@@ -1,26 +1,14 @@
-import { useEffect, useState } from "react";
+import React from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import ImportPage from "./pages/ImportPage";
 
-function App() {
-  const [healthData, setHealthData] = useState(null);
-  const [error, setError] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:4000/api/health")
-      .then((res) => {
-        if (!res.ok) throw new Error("Failed to fetch");
-        return res.json();
-      })
-      .then((data) => setHealthData(data))
-      .catch((err) => setError(err.message));
-  }, []);
-
+export default function App() {
   return (
-    <div>
-      <h1>Test frontend-backend connection</h1>
-      {error && <p>Error: {error}</p>}
-      {healthData ? <pre>{JSON.stringify(healthData, null, 2)}</pre> : <p>Loading...</p>}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/import" element={<ImportPage />} />
+        <Route path="*" element={<Navigate to="/import" replace />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-export default App;

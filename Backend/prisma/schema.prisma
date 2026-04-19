@@ -1,16 +1,142 @@
+datasource db {
+  provider = "postgresql"
+}
+
 generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+model FlatStudentSummary {
+  student_id                   String
+  course_id                    String
+  source_dataset               String
+  gender                       String?
+  age_group                    String?
+  region                       String?
+  residence_area               String?
+  highest_education            String?
+  socioeconomic_band           String?
+  imd_score_numeric            Float?
+  disability_flag              Boolean?
+  higher_education_intent_flag Boolean?
+  internet_access_flag         Boolean?
+  school_support_flag          Boolean?
+  family_support_flag          Boolean?
+  mother_education_level       String?
+  father_education_level       String?
+  mother_job                   String?
+  father_job                   String?
+  guardian_type                String?
+  family_relation              Int?
+  travel_time                  Int?
+  free_time                    Int?
+  go_out_freq                  Int?
+  alcohol_weekday              Int?
+  alcohol_weekend              Int?
+  health_status                Int?
+  course_name                  String?
+  subject_area                 String?
+  course_run                   String?
+  course_duration_days         Int?
+  final_outcome                String?
+  previous_attempt_count       Int?
+  study_load_credits           Int?
+  enrollment_start_day         Int?
+  enrollment_end_day           Int?
+  total_engagement_count       Int?
+  active_day_count             Int?
+  absence_count                Int?
+  study_effort_level           String?
+  consistency_level            String?
+  extracurricular_flag         Boolean?
+  paid_class_flag              Boolean?
+  parent_cohabitation_status   String?
+  romantic_relationship_flag   Boolean?
+  absences_rate                Float?
+  at_risk_label                String?
+  at_risk_score                Int?
+  avg_score                    Float?
+  created_at                   DateTime @default(now())
+  disadvantage_score           Float?
+  early_warning_week           Int?
+  engagement_score             Float?
+  family_stability_score       Float?
+  forum_engagement_rate        Float?
+  id                           BigInt   @id @default(autoincrement())
+  import_batch_id              String
+  lifestyle_risk_score         Float?
+  performance_trend            Float?
+  punctuality_rate             Float?
+  quiz_engagement_rate         Float?
+  registration_lead_time       Int?
+  resource_engagement_rate     Float?
+  score_consistency            Float?
+  social_balance_score         Float?
+  submission_delay_avg         Float?
+  support_score                Float?
+  vle_diversity_score          Float?
+  weekly_engagement_drop       Float?
+  withdrew_early               Int?
+
+  @@index([import_batch_id])
+  @@index([student_id, course_id, source_dataset])
+  @@map("flat_student_summary")
 }
 
-model Student {
-  id        String   @id
-  name      String?
-  gender    String?
-  age       Int?
-  createdAt DateTime @default(now())
+model FlatAssessmentResult {
+  student_id            String
+  course_id             String
+  assessment_order      Int?
+  source_dataset        String
+  assessment_result_id  String?
+  assessment_id         String?
+  score_normalized      Float?
+  submission_day        Int?
+  submission_delay_days Int?
+  is_banked             Boolean?
+  pass_flag             Boolean?
+  assessment_name       String?
+  assessment_type       String?
+  assessment_due_day    Int?
+  assessment_weight_pct Float?
+  is_final_assessment   Boolean?
+  final_outcome         String?
+  gender                String?
+  age_group             String?
+  course_name           String?
+  course_run            String?
+  created_at            DateTime @default(now())
+  id                    BigInt   @id @default(autoincrement())
+  import_batch_id       String
+  subject_area          String?
+
+  @@index([import_batch_id])
+  @@index([student_id, course_id, source_dataset])
+  @@index([assessment_id])
+  @@map("flat_assessment_result")
+}
+
+model FlatEngagementEvent {
+  student_id          String
+  course_id           String
+  event_day           Int?
+  source_dataset      String
+  engagement_event_id String?
+  resource_id         String?
+  resource_type       String?
+  engagement_count    Int?
+  course_name         String?
+  gender              String?
+  final_outcome       String?
+  age_group           String?
+  course_run          String?
+  created_at          DateTime @default(now())
+  id                  BigInt   @id @default(autoincrement())
+  import_batch_id     String
+  subject_area        String?
+
+  @@index([import_batch_id])
+  @@index([student_id, course_id, source_dataset])
+  @@index([event_day])
+  @@map("flat_engagement_event")
 }

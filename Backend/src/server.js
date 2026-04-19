@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import importRoutes from "./routes/import.routes.js";
 
 dotenv.config();
 
@@ -14,6 +15,7 @@ app.use(
 );
 
 app.use(express.json());
+app.use("/api/import", importRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({
