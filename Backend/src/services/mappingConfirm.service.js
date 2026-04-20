@@ -17,12 +17,8 @@ function normalizeFieldStatusForConfirmedMapping(fieldMapping) {
     return fieldMapping;
   }
 
-  if (fieldMapping.status === "suggested" || fieldMapping.status === "needs_review") {
-    throw new Error(
-      `Invalid field mapping status "${fieldMapping.status}" during confirmation. Strict validation should have blocked this earlier.`
-    );
-  }
-
+  // Không throw ở đây nữa.
+  // Để validateMapping(mode="strict") trả về validationResult chuẩn.
   return fieldMapping;
 }
 
@@ -53,7 +49,8 @@ export function confirmMapping({
   });
 
   if (!validationResult.isValid) {
-    const error = new Error("Mapping confirmation failed: strict validation did not pass.");
+    const error = new Error("Mapping confirmation failed.");
+    error.status = 400;
     error.code = "MAPPING_CONFIRMATION_FAILED";
     error.validationResult = validationResult;
     throw error;

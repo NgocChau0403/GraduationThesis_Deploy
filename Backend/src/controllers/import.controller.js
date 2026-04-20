@@ -383,15 +383,15 @@ export async function confirmMappingController(req, res) {
       confirmedMappingConfig: confirmationResult.mappingConfig
     });
   } catch (error) {
-    console.error("Mapping confirmation failed:", error);
+  console.error("Mapping confirmation failed:", error);
 
-    return res.status(400).json({
-      success: false,
-      message: "Mapping confirmation failed.",
-      error: error.message,
-      validationResult: error.validationResult || null
-    });
-  }
+  return res.status(error.status || 400).json({
+    success: false,
+    message: error.message || "Mapping confirmation failed.",
+    validationResult: error.validationResult || null,
+    code: error.code || null
+  });
+}
 }
 
 // ==========================================

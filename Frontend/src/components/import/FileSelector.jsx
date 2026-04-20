@@ -11,7 +11,7 @@ function statusTone(file) {
     return "border-amber-200 bg-amber-50 text-amber-700";
   }
 
-  return "border-slate-200 bg-slate-50 text-slate-600";
+  return "border-slate-200 bg-slate-100 text-slate-500";
 }
 
 function statusLabel(file) {
@@ -19,13 +19,17 @@ function statusLabel(file) {
   const hasNeedsReview = (file?.editableMappingConfig?.field_mappings || []).some(
     (item) => item.status === "needs_review"
   );
-  if (hasNeedsReview) return "Needs review";
+  if (hasNeedsReview) return "Review Needed";
   return "Draft";
 }
 
-function FileMetaPill({ children }) {
+function FileMetaPill({ children, isActive }) {
   return (
-    <span className="inline-flex rounded-full border border-slate-200 bg-white px-2.5 py-1 text-[11px] font-semibold text-slate-600">
+    <span className={`inline-flex rounded-full border px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${
+      isActive 
+        ? "border-emerald-400 bg-emerald-500/20 text-emerald-50" 
+        : "border-slate-200 bg-white text-slate-500"
+    }`}>
       {children}
     </span>
   );
@@ -41,23 +45,23 @@ export default function FileSelector({
   const confirmedCount = files.filter((file) => !!file.confirmedMappingConfig).length;
 
   return (
-    <section className="rounded-[24px] border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="mb-5">
-        <h2 className="text-xl font-bold text-slate-900">3. Uploaded files</h2>
+    <section className="rounded-[28px] border border-emerald-100 bg-white p-6 shadow-sm">
+      <div className="mb-6">
+        <h2 className="text-xl font-black text-slate-900">3. Uploaded Files</h2>
         <p className="mt-1 text-sm text-slate-500">
-          Select a file to review and confirm its mapping.
+          Select a specific file to review automated mapping results.
         </p>
       </div>
 
-      <div className="mb-4 grid grid-cols-2 gap-3">
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
-          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Files</div>
-          <div className="mt-1 text-xl font-bold text-slate-900">{files.length}</div>
+      <div className="mb-6 grid grid-cols-2 gap-4">
+        <div className="rounded-2xl border border-slate-100 bg-slate-50 p-4">
+          <div className="text-[10px] font-black uppercase tracking-widest text-slate-400">Total Files</div>
+          <div className="mt-1 text-2xl font-black text-slate-900">{files.length}</div>
         </div>
 
-        <div className="rounded-2xl border border-slate-200 bg-slate-50 p-3">
-          <div className="text-xs font-semibold uppercase tracking-wide text-slate-500">Confirmed</div>
-          <div className="mt-1 text-xl font-bold text-slate-900">{confirmedCount}</div>
+        <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-4">
+          <div className="text-[10px] font-black uppercase tracking-widest text-emerald-500">Confirmed</div>
+          <div className="mt-1 text-2xl font-black text-emerald-600">{confirmedCount}</div>
         </div>
       </div>
 
@@ -70,30 +74,33 @@ export default function FileSelector({
               key={file.fileId}
               type="button"
               onClick={() => onSelect(file.fileId)}
-              className={`w-full rounded-2xl border p-4 text-left transition ${
+              className={`group w-full rounded-3xl border p-5 text-left transition-all duration-300 ${
                 isActive
-                  ? "border-slate-900 bg-slate-900 text-white shadow-sm"
-                  : "border-slate-200 bg-white hover:border-slate-300 hover:bg-slate-50"
+                  ? "border-emerald-600 bg-emerald-600 text-white shadow-lg shadow-emerald-200 scale-[1.02]"
+                  : "border-slate-100 bg-white hover:border-emerald-200 hover:bg-emerald-50/30"
               }`}
             >
-              <div className="flex items-start justify-between gap-4">
-                <div className="min-w-0">
-                  <div className={`truncate text-sm font-semibold ${isActive ? "text-white" : "text-slate-900"}`}>
-                    {file.fileName}
+              <div className="flex flex-col gap-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0 flex-1">
+                    <div className={`truncate text-sm font-black tracking-tight ${isActive ? "text-white" : "text-slate-900"}`}>
+                      {file.fileName}
+                    </div>
                   </div>
-
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    <FileMetaPill>{file.inferredRole || "unknown role"}</FileMetaPill>
-                    <FileMetaPill>{file.inferredDatasetType || "unknown dataset"}</FileMetaPill>
-                    <FileMetaPill>
-                      Delimiter: {file.delimiterInfo?.delimiter || file.delimiterInfo?.detectedDelimiter || "-"}
-                    </FileMetaPill>
-                  </div>
+                  <span className={`shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-black uppercase tracking-widest transition-colors ${
+                    isActive ? "border-white/30 bg-white/20 text-white" : statusTone(file)
+                  }`}>
+                    {statusLabel(file)}
+                  </span>
                 </div>
 
-                <span className={`rounded-full border px-2.5 py-1 text-[11px] font-semibold ${statusTone(file)}`}>
-                  {statusLabel(file)}
-                </span>
+                <div className="flex flex-wrap gap-2">
+                  <FileMetaPill isActive={isActive}>{file.inferredRole || "Unknown Role"}</FileMetaPill>
+                  <FileMetaPill isActive={isActive}>{file.inferredDatasetType || "Generic"}</FileMetaPill>
+                  <FileMetaPill isActive={isActive}>
+                    CSV: {file.delimiterInfo?.delimiter || file.delimiterInfo?.detectedDelimiter || "-"}
+                  </FileMetaPill>
+                </div>
               </div>
             </button>
           );

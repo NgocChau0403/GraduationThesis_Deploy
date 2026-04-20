@@ -1,3 +1,8 @@
+/**
+ * CANONICAL_FIELD_OPTIONS: 
+ * Các trường dữ liệu chuẩn trong hệ thống Smart Learning.
+ * Giữ nguyên snake_case để lưu DB, nhưng khi hiển thị ở UI dùng CSS (capitalize) hoặc .replace(/_/g, ' ')
+ */
 export const CANONICAL_FIELD_OPTIONS = [
   "student_id",
   "course_id",
@@ -41,8 +46,12 @@ export const CANONICAL_FIELD_OPTIONS = [
   "engagement_count",
   "absence_count",
   "activity_type"
-];
+].sort(); // Sắp xếp A-Z để người dùng dễ tìm trong dropdown
 
+/**
+ * TRANSFORM_OPTIONS: 
+ * Các hàm biến đổi dữ liệu (Data Transformation)
+ */
 export const TRANSFORM_OPTIONS = [
   "direct_copy",
   "ignore",
@@ -51,19 +60,32 @@ export const TRANSFORM_OPTIONS = [
   "cast_boolean",
   "normalize_gender",
   "normalize_score",
-  "convert_date_to_relative_day"
+  "convert_date_to_relative_day",
+  "trim_whitespace",  // dữ liệu thô hay có khoảng trắng thừa
+  "lowercase",        // Chuẩn hóa chữ thường
+  "uppercase"         // Chuột hóa chữ hoa
 ];
 
+/**
+ * ENTITY_SCOPE_OPTIONS: 
+ * Định nghĩa thực thể mà dữ liệu này thuộc về
+ */
 export const ENTITY_SCOPE_OPTIONS = [
   "student",
   "course",
   "assessment",
   "engagement_event",
+  "demographic",     // Thêm để phân loại các trường như region, age...
   "system"
 ];
 
+/**
+ * STATUS_OPTIONS: 
+ * Trạng thái của một dòng mapping
+ */
 export const STATUS_OPTIONS = [
   "confirmed",
   "needs_review",
-  "ignored"
+  "ignored",
+  "suggested"
 ];
