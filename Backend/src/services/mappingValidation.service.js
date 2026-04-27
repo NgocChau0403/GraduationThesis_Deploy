@@ -1,4 +1,5 @@
 import { CANONICAL_FIELDS } from "../config/canonicalFields.js";
+import { normalizeText } from "../utils/textUtils.js";
 
 const ALLOWED_VALIDATION_MODE = ["draft", "strict"];
 const ALLOWED_MAPPING_STATUS = ["draft", "in_review", "confirmed"];
@@ -51,13 +52,6 @@ function pushUniqueMessage(targetArray, message) {
   }
 }
 
-function normalizeText(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "");
-}
 
 function buildCanonicalFieldMap() {
   return Object.fromEntries(CANONICAL_FIELDS.map((field) => [field.name, field]));
@@ -198,11 +192,13 @@ function getAllowedEntityScopes(canonicalFieldName, group) {
       "resource_id",
       "resource_type",
       "engagement_count",
-      "event_day"
+      "event_day",
+      "week_number",
+      "active_day_count",
+      "absence_count"
     ].includes(canonicalFieldName) ||
-    group === "activity" ||
-    (group === "engagement" &&
-      ["engagement_event_id", "engagement_count"].includes(canonicalFieldName))
+    group === "event" ||
+    group === "engagement"
   ) {
     return ["engagement_event"];
   }
@@ -248,7 +244,7 @@ function getAllowedTransforms(canonicalFieldName, rawColumnName, detectedType) {
   }
 
   if (
-    ["pass_flag", "is_banked", "is_final_assessment", "disability_flag", "higher_education_intent_flag", "internet_access_flag", "school_support_flag", "family_support_flag", "romantic_relationship_flag", "extracurricular_flag", "paid_class_flag"].includes(canonicalFieldName)
+    ["pass_flag", "is_banked", "is_final_assessment", "disability_flag", "higher_education_intent_flag", "internet_access_flag", "school_support_flag", "family_support_flag", "has_romantic", "has_extracurricular", "has_paid_class"].includes(canonicalFieldName)
   ) {
     return ["cast_boolean", "direct_copy"];
   }
@@ -527,11 +523,14 @@ export function validateMapping({
       );
     }
 
-    if (mode === "strict" && item.status === "confirmed" && item.confidence < 0.7) {
-      pushUniqueMessage(
+    if (item.status === "confirmed" && item.confidence < 0.7) {
+      reportIssue({
+        mode,
+        severity: "warning",
+        message: `${itemPath}: confirmed with low AI confidence (${item.confidence}). This may be a manual human override — verify the mapping is intentional.`,
         errors,
-        `${itemPath}.status is "confirmed" but confidence is too low (${item.confidence}).`
-      );
+        warnings
+      });
     }
 
     // ---- usage tracking
@@ -575,41 +574,46 @@ export function validateMapping({
   }
 
   // ==========================================
-// 5. REQUIRED CANONICAL FIELD COVERAGE
-// ==========================================
+  // 5. REQUIRED CANONICAL FIELD COVERAGE
+  // ==========================================
+  const isUciDataset =
+    String(mappingConfig?.source_dataset || "").toUpperCase() === "UCI" ||
+    String(mappingConfig?.dataset_name || "").toUpperCase().includes("UCI");
 
-const isUciDataset =
-  String(mappingConfig?.source_dataset || "").toUpperCase() === "UCI" ||
-  String(mappingConfig?.dataset_name || "").toUpperCase().includes("UCI");
+  const isCustomDataset =
+    String(mappingConfig?.source_dataset || "").toUpperCase() === "CUSTOM";
 
-for (const requiredField of REQUIRED_CANONICAL_FIELDS) {
-  // ✅ Skip cho UCI
-  if (isUciDataset && ["student_id", "course_id"].includes(requiredField)) {
-    continue;
+  for (const requiredField of REQUIRED_CANONICAL_FIELDS) {
+    // Trong kiến trúc 3NF, không phải file nào cũng chứa cả student_id và course_id
+    // Ví dụ: assessments.csv của OULAD không có student_id, courses.csv cũng không có.
+    // Do đó, ta bỏ qua việc ép buộc có 2 trường này trên từng file.
+    if (["student_id", "course_id"].includes(requiredField)) {
+      continue;
+    }
+
+    const isCoveredInDraft =
+      canonicalFieldUsage.has(requiredField) ||
+      (requiredField === "source_dataset" && isNonEmptyString(mappingConfig.source_dataset));
+
+    const isCoveredInStrict =
+      confirmedCanonicalFields.has(requiredField) ||
+      (requiredField === "source_dataset" && isNonEmptyString(mappingConfig.source_dataset));
+
+    if (mode === "draft" && !isCoveredInDraft) {
+      pushUniqueMessage(
+        errors,
+        `Required canonical field "${requiredField}" is not covered by the mapping config.`
+      );
+    }
+
+    if (mode === "strict" && !isCoveredInStrict) {
+      pushUniqueMessage(
+        errors,
+        `Required canonical field "${requiredField}" must be confirmed before strict validation passes.`
+      );
+    }
   }
 
-  const isCoveredInDraft =
-    canonicalFieldUsage.has(requiredField) ||
-    (requiredField === "source_dataset" && isNonEmptyString(mappingConfig.source_dataset));
-
-  const isCoveredInStrict =
-    confirmedCanonicalFields.has(requiredField) ||
-    (requiredField === "source_dataset" && isNonEmptyString(mappingConfig.source_dataset));
-
-  if (mode === "draft" && !isCoveredInDraft) {
-    pushUniqueMessage(
-      errors,
-      `Required canonical field "${requiredField}" is not covered by the mapping config.`
-    );
-  }
-
-  if (mode === "strict" && !isCoveredInStrict) {
-    pushUniqueMessage(
-      errors,
-      `Required canonical field "${requiredField}" must be confirmed before strict validation passes.`
-    );
-  }
-}
   // ==========================================
   // 6. MAPPING STATUS CONSISTENCY
   // ==========================================

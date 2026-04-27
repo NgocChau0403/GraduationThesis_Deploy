@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
+import { Select } from "antd";
 import UploadPanel from "../../components/import/UploadPanel";
 
 /**
@@ -11,6 +12,7 @@ export default function UploadStep() {
   const { 
     handleUpload, 
     loadingStates, 
+    uploadProgress,
     datasetName, 
     setDatasetName, 
     sourceDataset, 
@@ -18,6 +20,20 @@ export default function UploadStep() {
   } = useOutletContext();
 
   const [selectedFiles, setSelectedFiles] = useState([]);
+
+  // Auto-fill dataset name when files are dropped
+  useEffect(() => {
+    if (selectedFiles.length > 0 && !datasetName) {
+      if (selectedFiles.length === 1) {
+        // Tên file bỏ đi đuôi .csv
+        const name = selectedFiles[0].name.replace(/\.[^/.]+$/, "");
+        setDatasetName(name);
+      } else {
+        // Nếu nhiều file thì tạo tên chung
+        setDatasetName(`Multi-file_Dataset_${new Date().getTime().toString().slice(-4)}`);
+      }
+    }
+  }, [selectedFiles, datasetName, setDatasetName]);
 
   /**
    * Triggers the backend orchestration (Step 0 & 1)
@@ -49,6 +65,7 @@ export default function UploadStep() {
           <UploadPanel 
             onFilesChange={setSelectedFiles} 
             loading={loadingStates.uploading} 
+            uploadProgress={uploadProgress}
             standalone={false} 
           />
         </div>
@@ -59,7 +76,7 @@ export default function UploadStep() {
             {/* Dataset Identification */}
             <div className="space-y-2">
               <label className="text-[13px] font-bold uppercase tracking-wider text-slate-500">
-                Dataset Reference
+                Dataset Name
               </label>
               <input
                 type="text"
@@ -73,16 +90,21 @@ export default function UploadStep() {
             {/* Source Origin for Data Lineage */}
             <div className="space-y-2">
               <label className="text-[13px] font-bold uppercase tracking-wider text-slate-500">
-                Data Origin
+                Dataset Schema (Source)
               </label>
-              <input
-                type="text"
-                placeholder="e.g., LMS-Production"
-                className="w-full rounded-2xl border border-slate-200 bg-slate-50/30 p-4 text-sm font-medium focus:border-emerald-500 focus:bg-white focus:outline-none transition-all"
-                value={sourceDataset} 
-                onChange={(e) => setSourceDataset(e.target.value)} 
+              <Select
+                value={sourceDataset || ""}
+                onChange={(value) => setSourceDataset(value)}
+                className="w-full text-sm font-medium custom-source-select"
+                size="large"
+                options={[
+                  { value: "", label: "Auto-detect (Recommended)" },
+                  { value: "OULAD", label: "OULAD (Open University)" },
+                  { value: "UCI", label: "UCI (Portuguese/Math)" },
+                  { value: "CUSTOM", label: "CUSTOM (Unknown Schema)" }
+                ]}
               />
-              <p className="px-1 text-[11px] leading-relaxed text-slate-400 italic">
+              <p className="px-1 text-[11px] leading-relaxed text-slate-400 italic mt-1">
                 System will use these values to override automated detection if provided.
               </p>
             </div>
@@ -104,7 +126,9 @@ export default function UploadStep() {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
-                PROFILING DATA...
+                {uploadProgress < 100
+                  ? `UPLOADING... ${uploadProgress}%`
+                  : "PROFILING DATA..."}
               </span>
             ) : (
               "UPLOAD & ANALYZE"

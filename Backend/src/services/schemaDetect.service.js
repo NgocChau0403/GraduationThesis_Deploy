@@ -1,10 +1,4 @@
-function normalizeText(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "");
-}
+import { normalizeText } from "../utils/textUtils.js";
 
 function getColumnNames(profilingResult) {
   return Array.isArray(profilingResult?.columns)

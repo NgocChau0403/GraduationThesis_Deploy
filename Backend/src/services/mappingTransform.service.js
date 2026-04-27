@@ -1,5 +1,8 @@
 import { CANONICAL_FIELDS } from "../config/canonicalFields.js";
 import { validateMapping } from "./mappingValidation.service.js";
+import { normalizeText } from "../utils/textUtils.js";
+import { isOuladDataset } from "../utils/datasetUtils.js";
+import { surrogateKeyGenerators } from "../config/surrogateKey.js";
 
 // ==========================================
 // CONSTANTS
@@ -8,8 +11,21 @@ import { validateMapping } from "./mappingValidation.service.js";
 const TARGET_ENTITIES = [
   "student",
   "course",
+  "class",
+  "enrollment",
   "assessment",
-  "engagement_event"
+  "exam_result",
+  "event",
+  "engagement"
+];
+
+// Logical groups from canonicalFields mapping config
+const LOGICAL_GROUPS = [
+  "student",
+  "course",
+  "enrollment",
+  "assessment",
+  "engagement"
 ];
 
 // ==========================================
@@ -18,14 +34,6 @@ const TARGET_ENTITIES = [
 
 function buildCanonicalFieldMap() {
   return Object.fromEntries(CANONICAL_FIELDS.map((field) => [field.name, field]));
-}
-
-function normalizeText(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "");
 }
 
 function isPlainObject(value) {
@@ -43,37 +51,27 @@ function pushUnique(targetArray, message) {
 }
 
 function initializeTargetBuckets() {
-  return {
-    student: [],
-    course: [],
-    assessment: [],
-    engagement_event: []
-  };
+  const buckets = {};
+  for (const entity of TARGET_ENTITIES) {
+    buckets[entity] = [];
+  }
+  return buckets;
+}
+
+function initializeLogicalRecordMap() {
+  const map = {};
+  for (const group of LOGICAL_GROUPS) {
+    map[group] = {};
+  }
+  return map;
 }
 
 function initializeTargetStats() {
-  return {
-    student: 0,
-    course: 0,
-    assessment: 0,
-    engagement_event: 0
-  };
-}
-
-function getTargetEntityFromScope(entityScope) {
-  if (entityScope === "student") return "student";
-  if (entityScope === "course") return "course";
-  if (entityScope === "assessment") return "assessment";
-  if (entityScope === "engagement_event") return "engagement_event";
-  if (entityScope === "system") return "system";
-  return null;
-}
-
-function createEmptyTargetRecord(targetEntity, sourceDataset) {
-  return {
-    _target_entity: targetEntity,
-    source_dataset: sourceDataset
-  };
+  const stats = {};
+  for (const entity of TARGET_ENTITIES) {
+    stats[entity] = 0;
+  }
+  return stats;
 }
 
 function isNumericLike(value) {
@@ -83,132 +81,84 @@ function isNumericLike(value) {
 
 function castInt(value) {
   if (value === null || value === undefined || value === "") return null;
-
   const parsed = Number(value);
   if (Number.isNaN(parsed)) return null;
-
   return Math.trunc(parsed);
 }
 
 function castFloat(value) {
   if (value === null || value === undefined || value === "") return null;
-
   const parsed = Number(value);
   if (Number.isNaN(parsed)) return null;
-
   return parsed;
 }
 
 function castBoolean(value) {
   if (value === null || value === undefined || value === "") return null;
-
   if (typeof value === "boolean") return value;
-
   const normalized = normalizeText(value);
-
   if (["true", "1", "yes", "y"].includes(normalized)) return true;
   if (["false", "0", "no", "n"].includes(normalized)) return false;
-
   return null;
 }
 
 function normalizeGender(value) {
   if (value === null || value === undefined || value === "") return null;
-
   const normalized = normalizeText(value);
-
   if (["m", "male"].includes(normalized)) return "M";
   if (["f", "female"].includes(normalized)) return "F";
-
   return String(value).trim();
 }
 
 function normalizeScore(value) {
   if (value === null || value === undefined || value === "") return null;
-
   const parsed = Number(value);
   if (Number.isNaN(parsed)) return null;
-
   return parsed;
 }
 
 function convertDateToRelativeDay(value) {
   if (value === null || value === undefined || value === "") return null;
-
-  // Current prototype behavior:
-  // - if numeric-like => assume already relative day
-  // - if calendar date string => cannot infer anchor date yet, return null
   if (isNumericLike(value)) {
     return Math.trunc(Number(value));
   }
-
   return null;
 }
 
 function applyTransform(transformName, rawValue) {
   switch (transformName) {
-    case "direct_copy":
-      return rawValue ?? null;
-
-    case "ignore":
-      return null;
-
-    case "cast_int":
-      return castInt(rawValue);
-
-    case "cast_float":
-      return castFloat(rawValue);
-
-    case "cast_boolean":
-      return castBoolean(rawValue);
-
-    case "normalize_gender":
-      return normalizeGender(rawValue);
-
-    case "normalize_score":
-      return normalizeScore(rawValue);
-
-    case "convert_date_to_relative_day":
-      return convertDateToRelativeDay(rawValue);
-
-    default:
-      throw new Error(`Unsupported transform "${transformName}".`);
+    case "direct_copy": return rawValue ?? null;
+    case "ignore": return null;
+    case "cast_int": return castInt(rawValue);
+    case "cast_float": return castFloat(rawValue);
+    case "cast_boolean": return castBoolean(rawValue);
+    case "normalize_gender": return normalizeGender(rawValue);
+    case "normalize_score": return normalizeScore(rawValue);
+    case "convert_date_to_relative_day": return convertDateToRelativeDay(rawValue);
+    default: throw new Error(`Unsupported transform "${transformName}".`);
   }
 }
 
 function coerceValueToCanonicalType(value, canonicalType) {
   if (value === null || value === undefined) return null;
-
   switch (canonicalType) {
-    case "string":
-      return String(value);
-
+    case "string": return String(value);
     case "int": {
       const parsed = Number(value);
       return Number.isNaN(parsed) ? null : Math.trunc(parsed);
     }
-
     case "float": {
       const parsed = Number(value);
       return Number.isNaN(parsed) ? null : parsed;
     }
-
-    case "boolean":
-      return castBoolean(value);
-
-    case "date":
-      return String(value);
-
-    default:
-      return value;
+    case "boolean": return castBoolean(value);
+    case "date": return String(value);
+    default: return value;
   }
 }
 
 function getPrimarySourceField(sourceFields) {
-  if (!Array.isArray(sourceFields) || sourceFields.length === 0) {
-    return null;
-  }
-
+  if (!Array.isArray(sourceFields) || sourceFields.length === 0) return null;
   return sourceFields[0];
 }
 
@@ -221,48 +171,8 @@ function buildRowContext(rawRowIndex, mappingId, sourceField) {
   return `row ${rawRowIndex}, mapping "${mappingId}", source field "${sourceField}"`;
 }
 
-function ensureEntityRecord(entityRecordMap, targetEntity, sourceDataset) {
-  if (!entityRecordMap[targetEntity]) {
-    entityRecordMap[targetEntity] = createEmptyTargetRecord(targetEntity, sourceDataset);
-  }
-
-  return entityRecordMap[targetEntity];
-}
-
-function mergeSystemValuesIntoRecord(record, systemValues) {
-  if (!isPlainObject(record) || !isPlainObject(systemValues)) return record;
-
-  for (const [key, value] of Object.entries(systemValues)) {
-    if (record[key] === undefined || record[key] === null) {
-      record[key] = value;
-    }
-  }
-
-  return record;
-}
-
-function isUciDataset(mappingConfig) {
-  const datasetName = normalizeText(mappingConfig?.dataset_name);
-  const sourceDataset = normalizeText(mappingConfig?.source_dataset);
-
-  return (
-    datasetName.includes("uci") ||
-    sourceDataset.includes("uci") ||
-    datasetName.includes("student_mat") ||
-    datasetName.includes("student_por")
-  );
-}
-
-function isOuladDataset(mappingConfig) {
-  const datasetName = normalizeText(mappingConfig?.dataset_name);
-  const sourceDataset = normalizeText(mappingConfig?.source_dataset);
-
-  return datasetName.includes("oulad") || sourceDataset.includes("oulad");
-}
-
 function deriveUciCourseId(mappingConfig) {
   const datasetName = normalizeText(mappingConfig?.dataset_name);
-
   if (datasetName.includes("mat")) return "UCI_MAT";
   if (datasetName.includes("por")) return "UCI_POR";
   return "UCI_COURSE";
@@ -270,90 +180,76 @@ function deriveUciCourseId(mappingConfig) {
 
 function deriveOuladCourseId(rawRow) {
   const codeModule = rawRow?.code_module ? String(rawRow.code_module).trim() : null;
-  const codePresentation = rawRow?.code_presentation
-    ? String(rawRow.code_presentation).trim()
-    : null;
-
-  if (codeModule && codePresentation) {
-    return `${codeModule}_${codePresentation}`;
-  }
-
   if (codeModule) return codeModule;
   return null;
 }
 
-function deriveFallbackStudentId({
-  mappingConfig,
-  rawRow,
-  rowIndex,
-  courseId
-}) {
+function deriveOuladCourseRun(rawRow) {
+  const codePresentation = rawRow?.code_presentation ? String(rawRow.code_presentation).trim() : null;
+  if (codePresentation) return codePresentation;
+  return null;
+}
+
+function deriveFallbackStudentId({ mappingConfig, rawRow, rowIndex, courseId }) {
   if (rawRow?.id_student !== undefined && rawRow?.id_student !== null && rawRow?.id_student !== "") {
     return String(rawRow.id_student);
   }
-
-  if (isUciDataset(mappingConfig)) {
+  if (isUciDataset(mappingConfig?.dataset_name, mappingConfig?.source_dataset)) {
     const safeCourseId = courseId || deriveUciCourseId(mappingConfig);
     return `${safeCourseId}_STUDENT_${String(rowIndex + 1).padStart(4, "0")}`;
   }
-
   return null;
 }
 
-function buildUciAssessmentMetadata(sourceField) {
-  const normalized = normalizeText(sourceField);
+/**
+ * Converts accumulated assessmentScores + assessmentBase into a list of expanded
+ * assessment logic objects ready for Phase 3 dispatch.
+ *
+ * Rules:
+ *  - 0 score entries  → skip (no score data at all)
+ *  - 1 score entry    → 1 row; use assessmentBase.assessment_id if present, else derive from sourceField
+ *  - N score entries  → N rows; each row uses its sourceField as the assessment_name / assessment_id
+ *    (UCI G1/G2/G3 fall naturally into this path without any hardcoding)
+ *
+ * @param {Array<{sourceField: string, value: any}>} assessmentScores
+ * @param {Object} assessmentBase  — non-score canonical assessment fields (type, weight, due_day…)
+ * @returns {Array<Object>}        — array of assessmentLogic objects for processAssessment()
+ */
+function buildExpandedAssessmentRows(assessmentScores, assessmentBase) {
+  if (assessmentScores.length === 0) return [];
 
-  if (normalized === "g1") {
-    return {
-      assessment_name: "G1",
-      assessment_order: 1,
-      assessment_id: "G1",
-      is_final_assessment: false
-    };
+  if (assessmentScores.length === 1) {
+    const { sourceField, value } = assessmentScores[0];
+    return [{
+      ...assessmentBase,
+      score_normalized: value,
+      // Respect an explicit assessment_id from the mapping; else derive from the source column name
+      assessment_id: assessmentBase.assessment_id || sourceField,
+      assessment_name: assessmentBase.assessment_name || sourceField
+    }];
   }
 
-  if (normalized === "g2") {
-    return {
-      assessment_name: "G2",
-      assessment_order: 2,
-      assessment_id: "G2",
-      is_final_assessment: false
-    };
+  // Multiple score columns → one assessment row per column (generic unpivot / melt)
+  return assessmentScores.map(({ sourceField, value }, idx) => ({
+    ...assessmentBase,
+    score_normalized: value,
+    // Each column becomes its own assessment; the column name IS the assessment identity
+    assessment_id:    sourceField,
+    assessment_name:  sourceField,
+    // Preserve natural column order so downstream analytics can sort by assessment_order
+    assessment_order: assessmentBase.assessment_order ?? (idx + 1)
+  }));
+}
+
+// Helper to filter out properties that are undefined (keeps nulls)
+function extractModelProps(record, keys) {
+  const obj = {};
+  for (const key of keys) {
+    if (record[key] !== undefined) {
+      obj[key] = record[key];
+    }
   }
-
-  if (normalized === "g3") {
-    return {
-      assessment_name: "G3",
-      assessment_order: 3,
-      assessment_id: "G3",
-      is_final_assessment: true
-    };
-  }
-
-  return null;
-}
-
-function isSpecialExpandedUciAssessmentMapping(mappingConfig, mappingItem, primarySourceField) {
-  if (!isUciDataset(mappingConfig)) return false;
-
-  return (
-    mappingItem.entity_scope === "assessment" &&
-    mappingItem.canonical_field === "score_normalized" &&
-    ["g1", "g2", "g3"].includes(normalizeText(primarySourceField))
-  );
-}
-
-function buildAssessmentResultId({ studentId, courseId, assessmentId }) {
-  if (!studentId && !courseId && !assessmentId) return null;
-  return [studentId, courseId, assessmentId].filter(Boolean).join("__");
-}
-
-function removeInternalFields(record) {
-  if (!isPlainObject(record)) return record;
-
-  const cloned = { ...record };
-  delete cloned._target_entity;
-  return cloned;
+  return obj;
 }
 
 // ==========================================
@@ -363,7 +259,8 @@ function removeInternalFields(record) {
 export function transformRawRowsToCanonical({
   mappingConfig,
   profilingResult,
-  rawRows
+  rawRows,
+  batchId // Newly required for linking in DB
 }) {
   const validationResult = validateMapping({
     mappingConfig,
@@ -372,9 +269,7 @@ export function transformRawRowsToCanonical({
   });
 
   if (!validationResult.isValid) {
-    const error = new Error(
-      "Mapping transform failed: mappingConfig did not pass strict validation."
-    );
+    const error = new Error("Mapping transform failed: mappingConfig did not pass strict validation.");
     error.code = "MAPPING_TRANSFORM_VALIDATION_FAILED";
     error.validationResult = validationResult;
     throw error;
@@ -385,6 +280,9 @@ export function transformRawRowsToCanonical({
     error.code = "INVALID_RAW_ROWS";
     throw error;
   }
+
+  const sourceDataset = mappingConfig.source_dataset || "CUSTOM";
+  const safeBatchId = batchId || "TEMPORARY_BATCH";
 
   const canonicalFieldMap = buildCanonicalFieldMap();
   const output = initializeTargetBuckets();
@@ -411,26 +309,24 @@ export function transformRawRowsToCanonical({
 
     if (!isPlainObject(rawRow)) {
       skippedRowCount += 1;
-      pushUnique(
-        warnings,
-        `Row at index ${rowIndex} is not a valid object and was skipped.`
-      );
+      pushUnique(warnings, `Row at index ${rowIndex} is not a valid object and was skipped.`);
       continue;
     }
 
-    const entityRecordMap = {};
-    const systemValues = {};
-    const assessmentRows = [];
+    const logicalRecordMap = initializeLogicalRecordMap();
+    // Generic unpivot accumulators — populated during Phase 1
+    const assessmentScores = []; // [{sourceField, value}] — one entry per score_normalized mapping
+    const assessmentBase = {};   // all other assessment canonical fields
 
+    // Phase 1: Gather mapped fields into logical groups
     for (const mappingItem of activeMappings) {
-      const targetEntity = getTargetEntityFromScope(mappingItem.entity_scope);
+      const logicalGroup = LOGICAL_GROUPS.includes(mappingItem.entity_scope) 
+        ? mappingItem.entity_scope 
+        : (mappingItem.entity_scope === "system" ? "system" : null);
 
-      if (!targetEntity) {
+      if (!logicalGroup) {
         skippedMappingCount += 1;
-        pushUnique(
-          warnings,
-          `Mapping "${mappingItem.id}" has unsupported entity_scope "${mappingItem.entity_scope}" and was skipped during transform.`
-        );
+        pushUnique(warnings, `Mapping "${mappingItem.id}" has unsupported entity_scope "${mappingItem.entity_scope}".`);
         continue;
       }
 
@@ -439,29 +335,14 @@ export function transformRawRowsToCanonical({
 
       if (!canonicalMeta) {
         skippedMappingCount += 1;
-        pushUnique(
-          warnings,
-          `Mapping "${mappingItem.id}" references unknown canonical field "${canonicalFieldName}" and was skipped during transform.`
-        );
+        pushUnique(warnings, `Mapping "${mappingItem.id}" references unknown canonical field "${canonicalFieldName}".`);
         continue;
       }
 
       const primarySourceField = getPrimarySourceField(mappingItem.source_fields);
-
       if (!primarySourceField) {
         skippedMappingCount += 1;
-        pushUnique(
-          warnings,
-          `Mapping "${mappingItem.id}" has no usable source_fields and was skipped during transform.`
-        );
         continue;
-      }
-
-      if (Array.isArray(mappingItem.source_fields) && mappingItem.source_fields.length > 1) {
-        pushUnique(
-          warnings,
-          `Mapping "${mappingItem.id}" has multiple source_fields. Current transform uses only the first source field "${primarySourceField}".`
-        );
       }
 
       const rawValue = getRowValue(rawRow, primarySourceField);
@@ -471,222 +352,255 @@ export function transformRawRowsToCanonical({
         transformedValue = applyTransform(mappingItem.transform, rawValue);
       } catch (error) {
         skippedMappingCount += 1;
-        pushUnique(
-          warnings,
-          `Transform failed for ${buildRowContext(rowIndex, mappingItem.id, primarySourceField)} with transform "${mappingItem.transform}".`
-        );
+        pushUnique(warnings, `Transform failed for ${buildRowContext(rowIndex, mappingItem.id, primarySourceField)}.`);
         continue;
       }
 
-      const finalValue = coerceValueToCanonicalType(
-        transformedValue,
-        canonicalMeta.type
-      );
+      const finalValue = coerceValueToCanonicalType(transformedValue, canonicalMeta.type);
 
-      if (targetEntity === "system") {
-        systemValues[canonicalFieldName] = finalValue;
+      if (logicalGroup === "system") {
+        continue; // system fields are not dumped into entities
+      }
+
+      // ── Generic Assessment Unpivot ──────────────────────────────────────────
+      // Instead of overwriting logicalRecordMap.assessment.score_normalized on
+      // every iteration (which causes data loss when multiple score columns are
+      // mapped), we ACCUMULATE them and defer row generation to Phase 1.5.
+      if (logicalGroup === "assessment" && canonicalFieldName === "score_normalized") {
+        assessmentScores.push({ sourceField: primarySourceField, value: finalValue });
         transformedValueCount += 1;
         continue;
       }
 
-      // ------------------------------------------
-      // Special handling for UCI G1/G2/G3 expansion
-      // ------------------------------------------
-      if (
-        isSpecialExpandedUciAssessmentMapping(
-          mappingConfig,
-          mappingItem,
-          primarySourceField
-        )
-      ) {
-        const uciAssessmentMeta = buildUciAssessmentMetadata(primarySourceField);
-
-        if (!uciAssessmentMeta) {
-          skippedMappingCount += 1;
-          pushUnique(
-            warnings,
-            `UCI assessment expansion failed for ${buildRowContext(rowIndex, mappingItem.id, primarySourceField)}.`
-          );
-          continue;
-        }
-
-        const assessmentRow = createEmptyTargetRecord("assessment", mappingConfig.source_dataset);
-        assessmentRow.score_normalized = finalValue;
-        assessmentRow.assessment_name = uciAssessmentMeta.assessment_name;
-        assessmentRow.assessment_order = uciAssessmentMeta.assessment_order;
-        assessmentRow.assessment_id = uciAssessmentMeta.assessment_id;
-        assessmentRow.is_final_assessment = uciAssessmentMeta.is_final_assessment;
-
-        assessmentRows.push(assessmentRow);
+      if (logicalGroup === "assessment") {
+        // Non-score assessment fields (type, weight, due_day, etc.) — shared across all rows
+        assessmentBase[canonicalFieldName] = finalValue;
         transformedValueCount += 1;
         continue;
       }
 
-      const record = ensureEntityRecord(
-        entityRecordMap,
-        targetEntity,
-        mappingConfig.source_dataset
-      );
-
-      record[canonicalFieldName] = finalValue;
+      logicalRecordMap[logicalGroup][canonicalFieldName] = finalValue;
       transformedValueCount += 1;
     }
 
-    // ------------------------------------------
-    // Derive contextual IDs and metadata
-    // ------------------------------------------
-    const studentRecord = entityRecordMap.student || null;
-    const courseRecord = entityRecordMap.course || null;
-    const assessmentBaseRecord = entityRecordMap.assessment || null;
-    const engagementEventRecord = entityRecordMap.engagement_event || null;
+    // Phase 1.5: Build expanded assessment rows from accumulated scores
+    // This converts N score columns into N distinct assessmentLogic objects.
+    const expandedAssessmentRows = buildExpandedAssessmentRows(assessmentScores, assessmentBase);
 
-    let derivedCourseId = null;
+    // Phase 2: Derive Contextual IDs (Surrogate Keys)
+    const courseLogic = logicalRecordMap.course;
+    const studentLogic = logicalRecordMap.student;
+    const enrollmentLogic = logicalRecordMap.enrollment;
+    const engagementLogic = logicalRecordMap.engagement;
 
-    if (courseRecord?.course_id) {
-      derivedCourseId = courseRecord.course_id;
-    } else if (isOuladDataset(mappingConfig)) {
-      derivedCourseId = deriveOuladCourseId(rawRow);
-    } else if (isUciDataset(mappingConfig)) {
-      derivedCourseId = deriveUciCourseId(mappingConfig);
+    let derivedCourseId = courseLogic.course_id || null;
+    let derivedCourseRun = courseLogic.course_run || null;
+
+    if (isOuladDataset(mappingConfig?.dataset_name, mappingConfig?.source_dataset)) {
+      if (!derivedCourseId) derivedCourseId = deriveOuladCourseId(rawRow);
+      if (!derivedCourseRun) derivedCourseRun = deriveOuladCourseRun(rawRow);
+    } else if (isUciDataset(mappingConfig?.dataset_name, mappingConfig?.source_dataset)) {
+      if (!derivedCourseId) derivedCourseId = deriveUciCourseId(mappingConfig);
+      if (!derivedCourseRun) derivedCourseRun = "DEFAULT_RUN"; // UCI doesn't have class runs
     }
 
-    let derivedStudentId = null;
+    let derivedStudentId = studentLogic.student_id || null;
+    if (!derivedStudentId) {
+      derivedStudentId = deriveFallbackStudentId({ mappingConfig, rawRow, rowIndex, courseId: derivedCourseId });
+    }
 
-    if (studentRecord?.student_id) {
-      derivedStudentId = studentRecord.student_id;
-    } else {
-      derivedStudentId = deriveFallbackStudentId({
-        mappingConfig,
-        rawRow,
-        rowIndex,
-        courseId: derivedCourseId
+    // Must have at least basic keys to proceed with relations
+    const classId = (derivedCourseId && derivedCourseRun) ? surrogateKeyGenerators.class_id(derivedCourseId, derivedCourseRun) : null;
+    const enrollmentId = (derivedStudentId && classId) ? surrogateKeyGenerators.enrollment_id(derivedStudentId, classId) : null;
+
+    // Phase 3: Shatter into 8 Entities
+    const hasData = (obj) => Object.keys(obj).length > 0;
+
+    // 1. COURSE
+    if (derivedCourseId && hasData(courseLogic)) {
+      output.course.push({
+        batch_id: safeBatchId,
+        source_dataset: sourceDataset,
+        course_id: derivedCourseId,
+        course_name: courseLogic.course_name,
+        subject_area: courseLogic.subject_area
       });
-    }
+      targetEntityRowCounts.course += 1;
 
-    // ------------------------------------------
-    // Enrich base records with derived values
-    // ------------------------------------------
-    if (studentRecord) {
-      if (!studentRecord.student_id && derivedStudentId) {
-        studentRecord.student_id = derivedStudentId;
-      }
-      if (!studentRecord.course_id && derivedCourseId) {
-        studentRecord.course_id = derivedCourseId;
-      }
-    }
-
-    if (courseRecord) {
-      if (!courseRecord.course_id && derivedCourseId) {
-        courseRecord.course_id = derivedCourseId;
-      }
-    }
-
-    if (assessmentBaseRecord) {
-      if (!assessmentBaseRecord.student_id && derivedStudentId) {
-        assessmentBaseRecord.student_id = derivedStudentId;
-      }
-      if (!assessmentBaseRecord.course_id && derivedCourseId) {
-        assessmentBaseRecord.course_id = derivedCourseId;
-      }
-    }
-
-    if (engagementEventRecord) {
-      if (!engagementEventRecord.student_id && derivedStudentId) {
-        engagementEventRecord.student_id = derivedStudentId;
-      }
-      if (!engagementEventRecord.course_id && derivedCourseId) {
-        engagementEventRecord.course_id = derivedCourseId;
-      }
-    }
-
-    // ------------------------------------------
-    // Materialize assessment rows
-    // ------------------------------------------
-    if (assessmentRows.length > 0) {
-      for (const assessmentRow of assessmentRows) {
-        if (assessmentBaseRecord) {
-          for (const [key, value] of Object.entries(assessmentBaseRecord)) {
-            if (
-              assessmentRow[key] === undefined ||
-              assessmentRow[key] === null
-            ) {
-              assessmentRow[key] = value;
-            }
-          }
-        }
-
-        if (!assessmentRow.student_id && derivedStudentId) {
-          assessmentRow.student_id = derivedStudentId;
-        }
-
-        if (!assessmentRow.course_id && derivedCourseId) {
-          assessmentRow.course_id = derivedCourseId;
-        }
-
-        if (!assessmentRow.assessment_result_id) {
-          assessmentRow.assessment_result_id = buildAssessmentResultId({
-            studentId: assessmentRow.student_id,
-            courseId: assessmentRow.course_id,
-            assessmentId: assessmentRow.assessment_id
-          });
-        }
-
-        mergeSystemValuesIntoRecord(assessmentRow, systemValues);
-        assessmentRow.source_dataset = mappingConfig.source_dataset;
-
-        output.assessment.push(removeInternalFields(assessmentRow));
-        targetEntityRowCounts.assessment += 1;
-      }
-    } else if (assessmentBaseRecord) {
-      if (!assessmentBaseRecord.assessment_result_id) {
-        assessmentBaseRecord.assessment_result_id = buildAssessmentResultId({
-          studentId: assessmentBaseRecord.student_id,
-          courseId: assessmentBaseRecord.course_id,
-          assessmentId: assessmentBaseRecord.assessment_id
+      // 2. CLASS (Derived from Course logically)
+      if (derivedCourseRun && classId) {
+        output.class.push({
+          batch_id: safeBatchId,
+          source_dataset: sourceDataset,
+          class_id: classId,
+          course_id: derivedCourseId,
+          class_run: derivedCourseRun,
+          duration_days: courseLogic.course_duration_days
         });
+        targetEntityRowCounts.class += 1;
       }
-
-      mergeSystemValuesIntoRecord(assessmentBaseRecord, systemValues);
-      assessmentBaseRecord.source_dataset = mappingConfig.source_dataset;
-
-      output.assessment.push(removeInternalFields(assessmentBaseRecord));
-      targetEntityRowCounts.assessment += 1;
     }
 
-    // ------------------------------------------
-    // Materialize student / course / engagement_event
-    // ------------------------------------------
-    if (studentRecord) {
-      mergeSystemValuesIntoRecord(studentRecord, systemValues);
-      studentRecord.source_dataset = mappingConfig.source_dataset;
-
-      output.student.push(removeInternalFields(studentRecord));
+    // 3. STUDENT
+    if (derivedStudentId && hasData(studentLogic)) {
+      output.student.push({
+        batch_id: safeBatchId,
+        source_dataset: sourceDataset,
+        student_id: derivedStudentId,
+        gender: studentLogic.gender,
+        age_years: studentLogic.age_years,
+        age_group: studentLogic.age_group,
+        region: studentLogic.region,
+        residence_area: studentLogic.residence_area,
+        school: studentLogic.school,
+        family_size: studentLogic.family_size,
+        highest_education: studentLogic.highest_education,
+        socioeconomic_band: studentLogic.socioeconomic_band,
+        imd_score_numeric: studentLogic.imd_score_numeric,
+        disability_flag: studentLogic.disability_flag,
+        higher_education_intent_flag: studentLogic.higher_education_intent_flag,
+        internet_access_flag: studentLogic.internet_access_flag,
+        school_support_flag: studentLogic.school_support_flag,
+        family_support_flag: studentLogic.family_support_flag,
+        mother_education_level: studentLogic.mother_education_level,
+        father_education_level: studentLogic.father_education_level,
+        mother_job: studentLogic.mother_job,
+        father_job: studentLogic.father_job,
+        guardian_type: studentLogic.guardian_type,
+        parent_cohabitation_status: studentLogic.parent_cohabitation_status,
+        travel_time: studentLogic.travel_time,
+        free_time: studentLogic.free_time,
+        go_out_freq: studentLogic.go_out_freq,
+        alcohol_weekday: studentLogic.alcohol_weekday,
+        alcohol_weekend: studentLogic.alcohol_weekend,
+        health_status: studentLogic.health_status,
+        family_relation: studentLogic.family_relation,
+        has_romantic: studentLogic.has_romantic,
+        has_extracurricular: studentLogic.has_extracurricular,
+        has_paid_class: studentLogic.has_paid_class
+      });
       targetEntityRowCounts.student += 1;
     }
 
-    if (courseRecord) {
-      mergeSystemValuesIntoRecord(courseRecord, systemValues);
-      courseRecord.source_dataset = mappingConfig.source_dataset;
-
-      output.course.push(removeInternalFields(courseRecord));
-      targetEntityRowCounts.course += 1;
+    // 4. ENROLLMENT
+    if (enrollmentId) {
+      // Sometimes an enrollment row just maps student/course keys without extra fields, we still need to create it.
+      output.enrollment.push({
+        batch_id: safeBatchId,
+        source_dataset: sourceDataset,
+        enrollment_id: enrollmentId,
+        student_id: derivedStudentId,
+        class_id: classId,
+        enrollment_start_day: enrollmentLogic.enrollment_start_day,
+        enrollment_end_day: enrollmentLogic.enrollment_end_day,
+        final_outcome: enrollmentLogic.final_outcome,
+        previous_attempt_count: enrollmentLogic.previous_attempt_count,
+        study_load_credits: courseLogic.study_load_credits, // from canonical logic mapping
+        absences: engagementLogic.absence_count // absences mapped from engagement
+      });
+      targetEntityRowCounts.enrollment += 1;
     }
 
-    if (engagementEventRecord) {
-      mergeSystemValuesIntoRecord(engagementEventRecord, systemValues);
-      engagementEventRecord.source_dataset = mappingConfig.source_dataset;
+    // Helper to process a single assessment record
+    const processAssessment = (aLogic) => {
+      if (!classId) return;
 
-      output.engagement_event.push(removeInternalFields(engagementEventRecord));
-      targetEntityRowCounts.engagement_event += 1;
+      const rawAssessmentName = aLogic.assessment_name || aLogic.assessment_id || "ASSESSMENT";
+      const derivedAssessmentId = aLogic.assessment_id || surrogateKeyGenerators.assessment_id(classId, rawAssessmentName);
+      
+      // 5. ASSESSMENT
+      output.assessment.push({
+        batch_id: safeBatchId,
+        source_dataset: sourceDataset,
+        assessment_id: derivedAssessmentId,
+        class_id: classId,
+        assessment_name: aLogic.assessment_name,
+        assessment_type: aLogic.assessment_type,
+        assessment_order: aLogic.assessment_order,
+        due_day: aLogic.assessment_due_day,
+        weight_pct: aLogic.assessment_weight_pct,
+        is_final_assessment: aLogic.is_final_assessment
+      });
+      targetEntityRowCounts.assessment += 1;
+
+      // 6. EXAM RESULT
+      if (enrollmentId && (aLogic.score_normalized !== undefined || aLogic.pass_flag !== undefined)) {
+        const resultId = aLogic.assessment_result_id || surrogateKeyGenerators.result_id(derivedStudentId, derivedAssessmentId);
+        output.exam_result.push({
+          batch_id: safeBatchId,
+          source_dataset: sourceDataset,
+          result_id: resultId,
+          assessment_id: derivedAssessmentId,
+          student_id: derivedStudentId,
+          enrollment_id: enrollmentId,
+          score_normalized: aLogic.score_normalized,
+          submission_day: aLogic.submission_day,
+          submission_delay_days: aLogic.submission_delay_days,
+          pass_flag: aLogic.pass_flag,
+          is_banked: aLogic.is_banked
+        });
+        targetEntityRowCounts.exam_result += 1;
+      }
+    };
+
+    // Dispatch all assessment rows (unified — covers both single-score and multi-score/unpivot cases)
+    for (const expandedRow of expandedAssessmentRows) {
+      processAssessment(expandedRow);
     }
+
+    // 7. EVENT & 8. ENGAGEMENT
+    if (classId && hasData(engagementLogic) && engagementLogic.engagement_count !== undefined) {
+      const rawResourceId = engagementLogic.resource_id || "EVENT";
+      const derivedEventId = engagementLogic.engagement_event_id || surrogateKeyGenerators.event_id(classId, rawResourceId);
+
+      // EVENT
+      output.event.push({
+        batch_id: safeBatchId,
+        source_dataset: sourceDataset,
+        event_id: derivedEventId,
+        class_id: classId,
+        resource_id: engagementLogic.resource_id,
+        resource_type: engagementLogic.resource_type
+      });
+      targetEntityRowCounts.event += 1;
+
+      // ENGAGEMENT
+      if (enrollmentId) {
+        const derivedEngagementId = surrogateKeyGenerators.engagement_id(derivedStudentId, derivedEventId, engagementLogic.event_day || 0);
+        output.engagement.push({
+          batch_id: safeBatchId,
+          source_dataset: sourceDataset,
+          engagement_id: derivedEngagementId,
+          event_id: derivedEventId,
+          student_id: derivedStudentId,
+          enrollment_id: enrollmentId,
+          engagement_count: engagementLogic.engagement_count,
+          event_day: engagementLogic.event_day,
+          week_number: engagementLogic.week_number
+        });
+        targetEntityRowCounts.engagement += 1;
+      }
+    }
+  }
+
+  // Final cleanup step: Remove completely undefined fields from all output records
+  const cleanOutput = initializeTargetBuckets();
+  for (const entity of TARGET_ENTITIES) {
+    cleanOutput[entity] = output[entity].map(record => {
+      const cleanRecord = {};
+      for (const [key, value] of Object.entries(record)) {
+        if (value !== undefined) cleanRecord[key] = value;
+      }
+      return cleanRecord;
+    });
   }
 
   return {
     dataset_name: mappingConfig.dataset_name,
-    source_dataset: mappingConfig.source_dataset,
+    source_dataset: sourceDataset,
     mapping_version: mappingConfig.version,
     transformed_at: new Date().toISOString(),
-    output,
+    output: cleanOutput,
     summary: {
       input_row_count: rawRows.length,
       active_mapping_count: activeMappings.length,

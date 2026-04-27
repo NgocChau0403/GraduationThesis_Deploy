@@ -3,7 +3,6 @@ import csv from "csv-parser";
 
 export function parseCsvFileToRawRows(filePath, options = {}) {
   const separator = options.separator || ",";
-  console.log("Parsing CSV:", filePath, "separator:", separator);
 
   return new Promise((resolve, reject) => {
     const rows = [];

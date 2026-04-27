@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Banner from "../components/import/Banner";
 import StepPill from "../components/import/StepPill";
@@ -48,6 +48,8 @@ export default function ImportPage() {
     confirming: false,
     running: false
   });
+  // 0-100: tiến trình upload file lên server (phase trước khi profiling)
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [banner, setBanner] = useState(null);
 
   const currentStepPath = location.pathname.split("/").pop();
@@ -55,7 +57,11 @@ export default function ImportPage() {
   const handleUpload = async (payload) => {
     try {
       setLoadingStates(prev => ({ ...prev, uploading: true }));
-      const response = await profileImport(payload);
+      setUploadProgress(0); // Reset trước mỗi lần upload
+      const response = await profileImport({
+        ...payload,
+        onProgress: (percent) => setUploadProgress(percent)
+      });
 
       const files = (response.uploadedFiles || []).map((file) => ({
         ...file,
@@ -71,12 +77,13 @@ export default function ImportPage() {
       setUploadedFiles(files);
       setSelectedFileId(files[0]?.fileId || null);
 
-      setBanner({ type: "success", title: "Ingestion Successful", message: "Automated schema detection complete." });
+      setBanner(null); // Clear any old banners, let the UI transition indicate success
       navigate("/import/review");
     } catch (error) {
       setBanner({ type: "error", title: "Upload Failed", message: error.message });
     } finally {
       setLoadingStates(prev => ({ ...prev, uploading: false }));
+      setUploadProgress(0); // Reset sau khi xong
     }
   };
 
@@ -101,7 +108,7 @@ export default function ImportPage() {
           : item
       ));
 
-      setBanner({ type: "success", title: "Mapping Verified", message: `${file.fileName} is validated.` });
+      setBanner(null); // Clear error banners if any, the green verified pill is enough feedback
 
     } catch (error) {
       if (error.status === 400) {
@@ -139,6 +146,7 @@ export default function ImportPage() {
       setLoadingStates(prev => ({ ...prev, running: true }));
       const response = await runImport(payload);
       setRunResult(response);
+      setBanner(null); // Clear any banners before navigating to complete step
       navigate("/import/complete");
     } catch (error) {
       setBanner({ type: "error", title: "Execution Error", message: error.message });
@@ -172,8 +180,9 @@ export default function ImportPage() {
     datasetName, setDatasetName,
     sourceDataset, setSourceDataset,
     bundleSchema, runResult, loadingStates,
+    uploadProgress, // 0-100: tiến trình upload tổng
     handleUpload, handleConfirmMapping, handleRunPipeline,
-    handleClearRowError, // ✅ truyền xuống
+    handleClearRowError,
     setBanner
   };
 

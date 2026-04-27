@@ -12,15 +12,6 @@ function deepClone(value) {
   return JSON.parse(JSON.stringify(value));
 }
 
-function normalizeFieldStatusForConfirmedMapping(fieldMapping) {
-  if (!fieldMapping || typeof fieldMapping !== "object") {
-    return fieldMapping;
-  }
-
-  // Không throw ở đây nữa.
-  // Để validateMapping(mode="strict") trả về validationResult chuẩn.
-  return fieldMapping;
-}
 
 // ==========================================
 // MAIN SERVICE
@@ -36,11 +27,7 @@ export function confirmMapping({
   confirmedMapping.mapping_status = "confirmed";
   confirmedMapping.confirmed_at = confirmedAt || getCurrentIsoTimestamp();
 
-  if (Array.isArray(confirmedMapping.field_mappings)) {
-    confirmedMapping.field_mappings = confirmedMapping.field_mappings.map(
-      normalizeFieldStatusForConfirmedMapping
-    );
-  }
+  // field_mappings được giữ nguyên sau deepClone — không cần transform thêm.
 
   const validationResult = validateMapping({
     mappingConfig: confirmedMapping,

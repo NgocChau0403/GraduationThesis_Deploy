@@ -80,17 +80,10 @@ export default function BundleSummaryCard({
       </div>
 
       {/* METRICS GRID */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label="Dataset Label" value={datasetName} />
 
         <StatCard label="Data Origin" value={sourceDataset} />
-
-        <StatCard
-          label="Schema Type"
-          value={bundleSchema?.bundle_type}
-          isPrimary={true}
-          hint="System identified bundle role"
-        />
 
         <StatCard
           label="Match Accuracy"

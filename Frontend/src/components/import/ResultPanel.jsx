@@ -5,7 +5,10 @@ function SummaryCard({ label, value, isHighlight = false }) {
       isHighlight ? "border-emerald-200 bg-emerald-50/50" : "border-slate-100 bg-white"
     }`}>
       <div className="text-[10px] font-black uppercase tracking-widest text-slate-400">{label}</div>
-      <div className={`mt-2 text-xl font-black ${isHighlight ? "text-emerald-600" : "text-slate-900"}`}>
+      <div 
+        className={`mt-2 text-xl font-black truncate ${isHighlight ? "text-emerald-600" : "text-slate-900"}`}
+        title={value ?? "-"}
+      >
         {value ?? "-"}
       </div>
     </div>
@@ -31,7 +34,7 @@ function renderCountBlock(title, data) {
 }
 
 // --- MAIN COMPONENT ---
-export default function ResultPanel({ result }) {
+export default function ResultPanel({ result, datasetName, sourceDataset, fileCount, uploadedFiles = [] }) {
   if (!result) return null;
 
   const payload = result?.result || result;
@@ -71,10 +74,33 @@ export default function ResultPanel({ result }) {
 
       {/* CORE INFO GRID */}
       <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-        <SummaryCard label="Execution ID" value={result?.sessionId?.slice(0, 8) + '...'} isHighlight />
-        <SummaryCard label="Mode" value={result?.bundleMode ? "BUNDLE IMPORT" : "SINGLE FILE"} />
-        <SummaryCard label="Origin / Scope" value={payload?.fileName || "Multi-file Bundle"} />
+        <SummaryCard label="Dataset Name" value={datasetName || "Untitled Dataset"} isHighlight />
+        <SummaryCard label="Target Schema" value={sourceDataset || "CUSTOM"} />
+        <SummaryCard label="Files Imported" value={`${fileCount} File(s)`} />
       </div>
+
+      {/* IMPORTED FILES LIST */}
+      {uploadedFiles && uploadedFiles.length > 0 && (
+        <div className="mb-8 rounded-3xl border border-slate-100 bg-white p-6">
+          <div className="mb-4 flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4 text-emerald-500">
+              <path fillRule="evenodd" d="M5.625 1.5c-1.036 0-1.875.84-1.875 1.875v17.25c0 1.035.84 1.875 1.875 1.875h12.75c1.035 0 1.875-.84 1.875-1.875V12.75A3.75 3.75 0 0016.5 9h-1.875a1.875 1.875 0 01-1.875-1.875V5.25A3.75 3.75 0 009 1.5H5.625zM7.5 15a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5A.75.75 0 017.5 15zm.75 2.25a.75.75 0 000 1.5H12a.75.75 0 000-1.5H8.25z" clipRule="evenodd" />
+              <path d="M12.971 1.816A5.23 5.23 0 0114.25 5.25v1.875c0 .207.168.375.375.375H16.5a5.23 5.23 0 013.434 1.279 9.768 9.768 0 00-6.963-6.963z" />
+            </svg>
+            <div className="text-xs font-black uppercase tracking-[0.15em] text-slate-800">Files Processed</div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {uploadedFiles.map((file) => (
+              <div key={file.fileId || file.fileName || file.name} className="inline-flex items-center gap-2 rounded-xl bg-slate-50 px-3 py-1.5 border border-slate-100">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="w-3.5 h-3.5 text-emerald-500">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clipRule="evenodd" />
+                </svg>
+                <span className="text-xs font-bold text-slate-600">{file.fileName || file.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {/* DETAILED METRICS */}
       <div className="space-y-6">
@@ -84,20 +110,7 @@ export default function ResultPanel({ result }) {
         {renderCountBlock("Final Storage Persistence", nested?.saved_counts)}
       </div>
 
-      {/* DEBUG JSON (VIP STYLE) */}
-      <details className="mt-10 group">
-        <summary className="flex cursor-pointer items-center gap-2 text-xs font-black uppercase tracking-[0.2em] text-slate-400 hover:text-emerald-500 transition-colors">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2.5} stroke="currentColor" className="w-3 h-3 group-open:rotate-180 transition-transform">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-          </svg>
-          Technical Log (JSON)
-        </summary>
-        <div className="mt-4 overflow-hidden rounded-2xl border border-slate-100 bg-slate-900 p-6 shadow-inner">
-          <pre className="overflow-auto text-[10px] leading-relaxed text-emerald-400 font-mono scrollbar-hide">
-            {JSON.stringify(result, null, 2)}
-          </pre>
-        </div>
-      </details>
+
     </section>
   );
 }

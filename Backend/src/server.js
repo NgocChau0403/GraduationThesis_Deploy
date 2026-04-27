@@ -2,6 +2,9 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import importRoutes from "./routes/import.routes.js";
+import datasetRoutes from "./routes/dataset.routes.js";
+import { seedSampleDatasets } from "./services/sampleSeeder.service.js";
+import { clearExpiredUploadSessions } from "./services/uploadSession.store.js";
 
 dotenv.config();
 
@@ -10,12 +13,14 @@ const PORT = process.env.PORT || 4000;
 
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL || "*",
   })
 );
 
-app.use(express.json());
+app.use(express.json({ limit: "100mb" }));
+app.use(express.urlencoded({ limit: "100mb", extended: true }));
 app.use("/api/import", importRoutes);
+app.use("/api/datasets", datasetRoutes);
 
 app.get("/api/health", (req, res) => {
   res.json({
@@ -24,6 +29,8 @@ app.get("/api/health", (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  await seedSampleDatasets();
+  await clearExpiredUploadSessions();
   console.log(`Server running at http://localhost:${PORT}`);
 });

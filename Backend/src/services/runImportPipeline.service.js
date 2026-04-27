@@ -1,16 +1,16 @@
 import { confirmMapping } from "./mappingConfirm.service.js";
 import { transformRawRowsToCanonical } from "./mappingTransform.service.js";
-import { mergeCanonicalEntities } from "./canonicalMerge.service.js";
-import { constructCanonicalFeatures } from "./canonicalFeature.service.js";
-import { canonicalToFlat } from "./canonicalToFlat.service.js";
-import { saveFlatTablesToDb } from "./saveFlatTables.service.js";
+import { insertNormalizedEntities, insertEnrollmentFeatures } from "./entityInsert.service.js";
+import { computeCohortStats } from "./cohortStats.service.js";
+import { computeEnrollmentFeatures } from "./enrollmentFeatures.service.js";
+import { materializeFlatTables } from "./saveFlatTables.service.js";
 
 // ==========================================
 // CONSTANTS
 // ==========================================
 
 const DEFAULT_PIPELINE_OPTIONS = {
-  saveFlatOutput: false,
+  saveFlatOutput: false, // Legacy flag, now used to decide whether to save to DB
   replaceIfExists: true,
   importBatchId: null,
   chunkSize: 500,
@@ -114,16 +114,16 @@ function countEntityRows(entityObject = {}) {
 function buildPipelineSummary({
   rawRows,
   transformResult,
-  mergeResult,
-  flatResult,
-  saveResult
+  saveResult,
+  featureSaveResult,
+  materializeResult
 }) {
   return {
     raw_row_count: Array.isArray(rawRows) ? rawRows.length : 0,
     transformed_counts: countEntityRows(transformResult?.output),
-    merged_counts: countEntityRows(mergeResult?.output),
-    flat_table_counts: countEntityRows(flatResult?.output),
-    saved_counts: saveResult?.summary ?? null
+    saved_counts: saveResult?.summary?.entity_counts ?? null,
+    features_computed_count: featureSaveResult?.summary?.total_features_inserted ?? 0,
+    materialized: materializeResult?.success ?? false
   };
 }
 
@@ -173,32 +173,41 @@ export async function runImportPipeline({
 
     assertConfirmedMapping(mappingForPipeline);
 
+    // 1. PHASE: TRANSFORM TO NORMALIZED 8 ENTITIES
     const transformResult = transformRawRowsToCanonical({
       mappingConfig: mappingForPipeline,
       profilingResult,
-      rawRows
-    });
-
-    const mergeResult = mergeCanonicalEntities({
-      canonicalOutput: transformResult.output
-    });
-
-    const featureResult = constructCanonicalFeatures({
-      canonicalOutput: mergeResult.output
-    });
-
-    const flatResult = canonicalToFlat({
-      canonicalOutput: featureResult.output
+      rawRows,
+      batchId: resolvedOptions.importBatchId
     });
 
     let saveResult = null;
+    let featureSaveResult = null;
+    let materializeResult = null;
 
     if (resolvedOptions.saveFlatOutput) {
-      saveResult = await saveFlatTablesToDb({
-        flatOutput: flatResult.output,
-        importBatchId: resolvedOptions.importBatchId,
-        replaceIfExists: resolvedOptions.replaceIfExists,
+      // 2. PHASE: INSERT NORMALIZED ENTITIES TO DB
+      saveResult = await insertNormalizedEntities({
+        normalizedData: transformResult.output,
+        batchId: resolvedOptions.importBatchId,
+        batchName: mappingForPipeline.dataset_name,
+        sourceDataset: mappingForPipeline.source_dataset,
         chunkSize: resolvedOptions.chunkSize
+      });
+
+      // 3. PHASE: FEATURE ENGINEERING 2-PASS
+      const cohortStats = computeCohortStats(transformResult.output);
+      const enrollmentFeatures = computeEnrollmentFeatures(transformResult.output, cohortStats);
+
+      featureSaveResult = await insertEnrollmentFeatures({
+        features: enrollmentFeatures,
+        chunkSize: resolvedOptions.chunkSize
+      });
+
+      // 4. PHASE: SQL MATERIALIZATION
+      materializeResult = await materializeFlatTables({
+        batchId: saveResult.batch_id,
+        replaceIfExists: resolvedOptions.replaceIfExists
       });
     }
 
@@ -212,15 +221,14 @@ export async function runImportPipeline({
       summary: buildPipelineSummary({
         rawRows,
         transformResult,
-        mergeResult,
-        flatResult,
-        saveResult
+        saveResult,
+        featureSaveResult,
+        materializeResult
       }),
       transformResult,
-      mergeResult,
-      featureResult,
-      flatResult,
-      saveResult
+      saveResult,
+      featureSaveResult,
+      materializeResult
     };
   } catch (cause) {
     finalizeMetadata(metadata);

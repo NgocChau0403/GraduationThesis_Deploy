@@ -1,5 +1,5 @@
 export const FLAT_TABLE_FIELD_MAP = {
-  flat_student_summary: [
+  flat_enrollment_master: [
     // =========================
     // Identity / meta
     // =========================
@@ -26,9 +26,9 @@ export const FLAT_TABLE_FIELD_MAP = {
     "internet_access_flag",
     "school_support_flag",
     "family_support_flag",
-    "romantic_relationship_flag",
-    "extracurricular_flag",
-    "paid_class_flag",
+    "has_romantic",
+    "has_extracurricular",
+    "has_paid_class",
     "previous_attempt_count",
 
     // =========================
@@ -162,33 +162,5 @@ export const FLAT_TABLE_FIELD_MAP = {
     "course_name",
     "course_run",
     "subject_area"
-  ],
-
-  flat_engagement_event: [
-    // =========================
-    // Identity / meta
-    // =========================
-    "engagement_event_id",
-    "student_id",
-    "course_id",
-    "event_day",
-    "source_dataset",
-
-    // =========================
-    // Event grain fields
-    // =========================
-    "resource_id",
-    "resource_type",
-    "engagement_count",
-
-    // =========================
-    // Student / course context
-    // =========================
-    "course_name",
-    "course_run",
-    "subject_area",
-    "gender",
-    "age_group",
-    "final_outcome"
   ]
 };

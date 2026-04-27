@@ -5,6 +5,8 @@ import {
   DERIVED_FIELD_HINTS
 } from "../config/canonicalFieldAliases.js";
 import { getDatasetRuleMapper } from "../config/datasetRules/index.js";
+import { normalizeText } from "../utils/textUtils.js";
+import { isUciDataset } from "../utils/datasetUtils.js";
 
 
 // ==========================================
@@ -22,13 +24,6 @@ const REVIEW_CONFIDENCE_THRESHOLD = 0.7;
 // HELPERS
 // ==========================================
 
-function normalizeText(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "");
-}
 
 function generateMappingId(index) {
   return `map_${String(index + 1).padStart(3, "0")}`;
@@ -58,112 +53,7 @@ function looksLikeBooleanBySamples(sampleValues = []) {
   );
 }
 
-function isLikelyUciDataset(datasetName, sourceDataset) {
-  const dataset = normalizeText(datasetName);
-  const source = normalizeText(sourceDataset);
 
-  return (
-    dataset.includes("uci") ||
-    source.includes("uci") ||
-    dataset.includes("student_mat") ||
-    dataset.includes("student_por") ||
-    dataset.includes("student_mat_csv") ||
-    dataset.includes("student_por_csv")
-  );
-}
-
-function getDatasetSpecificSuggestion({
-  rawColumn,
-  column,
-  datasetName,
-  sourceDataset
-}) {
-  const normalizedRaw = normalizeText(rawColumn);
-
-  const booleanUciMap = {
-    higher: "higher_education_intent_flag",
-    internet: "internet_access_flag",
-    schoolsup: "school_support_flag",
-    famsup: "family_support_flag",
-    romantic: "romantic_relationship_flag",
-    activities: "extracurricular_flag",
-    paid: "paid_class_flag"
-  };
-
-  if (isLikelyUciDataset(datasetName, sourceDataset)) {
-    if (normalizedRaw === "sex") {
-      return {
-        canonical_field: "gender",
-        transform: "normalize_gender",
-        status: "suggested",
-        confidence: 0.99,
-        entity_scope: "student",
-        review_comment: null
-      };
-    }
-
-    if (booleanUciMap[normalizedRaw]) {
-      return {
-        canonical_field: booleanUciMap[normalizedRaw],
-        transform: "cast_boolean",
-        status: "suggested",
-        confidence: 0.98,
-        entity_scope: "student",
-        review_comment: null
-      };
-    }
-
-    if (["g1", "g2", "g3"].includes(normalizedRaw)) {
-      return {
-        canonical_field: "score_normalized",
-        transform: "normalize_score",
-        status: "suggested",
-        confidence: 0.98,
-        entity_scope: "assessment",
-        review_comment:
-          `Detected UCI grade column "${rawColumn}". This should later be expanded into assessment rows in transform logic.`
-      };
-    }
-
-    if (normalizedRaw === "absences") {
-      return {
-        canonical_field: "absence_count",
-        transform: "cast_int",
-        status: "suggested",
-        confidence: 0.96,
-        entity_scope: "engagement_event",
-        review_comment:
-          'Detected UCI absences column. This should later be materialized as engagement summary logic.'
-      };
-    }
-  }
-
-  if (
-    ["id_student", "student_id", "idstudent"].includes(normalizedRaw)
-  ) {
-    return {
-      canonical_field: "student_id",
-      transform: "direct_copy",
-      status: "suggested",
-      confidence: 0.99,
-      entity_scope: "student",
-      review_comment: null
-    };
-  }
-
-  if (["final_result", "finalresult"].includes(normalizedRaw)) {
-    return {
-      canonical_field: "final_outcome",
-      transform: "direct_copy",
-      status: "suggested",
-      confidence: 0.97,
-      entity_scope: "student",
-      review_comment: null
-    };
-  }
-
-  return null;
-}
 
 function getSystemDerivedSuggestions(missingRequiredCanonicalFields = []) {
   return missingRequiredCanonicalFields.map((fieldName) => {
@@ -213,7 +103,7 @@ function getEntityScope(canonicalFieldName, group) {
 
   if (
     ["event_day"].includes(canonicalFieldName) ||
-    group === "activity" ||
+    group === "event" ||
     group === "engagement"
   ) {
     return "engagement_event";
@@ -221,7 +111,8 @@ function getEntityScope(canonicalFieldName, group) {
 
   if (
     ["enrollment_start_day", "enrollment_end_day"].includes(canonicalFieldName) ||
-    group === "course"
+    group === "course" ||
+    group === "class"
   ) {
     return "course";
   }
@@ -259,9 +150,9 @@ function getSuggestedTransform(canonicalField, rawColumnName, detectedType, colu
       "internet_access_flag",
       "school_support_flag",
       "family_support_flag",
-      "romantic_relationship_flag",
-      "extracurricular_flag",
-      "paid_class_flag",
+      "has_romantic",
+      "has_extracurricular",
+      "has_paid_class",
       "disability_flag",
       "pass_flag",
       "is_banked",
@@ -419,9 +310,9 @@ function scoreSamplePattern(canonicalFieldName, sampleValues = []) {
       "internet_access_flag",
       "school_support_flag",
       "family_support_flag",
-      "romantic_relationship_flag",
-      "extracurricular_flag",
-      "paid_class_flag",
+      "has_romantic",
+      "has_extracurricular",
+      "has_paid_class",
       "pass_flag",
       "is_banked"
     ].includes(canonicalFieldName) &&
@@ -674,7 +565,16 @@ export function suggestMappingsFromProfiling({
   }
 
  const missingRequiredCanonicalFields = CANONICAL_FIELDS
-  .filter((field) => field.required && !strongSuggestedCanonicalFields.has(field.name))
+  .filter((field) => {
+    if (!field.required) return false;
+    // UCI không có student_id / course_id dưới dạng cột CSV rời
+    // → inject từ metadata, không báo thiếu ở đây.
+    if (
+      isUciDataset(datasetName, sourceDataset) &&
+      ["student_id", "course_id"].includes(field.name)
+    ) return false;
+    return !strongSuggestedCanonicalFields.has(field.name);
+  })
   .map((field) => field.name);
 
 const systemDerivedSuggestions = getSystemDerivedSuggestions(

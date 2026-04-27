@@ -9,6 +9,19 @@ export const DIRECT_FIELD_ALIASES = {
     "student_id_pk",
     "sid"
   ],
+  school: [
+    "school",
+    "school_name"
+  ],
+  family_size: [
+    "family_size",
+    "famsize"
+  ],
+  age_years: [
+    "age",
+    "age_years",
+    "student_age"
+  ],
   higher_education_intent_flag: [
     "higher_education_intent_flag",
     "higher_education_intent"
@@ -28,17 +41,20 @@ export const DIRECT_FIELD_ALIASES = {
     "family_support",
     "famsup"
   ],
-  romantic_relationship_flag: [
+  has_romantic: [
+    "has_romantic",
     "romantic_relationship_flag",
     "romantic_relationship",
     "romantic"
   ],
-  extracurricular_flag: [
+  has_extracurricular: [
+    "has_extracurricular",
     "extracurricular_flag",
     "extracurricular",
     "activities"
   ],
-  paid_class_flag: [
+  has_paid_class: [
+    "has_paid_class",
     "paid_class_flag",
     "paid_class",
     "paid"
@@ -62,15 +78,16 @@ export const DIRECT_FIELD_ALIASES = {
     "module_name",
     "subject_name"
   ],
-  course_run: [
-    "course_run",
-    "code_presentation",
-    "presentation"
-  ],
   subject_area: [
     "subject_area",
     "subject",
     "domain"
+  ],
+  course_run: [
+    "course_run",
+    "class_run",
+    "code_presentation",
+    "presentation"
   ],
   course_duration_days: [
     "course_duration_days",
@@ -120,7 +137,9 @@ export const DIRECT_FIELD_ALIASES = {
     "weight_pct",
     "weight"
   ],
-  score_raw: [
+  score_normalized: [
+    "score_normalized",
+    "score_raw",
     "score",
     "grade",
     "result_score",
@@ -172,6 +191,10 @@ export const DIRECT_FIELD_ALIASES = {
     "active_day_count",
     "active_days"
   ],
+  week_number: [
+    "week_number",
+    "week"
+  ],
   absence_count: [
     "absence_count",
     "absences"
@@ -201,8 +224,8 @@ export const DIRECT_FIELD_ALIASES = {
   ],
   assessment_due_day: [
     "assessment_due_day",
-    "date_deadline",
     "due_day",
+    "date_deadline",
     "deadline_day"
   ],
 
@@ -333,7 +356,7 @@ export const DERIVED_FIELD_HINTS = {
   uci_assessment_columns: {
     suggested_from: ["g1", "g2", "g3"],
     note:
-      "G1, G2, G3 are not simple aliases of score_raw. They usually require wide-to-long transformation into assessment rows."
+      "G1, G2, G3 are not simple aliases of score_normalized. They usually require wide-to-long transformation into assessment rows."
   },
 
   // =========================

@@ -12,7 +12,7 @@ const upload = multer({
   dest: "uploads/",
   limits: {
     files: 20,
-    fileSize: 10 * 1024 * 1024
+    fileSize: 1024 * 1024 * 1024 // 1GB limit for large datasets like OULAD
   },
   fileFilter: (req, file, cb) => {
     const isCsv =

@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
+import { Select } from "antd";
 import {
   CANONICAL_FIELD_OPTIONS,
   TRANSFORM_OPTIONS,
@@ -54,11 +55,11 @@ function ValidationPanel({ validation }) {
 // --- MAIN COMPONENT ---
 // ✅ Nhận thêm prop onClearRowError từ parent
 export default function MappingEditor({ file, onChangeEditableConfig, onClearRowError }) {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all");
+  const searchTerm = "";
+  const statusFilter = "all";
 
   const config = file?.editableMappingConfig || {};
-  const rows = config.field_mappings || [];
+  const rows = useMemo(() => config.field_mappings || [], [config.field_mappings]);
   const statusCounts = countByStatus(rows);
 
   const validation = file?.mappingConfirmationResult || null;
@@ -79,7 +80,16 @@ export default function MappingEditor({ file, onChangeEditableConfig, onClearRow
       return "Must be set to CONFIRMED or IGNORED before proceeding.";
     }
 
-    return cleanMsg.replace(/\"/g, "");
+    return cleanMsg.replace(/"/g, "");
+  };
+
+  // Returns amber warning when user manually confirmed a low-AI-confidence mapping
+  const getRowWarning = (row) => {
+    if (row.status !== "confirmed") return null;
+    if (typeof row.confidence === "number" && row.confidence < 0.7) {
+      return `Low AI confidence (${Math.round(row.confidence * 100)}%) — manually confirmed. Verify this mapping is intentional.`;
+    }
+    return null;
   };
 
   const profilingColumnMap = useMemo(() => {
@@ -173,22 +183,27 @@ export default function MappingEditor({ file, onChangeEditableConfig, onClearRow
                   <th className="w-[180px] px-6 py-4">Raw Attribute</th>
                   <th className="w-[200px] px-6 py-4">Canonical Field</th>
                   <th className="w-[140px] px-6 py-4">Scope</th>
-                  <th className="w-[160px] px-6 py-4">Transformation</th>
-                  <th className="w-[140px] px-6 py-4">Status</th>
-                  <th className="w-[80px] px-6 py-4 text-center">Score</th>
+                  <th className="w-[140px] px-6 py-4">Transformation</th>
+                  <th className="w-[160px] px-6 py-4">Status</th>
+                  <th className="w-[100px] px-6 py-4 text-center">Match Accuracy</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-50 bg-white">
                 {filteredRows.map((row) => {
                   const rowError = getRowError(row._rowIndex);
+                  const rowWarning = !rowError ? getRowWarning(row) : null;
                   return (
                     <tr
                       key={row._rowIndex}
-                      className={`group transition-all hover:bg-emerald-50/30 ${rowError ? "bg-red-50/60" : ""}`}
+                      className={`group transition-all hover:bg-emerald-50/30 ${
+                        rowError ? "bg-red-50/60" : rowWarning ? "bg-amber-50/40" : ""
+                      }`}
                     >
                       <td className="px-6 py-4">
                         <div
-                          className={`font-black truncate ${rowError ? "text-red-700" : "text-slate-800"}`}
+                          className={`font-black truncate ${
+                            rowError ? "text-red-700" : rowWarning ? "text-amber-700" : "text-slate-800"
+                          }`}
                           title={row._displayRawColumn}
                         >
                           {row._displayRawColumn}
@@ -203,67 +218,77 @@ export default function MappingEditor({ file, onChangeEditableConfig, onClearRow
                             {rowError}
                           </div>
                         )}
+                        {rowWarning && (
+                          <div className="mt-2 p-1.5 bg-amber-50 border border-amber-200 rounded text-[9px] font-bold text-amber-600 shadow-sm">
+                            <span className="mr-1">💡</span>
+                            {rowWarning}
+                          </div>
+                        )}
                       </td>
 
                       <td className="px-6 py-4">
-                        <select
-                          value={row.canonical_field || ""}
-                          onChange={(e) => updateRow(row._rowIndex, { canonical_field: e.target.value || null })}
+                        <Select
+                          showSearch
+                          allowClear
+                          placeholder="-- Unmapped --"
+                          value={row.canonical_field || undefined}
+                          onChange={(val) => updateRow(row._rowIndex, { canonical_field: val || null })}
                           disabled={row.status === "ignored"}
-                          className={`w-full rounded-xl border bg-white px-3 py-2 text-xs font-bold shadow-sm transition outline-none disabled:opacity-40 ${
-                            rowError ? "border-red-300 ring-2 ring-red-50" : "border-slate-100 focus:border-emerald-500"
-                          }`}
-                        >
-                          <option value="">-- Unmapped --</option>
-                          {CANONICAL_FIELD_OPTIONS.map((opt) => (
-                            <option key={opt} value={opt}>{opt}</option>
-                          ))}
-                        </select>
+                          className={`w-full text-xs font-bold ${rowError ? "status-error" : ""}`}
+                          status={rowError ? "error" : ""}
+                          options={CANONICAL_FIELD_OPTIONS.map(opt => ({ label: opt, value: opt }))}
+                          filterOption={(input, option) =>
+                            (option?.label ?? "").toLowerCase().includes(input.toLowerCase())
+                          }
+                        />
                       </td>
 
                       <td className="px-6 py-4">
-                        <select
-                          value={row.entity_scope || ""}
-                          onChange={(e) => updateRow(row._rowIndex, { entity_scope: e.target.value || null })}
+                        <Select
+                          placeholder="-- Scope --"
+                          value={row.entity_scope || undefined}
+                          onChange={(val) => updateRow(row._rowIndex, { entity_scope: val || null })}
                           disabled={row.status === "ignored"}
-                          className="w-full rounded-xl border border-slate-100 bg-white px-3 py-2 text-[11px] font-bold outline-none disabled:opacity-40"
-                        >
-                          <option value="">-- Scope --</option>
-                          {ENTITY_SCOPE_OPTIONS.map((opt) => (
-                            <option key={opt} value={opt}>{opt}</option>
-                          ))}
-                        </select>
+                          className="w-full text-[11px] font-bold"
+                          options={ENTITY_SCOPE_OPTIONS.map(opt => ({ label: opt, value: opt }))}
+                        />
                       </td>
 
                       <td className="px-6 py-4">
-                        <select
+                        <Select
                           value={row.transform || "direct_copy"}
-                          onChange={(e) => updateRow(row._rowIndex, { transform: e.target.value })}
+                          onChange={(val) => updateRow(row._rowIndex, { transform: val })}
                           disabled={row.status === "ignored"}
-                          className="w-full rounded-xl border border-slate-100 bg-white px-3 py-2 text-[11px] font-bold text-slate-600 outline-none disabled:opacity-40 italic"
-                        >
-                          {TRANSFORM_OPTIONS.map((opt) => (
-                            <option key={opt} value={opt}>{opt}</option>
-                          ))}
-                        </select>
+                          className="w-full text-[11px] font-bold italic text-slate-600"
+                          options={TRANSFORM_OPTIONS.map(opt => ({ label: opt, value: opt }))}
+                        />
                       </td>
 
                       <td className="px-6 py-4">
-                        <select
-                          value={row.status}
-                          onChange={(e) => updateRow(row._rowIndex, { status: e.target.value })}
-                          className={`w-full rounded-xl border px-3 py-2 text-[10px] font-black uppercase tracking-wider outline-none shadow-sm transition ${
-                            row.status === "confirmed"
-                              ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-                              : row.status === "needs_review"
-                              ? "border-amber-200 bg-amber-50 text-amber-700"
-                              : "bg-white"
-                          } ${rowError ? "border-red-400 text-red-700 bg-red-50" : ""}`}
-                        >
-                          {STATUS_OPTIONS.map((opt) => (
-                            <option key={opt} value={opt}>{opt}</option>
-                          ))}
-                        </select>
+                        <div className={`rounded-xl border transition-all ${
+                          row.status === "confirmed"
+                            ? "bg-emerald-50 border-emerald-200 text-emerald-700"
+                            : row.status === "needs_review"
+                            ? "bg-amber-50 border-amber-300 ring-2 ring-amber-100/50 text-amber-700"
+                            : "bg-slate-50 border-slate-200 text-slate-500"
+                        } ${rowError ? "!border-red-400 !bg-red-50 !text-red-700" : ""}`}>
+                          <Select
+                            variant="borderless"
+                            bordered={false}
+                            value={row.status}
+                            onChange={(val) => updateRow(row._rowIndex, { status: val })}
+                            className="w-full text-[10px] font-black uppercase tracking-wider"
+                            popupClassName="custom-status-dropdown"
+                            style={{ 
+                              color: 'inherit',
+                              fontWeight: 900 
+                            }}
+                            options={STATUS_OPTIONS.map(opt => ({ 
+                              label: <span className="text-[10px] font-black uppercase tracking-wider">{opt.replace('_', ' ')}</span>, 
+                              value: opt 
+                            }))}
+                          />
+                        </div>
                       </td>
 
                       <td className="px-6 py-4 text-center font-black text-slate-400">

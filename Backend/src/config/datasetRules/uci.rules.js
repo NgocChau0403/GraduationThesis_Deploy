@@ -1,10 +1,4 @@
-function normalizeText(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "");
-}
+import { normalizeText } from "../../utils/textUtils.js";
 
 export function mapUciColumn({ rawColumn }) {
   const col = normalizeText(rawColumn);
@@ -14,9 +8,9 @@ export function mapUciColumn({ rawColumn }) {
     internet: "internet_access_flag",
     schoolsup: "school_support_flag",
     famsup: "family_support_flag",
-    romantic: "romantic_relationship_flag",
-    activities: "extracurricular_flag",
-    paid: "paid_class_flag"
+    romantic: "has_romantic",
+    activities: "has_extracurricular",
+    paid: "has_paid_class"
   };
 
   const directFieldMap = {

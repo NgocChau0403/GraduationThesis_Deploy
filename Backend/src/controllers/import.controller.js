@@ -1,10 +1,10 @@
 import fs from "fs/promises";
+import prisma from "../lib/prisma.js";
 import { parseCsvFileToRawRows } from "../services/csvParse.service.js";
 import { profileCSV } from "../services/profiling.service.js";
 import { suggestMappingsFromProfiling } from "../services/mappingSuggest.service.js";
 import { confirmMapping } from "../services/mappingConfirm.service.js";
 import { runImportPipeline } from "../services/runImportPipeline.service.js";
-import { runBundleImportPipeline } from "../services/runBundleImportPipeline.service.js";
 import {
   createUploadSession,
   getUploadSession,
@@ -12,6 +12,7 @@ import {
 } from "../services/uploadSession.store.js";
 
 import { detectCsvDelimiter } from "../services/fileFormat.service.js";
+import { normalizeText } from "../utils/textUtils.js";
 import {
   inferFileRole,
   detectDatasetType,
@@ -22,13 +23,6 @@ import {
 // HELPERS
 // ==========================================
 
-function normalizeText(value) {
-  return String(value || "")
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "_")
-    .replace(/^_+|_+$/g, "");
-}
 
 function isPlainObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
@@ -100,6 +94,118 @@ function buildRunTargets(session, requestedFileIds = null) {
 
   const requestedSet = new Set(requestedFileIds);
   return uploadedFiles.filter((file) => requestedSet.has(file.fileId));
+}
+
+function inferLearningMode({ datasetName = "", sourceDataset = "" }) {
+  const normalized = normalizeText(`${datasetName} ${sourceDataset}`);
+
+  if (normalized.includes("oulad")) return "online";
+  if (normalized.includes("uci")) return "offline";
+
+  return null;
+}
+
+function buildImportBatchName({ session, runTargets, bundleMode }) {
+  if (session?.datasetName && session.datasetName !== "uploaded_dataset") {
+    return String(session.datasetName);
+  }
+
+  if (!bundleMode && runTargets?.[0]?.fileName) {
+    return String(runTargets[0].fileName);
+  }
+
+  return bundleMode ? "Imported Bundle Dataset" : "Imported Dataset";
+}
+
+function countImportedRows({ runTargets, bundleMode, result }) {
+  if (bundleMode) {
+    const summaryRowCount = Number(result?.summary?.total_input_rows);
+    if (Number.isFinite(summaryRowCount) && summaryRowCount >= 0) {
+      return summaryRowCount;
+    }
+  }
+
+  return Array.isArray(runTargets)
+    ? runTargets.reduce(
+        (sum, file) => sum + (Array.isArray(file?.rawRows) ? file.rawRows.length : 0),
+        0
+      )
+    : 0;
+}
+
+async function upsertImportBatchHistory({
+  session,
+  runTargets,
+  importBatchId,
+  bundleMode,
+  result
+}) {
+  if (!importBatchId) return;
+
+  const importedAt = new Date();
+  const sourceDataset = session?.sourceDataset || "CUSTOM";
+  const batchName = buildImportBatchName({ session, runTargets, bundleMode });
+  const learningMode = inferLearningMode({
+    datasetName: session?.datasetName,
+    sourceDataset
+  });
+  const rowCount = countImportedRows({ runTargets, bundleMode, result });
+
+  await prisma.$transaction(async (tx) => {
+    // 1. Ensure old active datasets are deactivated
+    await tx.importBatch.updateMany({
+      where: { is_active: true },
+      data: { is_active: false }
+    });
+
+    // 2. Upsert the new batch as active
+    await tx.importBatch.upsert({
+      where: { batch_id: importBatchId },
+      update: {
+        batch_name: batchName,
+        source_dataset: sourceDataset,
+        learning_mode: learningMode,
+        imported_at: importedAt,
+        is_active: true, // AUTO-SET ACTIVE
+        is_sample: false,
+        row_count: rowCount,
+        status: "completed"
+      },
+      create: {
+        batch_id: importBatchId,
+        batch_name: batchName,
+        source_dataset: sourceDataset,
+        learning_mode: learningMode,
+        imported_at: importedAt,
+        is_active: true, // AUTO-SET ACTIVE
+        is_sample: false,
+        row_count: rowCount,
+        status: "completed"
+      }
+    });
+
+    // 3. Update AppState
+    await tx.appState.upsert({
+      where: { id: 1 },
+      update: {
+        active_dataset_id: importBatchId,
+        active_dataset_name: batchName,
+        active_dataset_type: "custom",
+        active_dataset_source: sourceDataset,
+        active_dataset_set_at: importedAt,
+        is_first_use: false
+      },
+      create: {
+        id: 1,
+        active_dataset_id: importBatchId,
+        active_dataset_name: batchName,
+        active_dataset_type: "custom",
+        active_dataset_source: sourceDataset,
+        active_dataset_set_at: importedAt,
+        is_first_use: false
+      }
+    });
+  });
 }
 
 // ==========================================
@@ -249,7 +355,7 @@ export async function profileImportController(req, res) {
     // ------------------------------------------
     // STEP 9 — Create session
     // ------------------------------------------
-    const sessionId = createUploadSession({
+    const sessionId = await createUploadSession({
       datasetName: resolvedDatasetName,
       sourceDataset: resolvedSourceDataset,
       uploadedFiles: normalizedUploadedFiles.map((item) => ({
@@ -338,7 +444,7 @@ export async function confirmMappingController(req, res) {
       });
     }
 
-    const session = getUploadSession(sessionId);
+    const session = await getUploadSession(sessionId);
 
     if (!session) {
       return res.status(404).json({
@@ -371,7 +477,7 @@ export async function confirmMappingController(req, res) {
       mappingConfirmationResult: confirmationResult
     };
 
-    updateUploadSession(sessionId, {
+    await updateUploadSession(sessionId, {
       uploadedFiles: nextUploadedFiles
     });
 
@@ -409,7 +515,7 @@ export async function runImportController(req, res) {
       });
     }
 
-    const session = getUploadSession(sessionId);
+    const session = await getUploadSession(sessionId);
 
     if (!session) {
       return res.status(404).json({
@@ -450,92 +556,65 @@ export async function runImportController(req, res) {
     }
 
     // ------------------------------------------
-    // SINGLE-FILE MODE
+    // EXECUTION
     // ------------------------------------------
-    if (runTargets.length === 1) {
-      const file = runTargets[0];
+    if (runTargets.length > 0) {
+      const importBatchId = options.importBatchId || sessionId;
+      let allSuccess = true;
+      const results = [];
 
-      const importBatchId =
-        options.importBatchId
-          ? `${options.importBatchId}__${file.fileId}`
-          : `${sessionId}__${file.fileId}`;
+      for (const file of runTargets) {
+        try {
+          const pipelineResult = await runImportPipeline({
+            mappingConfig: file.confirmedMappingConfig,
+            profilingResult: file.profilingResult,
+            rawRows: file.rawRows,
+            options: {
+              saveFlatOutput: true,
+              replaceIfExists: options.replaceIfExists ?? true,
+              importBatchId,
+              chunkSize: options.chunkSize || 500,
+              allowAutoConfirmMapping: false
+            }
+          });
 
-      const pipelineResult = await runImportPipeline({
-        mappingConfig: file.confirmedMappingConfig,
-        profilingResult: file.profilingResult,
-        rawRows: file.rawRows,
-        options: {
-          saveFlatOutput: true,
-          replaceIfExists: options.replaceIfExists ?? true,
-          importBatchId,
-          chunkSize: options.chunkSize || 500,
-          allowAutoConfirmMapping: false
+          results.push({ fileId: file.fileId, success: pipelineResult.success, result: pipelineResult });
+          if (!pipelineResult.success) allSuccess = false;
+        } catch (err) {
+          console.error(`Pipeline failed for file ${file.fileId}:`, err);
+          results.push({ fileId: file.fileId, success: false, error: err.message });
+          allSuccess = false;
         }
+      }
+
+      const nextUploadedFiles = uploadedFiles.map((item) => {
+        const runResult = results.find(r => r.fileId === item.fileId);
+        return runResult ? { ...item, importResult: runResult.result } : item;
       });
 
-      const nextUploadedFiles = uploadedFiles.map((item) =>
-        item.fileId === file.fileId
-          ? { ...item, importResult: pipelineResult }
-          : item
-      );
-
-      updateUploadSession(sessionId, {
+      await updateUploadSession(sessionId, {
         uploadedFiles: nextUploadedFiles,
-        bundleImportResult: null
+        bundleImportResult: { success: allSuccess, results }
       });
+
+      if (allSuccess) {
+        await upsertImportBatchHistory({
+          session,
+          runTargets,
+          importBatchId,
+          bundleMode: runTargets.length > 1,
+          result: { success: allSuccess, results }
+        });
+      }
 
       return res.json({
-        success: pipelineResult.success,
+        success: allSuccess,
         sessionId,
-        bundleMode: false,
-        result: {
-          fileId: file.fileId,
-          fileName: file.fileName,
-          inferredRole: file.inferredRole,
-          importBatchId,
-          result: pipelineResult
-        }
+        bundleMode: runTargets.length > 1,
+        importBatchId,
+        results
       });
     }
-
-    // ------------------------------------------
-    // MULTI-FILE BUNDLE MODE
-    // ------------------------------------------
-    const bundleResult = await runBundleImportPipeline({
-      uploadedFiles: runTargets,
-      datasetName: session.datasetName,
-      sourceDataset: session.sourceDataset,
-      fileIds: runTargets.map((file) => file.fileId),
-      options: {
-        saveFlatOutput: true,
-        replaceIfExists: options.replaceIfExists ?? true,
-        importBatchId: options.importBatchId || sessionId,
-        chunkSize: options.chunkSize || 500
-      }
-    });
-
-    const nextUploadedFiles = uploadedFiles.map((file) => {
-      const included = runTargets.some((target) => target.fileId === file.fileId);
-
-      if (!included) return file;
-
-      return {
-        ...file,
-        importResult: bundleResult
-      };
-    });
-
-    updateUploadSession(sessionId, {
-      uploadedFiles: nextUploadedFiles,
-      bundleImportResult: bundleResult
-    });
-
-    return res.json({
-      success: bundleResult.success,
-      sessionId,
-      bundleMode: true,
-      result: bundleResult
-    });
   } catch (error) {
     console.error("Import pipeline failed:", error);
 

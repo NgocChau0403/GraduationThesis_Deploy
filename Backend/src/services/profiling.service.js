@@ -24,7 +24,6 @@ function detectType(values) {
 
 export function profileCSV(filePath, options = {}) {
   const separator = options.separator || ",";
-  console.log("Profiling CSV:", filePath, "separator:", separator);
 
   return new Promise((resolve, reject) => {
     const rows = [];
@@ -44,12 +43,15 @@ export function profileCSV(filePath, options = {}) {
           if (!columnStats[key]) {
             columnStats[key] = {
               values: [],
-              nullCount: 0
+              nullCount: 0,
+              distinctValues: new Set()
             };
           }
 
           if (value === "" || value === null || value === undefined) {
             columnStats[key].nullCount++;
+          } else {
+            columnStats[key].distinctValues.add(value);
           }
 
           if (columnStats[key].values.length < SAMPLE_LIMIT) {
@@ -62,7 +64,8 @@ export function profileCSV(filePath, options = {}) {
           raw_column: col,
           detected_type: detectType(stats.values),
           sample_values: stats.values.slice(0, 5),
-          null_ratio: totalRows === 0 ? 0 : stats.nullCount / totalRows
+          null_ratio: totalRows === 0 ? 0 : stats.nullCount / totalRows,
+          distinct_count: stats.distinctValues.size
         }));
 
         resolve({
