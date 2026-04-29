@@ -99,16 +99,16 @@ export default function CompleteStep() {
 
         {isSuccess ? (
           <>
-            <h2 className="text-4xl font-black text-slate-900 tracking-tight">Mission Accomplished!</h2>
-            <p className="text-slate-500 mt-3 text-lg max-w-2xl mx-auto">
+            <h2 className="text-2xl font-black text-slate-900 tracking-tight sm:text-4xl">Mission Accomplished!</h2>
+            <p className="text-slate-500 mt-3 text-base max-w-2xl mx-auto sm:text-lg">
               Your data has been successfully processed, validated, and ingested into the{" "}
               <span className="text-emerald-600 font-bold">Learning Data Warehouse</span>.
             </p>
           </>
         ) : (
           <>
-            <h2 className="text-4xl font-black text-red-600 tracking-tight">Pipeline Failed</h2>
-            <p className="text-slate-500 mt-3 text-lg max-w-2xl mx-auto">
+            <h2 className="text-2xl font-black text-red-600 tracking-tight sm:text-4xl">Pipeline Failed</h2>
+            <p className="text-slate-500 mt-3 text-base max-w-2xl mx-auto sm:text-lg">
               One or more files could not be processed. Please review the error details below,
               fix the data issues, and try again.
             </p>

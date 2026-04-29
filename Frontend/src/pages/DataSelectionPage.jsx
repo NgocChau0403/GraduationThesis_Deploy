@@ -175,13 +175,13 @@ export default function DataSelectionPage() {
 
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12 px-6">
+    <div className="min-h-screen bg-slate-50 py-8 px-4 sm:py-12 sm:px-6">
       <div className="max-w-4xl mx-auto">
         <header className="mb-6 text-center">
-          <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight mb-3">
+          <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight mb-3 sm:text-4xl">
             Select Data Source
           </h1>
-          <p className="text-lg text-slate-500">
+          <p className="text-base text-slate-500 sm:text-lg">
             Choose a standard sample dataset or select from your uploaded history.
           </p>
         </header>

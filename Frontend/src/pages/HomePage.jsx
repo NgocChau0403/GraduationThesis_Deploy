@@ -1,37 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useNavigate } from "react-router-dom";
+import Navbar from "../components/layout/Navbar";
 
-// ─── Inline SVG Icons (Figma → lucide-react equivalents) ─────────────────────
-function BookOpenIcon({ size = 20 }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" />
-      <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" />
-    </svg>
-  );
-}
-
+// ─── Inline SVG Icons ─────────────────────────────────────────────────────────
 function ZapIcon({ size = 20 }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
     </svg>
   );
@@ -39,16 +13,7 @@ function ZapIcon({ size = 20 }) {
 
 function ArrowRightIcon({ size = 20 }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
       <path d="M5 12h14M12 5l7 7-7 7" />
     </svg>
   );
@@ -56,16 +21,7 @@ function ArrowRightIcon({ size = 20 }) {
 
 function SparklesIcon({ size = 16 }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z" />
       <path d="M5 3l.9 2.4L8.3 6.3l-2.4.9L5 9.7l-.9-2.4L1.7 6.3l2.4-.9z" />
       <path d="M19 15l.9 2.4 2.4.9-2.4.9-.9 2.4-.9-2.4-2.4-.9 2.4-.9z" />
@@ -75,109 +31,47 @@ function SparklesIcon({ size = 16 }) {
 
 function TargetIcon({ size = 12 }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <circle cx="12" cy="12" r="6" />
-      <circle cx="12" cy="12" r="2" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" />
     </svg>
   );
 }
 
 function AwardIcon({ size = 12 }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="8" r="6" />
-      <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="8" r="6" /><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
     </svg>
   );
 }
 
 function ClockIcon({ size = 12 }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path d="M12 6v6l4 2" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" />
     </svg>
   );
 }
 
 function CheckCircle2Icon({ size = 12 }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <path d="M9 12l2 2 4-4" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="12" cy="12" r="10" /><path d="M9 12l2 2 4-4" />
     </svg>
   );
 }
 
 function BarChart3Icon({ size = 14 }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M3 3v18h18" />
-      <path d="M18 17V9" />
-      <path d="M13 17V5" />
-      <path d="M8 17v-3" />
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 3v18h18" /><path d="M18 17V9" /><path d="M13 17V5" /><path d="M8 17v-3" />
     </svg>
   );
 }
 
 function ActivityIcon({ size = 14 }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
     </svg>
   );
@@ -185,16 +79,7 @@ function ActivityIcon({ size = 14 }) {
 
 function TrendingUpIcon({ size = 14 }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <polyline points="23 6 13.5 15.5 8.5 10.5 1 18" />
       <polyline points="17 6 23 6 23 12" />
     </svg>
@@ -203,16 +88,7 @@ function TrendingUpIcon({ size = 14 }) {
 
 function BrainIcon({ size = 16 }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
       <path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z" />
       <path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z" />
       <path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4" />
@@ -235,35 +111,15 @@ function DonutChart({ value, color, label }) {
     <div className="flex flex-col items-center gap-1">
       <div className="relative w-16 h-16">
         <svg viewBox="0 0 72 72" className="w-full h-full -rotate-90">
-          <circle
-            cx="36"
-            cy="36"
-            r={r}
-            fill="none"
-            stroke="#e5e7eb"
-            strokeWidth="8"
-          />
-          <circle
-            cx="36"
-            cy="36"
-            r={r}
-            fill="none"
-            stroke={color}
-            strokeWidth="8"
-            strokeDasharray={`${dash} ${circ - dash}`}
-            strokeLinecap="round"
-          />
+          <circle cx="36" cy="36" r={r} fill="none" stroke="#e5e7eb" strokeWidth="8" />
+          <circle cx="36" cy="36" r={r} fill="none" stroke={color} strokeWidth="8"
+            strokeDasharray={`${dash} ${circ - dash}`} strokeLinecap="round" />
         </svg>
-        <span
-          className="absolute inset-0 flex items-center justify-center text-xs font-bold"
-          style={{ color }}
-        >
+        <span className="absolute inset-0 flex items-center justify-center text-xs font-bold" style={{ color }}>
           {value}%
         </span>
       </div>
-      <span className="text-[10px] text-gray-500 text-center leading-tight">
-        {label}
-      </span>
+      <span className="text-[10px] text-gray-500 text-center leading-tight">{label}</span>
     </div>
   );
 }
@@ -279,22 +135,12 @@ function MiniBarChart() {
     { day: "S", h: 30, color: "#d1fae5" },
     { day: "S", h: 20, color: "#d1fae5" },
   ];
-  // h-14 = 56px; use pixel heights so bars render correctly inside flex
   const maxH = 56;
   return (
     <div className="flex items-end gap-1" style={{ height: `${maxH}px` }}>
       {bars.map((b, i) => (
-        <div
-          key={i}
-          className="flex flex-col items-center justify-end gap-0.5 flex-1"
-        >
-          <div
-            className="w-full rounded-sm"
-            style={{
-              height: `${Math.round((b.h / 100) * maxH)}px`,
-              background: b.color,
-            }}
-          />
+        <div key={i} className="flex flex-col items-center justify-end gap-0.5 flex-1">
+          <div className="w-full rounded-sm" style={{ height: `${Math.round((b.h / 100) * maxH)}px`, background: b.color }} />
           <span className="text-[8px] text-gray-400">{b.day}</span>
         </div>
       ))}
@@ -307,9 +153,7 @@ function GradeIndicator({ grade, label }) {
   return (
     <div className="flex items-center justify-between py-1.5 border-b border-gray-100 last:border-0">
       <span className="text-[11px] text-gray-600 truncate pr-2">{label}</span>
-      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 flex-shrink-0">
-        {grade}
-      </span>
+      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 flex-shrink-0">{grade}</span>
     </div>
   );
 }
@@ -317,49 +161,18 @@ function GradeIndicator({ grade, label }) {
 // ─── 3D Browser Mockup ────────────────────────────────────────────────────────
 function BrowserMockup() {
   const stats = [
-    {
-      label: "Effort Score",
-      value: "75%",
-      trend: "+5%",
-      Icon: TargetIcon,
-      colorClass: "text-emerald-600 bg-emerald-50",
-    },
-    {
-      label: "Outcome Score",
-      value: "85%",
-      trend: "+12%",
-      Icon: AwardIcon,
-      colorClass: "text-blue-600 bg-blue-50",
-    },
-    {
-      label: "Weekly Hours",
-      value: "18h",
-      trend: "+2h",
-      Icon: ClockIcon,
-      colorClass: "text-purple-600 bg-purple-50",
-    },
-    {
-      label: "Completion",
-      value: "92%",
-      trend: "+8%",
-      Icon: CheckCircle2Icon,
-      colorClass: "text-amber-600 bg-amber-50",
-    },
+    { label: "Effort Score",  value: "75%", trend: "+5%",  Icon: TargetIcon,      colorClass: "text-emerald-600 bg-emerald-50" },
+    { label: "Outcome Score", value: "85%", trend: "+12%", Icon: AwardIcon,       colorClass: "text-blue-600 bg-blue-50" },
+    { label: "Weekly Hours",  value: "18h", trend: "+2h",  Icon: ClockIcon,       colorClass: "text-purple-600 bg-purple-50" },
+    { label: "Completion",    value: "92%", trend: "+8%",  Icon: CheckCircle2Icon,colorClass: "text-amber-600 bg-amber-50" },
   ];
 
   return (
-    <div
-      className="relative w-full max-w-4xl mx-auto"
-      style={{ perspective: "1200px" }}
-    >
+    <div className="relative w-full mx-auto" style={{ perspective: "1200px" }}>
       {/* Ambient glow */}
       <div
         className="absolute inset-0 rounded-3xl blur-3xl -z-10"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(52,211,153,0.2), rgba(96,165,250,0.2))",
-          transform: "scale(0.95)",
-        }}
+        style={{ background: "linear-gradient(to right, rgba(52,211,153,0.2), rgba(96,165,250,0.2))", transform: "scale(0.95)" }}
       />
 
       {/* Browser frame */}
@@ -368,99 +181,72 @@ function BrowserMockup() {
         style={{
           transform: "rotateX(3deg) rotateY(-1deg)",
           transformStyle: "preserve-3d",
-          boxShadow:
-            "0 40px 80px -20px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.05)",
+          boxShadow: "0 40px 80px -20px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.05)",
         }}
       >
         {/* Browser chrome */}
-        <div className="bg-gray-100 px-4 py-3 border-b border-gray-200 flex items-center gap-3">
+        <div className="bg-gray-100 px-3 py-2 border-b border-gray-200 flex items-center gap-2 sm:px-4 sm:py-3 sm:gap-3">
           <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-red-400" />
-            <div className="w-3 h-3 rounded-full bg-yellow-400" />
-            <div className="w-3 h-3 rounded-full bg-green-400" />
+            <div className="w-2.5 h-2.5 rounded-full bg-red-400 sm:w-3 sm:h-3" />
+            <div className="w-2.5 h-2.5 rounded-full bg-yellow-400 sm:w-3 sm:h-3" />
+            <div className="w-2.5 h-2.5 rounded-full bg-green-400 sm:w-3 sm:h-3" />
           </div>
           <div className="flex-1 flex justify-center">
-            <div className="bg-white border border-gray-300 rounded-md px-4 py-1 text-[11px] text-gray-400 flex items-center gap-2 w-72">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" />
-              app.learninganalytics.io/dashboard
+            <div className="bg-white border border-gray-300 rounded-md px-2 py-0.5 text-[10px] text-gray-400 flex items-center gap-1.5 w-40 sm:px-4 sm:py-1 sm:text-[11px] sm:w-72">
+              <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 flex-shrink-0 sm:w-2 sm:h-2" />
+              <span className="truncate">app.learninganalytics.io/dashboard</span>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="hidden sm:flex items-center gap-2">
             <div className="w-4 h-4 rounded bg-gray-300/60" />
             <div className="w-4 h-4 rounded bg-gray-300/60" />
           </div>
         </div>
 
         {/* Dashboard content */}
-        <div className="bg-gray-50 p-5">
+        <div className="bg-gray-50 p-3 sm:p-5">
           {/* Inner navbar */}
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <div
-                className="w-7 h-7 rounded-lg flex items-center justify-center text-white"
-                style={{
-                  background: "linear-gradient(135deg,#10b981,#059669)",
-                }}
-              >
-                <SparklesIcon size={14} />
+          <div className="flex items-center justify-between mb-3 sm:mb-4">
+            <div className="flex items-center gap-1.5">
+              <div className="w-6 h-6 rounded-lg flex items-center justify-center text-white sm:w-7 sm:h-7"
+                style={{ background: "linear-gradient(135deg,#10b981,#059669)" }}>
+                <SparklesIcon size={12} />
               </div>
-              <span className="text-sm font-semibold text-gray-800">
-                Learning Analytics
-              </span>
+              <span className="text-xs font-semibold text-gray-800 sm:text-sm">Learning Analytics</span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="px-3 py-1 bg-emerald-600 text-white text-[11px] rounded-lg">
-                Dashboard
-              </div>
-              <div
-                className="w-7 h-7 rounded-full"
-                style={{
-                  background: "linear-gradient(135deg,#10b981,#3b82f6)",
-                }}
-              />
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <div className="px-2 py-0.5 bg-emerald-600 text-white text-[10px] rounded-lg sm:px-3 sm:py-1 sm:text-[11px]">Dashboard</div>
+              <div className="w-6 h-6 rounded-full sm:w-7 sm:h-7" style={{ background: "linear-gradient(135deg,#10b981,#3b82f6)" }} />
             </div>
           </div>
 
-          {/* Summary cards */}
-          <div className="grid grid-cols-4 gap-3 mb-4">
+          {/* Summary cards – 2 cols on mobile, 4 on sm+ */}
+          <div className="grid grid-cols-2 gap-2 mb-3 sm:grid-cols-4 sm:gap-3 sm:mb-4">
             {stats.map(({ label, value, trend, Icon, colorClass }) => (
-              <div
-                key={label}
-                className="bg-white rounded-xl p-3 border border-gray-100 shadow-sm"
-              >
-                <div className="flex items-center gap-1.5 mb-2">
-                  <div className={`p-1 rounded-md ${colorClass}`}>
-                    <Icon size={12} />
-                  </div>
-                  <span className="text-[10px] text-gray-500">{label}</span>
+              <div key={label} className="bg-white rounded-xl p-2 border border-gray-100 shadow-sm sm:p-3">
+                <div className="flex items-center gap-1 mb-1 sm:gap-1.5 sm:mb-2">
+                  <div className={`p-0.5 rounded-md ${colorClass} sm:p-1`}><Icon size={10} /></div>
+                  <span className="text-[9px] text-gray-500 sm:text-[10px]">{label}</span>
                 </div>
-                <div className="text-lg font-bold text-gray-900">{value}</div>
-                <div className="text-[10px] text-emerald-600 font-medium">
-                  {trend}
-                </div>
+                <div className="text-base font-bold text-gray-900 sm:text-lg">{value}</div>
+                <div className="text-[9px] text-emerald-600 font-medium sm:text-[10px]">{trend}</div>
               </div>
             ))}
           </div>
 
-          {/* Charts grid */}
-          <div className="grid grid-cols-12 gap-3">
-            {/* Bar chart – col 5 */}
-            <div className="col-span-5 bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[11px] font-semibold text-gray-700">
-                  Weekly Study Hours
-                </span>
+          {/* Charts grid – stack on mobile, 12-col on sm+ */}
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-12 sm:gap-3">
+            <div className="sm:col-span-5 bg-white rounded-xl p-3 border border-gray-100 shadow-sm sm:p-4">
+              <div className="flex items-center justify-between mb-2 sm:mb-3">
+                <span className="text-[10px] font-semibold text-gray-700 sm:text-[11px]">Weekly Study Hours</span>
                 <BarChart3Icon />
               </div>
               <MiniBarChart />
             </div>
 
-            {/* Donut charts – col 4 */}
-            <div className="col-span-4 bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[11px] font-semibold text-gray-700">
-                  Time Allocation
-                </span>
+            <div className="sm:col-span-4 bg-white rounded-xl p-3 border border-gray-100 shadow-sm sm:p-4">
+              <div className="flex items-center justify-between mb-2 sm:mb-3">
+                <span className="text-[10px] font-semibold text-gray-700 sm:text-[11px]">Time Allocation</span>
                 <ActivityIcon />
               </div>
               <div className="flex items-center justify-around">
@@ -469,46 +255,31 @@ function BrowserMockup() {
               </div>
             </div>
 
-            {/* Predicted grades – col 3 */}
-            <div className="col-span-3 bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+            <div className="sm:col-span-3 bg-white rounded-xl p-3 border border-gray-100 shadow-sm sm:p-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-[11px] font-semibold text-gray-700">
-                  Predicted Grades
-                </span>
-                <span className="text-emerald-500">
-                  <TrendingUpIcon />
-                </span>
+                <span className="text-[10px] font-semibold text-gray-700 sm:text-[11px]">Predicted Grades</span>
+                <span className="text-emerald-500"><TrendingUpIcon /></span>
               </div>
               <GradeIndicator grade="A+" label="Mathematics" />
               <GradeIndicator grade="B+" label="Physics" />
-              <GradeIndicator grade="A" label="CompSci" />
-              <GradeIndicator grade="B" label="History" />
+              <GradeIndicator grade="A"  label="CompSci" />
+              <GradeIndicator grade="B"  label="History" />
             </div>
           </div>
 
           {/* AI Insight bar */}
           <div
-            className="mt-3 flex items-center gap-3 rounded-xl p-3 border border-emerald-100"
-            style={{
-              background: "linear-gradient(to right, #ecfdf5, #eff6ff)",
-            }}
+            className="mt-2 flex items-center gap-2 rounded-xl p-2 border border-emerald-100 sm:mt-3 sm:gap-3 sm:p-3"
+            style={{ background: "linear-gradient(to right, #ecfdf5, #eff6ff)" }}
           >
-            <div
-              className="p-2 rounded-lg text-white"
-              style={{ background: "linear-gradient(135deg,#10b981,#059669)" }}
-            >
-              <BrainIcon size={16} />
+            <div className="p-1.5 rounded-lg text-white flex-shrink-0" style={{ background: "linear-gradient(135deg,#10b981,#059669)" }}>
+              <BrainIcon size={14} />
             </div>
-            <div className="flex-1">
-              <div className="text-[11px] font-semibold text-gray-800">
-                AI Insight · HIGH EFFORT / HIGH OUTCOME
-              </div>
-              <div className="text-[10px] text-gray-500">
-                Your strategy is working — maintain consistency and optimize
-                review cycles
-              </div>
+            <div className="flex-1 min-w-0">
+              <div className="text-[10px] font-semibold text-gray-800 sm:text-[11px]">AI Insight · HIGH EFFORT / HIGH OUTCOME</div>
+              <div className="text-[9px] text-gray-500 truncate sm:text-[10px]">Your strategy is working — maintain consistency and optimize review cycles</div>
             </div>
-            <div className="px-2 py-1 bg-emerald-600 text-white text-[10px] rounded-lg font-medium cursor-default">
+            <div className="px-2 py-1 bg-emerald-600 text-white text-[9px] rounded-lg font-medium cursor-default flex-shrink-0 sm:text-[10px]">
               View Report
             </div>
           </div>
@@ -518,280 +289,170 @@ function BrowserMockup() {
   );
 }
 
+// ─── Floating Badge ───────────────────────────────────────────────────────────
+function FloatingBadge({ Icon, label, color, delay = "0s" }) {
+  return (
+    <div
+      className="bg-white rounded-xl px-3 py-2 flex items-center gap-2 shadow-lg border"
+      style={{
+        borderColor: color === "emerald" ? "rgba(16,185,129,0.2)" : "rgba(59,130,246,0.2)",
+        animation: "bounce 1.5s infinite",
+        animationDelay: delay,
+      }}
+    >
+      <Icon size={14} color={color === "emerald" ? "#059669" : "#2563eb"} />
+      <span className="text-[11px] font-semibold text-gray-700 whitespace-nowrap">{label}</span>
+    </div>
+  );
+}
+
 // ─── Main HomePage ────────────────────────────────────────────────────────────
 export default function HomePage() {
   const navigate = useNavigate();
 
   return (
+    /*
+     * Desktop (lg+): h-screen + overflow-hidden — must fit 100vh
+     * Mobile/tablet : min-h-screen, scrollable
+     */
     <div
-      className="h-screen flex flex-col overflow-hidden"
-      style={{
-        background:
-          "linear-gradient(150deg,#f0fdf4 0%,#ffffff 55%,#eff6ff 100%)",
-        position: "relative",
-      }}
+      className="min-h-screen lg:h-screen flex flex-col overflow-x-hidden lg:overflow-hidden"
+      style={{ background: "linear-gradient(150deg,#f0fdf4 0%,#ffffff 55%,#eff6ff 100%)" }}
     >
-      {/* Ambient glow orbs */}
-      <div
-        style={{
-          position: "fixed",
-          inset: 0,
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: "-10%",
-            left: "10%",
-            width: "500px",
-            height: "500px",
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle,rgba(16,185,129,0.08),transparent 70%)",
-            filter: "blur(60px)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "20%",
-            right: "-5%",
-            width: "600px",
-            height: "600px",
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle,rgba(59,130,246,0.06),transparent 70%)",
-            filter: "blur(80px)",
-          }}
-        />
+      {/* ── Ambient glows ── */}
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute -top-[10%] left-[10%] w-[min(500px,55vw)] h-[min(500px,55vw)] rounded-full"
+          style={{ background: "radial-gradient(circle,rgba(16,185,129,0.08),transparent 70%)", filter: "blur(60px)" }} />
+        <div className="absolute top-[20%] -right-[5%] w-[min(600px,65vw)] h-[min(600px,65vw)] rounded-full"
+          style={{ background: "radial-gradient(circle,rgba(59,130,246,0.06),transparent 70%)", filter: "blur(80px)" }} />
       </div>
 
       {/* ── NAVBAR ── */}
-      <nav
-        style={{
-          flexShrink: 0,
-          height: "64px",
-          display: "flex",
-          alignItems: "center",
-          padding: "0 48px",
-          zIndex: 50,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <div
-            style={{
-              width: "36px",
-              height: "36px",
-              borderRadius: "10px",
-              background: "linear-gradient(135deg,#10b981,#059669)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 4px 12px rgba(16,185,129,0.3)",
-              color: "white",
-            }}
-          >
-            <BookOpenIcon size={18} />
-          </div>
-          <div>
-            <div
-              style={{
-                fontSize: "11px",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                color: "#1f2937",
-                textTransform: "uppercase",
-                lineHeight: 1.3,
-              }}
-            >
-              Learning Analytics Dashboard
-            </div>
-            <div
-              style={{
-                fontSize: "10px",
-                fontWeight: 500,
-                color: "#059669",
-                letterSpacing: "0.04em",
-              }}
-            >
-              AI-Assisted Data Analysis
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
-      {/* ── MAIN VERTICAL CONTENT ── */}
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          paddingTop: "8px",
-          zIndex: 1,
-          overflow: "hidden",
-        }}
-      >
-        {/* Headline */}
+      {/*
+       * Content area — flex-1 so it fills remaining viewport height on desktop.
+       * min-h-0 prevents flex children from overflowing their parent.
+       * overflow-hidden on lg ensures nothing escapes 100vh.
+       *
+       * The inner layout uses gap instead of margin so spacing compresses
+       * automatically when the flex container shrinks.
+       */}
+      <div className="
+        relative z-10
+        flex-1 min-h-0
+        flex flex-col items-center justify-center
+        gap-2 lg:gap-2
+        px-4 pb-4 pt-2
+        sm:px-6 sm:pt-3 sm:pb-5
+        lg:px-8 lg:overflow-hidden
+      ">
+
+        {/* ── Headline ──
+            clamp uses both vw AND vh so the text shrinks on short screens
+            (e.g. 15-inch landscape laptop ~730px tall)
+        */}
         <h1
+          className="font-bold text-center text-slate-900 leading-[1.15] tracking-tight flex-shrink-0"
           style={{
-            fontSize: "clamp(2.5rem, 4vw, 3.5rem)",
-            fontWeight: 700,
-            lineHeight: 1.15,
+            fontSize: "clamp(1.5rem, min(4vw, 6vh), 3.2rem)",
             letterSpacing: "-0.025em",
-            color: "#0f172a",
-            textAlign: "center",
-            margin: "0 0 12px 0",
           }}
         >
-          <span style={{ display: "block" }}>Master Your</span>
+          <span className="block">Master Your</span>
           <span
+            className="block"
             style={{
-              display: "block",
               background: "linear-gradient(90deg,#059669,#0d9488 50%,#2563eb)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
-              paddingBottom: "0.1em",
+              paddingBottom: "0.08em",
             }}
           >
             Study Flow
           </span>
-          <span style={{ display: "block" }}>with AI Insights</span>
+          <span className="block">with AI Insights</span>
         </h1>
 
-        {/* Subtitle */}
+        {/* ── Subtitle ── */}
         <p
-          style={{
-            fontSize: "15px",
-            color: "#64748b",
-            lineHeight: 1.6,
-            maxWidth: "560px",
-            textAlign: "center",
-            margin: "0 0 20px 0",
-            fontWeight: 400,
-          }}
+          className="text-slate-500 text-center max-w-[520px] leading-relaxed flex-shrink-0"
+          style={{ fontSize: "clamp(0.8rem, min(1.5vw, 2vh), 1rem)" }}
         >
           Unlock your learning potential with powerful analytics. Analyze your
           study habits based on real data to optimize your path to graduation.
         </p>
 
-        {/* CTA button */}
-        <div style={{ marginBottom: "24px" }}>
+        {/* ── CTA ── */}
+        <div className="flex-shrink-0">
           <button
             id="start-analysis-btn"
             onClick={() => navigate("/choose-role")}
+            className="inline-flex items-center gap-2 rounded-xl border-none cursor-pointer text-white font-semibold"
             style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "8px",
-              padding: "14px 28px",
-              border: "none",
-              borderRadius: "12px",
-              cursor: "pointer",
+              padding: "clamp(8px, 1.2vh, 14px) clamp(18px, 2vw, 28px)",
+              fontSize: "clamp(0.8rem, min(1.4vw, 2vh), 0.95rem)",
               background: "linear-gradient(135deg,#059669,#047857)",
-              color: "white",
-              fontWeight: 600,
-              fontSize: "14.5px",
               boxShadow: "0 6px 20px rgba(5,150,105,0.35)",
-              transition: "transform 0.2s,box-shadow 0.2s",
+              transition: "transform 0.2s, box-shadow 0.2s",
             }}
-            onMouseEnter={(e) => {
+            onMouseEnter={e => {
               e.currentTarget.style.transform = "translateY(-2px)";
-              e.currentTarget.style.boxShadow =
-                "0 10px 28px rgba(5,150,105,0.45)";
+              e.currentTarget.style.boxShadow = "0 10px 28px rgba(5,150,105,0.45)";
             }}
-            onMouseLeave={(e) => {
+            onMouseLeave={e => {
               e.currentTarget.style.transform = "";
-              e.currentTarget.style.boxShadow =
-                "0 6px 20px rgba(5,150,105,0.35)";
+              e.currentTarget.style.boxShadow = "0 6px 20px rgba(5,150,105,0.35)";
             }}
           >
-            <ZapIcon size={16} />
+            <ZapIcon size={15} />
             Start Your Analysis
-            <ArrowRightIcon size={16} />
+            <ArrowRightIcon size={15} />
           </button>
         </div>
 
-        {/* Browser Mockup Container - Scaled to fit partially */}
-        <div
-          style={{
-            position: "relative",
-            width: "900px",
-            maxWidth: "90%",
-            margin: "0 auto",
-            transform: "scale(0.85)",
-            transformOrigin: "top center",
-          }}
-        >
-          <BrowserMockup />
-
-          {/* Floating badges overlapping bottom edge */}
+        {/*
+         * ── Browser Mockup ──
+         *
+         * LAYOUT STRATEGY:
+         *   We do NOT use flex-1 here. flex-1 would make the mockup expand
+         *   to fill ALL remaining space on a 32-inch screen (~1200px) while
+         *   the actual content is only ~400px → huge empty gap below.
+         *
+         *   Instead we use a max-height formula:
+         *     min(calc(100vh - 290px), 520px)
+         *   - 15-inch 730px tall  → min(440px, 520px) = 440px  ✅ fills well
+         *   - 1080p  1080px tall  → min(790px, 520px) = 520px  ✅ capped
+         *   - 32-inch 1440px tall → min(1150px, 520px) = 520px ✅ capped
+         *
+         *   overflow-hidden clips the mockup at that height (peek effect).
+         *   Badges are rendered OUTSIDE this clip zone so they always sit
+         *   correctly at the bottom edge of the visible mockup.
+         */}
+        <div className="relative w-full max-w-[960px] flex-shrink-0">
+          {/* Clipped mockup */}
           <div
-            style={{
-              position: "relative",
-              marginTop: "-24px",
-              display: "flex",
-              justifyContent: "space-between",
-              padding: "0 16px",
-              pointerEvents: "none",
-            }}
+            className="overflow-hidden rounded-2xl"
+            style={{ maxHeight: "min(calc(100vh - 290px), 520px)" }}
           >
-            <div
-              style={{
-                background: "white",
-                borderRadius: "12px",
-                padding: "10px 16px",
-                border: "1px solid rgba(16,185,129,0.15)",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
-                animation: "bounce 1.5s infinite",
-              }}
-            >
-              <CheckCircle2Icon size={16} color="#059669" />
-              <span
-                style={{
-                  fontSize: "12px",
-                  fontWeight: 600,
-                  color: "#374151",
-                }}
-              >
-                Personalized Insights
-              </span>
-            </div>
+            <BrowserMockup />
+          </div>
 
-            <div
-              style={{
-                background: "white",
-                borderRadius: "12px",
-                padding: "10px 16px",
-                border: "1px solid rgba(59,130,246,0.15)",
-                display: "flex",
-                alignItems: "center",
-                gap: "8px",
-                boxShadow: "0 10px 25px rgba(0,0,0,0.08)",
-                animation: "bounce 1.5s infinite",
-                animationDelay: "0.4s",
-              }}
-            >
-              <BrainIcon size={16} color="#2563eb" />
-              <span
-                style={{
-                  fontSize: "12px",
-                  fontWeight: 600,
-                  color: "#374151",
-                }}
-              >
-                AI-Powered Analysis
-              </span>
-            </div>
+          {/* Floating badges — outside clip, always overlap bottom edge */}
+          <div className="
+            relative -mt-3 flex justify-between px-2 pointer-events-none
+            sm:-mt-4 sm:px-4
+            lg:-mt-4 lg:px-6
+          ">
+            <FloatingBadge Icon={CheckCircle2Icon} label="Personalized Insights" color="emerald" delay="0s" />
+            <FloatingBadge Icon={BrainIcon}        label="AI-Powered Analysis"   color="blue"    delay="0.4s" />
           </div>
         </div>
+
+
       </div>
     </div>
   );
 }
+

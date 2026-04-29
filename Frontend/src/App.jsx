@@ -1,19 +1,30 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-// Pages
+// ── Lazy-loaded pages (code splitting — each route is its own JS chunk) ────────
+const HomePage           = lazy(() => import("./pages/HomePage"));
+const RoleSelectionPage  = lazy(() => import("./pages/RoleSelectionPage"));
+const ImportPage         = lazy(() => import("./pages/ImportPage"));
+const UploadStep         = lazy(() => import("./pages/import-steps/UploadStep"));
+const ReviewStep         = lazy(() => import("./pages/import-steps/ReviewStep"));
+const ConfirmStep        = lazy(() => import("./pages/import-steps/ConfirmStep"));
+const CompleteStep       = lazy(() => import("./pages/import-steps/CompleteStep"));
+const DataSelectionPage  = lazy(() => import("./pages/DataSelectionPage"));
+const StudentDashboardPage = lazy(() => import("./pages/StudentDashboardPage"));
+const AdminDashboardPage = lazy(() => import("./pages/AdminDashboardPage"));
 
-import HomePage from "./pages/HomePage";
-import RoleSelectionPage from "./pages/RoleSelectionPage";
-import ImportPage from "./pages/ImportPage";
-import UploadStep from "./pages/import-steps/UploadStep";
-import ReviewStep from "./pages/import-steps/ReviewStep";
-import ConfirmStep from "./pages/import-steps/ConfirmStep";
-import CompleteStep from "./pages/import-steps/CompleteStep";
+// ── Minimal fallback shown while a lazy chunk loads ───────────────────────────
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-slate-50">
+      <div className="flex flex-col items-center gap-3">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
+        <span className="text-xs text-slate-400 font-medium tracking-wide">Loading...</span>
+      </div>
+    </div>
+  );
+}
 
-import DataSelectionPage from "./pages/DataSelectionPage";
-import StudentDashboardPage from "./pages/StudentDashboardPage";
-import AdminDashboardPage from "./pages/AdminDashboardPage";
 
 /**
  * Main Application Component
@@ -24,32 +35,35 @@ import AdminDashboardPage from "./pages/AdminDashboardPage";
 export default function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        {/* 1. Homepage — Landing page */}
-        <Route path="/" element={<HomePage />} />
+      {/* Suspense wraps all lazy routes — shows PageLoader until chunk is ready */}
+      <Suspense fallback={<PageLoader />}>
+        <Routes>
+          {/* 1. Homepage — Landing page */}
+          <Route path="/" element={<HomePage />} />
 
-        {/* 2. Choose Role */}
-        <Route path="/choose-role" element={<RoleSelectionPage />} />
+          {/* 2. Choose Role */}
+          <Route path="/choose-role" element={<RoleSelectionPage />} />
 
-        {/* 3. Data Selection (Admin Only) */}
-        <Route path="/data-selection" element={<DataSelectionPage />} />
+          {/* 3. Data Selection */}
+          <Route path="/data-selection" element={<DataSelectionPage />} />
 
-        {/* 4. Dashboards */}
-        <Route path="/student/dashboard" element={<StudentDashboardPage />} />
-        <Route path="/admin/dashboard" element={<AdminDashboardPage />} />
+          {/* 4. Dashboards */}
+          <Route path="/student/dashboard" element={<StudentDashboardPage />} />
+          <Route path="/admin/dashboard"   element={<AdminDashboardPage />} />
 
-        {/* 5. Import Workspace — Multi-step Flow */}
-        <Route path="/import" element={<ImportPage />}>
-          <Route index element={<Navigate to="upload" replace />} />
-          <Route path="upload" element={<UploadStep />} />
-          <Route path="review" element={<ReviewStep />} />
-          <Route path="confirm" element={<ConfirmStep />} />
-          <Route path="complete" element={<CompleteStep />} />
-        </Route>
+          {/* 5. Import Workspace — Multi-step Flow */}
+          <Route path="/import" element={<ImportPage />}>
+            <Route index element={<Navigate to="upload" replace />} />
+            <Route path="upload"  element={<UploadStep />} />
+            <Route path="review"  element={<ReviewStep />} />
+            <Route path="confirm" element={<ConfirmStep />} />
+            <Route path="complete" element={<CompleteStep />} />
+          </Route>
 
-        {/* 4. Catch-all */}
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+          {/* 6. Catch-all */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }

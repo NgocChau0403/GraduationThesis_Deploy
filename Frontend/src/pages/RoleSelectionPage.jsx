@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAppContext } from "../contexts/AppContext";
 import AdminConfirmModal from "../components/AdminConfirmModal";
+import Navbar from "../components/layout/Navbar";
 // ─── Inline SVG Icons ─────────────────────────────────────────────────────────
 function BookOpenIcon({ size = 18 }) {
   return (
@@ -239,11 +240,9 @@ function RoleCard({ role, isHovered, onHover, onLeave, onClick }) {
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onClick={onClick}
+      className="w-full sm:flex-1 sm:min-w-[300px] sm:max-w-[520px]"
       style={{
         position: "relative",
-        flex: 1,
-        minWidth: "320px",
-        maxWidth: "520px",
         cursor: "pointer",
         transition: "transform 0.25s ease, box-shadow 0.25s ease",
         transform: isHovered ? "translateY(-6px)" : "translateY(0)",
@@ -577,15 +576,25 @@ export default function ChooseRoleScreen() {
     }
   };
 
+  // Back button for Navbar right slot
+  const backButton = (
+    <button
+      type="button"
+      onClick={() => navigate("/")}
+      className="border border-slate-300/90 bg-white/85 backdrop-blur text-slate-600 rounded-xl px-3 py-2 text-sm font-semibold cursor-pointer hover:bg-white transition-colors"
+    >
+      ← Home
+    </button>
+  );
+
   return (
+    /*
+     * Mobile/tablet  → min-h-screen, scrollable
+     * Desktop (lg+)  → h-screen, overflow-hidden — fits 100vh
+     */
     <div
-      className="h-screen"
-      style={{
-        background:
-          "linear-gradient(150deg,#f0fdf4 0%,#ffffff 55%,#eff6ff 100%)",
-        position: "relative",
-        overflow: "hidden",
-      }}
+      className="min-h-screen lg:h-screen flex flex-col overflow-x-hidden lg:overflow-hidden"
+      style={{ background: "linear-gradient(150deg,#f0fdf4 0%,#ffffff 55%,#eff6ff 100%)", position: "relative" }}
     >
       {/* Loading Overlay */}
       <div
@@ -594,154 +603,47 @@ export default function ChooseRoleScreen() {
         }`}
       >
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600 mb-4"></div>
-        <p className="text-slate-600 font-medium tracking-wide animate-pulse">
-          Initializing System...
-        </p>
+        <p className="text-slate-600 font-medium tracking-wide animate-pulse">Initializing System...</p>
       </div>
+
       {/* Ambient glow orbs */}
-      <div
-        style={{
-          position: "fixed",
-          inset: 0,
-          pointerEvents: "none",
-          zIndex: 0,
-        }}
-      >
-        <div
-          style={{
-            position: "absolute",
-            top: "-10%",
-            left: "8%",
-            width: "520px",
-            height: "520px",
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle,rgba(16,185,129,0.08),transparent 70%)",
-            filter: "blur(60px)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "18%",
-            right: "-6%",
-            width: "620px",
-            height: "620px",
-            borderRadius: "50%",
-            background:
-              "radial-gradient(circle,rgba(59,130,246,0.06),transparent 70%)",
-            filter: "blur(80px)",
-          }}
-        />
+      <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+        <div className="absolute -top-[10%] left-[8%] w-[min(520px,60vw)] h-[min(520px,60vw)] rounded-full"
+          style={{ background: "radial-gradient(circle,rgba(16,185,129,0.08),transparent 70%)", filter: "blur(60px)" }} />
+        <div className="absolute top-[18%] -right-[6%] w-[min(620px,70vw)] h-[min(620px,70vw)] rounded-full"
+          style={{ background: "radial-gradient(circle,rgba(59,130,246,0.06),transparent 70%)", filter: "blur(80px)" }} />
       </div>
 
-      {/* Navbar */}
-      <nav
-        style={{
-          height: "64px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 48px",
-          position: "relative",
-          zIndex: 5,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <div
-            style={{
-              width: "36px",
-              height: "36px",
-              borderRadius: "10px",
-              background: "linear-gradient(135deg,#10b981,#059669)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 4px 12px rgba(16,185,129,0.3)",
-              color: "white",
-            }}
-          >
-            <BookOpenIcon size={18} />
-          </div>
+      {/* ── NAVBAR ── */}
+      <Navbar rightSlot={backButton} />
 
-          <div>
-            <div
-              style={{
-                fontSize: "11px",
-                fontWeight: 700,
-                letterSpacing: "0.1em",
-                color: "#1f2937",
-                textTransform: "uppercase",
-                lineHeight: 1.3,
-              }}
-            >
-              Learning Analytics Dashboard
-            </div>
-            <div
-              style={{
-                fontSize: "10px",
-                fontWeight: 500,
-                color: "#059669",
-                letterSpacing: "0.04em",
-              }}
-            >
-              AI-Assisted Data Analysis
-            </div>
-          </div>
-        </div>
+      {/*
+       * Main content: fills remaining height on desktop (flex-1 + min-h-0),
+       * centers vertically, allows y-scroll only if content is taller than
+       * remaining space (rare on desktop, normal on mobile).
+       */}
+      <div className="
+        relative z-[2] flex-1 min-h-0
+        flex flex-col justify-center
+        max-w-[1240px] w-full mx-auto
+        px-4 py-5 sm:px-8 sm:py-6 lg:px-12 lg:py-4
+        overflow-y-auto lg:overflow-hidden
+      ">
 
-        <button
-          type="button"
-          onClick={() => navigate("/")}
-          style={{
-            border: "1px solid rgba(203,213,225,0.9)",
-            background: "rgba(255,255,255,0.85)",
-            color: "#334155",
-            borderRadius: "12px",
-            padding: "10px 14px",
-            fontSize: "13px",
-            fontWeight: 600,
-            cursor: "pointer",
-            backdropFilter: "blur(8px)",
-          }}
-        >
-          Back to Home
-        </button>
-      </nav>
-
-      {/* Main content */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 2,
-          maxWidth: "1240px",
-          margin: "0 auto",
-          padding: "18px 32px 40px",
-          height: "calc(100vh - 64px)",
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-        }}
-      >
-        {/* Hero */}
-        <div style={{ textAlign: "center", marginBottom: "34px" }}>
+        {/* Hero text */}
+        <div className="text-center mb-5 sm:mb-6 lg:mb-5 flex-shrink-0">
           <h1
+            className="font-bold text-slate-900 leading-[1.15] tracking-tight text-center mb-2 sm:mb-3"
             style={{
-              fontSize: "clamp(2.4rem, 4vw, 3.4rem)",
-              fontWeight: 700,
-              lineHeight: 1.15,
+              fontSize: "clamp(1.8rem, min(4vw, 5vh), 3.4rem)",
               letterSpacing: "-0.025em",
-              color: "#0f172a",
-              textAlign: "center",
-              margin: "0 0 12px 0",
             }}
           >
-            <span style={{ display: "block" }}>Choose Your</span>
+            <span className="block">Choose Your</span>
             <span
+              className="block"
               style={{
-                display: "block",
-                background:
-                  "linear-gradient(90deg,#059669,#0d9488 50%,#2563eb)",
+                background: "linear-gradient(90deg,#059669,#0d9488 50%,#2563eb)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
@@ -751,35 +653,15 @@ export default function ChooseRoleScreen() {
               Analytics Workspace
             </span>
           </h1>
-
-          <p
-            style={{
-              fontSize: "15px",
-              color: "#64748b",
-              lineHeight: 1.7,
-              maxWidth: "660px",
-              textAlign: "center",
-              margin: "0 auto",
-              fontWeight: 400,
-            }}
-          >
+          <p className="text-sm text-slate-500 leading-relaxed max-w-[600px] text-center mx-auto sm:text-[15px]">
             Continue as a student for personalized learning insights, or enter
             the administrator workspace to monitor broader class performance and
             engagement patterns.
           </p>
         </div>
 
-        {/* Cards */}
-        <div
-          style={{
-            display: "flex",
-            gap: "24px",
-            justifyContent: "center",
-            alignItems: "stretch",
-            flexWrap: "wrap",
-            marginBottom: "24px",
-          }}
-        >
+        {/* Role Cards — stack on mobile, row on sm+ */}
+        <div className="flex flex-col gap-4 items-stretch sm:flex-row sm:flex-wrap sm:justify-center sm:items-stretch sm:gap-5 lg:gap-6 flex-shrink-0">
           {roles.map((role) => (
             <RoleCard
               key={role.id}
@@ -804,3 +686,4 @@ export default function ChooseRoleScreen() {
     </div>
   );
 }
+

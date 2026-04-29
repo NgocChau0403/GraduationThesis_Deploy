@@ -57,7 +57,7 @@ export default function ReviewStep() {
       {/* SECTION HEADER */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-3xl font-black text-slate-900 tracking-tight">2. Schema Mapping Review</h2>
+          <h2 className="text-xl font-black text-slate-900 tracking-tight sm:text-3xl">2. Schema Mapping Review</h2>
           <p className="mt-1 text-slate-500 text-sm font-medium">
             Verify automated suggestions and enforce strict structural integrity rules.
           </p>
@@ -113,7 +113,7 @@ export default function ReviewStep() {
       </div>
 
       {/* STEP NAVIGATION */}
-      <div className="flex flex-col items-center justify-center gap-6 rounded-[3rem] bg-slate-50/50 border border-slate-100 p-12 mt-12 transition-all shadow-inner">
+      <div className="flex flex-col items-center justify-center gap-4 rounded-[2rem] bg-slate-50/50 border border-slate-100 p-6 mt-8 transition-all shadow-inner sm:gap-6 sm:rounded-[3rem] sm:p-12 sm:mt-12">
         {!allConfirmed && (
           <div className="flex items-center gap-2 text-sm font-bold text-amber-600 animate-pulse bg-white px-6 py-2 rounded-full border border-amber-100 shadow-sm">
             <span>⚠️</span>

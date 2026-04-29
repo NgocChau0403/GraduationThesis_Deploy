@@ -35,9 +35,9 @@ export default function ConfirmStep() {
     <div className="animate-in fade-in zoom-in-95 duration-500 max-w-4xl mx-auto space-y-8">
       {/* Header Section */}
       <div className="text-center">
-        <h2 className="text-3xl font-black text-slate-900">3. Final Confirmation</h2>
-        <p className="text-slate-500 mt-2">
-          Everything looks good! You are about to import <span className="font-bold text-emerald-600">{uploadedFiles.length} file(s)</span> 
+        <h2 className="text-xl font-black text-slate-900 sm:text-3xl">3. Final Confirmation</h2>
+        <p className="text-slate-500 mt-2 text-sm sm:text-base">
+          Everything looks good! You are about to import <span className="font-bold text-emerald-600">{uploadedFiles.length} file(s)</span>{" "}
           into <span className="font-bold text-slate-800">"{datasetName || 'Default Dataset'}"</span>.
         </p>
       </div>
