@@ -316,7 +316,7 @@ export default function HomePage() {
      * Mobile/tablet : min-h-screen, scrollable
      */
     <div
-      className="min-h-screen lg:h-screen flex flex-col overflow-x-hidden lg:overflow-hidden"
+      className="min-h-screen flex flex-col overflow-x-hidden"
       style={{ background: "linear-gradient(150deg,#f0fdf4 0%,#ffffff 55%,#eff6ff 100%)" }}
     >
       {/* ── Ambient glows ── */}
@@ -331,31 +331,26 @@ export default function HomePage() {
       <Navbar />
 
       {/*
-       * Content area — flex-1 so it fills remaining viewport height on desktop.
-       * min-h-0 prevents flex children from overflowing their parent.
-       * overflow-hidden on lg ensures nothing escapes 100vh.
-       *
-       * The inner layout uses gap instead of margin so spacing compresses
-       * automatically when the flex container shrinks.
+       * Content area — flex-1, centered vertically.
+       * KHÔNG dùng overflow-hidden hay h-screen vì sẽ cắt nội dung
+       * khi viewport ngắn hơn (nhiều tab, bookmark bar, v.v.)
+       * Thay vào đó dùng min-h-screen + scroll tự nhiên.
        */}
       <div className="
         relative z-10
         flex-1 min-h-0
         flex flex-col items-center justify-center
-        gap-2 lg:gap-2
-        px-4 pb-4 pt-2
-        sm:px-6 sm:pt-3 sm:pb-5
-        lg:px-8 lg:overflow-hidden
+        gap-3
+        px-4 pb-8 pt-4
+        sm:px-6
+        lg:px-8
       ">
 
-        {/* ── Headline ──
-            clamp uses both vw AND vh so the text shrinks on short screens
-            (e.g. 15-inch landscape laptop ~730px tall)
-        */}
+        {/* ── Headline ── */}
         <h1
           className="font-bold text-center text-slate-900 leading-[1.15] tracking-tight flex-shrink-0"
           style={{
-            fontSize: "clamp(1.5rem, min(4vw, 6vh), 3.2rem)",
+            fontSize: "clamp(1.6rem, 3.5vw, 3rem)",
             letterSpacing: "-0.025em",
           }}
         >
@@ -378,7 +373,7 @@ export default function HomePage() {
         {/* ── Subtitle ── */}
         <p
           className="text-slate-500 text-center max-w-[520px] leading-relaxed flex-shrink-0"
-          style={{ fontSize: "clamp(0.8rem, min(1.5vw, 2vh), 1rem)" }}
+          style={{ fontSize: "clamp(0.85rem, 1.3vw, 1rem)" }}
         >
           Unlock your learning potential with powerful analytics. Analyze your
           study habits based on real data to optimize your path to graduation.
@@ -391,8 +386,8 @@ export default function HomePage() {
             onClick={() => navigate("/choose-role")}
             className="inline-flex items-center gap-2 rounded-xl border-none cursor-pointer text-white font-semibold"
             style={{
-              padding: "clamp(8px, 1.2vh, 14px) clamp(18px, 2vw, 28px)",
-              fontSize: "clamp(0.8rem, min(1.4vw, 2vh), 0.95rem)",
+              padding: "10px clamp(18px, 2vw, 28px)",
+              fontSize: "clamp(0.85rem, 1.2vw, 0.95rem)",
               background: "linear-gradient(135deg,#059669,#047857)",
               boxShadow: "0 6px 20px rgba(5,150,105,0.35)",
               transition: "transform 0.2s, box-shadow 0.2s",
@@ -414,27 +409,16 @@ export default function HomePage() {
 
         {/*
          * ── Browser Mockup ──
-         *
-         * LAYOUT STRATEGY:
-         *   We do NOT use flex-1 here. flex-1 would make the mockup expand
-         *   to fill ALL remaining space on a 32-inch screen (~1200px) while
-         *   the actual content is only ~400px → huge empty gap below.
-         *
-         *   Instead we use a max-height formula:
-         *     min(calc(100vh - 290px), 520px)
-         *   - 15-inch 730px tall  → min(440px, 520px) = 440px  ✅ fills well
-         *   - 1080p  1080px tall  → min(790px, 520px) = 520px  ✅ capped
-         *   - 32-inch 1440px tall → min(1150px, 520px) = 520px ✅ capped
-         *
-         *   overflow-hidden clips the mockup at that height (peek effect).
-         *   Badges are rendered OUTSIDE this clip zone so they always sit
-         *   correctly at the bottom edge of the visible mockup.
+         * max-height dùng 100dvh (dynamic viewport height) thay vì 100vh.
+         * 100dvh tự trừ browser chrome (tab bar, bookmark bar...) trên mọi
+         * browser → kết quả giống nhau ở local và deployed.
+         * Cap ở 520px để không quá to trên màn hình lớn.
          */}
         <div className="relative w-full max-w-[960px] flex-shrink-0">
           {/* Clipped mockup */}
           <div
             className="overflow-hidden rounded-2xl"
-            style={{ maxHeight: "min(calc(100vh - 290px), 520px)" }}
+            style={{ maxHeight: "min(calc(100dvh - 280px), 520px)" }}
           >
             <BrowserMockup />
           </div>

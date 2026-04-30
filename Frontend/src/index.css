@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* ─── CSS Reset nền tảng ─────────────────────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 /* ─── Figma Theme Variables ─────────────────────────────────────────────── */
 :root {
   --font-size: 16px;
@@ -48,25 +55,19 @@
   --card-bg: #ffffff;
   --border: #e2e8f0;      /* slate-200 */
   --code-bg: #f1f5f9;     /* slate-100 */
-  
+
   /* Primary Accent: Emerald */
   --accent: #10b981;      /* emerald-500 */
   --accent-bg: rgba(16, 185, 129, 0.1);
   --accent-border: rgba(16, 185, 129, 0.3);
-  
+
   --social-bg: rgba(241, 245, 249, 0.6);
   --shadow: rgba(0, 0, 0, 0.05) 0 10px 15px -3px, rgba(0, 0, 0, 0.02) 0 4px 6px -2px;
 
   /* Typography */
-  --sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', monospace;
 
-  font: 16px/1.6 var(--sans);
-  letter-spacing: -0.011em;
-  color-scheme: light;
-  color: var(--text);
-  background: var(--bg);
-  
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -87,43 +88,53 @@
   }
 }
 
+/* ─── Base HTML/Body Reset ───────────────────────────────────────────────── */
+html {
+  height: 100%;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  scrollbar-gutter: stable;
+}
+
 body {
   margin: 0;
   padding: 0;
+  min-height: 100%;
+  min-width: 320px;
+  overflow-x: hidden;   /* Ngăn tràn ngang */
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  letter-spacing: -0.011em;
+  color-scheme: light;
+  color: var(--text);
+  background: var(--bg);
 }
 
 #root {
-  /*  
-  Sử dụng max-width linh hoạt cho các màn hình lớn
-  */
   width: 100%;
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  box-sizing: border-box;
 }
 
-/* Typography Reset */
-h1, h2, h3, h4 {
+/* ─── Typography Reset ───────────────────────────────────────────────────── */
+/* KHÔNG đặt font-size cố định cho h1/h2/h3/h4 tại đây
+   vì các page đã dùng clamp() responsive riêng.
+   Chỉ reset margin và đặt font-family. */
+h1, h2, h3, h4, h5, h6 {
   font-family: var(--sans);
   color: var(--text-h);
   margin: 0;
+  line-height: 1.2;
 }
 
-h1 {
-  font-size: 2.5rem;
-  font-weight: 800;
-  letter-spacing: -0.025em;
+p {
+  margin: 0;
 }
 
-h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-/* Code & Utilities */
+/* ─── Code Utilities ─────────────────────────────────────────────────────── */
 code {
   font-family: var(--mono);
   font-size: 0.9em;
@@ -133,6 +144,8 @@ code {
   color: var(--accent);
   font-weight: 600;
 }
+
+/* ─── Animations ─────────────────────────────────────────────────────────── */
 @keyframes bounce {
   0%, 100% {
     transform: translateY(-8%);
