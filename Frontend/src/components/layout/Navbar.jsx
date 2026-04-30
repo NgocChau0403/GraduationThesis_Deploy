@@ -24,8 +24,8 @@ function BookOpenIcon() {
 export default function Navbar({ rightSlot }) {
   return (
     <nav className="
+      desktop-shell desktop-shell--nav w-full
       flex-shrink-0 h-16 flex items-center justify-between
-      px-4 sm:px-8 lg:px-12
       relative z-50
     ">
       {/* Brand */}

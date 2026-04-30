@@ -1,18 +1,37 @@
 import React from "react";
 
-export default function StepPill({ index, label, active, complete }) {
-  const className = complete
-    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
-    : active
-      ? "border-emerald-600 bg-emerald-600 text-white shadow-md shadow-emerald-100 scale-105"
-      : "border-slate-200 bg-white text-slate-400";
-
+function CheckIcon() {
   return (
-    <div className={`inline-flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-bold transition-all duration-300 ${className}`}>
-      <span className={`inline-flex h-6 w-6 items-center justify-center rounded-full text-[10px] ${active ? 'bg-white text-emerald-600' : 'bg-slate-100'}`}>
-        {index}
+    <svg width={12} height={12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={3} strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 13l4 4L19 7" />
+    </svg>
+  );
+}
+
+export default function StepPill({ index, label, active, complete }) {
+  return (
+    <div
+      className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-semibold transition-all duration-300 ${
+        complete
+          ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+          : active
+          ? "border-emerald-500 bg-emerald-600 text-white shadow-lg shadow-emerald-200 scale-105"
+          : "border-slate-200 bg-white text-slate-400"
+      }`}
+    >
+      {/* Index bubble / checkmark */}
+      <span
+        className={`inline-flex h-5 w-5 items-center justify-center rounded-full text-[10px] font-bold flex-shrink-0 ${
+          complete
+            ? "bg-emerald-500 text-white"
+            : active
+            ? "bg-white text-emerald-600"
+            : "bg-slate-100 text-slate-400"
+        }`}
+      >
+        {complete ? <CheckIcon /> : index}
       </span>
-      <span>{label}</span>
+      <span className="whitespace-nowrap">{label}</span>
     </div>
   );
 }

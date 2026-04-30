@@ -75,7 +75,7 @@ export default function UploadStep() {
           <div className="space-y-6 rounded-[2rem] border border-slate-100 bg-white p-8 shadow-sm">
             {/* Dataset Identification */}
             <div className="space-y-2">
-              <label className="text-[13px] font-bold uppercase tracking-wider text-slate-500">
+              <label className="text-[13px] font-semibold text-slate-600">
                 Dataset Name
               </label>
               <input
@@ -89,7 +89,7 @@ export default function UploadStep() {
 
             {/* Source Origin for Data Lineage */}
             <div className="space-y-2">
-              <label className="text-[13px] font-bold uppercase tracking-wider text-slate-500">
+              <label className="text-[13px] font-semibold text-slate-600">
                 Dataset Schema (Source)
               </label>
               <Select
@@ -127,11 +127,11 @@ export default function UploadStep() {
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                 </svg>
                 {uploadProgress < 100
-                  ? `UPLOADING... ${uploadProgress}%`
-                  : "PROFILING DATA..."}
+                  ? `Uploading... ${uploadProgress}%`
+                  : "Profiling data..."}
               </span>
             ) : (
-              "UPLOAD & ANALYZE"
+              "Upload & Analyze"
             )}
           </button>
         </div>

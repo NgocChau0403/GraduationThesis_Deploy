@@ -240,7 +240,7 @@ function RoleCard({ role, isHovered, onHover, onLeave, onClick }) {
       onMouseEnter={onHover}
       onMouseLeave={onLeave}
       onClick={onClick}
-      className="w-full sm:flex-1 sm:min-w-[300px] sm:max-w-[520px]"
+        className="w-full sm:flex-1 sm:min-w-[280px] sm:max-w-[510px]"
       style={{
         position: "relative",
         cursor: "pointer",
@@ -265,7 +265,7 @@ function RoleCard({ role, isHovered, onHover, onLeave, onClick }) {
         style={{
           position: "relative",
           zIndex: 1,
-          borderRadius: "24px",
+          borderRadius: "22px",
           overflow: "hidden",
           background: "rgba(255,255,255,0.94)",
           backdropFilter: "blur(10px)",
@@ -280,14 +280,14 @@ function RoleCard({ role, isHovered, onHover, onLeave, onClick }) {
       >
         <div
           style={{
-            height: "5px",
+            height: "4px",
             background: role.headerGradient,
           }}
         />
 
         <div
           style={{
-            padding: "28px 28px 22px",
+            padding: "var(--desktop-role-card-header-pad)",
             background: role.softBackground,
             borderBottom: "1px solid rgba(226,232,240,0.8)",
           }}
@@ -297,15 +297,15 @@ function RoleCard({ role, isHovered, onHover, onLeave, onClick }) {
               display: "flex",
               alignItems: "flex-start",
               justifyContent: "space-between",
-              gap: "16px",
-              marginBottom: "18px",
+              gap: "var(--desktop-role-card-header-gap)",
+              marginBottom: "var(--desktop-role-card-header-margin)",
             }}
           >
             <div
               style={{
-                width: "64px",
-                height: "64px",
-                borderRadius: "18px",
+                width: "var(--desktop-role-card-icon-size)",
+                height: "var(--desktop-role-card-icon-size)",
+                borderRadius: "var(--desktop-role-card-icon-radius)",
                 background: role.headerGradient,
                 display: "flex",
                 alignItems: "center",
@@ -316,14 +316,14 @@ function RoleCard({ role, isHovered, onHover, onLeave, onClick }) {
                 transition: "transform 0.25s ease",
               }}
             >
-              <Icon size={30} />
+              <Icon size="var(--desktop-role-card-icon-glyph-size)" />
             </div>
 
             <div
               style={{
-                padding: "8px 12px",
+                padding: "var(--desktop-role-card-badge-pad)",
                 borderRadius: "999px",
-                fontSize: "11px",
+                fontSize: "var(--desktop-role-card-badge-size)",
                 fontWeight: 700,
                 letterSpacing: "0.04em",
                 color: role.badgeText,
@@ -337,10 +337,10 @@ function RoleCard({ role, isHovered, onHover, onLeave, onClick }) {
 
           <h2
             style={{
-              fontSize: "30px",
+              fontSize: "var(--desktop-role-card-title-size)",
               fontWeight: 700,
               color: "#0f172a",
-              margin: "0 0 8px 0",
+              margin: "0 0 6px 0",
               letterSpacing: "-0.02em",
             }}
           >
@@ -350,18 +350,18 @@ function RoleCard({ role, isHovered, onHover, onLeave, onClick }) {
           <p
             style={{
               margin: 0,
-              fontSize: "15px",
-              lineHeight: 1.7,
+              fontSize: "var(--desktop-role-card-desc-size)",
+              lineHeight: 1.62,
               color: "#475569",
-              maxWidth: "420px",
+              maxWidth: "440px",
             }}
           >
             {role.description}
           </p>
         </div>
 
-        <div style={{ padding: "24px 28px 28px" }}>
-          <div style={{ marginBottom: "22px" }}>
+        <div style={{ padding: "var(--desktop-role-card-body-pad)" }}>
+          <div style={{ marginBottom: "12px" }}>
             {role.features.map((feature, index) => {
               const FeatureIcon = feature.icon;
               return (
@@ -370,8 +370,8 @@ function RoleCard({ role, isHovered, onHover, onLeave, onClick }) {
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: "12px",
-                    padding: "10px 0",
+                    gap: "var(--desktop-role-card-feature-gap)",
+                    padding: "var(--desktop-role-card-feature-pad-y) 0",
                     borderBottom:
                       index === role.features.length - 1
                         ? "none"
@@ -380,8 +380,8 @@ function RoleCard({ role, isHovered, onHover, onLeave, onClick }) {
                 >
                   <div
                     style={{
-                      width: "34px",
-                      height: "34px",
+                      width: "var(--desktop-role-card-feature-box-size)",
+                      height: "var(--desktop-role-card-feature-box-size)",
                       borderRadius: "10px",
                       background: feature.bg,
                       color: feature.color,
@@ -391,14 +391,14 @@ function RoleCard({ role, isHovered, onHover, onLeave, onClick }) {
                       flexShrink: 0,
                     }}
                   >
-                    <FeatureIcon size={14} />
+                    <FeatureIcon size="var(--desktop-role-card-feature-icon-size)" />
                   </div>
 
                   <span
                     style={{
-                      fontSize: "14px",
+                      fontSize: "var(--desktop-role-card-feature-text-size)",
                       color: "#334155",
-                      lineHeight: 1.55,
+                      lineHeight: 1.45,
                       fontWeight: 500,
                     }}
                   >
@@ -420,15 +420,15 @@ function RoleCard({ role, isHovered, onHover, onLeave, onClick }) {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              gap: "8px",
-              padding: "14px 18px",
+              gap: "7px",
+              padding: "var(--desktop-role-card-button-pad)",
               border: "none",
               borderRadius: "14px",
               cursor: "pointer",
               background: role.headerGradient,
               color: "white",
               fontWeight: 600,
-              fontSize: "14.5px",
+              fontSize: "var(--desktop-role-card-button-size)",
               boxShadow: role.buttonShadow,
               transition: "transform 0.2s ease, box-shadow 0.2s ease",
               transform: isHovered ? "translateY(-1px)" : "translateY(0)",
@@ -581,7 +581,7 @@ export default function ChooseRoleScreen() {
     <button
       type="button"
       onClick={() => navigate("/")}
-      className="border border-slate-300/90 bg-white/85 backdrop-blur text-slate-600 rounded-xl px-3 py-2 text-sm font-semibold cursor-pointer hover:bg-white transition-colors"
+      className="border border-slate-300/90 bg-white/85 backdrop-blur text-slate-600 rounded-xl px-2.5 py-2 text-xs font-semibold cursor-pointer hover:bg-white transition-colors sm:px-3 sm:text-sm"
     >
       ← Home
     </button>
@@ -593,7 +593,7 @@ export default function ChooseRoleScreen() {
      * Desktop (lg+)  → h-screen, overflow-hidden — fits 100vh
      */
     <div
-      className="min-h-screen lg:h-screen flex flex-col overflow-x-hidden lg:overflow-hidden"
+      className="viewport-shell flex flex-col overflow-x-hidden"
       style={{ background: "linear-gradient(150deg,#f0fdf4 0%,#ffffff 55%,#eff6ff 100%)", position: "relative" }}
     >
       {/* Loading Overlay */}
@@ -622,24 +622,17 @@ export default function ChooseRoleScreen() {
        * centers vertically, allows y-scroll only if content is taller than
        * remaining space (rare on desktop, normal on mobile).
        */}
-      <div className="
-        relative z-[2] flex-1 min-h-0
-        flex flex-col justify-center
-        max-w-[1240px] w-full mx-auto
-        px-4 py-5 sm:px-8 sm:py-6 lg:px-12 lg:py-4
-        overflow-y-auto lg:overflow-hidden
-      ">
+      <div className="relative z-[2] flex-1 min-h-0 w-full flex flex-col justify-center px-4 py-4 sm:px-6 sm:py-5 overflow-y-auto">
 
         {/* Hero text */}
-        <div className="text-center mb-5 sm:mb-6 lg:mb-5 flex-shrink-0">
+        <div className="text-center mb-3 sm:mb-4 lg:mb-3 flex-shrink-0" style={{ maxWidth: "800px", margin: "0 auto 1rem", width: "100%" }}>
           <h1
-            className="font-bold text-slate-900 leading-[1.15] tracking-tight text-center mb-2 sm:mb-3"
+            className="font-bold leading-[1.12] tracking-tight text-center mb-2 sm:mb-2.5"
             style={{
-              fontSize: "clamp(1.8rem, min(4vw, 5vh), 3.4rem)",
+              fontSize: "clamp(1.8rem, 3.2vw, 3rem)",
               letterSpacing: "-0.025em",
             }}
           >
-            <span className="block">Choose Your</span>
             <span
               className="block"
               style={{
@@ -647,13 +640,24 @@ export default function ChooseRoleScreen() {
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
-                paddingBottom: "0.1em",
               }}
             >
+              Choose Your
+            </span>
+            <span className="block text-slate-900">
               Analytics Workspace
             </span>
           </h1>
-          <p className="text-sm text-slate-500 leading-relaxed max-w-[600px] text-center mx-auto sm:text-[15px]">
+          <p
+            style={{
+              maxWidth: "600px",
+              margin: "0 auto",
+              textAlign: "center",
+              fontSize: "clamp(0.85rem, 1.2vw, 0.95rem)",
+              lineHeight: 1.6,
+              color: "#64748b",
+            }}
+          >
             Continue as a student for personalized learning insights, or enter
             the administrator workspace to monitor broader class performance and
             engagement patterns.
@@ -661,7 +665,7 @@ export default function ChooseRoleScreen() {
         </div>
 
         {/* Role Cards — stack on mobile, row on sm+ */}
-        <div className="flex flex-col gap-4 items-stretch sm:flex-row sm:flex-wrap sm:justify-center sm:items-stretch sm:gap-5 lg:gap-6 flex-shrink-0">
+        <div className="flex flex-col gap-3 items-stretch sm:flex-row sm:flex-wrap sm:justify-center sm:items-stretch sm:gap-4 lg:gap-4 flex-shrink-0">
           {roles.map((role) => (
             <RoleCard
               key={role.id}
