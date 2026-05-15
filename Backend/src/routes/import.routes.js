@@ -3,6 +3,7 @@ import multer from "multer";
 import {
   profileImportController,
   confirmMappingController,
+  previewMappingController,
   runImportController
 } from "../controllers/import.controller.js";
 
@@ -29,6 +30,7 @@ const upload = multer({
 
 router.post("/profile", upload.array("files"), profileImportController);
 router.post("/confirm-mapping", express.json(), confirmMappingController);
+router.post("/preview", express.json(), previewMappingController);
 router.post("/run", express.json(), runImportController);
 
 export default router;

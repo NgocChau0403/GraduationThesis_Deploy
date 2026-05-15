@@ -52,6 +52,7 @@ export const CANONICAL_FIELDS = [
   { name: "enrollment_end_day", required: false, type: "int", group: "enrollment", origin: "normalized", description: "Normalized enrollment end day." },
   { name: "final_outcome", required: false, type: "string", group: "enrollment", origin: "normalized", description: "Final course outcome." },
   { name: "previous_attempt_count", required: false, type: "int", group: "enrollment", origin: "normalized", description: "Number of previous attempts." },
+  { name: "studytime", required: false, type: "int", group: "enrollment", origin: "raw", description: "UCI: weekly self-study time on 1-4 scale. NULL for OULAD." },
   { name: "source_dataset", required: true, type: "string", group: "enrollment", origin: "raw", description: "Source dataset name." },
 
   // =====================================================

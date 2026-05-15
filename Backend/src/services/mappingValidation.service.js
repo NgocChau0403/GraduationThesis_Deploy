@@ -27,7 +27,8 @@ const ALLOWED_TRANSFORMS = [
   "cast_boolean",
   "normalize_gender",
   "normalize_score",
-  "convert_date_to_relative_day"
+  "convert_date_to_relative_day",
+  "regex_extract"
 ];
 
 const REQUIRED_TOP_LEVEL_FIELDS = [
@@ -254,10 +255,10 @@ function getAllowedTransforms(canonicalFieldName, rawColumnName, detectedType) {
   }
 
   if (isNumericDetectedType(detected)) {
-    return ["cast_int", "cast_float", "direct_copy"];
+    return ["cast_int", "cast_float", "direct_copy", "regex_extract"];
   }
 
-  return ["direct_copy"];
+  return ["direct_copy", "regex_extract"];
 }
 
 // ==========================================
@@ -512,6 +513,19 @@ export function validateMapping({
           errors,
           warnings
         });
+      }
+
+      // ---- regex validation
+      if (item.transform === "regex_extract") {
+        if (!item.transform_params || typeof item.transform_params.regex !== "string" || !item.transform_params.regex.trim()) {
+           pushUniqueMessage(errors, `${itemPath}.transform_params.regex must be a valid non-empty string when transform is regex_extract.`);
+        } else {
+           try {
+             new RegExp(item.transform_params.regex);
+           } catch (e) {
+             pushUniqueMessage(errors, `${itemPath}.transform_params.regex is an invalid regular expression: ${e.message}`);
+           }
+        }
       }
     }
 

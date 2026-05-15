@@ -10,9 +10,8 @@ generator client {
 // NORMALIZED RELATIONAL SCHEMA — ERD v2.3
 // Decisions applied:
 //   - has_romantic / has_extracurricular / has_paid_class (diagram naming)
-//   - withdrew_early: Boolean (fixed from Int in old flat schema)
-//   - engagement.log_click_score (renamed from engagement_score to avoid collision with enrollment_features.engagement_score)
-//   - Flat tables kept for dashboard backward compatibility
+//   - engagement.log_click_score (renamed from engagement_score to avoid collision with old schema)
+//   - In-table FE fields only: no flat tables, no cross-table FE layer (per Section 3.2 of system_design.md)
 // ============================================================
 
 // -------------------------------------------------------
@@ -68,13 +67,21 @@ model Student {
   has_extracurricular Boolean?
   has_paid_class      Boolean?
 
+  // --- Background profile snapshot [FE] ---
+  // Computed from student demographic data at ETL time (per-student, dataset-specific)
+  lifestyle_risk_score   Float? // UCI only. norm(alc_weekday+alc_weekend)×0.4 + norm(go_out)×0.3 + norm(5-health)×0.3
+  support_score          Float? // UCI only. (school_sup + fam_sup + paid + internet) / 4
+  social_balance_score   Float? // UCI only. norm(free_time)×0.5 - norm(go_out)×0.3 - norm(alc_weekday)×0.2
+  family_stability_score Float? // UCI only. norm(fam_rel)×0.5 + (cohabitation=T)×0.3 + norm(max_parent_edu)×0.2
+  disadvantage_score     Float? // OULAD only. norm(100-imd)×0.5 + disability×0.3 + (no_formal_edu)×0.2
+
   created_at DateTime  @default(now())
   updated_at DateTime?
 
   // Relations
   batch               ImportBatch          @relation(fields: [batch_id], references: [batch_id], onDelete: Cascade)
   enrollments         Enrollment[]
-  exam_results        ExamResult[]
+  assessment_results   AssessmentResult[]
   engagements         Engagement[]
 
   @@index([batch_id])
@@ -93,7 +100,8 @@ model Course {
   course_name  String?
   subject_area String?
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  updated_at DateTime?
 
   // Relations
   batch   ImportBatch @relation(fields: [batch_id], references: [batch_id], onDelete: Cascade)
@@ -160,15 +168,19 @@ model Enrollment {
   absences  Int?
   studytime Int?
 
-  created_at DateTime @default(now())
+  // [FE] Computed at ETL time — in-table, no JOIN required
+  // = ABS(enrollment_start_day) WHERE enrollment_start_day < 0. NULL if enrolled after class start or UCI.
+  registration_lead_time Int?
+
+  created_at DateTime  @default(now())
+  updated_at DateTime?
 
   // Relations
   batch               ImportBatch          @relation(fields: [batch_id], references: [batch_id], onDelete: Cascade)
   student             Student              @relation(fields: [student_id], references: [student_id])
   class               Class                @relation(fields: [class_id], references: [class_id])
-  exam_results        ExamResult[]
+  assessment_results   AssessmentResult[]
   engagements         Engagement[]
-  enrollment_features EnrollmentFeatures[]
 
   @@index([batch_id])
   @@index([student_id])
@@ -210,7 +222,7 @@ model Assessment {
   // Relations
   batch        ImportBatch @relation(fields: [batch_id], references: [batch_id], onDelete: Cascade)
   class        Class        @relation(fields: [class_id], references: [class_id])
-  exam_results ExamResult[]
+  assessment_results AssessmentResult[]
 
   @@index([batch_id])
   @@index([class_id])
@@ -219,9 +231,9 @@ model Assessment {
 }
 
 // -------------------------------------------------------
-// 6. EXAM_RESULT
+// 6. ASSESSMENT_RESULT
 // -------------------------------------------------------
-model ExamResult {
+model AssessmentResult {
   result_id      String @id
   batch_id       String
   assessment_id  String
@@ -234,13 +246,12 @@ model ExamResult {
   score_normalized Float?
   pass_flag        Boolean?
 
-  // INT offset (raw from OULAD). NULL for UCI.
   submission_day        Int?
-  submission_delay_days Int? // Positive = late, Negative = early
 
   is_banked Boolean?
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  updated_at DateTime?
 
   // Relations
   batch      ImportBatch @relation(fields: [batch_id], references: [batch_id], onDelete: Cascade)
@@ -254,7 +265,7 @@ model ExamResult {
   @@index([enrollment_id])
   @@index([student_id, source_dataset])
   @@unique([batch_id, enrollment_id, assessment_id])
-  @@map("exam_result")
+  @@map("assessment_result")
 }
 
 // -------------------------------------------------------
@@ -273,7 +284,8 @@ model Event {
   available_from_week Int?
   available_to_week   Int?
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  updated_at DateTime?
 
   // Relations
   batch       ImportBatch   @relation(fields: [batch_id], references: [batch_id], onDelete: Cascade)
@@ -303,9 +315,10 @@ model Engagement {
   week_number Int?
 
   engagement_count Int?   // OULAD: sum_click
-  log_click_score  Float? // Row-level: log(engagement_count + 1). Renamed from engagement_score to avoid collision with enrollment_features.engagement_score
+  log_click_score  Float? // [FE] log(engagement_count + 1). Row-level click intensity
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  updated_at DateTime?
 
   // Relations
   batch      ImportBatch @relation(fields: [batch_id], references: [batch_id], onDelete: Cascade)
@@ -322,221 +335,6 @@ model Engagement {
   @@map("engagement")
 }
 
-// -------------------------------------------------------
-// 9. ENROLLMENT_FEATURES (Feature Store)
-// Grain: 1 row = 1 enrollment
-// Computed cache for ML models & dashboard — not raw data
-// -------------------------------------------------------
-model EnrollmentFeatures {
-  ef_id          String   @id
-  batch_id       String
-  enrollment_id  String
-  computed_at    DateTime
-  source_dataset String
-
-  // --- Background profile snapshot ---
-  lifestyle_risk_score   Float?
-  support_score          Float?
-  social_balance_score   Float?
-  family_stability_score Float?
-  disadvantage_score     Float?
-
-  // --- Score metrics ---
-  avg_score         Float?
-  performance_trend Float?
-  score_consistency Float?
-  pass_rate         Float?
-
-  // --- Engagement metrics ---
-  // NOTE: engagement_score here is aggregated composite — distinct from engagement.log_click_score
-  total_engagement_count   Int?
-  active_day_count         Int?
-  study_effort_level       String?
-  engagement_score         Float?
-  consistency_level        String?
-  vle_diversity_score      Float?
-  forum_engagement_rate    Float?
-  quiz_engagement_rate     Float?
-  resource_engagement_rate Float?
-  weekly_engagement_drop   Float?
-
-  // --- Risk / warning signals ---
-  early_warning_week     Int?
-  absences_rate          Float?
-  punctuality_rate       Float?
-  submission_delay_avg   Float?
-  registration_lead_time Int?
-  withdrew_early         Boolean? // Fixed: was Int in old flat schema
-
-  // --- Final risk label ---
-  at_risk_score Int?
-  at_risk_label String?
-
-  // Relations
-  batch      ImportBatch @relation(fields: [batch_id], references: [batch_id], onDelete: Cascade)
-  enrollment Enrollment  @relation(fields: [enrollment_id], references: [enrollment_id])
-
-  @@index([batch_id])
-  @@index([enrollment_id])
-  @@unique([enrollment_id])
-  @@map("enrollment_features")
-}
-
-// ============================================================
-// FLAT TABLES — Kept for dashboard backward compatibility
-// ETL pipeline writes to both normalized + flat tables
-// These are denormalized read-optimized views for BI queries
-// ============================================================
-
-model FlatEnrollmentMaster {
-  id              BigInt @id @default(autoincrement())
-  import_batch_id String
-
-  student_id     String
-  course_id      String
-  source_dataset String
-
-  // Demographic
-  gender             String?
-  age_group          String?
-  region             String?
-  residence_area     String?
-  highest_education  String?
-  socioeconomic_band String?
-  imd_score_numeric  Float?
-  disability_flag    Boolean?
-
-  // Support flags
-  higher_education_intent_flag Boolean?
-  internet_access_flag         Boolean?
-  school_support_flag          Boolean?
-  family_support_flag          Boolean?
-  has_romantic                 Boolean?
-  has_extracurricular          Boolean?
-  has_paid_class               Boolean?
-
-  // Family / lifestyle
-  mother_education_level     String?
-  father_education_level     String?
-  mother_job                 String?
-  father_job                 String?
-  guardian_type              String?
-  family_relation            Int?
-  travel_time                Int?
-  free_time                  Int?
-  go_out_freq                Int?
-  alcohol_weekday            Int?
-  alcohol_weekend            Int?
-  health_status              Int?
-  parent_cohabitation_status String?
-
-  // Course context
-  course_name          String?
-  subject_area         String?
-  course_run           String?
-  course_duration_days Int?
-  study_load_credits   Int?
-
-  // Outcome / enrollment
-  final_outcome          String?
-  previous_attempt_count Int?
-  enrollment_start_day   Int?
-  enrollment_end_day     Int?
-
-  // Engagement summary
-  total_engagement_count Int?
-  active_day_count       Int?
-  absence_count          Int?
-  study_effort_level     String?
-  consistency_level      String?
-
-  // Performance features
-  avg_score         Float?
-  performance_trend Float?
-  score_consistency Float?
-
-  // Engagement features
-  absences_rate            Float?
-  punctuality_rate         Float?
-  engagement_score         Float?
-  vle_diversity_score      Float?
-  forum_engagement_rate    Float?
-  quiz_engagement_rate     Float?
-  resource_engagement_rate Float?
-  weekly_engagement_drop   Float?
-  early_warning_week       Int?
-
-  // Timeliness features
-  submission_delay_avg   Float?
-  registration_lead_time Int?
-  withdrew_early         Boolean? // Fixed: was Int
-
-  // At-risk features
-  at_risk_score Int?
-  at_risk_label String?
-
-  // Lifestyle features
-  lifestyle_risk_score   Float?
-  support_score          Float?
-  social_balance_score   Float?
-  family_stability_score Float?
-
-  // Socioeconomic features
-  disadvantage_score Float?
-
-  created_at DateTime @default(now())
-
-  batch ImportBatch @relation(fields: [import_batch_id], references: [batch_id], onDelete: Cascade)
-
-  @@index([import_batch_id])
-  @@index([student_id, course_id, source_dataset])
-  @@map("flat_enrollment_master")
-}
-
-model FlatAssessmentResult {
-  id              BigInt @id @default(autoincrement())
-  import_batch_id String
-
-  assessment_result_id String?
-  student_id           String
-  course_id            String
-  assessment_order     Int?
-  source_dataset       String
-
-  // Assessment identity
-  assessment_id         String?
-  assessment_name       String?
-  assessment_type       String?
-  assessment_due_day    Int?
-  assessment_weight_pct Float?
-  is_final_assessment   Boolean?
-  is_banked             Boolean?
-
-  // Assessment values
-  score_normalized      Float?
-  submission_day        Int?
-  submission_delay_days Int?
-  pass_flag             Boolean?
-
-  // Student / outcome context
-  final_outcome String?
-  gender        String?
-  age_group     String?
-
-  // Course context
-  course_name  String?
-  course_run   String?
-  subject_area String?
-
-  created_at DateTime @default(now())
-
-  batch ImportBatch @relation(fields: [import_batch_id], references: [batch_id], onDelete: Cascade)
-
-  @@index([import_batch_id])
-  @@index([student_id, course_id, source_dataset])
-  @@index([assessment_id])
-  @@map("flat_assessment_result")
-}
 
 // -------------------------------------------------------
 // APP STATE (Singleton)
@@ -571,17 +369,14 @@ model ImportBatch {
   row_count      Int      @default(0)
   status         String // completed | failed | processing | seeded
 
-  students               Student[]
-  courses                Course[]
-  classes                Class[]
-  enrollments            Enrollment[]
-  assessments            Assessment[]
-  exam_results           ExamResult[]
-  events                 Event[]
-  engagements            Engagement[]
-  enrollment_features    EnrollmentFeatures[]
-  flat_enrollment_master FlatEnrollmentMaster[]
-  flat_assessment_result FlatAssessmentResult[]
+  students           Student[]
+  courses            Course[]
+  classes            Class[]
+  enrollments        Enrollment[]
+  assessments        Assessment[]
+  assessment_results AssessmentResult[]
+  events             Event[]
+  engagements        Engagement[]
 
   @@map("import_batch")
 }

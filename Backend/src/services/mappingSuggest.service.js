@@ -7,6 +7,7 @@ import {
 import { getDatasetRuleMapper } from "../config/datasetRules/index.js";
 import { normalizeText } from "../utils/textUtils.js";
 import { isUciDataset } from "../utils/datasetUtils.js";
+import { getLearnedAliases, normalizeKey } from "../repositories/aliasMemory.repository.js";
 
 
 // ==========================================
@@ -400,7 +401,7 @@ function getDerivedHint(rawColumnName) {
 // MAIN SERVICE
 // ==========================================
 
-export function suggestMappingsFromProfiling({
+export async function suggestMappingsFromProfiling({
   profilingResult,
   datasetName = "uploaded_dataset",
   sourceDataset = DEFAULT_SOURCE_DATASET
@@ -408,6 +409,8 @@ export function suggestMappingsFromProfiling({
   if (!profilingResult || !Array.isArray(profilingResult.columns)) {
     throw new Error("Invalid profilingResult: expected an object with a columns array.");
   }
+
+  const learnedAliases = await getLearnedAliases();
 
   const fieldMappings = [];
   const strongSuggestedCanonicalFields = new Set();
@@ -479,6 +482,17 @@ export function suggestMappingsFromProfiling({
         bestScore = totalScore;
         bestField = canonicalField.name;
         bestFieldMeta = canonicalField;
+      }
+    }
+    
+    // Check Learned Memory
+    const normalizedRaw = normalizeKey(rawColumn);
+    if (learnedAliases[normalizedRaw]) {
+      const learnedTarget = learnedAliases[normalizedRaw].canonical_field;
+      if (learnedTarget) {
+        bestScore = Math.max(bestScore, 0.96); // High confidence for learned
+        bestField = learnedTarget;
+        bestFieldMeta = CANONICAL_FIELDS.find(f => f.name === learnedTarget);
       }
     }
 

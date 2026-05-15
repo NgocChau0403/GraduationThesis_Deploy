@@ -4,6 +4,7 @@ import { parseCsvFileToRawRows } from "../services/csvParse.service.js";
 import { profileCSV } from "../services/profiling.service.js";
 import { suggestMappingsFromProfiling } from "../services/mappingSuggest.service.js";
 import { confirmMapping } from "../services/mappingConfirm.service.js";
+import { transformRawRowsToCanonical } from "../services/mappingTransform.service.js";
 import { runImportPipeline } from "../services/runImportPipeline.service.js";
 import {
   createUploadSession,
@@ -286,7 +287,7 @@ export async function profileImportController(req, res) {
           ? sourceDatasetInput
           : inferredDatasetType;
 
-      const mappingSuggestion = suggestMappingsFromProfiling({
+      const mappingSuggestion = await suggestMappingsFromProfiling({
         profilingResult,
         datasetName: effectiveDatasetName,
         sourceDataset: effectiveSourceDataset
@@ -465,8 +466,9 @@ export async function confirmMappingController(req, res) {
 
     const targetFile = uploadedFiles[fileIndex];
 
-    const confirmationResult = confirmMapping({
+    const confirmationResult = await confirmMapping({
       mappingConfig,
+      originalMappingConfig: targetFile.mappingSuggestion,
       profilingResult: targetFile.profilingResult
     });
 
@@ -501,7 +503,64 @@ export async function confirmMappingController(req, res) {
 }
 
 // ==========================================
-// 7. /api/import/run
+// 7. /api/import/preview
+// Previews the transformation for a mapping config
+// ==========================================
+export async function previewMappingController(req, res) {
+  try {
+    const { sessionId, fileId, mappingConfig } = req.body;
+
+    if (!sessionId || !fileId || !mappingConfig) {
+      return res.status(400).json({
+        success: false,
+        message: "sessionId, fileId, and mappingConfig are required."
+      });
+    }
+
+    const session = await getUploadSession(sessionId);
+    if (!session) {
+      return res.status(404).json({ success: false, message: "Upload session not found." });
+    }
+
+    const uploadedFiles = Array.isArray(session.uploadedFiles) ? session.uploadedFiles : [];
+    const targetFile = uploadedFiles.find((item) => item.fileId === fileId);
+
+    if (!targetFile || !targetFile.rawRows) {
+      return res.status(404).json({ success: false, message: "Uploaded file or raw data not found." });
+    }
+
+    // Take just the first 5 rows for preview
+    const previewRows = targetFile.rawRows.slice(0, 5);
+
+    const transformedData = transformRawRowsToCanonical({
+      mappingConfig,
+      profilingResult: targetFile.profilingResult,
+      rawRows: previewRows,
+      batchId: "preview"
+    });
+
+    return res.json({
+      success: true,
+      preview_data: {
+        student: transformedData.student.slice(0, 5),
+        enrollment: transformedData.enrollment.slice(0, 5),
+        assessment_result: transformedData.assessment_result.slice(0, 5),
+        engagement: transformedData.engagement.slice(0, 5)
+      }
+    });
+  } catch (error) {
+    console.error("Preview mapping failed:", error);
+    return res.status(error.status || 400).json({
+      success: false,
+      message: error.message || "Preview mapping failed.",
+      validationResult: error.validationResult || null,
+      code: error.code || null
+    });
+  }
+}
+
+// ==========================================
+// 8. /api/import/run
 // Supports running 1 or many confirmed files in same session
 // ==========================================
 export async function runImportController(req, res) {
@@ -570,7 +629,7 @@ export async function runImportController(req, res) {
             profilingResult: file.profilingResult,
             rawRows: file.rawRows,
             options: {
-              saveFlatOutput: true,
+              saveToDb: true,
               replaceIfExists: options.replaceIfExists ?? true,
               importBatchId,
               chunkSize: options.chunkSize || 500,

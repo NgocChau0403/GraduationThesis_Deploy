@@ -14,7 +14,7 @@ const TARGET_ENTITIES = [
   "class",
   "enrollment",
   "assessment",
-  "exam_result",
+  "assessment_result",
   "event",
   "engagement"
 ];
@@ -125,7 +125,23 @@ function convertDateToRelativeDay(value) {
   return null;
 }
 
-function applyTransform(transformName, rawValue) {
+function regexExtract(value, pattern) {
+  if (value === null || value === undefined || value === "") return null;
+  try {
+    const regex = new RegExp(pattern);
+    const match = regex.exec(String(value));
+    if (match) {
+      // Return first capture group if it exists, otherwise the full match
+      return match[1] !== undefined ? match[1] : match[0];
+    }
+  } catch (err) {
+    // Return null if regex fails or pattern is invalid
+    return null;
+  }
+  return null;
+}
+
+function applyTransform(transformName, rawValue, transformParams) {
   switch (transformName) {
     case "direct_copy": return rawValue ?? null;
     case "ignore": return null;
@@ -135,6 +151,7 @@ function applyTransform(transformName, rawValue) {
     case "normalize_gender": return normalizeGender(rawValue);
     case "normalize_score": return normalizeScore(rawValue);
     case "convert_date_to_relative_day": return convertDateToRelativeDay(rawValue);
+    case "regex_extract": return regexExtract(rawValue, transformParams?.regex);
     default: throw new Error(`Unsupported transform "${transformName}".`);
   }
 }
@@ -349,7 +366,7 @@ export function transformRawRowsToCanonical({
       let transformedValue;
 
       try {
-        transformedValue = applyTransform(mappingItem.transform, rawValue);
+        transformedValue = applyTransform(mappingItem.transform, rawValue, mappingItem.transform_params);
       } catch (error) {
         skippedMappingCount += 1;
         pushUnique(warnings, `Transform failed for ${buildRowContext(rowIndex, mappingItem.id, primarySourceField)}.`);
@@ -484,7 +501,10 @@ export function transformRawRowsToCanonical({
 
     // 4. ENROLLMENT
     if (enrollmentId) {
-      // Sometimes an enrollment row just maps student/course keys without extra fields, we still need to create it.
+      // Compute registration_lead_time [FE]: ABS(enrollment_start_day) only when day < 0 (registered early)
+      const startDay = enrollmentLogic.enrollment_start_day != null ? Number(enrollmentLogic.enrollment_start_day) : null;
+      const registrationLeadTime = (startDay !== null && startDay < 0) ? Math.abs(startDay) : null;
+
       output.enrollment.push({
         batch_id: safeBatchId,
         source_dataset: sourceDataset,
@@ -495,8 +515,10 @@ export function transformRawRowsToCanonical({
         enrollment_end_day: enrollmentLogic.enrollment_end_day,
         final_outcome: enrollmentLogic.final_outcome,
         previous_attempt_count: enrollmentLogic.previous_attempt_count,
-        study_load_credits: courseLogic.study_load_credits, // from canonical logic mapping
-        absences: engagementLogic.absence_count // absences mapped from engagement
+        study_load_credits: courseLogic.study_load_credits,
+        absences: engagementLogic.absence_count,
+        studytime: enrollmentLogic.studytime,         // UCI: weekly self-study time 1-4. NULL for OULAD
+        registration_lead_time: registrationLeadTime  // [FE] days registered before class start
       });
       targetEntityRowCounts.enrollment += 1;
     }
@@ -509,6 +531,10 @@ export function transformRawRowsToCanonical({
       const derivedAssessmentId = aLogic.assessment_id || surrogateKeyGenerators.assessment_id(classId, rawAssessmentName);
       
       // 5. ASSESSMENT
+      // [FE] week_of_class: CEIL(due_day / 7) — in-table, no JOIN needed
+      const dueDayNum = aLogic.assessment_due_day != null ? Number(aLogic.assessment_due_day) : null;
+      const weekOfClass = (dueDayNum !== null && !Number.isNaN(dueDayNum)) ? Math.ceil(dueDayNum / 7) : null;
+
       output.assessment.push({
         batch_id: safeBatchId,
         source_dataset: sourceDataset,
@@ -518,15 +544,22 @@ export function transformRawRowsToCanonical({
         assessment_type: aLogic.assessment_type,
         assessment_order: aLogic.assessment_order,
         due_day: aLogic.assessment_due_day,
+        week_of_class: weekOfClass,            // [FE] CEIL(due_day / 7)
         weight_pct: aLogic.assessment_weight_pct,
         is_final_assessment: aLogic.is_final_assessment
       });
       targetEntityRowCounts.assessment += 1;
 
-      // 6. EXAM RESULT
+      // 6. ASSESSMENT_RESULT
       if (enrollmentId && (aLogic.score_normalized !== undefined || aLogic.pass_flag !== undefined)) {
         const resultId = aLogic.assessment_result_id || surrogateKeyGenerators.result_id(derivedStudentId, derivedAssessmentId);
-        output.exam_result.push({
+
+        // [FE] pass_flag: score_normalized >= 40 — in-table, always auto-computed
+        // Source mapping may carry pass_flag but we override with the canonical rule
+        const scoreNum = aLogic.score_normalized != null ? Number(aLogic.score_normalized) : null;
+        const computedPassFlag = (scoreNum !== null && !Number.isNaN(scoreNum)) ? scoreNum >= 40 : null;
+
+        output.assessment_result.push({
           batch_id: safeBatchId,
           source_dataset: sourceDataset,
           result_id: resultId,
@@ -535,11 +568,12 @@ export function transformRawRowsToCanonical({
           enrollment_id: enrollmentId,
           score_normalized: aLogic.score_normalized,
           submission_day: aLogic.submission_day,
-          submission_delay_days: aLogic.submission_delay_days,
-          pass_flag: aLogic.pass_flag,
+          // submission_delay_days intentionally omitted — not stored in DB per spec.
+          // Computed on-the-fly via JOIN with assessment.due_day when needed.
+          pass_flag: computedPassFlag,           // [FE] score_normalized >= 40
           is_banked: aLogic.is_banked
         });
-        targetEntityRowCounts.exam_result += 1;
+        targetEntityRowCounts.assessment_result += 1;
       }
     };
 
@@ -566,6 +600,12 @@ export function transformRawRowsToCanonical({
 
       // ENGAGEMENT
       if (enrollmentId) {
+        const rawCount = engagementLogic.engagement_count;
+        const countNum = rawCount != null ? Number(rawCount) : null;
+
+        // [FE] log_click_score: log(engagement_count + 1) — row-level click intensity, in-table
+        const logClickScore = countNum !== null ? Math.log(countNum + 1) : null;
+
         const derivedEngagementId = surrogateKeyGenerators.engagement_id(derivedStudentId, derivedEventId, engagementLogic.event_day || 0);
         output.engagement.push({
           batch_id: safeBatchId,
@@ -574,9 +614,10 @@ export function transformRawRowsToCanonical({
           event_id: derivedEventId,
           student_id: derivedStudentId,
           enrollment_id: enrollmentId,
-          engagement_count: engagementLogic.engagement_count,
+          engagement_count: rawCount,
           event_day: engagementLogic.event_day,
-          week_number: engagementLogic.week_number
+          week_number: engagementLogic.week_number,
+          log_click_score: logClickScore    // [FE] log(count+1)
         });
         targetEntityRowCounts.engagement += 1;
       }

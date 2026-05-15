@@ -5,7 +5,12 @@
   "main": "index.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon --watch src src/server.js"
+    "dev": "nodemon --watch src src/server.js",
+    "migrate": "prisma migrate dev",
+    "generate": "prisma generate"
+  },
+  "prisma": {
+    "schema": "prisma/schema.prisma"
   },
   "keywords": [],
   "author": "",

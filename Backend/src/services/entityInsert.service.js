@@ -74,7 +74,7 @@ export async function insertNormalizedEntities({
     student: deduplicate(normalizedData.student, s => s.student_id),
     enrollment: deduplicate(normalizedData.enrollment, e => e.enrollment_id),
     assessment: deduplicate(normalizedData.assessment, a => a.assessment_id),
-    exam_result: deduplicate(normalizedData.exam_result, er => er.result_id),
+    assessment_result: deduplicate(normalizedData.assessment_result, er => er.result_id),
     event: deduplicate(normalizedData.event, e => e.event_id),
     engagement: deduplicate(normalizedData.engagement, e => e.engagement_id)
   };
@@ -85,7 +85,7 @@ export async function insertNormalizedEntities({
     deduplicated.class.length +
     deduplicated.enrollment.length +
     deduplicated.assessment.length +
-    deduplicated.exam_result.length +
+    deduplicated.assessment_result.length +
     deduplicated.event.length +
     deduplicated.engagement.length;
 
@@ -115,7 +115,7 @@ export async function insertNormalizedEntities({
     results.student = await insertInChunks(tx.student, deduplicated.student, chunkSize);
     results.enrollment = await insertInChunks(tx.enrollment, deduplicated.enrollment, chunkSize);
     results.assessment = await insertInChunks(tx.assessment, deduplicated.assessment, chunkSize);
-    results.exam_result = await insertInChunks(tx.examResult, deduplicated.exam_result, chunkSize);
+    results.assessment_result = await insertInChunks(tx.assessmentResult, deduplicated.assessment_result, chunkSize);
     results.event = await insertInChunks(tx.event, deduplicated.event, chunkSize);
     results.engagement = await insertInChunks(tx.engagement, deduplicated.engagement, chunkSize);
   });
@@ -130,23 +130,3 @@ export async function insertNormalizedEntities({
   };
 }
 
-export async function insertEnrollmentFeatures({ features, chunkSize = DEFAULT_CHUNK_SIZE }) {
-  if (!Array.isArray(features)) {
-    throw new Error("features must be an array.");
-  }
-  
-  // Deduplicate on ef_id to be safe
-  const deduplicated = deduplicate(features, f => f.ef_id);
-  
-  let inserted = 0;
-  await prisma.$transaction(async (tx) => {
-    inserted = await insertInChunks(tx.enrollmentFeatures, deduplicated, chunkSize);
-  });
-  
-  return {
-    success: true,
-    summary: {
-      total_features_inserted: inserted
-    }
-  };
-}

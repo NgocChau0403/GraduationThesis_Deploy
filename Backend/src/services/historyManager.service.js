@@ -22,8 +22,8 @@ export async function deleteImportBatch(batchId) {
 
   // Delete batch
   // Thanks to onDelete: Cascade in schema.prisma, 
-  // all 8 normalized tables, enrollment_features, and 2 flat tables 
-  // associated with this batch_id will be automatically deleted by PostgreSQL!
+  // all 8 normalized tables associated with this batch_id 
+  // will be automatically deleted by PostgreSQL!
   await prisma.importBatch.delete({
     where: { batch_id: batchId }
   });

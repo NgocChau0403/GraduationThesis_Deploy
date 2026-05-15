@@ -103,6 +103,12 @@ export function mapUciColumn({ rawColumn }) {
       transform: "direct_copy",
       entity_scope: "student",
       confidence: 0.95
+    },
+    studytime: {
+      canonical_field: "studytime",
+      transform: "cast_int",
+      entity_scope: "enrollment",
+      confidence: 0.95
     }
   };
 

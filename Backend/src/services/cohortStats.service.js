@@ -23,7 +23,9 @@ function sumNumbers(values) {
 }
 
 // ==========================================
-// MAIN SERVICE
+// MAIN SERVICE (Phase 2 Utility)
+// Note: This service is not used during the Phase 1 ETL import pipeline.
+// Cross-table derived metrics are computed dynamically via SQL during Phase 2 analytics.
 // ==========================================
 
 export function computeCohortStats(normalizedEntities) {

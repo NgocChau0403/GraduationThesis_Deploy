@@ -1,16 +1,14 @@
 import { confirmMapping } from "./mappingConfirm.service.js";
 import { transformRawRowsToCanonical } from "./mappingTransform.service.js";
-import { insertNormalizedEntities, insertEnrollmentFeatures } from "./entityInsert.service.js";
-import { computeCohortStats } from "./cohortStats.service.js";
-import { computeEnrollmentFeatures } from "./enrollmentFeatures.service.js";
-import { materializeFlatTables } from "./saveFlatTables.service.js";
+import { insertNormalizedEntities } from "./entityInsert.service.js";
+import { computeStudentFeatures } from "./compositeFeatures.service.js";
 
 // ==========================================
 // CONSTANTS
 // ==========================================
 
 const DEFAULT_PIPELINE_OPTIONS = {
-  saveFlatOutput: false, // Legacy flag, now used to decide whether to save to DB
+  saveToDb: true,          // Whether to persist to DB (set false for dry-run/preview)
   replaceIfExists: true,
   importBatchId: null,
   chunkSize: 500,
@@ -57,7 +55,7 @@ function createPipelineMetadata(options) {
     completed_at: null,
     duration_ms: null,
     options: {
-      saveFlatOutput: options.saveFlatOutput,
+      saveToDb: options.saveToDb,
       replaceIfExists: options.replaceIfExists,
       chunkSize: options.chunkSize,
       importBatchId: options.importBatchId,
@@ -111,19 +109,11 @@ function countEntityRows(entityObject = {}) {
   );
 }
 
-function buildPipelineSummary({
-  rawRows,
-  transformResult,
-  saveResult,
-  featureSaveResult,
-  materializeResult
-}) {
+function buildPipelineSummary({ rawRows, transformResult, saveResult }) {
   return {
     raw_row_count: Array.isArray(rawRows) ? rawRows.length : 0,
     transformed_counts: countEntityRows(transformResult?.output),
-    saved_counts: saveResult?.summary?.entity_counts ?? null,
-    features_computed_count: featureSaveResult?.summary?.total_features_inserted ?? 0,
-    materialized: materializeResult?.success ?? false
+    saved_counts: saveResult?.summary?.entity_counts ?? null
   };
 }
 
@@ -173,7 +163,8 @@ export async function runImportPipeline({
 
     assertConfirmedMapping(mappingForPipeline);
 
-    // 1. PHASE: TRANSFORM TO NORMALIZED 8 ENTITIES
+    // ── Phase 1: TRANSFORM ──────────────────────────────────────────────
+    // Parse raw rows → normalize → route to 8 canonical entity arrays
     const transformResult = transformRawRowsToCanonical({
       mappingConfig: mappingForPipeline,
       profilingResult,
@@ -181,33 +172,29 @@ export async function runImportPipeline({
       batchId: resolvedOptions.importBatchId
     });
 
-    let saveResult = null;
-    let featureSaveResult = null;
-    let materializeResult = null;
+    // ── Phase 2: IN-TABLE FEATURE ENGINEERING ──────────────────────────
+    // Compute student-level composite FE fields (lifestyle, socioeconomic scores).
+    // Split into a separate pass because these require combining multiple
+    // demographic fields with weighted formulas — done cleanly after transform.
+    //
+    // Row-level FE fields (registration_lead_time, pass_flag, log_click_score,
+    // week_of_class) are already computed during Phase 1 transform, inline,
+    // because their raw inputs are immediately available at shatter time.
+    transformResult.output.student = computeStudentFeatures(transformResult.output.student);
 
-    if (resolvedOptions.saveFlatOutput) {
-      // 2. PHASE: INSERT NORMALIZED ENTITIES TO DB
+    let saveResult = null;
+
+    if (resolvedOptions.saveToDb) {
+      // ── Phase 3: INSERT TO DB ─────────────────────────────────────────
+      // Batch-insert all 8 normalized entity arrays into PostgreSQL.
+      // Cross-table derived metrics (avg_score, at_risk, etc.) are computed
+      // on-demand via SQL queries in the analytics execution engine.
       saveResult = await insertNormalizedEntities({
         normalizedData: transformResult.output,
         batchId: resolvedOptions.importBatchId,
         batchName: mappingForPipeline.dataset_name,
         sourceDataset: mappingForPipeline.source_dataset,
         chunkSize: resolvedOptions.chunkSize
-      });
-
-      // 3. PHASE: FEATURE ENGINEERING 2-PASS
-      const cohortStats = computeCohortStats(transformResult.output);
-      const enrollmentFeatures = computeEnrollmentFeatures(transformResult.output, cohortStats);
-
-      featureSaveResult = await insertEnrollmentFeatures({
-        features: enrollmentFeatures,
-        chunkSize: resolvedOptions.chunkSize
-      });
-
-      // 4. PHASE: SQL MATERIALIZATION
-      materializeResult = await materializeFlatTables({
-        batchId: saveResult.batch_id,
-        replaceIfExists: resolvedOptions.replaceIfExists
       });
     }
 
@@ -218,17 +205,9 @@ export async function runImportPipeline({
       metadata,
       profilingResult,
       mappingConfigUsed: mappingForPipeline,
-      summary: buildPipelineSummary({
-        rawRows,
-        transformResult,
-        saveResult,
-        featureSaveResult,
-        materializeResult
-      }),
+      summary: buildPipelineSummary({ rawRows, transformResult, saveResult }),
       transformResult,
-      saveResult,
-      featureSaveResult,
-      materializeResult
+      saveResult
     };
   } catch (cause) {
     finalizeMetadata(metadata);

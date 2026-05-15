@@ -1,6 +1,12 @@
 export const FEATURE_RULES = {
+  // ==========================================
+  // THRESHOLDS
+  // ==========================================
   thresholds: {
+    // ETL-time threshold (In-table FE: pass_flag)
     pass_score: 40,
+    
+    // Analytics-time thresholds (Phase 2 Cross-table analysis)
     at_risk_avg_score: 40,
     at_risk_low_engagement: 0.15,
     at_risk_low_punctuality: 0.7,

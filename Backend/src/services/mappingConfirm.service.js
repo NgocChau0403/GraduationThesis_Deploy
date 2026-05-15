@@ -1,4 +1,5 @@
 import { validateMapping } from "./mappingValidation.service.js";
+import { saveLearnedAlias } from "../repositories/aliasMemory.repository.js";
 
 // ==========================================
 // HELPERS
@@ -17,8 +18,9 @@ function deepClone(value) {
 // MAIN SERVICE
 // ==========================================
 
-export function confirmMapping({
+export async function confirmMapping({
   mappingConfig,
+  originalMappingConfig,
   profilingResult,
   confirmedAt = null
 }) {
@@ -41,6 +43,24 @@ export function confirmMapping({
     error.code = "MAPPING_CONFIRMATION_FAILED";
     error.validationResult = validationResult;
     throw error;
+  }
+
+  // Learn from manual overrides
+  if (originalMappingConfig && Array.isArray(originalMappingConfig.field_mappings)) {
+    const originalMap = new Map(
+      originalMappingConfig.field_mappings.map(m => [m.id, m])
+    );
+
+    for (const item of confirmedMapping.field_mappings) {
+      if (item.status === "confirmed" && item.canonical_field && item.source_fields?.length > 0) {
+        const originalItem = originalMap.get(item.id);
+        if (originalItem && ["unmapped", "needs_review"].includes(originalItem.status)) {
+           // User manually mapped this field!
+           const rawColumn = item.source_fields[0];
+           await saveLearnedAlias(rawColumn, item.canonical_field);
+        }
+      }
+    }
   }
 
   return {
