@@ -1,0 +1,117 @@
+import taskRegistryService from "../services/taskRegistry.service.js";
+
+// ─────────────────────────────────────────────────────────────────────────────
+// SANITIZER
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * Strips raw SQL fields from a task before returning to the client.
+ *
+ * Security rationale:
+ *   - sqlQuery / sqlQueries are server-side implementation details
+ *   - Exposing them leaks schema structure to the client
+ *   - The frontend never needs raw SQL — it only needs metadata + results
+ *   - This follows the principle of minimal surface area in public APIs
+ */
+function sanitizeTask(task) {
+  // Destructure to explicitly exclude SQL fields, spread the rest
+  const { sqlQuery, sqlQueries, ...publicFields } = task;
+  return publicFields;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// CONTROLLERS
+// ─────────────────────────────────────────────────────────────────────────────
+
+/**
+ * GET /api/tasks
+ *
+ * Returns all tasks with optional filtering. SQL fields are stripped.
+ *
+ * Query params (all optional, combinable):
+ *   scope    — filter by scope keyword  e.g. "student", "cohort"
+ *   dataset  — filter by dataset compat e.g. "OULAD", "UCI"
+ *   search   — keyword search in taskName + actionableQuestion
+ *   analysis — filter by analysisType   e.g. "trend", "correlation"
+ *
+ * Design: filtering is applied in-memory on the registry (53 tasks).
+ * No DB query needed — the registry is a static JSON loaded once at startup.
+ */
+export async function getTasksController(req, res) {
+  try {
+    const { scope, dataset, search, analysis } = req.query;
+
+    let tasks = taskRegistryService.getAllTasks();
+
+    // Filter: scope (case-insensitive substring)
+    if (scope) {
+      const kw = scope.toLowerCase();
+      tasks = tasks.filter((t) => t.scope?.toLowerCase().includes(kw));
+    }
+
+    // Filter: dataset compatibility
+    if (dataset) {
+      const ds = dataset.toLowerCase();
+      tasks = tasks.filter((t) => {
+        const compat = (t.datasetCompatibility ?? "").toLowerCase();
+        return compat === "both" || compat.includes(ds);
+      });
+    }
+
+    // Filter: keyword search in name + question
+    if (search) {
+      const kw = search.toLowerCase();
+      tasks = tasks.filter(
+        (t) =>
+          t.taskName?.toLowerCase().includes(kw) ||
+          t.actionableQuestion?.toLowerCase().includes(kw)
+      );
+    }
+
+    // Filter: analysisType (from analytics sub-object)
+    if (analysis) {
+      const kw = analysis.toLowerCase();
+      tasks = tasks.filter((t) =>
+        t.analytics?.analysisType?.toLowerCase().includes(kw)
+      );
+    }
+
+    return res.status(200).json({
+      success: true,
+      count:   tasks.length,
+      filters: { scope, dataset, search, analysis },
+      tasks:   tasks.map(sanitizeTask),
+    });
+  } catch (err) {
+    console.error("[getTasksController]", err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+}
+
+/**
+ * GET /api/tasks/:taskId
+ *
+ * Returns full metadata for a single task. SQL fields are stripped.
+ * Used by the frontend to display task details before execution.
+ */
+export async function getTaskByIdController(req, res) {
+  try {
+    const { taskId } = req.params;
+    const task = taskRegistryService.getTaskById(taskId);
+
+    if (!task) {
+      return res.status(404).json({
+        success: false,
+        error:   `Task "${taskId}" not found in registry.`,
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      task:    sanitizeTask(task),
+    });
+  } catch (err) {
+    console.error("[getTaskByIdController]", err);
+    return res.status(500).json({ success: false, error: err.message });
+  }
+}
