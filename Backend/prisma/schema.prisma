@@ -395,3 +395,64 @@ model UploadSession {
   @@index([expires_at])
   @@map("upload_session")
 }
+
+// -------------------------------------------------------
+// AI EXPLANATION LOG
+// Observability layer for the AI explanation pipeline.
+//
+// Every call to POST /api/ai/explain produces one row here,
+// regardless of success or degradation.
+//
+// Design decisions:
+//   - task_id is a plain String (not FK) — registry is in-memory JSON,
+//     not a DB table. Avoids schema coupling.
+//   - datasets_snapshot stores lightweight metadata (rowCount, nullPct),
+//     NOT full row data — avoids storage bloat.
+//   - explanation_text and structured_output are separate columns
+//     so we can query text alone without parsing JSON.
+//   - is_degraded = true means Python AI was unavailable and the
+//     Node backend returned a fallback response.
+// -------------------------------------------------------
+model AiExplanationLog {
+  log_id       String   @id @default(cuid())
+  created_at   DateTime @default(now())
+
+  // ── Request identity ──────────────────────────────────
+  execution_id  String   // correlates with analytics run (exec_xxx)
+  task_id       String   // e.g. "S-B01" — NOT a FK (registry is JSON)
+  student_id    String?  // null for cohort-level tasks
+
+  // ── AI strategy metadata (from taskRegistry at call time) ──
+  explanation_strategy String   // "trend" | "comparison" | ...
+  target_audience      String[] // ["student"] | ["instructor", "advisor"]
+  granularity          String?  // "weekly" | "per_assessment" | ...
+  aggregation_level    String?  // "student" | "cohort" | ...
+
+  // ── Call outcome ──────────────────────────────────────
+  is_degraded        Boolean  @default(false) // true = Python service was down
+  degraded_reason    String?                  // "TIMEOUT" | "SERVICE_UNAVAILABLE" | ...
+
+  // ── AI response quality ───────────────────────────────
+  confidence_level   String?  // "HIGH" | "MEDIUM" | "LOW"
+  confidence_reason  String?
+
+  // ── Output storage ────────────────────────────────────
+  explanation_text   String?  // plain summary for quick display / search
+  structured_output  Json?    // full AIExplainResponse body (insights[], recommendations[])
+  datasets_snapshot  Json?    // { labelName: { rowCount, nullPct } } — NOT full rows
+
+  // ── Latency tracking ──────────────────────────────────
+  latency_ms         Int?     // total proxy round-trip (Node → Python → Node)
+  python_latency_ms  Int?     // Python-only processing time
+
+  // ── Provenance ────────────────────────────────────────
+  model_version        String?  // e.g. "gpt-4o-mini-2024-07-18"
+  prompt_token_count   Int?
+  response_token_count Int?
+
+  @@index([execution_id])
+  @@index([task_id, created_at])
+  @@index([student_id])
+  @@index([is_degraded])
+  @@map("ai_explanation_log")
+}

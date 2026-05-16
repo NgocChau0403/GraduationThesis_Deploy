@@ -563,50 +563,46 @@ The AI does NOT: run queries, select chart types, compute statistics, or make de
 ```
 Python FastAPI Microservice (separate service)
 ├── /explain endpoint
-├── Prompt Builder
-├── LLM Client (OpenAI/Gemini)
-├── Safety Filter
-└── Response Parser
+├── ExplanationStrategyFactory (trend, comparison, risk, etc.)
+├── LLM Client (OpenAI API, JSON Mode)
+├── Safety Filter (5-category rule evaluation)
+├── Observability Logger (AiExplanationLog)
+└── Pydantic Validation (ExplainResponse schema)
 ```
 
-### 8.2 Prompt Construction
+### 8.2 Prompt Construction (Strategy Pattern)
+
+The prompt construction uses a Strategy Pattern driven by the `explanation_strategy` metadata field, avoiding a monolithic "god-function" prompt builder.
 
 ```python
-def build_prompt(task_meta, sql_result, student_ctx):
-    return f"""
-You are an educational data analyst providing objective, evidence-based interpretation.
+class ExplanationStrategy(ABC):
+    @abstractmethod
+    def build_prompt(self, context: AnalysisContext, data: dict) -> str: pass
 
-Task: {task_meta['task_name']}
-Analysis Type: {task_meta['analysis_type']}
-Visualization Concept: {task_meta['visualization']}
-Educational Context: {task_meta['data_concept']}
-Insight Type: {task_meta['insight_type']}
-AI Hint: {task_meta['ai_prompt_hint']}
-Actionable Question: {task_meta['actionable_question']}
-
-Data Summary:
-{format_result(sql_result)}
-
-Student Context:
-{student_ctx}
-
-Generate a {task_meta['explanation_type']} explanation (2-3 paragraphs).
-Focus on observable patterns and educational implications.
-Do NOT recommend specific chart types (already determined by metadata).
-Do NOT make personality judgments or deterministic predictions.
-Only describe what the data shows.
-    """
+class TrendStrategy(ExplanationStrategy):
+    def build_prompt(self, context, data):
+        # Uses context.granularity (e.g., "weekly") to adjust tone
+        return f"""
+        You are an educational data analyst writing for {context.target_audience}.
+        The data granularity is {context.granularity}.
+        Analyze the following trend data: {data}
+        ...
+        """
 ```
 
-### 8.3 Explanation Types
+### 8.3 Explanation Strategies
 
-| Type | Style |
+The explanation tone and structural approach are governed by the `explanation_strategy` field in the task metadata.
+
+| Strategy Type | Used for |
 |---|---|
-| `descriptive` | "What happened" — observable pattern summary |
-| `diagnostic` | "Why it might have happened" — cautious analytical reasoning |
-| `comparative` | "How this compares" — relative insights |
-| `temporal` | "Trend over time" — progression narrative |
-| `risk` | "Risk signals observed" — evidence-grounded warning indicators |
+| `trend` | Temporal progression and changes over time |
+| `comparison` | Side-by-side evaluation of students or groups |
+| `distribution` | Analyzing spread across categorical or continuous fields |
+| `correlation` | Identifying associations between numeric variables |
+| `risk` | Communicating evidence-grounded warning indicators |
+| `behavioral` | Explaining engagement and activity patterns |
+| `ranking` | Contextualizing ordered lists and percentiles |
 
 ### 8.4 AI Safety & Educational Interpretation Constraints
 
@@ -644,29 +640,31 @@ The AI explanation engine operates under strict guardrails to ensure ethical, ev
 
 ### 8.5 Explainability Pipeline & Traceability
 
-Every AI-generated explanation in the system is fully traceable through a deterministic provenance chain:
+Every AI-generated explanation in the system is fully traceable through a deterministic provenance chain, recorded in the `AiExplanationLog` table:
 
 ```
-Task Registry (task_id, sql_query, ai_prompt_hint)
+Task Registry (task_id, sql_query, explanation_strategy, analysis_context)
        ↓
-Capability Validator (confirms data conditions, assigns confidence)
+Capability Validator (confirms data conditions, assigns layer confidence)
        ↓
-SQL Execution Engine (executes task-defined query, returns structured result)
+SQL Execution Engine (executes parameterized query, normalizes datasets via query_labels)
        ↓
-Prompt Builder (constructs prompt from task metadata + sql_result + confidence)
+AI Strategy Factory (constructs strategy-specific prompt, derives confidence.based_on)
        ↓
-LLM (generates narrative — constrained by prompt guardrails)
+LLM (generates structured JSON output in JSON mode)
        ↓
-AI Explanation Response (narrative + confidence + source task_id)
+Pydantic Validator (enforces ExplainResponse schema: summary, insights, warnings)
+       ↓
+AIInsightPanel (Renders structured narrative + EvidenceItem linking)
 ```
 
 This means every explanation can be audited by tracing back to:
-- The **task** that defined the analytical intent
-- The **SQL query** that produced the underlying data
-- The **metadata constraints** that governed the prompt
-- The **confidence score** that reflects data quality
+- The **task metadata** that defined the analytical intent and strategy
+- The **SQL query** that produced the underlying datasets
+- The **safety filter flags** and **Pydantic schema validation**
+- The **confidence score** and specific reasons (`based_on`) reflecting data quality
 
-> AI explanations are grounded exclusively in SQL outputs, validated metrics, and metadata constraints. The system produces no AI-generated analytics that cannot be traced to a deterministic data source.
+> AI explanations are grounded exclusively in SQL outputs, validated metrics, and metadata constraints. Execution metadata (latency, token usage, cost) is logged for thesis evaluation and reproducibility.
 
 ---
 
@@ -699,28 +697,39 @@ frontend/
 │       └── api.js
 ```
 
-### 9.2 Dynamic Chart Rendering
+### 9.2 Dynamic Chart Rendering (Adapter Pattern)
+
+The frontend uses an Adapter layer to decouple raw analytical data from charting libraries, driven by the `visualization_config` metadata.
 
 ```jsx
-// ChartRenderer.jsx — driven by task metadata viz_type (frontend chart component)
-// visualization field (intent) is used for AI framing, NOT for chart selection
-const CHART_MAP = {
-  line_chart:   LineChart,
-  bar_chart:    BarChart,
-  histogram:    BarChart,   // configured as histogram
-  scatter_plot: ScatterChart,
-  heatmap:      HeatmapChart,
-  pie_chart:    PieChart,
+// Chart adapters normalize SQL rows into Recharts-compatible structures
+const ADAPTER_MAP = {
+  line_chart: lineAdapter,
+  bar_chart: barAdapter,
+  // ...
 };
 
-export default function ChartRenderer({ taskMeta, data }) {
-  // Rendering is deterministic: driven by viz_type from metadata
-  const ChartComponent = CHART_MAP[taskMeta.viz_type];
-  return <ChartComponent data={data} config={taskMeta} />;
+const CHART_MAP = {
+  line_chart: LineChartView,
+  bar_chart: BarChartView,
+  // ...
+};
+
+export default function ChartRenderer({ taskMeta, datasets }) {
+  // 1. Semantic mapping driven by visualization_config
+  const { viz_type, semantic_roles } = taskMeta.visualization_config;
+  
+  // 2. Data transformation
+  const adapter = ADAPTER_MAP[viz_type];
+  const chartData = adapter(datasets, semantic_roles);
+
+  // 3. Deterministic rendering
+  const ChartComponent = CHART_MAP[viz_type];
+  return <ChartComponent data={chartData} config={taskMeta.visualization_config} />;
 }
 ```
 
-> **Key Principle:** AI does not determine the primary chart. The frontend renders the chart component mapped to `viz_type` as defined in the task registry metadata.
+> **Key Principle:** The frontend rendering is fully decoupled from SQL logic via the Adapter Pattern and semantic metadata (`semantic_roles`). AI does not determine the chart type; it is fully determined by the registry metadata.
 
 ### 9.3 Role-Based Dashboard Architecture
 
@@ -801,8 +810,8 @@ Before a task is accepted into the registry, it must pass:
 
 | Validation Area | Rule |
 |---|---|
-| Required fields completeness | `task_id`, `task_name`, `scope`, `analysis_type`, `visualization`, `viz_type`, `sql_query`, `roles`, `dataset_compatibility` must all be present |
-| Visualization consistency | `visualization` and `viz_type` must be compatible (see Section 11.2) |
+| Required fields completeness | `task_id`, `task_name`, `scope`, `analysis_type`, `visualization_config` (with `semantic_roles`), `analysis_context`, `explanation_strategy`, `target_audience`, `query_labels`, `sql_query`, `roles`, `dataset_compatibility` must all be present |
+| Visualization consistency | `visualization_config.viz_type` must be compatible with the analytical intent (see Section 11.2) |
 | SQL template validity | `sql_query` must contain named parameter placeholders (`:paramName` format), not literal values |
 | Role compatibility | `scope` must align with `roles` (e.g., `cohort` scope must include `admin` role) |
 
@@ -948,29 +957,29 @@ This section explicitly acknowledges the inherent limitations of the system's an
 ## 15. DEVELOPMENT ROADMAP
 
 ### Phase 1 — Foundation (Weeks 1–3)
-- [ ] PostgreSQL schema setup (8 tables + in-table engineered fields)
-- [ ] Prisma schema & migrations
-- [ ] CSV import pipeline (parse → map → insert → FE computation)
-- [ ] Task registry JSON structure + seed data
-- [ ] Basic Express API scaffold
+- [x] PostgreSQL schema setup (8 tables + in-table engineered fields)
+- [x] Prisma schema & migrations
+- [x] CSV import pipeline (parse → map → insert → FE computation)
+- [x] Task registry JSON structure + seed data
+- [x] Basic Express API scaffold
 
 ### Phase 2 — Analytics Core (Weeks 4–6)
-- [ ] Multi-layer capability validator engine (Structural → Semantic → Analytical → Data Sufficiency)
-- [ ] SQL execution engine with parameterized analytical query templates
-- [ ] Task registry API endpoints
-- [ ] Analytics execution endpoint
-- [ ] Basic React UI: import flow + task list
+- [x] Multi-layer capability validator engine (Structural → Semantic → Analytical → Data Sufficiency)
+- [x] SQL execution engine with parameterized analytical query templates
+- [x] Task registry API endpoints
+- [x] Analytics execution endpoint
+- [x] Basic React UI: import flow + task list
 
 ### Phase 3 — Visualization & AI (Weeks 7–9)
 - [ ] Dynamic ChartRenderer with viz_type-driven chart components
-- [ ] Python FastAPI AI explanation service with safety guardrails
-- [ ] Prompt engineering per task metadata (visualization intent + ai_prompt_hint)
+- [x] Python FastAPI AI explanation service with safety guardrails
+- [x] Prompt engineering per task metadata (visualization intent + ai_prompt_hint)
 - [ ] AIInsightPanel component
 - [ ] Student Dashboard complete (basic stats + on-demand tasks)
 
 ### Phase 4 — Instructor Dashboard & Polish (Weeks 10–12)
 - [ ] Instructor Dashboard: single-student deep dive, student comparison workspace, cohort analytics
-- [ ] Role-based auth (JWT)
+- [ ] Mock Auth (UI Role Selection: Student vs Admin)
 - [ ] Filter system (enrollment, cohort, date range)
 - [ ] Task Registry governance validation tooling
 - [ ] OULAD dataset full end-to-end test
@@ -982,7 +991,7 @@ This section explicitly acknowledges the inherent limitations of the system's an
 
 | Area | Approach |
 |---|---|
-| Auth | JWT with role claims (`student` / `instructor`) |
+| Auth | Mock Auth via Role Selection UI (Prototype scope: no JWT/bcrypt) |
 | SQL Injection | Parameterized execution only via Prisma $queryRaw typed parameters |
 | File Upload | MIME type check, size limit, temp storage |
 | AI API Key | Server-side only, never exposed to frontend |
