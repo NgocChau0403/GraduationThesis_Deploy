@@ -1,4 +1,4 @@
-import { normalizeText } from "../../utils/textUtils.js";
+﻿import { normalizeText } from "../../utils/textUtils.js";
 
 export function mapUciColumn({ rawColumn }) {
   const col = normalizeText(rawColumn);
@@ -107,7 +107,7 @@ export function mapUciColumn({ rawColumn }) {
     studytime: {
       canonical_field: "studytime",
       transform: "cast_int",
-      entity_scope: "enrollment",
+      entity_scope: "student",
       confidence: 0.95
     }
   };

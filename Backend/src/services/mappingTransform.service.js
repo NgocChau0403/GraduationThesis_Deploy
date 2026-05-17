@@ -1,7 +1,7 @@
 import { CANONICAL_FIELDS } from "../config/canonicalFields.js";
 import { validateMapping } from "./mappingValidation.service.js";
 import { normalizeText } from "../utils/textUtils.js";
-import { isOuladDataset } from "../utils/datasetUtils.js";
+import { isOuladDataset, isUciDataset } from "../utils/datasetUtils.js";
 import { surrogateKeyGenerators } from "../config/surrogateKey.js";
 
 // ==========================================
@@ -251,8 +251,8 @@ function buildExpandedAssessmentRows(assessmentScores, assessmentBase) {
     ...assessmentBase,
     score_normalized: value,
     // Each column becomes its own assessment; the column name IS the assessment identity
-    assessment_id:    sourceField,
-    assessment_name:  sourceField,
+    assessment_id: sourceField,
+    assessment_name: sourceField,
     // Preserve natural column order so downstream analytics can sort by assessment_order
     assessment_order: assessmentBase.assessment_order ?? (idx + 1)
   }));
@@ -308,13 +308,13 @@ export function transformRawRowsToCanonical({
 
   const activeMappings = Array.isArray(mappingConfig.field_mappings)
     ? mappingConfig.field_mappings.filter(
-        (item) =>
-          isPlainObject(item) &&
-          item.status === "confirmed" &&
-          item.transform !== "ignore" &&
-          typeof item.canonical_field === "string" &&
-          item.canonical_field.trim().length > 0
-      )
+      (item) =>
+        isPlainObject(item) &&
+        item.status === "confirmed" &&
+        item.transform !== "ignore" &&
+        typeof item.canonical_field === "string" &&
+        item.canonical_field.trim().length > 0
+    )
     : [];
 
   let transformedValueCount = 0;
@@ -337,8 +337,8 @@ export function transformRawRowsToCanonical({
 
     // Phase 1: Gather mapped fields into logical groups
     for (const mappingItem of activeMappings) {
-      const logicalGroup = LOGICAL_GROUPS.includes(mappingItem.entity_scope) 
-        ? mappingItem.entity_scope 
+      const logicalGroup = LOGICAL_GROUPS.includes(mappingItem.entity_scope)
+        ? mappingItem.entity_scope
         : (mappingItem.entity_scope === "system" ? "system" : null);
 
       if (!logicalGroup) {
@@ -434,12 +434,15 @@ export function transformRawRowsToCanonical({
     const hasData = (obj) => Object.keys(obj).length > 0;
 
     // 1. COURSE
-    if (derivedCourseId && hasData(courseLogic)) {
+    // For flat-file datasets (UCI), courseLogic may be empty because no columns
+    // are mapped to scope "course", but we still derive courseId/courseRun.
+    // We must always create course+class records when IDs are derived.
+    if (derivedCourseId) {
       output.course.push({
         batch_id: safeBatchId,
         source_dataset: sourceDataset,
         course_id: derivedCourseId,
-        course_name: courseLogic.course_name,
+        course_name: courseLogic.course_name || derivedCourseId,
         subject_area: courseLogic.subject_area
       });
       targetEntityRowCounts.course += 1;
@@ -529,7 +532,7 @@ export function transformRawRowsToCanonical({
 
       const rawAssessmentName = aLogic.assessment_name || aLogic.assessment_id || "ASSESSMENT";
       const derivedAssessmentId = aLogic.assessment_id || surrogateKeyGenerators.assessment_id(classId, rawAssessmentName);
-      
+
       // 5. ASSESSMENT
       // [FE] week_of_class: CEIL(due_day / 7) — in-table, no JOIN needed
       const dueDayNum = aLogic.assessment_due_day != null ? Number(aLogic.assessment_due_day) : null;

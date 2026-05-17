@@ -14,9 +14,7 @@
 
 import axios from "axios";
 import taskRegistryService from "../services/taskRegistry.service.js";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import prisma from "../lib/prisma.js";
 const AI_SERVICE_URL     = process.env.AI_SERVICE_URL      || "http://localhost:8000";
 const AI_SERVICE_TIMEOUT = parseInt(process.env.AI_SERVICE_TIMEOUT_MS) || 15000;
 

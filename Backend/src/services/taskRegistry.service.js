@@ -30,11 +30,59 @@ class TaskRegistryService {
     try {
       const rawData = fs.readFileSync(REGISTRY_PATH, "utf-8");
       this.tasks = JSON.parse(rawData);
+      // Pre-process all SQL templates to strip -- comments at load time
+      // so that buildPositionalQuery never encounters :params inside comments
+      this.tasks.forEach(task => this._preprocessSql(task));
       this.isLoaded = true;
     } catch (error) {
       console.error("Failed to load taskRegistry.json:", error);
       throw new Error("Task registry could not be loaded. Ensure the JSON file exists.");
     }
+  }
+
+  /**
+   * Strips SQL line comments (-- ...) from sqlQuery and sqlQueries fields.
+   *
+   * Handles both multi-line SQL (with \n) and single-line SQL (no \n).
+   * For single-line SQL like "-- comment text-- more commentsWITH cte AS (...)",
+   * it finds -- comment regions and removes them up to the next SQL keyword.
+   *
+   * This runs ONCE at load time so buildPositionalQuery only sees clean SQL.
+   */
+  _preprocessSql(task) {
+    if (task.sqlQuery) {
+      task.sqlQuery = this._stripSqlComments(task.sqlQuery);
+    }
+    if (Array.isArray(task.sqlQueries)) {
+      task.sqlQueries = task.sqlQueries.map(q => this._stripSqlComments(q));
+    }
+  }
+
+  /**
+   * Strips -- line comments from a SQL string.
+   * Works for both multi-line (\n separated) and single-line SQL.
+   */
+  _stripSqlComments(sql) {
+    if (!sql) return sql;
+
+    // If the SQL has real newlines, process line by line
+    if (sql.includes('\n')) {
+      return sql.split('\n')
+        .map(line => {
+          const commentIdx = line.indexOf('--');
+          return commentIdx >= 0 ? line.substring(0, commentIdx) : line;
+        })
+        .join('\n')
+        .trim();
+    }
+
+    // Single-line SQL: remove -- comment regions up to the next SQL keyword
+    // Pattern: -- ... followed by a SQL keyword (WITH/SELECT/FROM/JOIN etc.)
+    // The SQL keyword itself is NOT removed.
+    return sql.replace(
+      /--.*?(?=(?:WITH|SELECT|INSERT|UPDATE|DELETE|FROM|JOIN|WHERE|GROUP|ORDER|HAVING|LIMIT|UNION)\b)/gi,
+      ''
+    ).trim();
   }
 
   /**

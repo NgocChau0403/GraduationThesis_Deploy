@@ -115,6 +115,8 @@ function buildPositionalQuery(sqlTemplate, params) {
   const paramIndexMap = new Map();
   const values = [];
 
+  // SQL comments are already stripped at load time by TaskRegistryService.
+  // This function only handles clean SQL with :param placeholders.
   const sql = sqlTemplate.replace(
     /(?<!:):([a-zA-Z_][a-zA-Z0-9_]*)/g,
     (match, name) => {
@@ -147,6 +149,73 @@ function applyLimitGuardrail(sql) {
     return `${sql} LIMIT ${MAX_ROWS_GUARDRAIL}`;
   }
   return sql;
+}
+
+/**
+ * PostgreSQL does not support ROUND(double precision, integer).
+ * Must cast the first argument to numeric: ROUND(expr::numeric, N).
+ *
+ * This rewrites patterns like:
+ *   ROUND(AVG(x), 2)  → ROUND((AVG(x))::numeric, 2)
+ *   ROUND(x * 100, 1) → ROUND((x * 100)::numeric, 1)
+ *
+ * Only triggers when a second argument (precision) is present.
+ * ROUND(x) with a single arg works fine on double precision.
+ */
+function fixRoundCast(sql) {
+  // Find each ROUND( and manually parse balanced parentheses to find
+  // the top-level comma that separates expr from precision.
+  // Regex can't handle nested parens reliably.
+  const result = [];
+  let i = 0;
+
+  while (i < sql.length) {
+    const roundIdx = sql.toUpperCase().indexOf('ROUND(', i);
+    if (roundIdx === -1) {
+      result.push(sql.substring(i));
+      break;
+    }
+
+    // Push everything before ROUND(
+    result.push(sql.substring(i, roundIdx));
+
+    // Find matching closing paren with depth tracking
+    const openParen = roundIdx + 5; // index of '(' after ROUND
+    let depth = 1;
+    let j = openParen + 1;
+    let topLevelCommaIdx = -1;
+
+    while (j < sql.length && depth > 0) {
+      const ch = sql[j];
+      if (ch === '(') depth++;
+      else if (ch === ')') depth--;
+      else if (ch === ',' && depth === 1) {
+        // This is the top-level comma inside ROUND(expr, precision)
+        topLevelCommaIdx = j;
+      }
+      if (depth > 0) j++;
+    }
+
+    if (depth === 0 && topLevelCommaIdx !== -1) {
+      // We found ROUND(expr, precision)
+      const expr = sql.substring(openParen + 1, topLevelCommaIdx).trim();
+      const precision = sql.substring(topLevelCommaIdx + 1, j).trim();
+      // Only apply ::numeric cast if precision is a single digit
+      if (/^\d+$/.test(precision)) {
+        result.push(`ROUND((${expr})::numeric, ${precision})`);
+      } else {
+        // Not a simple precision — keep original
+        result.push(sql.substring(roundIdx, j + 1));
+      }
+    } else {
+      // No comma found or unbalanced — single-arg ROUND(x), keep as-is
+      result.push(sql.substring(roundIdx, j + 1));
+    }
+
+    i = j + 1;
+  }
+
+  return result.join('');
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -192,7 +261,8 @@ async function executeOne(sqlTemplate, params, options = {}) {
   const { bigintMode = "number", limitGuardrail = true } = options;
 
   const { sql: rawSql, values } = buildPositionalQuery(sqlTemplate, params);
-  const sql = limitGuardrail ? applyLimitGuardrail(rawSql) : rawSql;
+  const guardedSql = limitGuardrail ? applyLimitGuardrail(rawSql) : rawSql;
+  const sql = fixRoundCast(guardedSql);
 
   const startTime = Date.now();
 

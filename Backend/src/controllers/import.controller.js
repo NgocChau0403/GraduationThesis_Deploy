@@ -250,12 +250,16 @@ export async function profileImportController(req, res) {
         separator: delimiterInfo.delimiter
       });
 
+      console.log(`[DEBUG] File ${file.originalname} - Delimiter: ${delimiterInfo.delimiter}, rawRows: ${rawRows.length}`);
+
       // ------------------------------------------
       // STEP 3 — Profile using same detected delimiter
       // ------------------------------------------
       const profilingResult = await profileCSV(file.path, {
         separator: delimiterInfo.delimiter
       });
+
+      console.log(`[DEBUG] File ${file.originalname} - profiling columns count: ${profilingResult.columns.length}`);
 
       // ------------------------------------------
       // STEP 4 — Detect dataset type + role
@@ -337,14 +341,14 @@ export async function profileImportController(req, res) {
     // STEP 8 — Rebuild mapping suggestions if
     // final dataset/source resolution changed
     // ------------------------------------------
-    const normalizedUploadedFiles = uploadedFiles.map((item) => ({
+    const normalizedUploadedFiles = await Promise.all(uploadedFiles.map(async (item) => ({
       ...item,
-      mappingSuggestion: suggestMappingsFromProfiling({
+      mappingSuggestion: await suggestMappingsFromProfiling({
         profilingResult: item.profilingResult,
         datasetName: resolvedDatasetName,
         sourceDataset: resolvedSourceDataset
       })
-    }));
+    })));
 
     const bundleProfilingResult = buildBundleProfilingResult(normalizedUploadedFiles);
     const bundleMappingSuggestion = buildBundleMappingSuggestion({
