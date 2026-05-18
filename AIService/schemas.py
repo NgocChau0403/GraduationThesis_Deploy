@@ -55,6 +55,24 @@ class AnalysisContext(BaseModel):
     aggregation_level: str   # "student"|"cohort"|"comparison"|"instructor"
 
 
+class SemanticContext(BaseModel):
+    """
+    Semantic enrichment for tasks that use competency proxies.
+    Injected by Node ai.controller when competency_source in data rows.
+
+    competency_mode:
+      "native"  — dataset has real competency_tag ontology
+      "proxy"   — assessment_name used as fallback (G1, G2, G3 / TMA01, CMA01)
+      "mixed"   — some rows native, some proxy
+      "unknown" — neither field available
+
+    competency_proxy_note:
+      Human-readable explanation (from task.semanticNote in registry).
+    """
+    competency_mode:       str | None = None
+    competency_proxy_note: str | None = None
+
+
 class ConfidenceInput(BaseModel):
     """
     Data quality signal from Node (from capabilityValidator output).
@@ -91,6 +109,9 @@ class ExplainRequest(BaseModel):
 
     # query_labels echoed from meta (same as datasets keys, ordered)
     query_labels: list[str] = Field(default_factory=list)
+
+    # semantic context: proxy vs native competency detection (injected by Node)
+    semantic_context: SemanticContext | None = None
 
 
 # ─────────────────────────────────────────────────────────────────────────────

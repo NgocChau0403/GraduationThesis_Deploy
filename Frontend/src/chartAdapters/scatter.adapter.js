@@ -20,9 +20,9 @@ export function adapt(rawData, config) {
   if (variant === "colored" && color_field) {
     const groups = {};
     for (const row of rawData) {
-      const group = String(row[color_field] ?? "Other");
+      const group = row[color_field] != null ? String(row[color_field]) : "Unknown";
       if (!groups[group]) groups[group] = [];
-      groups[group].push({ x: row[x_field], y: row[y_field], label: row[color_field] });
+      groups[group].push({ x: row[x_field] != null ? Number(row[x_field]) : 0, y: Number(row[y_field]) || 0, label: group });
     }
 
     return {
@@ -36,7 +36,7 @@ export function adapt(rawData, config) {
   return {
     series: [{
       name: config.y_label || y_field,
-      data: rawData.map((row) => ({ x: row[x_field], y: row[y_field] })),
+      data: rawData.map((row) => ({ x: row[x_field] != null ? Number(row[x_field]) : 0, y: Number(row[y_field]) || 0 })),
     }],
     xKey: "x",
     yKey: "y",

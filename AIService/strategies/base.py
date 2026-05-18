@@ -99,6 +99,53 @@ class BaseExplanationStrategy(ABC):
           openai.APIError         — if API is down or rate-limited
           Any other Exception     — caught by main.py → DEGRADED response
         """
+        
+        json_format_instruction = """
+OUTPUT FORMAT: You MUST return a valid JSON object with this exact structure:
+{
+  "explanation": {
+    "summary": "<2-3 sentence overall narrative>",
+    "insights": [
+      {
+        "title": "<short title>",
+        "description": "<detailed observation>",
+        "severity": "low|medium|high",
+        "evidence": [
+          {
+            "metric": "<field name>",
+            "value": <number or string>,
+            "comparison": "baseline|up_from_previous|down_from_previous|peak|trough|stable",
+            "delta": <signed number or null>,
+            "context": "<optional context string>"
+          }
+        ]
+      }
+    ],
+    "educational_implications": ["<string>"],
+    "recommendations": [
+      {
+        "priority": "low|medium|high",
+        "action": "<specific action>",
+        "rationale": "<why this action>"
+      }
+    ],
+    "warnings": []
+  },
+  "confidence": {
+    "level": "HIGH|MEDIUM|LOW",
+    "reason": "<brief data quality note>"
+  }
+}
+
+CRITICAL RULES:
+- Generate 2–4 insights maximum
+- evidence[] must use exact field names from the dataset
+- Do NOT invent data points — only reference values present in the dataset
+- Do NOT include markdown, code fences, or any text outside the JSON object
+"""
+        
+        system_prompt = system_prompt.strip() + "\n\n" + json_format_instruction
+
         response = await _client.chat.completions.create(
             model  = MODEL,
             messages = [

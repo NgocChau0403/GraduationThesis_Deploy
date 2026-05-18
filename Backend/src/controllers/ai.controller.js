@@ -50,8 +50,34 @@ function buildDegradedResponse(taskId, executionId, reason) {
 }
 
 /**
- * Helper: Create a lightweight snapshot of datasets for logging (avoid storing heavy raw rows).
+ * Helper: Detect proxy competency mode from datasets rows.
+ * Reads competency_source field injected by SQL CASE expression.
+ * Returns null if task has no competency dimension.
  */
+function buildSemanticContext(task, datasets) {
+  const allRows = Object.values(datasets).flat();
+  // competency_source is in SQL output for S-T02, A-S05, A-G04 only
+  const hasSource = allRows.some(r => r?.competency_source != null);
+  if (!hasSource) return null;
+
+  const hasProxy  = allRows.some(r => r?.competency_source === "proxy");
+  const hasNative = allRows.some(r => r?.competency_source === "native");
+  const hasUnknown = allRows.some(r => r?.competency_source === "unknown");
+
+  const competencyMode =
+    hasNative && hasProxy   ? "mixed"   :
+    hasNative               ? "native"  :
+    hasProxy                ? "proxy"   :
+    hasUnknown              ? "unknown" : null;
+
+  if (!competencyMode) return null;
+
+  return {
+    competency_mode:        competencyMode,
+    competency_proxy_note:  task.semanticNote ?? null,
+  };
+}
+
 function buildDatasetsSnapshot(datasets) {
   if (!datasets || typeof datasets !== "object") return null;
   const snapshot = {};
@@ -158,20 +184,21 @@ export async function explainController(req, res) {
     execution_id:         executionId,
     task_name:            task.taskName,
     analysis_type:        task.analytics?.analysisType ?? null,
-    explanation_strategy: task.explanation_strategy,          // from registry (STEP 2b)
+    explanation_strategy: task.explanation_strategy,
     explanation_type:     task.analytics?.explanationType ?? null,
     ai_prompt_hint:       task.aiPromptHint ?? null,
     actionable_question:  task.actionableQuestion ?? null,
-    target_audience:      task.target_audience,               // from registry (STEP 2b)
-    visualization_config: task.visualization_config ?? null,  // from registry (STEP 2a)
-    analysis_context:     task.analysis_context ?? null,      // from registry (STEP 2b)
+    target_audience:      task.target_audience,
+    visualization_config: task.visualization_config ?? null,
+    analysis_context:     task.analysis_context ?? null,
     datasets,
     confidence: {
       level:  meta?.dataQuality?.confidence        ?? "LOW",
       reason: meta?.dataQuality?.confidence_reason ?? "Unknown.",
     },
-    student_context: studentContext ?? null,
-    query_labels:    task.query_labels ?? []
+    student_context:  studentContext ?? null,
+    query_labels:     task.query_labels ?? [],
+    semantic_context: buildSemanticContext(task, datasets),  // proxy competency detection
   };
 
   // ── Forward to Python AI service ────────────────────────────────────────────

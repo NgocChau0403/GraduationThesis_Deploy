@@ -8,7 +8,7 @@ import {
   Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
 
-const COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899"];
+import { getStableColor } from "../../utils/colorUtils";
 
 export default function BarChartView({ data, config }) {
   const { data: chartData, xKey, bars, stacked } = data;
@@ -21,27 +21,31 @@ export default function BarChartView({ data, config }) {
     );
   }
 
-  const isHorizontal = config.orientation === "horizontal";
+  // config.orientation: "horizontal" means horizontal bars (Recharts layout="vertical")
+  // config.orientation: "vertical" means vertical columns (Recharts layout="horizontal")
+  const isHorizontalBar = config.orientation === "horizontal";
+  const rechartsLayout = isHorizontalBar ? "vertical" : "horizontal";
 
   return (
-    <ResponsiveContainer width="100%" height={380}>
-      <BarChart
-        data={chartData}
-        layout={isHorizontal ? "horizontal" : "vertical"}
-        margin={{ top: 5, right: 20, bottom: 5, left: 20 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-        {isHorizontal ? (
-          <>
-            <XAxis dataKey={xKey} tick={{ fontSize: 11, fill: "#64748b" }} />
-            <YAxis tick={{ fontSize: 12, fill: "#64748b" }} />
-          </>
-        ) : (
-          <>
-            <XAxis type="number" tick={{ fontSize: 12, fill: "#64748b" }} />
-            <YAxis dataKey={xKey} type="category" tick={{ fontSize: 11, fill: "#64748b" }} width={100} />
-          </>
-        )}
+    <div style={{ minHeight: 380, width: "100%" }}>
+      <ResponsiveContainer width="100%" height={380}>
+        <BarChart
+          data={chartData}
+          layout={rechartsLayout}
+          margin={{ top: 5, right: 20, bottom: isHorizontalBar ? 5 : 25, left: 20 }}
+        >
+          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+          {isHorizontalBar ? (
+            <>
+              <XAxis type="number" tick={{ fontSize: 12, fill: "#64748b" }} />
+              <YAxis dataKey={xKey} type="category" tick={{ fontSize: 11, fill: "#64748b" }} width={120} />
+            </>
+          ) : (
+            <>
+              <XAxis dataKey={xKey} height={60} tick={{ fontSize: 11, fill: "#64748b", angle: -25, textAnchor: "end" }} />
+              <YAxis tick={{ fontSize: 12, fill: "#64748b" }} />
+            </>
+          )}
         <Tooltip contentStyle={{ borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 12 }} />
         {bars.length > 1 && <Legend wrapperStyle={{ fontSize: 12 }} />}
         {bars.map((bar, i) => (
@@ -49,7 +53,7 @@ export default function BarChartView({ data, config }) {
             key={bar.dataKey}
             dataKey={bar.dataKey}
             name={bar.name}
-            fill={COLORS[i % COLORS.length]}
+            fill={getStableColor(bar.dataKey)}
             stackId={stacked ? "stack" : undefined}
             radius={stacked ? 0 : [4, 4, 0, 0]}
             maxBarSize={50}
@@ -57,5 +61,6 @@ export default function BarChartView({ data, config }) {
         ))}
       </BarChart>
     </ResponsiveContainer>
+    </div>
   );
 }

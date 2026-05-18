@@ -8,7 +8,7 @@ import {
   Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
 
-const COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899"];
+import { getStableColor } from "../../utils/colorUtils";
 
 export default function LineChartView({ data, config }) {
   const { data: chartData, xKey, lines } = data;
@@ -18,14 +18,16 @@ export default function LineChartView({ data, config }) {
   }
 
   return (
-    <ResponsiveContainer width="100%" height={380}>
-      <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-        <XAxis
-          dataKey={xKey}
-          tick={{ fontSize: 12, fill: "#64748b" }}
-          label={config.x_label ? { value: config.x_label, position: "insideBottom", offset: -5, fontSize: 12, fill: "#94a3b8" } : undefined}
-        />
+    <div style={{ minHeight: 380, width: "100%" }}>
+      <ResponsiveContainer width="100%" height={380}>
+        <LineChart data={chartData} margin={{ top: 5, right: 20, bottom: 25, left: 0 }}>
+          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+          <XAxis
+            dataKey={xKey}
+            height={60}
+            tick={{ fontSize: 11, fill: "#64748b", angle: -25, textAnchor: "end" }}
+            label={config.x_label ? { value: config.x_label, position: "insideBottom", offset: -15, fontSize: 12, fill: "#94a3b8" } : undefined}
+          />
         <YAxis
           tick={{ fontSize: 12, fill: "#64748b" }}
           label={config.y_label ? { value: config.y_label, angle: -90, position: "insideLeft", fontSize: 12, fill: "#94a3b8" } : undefined}
@@ -40,14 +42,15 @@ export default function LineChartView({ data, config }) {
             type="monotone"
             dataKey={line.dataKey}
             name={line.name}
-            stroke={COLORS[i % COLORS.length]}
+            stroke={getStableColor(line.dataKey)}
             strokeWidth={2}
-            dot={{ r: 4, fill: COLORS[i % COLORS.length] }}
+            dot={{ r: 4, fill: getStableColor(line.dataKey) }}
             activeDot={{ r: 6 }}
           />
         ))}
       </LineChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   );
 }
 

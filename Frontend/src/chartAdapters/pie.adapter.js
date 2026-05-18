@@ -21,7 +21,7 @@ export function adapt(rawData, config) {
   if (sorted.length <= MAX_SLICES) {
     return {
       data: sorted.map((row) => ({
-        name: String(row[x_field]),
+        name: row[x_field] != null ? String(row[x_field]) : "Unknown",
         value: Number(row[y_field]) || 0,
       })),
     };
@@ -33,7 +33,7 @@ export function adapt(rawData, config) {
 
   return {
     data: [
-      ...top.map((row) => ({ name: String(row[x_field]), value: Number(row[y_field]) || 0 })),
+      ...top.map((row) => ({ name: row[x_field] != null ? String(row[x_field]) : "Unknown", value: Number(row[y_field]) || 0 })),
       { name: "Other", value: otherValue },
     ],
   };

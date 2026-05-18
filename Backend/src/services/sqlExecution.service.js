@@ -140,16 +140,50 @@ function buildPositionalQuery(sqlTemplate, params) {
 }
 
 /**
- * Applies a LIMIT guardrail to queries without an explicit LIMIT.
- * Prevents accidental full-table scans.
+ * Applies a LIMIT guardrail to queries without an explicit top-level LIMIT.
+ * Prevents accidental full-table scans returning millions of rows.
+ *
+ * ── Bug #6 note ─────────────────────────────────────────────────────────────
+ * This function is called per-query by executeOne().
+ * Since Bug #2 fix, multi-statement tasks use sqlQueries[] (each entry is a
+ * single clean statement). applyLimitGuardrail never receives a semicolon-
+ * separated multi-statement string. The guard below is a safety net.
+ *
+ * ── Trailing semicolon ───────────────────────────────────────────────────────
+ * Strip only a single trailing semicolon (after trimming whitespace).
+ * A semicolon in the middle of the string means multi-statement — we log a
+ * warning and return the SQL unchanged so PostgreSQL will reject it clearly.
+ * ────────────────────────────────────────────────────────────────────────────
  */
 function applyLimitGuardrail(sql) {
-  const hasLimit = /\bLIMIT\s+\d+/i.test(sql);
-  if (!hasLimit) {
-    return `${sql} LIMIT ${MAX_ROWS_GUARDRAIL}`;
+  let cleanSql = sql.trim();
+
+  // ── Guard: detect multi-statement (semicolon NOT at the very end) ─────────
+  // After Bug #2, this should never fire. If it does, log clearly and bail.
+  const innerSemicolon = cleanSql.replace(/;$/, '');   // strip trailing ; first
+  if (/;\s*(SELECT|WITH|INSERT|UPDATE|DELETE)\b/i.test(innerSemicolon)) {
+    console.error(
+      '[SqlExecution] ⚠️  applyLimitGuardrail received a multi-statement SQL. ' +
+      'This task should use sqlQueries[] not sqlQuery. Skipping LIMIT injection.'
+    );
+    return cleanSql;  // return as-is; PostgreSQL will reject it with a clear error
   }
-  return sql;
+
+  // Strip single trailing semicolon
+  if (cleanSql.endsWith(';')) {
+    cleanSql = cleanSql.slice(0, -1).trimEnd();
+  }
+
+  // Detect top-level LIMIT: only inject guardrail when no LIMIT exists at all.
+  // Note: LIMIT inside a subquery still counts — we don't want to add an outer
+  // LIMIT if the query already caps results via an inner LIMIT.
+  const hasLimit = /\bLIMIT\s+\d+/i.test(cleanSql);
+  if (!hasLimit) {
+    return `${cleanSql}\nLIMIT ${MAX_ROWS_GUARDRAIL}`;
+  }
+  return cleanSql;
 }
+
 
 /**
  * PostgreSQL does not support ROUND(double precision, integer).

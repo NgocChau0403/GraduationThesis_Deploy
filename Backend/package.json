@@ -9,7 +9,9 @@
     "migrate": "prisma migrate dev",
     "generate": "prisma generate",
     "registry:validate": "node scripts/validateRegistry.js",
-    "registry:stats": "node scripts/registryStats.js"
+    "registry:stats": "node scripts/registryStats.js",
+    "registry:runtime": "node scripts/validateTasksAgainstDataset.js",
+    "registry:freeze": "node scripts/freezeRegistry.js"
   },
   "prisma": {
     "schema": "prisma/schema.prisma"

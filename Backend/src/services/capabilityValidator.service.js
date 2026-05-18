@@ -1,6 +1,8 @@
 import prisma from "../lib/prisma.js";
 import taskRegistryService from "./taskRegistry.service.js";
 import { WarningCodes } from "../constants/warningCodes.js";
+import { checkCapabilityCompatibility } from "../lib/capabilityUtils.js";
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // CONSTANTS
@@ -17,15 +19,7 @@ const ALLOWED_TABLES = new Set([
   "import_batch",
 ]);
 
-/**
- * Maps datasetCompatibility values to their required source_dataset values.
- * "both" means any dataset is accepted.
- */
-const DATASET_COMPAT_MAP = {
-  OULAD_only: "OULAD",
-  UCI_only:   "UCI",
-  both:       null, // no restriction
-};
+
 
 // ─────────────────────────────────────────────────────────────────────────────
 // HELPERS
@@ -129,10 +123,28 @@ class CapabilityValidatorService {
     const missingFeFields = [];
     let compatibilityMismatch = false;
 
-    // B1 — Dataset compatibility check
-    const requiredDataset = DATASET_COMPAT_MAP[task.datasetCompatibility];
-    if (requiredDataset && sourceDataset !== requiredDataset) {
-      compatibilityMismatch = true;
+    // B1 — Dataset compatibility check (capability matrix — single source of truth)
+    //
+    // Primary path: task.requiredCapabilities[] vs datasetCapabilityMatrix[sourceDataset]
+    // Fallback: legacy task.datasetCompatibility string (kept for backwards compat)
+    //
+    // Both paths produce the same filtering result. The capability matrix path
+    // is authoritative and provides structured missingCapabilities[] for diagnostics.
+    if (task.requiredCapabilities?.length > 0) {
+      const { compatible, missingCapabilities } = checkCapabilityCompatibility(
+        sourceDataset,
+        task.requiredCapabilities
+      );
+      if (!compatible) {
+        compatibilityMismatch = true;
+        // Surface which capabilities are missing for the structured issue below
+        task._missingCapabilities = missingCapabilities; // transient, not persisted
+      }
+    } else {
+      // Legacy fallback: datasetCompatibility string
+      const compat = (task.datasetCompatibility ?? "both").toLowerCase();
+      if (compat === "oulad_only" && sourceDataset !== "OULAD") compatibilityMismatch = true;
+      if (compat === "uci_only"   && sourceDataset !== "UCI")   compatibilityMismatch = true;
     }
 
     // B2 — Stored FE field availability check
@@ -173,10 +185,18 @@ class CapabilityValidatorService {
     // Build structured missing_requirements
     const structuredMissing = [];
     if (compatibilityMismatch) {
+      const missing = task._missingCapabilities;
+      const message = missing?.length > 0
+        ? `Task requires capabilities [${missing.join(", ")}] not available in "${sourceDataset}" dataset.`
+        : `Task requires "${task.datasetCompatibility}" dataset but active dataset is "${sourceDataset}".`;
       structuredMissing.push({
         ...WarningCodes.DATASET_MISMATCH,
-        message: `Task requires "${DATASET_COMPAT_MAP[task.datasetCompatibility]}" dataset but active dataset is "${sourceDataset}".`,
-        context: { required: DATASET_COMPAT_MAP[task.datasetCompatibility], actual: sourceDataset },
+        message,
+        context: {
+          missingCapabilities: missing ?? [],
+          activeDataset:       sourceDataset,
+          requiredCapabilities: task.requiredCapabilities ?? []
+        },
       });
     }
     for (const f of missingFeFields) {
@@ -187,11 +207,47 @@ class CapabilityValidatorService {
       });
     }
 
+    // B3 — Optional capability advisory (proxy competency detection)
+    //
+    // When a task lists proxy_competency_available in optionalCapabilities,
+    // check whether the active dataset is using proxy (assessment_name)
+    // instead of native competency_tag.
+    // Does NOT affect pass/fail — purely advisory for logging + UI + AI.
+    const semanticAdvisories = [];
+    const optionalCaps = task.optionalCapabilities ?? [];
+
+    if (optionalCaps.includes("proxy_competency_available")) {
+      const { capabilityMatrix } = await import("../lib/capabilityUtils.js");
+      const datasetCaps = capabilityMatrix[sourceDataset] ?? {};
+      const hasNativeCompetency = !!datasetCaps["competency_tagging"];
+      const hasProxyCompetency  = !!datasetCaps["proxy_competency_available"];
+
+      if (!hasNativeCompetency && hasProxyCompetency) {
+        const msg =
+          `[SEMANTIC_WARNING] Task ${task.taskId} using proxy competency inference ` +
+          `(dataset "${sourceDataset}" lacks native competency ontology — ` +
+          `assessment_name used as fallback proxy).`;
+        console.warn(msg);
+        semanticAdvisories.push({
+          ...WarningCodes.SEMANTIC_PROXY_COMPETENCY,
+          message: msg,
+          context: {
+            task_id:        task.taskId,
+            source_dataset: sourceDataset,
+            proxy_field:    "assessment_name",
+            native_field:   "competency_tag",
+            semantic_note:  task.semanticNote ?? null,
+          },
+        });
+      }
+    }
+
     return {
       pass:                   missingFeFields.length === 0 && !compatibilityMismatch,
       missing_fe_fields:      missingFeFields,
       compatibility_mismatch: compatibilityMismatch,
       structured_issues:      structuredMissing,
+      semantic_advisories:    semanticAdvisories,
     };
   }
 
@@ -490,6 +546,7 @@ class CapabilityValidatorService {
       confidence_reason:    layerD.confidence_reason,
       warnings:             allWarnings,
       missing_requirements: missingRequirements,
+      semantic_advisories:  layerB.semantic_advisories ?? [],
       layer_results:        layerResults,
     };
   }

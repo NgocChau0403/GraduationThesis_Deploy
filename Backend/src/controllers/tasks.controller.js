@@ -39,9 +39,20 @@ function sanitizeTask(task) {
  */
 export async function getTasksController(req, res) {
   try {
-    const { scope, dataset, search, analysis } = req.query;
+    const { scope, dataset, search, analysis, includeExperimental } = req.query;
 
     let tasks = taskRegistryService.getAllTasks();
+
+    // ── Governance Gating ───────────────────────────────────────────────────
+    // certified, validated: always exposed
+    // experimental: hidden unless ?includeExperimental=true
+    // deprecated: never exposed
+    tasks = tasks.filter((t) => {
+      const status = t.registry_status || "experimental";
+      if (status === "deprecated") return false;
+      if (status === "experimental" && includeExperimental !== "true") return false;
+      return true;
+    });
 
     // Filter: scope (case-insensitive substring)
     if (scope) {
@@ -97,12 +108,22 @@ export async function getTasksController(req, res) {
 export async function getTaskByIdController(req, res) {
   try {
     const { taskId } = req.params;
+    const { includeExperimental } = req.query;
     const task = taskRegistryService.getTaskById(taskId);
 
     if (!task) {
       return res.status(404).json({
         success: false,
         error:   `Task "${taskId}" not found in registry.`,
+      });
+    }
+
+    // ── Governance Gating ───────────────────────────────────────────────────
+    const status = task.registry_status || "experimental";
+    if (status === "deprecated" || (status === "experimental" && includeExperimental !== "true")) {
+      return res.status(403).json({
+        success: false,
+        error: `Task "${taskId}" is ${status} and is not exposed. ${status === "experimental" ? "Pass ?includeExperimental=true to access." : ""}`.trim()
       });
     }
 

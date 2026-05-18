@@ -23,9 +23,12 @@ export function adapt(rawData, config) {
   if (variant === "ranked") {
     const sorted = [...rawData].sort((a, b) => (b[y_field] ?? 0) - (a[y_field] ?? 0));
     return {
-      data: sorted,
-      xKey: x_field,
-      bars: [{ dataKey: y_field, name: config.y_label || y_field }],
+      data: sorted.map(r => ({
+        x: r[x_field] != null ? String(r[x_field]) : "Unknown",
+        y: Number(r[y_field]) || 0
+      })),
+      xKey: "x",
+      bars: [{ dataKey: "y", name: config.y_label || y_field }],
       stacked: false,
     };
   }
@@ -36,14 +39,14 @@ export function adapt(rawData, config) {
     const grouped = {};
 
     for (const row of rawData) {
-      const xVal = row[x_field];
-      if (!grouped[xVal]) grouped[xVal] = { [x_field]: xVal };
-      grouped[xVal][row[series_field]] = row[y_field];
+      const xVal = row[x_field] != null ? String(row[x_field]) : "Unknown";
+      if (!grouped[xVal]) grouped[xVal] = { x: xVal };
+      grouped[xVal][row[series_field]] = Number(row[y_field]) || 0;
     }
 
     return {
       data: Object.values(grouped),
-      xKey: x_field,
+      xKey: "x",
       bars: seriesValues.map((s) => ({ dataKey: String(s), name: String(s) })),
       stacked: variant === "stacked",
     };
@@ -51,9 +54,12 @@ export function adapt(rawData, config) {
 
   // Default / categorical / histogram
   return {
-    data: rawData,
-    xKey: x_field,
-    bars: [{ dataKey: y_field, name: config.y_label || y_field }],
+    data: rawData.map(r => ({
+      x: r[x_field] != null ? String(r[x_field]) : "Unknown",
+      y: Number(r[y_field]) || 0
+    })),
+    xKey: "x",
+    bars: [{ dataKey: "y", name: config.y_label || y_field }],
     stacked: false,
   };
 }

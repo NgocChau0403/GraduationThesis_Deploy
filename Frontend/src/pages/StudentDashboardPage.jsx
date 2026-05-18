@@ -21,15 +21,34 @@ import ChartRenderer from "../components/ChartRenderer";
 import AIInsightPanel from "../components/AIInsightPanel";
 
 // ── Basic tasks auto-run cho Student ────────────────────────────────────────
-// Đây là 3 tasks quan trọng nhất, chạy tự động khi vào dashboard
+// Đây là 3 tasks quan trọng nhất, chạy tự động khi vào dashboard.
+// Tất cả 3 tasks này có datasetCompatibility: "both" nên an toàn với mọi dataset.
 const STUDENT_BASIC_TASKS = ["S-B01", "S-B02", "S-T01"];
+
+// ── Dataset source → compatibility filter map ─────────────────────────────────
+// Maps activeDataset.source → which datasetCompatibility values are allowed.
+// "both" tasks always show; OULAD-only tasks hide for UCI users (and vice versa).
+function getCompatFilter(datasetSource) {
+  if (!datasetSource) return () => true;
+  const src = datasetSource.toUpperCase();
+  return (task) =>
+    task.datasetCompatibility === "both" ||
+    task.datasetCompatibility === `${src}_only`;
+}
 
 export default function StudentDashboardPage() {
   const navigate = useNavigate();
   const { activeDataset, isLoading: appLoading } = useAppContext();
 
-  // All student-scope tasks (for "Explore More")
-  const { tasks: allStudentTasks } = useTaskRegistry({ scope: "student" });
+  // Derive dataset source ("UCI" | "OULAD" | null) for compatibility filtering.
+  // activeDataset.source is set by the backend and stored in AppContext.
+  const datasetSource = activeDataset?.source ?? null;
+  const isCompatible  = getCompatFilter(datasetSource);
+
+  // All student-scope tasks, filtered by active dataset compatibility.
+  // This prevents OULAD-only tasks from showing in the UI when using UCI data.
+  const { tasks: allStudentTasksRaw } = useTaskRegistry({ scope: "student" });
+  const allStudentTasks = allStudentTasksRaw.filter(isCompatible);
 
   // Fetch classes
   const { data: classesData } = useQuery({
@@ -41,7 +60,9 @@ export default function StudentDashboardPage() {
   const [selectedClassId, setSelectedClassId] = useState("");
   const classId = selectedClassId || classes[0]?.class_id || "";
 
-  // Fetch students (filtered by class)
+  // Fetch students (filtered by class).
+  // The students API returns enrollment_id per student — we store the full
+  // student object so runTask can resolve enrollment_id on demand.
   const { data: studentsData } = useQuery({
     queryKey: ["students", activeDataset?.id, classId],
     queryFn: () => getStudents(activeDataset?.id, classId),
@@ -57,16 +78,39 @@ export default function StudentDashboardPage() {
 
   const studentId = selectedStudentId || students[0]?.student_id || "";
 
-  // ── Auto-run basic tasks ────────────────────────────────────────────────
-  const runTask = useCallback(async (taskId, sid, cid) => {
+  // ── Resolve enrollment_id for the currently selected student ─────────────
+  // The backend's GET /api/students already returns enrollment_id per row.
+  // We look it up from the in-memory students list to avoid an extra API call.
+  // Tasks that need :enrollment_id (S-B03, S-T05, S-T06, S-T10, A-S03)
+  // only work with OULAD data where enrollment records are unique per student+class.
+  const enrollmentId = students.find(s => s.student_id === studentId)?.enrollment_id ?? null;
+
+  // ── Run a single analytics task ──────────────────────────────────────────
+  //
+  // extraParams: optional additional params (e.g. enrollment_id for OULAD tasks).
+  // Base params: batch_id, class_id, student_id — always provided.
+  // enrollment_id is added automatically when the task SQL requires it AND the
+  // current dataset has OULAD enrollment records (enrollmentId != null).
+  //
+  // Tasks that need :enrollment_id but have no enrollmentId available (UCI)
+  // should have datasetCompatibility=OULAD_only and be filtered out by
+  // isCompatible() before reaching this function. The guard below is a
+  // safety net in case the filter is bypassed.
+  const runTask = useCallback(async (taskId, sid, cid, extraParams = {}) => {
     if (!sid || !cid || !activeDataset?.id) return;
     setLoadingTasks(prev => new Set([...prev, taskId]));
     try {
-      const result = await runAnalyticsTask(taskId, {
-        batch_id: activeDataset.id,
-        class_id: cid,
+      const params = {
+        batch_id:   activeDataset.id,
+        class_id:   cid,
         student_id: sid,
-      });
+        // Include enrollment_id when available — OULAD tasks need it.
+        // UCI tasks don't use :enrollment_id in their SQL so this is harmless.
+        ...(enrollmentId ? { enrollment_id: enrollmentId } : {}),
+        // Caller-supplied extras (e.g. comparison tasks passing s1, s2)
+        ...extraParams,
+      };
+      const result = await runAnalyticsTask(taskId, params);
       setTaskResults(prev => ({ ...prev, [taskId]: result }));
     } catch (err) {
       console.error(`[Dashboard] Task ${taskId} failed:`, err.message);
@@ -81,7 +125,8 @@ export default function StudentDashboardPage() {
         return next;
       });
     }
-  }, [activeDataset?.id, classId]);
+  // enrollmentId included in deps: re-create callback when student changes
+  }, [activeDataset?.id, enrollmentId]);
 
   // Auto-run basic tasks when studentId is available
   useEffect(() => {
@@ -95,7 +140,9 @@ export default function StudentDashboardPage() {
   // ── Get task metadata by ID ─────────────────────────────────────────────
   const getTaskMeta = (taskId) => allStudentTasks.find(t => t.taskId === taskId);
 
-  // ── Extra tasks (not in basic list, not yet run) ────────────────────────
+  // ── Extra tasks: compatible, not basic, not yet run ──────────────────────
+  // allStudentTasks is already filtered by dataset compatibility above.
+  // Further exclude: basic tasks (always shown) and tasks already executed.
   const extraTasks = allStudentTasks.filter(
     t => !STUDENT_BASIC_TASKS.includes(t.taskId) && !taskResults[t.taskId]
   );

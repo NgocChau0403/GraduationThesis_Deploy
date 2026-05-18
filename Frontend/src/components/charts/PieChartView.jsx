@@ -7,7 +7,7 @@ import {
   PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer,
 } from "recharts";
 
-const COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6"];
+import { getStableColor } from "../../utils/colorUtils";
 
 export default function PieChartView({ data, config }) {
   const { data: chartData } = data;
@@ -21,7 +21,8 @@ export default function PieChartView({ data, config }) {
   }
 
   return (
-    <ResponsiveContainer width="100%" height={380}>
+    <div style={{ minHeight: 380, width: "100%" }}>
+      <ResponsiveContainer width="100%" height={380}>
       <PieChart>
         <Pie
           data={chartData}
@@ -36,8 +37,8 @@ export default function PieChartView({ data, config }) {
           }
           labelLine={{ stroke: "#94a3b8" }}
         >
-          {chartData.map((_, idx) => (
-            <Cell key={idx} fill={COLORS[idx % COLORS.length]} />
+          {chartData.map((entry, idx) => (
+            <Cell key={idx} fill={getStableColor(entry.name)} />
           ))}
         </Pie>
         <Tooltip
@@ -46,6 +47,7 @@ export default function PieChartView({ data, config }) {
         />
         <Legend wrapperStyle={{ fontSize: 12 }} />
       </PieChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   );
 }

@@ -56,42 +56,6 @@ EXPLANATION OBJECTIVES:
 3. Quantify the magnitude of change (deltas)
 4. Provide educationally meaningful interpretation
 
-OUTPUT FORMAT: You MUST return a valid JSON object with this exact structure:
-{{
-  "explanation": {{
-    "summary": "<2-3 sentence overall trend narrative>",
-    "insights": [
-      {{
-        "title": "<short title>",
-        "description": "<detailed observation>",
-        "severity": "low|medium|high",
-        "evidence": [
-          {{
-            "metric": "<field name>",
-            "value": <number or string>,
-            "comparison": "baseline|up_from_previous|down_from_previous|peak|trough|stable",
-            "delta": <signed number or null>,
-            "context": "<week_due=7 or similar>"
-          }}
-        ]
-      }}
-    ],
-    "educational_implications": ["<string>"],
-    "recommendations": [
-      {{
-        "priority": "low|medium|high",
-        "action": "<specific action>",
-        "rationale": "<why this action>"
-      }}
-    ],
-    "warnings": []
-  }},
-  "confidence": {{
-    "level": "HIGH|MEDIUM|LOW",
-    "reason": "<brief data quality note>"
-  }}
-}}
-
 CRITICAL RULES:
 - Generate 2–4 insights maximum
 - evidence[] must use exact field names from the dataset

@@ -8,7 +8,7 @@ import {
   Tooltip, Legend, ResponsiveContainer, ZAxis,
 } from "recharts";
 
-const COLORS = ["#10b981", "#3b82f6", "#f59e0b", "#ef4444", "#8b5cf6", "#ec4899"];
+import { getStableColor } from "../../utils/colorUtils";
 
 export default function ScatterChartView({ data, config }) {
   const { series, xKey, yKey } = data;
@@ -22,7 +22,8 @@ export default function ScatterChartView({ data, config }) {
   }
 
   return (
-    <ResponsiveContainer width="100%" height={380}>
+    <div style={{ minHeight: 380, width: "100%" }}>
+      <ResponsiveContainer width="100%" height={380}>
       <ScatterChart margin={{ top: 10, right: 20, bottom: 10, left: 0 }}>
         <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
         <XAxis
@@ -50,10 +51,11 @@ export default function ScatterChartView({ data, config }) {
             key={s.name}
             name={s.name}
             data={s.data}
-            fill={COLORS[i % COLORS.length]}
+            fill={getStableColor(s.name)}
           />
         ))}
       </ScatterChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
+    </div>
   );
 }

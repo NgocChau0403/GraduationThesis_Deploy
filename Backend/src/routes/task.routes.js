@@ -45,6 +45,12 @@ const router = express.Router();
  *           type: string
  *         description: Search by task ID or task name
  *         example: "S-T01"
+ *       - in: query
+ *         name: includeExperimental
+ *         schema:
+ *           type: boolean
+ *         description: If true, includes tasks with registry_status='experimental'
+ *         example: false
  *     responses:
  *       200:
  *         description: A list of task metadata objects
@@ -196,6 +202,12 @@ router.get("/validate-one/:taskId", validateOneTaskController);
  *           type: string
  *         description: Task ID (e.g. S-T01, A-G03)
  *         example: "S-T01"
+ *       - in: query
+ *         name: includeExperimental
+ *         schema:
+ *           type: boolean
+ *         description: If true, allows access to a task even if its registry_status='experimental'
+ *         example: false
  *     responses:
  *       200:
  *         description: Full task metadata

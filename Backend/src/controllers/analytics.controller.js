@@ -181,6 +181,10 @@ export async function runAnalyticsController(req, res) {
     // Strip batch_id — SQL queries don't use it (not in ALLOWED_PARAMS)
     const sqlParams = extractSqlParams(params);
 
+    // Fallback for comparison tasks (e.g., A-C01) if frontend doesn't provide s1/s2
+    if (!sqlParams.s1) sqlParams.s1 = sqlParams.student_id || 'dummy_s1';
+    if (!sqlParams.s2) sqlParams.s2 = 'dummy_s2';
+
     const result = await executeSqlTask({ task, params: sqlParams });
 
     // ── Step 6: Normalize & return ──────────────────────────────────────────

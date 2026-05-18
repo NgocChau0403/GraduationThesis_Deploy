@@ -26,6 +26,13 @@ export const WarningCodes = {
     code:     "FEATURE_NOT_POPULATED",
     severity: "warning",
   },
+  SEMANTIC_PROXY_COMPETENCY: {
+    code:     "SEMANTIC_PROXY_COMPETENCY",
+    severity: "info",
+    //  Emitted when a task uses assessment_name as a proxy for competency_tag
+    //  because the active dataset lacks a native competency ontology.
+    //  Does NOT block execution — purely advisory for UI badge + AI context.
+  },
 
   // ── Layer C: Analytical ─────────────────────────────────────────────────
   INSUFFICIENT_TEMPORAL_POINTS: {

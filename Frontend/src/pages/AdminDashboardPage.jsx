@@ -19,13 +19,28 @@ import { runAnalyticsTask, fetchClasses } from "../services/analyticsApi";
 import ChartRenderer from "../components/ChartRenderer";
 import AIInsightPanel from "../components/AIInsightPanel";
 
-// ── Basic tasks auto-run cho Admin ──────────────────────────────────────────
-// Cohort-level analytics chạy tự động khi vào dashboard
+// ── Basic tasks auto-run cho Admin ───────────────────────────────────────────────────────
+// Cohort-level analytics chạy tự động khi vào dashboard.
+// Tất cả 3 tasks này có datasetCompatibility: "both" nên an toàn với mọi dataset.
 const ADMIN_BASIC_TASKS = ["A-G03", "A-G02", "A-G04"];
+
+// ── Dataset source → compatibility filter ───────────────────────────────────────
+// "both" tasks always show; OULAD-only tasks hide for UCI users (and vice versa).
+function getCompatFilter(datasetSource) {
+  if (!datasetSource) return () => true;
+  const src = datasetSource.toUpperCase();
+  return (task) =>
+    task.datasetCompatibility === "both" ||
+    task.datasetCompatibility === `${src}_only`;
+}
 
 export default function AdminDashboardPage() {
   const navigate = useNavigate();
   const { activeDataset, isLoading: appLoading } = useAppContext();
+
+  // Dataset compatibility filter — same logic as StudentDashboardPage
+  const datasetSource = activeDataset?.source ?? null;
+  const isCompatible  = getCompatFilter(datasetSource);
 
   // Fetch classes
   const { data: classesData } = useQuery({
@@ -37,15 +52,14 @@ export default function AdminDashboardPage() {
   const [selectedClassId, setSelectedClassId] = useState("");
   const classId = selectedClassId || classes[0]?.class_id || "";
 
-  // Fetch admin-scope tasks (Many students + Cohort)
-  const { tasks: manyTasks } = useTaskRegistry({ scope: "students" });
-  const { tasks: cohortTasks } = useTaskRegistry({ scope: "cohort" });
-  const allAdminTasks = [...manyTasks, ...cohortTasks];
+  // Fetch admin-scope tasks, filtered by active dataset compatibility
+  const { tasks: manyTasksRaw  } = useTaskRegistry({ scope: "students" });
+  const { tasks: cohortTasksRaw } = useTaskRegistry({ scope: "cohort"   });
 
-  // Remove duplicates
-  const uniqueAdminTasks = allAdminTasks.filter(
-    (t, i, arr) => arr.findIndex(x => x.taskId === t.taskId) === i
-  );
+  // Deduplicate + apply compatibility filter
+  const uniqueAdminTasks = [...manyTasksRaw, ...cohortTasksRaw]
+    .filter((t, i, arr) => arr.findIndex(x => x.taskId === t.taskId) === i)
+    .filter(isCompatible);
 
   const [taskResults, setTaskResults] = useState({});
   const [loadingTasks, setLoadingTasks] = useState(new Set());
