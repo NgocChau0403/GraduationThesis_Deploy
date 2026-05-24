@@ -3,6 +3,7 @@ import { SAMPLE_BATCHES } from "../config/sampleBatches.js";
 import { activateDatasetByBatchId } from "./activeDataset.service.js";
 import {
   SAMPLE_BATCH_WHITELIST,
+  inspectSampleBatchFiles,
   loadAllSampleBatchesFromCsv,
   loadSampleBatchFromCsv,
 } from "./sampleCsvLoader.service.js";
@@ -523,11 +524,83 @@ export async function seedSampleDatasets(options = {}) {
     ? batchIds.filter((id) => SAMPLE_BATCH_WHITELIST.includes(id))
     : SAMPLE_BATCH_WHITELIST;
 
+  const seedDecision = [];
+  for (const batchId of selectedBatchIds) {
+    // eslint-disable-next-line no-await-in-loop
+    const wouldSeed = await batchNeedsSeed(batchId, forceReseed);
+    seedDecision.push({ batchId, wouldSeed });
+  }
+
+  const neededBatchIds = seedDecision.filter((item) => item.wouldSeed).map((item) => item.batchId);
+  if (neededBatchIds.length === 0) {
+    console.log("[Seeder] Startup seed skipped: all sample batches already completed with data.");
+    return {
+      applied: false,
+      reason: "all_batches_already_completed_with_data",
+      perBatchResults: selectedBatchIds.map((batchId) => ({
+        batchId,
+        skipped: true,
+        reason: "already_completed_with_data",
+      })),
+    };
+  }
+
+  const missingByBatch = [];
+  const seedableBatchIds = [];
+  for (const batchId of neededBatchIds) {
+    // eslint-disable-next-line no-await-in-loop
+    const inspection = await inspectSampleBatchFiles(batchId);
+    if (inspection.ok) {
+      seedableBatchIds.push(batchId);
+    } else {
+      missingByBatch.push({
+        batchId,
+        missingFiles: inspection.missingFiles || [],
+      });
+    }
+  }
+
+  for (const item of missingByBatch) {
+    console.warn(
+      `[Seeder] Startup seed skipped for ${item.batchId}: missing required CSV files (${item.missingFiles.join(", ")}).`
+    );
+  }
+
+  if (seedableBatchIds.length === 0) {
+    return {
+      applied: false,
+      reason: "missing_csv_for_needed_batches",
+      perBatchResults: [
+        ...selectedBatchIds
+          .filter((batchId) => !neededBatchIds.includes(batchId))
+          .map((batchId) => ({
+            batchId,
+            skipped: true,
+            reason: "already_completed_with_data",
+          })),
+        ...missingByBatch.map((item) => ({
+          batchId: item.batchId,
+          skipped: true,
+          reason: "missing_required_csv_files",
+          missingFiles: item.missingFiles,
+        })),
+      ],
+    };
+  }
+
   const result = await reseedSampleDatasets({
     apply: true,
-    batchIds: selectedBatchIds,
+    batchIds: seedableBatchIds,
     forceReseed,
   });
+
+  for (const batchId of selectedBatchIds.filter((id) => !neededBatchIds.includes(id))) {
+    console.log(`[Seeder] ${batchId} skipped (already_completed_with_data).`);
+  }
+
+  for (const item of missingByBatch) {
+    console.log(`[Seeder] ${item.batchId} skipped (missing_required_csv_files).`);
+  }
 
   for (const item of result.perBatchResults || []) {
     if (item.skipped) {
