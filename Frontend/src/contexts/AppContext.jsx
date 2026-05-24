@@ -29,7 +29,11 @@ import {
   saveActiveDataset,
   saveFirstUseFlag,
 } from "../services/persistenceService";
-import { getActiveDataset, getImportHistory } from "../services/datasetApi";
+import {
+  getActiveDataset,
+  getImportHistory,
+  switchSampleDataset,
+} from "../services/datasetApi";
 
 // ─── Tạo Context ───────────────────────────────────────────────────────────
 // Khởi tạo với null để useAppContext() có thể phát hiện nếu dùng ngoài Provider
@@ -68,68 +72,59 @@ export function AppProvider({ children }) {
   // ─── Initialization Effect ──────────────────────────────────────────────
   useEffect(() => {
     async function initializeAppState() {
-      // BƯỚC 1: Đọc localStorage ngay (synchronous, không cần await)
-      // → UI có data để render ngay lập tức, không bị trắng màn hình
-      const persisted = loadPersistedState();      setIsFirstUse(persisted.isFirstUse);
+      const persisted = loadPersistedState();
+      setIsFirstUse(persisted.isFirstUse);
 
-      if (persisted.activeDataset) {
-        // Có cache → hiển thị ngay (optimistic)
-        setActiveDatasetState(persisted.activeDataset);
-      }
-
-      // BƯỚC 2: Đồng bộ với backend (asynchronous)
-      // → Xác nhận state thật, cập nhật nếu có thay đổi từ server
       try {
         const [serverActiveDataset, serverHistory] = await Promise.all([
-          getActiveDataset(),   // GET /api/datasets/active
-          getImportHistory(),   // GET /api/datasets/history
+          getActiveDataset(),
+          getImportHistory(),
         ]);
+        const importHistory = (serverHistory || []).filter(
+          (item) => item?.is_sample !== true
+        );
+        const isFirstRunWithoutUserImports =
+          persisted.isFirstUse && importHistory.length === 0;
 
-        // Server là nguồn sự thật cuối cùng
-        // Nếu server trả về dataset → dùng của server (override cache)
-        if (serverActiveDataset) {
+        // First-time users with no imported datasets should always start on
+        // the OULAD sample, even if a previous backend run left another sample active.
+        if (isFirstRunWithoutUserImports) {
+          const defaultDataset =
+            serverActiveDataset?.id === DEFAULT_DATASET.id
+              ? serverActiveDataset
+              : (await switchSampleDataset(DEFAULT_DATASET.source)).activeDataset;
+          setActiveDatasetState(defaultDataset || DEFAULT_DATASET);
+          saveActiveDataset(defaultDataset || DEFAULT_DATASET);
+        } else if (serverActiveDataset) {
+          // Backend is source of truth after the initial no-import state.
           setActiveDatasetState(serverActiveDataset);
-          saveActiveDataset(serverActiveDataset); // Cập nhật cache
-        } else if (!persisted.activeDataset) {
-          // Server trả về null VÀ không có cache → dùng OULAD làm default
+          saveActiveDataset(serverActiveDataset);
+        } else {
           setActiveDatasetState(DEFAULT_DATASET);
           saveActiveDataset(DEFAULT_DATASET);
         }
-        // Nếu server trả về null NHƯNG có cache → giữ nguyên cache (đã set ở Bước 1)
 
-        setImportHistory(serverHistory || []);
+        setImportHistory(importHistory);
       } catch (error) {
-        // Backend không respond → dùng localStorage cache (offline-first)
-        // Nếu cả 2 đều không có → dùng default OULAD
         console.warn(
           "[AppContext] Backend unavailable, using cached/default state:",
           error.message
         );
 
-        if (!persisted.activeDataset) {
+        if (persisted.activeDataset) {
+          setActiveDatasetState(persisted.activeDataset);
+        } else {
           setActiveDatasetState(DEFAULT_DATASET);
         }
       } finally {
-        // Luôn tắt loading dù thành công hay thất bại
-        // → UI không bị "treo" ở trạng thái loading mãi mãi
         setIsLoading(false);
       }
     }
 
     initializeAppState();
-  }, []); // Chỉ chạy 1 lần khi app mount
+  }, []);
 
-  // ─── Actions ────────────────────────────────────────────────────────────
-
-  /**
-   * Set dataset mới làm active.
-   * Cập nhật cả in-memory state lẫn localStorage cache.
-   *
-   * useCallback: Đảm bảo reference function ổn định — tránh re-render
-   * không cần thiết ở các component dùng function này làm dependency.
-   *
-   * @param {ActiveDataset} dataset
-   */
+  // Actions
   const setActiveDataset = useCallback((dataset) => {
     setActiveDatasetState(dataset);
     saveActiveDataset(dataset);

@@ -11,6 +11,7 @@ import {
   getUploadSession,
   updateUploadSession
 } from "../services/uploadSession.store.js";
+import { activateDatasetByBatchId } from "../services/activeDataset.service.js";
 
 import { detectCsvDelimiter } from "../services/fileFormat.service.js";
 import { normalizeText } from "../utils/textUtils.js";
@@ -201,13 +202,6 @@ async function upsertImportBatchHistory({
   const rowCount = countImportedRows({ runTargets, bundleMode, result });
 
   await prisma.$transaction(async (tx) => {
-    // 1. Ensure old active datasets are deactivated
-    await tx.importBatch.updateMany({
-      where: { is_active: true },
-      data: { is_active: false }
-    });
-
-    // 2. Upsert the new batch as active
     await tx.importBatch.upsert({
       where: { batch_id: importBatchId },
       update: {
@@ -215,7 +209,7 @@ async function upsertImportBatchHistory({
         source_dataset: sourceDataset,
         learning_mode: learningMode,
         imported_at: importedAt,
-        is_active: true, // AUTO-SET ACTIVE
+        is_active: false,
         is_sample: false,
         row_count: rowCount,
         status: "completed"
@@ -226,35 +220,15 @@ async function upsertImportBatchHistory({
         source_dataset: sourceDataset,
         learning_mode: learningMode,
         imported_at: importedAt,
-        is_active: true, // AUTO-SET ACTIVE
+        is_active: false,
         is_sample: false,
         row_count: rowCount,
         status: "completed"
       }
     });
-
-    // 3. Update AppState
-    await tx.appState.upsert({
-      where: { id: 1 },
-      update: {
-        active_dataset_id: importBatchId,
-        active_dataset_name: batchName,
-        active_dataset_type: "custom",
-        active_dataset_source: sourceDataset,
-        active_dataset_set_at: importedAt,
-        is_first_use: false
-      },
-      create: {
-        id: 1,
-        active_dataset_id: importBatchId,
-        active_dataset_name: batchName,
-        active_dataset_type: "custom",
-        active_dataset_source: sourceDataset,
-        active_dataset_set_at: importedAt,
-        is_first_use: false
-      }
-    });
   });
+
+  await activateDatasetByBatchId(importBatchId, { setAt: importedAt });
 }
 
 // ==========================================

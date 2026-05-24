@@ -47,21 +47,33 @@ export default function AdminDashboardPage() {
     [datasetSource]
   );
 
-  const { data: classesData } = useQuery({
+  const {
+    data: classesData,
+    isLoading: isClassesLoading,
+    isError: isClassesError,
+    error: classesQueryError,
+  } = useQuery({
     queryKey: ["classes", activeDataset?.id],
     queryFn: () => fetchClasses(activeDataset?.id),
     enabled: !!activeDataset?.id,
   });
+  const classesError = classesData?.success === false ? new Error(classesData?.message || "Failed to load classes.") : null;
   const classes = classesData?.classes ?? [];
 
   const [selectedClassId, setSelectedClassId] = useState("");
   const classId = selectedClassId || classes[0]?.class_id || "";
 
-  const { data: studentsData } = useQuery({
+  const {
+    data: studentsData,
+    isLoading: isStudentsLoading,
+    isError: isStudentsError,
+    error: studentsQueryError,
+  } = useQuery({
     queryKey: ["students", activeDataset?.id, classId],
     queryFn: () => getStudents(activeDataset?.id, classId),
     enabled: !!activeDataset?.id && !!classId,
   });
+  const studentsError = studentsData?.success === false ? new Error(studentsData?.message || "Failed to load students.") : null;
   const students = studentsData?.students ?? [];
 
   const [selectedStudentId, setSelectedStudentId] = useState("");
@@ -201,6 +213,66 @@ export default function AdminDashboardPage() {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+      </div>
+    );
+  }
+
+  if (isClassesLoading) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+      </div>
+    );
+  }
+
+  if (isClassesError || classesQueryError || classesError) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+        <div className="bg-white p-8 rounded-2xl shadow-sm border border-red-200 text-center max-w-md">
+          <h2 className="text-xl font-bold text-red-700 mb-2">Failed to load classes</h2>
+          <p className="text-slate-500">{(classesQueryError || classesError)?.message}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (classes.length === 0) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 text-center max-w-md">
+          <h2 className="text-xl font-bold text-slate-800 mb-2">No classes found for active dataset</h2>
+          <p className="text-slate-500">Please switch dataset or import data with class records.</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isStudentsError || studentsQueryError || studentsError) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+        <div className="bg-white p-8 rounded-2xl shadow-sm border border-red-200 text-center max-w-md">
+          <h2 className="text-xl font-bold text-red-700 mb-2">Failed to load students</h2>
+          <p className="text-slate-500">{(studentsQueryError || studentsError)?.message}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (isStudentsLoading && classId) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+      </div>
+    );
+  }
+
+  if (classId && students.length === 0) {
+    return (
+      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
+        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 text-center max-w-md">
+          <h2 className="text-xl font-bold text-slate-800 mb-2">No students found for selected class</h2>
+          <p className="text-slate-500">Please choose another class or refresh imported data.</p>
+        </div>
       </div>
     );
   }

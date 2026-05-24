@@ -1,6 +1,10 @@
 import prisma from "../lib/prisma.js";
 import { SAMPLE_BATCHES } from "../config/sampleBatches.js";
 import { deleteImportBatch, renameImportBatch } from "../services/historyManager.service.js";
+import {
+  activateDatasetByBatchId,
+  normalizeActiveDatasetFromBatch
+} from "../services/activeDataset.service.js";
 
 const SAMPLE_DATASETS = {
   OULAD: {
@@ -29,30 +33,20 @@ function getSampleDatasetByRequestKey(requestKey) {
   return SAMPLE_DATASETS[requestKey] || null;
 }
 
-function getSampleDatasetById(id) {
-  return (
-    Object.values(SAMPLE_DATASETS).find(
-      (dataset) => dataset.id === id || dataset.legacyIds?.includes(id)
-    ) || null
+function appStateMatchesBatch(appState, batch) {
+  if (!appState || !batch) return false;
+
+  const expected = normalizeActiveDatasetFromBatch(
+    batch,
+    appState.active_dataset_set_at
   );
-}
 
-function toActiveDatasetFromAppState(appState) {
-  if (!appState || !appState.active_dataset_id) {
-    return {
-      ...getDefaultSampleDataset(),
-      setAt: null
-    };
-  }
-
-  const sampleDataset = getSampleDatasetById(appState.active_dataset_id);
-  return {
-    id: appState.active_dataset_id,
-    name: appState.active_dataset_name || sampleDataset?.name || null,
-    type: appState.active_dataset_type || sampleDataset?.type || null,
-    source: appState.active_dataset_source || sampleDataset?.source || null,
-    setAt: appState.active_dataset_set_at
-  };
+  return (
+    appState.active_dataset_id === expected.id &&
+    appState.active_dataset_name === expected.name &&
+    appState.active_dataset_type === expected.type &&
+    appState.active_dataset_source === expected.source
+  );
 }
 
 // ==========================================
@@ -64,12 +58,57 @@ export async function getActiveDatasetController(req, res) {
       where: { id: 1 }
     });
 
+    if (appState?.active_dataset_id) {
+      const activeBatch = await prisma.importBatch.findUnique({
+        where: { batch_id: appState.active_dataset_id }
+      });
+
+      if (activeBatch) {
+        const activeFlags = await prisma.importBatch.findMany({
+          where: { is_active: true },
+          select: { batch_id: true }
+        });
+        const hasOnlySelectedActiveFlag =
+          activeFlags.length === 1 &&
+          activeFlags[0].batch_id === activeBatch.batch_id;
+
+        if (!hasOnlySelectedActiveFlag || !appStateMatchesBatch(appState, activeBatch)) {
+          const activeDataset = await activateDatasetByBatchId(activeBatch.batch_id, {
+            setAt: appState.active_dataset_set_at || new Date()
+          });
+
+          return res.json({
+            success: true,
+            activeDataset
+          });
+        }
+
+        return res.json({
+          success: true,
+          activeDataset: normalizeActiveDatasetFromBatch(
+            activeBatch,
+            appState.active_dataset_set_at
+          )
+        });
+      }
+    }
+
+    const activeDataset = await activateDatasetByBatchId(SAMPLE_BATCHES.OULAD.batch_id);
+
     return res.json({
       success: true,
-      activeDataset: toActiveDatasetFromAppState(appState)
+      activeDataset
     });
   } catch (error) {
     console.error("Failed to get active dataset:", error);
+
+    if (error.code === "DATASET_NOT_FOUND") {
+      return res.status(404).json({
+        success: false,
+        message: "Default sample dataset not found."
+      });
+    }
+
     return res.status(500).json({
       success: false,
       message: "Internal server error."
@@ -82,78 +121,25 @@ export async function getActiveDatasetController(req, res) {
 // ==========================================
 export async function setActiveDatasetController(req, res) {
   try {
-    const { id, name, type, source } = req.body;
+    const { id } = req.body;
 
     if (!id) {
       return res.status(400).json({ success: false, message: "Dataset ID is required." });
     }
 
-    let activeName = name;
-    let activeType = type;
-    let activeSource = source;
-
-    // If it's not a sample, try to fetch its real info from the ImportBatch table
-    if (type !== "sample") {
-      const batch = await prisma.importBatch.findUnique({
-        where: { batch_id: id }
-      });
-      
-      if (!batch) {
-        return res.status(404).json({ success: false, message: "Dataset not found in database." });
-      }
-
-      activeName = batch.batch_name;
-      activeType = "custom";
-      activeSource = batch.source_dataset;
-
-      // Ensure old active datasets have is_active set to false
-      await prisma.importBatch.updateMany({
-        where: { is_active: true },
-        data: { is_active: false }
-      });
-
-      // Set this one to active
-      await prisma.importBatch.update({
-        where: { batch_id: id },
-        data: { is_active: true }
-      });
-    }
-
-    // Upsert app_state (id=1), set is_first_use=false
-    const setAt = new Date();
-    await prisma.appState.upsert({
-      where: { id: 1 },
-      update: {
-        active_dataset_id: id,
-        active_dataset_name: activeName || null,
-        active_dataset_type: activeType || null,
-        active_dataset_source: activeSource || null,
-        active_dataset_set_at: setAt,
-        is_first_use: false
-      },
-      create: {
-        id: 1,
-        active_dataset_id: id,
-        active_dataset_name: activeName || null,
-        active_dataset_type: activeType || null,
-        active_dataset_source: activeSource || null,
-        active_dataset_set_at: setAt,
-        is_first_use: false
-      }
-    });
+    const activeDataset = await activateDatasetByBatchId(id);
 
     return res.json({
       success: true,
-      activeDataset: {
-        id,
-        name: activeName,
-        type: activeType,
-        source: activeSource,
-        setAt: setAt.toISOString()
-      }
+      activeDataset
     });
   } catch (error) {
     console.error("Failed to set active dataset:", error);
+
+    if (error.code === "DATASET_NOT_FOUND") {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+
     return res.status(500).json({
       success: false,
       message: "Internal server error."
@@ -167,6 +153,7 @@ export async function setActiveDatasetController(req, res) {
 export async function getImportHistoryController(req, res) {
   try {
     const history = await prisma.importBatch.findMany({
+      where: { is_sample: false },
       orderBy: { imported_at: 'desc' }
     });
 
@@ -206,77 +193,22 @@ export async function switchSampleDatasetController(req, res) {
       return res.status(400).json({ success: false, message: "Invalid sample dataset." });
     }
 
-    const appStateCount = await prisma.appState.count();
-    const beforeState = await prisma.appState.findUnique({
-      where: { id: 1 }
-    });
-    console.log("[DatasetSwitch] before update", {
-      requestedDataset: dataset,
-      targetDatasetId: targetDataset.id,
-      appStateCount,
-      beforeState: beforeState
-        ? {
-            id: beforeState.id,
-            active_dataset_id: beforeState.active_dataset_id,
-            active_dataset_name: beforeState.active_dataset_name,
-            active_dataset_type: beforeState.active_dataset_type,
-            active_dataset_source: beforeState.active_dataset_source,
-            active_dataset_set_at: beforeState.active_dataset_set_at
-          }
-        : null
+    const batch = await prisma.importBatch.findUnique({
+      where: { batch_id: targetDataset.id }
     });
 
-    const setAt = new Date();
+    if (!batch || !batch.is_sample) {
+      return res.status(404).json({
+        success: false,
+        message: "Sample dataset not found in database."
+      });
+    }
 
-    const writeState = await prisma.appState.upsert({
-      where: { id: 1 },
-      update: {
-        active_dataset_id: targetDataset.id,
-        active_dataset_name: targetDataset.name,
-        active_dataset_type: targetDataset.type,
-        active_dataset_source: targetDataset.source,
-        active_dataset_set_at: setAt,
-        is_first_use: false
-      },
-      create: {
-        id: 1,
-        active_dataset_id: targetDataset.id,
-        active_dataset_name: targetDataset.name,
-        active_dataset_type: targetDataset.type,
-        active_dataset_source: targetDataset.source,
-        active_dataset_set_at: setAt,
-        is_first_use: false
-      }
-    });
-
-    const afterState = await prisma.appState.findUnique({
-      where: { id: 1 }
-    });
-
-    console.log("[DatasetSwitch] after update", {
-      writeResult: {
-        id: writeState.id,
-        active_dataset_id: writeState.active_dataset_id,
-        active_dataset_name: writeState.active_dataset_name,
-        active_dataset_type: writeState.active_dataset_type,
-        active_dataset_source: writeState.active_dataset_source,
-        active_dataset_set_at: writeState.active_dataset_set_at
-      },
-      dbState: afterState
-        ? {
-            id: afterState.id,
-            active_dataset_id: afterState.active_dataset_id,
-            active_dataset_name: afterState.active_dataset_name,
-            active_dataset_type: afterState.active_dataset_type,
-            active_dataset_source: afterState.active_dataset_source,
-            active_dataset_set_at: afterState.active_dataset_set_at
-          }
-        : null
-    });
+    const activeDataset = await activateDatasetByBatchId(targetDataset.id);
 
     return res.json({
       success: true,
-      activeDataset: toActiveDatasetFromAppState(afterState)
+      activeDataset
     });
   } catch (error) {
     console.error("Failed to switch sample dataset:", error);
@@ -309,27 +241,13 @@ export async function deleteDatasetController(req, res) {
     if (appState && appState.active_dataset_id === batchId) {
       // Fallback to default OULAD sample
       const fallbackDataset = getDefaultSampleDataset();
-      const setAt = new Date();
-
-      await prisma.appState.update({
-        where: { id: 1 },
-        data: {
-          active_dataset_id: fallbackDataset.id,
-          active_dataset_name: fallbackDataset.name,
-          active_dataset_type: fallbackDataset.type,
-          active_dataset_source: fallbackDataset.source,
-          active_dataset_set_at: setAt
-        }
-      });
+      const activeDataset = await activateDatasetByBatchId(fallbackDataset.id);
       
       return res.json({
         success: true,
         message: "Dataset deleted successfully. Active dataset reset to OULAD Sample.",
         wasActive: true,
-        newActiveDataset: {
-          ...fallbackDataset,
-          setAt: setAt.toISOString()
-        }
+        newActiveDataset: activeDataset
       });
     }
 

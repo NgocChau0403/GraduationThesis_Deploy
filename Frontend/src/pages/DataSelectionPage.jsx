@@ -5,6 +5,19 @@ import { switchSampleDataset, deleteDataset, renameDataset } from "../services/d
 import { message, Popconfirm, Input, Button } from "antd";
 import Navbar from "../components/layout/Navbar";
 
+const STANDARD_SAMPLES = {
+  OULAD: {
+    id: "SAMPLE_OULAD",
+    source: "OULAD",
+    requestKey: "OULAD",
+  },
+  UCI: {
+    id: "SAMPLE_UCI_MAT",
+    source: "UCI",
+    requestKey: "UCI",
+  },
+};
+
 // --- Icons ---
 function InfoIcon({ className }) {
   return (
@@ -67,8 +80,11 @@ export default function DataSelectionPage() {
   
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const isSampleActive = (source) =>
-    activeDataset?.type === "sample" && activeDataset?.source === source;
+  const importedHistory = importHistory.filter((item) => item?.is_sample !== true);
+
+  const isSampleActive = (sample) =>
+    activeDataset?.id === sample.id ||
+    (activeDataset?.type === "sample" && activeDataset?.source === sample.source);
 
   useEffect(() => {
     refreshImportHistory();
@@ -222,11 +238,11 @@ export default function DataSelectionPage() {
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:gap-5">
             {/* OULAD Card */}
             <div className={`relative rounded-2xl flex flex-col justify-between transition-all duration-300 ${
-              isSampleActive("OULAD")
+              isSampleActive(STANDARD_SAMPLES.OULAD)
                 ? "bg-emerald-50/40 border-2 border-emerald-500 shadow-sm" 
                 : "bg-white border border-slate-200 shadow-sm hover:-translate-y-1 hover:shadow-md"
             }`} style={{ padding: "var(--desktop-data-card-pad)" }}>
-              {isSampleActive("OULAD") && (
+              {isSampleActive(STANDARD_SAMPLES.OULAD) && (
                 <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-[11px] font-bold text-emerald-800 shadow-sm">
                   <CheckIcon className="w-3 h-3" /> Active
                 </div>
@@ -238,14 +254,14 @@ export default function DataSelectionPage() {
                 </p>
               </div>
               
-              {isSampleActive("OULAD") ? (
+              {isSampleActive(STANDARD_SAMPLES.OULAD) ? (
                 <div className="mt-auto flex w-full items-center justify-center py-2 text-[13px] font-medium text-emerald-600/80 opacity-80 cursor-default sm:text-sm">
                   Currently Active
                 </div>
               ) : (
                 <button
                   disabled={isSwitching}
-                  onClick={() => handleSelectSample("OULAD")}
+                  onClick={() => handleSelectSample(STANDARD_SAMPLES.OULAD.requestKey)}
                   className="mt-auto flex w-full items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white py-2 text-[13px] font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:border-slate-800 hover:bg-slate-800 hover:text-white disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-400 disabled:opacity-60 disabled:shadow-none sm:text-sm"
                 >
                   {loadingId === "OULAD" ? (
@@ -257,11 +273,11 @@ export default function DataSelectionPage() {
 
             {/* UCI Card */}
             <div className={`relative rounded-2xl flex flex-col justify-between transition-all duration-300 ${
-              isSampleActive("UCI")
+              isSampleActive(STANDARD_SAMPLES.UCI)
                 ? "bg-emerald-50/40 border-2 border-emerald-500 shadow-sm" 
                 : "bg-white border border-slate-200 shadow-sm hover:-translate-y-1 hover:shadow-md"
             }`} style={{ padding: "var(--desktop-data-card-pad)" }}>
-              {isSampleActive("UCI") && (
+              {isSampleActive(STANDARD_SAMPLES.UCI) && (
                 <div className="absolute top-3 right-3 flex items-center gap-1 rounded-full bg-emerald-100 px-2.5 py-1 text-[11px] font-bold text-emerald-800 shadow-sm">
                   <CheckIcon className="w-3 h-3" /> Active
                 </div>
@@ -273,14 +289,14 @@ export default function DataSelectionPage() {
                 </p>
               </div>
               
-              {isSampleActive("UCI") ? (
+              {isSampleActive(STANDARD_SAMPLES.UCI) ? (
                 <div className="mt-auto flex w-full items-center justify-center py-2 text-[13px] font-medium text-emerald-600/80 opacity-80 cursor-default sm:text-sm">
                   Currently Active
                 </div>
               ) : (
                 <button
                   disabled={isSwitching}
-                  onClick={() => handleSelectSample("UCI")}
+                  onClick={() => handleSelectSample(STANDARD_SAMPLES.UCI.requestKey)}
                   className="mt-auto flex w-full items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white py-2 text-[13px] font-semibold text-slate-700 shadow-sm transition-all duration-200 hover:border-slate-800 hover:bg-slate-800 hover:text-white disabled:cursor-not-allowed disabled:border-slate-200 disabled:bg-slate-50 disabled:text-slate-400 disabled:opacity-60 disabled:shadow-none sm:text-sm"
                 >
                   {loadingId === "UCI" ? (
@@ -296,7 +312,7 @@ export default function DataSelectionPage() {
         <section>
           <div className="mb-3 flex items-center justify-between border-b pb-2 px-1">
             <h2 className="text-[1.15rem] font-bold text-slate-800">Import History</h2>
-            {importHistory.length > 0 && (
+            {importedHistory.length > 0 && (
               <button
                 onClick={() => navigate("/import/upload")}
                 className="flex items-center gap-1 rounded-lg bg-emerald-50 px-3 py-1.5 text-[13px] font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 sm:text-sm"
@@ -306,8 +322,8 @@ export default function DataSelectionPage() {
             )}
           </div>
 
-          <div className={`rounded-2xl transition-all ${importHistory.length > 0 ? "bg-white border border-slate-200 shadow-sm overflow-hidden" : ""}`}>
-            {importHistory.length === 0 ? (
+          <div className={`rounded-2xl transition-all ${importedHistory.length > 0 ? "bg-white border border-slate-200 shadow-sm overflow-hidden" : ""}`}>
+            {importedHistory.length === 0 ? (
               <div className="bg-slate-50 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center text-center" style={{ padding: "var(--desktop-data-empty-pad)" }}>
                 <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-white text-slate-400 shadow-sm">
                   <UploadCloudIcon className="w-7 h-7" />
@@ -325,7 +341,7 @@ export default function DataSelectionPage() {
               </div>
             ) : (
               <ul className="divide-y divide-slate-100">
-                {importHistory.map((item) => {
+                {importedHistory.map((item) => {
                   const isActive = activeDataset?.id === item.import_batch_id;
                   const isBeingRenamed = renamingId === item.import_batch_id;
                   
