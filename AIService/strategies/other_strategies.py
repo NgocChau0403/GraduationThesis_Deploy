@@ -4,25 +4,25 @@ Remaining 6 Strategy Stubs
 These inherit from BaseExplanationStrategy and override build_system_prompt
 and build_user_prompt. Detailed prompt engineering for each is Phase 3 Week 8.
 
-For now, each stub returns a functional (but generic) prompt — the service
+For now, each stub returns a functional (but generic) prompt  the service
 runs end-to-end and returns valid responses. Prompts will be refined per strategy.
 
 Strategies:
-  ComparisonStrategy   → "comparison"  (2-student, demographic group comparisons)
-  DistributionStrategy → "distribution" (histogram, pie chart, score bands)
-  CorrelationStrategy  → "correlation"  (scatter, heatmap, factor relationships)
-  RiskStrategy         → "risk"         (at-risk flags, risk scoring tables)
-  BehavioralStrategy   → "behavioral"   (engagement patterns, submission behavior)
-  RankingStrategy      → "ranking"      (ranked tables, priority lists)
+  ComparisonStrategy    "comparison"  (2-student, demographic group comparisons)
+  DistributionStrategy  "distribution" (histogram, pie chart, score bands)
+  CorrelationStrategy   "correlation"  (scatter, heatmap, factor relationships)
+  RiskStrategy          "risk"         (at-risk flags, risk scoring tables)
+  BehavioralStrategy    "behavioral"   (engagement patterns, submission behavior)
+  RankingStrategy       "ranking"      (ranked tables, priority lists)
 """
 
 from __future__ import annotations
 from .base import BaseExplanationStrategy
 from schemas import ExplainRequest
 
-# ─────────────────────────────────────────────────────────────────────────────
+# 
 # COMPARISON
-# ─────────────────────────────────────────────────────────────────────────────
+# 
 
 class ComparisonStrategy(BaseExplanationStrategy):
     strategy_name = "comparison"
@@ -48,9 +48,9 @@ Compare the groups/students in this data. Identify who is performing better, by 
 Return the JSON explanation structure."""
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+# 
 # DISTRIBUTION
-# ─────────────────────────────────────────────────────────────────────────────
+# 
 
 class DistributionStrategy(BaseExplanationStrategy):
     strategy_name = "distribution"
@@ -63,7 +63,7 @@ class DistributionStrategy(BaseExplanationStrategy):
         sc = req.semantic_context
         if sc and sc.competency_mode in ("proxy", "unknown", "mixed"):
             proxy_note = (
-                "\n\nSEMANTIC CONTEXT — IMPORTANT: "
+                "\n\nSEMANTIC CONTEXT  IMPORTANT: "
                 "This analysis uses assessment names (e.g., G1, G2, G3) as "
                 "competency area proxies because the current dataset does not provide "
                 "a native competency ontology. When referring to 'competency areas' "
@@ -106,13 +106,13 @@ Context: {ac.aggregation_level if ac else 'cohort'} level{competency_hint}
 DATASETS:
 {data_summary}
 
-Describe the distribution. Where do most students fall? What are the tails? Are there any notable clusters or gaps? If competency areas are shown, identify which areas need the most improvement.
+Describe the distribution. Where do most students fall What are the tails Are there any notable clusters or gaps If competency areas are shown, identify which areas need the most improvement.
 Return the JSON explanation structure."""
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+# 
 # CORRELATION
-# ─────────────────────────────────────────────────────────────────────────────
+# 
 
 class CorrelationStrategy(BaseExplanationStrategy):
     strategy_name = "correlation"
@@ -126,7 +126,7 @@ class CorrelationStrategy(BaseExplanationStrategy):
 {tone}
 Analyze the relationship between {x_label} and {y_label}.
 Describe direction (positive/negative), strength (strong/moderate/weak), and educational meaning.
-IMPORTANT: Do NOT claim causation — only describe correlation patterns.
+IMPORTANT: Do NOT claim causation  only describe correlation patterns.
 Return ONLY a valid JSON object matching the ExplainResponse schema."""
 
     def build_user_prompt(self, req: ExplainRequest) -> str:
@@ -138,13 +138,13 @@ X: {vc.x_label if vc else 'Variable X'} | Y: {vc.y_label if vc else 'Variable Y'
 DATASETS:
 {data_summary}
 
-Analyze the relationship between these variables. Is there a pattern? How strong? What does it mean for student learning?
+Analyze the relationship between these variables. Is there a pattern How strong What does it mean for student learning
 Return the JSON explanation structure."""
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+# 
 # RISK
-# ─────────────────────────────────────────────────────────────────────────────
+# 
 
 class RiskStrategy(BaseExplanationStrategy):
     strategy_name = "risk"
@@ -154,7 +154,7 @@ class RiskStrategy(BaseExplanationStrategy):
         return f"""You are a Learning Analytics expert specializing in at-risk student identification.
 {tone}
 Analyze the risk indicators in the data. Describe which students or groups are at risk, the severity, and why.
-Be careful NOT to label students harshly — focus on patterns and actionable interventions.
+Be careful NOT to label students harshly  focus on patterns and actionable interventions.
 Return ONLY a valid JSON object matching the ExplainResponse schema.
 Use severity="high" only for students showing multiple simultaneous risk signals."""
 
@@ -169,9 +169,9 @@ Identify risk patterns: who is at risk, what signals indicate risk, and what ear
 Return the JSON explanation structure."""
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+# 
 # BEHAVIORAL
-# ─────────────────────────────────────────────────────────────────────────────
+# 
 
 class BehavioralStrategy(BaseExplanationStrategy):
     strategy_name = "behavioral"
@@ -197,13 +197,13 @@ Context: {ac.granularity if ac else 'semester'} granularity, {ac.aggregation_lev
 DATASETS:
 {data_summary}
 
-Describe the behavioral patterns. Are they consistent? Are there concerning drops in activity? What do these behaviors suggest about the student's engagement with the course?
+Describe the behavioral patterns. Are they consistent Are there concerning drops in activity What do these behaviors suggest about the student's engagement with the course
 Return the JSON explanation structure."""
 
 
-# ─────────────────────────────────────────────────────────────────────────────
+# 
 # RANKING
-# ─────────────────────────────────────────────────────────────────────────────
+# 
 
 class RankingStrategy(BaseExplanationStrategy):
     strategy_name = "ranking"
@@ -223,5 +223,50 @@ Return ONLY a valid JSON object matching the ExplainResponse schema."""
 DATASETS:
 {data_summary}
 
-Analyze this ranked list. Who is at the top/bottom? What metrics drive the ranking? Which students should receive priority attention?
+Analyze this ranked list. Who is at the top/bottom What metrics drive the ranking Which students should receive priority attention
+Return the JSON explanation structure."""
+
+
+class RecommendationStrategy(BaseExplanationStrategy):
+    strategy_name = "recommendation"
+
+    def build_system_prompt(self, req: ExplainRequest) -> str:
+        tone = self.get_audience_tone(req.target_audience)
+        return f"""You are a Learning Analytics expert specializing in goal planning and practical recommendations.
+{tone}
+Use the provided metrics to explain current status, feasibility, and next realistic actions.
+Avoid generic advice: tie each recommendation to concrete returned fields.
+Return ONLY a valid JSON object matching the ExplainResponse schema."""
+
+    def build_user_prompt(self, req: ExplainRequest) -> str:
+        data_summary = self.summarize_datasets(req)
+        return f"""RECOMMENDATION TASK: {req.task_name or req.task_id}
+
+DATASETS:
+{data_summary}
+
+Explain the learner's current position, whether key goals are achievable, and what immediate step is most effective next.
+Return the JSON explanation structure."""
+
+
+class ProgressStrategy(BaseExplanationStrategy):
+    strategy_name = "progress"
+
+    def build_system_prompt(self, req: ExplainRequest) -> str:
+        tone = self.get_audience_tone(req.target_audience)
+        return f"""You are a Learning Analytics expert specializing in progress tracking and completion status analysis.
+{tone}
+Analyze status rows in chronological order, distinguish completed vs pending items, and prioritize the most urgent next item.
+Return ONLY a valid JSON object matching the ExplainResponse schema."""
+
+    def build_user_prompt(self, req: ExplainRequest) -> str:
+        data_summary = self.summarize_datasets(req)
+        ac = req.analysis_context
+        return f"""PROGRESS TASK: {req.task_name or req.task_id}
+Context: {ac.granularity if ac else 'per_assessment'} granularity, {ac.aggregation_level if ac else 'student'} level
+
+DATASETS:
+{data_summary}
+
+Summarize completion progress in order, identify what is still pending, and recommend the most immediate next action.
 Return the JSON explanation structure."""

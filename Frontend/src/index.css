@@ -106,6 +106,8 @@
   --desktop-data-card-pad: 18px;
   --desktop-data-empty-pad: 22px;
 
+  color-scheme: light;
+  color-scheme: only light;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -117,27 +119,16 @@
   }
 }
 
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #94a3b8;
-    --text-h: #f8fafc;
-    --bg: #0f172a;
-    --card-bg: #1e293b;
-    --border: #334155;
-    --code-bg: #1e293b;
-    --accent: #34d399;
-    --accent-bg: rgba(52, 211, 153, 0.15);
-    --accent-border: rgba(52, 211, 153, 0.4);
-  }
-}
-
 /* ─── Base HTML/Body Reset ───────────────────────────────────────────────── */
 html {
   height: 100%;
   text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   scrollbar-gutter: stable;
+  color-scheme: light;
+  color-scheme: only light;
+  background: var(--bg);
+  color: var(--text);
 }
 
 body {
@@ -151,6 +142,7 @@ body {
   line-height: 1.6;
   letter-spacing: -0.011em;
   color-scheme: light;
+  color-scheme: only light;
   color: var(--text);
   background: var(--bg);
 }
@@ -161,6 +153,16 @@ body {
   min-height: var(--app-min-height);
   display: flex;
   flex-direction: column;
+  background: var(--bg);
+  color: var(--text);
+}
+
+button,
+input,
+select,
+textarea {
+  color-scheme: light;
+  color-scheme: only light;
 }
 
 .viewport-shell {

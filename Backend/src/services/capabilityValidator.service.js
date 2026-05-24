@@ -1,7 +1,11 @@
 import prisma from "../lib/prisma.js";
 import taskRegistryService from "./taskRegistry.service.js";
 import { WarningCodes } from "../constants/warningCodes.js";
-import { checkCapabilityCompatibility } from "../lib/capabilityUtils.js";
+import {
+  buildCanonicalCapabilitySnapshot,
+  evaluateAvailabilityContract,
+  normalizeAvailabilityContract,
+} from "./canonicalCapability.service.js";
 
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -64,6 +68,23 @@ function deriveStatus(layers) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 class CapabilityValidatorService {
+  constructor() {
+    this.snapshotCache = new Map();
+  }
+
+  _snapshotCacheKey(batchId, classId) {
+    return `${batchId}::${classId || "__NO_CLASS__"}`;
+  }
+
+  async _getSnapshot(batchId, classId) {
+    const key = this._snapshotCacheKey(batchId, classId);
+    if (this.snapshotCache.has(key)) {
+      return this.snapshotCache.get(key);
+    }
+    const snapshot = await buildCanonicalCapabilitySnapshot({ batchId, classId });
+    this.snapshotCache.set(key, snapshot);
+    return snapshot;
+  }
 
   // ── LAYER A: Structural Capability ─────────────────────────────────────────
   /**
@@ -119,54 +140,27 @@ class CapabilityValidatorService {
    * @param {{ batchId: string, sourceDataset: string }} ctx
    * @returns {{ pass: boolean, missing_fe_fields: string[], compatibility_mismatch: boolean }}
    */
-  async layerB_semantic(task, { batchId, sourceDataset }) {
+  async layerB_semantic(task, { batchId, classId, sourceDataset }) {
+    const contract = normalizeAvailabilityContract(task);
+    const snapshot = await this._getSnapshot(batchId, classId || null);
+    const availability = evaluateAvailabilityContract({
+      task,
+      contract,
+      snapshot,
+      sourceDataset,
+    });
+
     const missingFeFields = [];
-    let compatibilityMismatch = false;
-
-    // B1 — Dataset compatibility check (capability matrix — single source of truth)
-    //
-    // Primary path: task.requiredCapabilities[] vs datasetCapabilityMatrix[sourceDataset]
-    // Fallback: legacy task.datasetCompatibility string (kept for backwards compat)
-    //
-    // Both paths produce the same filtering result. The capability matrix path
-    // is authoritative and provides structured missingCapabilities[] for diagnostics.
-    if (task.requiredCapabilities?.length > 0) {
-      const { compatible, missingCapabilities } = checkCapabilityCompatibility(
-        sourceDataset,
-        task.requiredCapabilities
-      );
-      if (!compatible) {
-        compatibilityMismatch = true;
-        // Surface which capabilities are missing for the structured issue below
-        task._missingCapabilities = missingCapabilities; // transient, not persisted
-      }
-    } else {
-      // Legacy fallback: datasetCompatibility string
-      const compat = (task.datasetCompatibility ?? "both").toLowerCase();
-      if (compat === "oulad_only" && sourceDataset !== "OULAD") compatibilityMismatch = true;
-      if (compat === "uci_only"   && sourceDataset !== "UCI")   compatibilityMismatch = true;
-    }
-
-    // B2 — Stored FE field availability check
     const storedFeFields = (task.fe_fields ?? []).filter(
       (f) => f.storage === "stored" && f.table
     );
 
     for (const feField of storedFeFields) {
-      // Skip check if this field belongs to a dataset the active batch doesn't have
       if (feField.dataset !== "both" && feField.dataset !== sourceDataset) continue;
 
       const table = sanitizeTable(feField.table);
       const field = feField.field;
-
-      // Dynamic column check — table name from whitelist, field name validated below.
-      // We use $queryRawUnsafe only AFTER sanitizing both table and field names.
-      // Stricter regex: must start with letter/underscore, alphanumeric+underscore only.
-      // Avoids unicode word chars that \w can match in some JS engines.
-      if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(field)) {
-        console.warn(`[LayerB] Skipping field with invalid name: ${field}`);
-        continue;
-      }
+      if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(field)) continue;
 
       const sql = `
         SELECT COUNT(*)::int AS cnt
@@ -175,101 +169,95 @@ class CapabilityValidatorService {
           AND batch_id = $1
         LIMIT 1
       `;
-
       const result = await prisma.$queryRawUnsafe(sql, batchId);
       const count = result[0]?.cnt ?? 0;
-
       if (count === 0) missingFeFields.push(`${table}.${field}`);
     }
 
-    // Build structured missing_requirements
-    const structuredMissing = [];
-    if (compatibilityMismatch) {
-      const missing = task._missingCapabilities;
-      const message = missing?.length > 0
-        ? `Task requires capabilities [${missing.join(", ")}] not available in "${sourceDataset}" dataset.`
-        : `Task requires "${task.datasetCompatibility}" dataset but active dataset is "${sourceDataset}".`;
-      structuredMissing.push({
-        ...WarningCodes.DATASET_MISMATCH,
-        message,
+    const structuredIssues = [];
+
+    if (availability.dataset_specific_issue) {
+      structuredIssues.push(availability.dataset_specific_issue);
+    }
+
+    for (const cap of availability.missing_required_capabilities) {
+      structuredIssues.push({
+        code: contract.reason_codes.REQUIRED_MISSING,
+        severity: "error",
+        message: `Required capability missing: ${cap}`,
+        context: { task_id: task.taskId, capability: cap, batch_id: batchId },
+      });
+    }
+
+    if (availability.missing_required_any_capabilities.length > 0) {
+      structuredIssues.push({
+        code: contract.reason_codes.REQUIRED_ANY_MISSING,
+        severity: "error",
+        message: `At least one capability required, but none available: ${availability.missing_required_any_capabilities.join(", ")}`,
         context: {
-          missingCapabilities: missing ?? [],
-          activeDataset:       sourceDataset,
-          requiredCapabilities: task.requiredCapabilities ?? []
+          task_id: task.taskId,
+          required_any: availability.required_any,
+          missing_required_any: availability.missing_required_any_capabilities,
         },
       });
     }
-    for (const f of missingFeFields) {
-      structuredMissing.push({
-        ...WarningCodes.FEATURE_NOT_POPULATED,
-        message: `FE field not populated: ${f}`,
-        field:   f,
+
+    for (const cap of availability.missing_optional_enrichments) {
+      structuredIssues.push({
+        code: contract.reason_codes.OPTIONAL_MISSING,
+        severity: "warning",
+        message: `Optional enrichment missing: ${cap}`,
+        context: { task_id: task.taskId, capability: cap, batch_id: batchId },
       });
     }
 
-    // B3 — Optional capability advisory (proxy competency detection)
-    //
-    // When a task lists proxy_competency_available in optionalCapabilities,
-    // check whether the active dataset is using proxy (assessment_name)
-    // instead of native competency_tag.
-    // Does NOT affect pass/fail — purely advisory for logging + UI + AI.
+    if (availability.legacy_dataset_compatibility_hint) {
+      structuredIssues.push(availability.legacy_dataset_compatibility_hint);
+    }
+
+    for (const f of missingFeFields) {
+      structuredIssues.push({
+        ...WarningCodes.FEATURE_NOT_POPULATED,
+        message: `FE field not populated: ${f}`,
+        field: f,
+      });
+    }
+
     const semanticAdvisories = [];
-    const optionalCaps = task.optionalCapabilities ?? [];
-
-    if (optionalCaps.includes("proxy_competency_available")) {
-      const { capabilityMatrix } = await import("../lib/capabilityUtils.js");
-      const datasetCaps = capabilityMatrix[sourceDataset] ?? {};
-      const hasNativeCompetency = !!datasetCaps["competency_tagging"];
-      const hasProxyCompetency  = !!datasetCaps["proxy_competency_available"];
-
-      if (!hasNativeCompetency && hasProxyCompetency) {
-        const msg =
-          `[SEMANTIC_WARNING] Task ${task.taskId} using proxy competency inference ` +
-          `(dataset "${sourceDataset}" lacks native competency ontology — ` +
-          `assessment_name used as fallback proxy).`;
-        console.warn(msg);
-        semanticAdvisories.push({
-          ...WarningCodes.SEMANTIC_PROXY_COMPETENCY,
-          message: msg,
-          context: {
-            task_id:        task.taskId,
-            source_dataset: sourceDataset,
-            proxy_field:    "assessment_name",
-            native_field:   "competency_tag",
-            semantic_note:  task.semanticNote ?? null,
-          },
-        });
-      }
+    if (
+      contract.optional_enrichments.includes("proxy_competency_available") &&
+      !snapshot.capabilities.competency_tagging &&
+      snapshot.capabilities.proxy_competency_available
+    ) {
+      const msg =
+        `[SEMANTIC_WARNING] Task ${task.taskId} using proxy competency inference ` +
+        `(dataset "${sourceDataset}" lacks native competency ontology - ` +
+        `assessment_name used as fallback proxy).`;
+      console.warn(msg);
+      semanticAdvisories.push({
+        ...WarningCodes.SEMANTIC_PROXY_COMPETENCY,
+        message: msg,
+        context: {
+          task_id: task.taskId,
+          source_dataset: sourceDataset,
+          proxy_field: "assessment_name",
+          native_field: "competency_tag",
+          semantic_note: task.semanticNote ?? null,
+        },
+      });
     }
 
     return {
-      pass:                   missingFeFields.length === 0 && !compatibilityMismatch,
-      missing_fe_fields:      missingFeFields,
-      compatibility_mismatch: compatibilityMismatch,
-      structured_issues:      structuredMissing,
-      semantic_advisories:    semanticAdvisories,
+      pass: availability.available,
+      missing_fe_fields: missingFeFields,
+      compatibility_mismatch: !!availability.dataset_specific_issue,
+      structured_issues: structuredIssues,
+      semantic_advisories: semanticAdvisories,
+      availability,
+      capability_snapshot: snapshot,
     };
   }
 
-  // ── LAYER C: Analytical Capability ─────────────────────────────────────────
-  /**
-   * Checks whether the data has enough structure to support the analysis type.
-   * This layer produces WARNINGS (not hard failures) — the task can still run
-   * but results may be unreliable.
-   *
-   * Analysis types handled:
-   *   trend        → need ≥ 2 distinct temporal points (week_of_class)
-   *   comparison   → need ≥ 2 distinct students in the class
-   *   correlation  → pass if Layer A+B pass (SQL handles the math)
-   *   distribution → always pass
-   *   aggregation  → always pass
-   *   synthesis    → always pass
-   *   ranking      → pass if Layer A+B pass
-   *
-   * @param {Object} task
-   * @param {{ batchId: string, classId?: string }} ctx
-   * @returns {{ pass: boolean, warnings: string[] }}
-   */
   async layerC_analytical(task, { batchId, classId }) {
     const warnings = [];
     const analysisType = task.analytics?.analysisType?.toLowerCase() ?? "";
@@ -419,6 +407,47 @@ class CapabilityValidatorService {
     // HIGH:   broad population + multiple assessments + temporal spread
     // MEDIUM: adequate on at least 2 of 3 dimensions
     // LOW:    minimal data — analytically valid but interpret cautiously
+    const contract = normalizeAvailabilityContract(task);
+    const requiredCaps = new Set([
+      ...contract.required_all,
+      ...contract.required_any,
+    ]);
+
+    if (requiredCaps.has("engagement_tracking")) {
+      const engagementResult = classId
+        ? await prisma.$queryRaw`
+            SELECT
+              COUNT(*)::int AS row_count,
+              COUNT(*) FILTER (WHERE COALESCE(eng.engagement_count, 0) > 0)::int AS positive_row_count
+            FROM engagement eng
+            JOIN enrollment e ON eng.enrollment_id = e.enrollment_id
+            WHERE eng.batch_id = ${batchId} AND e.class_id = ${classId}
+          `
+        : await prisma.$queryRaw`
+            SELECT
+              COUNT(*)::int AS row_count,
+              COUNT(*) FILTER (WHERE COALESCE(engagement_count, 0) > 0)::int AS positive_row_count
+            FROM engagement
+            WHERE batch_id = ${batchId}
+          `;
+
+      const engagementRows = engagementResult[0]?.row_count ?? 0;
+      const positiveEngagementRows = engagementResult[0]?.positive_row_count ?? 0;
+
+      if (positiveEngagementRows === 0) {
+        return {
+          pass:              false,
+          confidence:        "LOW",
+          confidence_reason: `No positive engagement activity found (${engagementRows} engagement rows).`,
+          structured_issue: {
+            ...WarningCodes.ENGAGEMENT_BELOW_MINIMUM,
+            message: `No positive engagement activity found (${engagementRows} engagement rows).`,
+            context: { found: positiveEngagementRows, required: 1, rowCount: engagementRows },
+          },
+        };
+      }
+    }
+
     let confidence, confidence_reason;
 
     if (distinctStudents >= 10 && distinctAssessments >= 3 && distinctWeeks >= 2) {
@@ -512,7 +541,7 @@ class CapabilityValidatorService {
     }
 
     // ── Layer B ──
-    const layerB = await this.layerB_semantic(task, { batchId, sourceDataset });
+    const layerB = await this.layerB_semantic(task, { batchId, classId, sourceDataset });
     if (!layerB.pass) {
       missingRequirements.push(...layerB.structured_issues);
     }
@@ -544,9 +573,11 @@ class CapabilityValidatorService {
       status,
       confidence:           layerD.pass ? layerD.confidence : "LOW",
       confidence_reason:    layerD.confidence_reason,
+      availability:         layerB.availability ?? null,
       warnings:             allWarnings,
       missing_requirements: missingRequirements,
       semantic_advisories:  layerB.semantic_advisories ?? [],
+      capability_snapshot:  layerB.capability_snapshot ?? null,
       layer_results:        layerResults,
     };
   }
@@ -560,6 +591,7 @@ class CapabilityValidatorService {
    * @returns {Object[]} Array of validation results, sorted by status
    */
   async validateAll({ batchId, classId, sourceDataset }) {
+    this.snapshotCache.clear();
     const allTasks = taskRegistryService.getAllTasks();
     const results  = [];
 

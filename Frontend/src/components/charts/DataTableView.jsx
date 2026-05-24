@@ -4,6 +4,7 @@
  */
 
 import { formatCellValue } from "../../utils/responseTransformer";
+import { getSemanticTag } from "../../utils/tableSemantic";
 
 export default function DataTableView({ data, config }) {
   const { columns, rows } = data;
@@ -42,7 +43,7 @@ export default function DataTableView({ data, config }) {
                   key={col.key}
                   className="px-4 py-2 text-xs text-slate-700 font-mono"
                 >
-                  {formatCellValue(row[col.key])}
+                  {renderCellValue(col.key, row[col.key])}
                 </td>
               ))}
             </tr>
@@ -53,5 +54,20 @@ export default function DataTableView({ data, config }) {
         {rows.length} rows
       </div>
     </div>
+  );
+}
+
+function renderCellValue(columnKey, value) {
+  const semantic = getSemanticTag(columnKey, value);
+  const label = semantic?.label ?? formatCellValue(value);
+
+  if (!semantic) {
+    return label;
+  }
+
+  return (
+    <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold border ${semantic.className}`}>
+      {label}
+    </span>
   );
 }

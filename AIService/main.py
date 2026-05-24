@@ -1,17 +1,17 @@
 """
-AI Explanation Service — FastAPI Application
+AI Explanation Service  FastAPI Application
 ============================================
 Phase 3 | Learning Analytics Thesis Project
 
 Architecture:
-  Node.js Backend  →  POST /explain  →  This service  →  OpenAI API
+  Node.js Backend    POST /explain    This service    OpenAI API
                         (proxy)         (LLM + Strategy)
 
 Endpoint: POST /explain
   - Receives enriched payload from Node proxy (includes task metadata)
   - Routes to correct ExplanationStrategy class
   - Returns structured AIExplainResponse (Pydantic-validated)
-  - On any failure → returns DEGRADED response (never crashes)
+  - On any failure  returns DEGRADED response (never crashes)
 
 Run:
   uvicorn main:app --reload --port 8000
@@ -31,7 +31,7 @@ from schemas import ExplainRequest, ExplainResponse
 from strategies.factory import ExplanationStrategyFactory
 from safety import SafetyFilter
 
-# ── Logging ───────────────────────────────────────────────────────────────────
+#  Logging 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
@@ -39,18 +39,21 @@ logging.basicConfig(
 logger = logging.getLogger("ai_service")
 
 
-# ── App Lifecycle ─────────────────────────────────────────────────────────────
+#  App Lifecycle 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("AI Explanation Service starting up...")
-    logger.info("ExplanationStrategyFactory initialized — 7 strategies registered")
+    logger.info(
+        f"ExplanationStrategyFactory initialized - "
+        f"{len(ExplanationStrategyFactory.list_strategies())} strategies registered"
+    )
     yield
     logger.info("AI Explanation Service shutting down.")
 
 
 app = FastAPI(
-    title="Learning Analytics — AI Explanation Service",
+    title="Learning Analytics  AI Explanation Service",
     description=(
         "Internal FastAPI service that generates structured AI explanations "
         "for learning analytics tasks. Receives enriched task metadata from "
@@ -61,12 +64,12 @@ app = FastAPI(
 )
 
 
-# ── Health Check ──────────────────────────────────────────────────────────────
+#  Health Check 
 
 @app.get("/health")
 async def health():
     """
-    Health probe — Node proxy checks this before forwarding requests.
+    Health probe  Node proxy checks this before forwarding requests.
     Returns 200 + service info so Node can decide to call or degrade immediately.
     """
     return {
@@ -77,7 +80,7 @@ async def health():
     }
 
 
-# ── Main Endpoint ─────────────────────────────────────────────────────────────
+#  Main Endpoint 
 
 @app.post("/explain", response_model=ExplainResponse)
 async def explain(request: ExplainRequest):
@@ -85,7 +88,7 @@ async def explain(request: ExplainRequest):
     Core explanation endpoint.
 
     Flow:
-      1. Validate incoming request (Pydantic — already done by FastAPI)
+      1. Validate incoming request (Pydantic  already done by FastAPI)
       2. Route to correct strategy via ExplanationStrategyFactory
       3. Build system + user prompt
       4. Call OpenAI API
@@ -93,8 +96,8 @@ async def explain(request: ExplainRequest):
       6. Apply safety filter
       7. Return ExplainResponse
 
-    On any exception at steps 3–6 → return DEGRADED response.
-    This endpoint NEVER raises a 500 — the Node proxy relies on this guarantee.
+    On any exception at steps 36  return DEGRADED response.
+    This endpoint NEVER raises a 500  the Node proxy relies on this guarantee.
     """
     start_ms = int(time.time() * 1000)
     logger.info(
@@ -104,25 +107,26 @@ async def explain(request: ExplainRequest):
     )
 
     try:
-        # ── Step 1: Get strategy ──────────────────────────────────────────────
+        #  Step 1: Get strategy 
         strategy = ExplanationStrategyFactory.get_strategy(request.explanation_strategy)
 
-        # ── Step 2: Build prompts ─────────────────────────────────────────────
+        #  Step 2: Build prompts 
         system_prompt = strategy.build_system_prompt(request)
         user_prompt   = strategy.build_user_prompt(request)
+        user_prompt   = _append_task_focus_hints(user_prompt, request)
 
         logger.info(
-            f"[explain] Prompts built — "
+            f"[explain] Prompts built  "
             f"system={len(system_prompt)} chars, user={len(user_prompt)} chars"
         )
 
-        # ── Step 3: Call LLM ──────────────────────────────────────────────────
+        #  Step 3: Call LLM 
         raw_response = await strategy.call_llm(system_prompt, user_prompt, request)
 
-        # ── Step 4: Apply safety filter ───────────────────────────────────────
+        #  Step 4: Apply safety filter 
         safety_flags = SafetyFilter.apply(raw_response.get("explanation", {}))
 
-        # ── Step 5: Build final response ──────────────────────────────────────
+        #  Step 5: Build final response 
         latency_ms = int(time.time() * 1000) - start_ms
         response   = strategy.build_response(
             request      = request,
@@ -132,7 +136,7 @@ async def explain(request: ExplainRequest):
         )
 
         logger.info(
-            f"[explain] OK — task={request.task_id} "
+            f"[explain] OK  task={request.task_id} "
             f"confidence={response.confidence.level} "
             f"latency={latency_ms}ms"
         )
@@ -141,14 +145,35 @@ async def explain(request: ExplainRequest):
     except Exception as exc:
         latency_ms = int(time.time() * 1000) - start_ms
         logger.error(
-            f"[explain] DEGRADED — task={request.task_id} "
+            f"[explain] DEGRADED  task={request.task_id} "
             f"error={type(exc).__name__}: {exc} "
             f"latency={latency_ms}ms"
         )
         return _build_degraded_response(request, latency_ms, str(exc))
 
 
-# ── Degraded Response Builder ─────────────────────────────────────────────────
+#  Degraded Response Builder 
+
+def _append_task_focus_hints(user_prompt: str, req: ExplainRequest) -> str:
+    """
+    Appends task-level guidance from registry (actionable question + aiPromptHint)
+    so the strategy prompt stays aligned with what the chart is expected to show.
+    """
+    extras = []
+    if req.actionable_question:
+        extras.append(f"PRIMARY ACTIONABLE QUESTION:\n{req.actionable_question}")
+    if req.ai_prompt_hint:
+        extras.append(
+            "TASK-SPECIFIC FOCUS (from task registry):\n"
+            f"{req.ai_prompt_hint}\n"
+            "Use only the fields present in the dataset rows."
+        )
+
+    if not extras:
+        return user_prompt
+
+    return f"{user_prompt}\n\n" + "\n\n".join(extras)
+
 
 def _build_degraded_response(req: ExplainRequest, latency_ms: int, reason: str) -> dict:
     """

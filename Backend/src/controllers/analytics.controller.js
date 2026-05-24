@@ -1,6 +1,7 @@
 import taskRegistryService from "../services/taskRegistry.service.js";
 import capabilityValidatorService from "../services/capabilityValidator.service.js";
 import { executeSqlTask } from "../services/sqlExecution.service.js";
+import { validateOutputSchema } from "../services/outputSchema.service.js";
 import prisma from "../lib/prisma.js";
 import { randomUUID } from "crypto";
 
@@ -45,8 +46,7 @@ async function resolveBatchContext(batchId) {
  * Removes: batch_id
  */
 function extractSqlParams(params) {
-  const { batch_id, ...sqlParams } = params;
-  return sqlParams;
+  return { ...params };
 }
 
 /**
@@ -192,6 +192,19 @@ export async function runAnalyticsController(req, res) {
     // Frontend and AI service always receive { datasets: { labelName: [...rows] } }
     // and NEVER see the legacy [{ index, data, rowCount }] shape.
     const datasets = normalizeAnalyticsResult(task, result);
+    const contract = validateOutputSchema(task, datasets);
+
+    if (!contract.ok) {
+      return res.status(422).json({
+        success: false,
+        executionId,
+        taskId,
+        error: "OUTPUT_SCHEMA_MISMATCH",
+        message: `Task output missing required columns: ${contract.missing.join(", ")}`,
+        output_schema: task.output_schema,
+        available_columns: contract.available,
+      });
+    }
 
     return res.status(200).json({
       success:     true,

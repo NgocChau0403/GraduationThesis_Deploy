@@ -53,6 +53,10 @@ export const WarningCodes = {
     code:     "ASSESSMENT_RESULTS_BELOW_MINIMUM",
     severity: "error",
   },
+  ENGAGEMENT_BELOW_MINIMUM: {
+    code:     "ENGAGEMENT_BELOW_MINIMUM",
+    severity: "error",
+  },
   LOW_DATA_DIVERSITY: {
     code:     "LOW_DATA_DIVERSITY",
     severity: "info",

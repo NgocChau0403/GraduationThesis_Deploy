@@ -258,6 +258,51 @@ function buildExpandedAssessmentRows(assessmentScores, assessmentBase) {
   }));
 }
 
+function normalizeAssessmentKey(value) {
+  if (value === null || value === undefined) return "ASSESSMENT";
+  const key = String(value).trim();
+  return key.length > 0 ? key : "ASSESSMENT";
+}
+
+function deriveFinalOutcomeFromAssessments(expandedAssessmentRows = []) {
+  if (!Array.isArray(expandedAssessmentRows) || expandedAssessmentRows.length === 0) {
+    return null;
+  }
+
+  const scoredRows = expandedAssessmentRows
+    .map((row) => {
+      const score = row?.score_normalized;
+      if (score === null || score === undefined || score === "") return null;
+      const numeric = Number(score);
+      if (Number.isNaN(numeric)) return null;
+      const rawOrder = row?.assessment_order;
+      const order =
+        rawOrder === null || rawOrder === undefined || rawOrder === ""
+          ? null
+          : Number(rawOrder);
+      return { numeric, order: Number.isNaN(order) ? null : order };
+    })
+    .filter(Boolean);
+
+  if (scoredRows.length === 0) return null;
+
+  // Prefer the final checkpoint score when order exists, otherwise the latest observed score.
+  const ordered = [...scoredRows].sort((a, b) => {
+    if (a.order === null && b.order === null) return 0;
+    if (a.order === null) return 1;
+    if (b.order === null) return -1;
+    return a.order - b.order;
+  });
+
+  const finalScore = ordered[ordered.length - 1].numeric;
+  // Scale-aware pass threshold:
+  // - 0..20 scale -> pass at 10
+  // - 0..100 scale (or equivalent normalized) -> pass at 50
+  const passThreshold = finalScore <= 20 ? 10 : 50;
+
+  return finalScore >= passThreshold ? "Pass" : "Fail";
+}
+
 // Helper to filter out properties that are undefined (keeps nulls)
 function extractModelProps(record, keys) {
   const obj = {};
@@ -427,7 +472,11 @@ export function transformRawRowsToCanonical({
     }
 
     // Must have at least basic keys to proceed with relations
-    const classId = (derivedCourseId && derivedCourseRun) ? surrogateKeyGenerators.class_id(derivedCourseId, derivedCourseRun) : null;
+    // Scope class identity by batch to prevent cross-batch collisions when
+    // datasets share the same course/run labels (e.g. repeated UCI imports).
+    const classId = (derivedCourseId && derivedCourseRun)
+      ? surrogateKeyGenerators.class_id(`${safeBatchId}::${derivedCourseId}`, derivedCourseRun)
+      : null;
     const enrollmentId = (derivedStudentId && classId) ? surrogateKeyGenerators.enrollment_id(derivedStudentId, classId) : null;
 
     // Phase 3: Shatter into 8 Entities
@@ -504,6 +553,9 @@ export function transformRawRowsToCanonical({
 
     // 4. ENROLLMENT
     if (enrollmentId) {
+      const derivedFinalOutcome =
+        enrollmentLogic.final_outcome || deriveFinalOutcomeFromAssessments(expandedAssessmentRows);
+
       // Compute registration_lead_time [FE]: ABS(enrollment_start_day) only when day < 0 (registered early)
       const startDay = enrollmentLogic.enrollment_start_day != null ? Number(enrollmentLogic.enrollment_start_day) : null;
       const registrationLeadTime = (startDay !== null && startDay < 0) ? Math.abs(startDay) : null;
@@ -516,10 +568,10 @@ export function transformRawRowsToCanonical({
         class_id: classId,
         enrollment_start_day: enrollmentLogic.enrollment_start_day,
         enrollment_end_day: enrollmentLogic.enrollment_end_day,
-        final_outcome: enrollmentLogic.final_outcome,
+        final_outcome: derivedFinalOutcome,
         previous_attempt_count: enrollmentLogic.previous_attempt_count,
         study_load_credits: courseLogic.study_load_credits,
-        absences: engagementLogic.absence_count,
+        absences: enrollmentLogic.absence_count ?? null,  // UCI: absences from enrollment (mapped via uci.rules.js)
         studytime: enrollmentLogic.studytime,         // UCI: weekly self-study time 1-4. NULL for OULAD
         registration_lead_time: registrationLeadTime  // [FE] days registered before class start
       });
@@ -531,7 +583,9 @@ export function transformRawRowsToCanonical({
       if (!classId) return;
 
       const rawAssessmentName = aLogic.assessment_name || aLogic.assessment_id || "ASSESSMENT";
-      const derivedAssessmentId = aLogic.assessment_id || surrogateKeyGenerators.assessment_id(classId, rawAssessmentName);
+      const assessmentKey = normalizeAssessmentKey(aLogic.assessment_id || rawAssessmentName);
+      // Scope assessment id to class to avoid collision across datasets/batches (e.g. G1/G2/G3).
+      const derivedAssessmentId = surrogateKeyGenerators.assessment_id(classId, assessmentKey);
 
       // 5. ASSESSMENT
       // [FE] week_of_class: CEIL(due_day / 7) — in-table, no JOIN needed

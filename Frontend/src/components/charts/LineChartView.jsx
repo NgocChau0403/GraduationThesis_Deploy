@@ -5,13 +5,13 @@
 
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid,
-  Tooltip, Legend, ResponsiveContainer,
+  Tooltip, Legend, ResponsiveContainer, ReferenceLine,
 } from "recharts";
 
 import { getStableColor } from "../../utils/colorUtils";
 
 export default function LineChartView({ data, config }) {
-  const { data: chartData, xKey, lines } = data;
+  const { data: chartData, xKey, lines, referenceLines = [] } = data;
 
   if (!chartData || chartData.length === 0) {
     return <EmptyChart message="No data to display" />;
@@ -35,6 +35,21 @@ export default function LineChartView({ data, config }) {
         <Tooltip
           contentStyle={{ borderRadius: 8, border: "1px solid #e2e8f0", fontSize: 12 }}
         />
+        {referenceLines.map((line) => (
+          <ReferenceLine
+            key={line.key}
+            y={line.y}
+            stroke={line.stroke}
+            strokeDasharray="6 4"
+            strokeWidth={1.5}
+            label={{
+              value: line.label,
+              position: "right",
+              fill: line.stroke,
+              fontSize: 11
+            }}
+          />
+        ))}
         {lines.length > 1 && <Legend wrapperStyle={{ fontSize: 12 }} />}
         {lines.map((line, i) => (
           <Line

@@ -11,6 +11,7 @@
 
 import { useState } from "react";
 import { useTaskRegistry } from "../../hooks/useTaskRegistry";
+import { useAppContext } from "../../contexts/AppContext";
 import TaskFilters from "./TaskFilters";
 
 // ── Viz type badge colors ───────────────────────────────────────────────────
@@ -34,9 +35,24 @@ const VIZ_ICONS = {
   table:        "📋",
 };
 
+// ── Capabilities not available in UCI dataset ─────────────────────────────────
+// Keep in sync with TaskDetailPanel.jsx
+const UCI_MISSING_CAPS = new Set([
+  "engagement_tracking", "resource_clickstream",
+  "temporal_activity", "submission_timestamps",
+]);
+
 export default function TaskListPanel({ selectedTaskId, onSelect }) {
   const [filters, setFilters] = useState({});
   const { tasks, count, isLoading, isError, error } = useTaskRegistry(filters);
+  const { activeDataset } = useAppContext();
+
+  // ── Detect dataset incompatibility ────────────────────────────────────────
+  const activeSource = activeDataset?.source ?? "";
+  function isTaskIncompatible(task) {
+    if (activeSource !== "UCI") return false;
+    return (task.requiredCapabilities ?? []).some(c => UCI_MISSING_CAPS.has(c));
+  }
 
   return (
     <div className="flex flex-col h-full">
@@ -81,48 +97,60 @@ export default function TaskListPanel({ selectedTaskId, onSelect }) {
           </div>
         )}
 
-        {tasks.map((task) => (
-          <button
-            key={task.taskId}
-            onClick={() => onSelect(task)}
-            className={`w-full text-left p-3 rounded-lg border transition-all
-              ${
-                selectedTaskId === task.taskId
-                  ? "border-emerald-400 bg-emerald-50 shadow-sm"
-                  : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm"
-              }`}
-          >
-            {/* Row 1: ID + Name */}
-            <div className="flex items-start gap-2">
-              <code className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded shrink-0">
-                {task.taskId}
-              </code>
-              <span className="text-sm font-medium text-slate-800 leading-tight">
-                {task.taskName}
-              </span>
-            </div>
-
-            {/* Row 2: Tags */}
-            <div className="flex flex-wrap gap-1.5 mt-2">
-              {/* Viz type */}
-              <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium ${VIZ_COLORS[task.viz_type] || "bg-slate-100 text-slate-600"}`}>
-                {VIZ_ICONS[task.viz_type] || "📊"} {task.viz_type?.replace("_", " ")}
-              </span>
-
-              {/* Scope */}
-              <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600">
-                {task.scope}
-              </span>
-
-              {/* Dataset compat */}
-              {task.datasetCompatibility && task.datasetCompatibility !== "both" && (
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-yellow-100 text-yellow-700">
-                  {task.datasetCompatibility}
+        {tasks.map((task) => {
+          const incompatible = isTaskIncompatible(task);
+          return (
+            <button
+              key={task.taskId}
+              onClick={() => onSelect(task)}
+              className={`w-full text-left p-3 rounded-lg border transition-all
+                ${
+                  selectedTaskId === task.taskId
+                    ? "border-emerald-400 bg-emerald-50 shadow-sm"
+                    : incompatible
+                    ? "border-slate-200 bg-slate-50 opacity-50 hover:opacity-70"
+                    : "border-slate-200 bg-white hover:border-slate-300 hover:shadow-sm"
+                }`}
+            >
+              {/* Row 1: ID + Name */}
+              <div className="flex items-start gap-2">
+                <code className="text-xs font-semibold text-emerald-600 bg-emerald-50 px-1.5 py-0.5 rounded shrink-0">
+                  {task.taskId}
+                </code>
+                <span className="text-sm font-medium text-slate-800 leading-tight">
+                  {task.taskName}
                 </span>
-              )}
-            </div>
-          </button>
-        ))}
+              </div>
+
+              {/* Row 2: Tags */}
+              <div className="flex flex-wrap gap-1.5 mt-2">
+                {/* Viz type */}
+                <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium ${VIZ_COLORS[task.viz_type] || "bg-slate-100 text-slate-600"}`}>
+                  {VIZ_ICONS[task.viz_type] || "📊"} {task.viz_type?.replace("_", " ")}
+                </span>
+
+                {/* Scope */}
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-slate-100 text-slate-600">
+                  {task.scope}
+                </span>
+
+                {/* Dataset compat */}
+                {task.datasetCompatibility && task.datasetCompatibility !== "both" && (
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-yellow-100 text-yellow-700">
+                    {task.datasetCompatibility}
+                  </span>
+                )}
+
+                {/* Incompatibility badge */}
+                {incompatible && (
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-orange-100 text-orange-700">
+                    ⚠️ OULAD only
+                  </span>
+                )}
+              </div>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

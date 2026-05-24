@@ -1,51 +1,99 @@
-/**
- * heatmap.adapter.js
- * ─────────────────────────────────────────────────────────────────────────────
- * Adapter: SQL rows → heatmap cell grid format.
- * Recharts doesn't have native heatmap — we'll render as a colored table grid.
- *
- * Output: { rows: string[], cols: string[], cells: { row, col, value }[], min, max }
- * ─────────────────────────────────────────────────────────────────────────────
- */
+import {
+  createAdapterDiagnostics,
+  finalizeDiagnostics,
+  registerMissingField,
+  toCategoryValue,
+  toFiniteNumber,
+} from "./adapterPolicy.js";
 
-export function adapt(rawData, config) {
-  if (!rawData || rawData.length === 0) {
-    return { rows: [], cols: [], cells: [], min: 0, max: 0 };
+export function adapt(rawData, config = {}) {
+  const diag = createAdapterDiagnostics({
+    chartType: "heatmap",
+    selectedDatasetLabel: config.__selected_dataset_label || null,
+  });
+
+  if (!Array.isArray(rawData) || rawData.length === 0) {
+    return { rows: [], cols: [], cells: [], min: null, max: null, meta: finalizeDiagnostics(diag) };
   }
 
+  diag.input_rows = rawData.length;
   const { x_field, y_field } = config;
-  // For heatmap, x_field = column dimension, y_field = value
-  // We need a third field for row dimension — use series_field or first non-x,y field
-  const allKeys = Object.keys(rawData[0]);
+  const allKeys = Object.keys(rawData[0] || {});
   const valueField = y_field;
   const colField = x_field;
-  const rowField = config.series_field || allKeys.find((k) => k !== colField && k !== valueField) || colField;
+  const rowField =
+    config.series_field ||
+    allKeys.find((k) => k !== colField && k !== valueField) ||
+    colField;
 
-  const cells = [];
-  let min = Infinity;
-  let max = -Infinity;
-
-  const rowSet = new Set();
-  const colSet = new Set();
+  const rowsSet = new Set();
+  const colsSet = new Set();
+  const lookup = {};
+  const numericValues = [];
 
   for (const row of rawData) {
-    const rv = String(row[rowField] ?? "");
-    const cv = String(row[colField] ?? "");
-    const val = Number(row[valueField]) || 0;
+    const r = toCategoryValue(row?.[rowField]);
+    const c = toCategoryValue(row?.[colField]);
+    if (r === null) {
+      registerMissingField(diag, rowField);
+      diag.warnings.push(`Skipped row: missing row dimension "${rowField}".`);
+      continue;
+    }
+    if (c === null) {
+      registerMissingField(diag, colField);
+      diag.warnings.push(`Skipped row: missing column dimension "${colField}".`);
+      continue;
+    }
 
-    rowSet.add(rv);
-    colSet.add(cv);
-    cells.push({ row: rv, col: cv, value: val });
-
-    if (val < min) min = val;
-    if (val > max) max = val;
+    rowsSet.add(r);
+    colsSet.add(c);
+    const n = toFiniteNumber(row?.[valueField]);
+    if (n === null && row?.[valueField] !== 0) {
+      registerMissingField(diag, valueField);
+      lookup[`${r}|${c}`] = null;
+      continue;
+    }
+    lookup[`${r}|${c}`] = n;
+    numericValues.push(n);
   }
 
+  const rows = [...rowsSet];
+  const cols = [...colsSet].sort(sortCategoryLike);
+  const cells = [];
+  for (const r of rows) {
+    for (const c of cols) {
+      const key = `${r}|${c}`;
+      cells.push({
+        row: r,
+        col: c,
+        value: Object.prototype.hasOwnProperty.call(lookup, key) ? lookup[key] : null,
+      });
+    }
+  }
+
+  diag.valid_rows = rows.length > 0 && cols.length > 0 ? rows.length * cols.length : 0;
+  if (diag.missing_field_counts?.[valueField] > 0) {
+    diag.warnings.push(
+      `Heatmap kept ${diag.missing_field_counts[valueField]} cells as missing (null), not zero-filled.`
+    );
+  }
+
+  const min = numericValues.length > 0 ? Math.min(...numericValues) : null;
+  const max = numericValues.length > 0 ? Math.max(...numericValues) : null;
   return {
-    rows: [...rowSet],
-    cols: [...colSet].sort((a, b) => (Number(a) || 0) - (Number(b) || 0)),
+    rows,
+    cols,
     cells,
-    min: min === Infinity ? 0 : min,
-    max: max === -Infinity ? 0 : max,
+    min,
+    max,
+    meta: finalizeDiagnostics(diag),
   };
+}
+
+function sortCategoryLike(a, b) {
+  const na = Number(a);
+  const nb = Number(b);
+  const bothNumeric = Number.isFinite(na) && Number.isFinite(nb);
+  if (bothNumeric) return na - nb;
+  return String(a).localeCompare(String(b));
 }

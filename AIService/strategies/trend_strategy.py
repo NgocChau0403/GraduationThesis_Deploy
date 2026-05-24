@@ -1,5 +1,5 @@
 """
-Trend Strategy — explanation_strategy = "trend"
+Trend Strategy  explanation_strategy = "trend"
 ================================================
 Used for tasks that show data changing over time:
   - Score progression over assessments (S-T01)
@@ -9,7 +9,7 @@ Used for tasks that show data changing over time:
 Prompt focuses on:
   - Identifying direction (improving / declining / stable / volatile)
   - Pinpointing turning points (peak, trough)
-  - Language calibrated to granularity (weekly → "sudden", semester → "long-term")
+  - Language calibrated to granularity (weekly  "sudden", semester  "long-term")
 """
 
 from __future__ import annotations
@@ -57,10 +57,10 @@ EXPLANATION OBJECTIVES:
 4. Provide educationally meaningful interpretation
 
 CRITICAL RULES:
-- Generate 2–4 insights maximum
+- Generate 24 insights maximum
 - evidence[] must use exact field names from the dataset
 - delta = current_value - previous_value (signed, null for baselines)
-- Do NOT invent data points — only reference values present in the dataset
+- Do NOT invent data points  only reference values present in the dataset
 - Do NOT include markdown, code fences, or any text outside the JSON object
 """
 
@@ -70,7 +70,7 @@ CRITICAL RULES:
         ac = req.analysis_context
         confidence_note = ""
         if req.confidence:
-            confidence_note = f"\nData quality signal: {req.confidence.level} — {req.confidence.reason}"
+            confidence_note = f"\nData quality signal: {req.confidence.level}  {req.confidence.reason}"
 
         return f"""TASK: {task_name}
 ANALYTICAL CONTEXT:
@@ -83,7 +83,7 @@ DATASET(S):
 INSTRUCTION:
 Analyze the trend in this data. Identify:
 1. The overall direction and magnitude of change
-2. Any notable turning points (when did the trend change?)
+2. Any notable turning points (when did the trend change)
 3. The highest and lowest values, and what they signify
 4. What this pattern suggests educationally
 

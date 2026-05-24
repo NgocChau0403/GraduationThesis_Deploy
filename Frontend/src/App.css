@@ -16,6 +16,8 @@ body {
   place-content: center;
   min-width: 320px;
   min-height: 100vh;
+  color-scheme: light;
+  color-scheme: only light;
   background-color: #f8fafc; /* Màu nền slate-50 cho toàn app */
 }
 
@@ -45,7 +47,9 @@ body {
 }
 
 /* Global Transition cho các nút bấm */
-button, a, select, input {
+button, a, select, input, textarea {
+  color-scheme: light;
+  color-scheme: only light;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 

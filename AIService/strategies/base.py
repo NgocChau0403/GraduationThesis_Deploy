@@ -4,13 +4,13 @@ Base Explanation Strategy
 Abstract base class that all 7 strategy classes inherit from.
 
 Each strategy handles ONE explanation_strategy value from taskRegistry:
-  TrendStrategy       → "trend"
-  ComparisonStrategy  → "comparison"
-  DistributionStrategy→ "distribution"
-  CorrelationStrategy → "correlation"
-  RiskStrategy        → "risk"
-  BehavioralStrategy  → "behavioral"
-  RankingStrategy     → "ranking"
+  TrendStrategy        "trend"
+  ComparisonStrategy   "comparison"
+  DistributionStrategy "distribution"
+  CorrelationStrategy  "correlation"
+  RiskStrategy         "risk"
+  BehavioralStrategy   "behavioral"
+  RankingStrategy      "ranking"
 
 The base class provides:
   - Common LLM call logic (call_llm)
@@ -39,11 +39,11 @@ from schemas import (
 
 logger = logging.getLogger("ai_service.strategy")
 
-# ── OpenAI client (singleton) ─────────────────────────────────────────────────
+#  OpenAI client (singleton) 
 _client = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
 
 MODEL         = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
-MAX_TOKENS    = int(os.environ.get("AI_MAX_TOKENS", "800"))
+MAX_TOKENS    = int(os.environ.get("AI_MAX_TOKENS", "1200"))
 TEMPERATURE   = float(os.environ.get("AI_TEMPERATURE", "0.3"))
 
 
@@ -51,12 +51,12 @@ class BaseExplanationStrategy(ABC):
     """
     Base class for all explanation strategies.
     Subclasses override build_system_prompt and build_user_prompt only.
-    All LLM call + response parsing logic lives here — not duplicated.
+    All LLM call + response parsing logic lives here  not duplicated.
     """
 
     strategy_name: str = "base"
 
-    # ── Abstract interface ────────────────────────────────────────────────────
+    #  Abstract interface 
 
     @abstractmethod
     def build_system_prompt(self, req: ExplainRequest) -> str:
@@ -82,7 +82,7 @@ class BaseExplanationStrategy(ABC):
         """
         ...
 
-    # ── Shared: LLM Call ──────────────────────────────────────────────────────
+    #  Shared: LLM Call 
 
     async def call_llm(
         self,
@@ -95,9 +95,9 @@ class BaseExplanationStrategy(ABC):
         Uses JSON mode (response_format=json_object) to prevent free-text responses.
 
         Raises:
-          json.JSONDecodeError    — if LLM returns non-JSON (shouldn't with JSON mode)
-          openai.APIError         — if API is down or rate-limited
-          Any other Exception     — caught by main.py → DEGRADED response
+          json.JSONDecodeError     if LLM returns non-JSON (shouldn't with JSON mode)
+          openai.APIError          if API is down or rate-limited
+          Any other Exception      caught by main.py  DEGRADED response
         """
         
         json_format_instruction = """
@@ -138,9 +138,10 @@ OUTPUT FORMAT: You MUST return a valid JSON object with this exact structure:
 }
 
 CRITICAL RULES:
-- Generate 2–4 insights maximum
+- Generate 1 to 3 insights maximum
+- Keep each insight and recommendation concise
 - evidence[] must use exact field names from the dataset
-- Do NOT invent data points — only reference values present in the dataset
+- Do NOT invent data points  only reference values present in the dataset
 - Do NOT include markdown, code fences, or any text outside the JSON object
 """
         
@@ -170,7 +171,7 @@ CRITICAL RULES:
 
         return parsed
 
-    # ── Shared: Response Builder ──────────────────────────────────────────────
+    #  Shared: Response Builder 
 
     def build_response(
         self,
@@ -181,8 +182,8 @@ CRITICAL RULES:
     ) -> ExplainResponse:
         """
         Assembles ExplainResponse from raw LLM dict.
-        Uses Pydantic model_validate — if LLM output doesn't match schema,
-        ValidationError is raised → caller (main.py) returns DEGRADED.
+        Uses Pydantic model_validate  if LLM output doesn't match schema,
+        ValidationError is raised  caller (main.py) returns DEGRADED.
 
         Also derives confidence.based_on[] via Python logic (not from LLM).
         """
@@ -192,7 +193,7 @@ CRITICAL RULES:
         # Validate LLM-generated explanation body
         explanation = ExplanationBody.model_validate(raw.get("explanation", raw))
 
-        # Derive confidence.based_on[] (Python logic — LLM doesn't decide this)
+        # Derive confidence.based_on[] (Python logic  LLM doesn't decide this)
         confidence_level  = raw.get("confidence", {}).get("level") or \
                             (request.confidence.level if request.confidence else "MEDIUM")
         confidence_reason = raw.get("confidence", {}).get("reason") or \
@@ -230,11 +231,11 @@ CRITICAL RULES:
             meta                 = meta,
         )
 
-    # ── Shared: Confidence Source Derivation ──────────────────────────────────
+    #  Shared: Confidence Source Derivation 
 
     def _derive_confidence_sources(self, level: str, req: ExplainRequest) -> list[str]:
         """
-        Python-derived — NOT LLM-derived.
+        Python-derived  NOT LLM-derived.
         Determines WHY confidence is at a given level from data signals.
         """
         if level == "HIGH":
@@ -260,7 +261,7 @@ CRITICAL RULES:
 
         return sources or ["sparse_data"]
 
-    # ── Shared: Cost Estimation ───────────────────────────────────────────────
+    #  Shared: Cost Estimation 
 
     @staticmethod
     def _estimate_cost(tu: TokenUsage, model: str) -> float | None:
@@ -284,7 +285,7 @@ CRITICAL RULES:
             6
         )
 
-    # ── Shared: Data Summarizer (for user prompts) ────────────────────────────
+    #  Shared: Data Summarizer (for user prompts) 
 
     @staticmethod
     def summarize_datasets(req: ExplainRequest, max_rows: int = 20) -> str:

@@ -1,13 +1,13 @@
-"""Safety Filter — 5 category screening for AI-generated explanations."""
+"""Safety Filter  5 category screening for AI-generated explanations."""
 
 import re
 import logging
 
 logger = logging.getLogger("ai_service.safety")
 
-# ── Safety rules ──────────────────────────────────────────────────────────────
+#  Safety rules 
 # Each rule: (category_name, [list of regex patterns], severity)
-# severity: "block" → strip section, "warn" → flag only
+# severity: "block"  strip section, "warn"  flag only
 
 _RULES = [
     (
@@ -19,15 +19,15 @@ _RULES = [
     (
         "DIAGNOSTIC_LABELING",
         # Diagnosing mental health or learning disabilities
-        [r"\bdyslexia\b", r"\bADHD\b", r"\bdepressed?\b", r"\banxiety disorder\b",
+        [r"\bdyslexia\b", r"\bADHD\b", r"\bdepressed\b", r"\banxiety disorder\b",
          r"\blearning disabilit\w*\b"],
         "warn",
     ),
     (
         "CAUSAL_OVERCLAIM",
         # LLM claiming causation instead of correlation
-        [r"\bcauses?\b.{0,30}\bperformance\b", r"\bdirectly (leads|results) to\b",
-         r"\bproves? that\b"],
+        [r"\bcauses\b.{0,30}\bperformance\b", r"\bdirectly (leads|results) to\b",
+         r"\bproves that\b"],
         "warn",
     ),
     (
@@ -48,9 +48,9 @@ class SafetyFilter:
     """
     Lightweight rule-based safety screening.
     Flags (does NOT block) explanations that contain potentially problematic language.
-    Returns list of triggered category names → stored in ExplainResponse.safety_flags[].
+    Returns list of triggered category names  stored in ExplainResponse.safety_flags[].
 
-    Design decision: We flag but don't block — the researcher (thesis author) reviews
+    Design decision: We flag but don't block  the researcher (thesis author) reviews
     flagged explanations. A real production system would need stricter handling.
     """
 

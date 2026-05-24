@@ -21,6 +21,7 @@ const ALLOWED_PARAMS = new Set([
  * Especially important if AI-generated SQL is introduced in Phase 3.
  */
 const QUERY_TIMEOUT_MS = 30_000;
+const TX_TIMEOUT_MS = QUERY_TIMEOUT_MS + 5_000;
 
 /**
  * Safety LIMIT injected when a query has no LIMIT clause.
@@ -184,6 +185,98 @@ function applyLimitGuardrail(sql) {
   return cleanSql;
 }
 
+/**
+ * Adds minimal batch-scoping guards for legacy task SQL templates.
+ *
+ * Why needed:
+ * - Older queries often filter by class_id only.
+ * - Historical data may contain class/assessment identifiers repeated across batches.
+ * - Missing batch predicates can cause cross-batch join explosion and timeouts.
+ *
+ * Scope:
+ * - Only applies when both :batch_id and :class_id are present in params.
+ * - Uses conservative string rewrites for known alias patterns in task registry SQL.
+ */
+function applyBatchScopeGuard(sql, params) {
+  if (!params?.batch_id || !params?.class_id) return sql;
+
+  let guarded = sql;
+
+  // 1) Prevent assessment_result <-> assessment cross-batch multiplication.
+  if (
+    /JOIN\s+assessment\s+a\s+ON\s+ar\.assessment_id\s*=\s*a\.assessment_id/i.test(guarded) &&
+    !/ar\.batch_id\s*=\s*a\.batch_id/i.test(guarded)
+  ) {
+    guarded = guarded.replace(
+      /JOIN\s+assessment\s+a\s+ON\s+ar\.assessment_id\s*=\s*a\.assessment_id/gi,
+      "JOIN assessment a ON ar.assessment_id = a.assessment_id AND ar.batch_id = a.batch_id"
+    );
+  }
+
+  // 1b) Prevent assessment_result <-> enrollment cross-batch joins.
+  if (
+    /JOIN\s+enrollment\s+e\s+ON\s+ar\.enrollment_id\s*=\s*e\.enrollment_id/i.test(guarded) &&
+    !/ar\.batch_id\s*=\s*e\.batch_id/i.test(guarded)
+  ) {
+    guarded = guarded.replace(
+      /JOIN\s+enrollment\s+e\s+ON\s+ar\.enrollment_id\s*=\s*e\.enrollment_id/gi,
+      "JOIN enrollment e ON ar.enrollment_id = e.enrollment_id AND ar.batch_id = e.batch_id"
+    );
+  }
+
+  if (
+    /JOIN\s+enrollment\s+e\s+ON\s+ar\.student_id\s*=\s*e\.student_id/i.test(guarded) &&
+    !/ar\.batch_id\s*=\s*e\.batch_id/i.test(guarded)
+  ) {
+    guarded = guarded.replace(
+      /JOIN\s+enrollment\s+e\s+ON\s+ar\.student_id\s*=\s*e\.student_id/gi,
+      "JOIN enrollment e ON ar.student_id = e.student_id AND ar.batch_id = e.batch_id"
+    );
+  }
+
+  // 2) Enforce batch on class-scoped enrollment filters.
+  guarded = guarded.replace(
+    /\be\.class_id\s*=\s*:class_id\b/gi,
+    "e.class_id = :class_id AND e.batch_id = :batch_id"
+  );
+
+  // 3) Enforce batch on class-scoped assessment filters.
+  guarded = guarded.replace(
+    /\ba\.class_id\s*=\s*:class_id\b/gi,
+    "a.class_id = :class_id AND a.batch_id = :batch_id"
+  );
+
+  // 3b) If class equality is used in JOIN clauses, align batch equality too.
+  guarded = guarded.replace(
+    /\ba\.class_id\s*=\s*e\.class_id\b(?!\s+AND\s+a\.batch_id\s*=\s*e\.batch_id)/gi,
+    "a.class_id = e.class_id AND a.batch_id = e.batch_id"
+  );
+
+  // 4) Enforce batch on engagement/event aliases commonly used in cohort queries.
+  guarded = guarded.replace(
+    /\beng\.batch_id\s*=\s*:batch_id\s+AND\s+e\.class_id\s*=\s*:class_id\b/gi,
+    "eng.batch_id = :batch_id AND e.class_id = :class_id AND e.batch_id = :batch_id"
+  );
+
+  return guarded;
+}
+
+/**
+ * Task-specific SQL optimizations for known heavy analytical queries.
+ * Keeps registry SQL readable while allowing targeted runtime hardening.
+ */
+function applyTaskSpecificSqlOptimizations(sql, taskId) {
+  if (taskId !== "A-B04") return sql;
+
+  let optimized = sql;
+  optimized = optimized.replace(/\bscore_context\s+AS\s*\(/i, "score_context AS MATERIALIZED (");
+  optimized = optimized.replace(/\bpunctuality\s+AS\s*\(/i, "punctuality AS MATERIALIZED (");
+  optimized = optimized.replace(/\beng_agg\s+AS\s*\(/i, "eng_agg AS MATERIALIZED (");
+  optimized = optimized.replace(/\bclass_max\s+AS\s*\(/i, "class_max AS MATERIALIZED (");
+  optimized = optimized.replace(/\beng_score\s+AS\s*\(/i, "eng_score AS MATERIALIZED (");
+  return optimized;
+}
+
 
 /**
  * PostgreSQL does not support ROUND(double precision, integer).
@@ -292,27 +385,42 @@ function buildQueryHash(taskId, params) {
  * @returns {{ data: Object[], rowCount: number, executionTimeMs: number }}
  */
 async function executeOne(sqlTemplate, params, options = {}) {
-  const { bigintMode = "number", limitGuardrail = true } = options;
+  const { bigintMode = "number", limitGuardrail = true, taskId = "unknown" } = options;
 
-  const { sql: rawSql, values } = buildPositionalQuery(sqlTemplate, params);
+  const batchScopedTemplate = applyBatchScopeGuard(sqlTemplate, params);
+  const optimizedTemplate = applyTaskSpecificSqlOptimizations(batchScopedTemplate, taskId);
+  const { sql: rawSql, values } = buildPositionalQuery(optimizedTemplate, params);
   const guardedSql = limitGuardrail ? applyLimitGuardrail(rawSql) : rawSql;
   const sql = fixRoundCast(guardedSql);
 
   const startTime = Date.now();
 
-  // Execute inside transaction to scope statement_timeout
-  const raw = await prisma.$transaction(async (tx) => {
-    // SET LOCAL: affects only this transaction, not the connection globally
-    await tx.$executeRawUnsafe(
-      `SET LOCAL statement_timeout = ${QUERY_TIMEOUT_MS}`
-    );
-    return tx.$queryRawUnsafe(sql, ...values);
-  });
+  try {
+    // Execute inside transaction to scope statement_timeout
+    const raw = await prisma.$transaction(async (tx) => {
+      // SET LOCAL: affects only this transaction, not the connection globally
+      await tx.$executeRawUnsafe(
+        `SET LOCAL statement_timeout = ${QUERY_TIMEOUT_MS}`
+      );
+      return tx.$queryRawUnsafe(sql, ...values);
+    }, { timeout: TX_TIMEOUT_MS });
 
-  const executionTimeMs = Date.now() - startTime;
-  const data = serializeRows(raw, bigintMode);
+    const executionTimeMs = Date.now() - startTime;
+    const data = serializeRows(raw, bigintMode);
 
-  return { data, rowCount: data.length, executionTimeMs };
+    return { data, rowCount: data.length, executionTimeMs };
+  } catch (error) {
+    const executionTimeMs = Date.now() - startTime;
+    console.error("[SqlExecution] failed", {
+      taskId,
+      executionTimeMs,
+      batch_id: params?.batch_id ?? null,
+      class_id: params?.class_id ?? null,
+      student_id: params?.student_id ?? null,
+      message: error?.message,
+    });
+    throw error;
+  }
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -347,7 +455,7 @@ export async function executeSqlTask({ task, params = {}, options = {} }) {
       const { data, rowCount, executionTimeMs } = await executeOne(
         queryTemplate,
         params,
-        options
+        { ...options, taskId: task.taskId }
       );
 
       resultSets.push({ index: i, data, rowCount });
@@ -378,7 +486,7 @@ export async function executeSqlTask({ task, params = {}, options = {} }) {
   const { data, rowCount, executionTimeMs } = await executeOne(
     task.sqlQuery,
     params,
-    options
+    { ...options, taskId: task.taskId }
   );
 
   return {
@@ -403,7 +511,12 @@ export function dryRunSqlTask({ task, params = {}, options = {} }) {
   const template = task.sqlQuery ?? task.sqlQueries?.[0] ?? "";
   const { limitGuardrail = true } = options;
 
-  const { sql: rawSql, values } = buildPositionalQuery(template, params);
+  const batchScopedTemplate = applyBatchScopeGuard(template, params);
+  const optimizedTemplate = applyTaskSpecificSqlOptimizations(
+    batchScopedTemplate,
+    task?.taskId ?? "unknown"
+  );
+  const { sql: rawSql, values } = buildPositionalQuery(optimizedTemplate, params);
   const sql = limitGuardrail ? applyLimitGuardrail(rawSql) : rawSql;
 
   const paramMap = {};

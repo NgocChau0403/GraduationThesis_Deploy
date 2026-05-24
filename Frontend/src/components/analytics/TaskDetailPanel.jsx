@@ -50,9 +50,23 @@ const CONFIDENCE_STYLES = {
   LOW:    "bg-orange-100 text-orange-700",
 };
 
+// ── Capabilities not available in UCI dataset ─────────────────────────────────
+// Keep in sync with TaskListPanel.jsx
+const UCI_MISSING_CAPS = new Set([
+  "engagement_tracking", "resource_clickstream",
+  "temporal_activity", "submission_timestamps",
+]);
+
 export default function TaskDetailPanel({ task, onRun, isRunning }) {
   const { activeDataset } = useAppContext();
   const [paramValues, setParamValues] = useState({});
+
+  // ── Detect dataset incompatibility ────────────────────────────────────────
+  const activeSource = activeDataset?.source ?? "";
+  const incompatibleCaps = activeSource === "UCI"
+    ? (task?.requiredCapabilities ?? []).filter(c => UCI_MISSING_CAPS.has(c))
+    : [];
+  const isIncompatible = incompatibleCaps.length > 0;
 
   // Reset params when task changes
   useEffect(() => {
@@ -170,12 +184,24 @@ export default function TaskDetailPanel({ task, onRun, isRunning }) {
         </div>
       </div>
 
+      {/* Dataset incompatibility warning */}
+      {isIncompatible && (
+        <div className="p-3 rounded-lg bg-amber-50 border border-amber-300">
+          <p className="text-xs font-semibold text-amber-700 mb-1">⚠️ Not available for {activeSource} dataset</p>
+          <p className="text-xs text-amber-600">
+            This task requires{" "}
+            <span className="font-mono font-semibold">{incompatibleCaps.join(", ")}</span>
+            {" "}— not present in {activeSource} data. Switch to an OULAD dataset to use this task.
+          </p>
+        </div>
+      )}
+
       {/* Run Button */}
       <button
         onClick={handleRun}
-        disabled={isRunning || !canRun}
+        disabled={isRunning || !canRun || isIncompatible}
         className={`w-full py-2.5 rounded-lg text-sm font-semibold transition-all
-          ${isRunning || !canRun
+          ${isRunning || !canRun || isIncompatible
             ? "bg-slate-200 text-slate-400 cursor-not-allowed"
             : "bg-emerald-600 text-white hover:bg-emerald-700 active:scale-[0.98] shadow-sm"
           }`}
@@ -185,6 +211,8 @@ export default function TaskDetailPanel({ task, onRun, isRunning }) {
             <span className="animate-spin rounded-full h-4 w-4 border-b-2 border-white" />
             Running...
           </span>
+        ) : isIncompatible ? (
+          "⚠️ Dataset Incompatible"
         ) : (
           "▶ Run Analysis"
         )}

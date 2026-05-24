@@ -1,3 +1,5 @@
+import { formatDisplayValue } from "./formatDisplayValue";
+
 /**
  * responseTransformer.js
  * ─────────────────────────────────────────────────────────────────────────────
@@ -53,9 +55,15 @@ export function transformToTableData(datasets) {
 export function formatCellValue(value) {
   if (value === null || value === undefined) return "—";
   if (typeof value === "boolean") return value ? "✓ Yes" : "✗ No";
+  if (Array.isArray(value)) {
+    return value.length > 0 ? value.join("; ") : "None";
+  }
   if (typeof value === "number") {
     // Integer check — don't add decimals to whole numbers
     return Number.isInteger(value) ? String(value) : value.toFixed(2);
+  }
+  if (typeof value === "object") {
+    return formatDisplayValue(value);
   }
   return String(value);
 }

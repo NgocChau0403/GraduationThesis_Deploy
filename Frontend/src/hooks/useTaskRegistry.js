@@ -17,6 +17,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchTasks, fetchTaskById } from "../services/analyticsApi";
 
+const EMPTY_TASKS = [];
+
 /**
  * Fetch task list with optional filters.
  *
@@ -37,7 +39,7 @@ export function useTaskRegistry(filters = {}) {
   });
 
   return {
-    tasks: data?.tasks ?? [],
+    tasks: data?.tasks ?? EMPTY_TASKS,
     count: data?.count ?? 0,
     isLoading,
     isError,

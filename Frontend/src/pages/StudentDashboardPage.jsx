@@ -11,19 +11,33 @@
  * ─────────────────────────────────────────────────────────────────────────────
  */
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useAppContext } from "../contexts/AppContext";
 import { useTaskRegistry } from "../hooks/useTaskRegistry";
-import { runAnalyticsTask, getStudents, fetchClasses } from "../services/analyticsApi";
+import { runAnalyticsTask, getStudents, fetchClasses, validateAnalyticsTask } from "../services/analyticsApi";
 import ChartRenderer from "../components/ChartRenderer";
 import AIInsightPanel from "../components/AIInsightPanel";
 
 // ── Basic tasks auto-run cho Student ────────────────────────────────────────
-// Đây là 3 tasks quan trọng nhất, chạy tự động khi vào dashboard.
-// Tất cả 3 tasks này có datasetCompatibility: "both" nên an toàn với mọi dataset.
-const STUDENT_BASIC_TASKS = ["S-B01", "S-B02", "S-T01"];
+// Always-displayed basic statistics: keep these on core academic data only.
+const STUDENT_BASIC_TASKS = ["S-B01", "S-B02", "S-T03"];
+
+// Shown only when the active class has enough source data for the task.
+const STUDENT_CONDITIONAL_TASKS = ["S-B03"];
+
+// Advanced analysis tasks students can choose to run.
+const STUDENT_ADVANCED_TASKS = [
+  "S-T00", "S-T01", "S-T02", "S-T04", "S-T05", "S-T06", "S-T07",
+  "S-T08", "S-T09", "S-T10", "S-T11", "S-T12", "S-T13", "S-T14", "S-T15",
+];
+
+const STUDENT_ALLOWED_TASK_IDS = new Set([
+  ...STUDENT_BASIC_TASKS,
+  ...STUDENT_ADVANCED_TASKS,
+  ...STUDENT_CONDITIONAL_TASKS,
+]);
 
 // ── Dataset source → compatibility filter map ─────────────────────────────────
 // Maps activeDataset.source → which datasetCompatibility values are allowed.
@@ -43,12 +57,20 @@ export default function StudentDashboardPage() {
   // Derive dataset source ("UCI" | "OULAD" | null) for compatibility filtering.
   // activeDataset.source is set by the backend and stored in AppContext.
   const datasetSource = activeDataset?.source ?? null;
-  const isCompatible  = getCompatFilter(datasetSource);
+  const isCompatible = useMemo(
+    () => getCompatFilter(datasetSource),
+    [datasetSource]
+  );
 
-  // All student-scope tasks, filtered by active dataset compatibility.
-  // This prevents OULAD-only tasks from showing in the UI when using UCI data.
-  const { tasks: allStudentTasksRaw } = useTaskRegistry({ scope: "student" });
-  const allStudentTasks = allStudentTasksRaw.filter(isCompatible);
+  // Student-visible task registry based on fixed backlog contract.
+  const { tasks: allTasksRaw } = useTaskRegistry();
+  const allStudentTasks = useMemo(
+    () =>
+      allTasksRaw
+        .filter((task) => STUDENT_ALLOWED_TASK_IDS.has(task.taskId))
+        .filter(isCompatible),
+    [allTasksRaw, isCompatible]
+  );
 
   // Fetch classes
   const { data: classesData } = useQuery({
@@ -69,6 +91,13 @@ export default function StudentDashboardPage() {
     enabled: !!activeDataset?.id && !!classId,
   });
   const students = studentsData?.students ?? [];
+
+  const { data: engagementSummaryCapability } = useQuery({
+    queryKey: ["task-capability", "S-B03", activeDataset?.id, classId],
+    queryFn: () => validateAnalyticsTask("S-B03", activeDataset.id, classId),
+    enabled: !!activeDataset?.id && !!classId,
+    staleTime: 60 * 1000,
+  });
 
   const [selectedStudentId, setSelectedStudentId] = useState("");
   // Stores results: { "S-B01": { result, taskMeta }, "S-T01": { result, taskMeta }, ... }
@@ -129,13 +158,30 @@ export default function StudentDashboardPage() {
   }, [activeDataset?.id, enrollmentId]);
 
   // Auto-run basic tasks when studentId is available
+  const basicTaskIds = useMemo(
+    () =>
+      STUDENT_BASIC_TASKS.filter((taskId) =>
+        allStudentTasks.some((task) => task.taskId === taskId)
+      ),
+    [allStudentTasks]
+  );
+
+  const conditionalTaskIds = useMemo(() => {
+    if (engagementSummaryCapability?.result?.status !== "executable") {
+      return [];
+    }
+    return STUDENT_CONDITIONAL_TASKS.filter((taskId) =>
+      allStudentTasks.some((task) => task.taskId === taskId)
+    );
+  }, [allStudentTasks, engagementSummaryCapability]);
+
   useEffect(() => {
     if (!studentId || !classId || !activeDataset?.id) return;
     // Clear old results
     setTaskResults({});
     // Run basic tasks
-    STUDENT_BASIC_TASKS.forEach(taskId => runTask(taskId, studentId, classId));
-  }, [studentId, classId, activeDataset?.id, runTask]);
+    basicTaskIds.forEach(taskId => runTask(taskId, studentId, classId));
+  }, [studentId, classId, activeDataset?.id, runTask, basicTaskIds]);
 
   // ── Get task metadata by ID ─────────────────────────────────────────────
   const getTaskMeta = (taskId) => allStudentTasks.find(t => t.taskId === taskId);
@@ -144,7 +190,9 @@ export default function StudentDashboardPage() {
   // allStudentTasks is already filtered by dataset compatibility above.
   // Further exclude: basic tasks (always shown) and tasks already executed.
   const extraTasks = allStudentTasks.filter(
-    t => !STUDENT_BASIC_TASKS.includes(t.taskId) && !taskResults[t.taskId]
+    t =>
+      (STUDENT_ADVANCED_TASKS.includes(t.taskId) || conditionalTaskIds.includes(t.taskId)) &&
+      !taskResults[t.taskId]
   );
 
   const handleRunExtra = (taskId) => {
@@ -163,8 +211,9 @@ export default function StudentDashboardPage() {
   // ── Guards ──────────────────────────────────────────────────────────────
   if (appLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 flex flex-col items-center justify-center gap-3">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
+        <p className="text-sm text-slate-500 font-medium">Initializing dashboard...</p>
       </div>
     );
   }
@@ -186,8 +235,8 @@ export default function StudentDashboardPage() {
 
   // All task IDs that have results or are loading
   const displayedTaskIds = [
-    ...STUDENT_BASIC_TASKS,
-    ...Object.keys(taskResults).filter(id => !STUDENT_BASIC_TASKS.includes(id)),
+    ...basicTaskIds,
+    ...Object.keys(taskResults).filter(id => !basicTaskIds.includes(id)),
   ];
 
   return (
@@ -256,6 +305,7 @@ export default function StudentDashboardPage() {
                   taskMeta={taskMeta}
                   datasets={result?.datasets ?? null}
                   isLoading={isLoading}
+                  error={result?.error ?? null}
                 />
               )}
 

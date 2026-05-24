@@ -70,8 +70,7 @@ export function AppProvider({ children }) {
     async function initializeAppState() {
       // BƯỚC 1: Đọc localStorage ngay (synchronous, không cần await)
       // → UI có data để render ngay lập tức, không bị trắng màn hình
-      const persisted = loadPersistedState();
-      setIsFirstUse(persisted.isFirstUse);
+      const persisted = loadPersistedState();      setIsFirstUse(persisted.isFirstUse);
 
       if (persisted.activeDataset) {
         // Có cache → hiển thị ngay (optimistic)
@@ -92,10 +91,11 @@ export function AppProvider({ children }) {
           setActiveDatasetState(serverActiveDataset);
           saveActiveDataset(serverActiveDataset); // Cập nhật cache
         } else if (!persisted.activeDataset) {
-          // Không có gì cả → dùng OULAD làm default
+          // Server trả về null VÀ không có cache → dùng OULAD làm default
           setActiveDatasetState(DEFAULT_DATASET);
           saveActiveDataset(DEFAULT_DATASET);
         }
+        // Nếu server trả về null NHƯNG có cache → giữ nguyên cache (đã set ở Bước 1)
 
         setImportHistory(serverHistory || []);
       } catch (error) {
@@ -203,3 +203,4 @@ export function useAppContext() {
 
   return context;
 }
+

@@ -76,6 +76,24 @@ export async function fetchTaskById(taskId) {
   return handleJsonResponse(response);
 }
 
+/**
+ * Validate whether a task is executable for a dataset/class before showing it.
+ *
+ * @param {string} taskId
+ * @param {string} datasetId
+ * @param {string} [classId]
+ * @returns {Promise<{ success: boolean, result: Object }>}
+ */
+export async function validateAnalyticsTask(taskId, datasetId, classId) {
+  const params = new URLSearchParams({ datasetId });
+  if (classId) params.set("classId", classId);
+
+  const response = await fetch(
+    `${API_BASE}/tasks/validate-one/${taskId}?${params}`
+  );
+  return handleJsonResponse(response);
+}
+
 // ─── Analytics Execution API ────────────────────────────────────────────────
 
 /**

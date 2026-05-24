@@ -1,7 +1,7 @@
 """
-Pydantic Schemas — AI Explanation Service
+Pydantic Schemas  AI Explanation Service
 =========================================
-CONTRACT 4 from phase3_contracts.md — all models defined here.
+CONTRACT 4 from phase3_contracts.md  all models defined here.
 
 These schemas serve 3 purposes:
   1. Input validation: FastAPI validates incoming requests automatically
@@ -14,15 +14,15 @@ from pydantic import BaseModel, Field
 from typing import Literal
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# REQUEST SCHEMAS (Node → Python)
-# ─────────────────────────────────────────────────────────────────────────────
+# 
+# REQUEST SCHEMAS (Node  Python)
+# 
 
 class SemanticRoles(BaseModel):
     """
-    Axis semantic meaning — used by strategies to frame AI language.
-    x="time" + granularity="weekly" → "week-over-week decline"
-    x="category" → "the highest performing group..."
+    Axis semantic meaning  used by strategies to frame AI language.
+    x="time" + granularity="weekly"  "week-over-week decline"
+    x="category"  "the highest performing group..."
     """
     x: str | None = None   # "time"|"category"|"cohort"|"student"|"ranking"|"assessment"
     y: str | None = None   # "performance_metric"|"engagement_metric"|"risk_metric"|...
@@ -31,14 +31,14 @@ class SemanticRoles(BaseModel):
 
 class VisualizationConfig(BaseModel):
     """
-    Chart rendering config from taskRegistry — passed to Python for
+    Chart rendering config from taskRegistry  passed to Python for
     axis-aware prompt construction (e.g. "over time" vs "by category").
     """
     x_field:        str | None = None
     y_field:        str | None = None
     series_field:   str | None = None
     color_field:    str | None = None
-    orientation:    str = "horizontal"
+    orientation:    str | None = "horizontal"
     variant:        str = "default"
     x_label:        str | None = None
     y_label:        str | None = None
@@ -47,9 +47,9 @@ class VisualizationConfig(BaseModel):
 
 class AnalysisContext(BaseModel):
     """
-    Temporal and aggregation context — drives AI language choices.
-    granularity="weekly" → "sudden decline", "week-over-week"
-    granularity="semester" → "long-term trend", "sustained improvement"
+    Temporal and aggregation context  drives AI language choices.
+    granularity="weekly"  "sudden decline", "week-over-week"
+    granularity="semester"  "long-term trend", "sustained improvement"
     """
     granularity:       str   # "weekly"|"per_assessment"|"semester"|"cohort_aggregate"
     aggregation_level: str   # "student"|"cohort"|"comparison"|"instructor"
@@ -61,10 +61,10 @@ class SemanticContext(BaseModel):
     Injected by Node ai.controller when competency_source in data rows.
 
     competency_mode:
-      "native"  — dataset has real competency_tag ontology
-      "proxy"   — assessment_name used as fallback (G1, G2, G3 / TMA01, CMA01)
-      "mixed"   — some rows native, some proxy
-      "unknown" — neither field available
+      "native"   dataset has real competency_tag ontology
+      "proxy"    assessment_name used as fallback (G1, G2, G3 / TMA01, CMA01)
+      "mixed"    some rows native, some proxy
+      "unknown"  neither field available
 
     competency_proxy_note:
       Human-readable explanation (from task.semanticNote in registry).
@@ -76,7 +76,7 @@ class SemanticContext(BaseModel):
 class ConfidenceInput(BaseModel):
     """
     Data quality signal from Node (from capabilityValidator output).
-    Python uses this to frame explanation caveats but does NOT echo it raw —
+    Python uses this to frame explanation caveats but does NOT echo it raw 
     Python derives its own confidence.based_on[] list from this + dataset stats.
     """
     level:  str           # "HIGH" | "MEDIUM" | "LOW"
@@ -92,6 +92,8 @@ class ExplainRequest(BaseModel):
     task_id:              str
     execution_id:         str
     task_name:            str | None = None
+    actionable_question:  str | None = None
+    ai_prompt_hint:       str | None = None
     explanation_strategy: str                    # "trend"|"comparison"|"risk"|...
     target_audience:      list[str]              # ["student"]|["instructor","academic_advisor"]
     visualization_config: VisualizationConfig | None = None
@@ -114,13 +116,13 @@ class ExplainRequest(BaseModel):
     semantic_context: SemanticContext | None = None
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# RESPONSE SCHEMAS (Python → Node → Frontend)
-# ─────────────────────────────────────────────────────────────────────────────
+# 
+# RESPONSE SCHEMAS (Python  Node  Frontend)
+# 
 
 class EvidenceItem(BaseModel):
     """
-    Structured evidence — NOT free-text.
+    Structured evidence  NOT free-text.
     LLM is instructed to fill these fields explicitly.
     """
     metric:     str           # "avg_score", "click_count", "submission_delay"
@@ -139,8 +141,8 @@ class EvidenceItem(BaseModel):
 
 class Insight(BaseModel):
     """
-    One insight block — title + description + structured evidence.
-    LLM generates 2–4 insights per response.
+    One insight block  title + description + structured evidence.
+    LLM generates 24 insights per response.
     """
     title:       str
     description: str
@@ -160,18 +162,18 @@ class Recommendation(BaseModel):
 class ConfidenceInfo(BaseModel):
     """
     AI-assessed confidence in the explanation.
-    based_on[] is derived by Python logic — NOT by LLM (prevents hallucination).
+    based_on[] is derived by Python logic  NOT by LLM (prevents hallucination).
     """
     level:    str | None                 # "HIGH"|"MEDIUM"|"LOW"|None (if degraded)
     reason:   str | None
     based_on: list[str] = Field(default_factory=list)
     # based_on enum:
-    # "sufficient_data"         — HIGH confidence, no issues
-    # "sparse_data"             — below MEDIUM threshold
-    # "limited_temporal_range"  — < 4 distinct time points
-    # "single_student"          — only 1 enrollment
-    # "missing_fe_fields"       — Feature Engineering fields not populated
-    # "dataset_mismatch"        — task not fully compatible with loaded dataset
+    # "sufficient_data"          HIGH confidence, no issues
+    # "sparse_data"              below MEDIUM threshold
+    # "limited_temporal_range"   < 4 distinct time points
+    # "single_student"           only 1 enrollment
+    # "missing_fe_fields"        Feature Engineering fields not populated
+    # "dataset_mismatch"         task not fully compatible with loaded dataset
 
 
 class TokenUsage(BaseModel):
@@ -182,7 +184,7 @@ class TokenUsage(BaseModel):
 
 class AIMeta(BaseModel):
     """
-    Execution metadata — returned in response for logging by Node proxy.
+    Execution metadata  returned in response for logging by Node proxy.
     Node reads these values to write to ai_explanation_log table.
     """
     model:       str | None = None    # "gpt-4o-mini-2024-07-18"
@@ -190,13 +192,13 @@ class AIMeta(BaseModel):
     token_usage: TokenUsage | None = None
     strategy:    str | None = None
     granularity: str | None = None
-    cost_usd:    float | None = None  # estimated: tokens × per-token rate
+    cost_usd:    float | None = None  # estimated: tokens  per-token rate
 
 
 class ExplanationBody(BaseModel):
     """
-    The actual explanation content — validated against this schema
-    after LLM returns JSON. If LLM output doesn't match → DEGRADED.
+    The actual explanation content  validated against this schema
+    after LLM returns JSON. If LLM output doesn't match  DEGRADED.
     """
     summary:                  str
     insights:                 list[Insight] = Field(default_factory=list)
@@ -207,8 +209,8 @@ class ExplanationBody(BaseModel):
 
 class ExplainResponse(BaseModel):
     """
-    Complete response from Python → Node → Frontend.
-    degraded=True means LLM was unavailable — Frontend renders AIDegradedBanner.
+    Complete response from Python  Node  Frontend.
+    degraded=True means LLM was unavailable  Frontend renders AIDegradedBanner.
     """
     task_id:              str
     execution_id:         str

@@ -19,6 +19,7 @@ import {
   detectDatasetType,
   detectBundleSchema
 } from "../services/schemaDetect.service.js";
+import { SAMPLE_BATCHES } from "../config/sampleBatches.js";
 
 // ==========================================
 // HELPERS
@@ -27,6 +28,53 @@ import {
 
 function isPlainObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+const SAMPLE_DATASETS = {
+  OULAD: {
+    id: SAMPLE_BATCHES.OULAD.batch_id,
+    name: SAMPLE_BATCHES.OULAD.batch_name,
+    type: "sample",
+    source: "OULAD",
+    legacyIds: ["OULAD"]
+  },
+  UCI: {
+    id: SAMPLE_BATCHES.UCI_MAT.batch_id,
+    name: SAMPLE_BATCHES.UCI_MAT.batch_name,
+    type: "sample",
+    source: "UCI",
+    legacyIds: ["UCI", SAMPLE_BATCHES.UCI_POR.batch_id]
+  }
+};
+
+function getDefaultSampleDataset() {
+  return SAMPLE_DATASETS.OULAD;
+}
+
+function getSampleDatasetById(id) {
+  return (
+    Object.values(SAMPLE_DATASETS).find(
+      (dataset) => dataset.id === id || dataset.legacyIds?.includes(id)
+    ) || null
+  );
+}
+
+function toActiveDatasetFromAppState(appState) {
+  if (!appState || !appState.active_dataset_id) {
+    return {
+      ...getDefaultSampleDataset(),
+      setAt: null
+    };
+  }
+
+  const sampleDataset = getSampleDatasetById(appState.active_dataset_id);
+  return {
+    id: appState.active_dataset_id,
+    name: appState.active_dataset_name || sampleDataset?.name || null,
+    type: appState.active_dataset_type || sampleDataset?.type || null,
+    source: appState.active_dataset_source || sampleDataset?.source || null,
+    setAt: appState.active_dataset_set_at
+  };
 }
 
 function buildFileId(fileName, index) {
@@ -670,12 +718,17 @@ export async function runImportController(req, res) {
         });
       }
 
+      const appState = allSuccess
+        ? await prisma.appState.findUnique({ where: { id: 1 } })
+        : null;
+
       return res.json({
         success: allSuccess,
         sessionId,
         bundleMode: runTargets.length > 1,
         importBatchId,
-        results
+        results,
+        activeDataset: allSuccess ? toActiveDatasetFromAppState(appState) : null
       });
     }
   } catch (error) {

@@ -37,6 +37,24 @@ function getSampleDatasetById(id) {
   );
 }
 
+function toActiveDatasetFromAppState(appState) {
+  if (!appState || !appState.active_dataset_id) {
+    return {
+      ...getDefaultSampleDataset(),
+      setAt: null
+    };
+  }
+
+  const sampleDataset = getSampleDatasetById(appState.active_dataset_id);
+  return {
+    id: appState.active_dataset_id,
+    name: appState.active_dataset_name || sampleDataset?.name || null,
+    type: appState.active_dataset_type || sampleDataset?.type || null,
+    source: appState.active_dataset_source || sampleDataset?.source || null,
+    setAt: appState.active_dataset_set_at
+  };
+}
+
 // ==========================================
 // 1. GET /api/datasets/active
 // ==========================================
@@ -46,27 +64,9 @@ export async function getActiveDatasetController(req, res) {
       where: { id: 1 }
     });
 
-    if (!appState || !appState.active_dataset_id) {
-      return res.json({
-        success: true,
-        activeDataset: {
-          ...getDefaultSampleDataset(),
-          setAt: null
-        }
-      });
-    }
-
-    const sampleDataset = getSampleDatasetById(appState.active_dataset_id);
-
     return res.json({
       success: true,
-      activeDataset: {
-        id: appState.active_dataset_id,
-        name: appState.active_dataset_name || sampleDataset?.name || null,
-        type: appState.active_dataset_type || sampleDataset?.type || null,
-        source: appState.active_dataset_source || sampleDataset?.source || null,
-        setAt: appState.active_dataset_set_at
-      }
+      activeDataset: toActiveDatasetFromAppState(appState)
     });
   } catch (error) {
     console.error("Failed to get active dataset:", error);
@@ -205,9 +205,30 @@ export async function switchSampleDatasetController(req, res) {
     if (!targetDataset) {
       return res.status(400).json({ success: false, message: "Invalid sample dataset." });
     }
+
+    const appStateCount = await prisma.appState.count();
+    const beforeState = await prisma.appState.findUnique({
+      where: { id: 1 }
+    });
+    console.log("[DatasetSwitch] before update", {
+      requestedDataset: dataset,
+      targetDatasetId: targetDataset.id,
+      appStateCount,
+      beforeState: beforeState
+        ? {
+            id: beforeState.id,
+            active_dataset_id: beforeState.active_dataset_id,
+            active_dataset_name: beforeState.active_dataset_name,
+            active_dataset_type: beforeState.active_dataset_type,
+            active_dataset_source: beforeState.active_dataset_source,
+            active_dataset_set_at: beforeState.active_dataset_set_at
+          }
+        : null
+    });
+
     const setAt = new Date();
 
-    await prisma.appState.upsert({
+    const writeState = await prisma.appState.upsert({
       where: { id: 1 },
       update: {
         active_dataset_id: targetDataset.id,
@@ -228,12 +249,34 @@ export async function switchSampleDatasetController(req, res) {
       }
     });
 
+    const afterState = await prisma.appState.findUnique({
+      where: { id: 1 }
+    });
+
+    console.log("[DatasetSwitch] after update", {
+      writeResult: {
+        id: writeState.id,
+        active_dataset_id: writeState.active_dataset_id,
+        active_dataset_name: writeState.active_dataset_name,
+        active_dataset_type: writeState.active_dataset_type,
+        active_dataset_source: writeState.active_dataset_source,
+        active_dataset_set_at: writeState.active_dataset_set_at
+      },
+      dbState: afterState
+        ? {
+            id: afterState.id,
+            active_dataset_id: afterState.active_dataset_id,
+            active_dataset_name: afterState.active_dataset_name,
+            active_dataset_type: afterState.active_dataset_type,
+            active_dataset_source: afterState.active_dataset_source,
+            active_dataset_set_at: afterState.active_dataset_set_at
+          }
+        : null
+    });
+
     return res.json({
       success: true,
-      activeDataset: {
-        ...targetDataset,
-        setAt: setAt.toISOString()
-      }
+      activeDataset: toActiveDatasetFromAppState(afterState)
     });
   } catch (error) {
     console.error("Failed to switch sample dataset:", error);

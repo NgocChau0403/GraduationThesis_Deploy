@@ -382,6 +382,34 @@ model ImportBatch {
 }
 
 // -------------------------------------------------------
+// ALIAS MEMORY
+// Replaces learnedAliases.json (filesystem) with a shared DB table.
+//
+// Design decisions:
+//   - normalized_key is the lookup key (lowercase, non-alphanum→space).
+//     E.g. "Student_ID" → "student id". Stored as UNIQUE to prevent
+//     duplicate rows per raw column pattern.
+//   - learned_count tracks how many times a user confirmed this mapping;
+//     higher count = higher trust for future suggestions.
+//   - If a user remaps the same key to a DIFFERENT canonical_field,
+//     the row is updated and learned_count resets to 1 (new intent wins).
+//   - No FK to any domain table — alias memory is dataset-agnostic and
+//     should persist across batch imports.
+// -------------------------------------------------------
+model AliasMemory {
+  id              Int      @id @default(autoincrement())
+  normalized_key  String   @unique   // e.g. "student id", "id student"
+  raw_column      String             // original column name for display
+  canonical_field String             // e.g. "student_id"
+  learned_count   Int      @default(1)
+  last_used_at    DateTime @default(now())
+  created_at      DateTime @default(now())
+
+  @@index([normalized_key])
+  @@map("alias_memory")
+}
+
+// -------------------------------------------------------
 // UPLOAD SESSION
 // Stores import-wizard state so session survives backend restarts.
 // -------------------------------------------------------
