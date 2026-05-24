@@ -272,7 +272,7 @@
       "explanationType": "suggestion",
       "vizType": "gauge, line"
     },
-    "datasetCompatibility": "OULAD_only",
+    "datasetCompatibility": "both",
     "aiPromptHint": "Use regression coefficients to explain which input (study time vs engagement) contributes more. Give concrete score estimate.",
     "sqlQuery": "WITH score_agg AS ( SELECT ar.student_id, AVG(ar.score_normalized) AS avg_score FROM assessment_result ar JOIN assessment a ON ar.assessment_id = a.assessment_id JOIN enrollment e ON ar.student_id = e.student_id AND a.class_id = e.class_id WHERE e.class_id = :class_id GROUP BY ar.student_id ), eng_agg AS ( SELECT e.student_id, COALESCE(SUM(eng.engagement_count), 0) AS total_clicks, COUNT(DISTINCT eng.event_day) AS active_days FROM enrollment e LEFT JOIN engagement eng ON e.enrollment_id = eng.enrollment_id WHERE e.class_id = :class_id GROUP BY e.student_id ), class_max AS ( SELECT MAX(total_clicks) AS mc, MAX(active_days) AS ma FROM eng_agg ), cohort_fe AS ( SELECT sa.student_id, sa.avg_score, COALESCE((ea.total_clicks::float / NULLIF(cm.mc, 0)) * 0.5, 0) + COALESCE((ea.active_days::float / NULLIF(cm.ma, 0)) * 0.5, 0) AS engagement_score FROM score_agg sa JOIN eng_agg ea ON ea.student_id = sa.student_id CROSS JOIN class_max cm ), model AS ( SELECT REGR_SLOPE(avg_score, engagement_score) AS coef_engagement, REGR_INTERCEPT(avg_score, engagement_score) AS intercept FROM cohort_fe ) SELECT cf.student_id, cf.engagement_score, cf.avg_score, m.coef_engagement, m.intercept, CASE WHEN m.coef_engagement IS NULL OR m.intercept IS NULL THEN NULL ELSE m.intercept + m.coef_engagement * cf.engagement_score END AS predicted_avg_score, CASE WHEN cf.student_id = :student_id THEN true ELSE false END AS is_selected_student FROM cohort_fe cf CROSS JOIN model m ORDER BY is_selected_student DESC, cf.engagement_score",
     "viz_type": "scatter_plot",
@@ -658,7 +658,7 @@
       "explanationType": "observation, interpretation",
       "vizType": "bar"
     },
-    "datasetCompatibility": "OULAD_only",
+    "datasetCompatibility": "both",
     "aiPromptHint": "Describe engagement pattern. Flag weeks with sharp drops. Note if drop precedes assessment.",
     "sqlQuery": "-- [OULAD only]-- FIX: FIRST_VALUE does not support FILTER in PostgreSQL (pure window fn).--      Use MIN() FILTER(WHERE...) OVER() instead — aggregate window fn, supports FILTER.WITH weekly AS (  SELECT eng.week_number,         SUM(eng.engagement_count) AS weekly_clicks  FROM engagement eng  WHERE eng.enrollment_id = :enrollment_id  GROUP BY eng.week_number),rolling AS (  SELECT week_number,         weekly_clicks,         AVG(weekly_clicks) OVER (           ORDER BY week_number           ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING         ) AS rolling_3wk_avg  FROM weekly)SELECT week_number,       weekly_clicks,       rolling_3wk_avg,weekly_clicks < rolling_3wk_avg * 0.5            AS weekly_engagement_drop,       MIN(week_number)         FILTER (WHERE weekly_clicks < rolling_3wk_avg * 0.5)         OVER ()                                        AS early_warning_week FROM rolling ORDER BY week_number",
     "viz_type": "bar_chart",
@@ -723,7 +723,7 @@
       "explanationType": "observation, interpretation, recommendation",
       "vizType": "heatmap, bar"
     },
-    "datasetCompatibility": "OULAD_only",
+    "datasetCompatibility": "both",
     "aiPromptHint": "Distinguish 'steady learner' from 'pre-exam crammer'. Recommend a consistent weekly routine.",
     "sqlQuery": "WITH weekly AS ( SELECT week_number, SUM(engagement_count) AS weekly_clicks FROM engagement WHERE enrollment_id = :enrollment_id GROUP BY week_number ), student_consistency AS ( SELECT COALESCE(STDDEV(weekly_clicks), 0) AS weekly_stddev, AVG(weekly_clicks) AS weekly_avg, SUM(weekly_clicks) AS total_clicks FROM weekly ), class_weekly AS ( SELECT e2.enrollment_id, eng2.week_number, SUM(eng2.engagement_count) AS weekly_clicks FROM enrollment e2 JOIN engagement eng2 ON e2.enrollment_id = eng2.enrollment_id WHERE e2.class_id = :class_id GROUP BY e2.enrollment_id, eng2.week_number ), class_student_consistency AS ( SELECT enrollment_id, COALESCE(STDDEV(weekly_clicks), 0) AS weekly_stddev FROM class_weekly GROUP BY enrollment_id ), class_thresholds AS ( SELECT PERCENTILE_CONT(0.33) WITHIN GROUP (ORDER BY weekly_stddev) AS p33, PERCENTILE_CONT(0.66) WITHIN GROUP (ORDER BY weekly_stddev) AS p66 FROM class_student_consistency ) SELECT w.week_number, w.weekly_clicks, sc.weekly_stddev, sc.weekly_avg, sc.total_clicks, CASE WHEN sc.weekly_stddev <= COALESCE(ct.p33, sc.weekly_stddev) THEN 'high' WHEN sc.weekly_stddev <= COALESCE(ct.p66, sc.weekly_stddev) THEN 'medium' ELSE 'low' END AS consistency_level FROM weekly w CROSS JOIN student_consistency sc CROSS JOIN class_thresholds ct ORDER BY w.week_number",
     "viz_type": "heatmap",
@@ -758,7 +758,7 @@
       "temporal_activity"
     ],
     "optionalCapabilities": [],
-    "fallbackStrategy": "hide_task",
+    "fallbackStrategy": "show_unavailable_with_reason",
     "registry_status": "validated",
     "semanticReliability": {
       "pass_rate": null,
@@ -766,6 +766,22 @@
       "last_validated_at": "2026-05-18",
       "validation_contexts": 0,
       "validated_dataset": "N/A"
+    },
+    "availability_contract": {
+      "required_all": [
+        "engagement_tracking",
+        "temporal_activity",
+        "final_outcome"
+      ],
+      "chart_required_fields": [
+        "week_number",
+        "avg_clicks",
+        "final_outcome"
+      ],
+      "dataset_specific": {
+        "source_dataset": "OULAD",
+        "reason": "Task depends on OULAD week-level engagement patterns and outcome labels."
+      }
     }
   },
   {
@@ -1722,7 +1738,7 @@
     },
     "datasetCompatibility": "both",
     "aiPromptHint": "State pass/fail/withdrawal counts. Highlight proportion at-risk.",
-    "sqlQuery": "SELECT final_outcome, COUNT(*) AS student_count, ROUND(COUNT(*)*100.0/SUM(COUNT(*)) OVER(),1) AS pct_of_class FROM enrollment WHERE class_id=:class_id GROUP BY final_outcome ORDER BY student_count DESC",
+    "sqlQuery": "SELECT final_outcome, COUNT(*) AS student_count, ROUND(COUNT(*)*100.0/NULLIF(SUM(COUNT(*)) OVER(), 0),1) AS pct_of_class FROM enrollment WHERE class_id=:class_id GROUP BY final_outcome ORDER BY student_count DESC",
     "viz_type": "pie_chart",
     "visualization_config": {
       "x_field": "final_outcome",
@@ -1785,9 +1801,9 @@
       "explanationType": "observation, interpretation",
       "vizType": "histogram, bar"
     },
-    "datasetCompatibility": "OULAD_only",
+    "datasetCompatibility": "both",
     "aiPromptHint": "Describe proportion of low/medium/high effort students. Flag the low tail.",
-    "sqlQuery": "WITH eng_agg AS (SELECT e.student_id, e.enrollment_id, COALESCE(SUM(eng.engagement_count), 0)::float8 AS total_clicks, COUNT(DISTINCT eng.event_day)::float8 AS active_days FROM enrollment e LEFT JOIN engagement eng ON e.enrollment_id = eng.enrollment_id WHERE e.class_id = :class_id AND e.source_dataset = 'OULAD' GROUP BY e.student_id, e.enrollment_id), class_stats AS (SELECT MAX(total_clicks) AS max_clicks, MAX(active_days) AS max_active FROM eng_agg), scored AS (SELECT ea.student_id, ea.total_clicks, ea.active_days, COALESCE((ea.total_clicks / NULLIF(cs.max_clicks, 0)) * 0.5, 0) + COALESCE((ea.active_days / NULLIF(cs.max_active, 0)) * 0.5, 0) AS engagement_score FROM eng_agg ea CROSS JOIN class_stats cs), ranked AS (SELECT *, CASE NTILE(4) OVER (ORDER BY engagement_score ASC, total_clicks ASC) WHEN 1 THEN 'very_low' WHEN 2 THEN 'low' WHEN 3 THEN 'medium' ELSE 'high' END AS study_effort_level FROM scored) SELECT study_effort_level, COUNT(*)::int AS student_count, ROUND((COUNT(*) * 100.0 / NULLIF(SUM(COUNT(*)) OVER (), 0))::numeric, 1)::float8 AS pct_of_class, ROUND(AVG(engagement_score)::numeric, 4)::float8 AS avg_engagement_score FROM ranked GROUP BY study_effort_level ORDER BY CASE study_effort_level WHEN 'very_low' THEN 1 WHEN 'low' THEN 2 WHEN 'medium' THEN 3 ELSE 4 END",
+    "sqlQuery": "WITH eng_agg AS (SELECT e.student_id, e.enrollment_id, COALESCE(SUM(eng.engagement_count), 0)::float8 AS total_clicks, COUNT(DISTINCT eng.event_day)::float8 AS active_days FROM enrollment e LEFT JOIN engagement eng ON e.enrollment_id = eng.enrollment_id WHERE e.class_id = :class_id GROUP BY e.student_id, e.enrollment_id), class_stats AS (SELECT MAX(total_clicks) AS max_clicks, MAX(active_days) AS max_active FROM eng_agg), scored AS (SELECT ea.student_id, ea.total_clicks, ea.active_days, CASE WHEN cs.max_clicks IS NULL AND cs.max_active IS NULL THEN NULL ELSE COALESCE((ea.total_clicks / NULLIF(cs.max_clicks, 0)) * 0.5, 0) + COALESCE((ea.active_days / NULLIF(cs.max_active, 0)) * 0.5, 0) END AS engagement_score FROM eng_agg ea CROSS JOIN class_stats cs), ranked AS (SELECT *, CASE NTILE(4) OVER (ORDER BY engagement_score ASC, total_clicks ASC) WHEN 1 THEN 'very_low' WHEN 2 THEN 'low' WHEN 3 THEN 'medium' ELSE 'high' END AS study_effort_level FROM scored) SELECT study_effort_level, COUNT(*)::int AS student_count, ROUND((COUNT(*) * 100.0 / NULLIF(SUM(COUNT(*)) OVER (), 0))::numeric, 1)::float8 AS pct_of_class, ROUND(AVG(engagement_score)::numeric, 4)::float8 AS avg_engagement_score FROM ranked GROUP BY study_effort_level ORDER BY CASE study_effort_level WHEN 'very_low' THEN 1 WHEN 'low' THEN 2 WHEN 'medium' THEN 3 ELSE 4 END",
     "viz_type": "bar_chart",
     "visualization_config": {
       "x_field": "study_effort_level",
@@ -1819,7 +1835,7 @@
       "engagement_tracking"
     ],
     "optionalCapabilities": [],
-    "fallbackStrategy": "hide_task",
+    "fallbackStrategy": "show_partial_with_warnings",
     "registry_status": "validated",
     "semanticReliability": {
       "pass_rate": null,
@@ -1827,6 +1843,18 @@
       "last_validated_at": "2026-05-18",
       "validation_contexts": 0,
       "validated_dataset": "N/A"
+    },
+    "availability_contract": {
+      "required_all": [
+        "engagement_tracking"
+      ],
+      "optional_enrichments": [
+        "temporal_activity"
+      ],
+      "chart_required_fields": [
+        "study_effort_level",
+        "student_count"
+      ]
     },
     "output_schema": {
       "required_columns": [
@@ -1863,7 +1891,7 @@
     },
     "datasetCompatibility": "both",
     "aiPromptHint": "State number of high/medium/low risk students. Recommend immediate review of high group.",
-    "sqlQuery": "WITH\nscore_context AS (\n  SELECT CASE\n           WHEN MAX(ar.score_normalized) <= 20 THEN 20::float8\n           ELSE 100::float8\n         END AS score_scale,\n         CASE\n           WHEN MAX(ar.score_normalized) <= 20 THEN 10::float8\n           ELSE 40::float8\n         END AS pass_threshold,\n         CASE\n           WHEN MAX(ar.score_normalized) <= 20 THEN 14::float8\n           ELSE 70::float8\n         END AS target_threshold\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment e ON ar.enrollment_id = e.enrollment_id\n                   AND a.class_id = e.class_id\n  WHERE e.class_id = :class_id\n),\nscore_agg AS (\n  SELECT ar.student_id,\n         ROUND((\n           CASE\n             WHEN SUM(a.weight_pct) FILTER (\n                    WHERE a.weight_pct IS NOT NULL\n                      AND ar.score_normalized IS NOT NULL\n                  ) > 0\n               THEN SUM(ar.score_normalized * a.weight_pct) FILTER (\n                      WHERE a.weight_pct IS NOT NULL\n                        AND ar.score_normalized IS NOT NULL\n                    ) / NULLIF(SUM(a.weight_pct) FILTER (\n                      WHERE a.weight_pct IS NOT NULL\n                        AND ar.score_normalized IS NOT NULL\n                    ), 0)\n             ELSE AVG(ar.score_normalized)\n           END\n         )::numeric, 2)::float8 AS avg_score,\n         ROUND(AVG(ar.score_normalized)::numeric, 2)::float8 AS unweighted_avg_score,\n         ROUND((\n           SUM(ar.score_normalized * a.weight_pct) FILTER (\n             WHERE a.weight_pct IS NOT NULL\n               AND ar.score_normalized IS NOT NULL\n           ) / NULLIF(SUM(a.weight_pct) FILTER (\n             WHERE a.weight_pct IS NOT NULL\n               AND ar.score_normalized IS NOT NULL\n           ), 0)\n         )::numeric, 2)::float8 AS weighted_avg_score,\n         CASE\n           WHEN SUM(a.weight_pct) FILTER (\n                  WHERE a.weight_pct IS NOT NULL\n                    AND ar.score_normalized IS NOT NULL\n                ) > 0\n             THEN 'weighted_by_assessment_weight'\n           ELSE 'unweighted_average_fallback'\n         END AS score_strategy,\n         ROUND(AVG((ar.score_normalized >= sc.pass_threshold)::int)::numeric, 4)::float8 AS pass_rate,\n         COUNT(*)::int AS assessment_count,\n         sc.score_scale,\n         sc.pass_threshold,\n         sc.target_threshold,\n         REGR_SLOPE(ar.score_normalized, a.assessment_order)::float8 AS perf_trend\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment e ON ar.enrollment_id = e.enrollment_id\n                   AND a.class_id = e.class_id\n  CROSS JOIN score_context sc\n  WHERE e.class_id = :class_id\n  GROUP BY ar.student_id, sc.score_scale, sc.pass_threshold, sc.target_threshold\n),\npunctuality AS (\n  SELECT ar.student_id,\n         CASE\n           WHEN COUNT(*) FILTER (\n                  WHERE a.due_day IS NOT NULL\n                    AND ar.submission_day IS NOT NULL\n                ) > 0\n             THEN COUNT(*) FILTER (WHERE ar.submission_day <= a.due_day) * 1.0\n                  / NULLIF(COUNT(*) FILTER (\n                      WHERE a.due_day IS NOT NULL\n                        AND ar.submission_day IS NOT NULL\n                    ), 0)\n           ELSE 1.0\n         END AS punctuality_rate\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment e ON ar.enrollment_id = e.enrollment_id\n                   AND a.class_id = e.class_id\n  WHERE e.class_id = :class_id\n  GROUP BY ar.student_id\n),\neng_agg AS (\n  SELECT e.student_id,\n         COALESCE(SUM(eng.engagement_count), 0)::float8 AS total_clicks,\n         COUNT(DISTINCT eng.event_day)::float8 AS active_days,\n         (COUNT(eng.engagement_id) > 0) AS has_engagement_data\n  FROM enrollment e\n  LEFT JOIN engagement eng ON e.enrollment_id = eng.enrollment_id\n  WHERE e.class_id = :class_id\n  GROUP BY e.student_id\n),\nclass_max AS (\n  SELECT NULLIF(MAX(total_clicks), 0) AS mc,\n         NULLIF(MAX(active_days), 0) AS ma\n  FROM eng_agg\n),\neng_score AS (\n  SELECT ea.student_id,\n         ea.has_engagement_data,\n         CASE\n           WHEN ea.has_engagement_data\n             THEN COALESCE(ea.total_clicks / cm.mc, 0) * 0.5\n                  + COALESCE(ea.active_days / cm.ma, 0) * 0.5\n           ELSE NULL\n         END AS engagement_score\n  FROM eng_agg ea\n  CROSS JOIN class_max cm\n),\nrisk_flags AS (\n  SELECT sa.student_id,\n         e.enrollment_id,\n         sa.avg_score,\n         sa.unweighted_avg_score,\n         sa.weighted_avg_score,\n         sa.score_strategy,\n         sa.pass_rate,\n         sa.assessment_count,\n         sa.score_scale,\n         sa.pass_threshold,\n         sa.target_threshold,\n         sa.perf_trend,\n         COALESCE(es.engagement_score, 0) AS engagement_score,\n         COALESCE(es.has_engagement_data, false) AS engagement_score_available,\n         COALESCE(p.punctuality_rate, 1)::float8 AS punctuality_rate,\n         COALESCE(e.previous_attempt_count, 0) AS previous_attempt_count,\n         e.final_outcome,\n         (sa.avg_score < sa.pass_threshold) AS flag_low_score,\n         (COALESCE(e.previous_attempt_count, 0) > 0) AS flag_repeated,\n         (COALESCE(es.has_engagement_data, false)\n           AND COALESCE(es.engagement_score, 1) < 0.15) AS flag_low_engagement,\n         (COALESCE(p.punctuality_rate, 1) < 0.7) AS flag_low_punctuality,\n         (sa.perf_trend < 0) AS flag_neg_trend,\n         ((CASE WHEN sa.avg_score < sa.pass_threshold THEN 1 ELSE 0 END)\n          + (CASE WHEN COALESCE(e.previous_attempt_count, 0) > 0 THEN 1 ELSE 0 END)\n          + (CASE WHEN COALESCE(es.has_engagement_data, false)\n                    AND COALESCE(es.engagement_score, 1) < 0.15 THEN 1 ELSE 0 END)\n          + (CASE WHEN COALESCE(p.punctuality_rate, 1) < 0.7 THEN 1 ELSE 0 END)\n          + (CASE WHEN sa.perf_trend < 0 THEN 1 ELSE 0 END)) AS sum_flags\n  FROM score_agg sa\n  JOIN enrollment e ON e.student_id = sa.student_id\n                   AND e.class_id = :class_id\n  LEFT JOIN eng_score es ON es.student_id = sa.student_id\n  LEFT JOIN punctuality p ON p.student_id = sa.student_id\n)\nSELECT CASE WHEN rf.sum_flags >= 3 THEN 'high' WHEN rf.sum_flags = 2 THEN 'medium' ELSE 'low' END AS at_risk_label,\n       COUNT(*)::int AS student_count\nFROM risk_flags rf\nGROUP BY 1\nORDER BY MIN(CASE WHEN rf.sum_flags >= 3 THEN 1 WHEN rf.sum_flags = 2 THEN 2 ELSE 3 END)",
+    "sqlQuery": "WITH\nscore_context AS (\n  SELECT CASE\n           WHEN MAX(ar.score_normalized) <= 20 THEN 20::float8\n           ELSE 100::float8\n         END AS score_scale,\n         CASE\n           WHEN MAX(ar.score_normalized) <= 20 THEN 10::float8\n           ELSE 40::float8\n         END AS pass_threshold,\n         CASE\n           WHEN MAX(ar.score_normalized) <= 20 THEN 14::float8\n           ELSE 70::float8\n         END AS target_threshold\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment e ON ar.enrollment_id = e.enrollment_id\n                   AND a.class_id = e.class_id\n  WHERE e.class_id = :class_id\n),\nscore_agg AS (\n  SELECT ar.student_id,\n         ROUND((\n           CASE\n             WHEN SUM(a.weight_pct) FILTER (\n                    WHERE a.weight_pct IS NOT NULL\n                      AND ar.score_normalized IS NOT NULL\n                  ) > 0\n               THEN SUM(ar.score_normalized * a.weight_pct) FILTER (\n                      WHERE a.weight_pct IS NOT NULL\n                        AND ar.score_normalized IS NOT NULL\n                    ) / NULLIF(SUM(a.weight_pct) FILTER (\n                      WHERE a.weight_pct IS NOT NULL\n                        AND ar.score_normalized IS NOT NULL\n                    ), 0)\n             ELSE AVG(ar.score_normalized)\n           END\n         )::numeric, 2)::float8 AS avg_score,\n         ROUND(AVG(ar.score_normalized)::numeric, 2)::float8 AS unweighted_avg_score,\n         ROUND((\n           SUM(ar.score_normalized * a.weight_pct) FILTER (\n             WHERE a.weight_pct IS NOT NULL\n               AND ar.score_normalized IS NOT NULL\n           ) / NULLIF(SUM(a.weight_pct) FILTER (\n             WHERE a.weight_pct IS NOT NULL\n               AND ar.score_normalized IS NOT NULL\n           ), 0)\n         )::numeric, 2)::float8 AS weighted_avg_score,\n         CASE\n           WHEN SUM(a.weight_pct) FILTER (\n                  WHERE a.weight_pct IS NOT NULL\n                    AND ar.score_normalized IS NOT NULL\n                ) > 0\n             THEN 'weighted_by_assessment_weight'\n           ELSE 'unweighted_average_fallback'\n         END AS score_strategy,\n         ROUND(AVG((ar.score_normalized >= sc.pass_threshold)::int)::numeric, 4)::float8 AS pass_rate,\n         COUNT(*)::int AS assessment_count,\n         sc.score_scale,\n         sc.pass_threshold,\n         sc.target_threshold,\n         REGR_SLOPE(ar.score_normalized, a.assessment_order)::float8 AS perf_trend\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment e ON ar.enrollment_id = e.enrollment_id\n                   AND a.class_id = e.class_id\n  CROSS JOIN score_context sc\n  WHERE e.class_id = :class_id\n  GROUP BY ar.student_id, sc.score_scale, sc.pass_threshold, sc.target_threshold\n),\npunctuality AS (\n  SELECT ar.student_id,\n         CASE\n           WHEN COUNT(*) FILTER (\n                  WHERE a.due_day IS NOT NULL\n                    AND ar.submission_day IS NOT NULL\n                ) > 0\n             THEN COUNT(*) FILTER (WHERE ar.submission_day <= a.due_day) * 1.0\n                  / NULLIF(COUNT(*) FILTER (\n                      WHERE a.due_day IS NOT NULL\n                        AND ar.submission_day IS NOT NULL\n                    ), 0)\n           ELSE 1.0\n         END AS punctuality_rate\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment e ON ar.enrollment_id = e.enrollment_id\n                   AND a.class_id = e.class_id\n  WHERE e.class_id = :class_id\n  GROUP BY ar.student_id\n),\neng_agg AS (\n  SELECT e.student_id,\n         COALESCE(SUM(eng.engagement_count), 0)::float8 AS total_clicks,\n         COUNT(DISTINCT eng.event_day)::float8 AS active_days,\n         (COUNT(eng.engagement_id) > 0) AS has_engagement_data\n  FROM enrollment e\n  LEFT JOIN engagement eng ON e.enrollment_id = eng.enrollment_id\n  WHERE e.class_id = :class_id\n  GROUP BY e.student_id\n),\nclass_max AS (\n  SELECT NULLIF(MAX(total_clicks), 0) AS mc,\n         NULLIF(MAX(active_days), 0) AS ma\n  FROM eng_agg\n),\neng_score AS (\n  SELECT ea.student_id,\n         ea.has_engagement_data,\n         CASE\n           WHEN ea.has_engagement_data\n             THEN COALESCE(ea.total_clicks / cm.mc, 0) * 0.5\n                  + COALESCE(ea.active_days / cm.ma, 0) * 0.5\n           ELSE NULL\n         END AS engagement_score\n  FROM eng_agg ea\n  CROSS JOIN class_max cm\n),\nrisk_flags AS (\n  SELECT sa.student_id,\n         e.enrollment_id,\n         sa.avg_score,\n         sa.unweighted_avg_score,\n         sa.weighted_avg_score,\n         sa.score_strategy,\n         sa.pass_rate,\n         sa.assessment_count,\n         sa.score_scale,\n         sa.pass_threshold,\n         sa.target_threshold,\n         sa.perf_trend,\n         es.engagement_score AS engagement_score,\n         COALESCE(es.has_engagement_data, false) AS engagement_score_available,\n         COALESCE(p.punctuality_rate, 1)::float8 AS punctuality_rate,\n         COALESCE(e.previous_attempt_count, 0) AS previous_attempt_count,\n         e.final_outcome,\n         (sa.avg_score < sa.pass_threshold) AS flag_low_score,\n         (COALESCE(e.previous_attempt_count, 0) > 0) AS flag_repeated,\n         (COALESCE(es.has_engagement_data, false)\n           AND COALESCE(es.engagement_score, 1) < 0.15) AS flag_low_engagement,\n         (COALESCE(p.punctuality_rate, 1) < 0.7) AS flag_low_punctuality,\n         (sa.perf_trend < 0) AS flag_neg_trend,\n         ((CASE WHEN sa.avg_score < sa.pass_threshold THEN 1 ELSE 0 END)\n          + (CASE WHEN COALESCE(e.previous_attempt_count, 0) > 0 THEN 1 ELSE 0 END)\n          + (CASE WHEN COALESCE(es.has_engagement_data, false)\n                    AND COALESCE(es.engagement_score, 1) < 0.15 THEN 1 ELSE 0 END)\n          + (CASE WHEN COALESCE(p.punctuality_rate, 1) < 0.7 THEN 1 ELSE 0 END)\n          + (CASE WHEN sa.perf_trend < 0 THEN 1 ELSE 0 END)) AS sum_flags\n  FROM score_agg sa\n  JOIN enrollment e ON e.student_id = sa.student_id\n                   AND e.class_id = :class_id\n  LEFT JOIN eng_score es ON es.student_id = sa.student_id\n  LEFT JOIN punctuality p ON p.student_id = sa.student_id\n)\nSELECT CASE WHEN rf.sum_flags >= 3 THEN 'high' WHEN rf.sum_flags = 2 THEN 'medium' ELSE 'low' END AS at_risk_label,\n       COUNT(*)::int AS student_count\nFROM risk_flags rf\nGROUP BY 1\nORDER BY MIN(CASE WHEN rf.sum_flags >= 3 THEN 1 WHEN rf.sum_flags = 2 THEN 2 ELSE 3 END)",
     "viz_type": "bar_chart",
     "visualization_config": {
       "x_field": "at_risk_label",
@@ -1896,7 +1924,7 @@
       "engagement_tracking"
     ],
     "optionalCapabilities": [],
-    "fallbackStrategy": "hide_task",
+    "fallbackStrategy": "show_unavailable_with_reason",
     "registry_status": "validated",
     "semanticReliability": {
       "pass_rate": null,
@@ -1904,6 +1932,22 @@
       "last_validated_at": "2026-05-18",
       "validation_contexts": 0,
       "validated_dataset": "N/A"
+    },
+    "availability_contract": {
+      "required_all": [
+        "engagement_tracking",
+        "temporal_activity",
+        "final_outcome"
+      ],
+      "chart_required_fields": [
+        "week_number",
+        "avg_clicks",
+        "final_outcome"
+      ],
+      "dataset_specific": {
+        "source_dataset": "OULAD",
+        "reason": "Task depends on OULAD week-level engagement patterns and outcome labels."
+      }
     }
   },
   {
@@ -1934,7 +1978,7 @@
       "explanationType": "observation, interpretation",
       "vizType": "card"
     },
-    "datasetCompatibility": "OULAD_only",
+    "datasetCompatibility": "both",
     "aiPromptHint": "Summarise who this student is and where they stand across all dimensions (score, engagement, risk) in plain language.",
     "sqlQuery": "WITH score_agg AS (SELECT ar.student_id, AVG(ar.score_normalized) AS avg_score, REGR_SLOPE(ar.score_normalized, a.assessment_order) AS perf_trend FROM assessment_result ar JOIN assessment a ON ar.assessment_id = a.assessment_id JOIN enrollment e ON ar.student_id = e.student_id AND a.class_id = e.class_id WHERE e.class_id = :class_id GROUP BY ar.student_id), eng_agg AS (SELECT e.student_id, SUM(eng.engagement_count) AS total_clicks, COUNT(DISTINCT eng.event_day) AS active_days FROM enrollment e JOIN engagement eng ON e.enrollment_id = eng.enrollment_id WHERE e.class_id = :class_id GROUP BY e.student_id), class_max AS (SELECT MAX(total_clicks) AS mc, MAX(active_days) AS ma FROM eng_agg), eng_score AS (SELECT ea.student_id, (ea.total_clicks / NULLIF(cm.mc, 0)) * 0.5 + (ea.active_days / NULLIF(cm.ma, 0)) * 0.5 AS engagement_score, CASE WHEN NTILE(4) OVER (ORDER BY ea.total_clicks) = 1 THEN 'very_low' WHEN NTILE(4) OVER (ORDER BY ea.total_clicks) = 2 THEN 'low' WHEN NTILE(4) OVER (ORDER BY ea.total_clicks) = 3 THEN 'medium' ELSE 'high' END AS study_effort_level FROM eng_agg ea, class_max cm), punctuality AS (SELECT ar.student_id, COUNT(*) FILTER (WHERE ar.submission_day <= a.due_day) * 1.0 / NULLIF(COUNT(*), 0) AS punctuality_rate FROM assessment_result ar JOIN assessment a ON ar.assessment_id = a.assessment_id JOIN enrollment e ON ar.student_id = e.student_id AND a.class_id = e.class_id WHERE e.class_id = :class_id AND e.source_dataset = 'OULAD' GROUP BY ar.student_id), risk_flags AS (SELECT sa.student_id, (CASE WHEN sa.avg_score < 40 THEN 1 ELSE 0 END + CASE WHEN e.previous_attempt_count > 0 THEN 1 ELSE 0 END + CASE WHEN es.engagement_score < 0.15 THEN 1 ELSE 0 END + CASE WHEN COALESCE(p.punctuality_rate, 1) < 0.7 THEN 1 ELSE 0 END + CASE WHEN sa.perf_trend < 0 THEN 1 ELSE 0 END) AS at_risk_score FROM score_agg sa JOIN eng_score es ON es.student_id = sa.student_id JOIN enrollment e ON e.student_id = sa.student_id AND e.class_id = :class_id LEFT JOIN punctuality p ON p.student_id = sa.student_id) SELECT s.student_id, s.gender, s.age_group, s.region, e.previous_attempt_count, e.final_outcome, sa.avg_score, rf.at_risk_score, CASE WHEN rf.at_risk_score >= 3 THEN 'high' WHEN rf.at_risk_score = 2 THEN 'medium' ELSE 'low' END AS at_risk_label, es.engagement_score, es.study_effort_level FROM student s JOIN enrollment e ON s.student_id = e.student_id AND e.class_id = :class_id JOIN score_agg sa ON sa.student_id = s.student_id JOIN risk_flags rf ON rf.student_id = s.student_id JOIN eng_score es ON es.student_id = s.student_id WHERE s.student_id = :student_id",
     "viz_type": "table",
@@ -4065,7 +4109,7 @@
       "final_outcome"
     ],
     "optionalCapabilities": [],
-    "fallbackStrategy": "hide_task",
+    "fallbackStrategy": "show_unavailable_with_reason",
     "registry_status": "validated",
     "semanticReliability": {
       "pass_rate": null,
@@ -4073,6 +4117,22 @@
       "last_validated_at": "2026-05-18",
       "validation_contexts": 0,
       "validated_dataset": "N/A"
+    },
+    "availability_contract": {
+      "required_all": [
+        "engagement_tracking",
+        "temporal_activity",
+        "final_outcome"
+      ],
+      "chart_required_fields": [
+        "week_number",
+        "avg_clicks",
+        "final_outcome"
+      ],
+      "dataset_specific": {
+        "source_dataset": "OULAD",
+        "reason": "Task depends on OULAD week-level engagement patterns and outcome labels."
+      }
     }
   },
   {
@@ -4104,9 +4164,9 @@
       "explanationType": "observation, interpretation, recommendation",
       "vizType": "table"
     },
-    "datasetCompatibility": "OULAD_only",
+    "datasetCompatibility": "both",
     "aiPromptHint": "Rank by at_risk_score [FE] descending. List triggered flags per student. Provide action per priority group.",
-    "sqlQuery": "WITH score_agg AS (SELECT ar.student_id, AVG(ar.score_normalized) AS avg_score, REGR_SLOPE(ar.score_normalized, a.assessment_order) AS perf_trend FROM assessment_result ar JOIN assessment a ON ar.assessment_id = a.assessment_id JOIN enrollment e ON ar.student_id = e.student_id AND a.class_id = e.class_id WHERE e.class_id = :class_id GROUP BY ar.student_id), eng_agg AS (SELECT e.student_id, SUM(eng.engagement_count) AS total_clicks, COUNT(DISTINCT eng.event_day) AS active_days FROM enrollment e JOIN engagement eng ON e.enrollment_id = eng.enrollment_id WHERE e.class_id = :class_id GROUP BY e.student_id), class_max AS (SELECT MAX(total_clicks) AS mc, MAX(active_days) AS ma FROM eng_agg), eng_score AS (SELECT ea.student_id, (ea.total_clicks / NULLIF(cm.mc, 0)) * 0.5 + (ea.active_days / NULLIF(cm.ma, 0)) * 0.5 AS engagement_score FROM eng_agg ea, class_max cm), punctuality AS (SELECT ar.student_id, COUNT(*) FILTER (WHERE ar.submission_day <= a.due_day) * 1.0 / NULLIF(COUNT(*), 0) AS punctuality_rate FROM assessment_result ar JOIN assessment a ON ar.assessment_id = a.assessment_id JOIN enrollment e ON ar.student_id = e.student_id AND a.class_id = e.class_id WHERE e.class_id = :class_id AND e.source_dataset = 'OULAD' GROUP BY ar.student_id), risk_flags AS (SELECT sa.student_id, e.enrollment_id, sa.avg_score, e.final_outcome, CASE WHEN sa.avg_score < 40 THEN 1 ELSE 0 END AS flag_low_score, CASE WHEN e.previous_attempt_count > 0 THEN 1 ELSE 0 END AS flag_repeated, CASE WHEN es.engagement_score < 0.15 THEN 1 ELSE 0 END AS flag_low_engagement, CASE WHEN COALESCE(p.punctuality_rate, 1) < 0.7 THEN 1 ELSE 0 END AS flag_low_punctuality, CASE WHEN sa.perf_trend < 0 THEN 1 ELSE 0 END AS flag_neg_trend, (CASE WHEN sa.avg_score < 40 THEN 1 ELSE 0 END + CASE WHEN e.previous_attempt_count > 0 THEN 1 ELSE 0 END + CASE WHEN es.engagement_score < 0.15 THEN 1 ELSE 0 END + CASE WHEN COALESCE(p.punctuality_rate, 1) < 0.7 THEN 1 ELSE 0 END + CASE WHEN sa.perf_trend < 0 THEN 1 ELSE 0 END) AS sum_flags FROM score_agg sa JOIN eng_score es ON es.student_id = sa.student_id JOIN enrollment e ON e.student_id = sa.student_id AND e.class_id = :class_id LEFT JOIN punctuality p ON p.student_id = sa.student_id) SELECT rf.student_id, s.gender, s.age_group, s.region, rf.avg_score, rf.sum_flags AS at_risk_score, CASE WHEN rf.sum_flags >= 3 THEN 'high' WHEN rf.sum_flags = 2 THEN 'medium' ELSE 'low' END AS at_risk_label, rf.flag_low_score, rf.flag_repeated, rf.flag_low_engagement, rf.flag_low_punctuality, rf.flag_neg_trend, rf.final_outcome FROM risk_flags rf JOIN student s ON rf.student_id = s.student_id ORDER BY at_risk_score DESC, rf.avg_score ASC LIMIT 50",
+    "sqlQuery": "WITH score_agg AS (SELECT ar.student_id, AVG(ar.score_normalized) AS avg_score, REGR_SLOPE(ar.score_normalized, a.assessment_order) AS perf_trend FROM assessment_result ar JOIN assessment a ON ar.assessment_id = a.assessment_id JOIN enrollment e ON ar.student_id = e.student_id AND a.class_id = e.class_id WHERE e.class_id = :class_id GROUP BY ar.student_id), eng_agg AS (SELECT e.student_id, SUM(eng.engagement_count) AS total_clicks, COUNT(DISTINCT eng.event_day) AS active_days FROM enrollment e JOIN engagement eng ON e.enrollment_id = eng.enrollment_id WHERE e.class_id = :class_id GROUP BY e.student_id), class_max AS (SELECT MAX(total_clicks) AS mc, MAX(active_days) AS ma FROM eng_agg), eng_score AS (SELECT ea.student_id, (ea.total_clicks / NULLIF(cm.mc, 0)) * 0.5 + (ea.active_days / NULLIF(cm.ma, 0)) * 0.5 AS engagement_score FROM eng_agg ea, class_max cm), punctuality AS (SELECT ar.student_id, COUNT(*) FILTER (WHERE ar.submission_day <= a.due_day) * 1.0 / NULLIF(COUNT(*), 0) AS punctuality_rate FROM assessment_result ar JOIN assessment a ON ar.assessment_id = a.assessment_id JOIN enrollment e ON ar.student_id = e.student_id AND a.class_id = e.class_id WHERE e.class_id = :class_id GROUP BY ar.student_id), risk_flags AS (SELECT sa.student_id, e.enrollment_id, sa.avg_score, e.final_outcome, CASE WHEN sa.avg_score < 40 THEN 1 ELSE 0 END AS flag_low_score, CASE WHEN e.previous_attempt_count > 0 THEN 1 ELSE 0 END AS flag_repeated, CASE WHEN es.engagement_score < 0.15 THEN 1 ELSE 0 END AS flag_low_engagement, CASE WHEN COALESCE(p.punctuality_rate, 1) < 0.7 THEN 1 ELSE 0 END AS flag_low_punctuality, CASE WHEN sa.perf_trend < 0 THEN 1 ELSE 0 END AS flag_neg_trend, (CASE WHEN sa.avg_score < 40 THEN 1 ELSE 0 END + CASE WHEN e.previous_attempt_count > 0 THEN 1 ELSE 0 END + CASE WHEN es.engagement_score < 0.15 THEN 1 ELSE 0 END + CASE WHEN COALESCE(p.punctuality_rate, 1) < 0.7 THEN 1 ELSE 0 END + CASE WHEN sa.perf_trend < 0 THEN 1 ELSE 0 END) AS sum_flags FROM score_agg sa JOIN eng_score es ON es.student_id = sa.student_id JOIN enrollment e ON e.student_id = sa.student_id AND e.class_id = :class_id LEFT JOIN punctuality p ON p.student_id = sa.student_id) SELECT rf.student_id, s.gender, s.age_group, s.region, rf.avg_score, rf.sum_flags AS at_risk_score, CASE WHEN rf.sum_flags >= 3 THEN 'high' WHEN rf.sum_flags = 2 THEN 'medium' ELSE 'low' END AS at_risk_label, rf.flag_low_score, rf.flag_repeated, rf.flag_low_engagement, rf.flag_low_punctuality, rf.flag_neg_trend, rf.final_outcome FROM risk_flags rf JOIN student s ON rf.student_id = s.student_id ORDER BY at_risk_score DESC, rf.avg_score ASC LIMIT 50",
     "viz_type": "table",
     "visualization_config": {
       "x_field": "student_id",
@@ -4140,7 +4200,7 @@
       "engagement_tracking"
     ],
     "optionalCapabilities": [],
-    "fallbackStrategy": "hide_task",
+    "fallbackStrategy": "show_partial_with_warnings",
     "registry_status": "experimental",
     "semanticReliability": {
       "pass_rate": null,
@@ -4148,6 +4208,22 @@
       "last_validated_at": "2026-05-18",
       "validation_contexts": 0,
       "validated_dataset": "N/A"
+    },
+    "availability_contract": {
+      "required_all": [
+        "assessment_scores",
+        "engagement_tracking"
+      ],
+      "optional_enrichments": [
+        "submission_timestamps",
+        "demographics",
+        "final_outcome"
+      ],
+      "chart_required_fields": [
+        "student_id",
+        "at_risk_score",
+        "at_risk_label"
+      ]
     }
   },
   {

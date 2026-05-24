@@ -103,6 +103,7 @@ function adaptMultiSeries(
 ) {
   const grouped = {};
   const seriesValues = new Set();
+  let acceptedRows = 0;
 
   for (const row of rawData) {
     const x = toCategoryValue(row?.[x_field]);
@@ -121,6 +122,7 @@ function adaptMultiSeries(
 
     if (!grouped[x]) grouped[x] = { x };
     seriesValues.add(series);
+    acceptedRows += 1;
 
     const y = toFiniteNumber(row?.[y_field]);
     if (y === null && row?.[y_field] !== 0) {
@@ -139,7 +141,14 @@ function adaptMultiSeries(
   }
 
   const data = Object.values(grouped);
-  diag.valid_rows = data.length;
+  // Count accepted source rows as valid_rows so diagnostics do not imply
+  // false row loss when many rows are intentionally collapsed into x buckets.
+  diag.valid_rows = acceptedRows;
+  if (acceptedRows > data.length) {
+    diag.warnings.push(
+      `Multi-series line collapsed ${acceptedRows} rows into ${data.length} x-buckets.`
+    );
+  }
   if (diag.missing_field_counts?.[y_field] > 0) {
     diag.warnings.push(
       `Line chart kept ${diag.missing_field_counts[y_field]} null y values as gaps (multi-series).`

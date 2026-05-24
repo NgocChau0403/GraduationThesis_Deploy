@@ -37,6 +37,45 @@ async function resolveBatchContext(batchId) {
 }
 
 /**
+ * Resolves enrollment_id for student-scoped SQL tasks when caller provides
+ * student_id + class_id (+ batch_id) but omits enrollment_id.
+ */
+async function resolveEnrollmentIdIfMissing(params = {}) {
+  const nextParams = { ...params };
+  if (nextParams.enrollment_id) return nextParams;
+  if (!nextParams.student_id || !nextParams.class_id) return nextParams;
+
+  const where = {
+    student_id: nextParams.student_id,
+    class_id: nextParams.class_id,
+    ...(nextParams.batch_id ? { batch_id: nextParams.batch_id } : {}),
+  };
+
+  const enrollment = await prisma.enrollment.findFirst({
+    where,
+    select: { enrollment_id: true },
+  });
+
+  if (!enrollment?.enrollment_id) {
+    throw Object.assign(
+      new Error("STUDENT_NOT_ENROLLED_IN_CLASS"),
+      {
+        statusCode: 422,
+        errorCode: "STUDENT_NOT_ENROLLED_IN_CLASS",
+        diagnostics: {
+          student_id: nextParams.student_id ?? null,
+          class_id: nextParams.class_id ?? null,
+          batch_id: nextParams.batch_id ?? null,
+        },
+      }
+    );
+  }
+
+  nextParams.enrollment_id = enrollment.enrollment_id;
+  return nextParams;
+}
+
+/**
  * Extracts SQL execution params by removing batch_id.
  *
  * batch_id is used only for capability validation — it is NOT in the
@@ -133,7 +172,8 @@ export async function runAnalyticsController(req, res) {
       });
     }
 
-    const { batch_id: batchId, class_id: classId } = params;
+    const resolvedParams = await resolveEnrollmentIdIfMissing(params);
+    const { batch_id: batchId, class_id: classId } = resolvedParams;
     if (!batchId) {
       return res.status(400).json({
         success:     false,
@@ -179,7 +219,7 @@ export async function runAnalyticsController(req, res) {
 
     // ── Step 5: Execute SQL ─────────────────────────────────────────────────
     // Strip batch_id — SQL queries don't use it (not in ALLOWED_PARAMS)
-    const sqlParams = extractSqlParams(params);
+    const sqlParams = extractSqlParams(resolvedParams);
 
     // Fallback for comparison tasks (e.g., A-C01) if frontend doesn't provide s1/s2
     if (!sqlParams.s1) sqlParams.s1 = sqlParams.student_id || 'dummy_s1';
@@ -233,6 +273,8 @@ export async function runAnalyticsController(req, res) {
       success:     false,
       executionId,
       error:       err.message,
+      ...(err?.errorCode ? { code: err.errorCode } : {}),
+      ...(err?.diagnostics ? { diagnostics: err.diagnostics } : {}),
     });
   }
 }
