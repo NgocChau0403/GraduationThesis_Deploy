@@ -29,69 +29,51 @@ function getCompatFilter(datasetSource) {
     task.datasetCompatibility === `${src}_only`;
 }
 
-function taskIdSet(ids) {
-  return new Set(ids);
-}
-
-const SINGLE_TASK_ID_SET = taskIdSet(ADMIN_SINGLE_STUDENT_TASKS);
-const COMPARE_TASK_ID_SET = taskIdSet(ADMIN_COMPARISON_TASKS);
-const COHORT_TASK_ID_SET = taskIdSet(ADMIN_COHORT_TASKS);
+const WORKSPACE_TABS = [
+  { id: "admin_basic", label: "Admin - Basic Tasks", prefixes: ADMIN_BASIC_TASKS },
+  { id: "admin_single", label: "Admin - Single Student Tasks", prefixes: ADMIN_SINGLE_STUDENT_TASKS },
+  { id: "admin_compare", label: "Admin - Comparison Tasks", prefixes: ADMIN_COMPARISON_TASKS },
+  { id: "admin_cohort", label: "Admin - Cohort Tasks", prefixes: ADMIN_COHORT_TASKS },
+];
 
 export default function AdminDashboardPage() {
   const navigate = useNavigate();
   const { activeDataset, isLoading: appLoading } = useAppContext();
+  const [currentTab, setCurrentTab] = useState("admin_basic");
+  const [activeTaskId, setActiveTaskId] = useState(ADMIN_BASIC_TASKS[0]);
 
   const datasetSource = activeDataset?.source ?? null;
-  const isCompatible = useMemo(
-    () => getCompatFilter(datasetSource),
-    [datasetSource]
-  );
+  const isCompatible = useMemo(() => getCompatFilter(datasetSource), [datasetSource]);
 
-  const {
-    data: classesData,
-    isLoading: isClassesLoading,
-    isError: isClassesError,
-    error: classesQueryError,
-  } = useQuery({
+  const { data: classesData, isLoading: isClassesLoading, isError: isClassesError, error: classesQueryError } = useQuery({
     queryKey: ["classes", activeDataset?.id],
     queryFn: () => fetchClasses(activeDataset?.id),
     enabled: !!activeDataset?.id,
   });
-  const classesError = classesData?.success === false ? new Error(classesData?.message || "Failed to load classes.") : null;
   const classes = classesData?.classes ?? [];
 
   const [selectedClassId, setSelectedClassId] = useState("");
   const classId = selectedClassId || classes[0]?.class_id || "";
 
-  const {
-    data: studentsData,
-    isLoading: isStudentsLoading,
-    isError: isStudentsError,
-    error: studentsQueryError,
-  } = useQuery({
+  const { data: studentsData, isLoading: isStudentsLoading, isError: isStudentsError, error: studentsQueryError } = useQuery({
     queryKey: ["students", activeDataset?.id, classId],
     queryFn: () => getStudents(activeDataset?.id, classId),
     enabled: !!activeDataset?.id && !!classId,
   });
-  const studentsError = studentsData?.success === false ? new Error(studentsData?.message || "Failed to load students.") : null;
   const students = studentsData?.students ?? [];
 
   const [selectedStudentId, setSelectedStudentId] = useState("");
   const [selectedCompareStudentId, setSelectedCompareStudentId] = useState("");
 
   const primaryStudentId = selectedStudentId || students[0]?.student_id || "";
-  const secondaryStudentId =
-    selectedCompareStudentId ||
-    students.find((s) => s.student_id !== primaryStudentId)?.student_id ||
-    "";
+  const secondaryStudentId = selectedCompareStudentId || students.find((s) => s.student_id !== primaryStudentId)?.student_id || "";
 
   const { tasks: allTasksRaw } = useTaskRegistry();
-  const uniqueAdminTasks = useMemo(
-    () =>
-      allTasksRaw
-        .filter((task) => ADMIN_ALLOWED_TASK_IDS.has(task.taskId))
-        .filter(isCompatible)
-        .filter((task, idx, arr) => arr.findIndex((t) => t.taskId === task.taskId) === idx),
+  const uniqueAdminTasks = useMemo(() => 
+    allTasksRaw
+      .filter((task) => ADMIN_ALLOWED_TASK_IDS.has(task.taskId))
+      .filter(isCompatible)
+      .filter((task, idx, arr) => arr.findIndex((t) => t.taskId === task.taskId) === idx),
     [allTasksRaw, isCompatible]
   );
 
@@ -103,61 +85,82 @@ export default function AdminDashboardPage() {
     return map;
   }, [uniqueAdminTasks]);
 
-  const basicTaskIds = useMemo(
-    () => ADMIN_BASIC_TASKS.filter((taskId) => taskMetaById.has(taskId)),
-    [taskMetaById]
-  );
-
   const [taskResults, setTaskResults] = useState({});
   const [loadingTasks, setLoadingTasks] = useState(new Set());
-  const [showExplore, setShowExplore] = useState(false);
 
-  const resolveEnrollmentId = useCallback(
-    (studentId) => students.find((s) => s.student_id === studentId)?.enrollment_id ?? null,
+  const resolveEnrollmentId = useCallback((studentId) => 
+    students.find((s) => s.student_id === studentId)?.enrollment_id ?? null,
     [students]
   );
 
-  const runTask = useCallback(
-    async (taskId, extraParams = {}) => {
-      if (!activeDataset?.id || !classId) return;
+  const runTask = useCallback(async (taskId, extraParams = {}) => {
+    if (!activeDataset?.id || !classId) return;
 
-      const params = {
-        batch_id: activeDataset.id,
-        class_id: classId,
-        ...extraParams,
-      };
+    const params = {
+      batch_id: activeDataset.id,
+      class_id: classId,
+      ...extraParams,
+    };
 
-      if (params.student_id && !params.enrollment_id) {
-        const eid = resolveEnrollmentId(params.student_id);
-        if (eid) params.enrollment_id = eid;
+    if (params.student_id && !params.enrollment_id) {
+      const eid = resolveEnrollmentId(params.student_id);
+      if (eid) params.enrollment_id = eid;
+    }
+
+    setLoadingTasks((prev) => new Set([...prev, taskId]));
+    try {
+      const result = await runAnalyticsTask(taskId, params);
+      setTaskResults((prev) => ({ ...prev, [taskId]: result }));
+    } catch (err) {
+      console.error(`[AdminDashboard] Task ${taskId} failed:`, err.message);
+      setTaskResults((prev) => ({ ...prev, [taskId]: { error: err.message, taskId } }));
+    } finally {
+      setLoadingTasks((prev) => {
+        const next = new Set(prev);
+        next.delete(taskId);
+        return next;
+      });
+    }
+  }, [activeDataset?.id, classId, resolveEnrollmentId]);
+
+  const activeTabObj = useMemo(() => WORKSPACE_TABS.find(t => t.id === currentTab), [currentTab]);
+  
+  const filteredTasks = useMemo(() => {
+    if (!activeTabObj) return [];
+    return uniqueAdminTasks.filter(t => activeTabObj.prefixes.includes(t.taskId));
+  }, [uniqueAdminTasks, activeTabObj]);
+
+  const currentTaskMeta = useMemo(() => taskMetaById.get(activeTaskId), [taskMetaById, activeTaskId]);
+  const currentResult = taskResults[activeTaskId];
+  const isCurrentTaskLoading = loadingTasks.has(activeTaskId);
+
+  const handleTabChange = (tabId) => {
+    setCurrentTab(tabId);
+    const targetTab = WORKSPACE_TABS.find(t => t.id === tabId);
+    if (targetTab && targetTab.prefixes.length > 0) {
+      setActiveTaskId(targetTab.prefixes[0]);
+    }
+  };
+
+  const handleTriggerAnalysis = () => {
+    if (ADMIN_BASIC_TASKS.includes(activeTaskId) || ADMIN_COHORT_TASKS.includes(activeTaskId)) {
+      runTask(activeTaskId);
+    } else if (ADMIN_SINGLE_STUDENT_TASKS.includes(activeTaskId)) {
+      runTask(activeTaskId, { student_id: primaryStudentId });
+    } else if (ADMIN_COMPARISON_TASKS.includes(activeTaskId)) {
+      if (primaryStudentId && secondaryStudentId && primaryStudentId !== secondaryStudentId) {
+        runTask(activeTaskId, { s1: primaryStudentId, s2: secondaryStudentId });
       }
-
-      setLoadingTasks((prev) => new Set([...prev, taskId]));
-      try {
-        const result = await runAnalyticsTask(taskId, params);
-        setTaskResults((prev) => ({ ...prev, [taskId]: result }));
-      } catch (err) {
-        console.error(`[AdminDashboard] Task ${taskId} failed:`, err.message);
-        setTaskResults((prev) => ({
-          ...prev,
-          [taskId]: { error: err.message, taskId },
-        }));
-      } finally {
-        setLoadingTasks((prev) => {
-          const next = new Set(prev);
-          next.delete(taskId);
-          return next;
-        });
-      }
-    },
-    [activeDataset?.id, classId, resolveEnrollmentId]
-  );
+    }
+  };
 
   useEffect(() => {
     if (!activeDataset?.id || !classId) return;
     setTaskResults({});
-    basicTaskIds.forEach((taskId) => runTask(taskId));
-  }, [activeDataset?.id, classId, basicTaskIds, runTask]);
+    if (ADMIN_BASIC_TASKS.includes(activeTaskId)) {
+      runTask(activeTaskId);
+    }
+  }, [activeDataset?.id, classId, activeTaskId, runTask]);
 
   useEffect(() => {
     setSelectedStudentId("");
@@ -165,332 +168,186 @@ export default function AdminDashboardPage() {
   }, [classId]);
 
   useEffect(() => {
-    // Chỉ redirect khi đã load xong (appLoading = false) và thực sự không có dataset.
-    // Không redirect trong khi đang loading để tránh race condition gây màn hình trắng.
     if (!appLoading && !activeDataset) {
       navigate("/data-selection", { replace: true });
     }
   }, [appLoading, activeDataset, navigate]);
 
-  const getTaskMeta = (taskId) => taskMetaById.get(taskId);
-
-  const displayedTaskIds = [
-    ...basicTaskIds,
-    ...Object.keys(taskResults).filter((id) => !basicTaskIds.includes(id)),
-  ];
-
-  const singleStudentTasks = uniqueAdminTasks.filter(
-    (task) => SINGLE_TASK_ID_SET.has(task.taskId) && !taskResults[task.taskId]
-  );
-  const comparisonTasks = uniqueAdminTasks.filter(
-    (task) => COMPARE_TASK_ID_SET.has(task.taskId) && !taskResults[task.taskId]
-  );
-  const cohortTasks = uniqueAdminTasks.filter(
-    (task) => COHORT_TASK_ID_SET.has(task.taskId) && !basicTaskIds.includes(task.taskId) && !taskResults[task.taskId]
-  );
-
-  const availableExploreCount =
-    singleStudentTasks.length + comparisonTasks.length + cohortTasks.length;
-
-  const runSingleStudentTask = (taskId) => {
-    if (!primaryStudentId) return;
-    runTask(taskId, { student_id: primaryStudentId });
-  };
-
-  const runComparisonTask = (taskId) => {
-    if (!primaryStudentId || !secondaryStudentId || primaryStudentId === secondaryStudentId) return;
-    runTask(taskId, { s1: primaryStudentId, s2: secondaryStudentId });
-  };
-
-  const runCohortTask = (taskId) => {
-    runTask(taskId);
-  };
-
-  // Hiện spinner trong 2 trường hợp:
-  //   1. App đang load lần đầu (appLoading = true)
-  //   2. Đã load xong nhưng chưa có dataset (sẽ bị redirect bởi useEffect phía trên)
-  if (appLoading || !activeDataset) {
+  if (appLoading || !activeDataset || isClassesLoading || isStudentsLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="h-screen bg-slate-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
-      </div>
-    );
-  }
-
-  if (isClassesLoading) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
-      </div>
-    );
-  }
-
-  if (isClassesError || classesQueryError || classesError) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-red-200 text-center max-w-md">
-          <h2 className="text-xl font-bold text-red-700 mb-2">Failed to load classes</h2>
-          <p className="text-slate-500">{(classesQueryError || classesError)?.message}</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (classes.length === 0) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 text-center max-w-md">
-          <h2 className="text-xl font-bold text-slate-800 mb-2">No classes found for active dataset</h2>
-          <p className="text-slate-500">Please switch dataset or import data with class records.</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (isStudentsError || studentsQueryError || studentsError) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-red-200 text-center max-w-md">
-          <h2 className="text-xl font-bold text-red-700 mb-2">Failed to load students</h2>
-          <p className="text-slate-500">{(studentsQueryError || studentsError)?.message}</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (isStudentsLoading && classId) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
-      </div>
-    );
-  }
-
-  if (classId && students.length === 0) {
-    return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center p-6">
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200 text-center max-w-md">
-          <h2 className="text-xl font-bold text-slate-800 mb-2">No students found for selected class</h2>
-          <p className="text-slate-500">Please choose another class or refresh imported data.</p>
-        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="bg-white border-b border-slate-200 px-6 py-4 flex items-center justify-between sticky top-0 z-20">
+    <div className="workspace-fixed-layout h-screen max-h-screen bg-slate-100 p-3 flex flex-col overflow-hidden text-slate-700 font-sans">
+      
+      {/* Light Clean Header */}
+      <header className="flex items-center justify-between px-4 py-2.5 bg-white rounded-t-xl border-b border-slate-200 shrink-0 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center font-bold text-lg">
-            A
-          </div>
+          <div className="h-8 w-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center font-bold text-sm border border-blue-200">A</div>
           <div>
-            <h1 className="text-lg font-bold text-slate-900 leading-tight">Admin Dashboard</h1>
-            <p className="text-xs font-medium text-slate-500">
-              Dataset: <span className="text-blue-600">{activeDataset.name}</span>
-            </p>
+            <h1 className="text-sm font-bold text-slate-900">Admin Executive Report Canvas</h1>
+            <p className="text-[10px] text-slate-500">Dataset: <span className="text-blue-600 font-semibold">{activeDataset.name}</span></p>
           </div>
         </div>
+
         <div className="flex items-center gap-3">
           <select
             value={classId}
             onChange={(e) => setSelectedClassId(e.target.value)}
-            className="px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm text-slate-700
-                       focus:outline-none focus:ring-2 focus:ring-blue-500/30 focus:border-blue-500"
+            className="px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
           >
-            {classes.length === 0 && <option value="">No classes</option>}
             {classes.map((c) => (
               <option key={c.class_id} value={c.class_id}>
                 {c.course_id} - {c.class_run} ({c.student_count} students)
               </option>
             ))}
           </select>
-          <button
-            onClick={() => navigate("/data-selection")}
-            className="text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg px-4 py-2 transition-colors"
-          >
-            Switch Dataset
-          </button>
-          <button
-            onClick={() => navigate("/choose-role")}
-            className="text-sm font-medium text-slate-600 hover:text-slate-900 border border-slate-200 rounded-lg px-4 py-2 hover:bg-slate-50 transition-colors"
-          >
-            Switch Role
-          </button>
+          <button onClick={() => navigate("/data-selection")} className="text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded px-3 py-1.5 transition-colors">Switch Dataset</button>
+          <button onClick={() => navigate("/choose-role")} className="text-xs font-semibold text-slate-600 bg-white border border-slate-200 rounded px-3 py-1.5 hover:bg-slate-50 transition-colors">Switch Role</button>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto p-6 space-y-6">
-        {displayedTaskIds.map((taskId) => {
-          const result = taskResults[taskId];
-          const taskMeta = getTaskMeta(taskId);
-          const isLoading = loadingTasks.has(taskId);
+      {/* Main Framework Grid */}
+      <main className="flex-1 grid grid-cols-[340px_1fr] min-h-0 bg-white rounded-b-xl overflow-hidden shadow-sm border border-t-0 border-slate-200">
+        
+        {/* Left Control Side Panel */}
+        <section className="border-r border-slate-200 flex flex-col min-h-0 bg-slate-50/50">
+          
+          {/* Category Tabs Menu Dropdown */}
+          <div className="p-3 border-b border-slate-200 bg-white shrink-0">
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Report Page / Analysis Category</label>
+            <select
+              value={currentTab}
+              onChange={(e) => handleTabChange(e.target.value)}
+              className="w-full px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 font-semibold focus:outline-none focus:border-blue-500"
+            >
+              {WORKSPACE_TABS.map(tab => (
+                <option key={tab.id} value={tab.id}>{tab.label}</option>
+              ))}
+            </select>
+          </div>
 
-          return (
-            <section key={taskId} className="space-y-3">
-              {taskMeta && (
-                <ChartRenderer
-                  taskMeta={taskMeta}
-                  datasets={result?.datasets ?? null}
-                  isLoading={isLoading}
-                  error={result?.error ?? null}
-                />
-              )}
-
-              {!taskMeta && isLoading && (
-                <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm animate-pulse">
-                  <div className="h-4 w-48 bg-slate-200 rounded mb-4" />
-                  <div className="h-[200px] bg-slate-100 rounded-lg flex items-center justify-center">
-                    <div className="flex items-center gap-2">
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-blue-500" />
-                      <span className="text-xs text-slate-400">Running {taskId}...</span>
-                    </div>
+          {/* Task Selection Rows Container */}
+          <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar px-3 py-2 space-y-1.5">
+            {filteredTasks.map((task) => (
+              <button
+                key={task.taskId}
+                onClick={() => setActiveTaskId(task.taskId)}
+                className={`w-full rounded-lg border p-2.5 text-left transition-all block ${
+                  activeTaskId === task.taskId
+                    ? "border-blue-500 bg-blue-50/60 shadow-sm"
+                    : "border-slate-100 bg-white hover:border-slate-300 hover:bg-slate-50"
+                }`}
+              >
+                <div className="flex items-start gap-2">
+                  <code className="shrink-0 rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-mono font-bold text-blue-600 border border-blue-100">
+                    {task.taskId}
+                  </code>
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-xs font-bold text-slate-800">{task.taskName}</p>
+                    <p className="mt-0.5 text-[10px] text-slate-400 truncate font-medium">{task.actionableQuestion}</p>
                   </div>
                 </div>
-              )}
+              </button>
+            ))}
+          </div>
 
-              {result?.error && (
-                <div className="p-4 rounded-lg bg-red-50 border border-red-200">
-                  <p className="text-sm font-medium text-red-700">{taskId} failed</p>
-                  <p className="text-xs text-red-500 mt-1">{result.error}</p>
-                </div>
-              )}
-
-              {result?.datasets && (
-                <AIInsightPanel
-                  taskId={result.taskId}
-                  executionId={result.executionId}
-                  datasets={result.datasets}
-                  meta={result.meta}
-                  studentContext={null}
-                />
-              )}
-            </section>
-          );
-        })}
-
-        {availableExploreCount > 0 && (
-          <div className="border-t border-slate-200 pt-6">
-            <button
-              onClick={() => setShowExplore(!showExplore)}
-              className="flex items-center gap-2 text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors"
-            >
-              <span>{showExplore ? "v" : ">"}</span>
-              Explore More ({availableExploreCount} tasks)
-            </button>
-
-            {showExplore && (
-              <div className="space-y-6 mt-4">
-                {singleStudentTasks.length > 0 && (
-                  <section className="space-y-3">
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <h3 className="text-sm font-semibold text-slate-800">Single Student Deep Dive</h3>
-                      <select
-                        value={primaryStudentId}
-                        onChange={(e) => setSelectedStudentId(e.target.value)}
-                        className="px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm text-slate-700"
-                      >
-                        {students.length === 0 && <option value="">No students</option>}
-                        {students.map((s) => (
-                          <option key={s.student_id} value={s.student_id}>
-                            {s.student_id}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                    <TaskCardGrid
-                      tasks={singleStudentTasks}
-                      loadingTasks={loadingTasks}
-                      onRun={runSingleStudentTask}
-                    />
-                  </section>
-                )}
-
-                {comparisonTasks.length > 0 && (
-                  <section className="space-y-3">
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <h3 className="text-sm font-semibold text-slate-800">Comparison Tasks (2 students)</h3>
-                      <div className="flex gap-2">
-                        <select
-                          value={primaryStudentId}
-                          onChange={(e) => setSelectedStudentId(e.target.value)}
-                          className="px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm text-slate-700"
-                        >
-                          {students.length === 0 && <option value="">No students</option>}
-                          {students.map((s) => (
-                            <option key={s.student_id} value={s.student_id}>
-                              {s.student_id}
-                            </option>
-                          ))}
-                        </select>
-                        <select
-                          value={secondaryStudentId}
-                          onChange={(e) => setSelectedCompareStudentId(e.target.value)}
-                          className="px-3 py-2 rounded-lg border border-slate-200 bg-white text-sm text-slate-700"
-                        >
-                          {students.length === 0 && <option value="">No students</option>}
-                          {students.map((s) => (
-                            <option key={s.student_id} value={s.student_id}>
-                              {s.student_id}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    <TaskCardGrid
-                      tasks={comparisonTasks}
-                      loadingTasks={loadingTasks}
-                      onRun={runComparisonTask}
-                      disabled={!primaryStudentId || !secondaryStudentId || primaryStudentId === secondaryStudentId}
-                    />
-                  </section>
-                )}
-
-                {cohortTasks.length > 0 && (
-                  <section className="space-y-3">
-                    <h3 className="text-sm font-semibold text-slate-800">Cohort / Group Analysis Tasks</h3>
-                    <TaskCardGrid
-                      tasks={cohortTasks}
-                      loadingTasks={loadingTasks}
-                      onRun={runCohortTask}
-                    />
-                  </section>
-                )}
+          {/* Scope Controls Configuration Box */}
+          <div className="border-t border-slate-200 bg-white p-3 shrink-0 space-y-2">
+            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Query Execution Scope</div>
+            
+            {ADMIN_SINGLE_STUDENT_TASKS.includes(activeTaskId) && (
+              <div>
+                <span className="block text-[10px] text-slate-400 font-medium mb-1">Target Student ID</span>
+                <select value={primaryStudentId} onChange={(e) => setSelectedStudentId(e.target.value)} className="w-full rounded-lg bg-slate-50 border border-slate-200 px-2 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-blue-500">
+                  {students.map(s => <option key={s.student_id} value={s.student_id}>{s.student_id}</option>)}
+                </select>
               </div>
             )}
-          </div>
-        )}
-      </main>
-    </div>
-  );
-}
 
-function TaskCardGrid({ tasks, loadingTasks, onRun, disabled = false }) {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-      {tasks.map((task) => (
-        <button
-          key={task.taskId}
-          onClick={() => onRun(task.taskId)}
-          disabled={disabled || loadingTasks.has(task.taskId)}
-          className="text-left p-4 rounded-xl border border-slate-200 bg-white hover:border-blue-300 hover:shadow-sm transition-all group disabled:opacity-60"
-        >
-          <div className="flex items-center gap-2 mb-1">
-            <code className="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">
-              {task.taskId}
-            </code>
-            <span className="px-2 py-0.5 rounded-full text-[9px] font-medium bg-slate-100 text-slate-500">
-              {task.viz_type?.replace("_", " ")}
-            </span>
+            {ADMIN_COMPARISON_TASKS.includes(activeTaskId) && (
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <span className="block text-[10px] text-slate-400 font-medium mb-1">Student 1 ID</span>
+                  <select value={primaryStudentId} onChange={(e) => setSelectedStudentId(e.target.value)} className="w-full rounded-lg bg-slate-50 border border-slate-200 px-2 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-blue-500">
+                    {students.map(s => <option key={s.student_id} value={s.student_id}>{s.student_id}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <span className="block text-[10px] text-slate-400 font-medium mb-1">Student 2 ID</span>
+                  <select value={secondaryStudentId} onChange={(e) => setSelectedCompareStudentId(e.target.value)} className="w-full rounded-lg bg-slate-50 border border-slate-200 px-2 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-blue-500">
+                    {students.map(s => <option key={s.student_id} value={s.student_id}>{s.student_id}</option>)}
+                  </select>
+                </div>
+              </div>
+            )}
+
+            <button
+              onClick={handleTriggerAnalysis}
+              disabled={isCurrentTaskLoading}
+              className="w-full rounded-lg py-2 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 transition-all text-white shadow-sm"
+            >
+              {isCurrentTaskLoading ? "⚡ Analyzing Metrics..." : "🚀 Run Analysis View"}
+            </button>
           </div>
-          <p className="text-sm font-medium text-slate-800 group-hover:text-blue-700 transition-colors">
-            {task.taskName}
-          </p>
-          <p className="text-xs text-slate-500 mt-0.5 line-clamp-1">
-            {task.actionableQuestion}
-          </p>
-        </button>
-      ))}
+        </section>
+
+        {/* Right Output Visual Area Canvas */}
+        <section className="flex flex-col min-h-0 bg-slate-50 p-4">
+          {currentTaskMeta ? (
+            <div className="h-full flex flex-col min-h-0 space-y-3">
+              <div className="bg-white p-3 rounded-xl border border-slate-200 shrink-0 shadow-sm">
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-600 border border-blue-100 mr-2">{currentTaskMeta.taskId}</span>
+                <span className="text-sm font-bold text-slate-800">{currentTaskMeta.taskName}</span>
+                <p className="text-xs text-slate-500 mt-1 font-medium">{currentTaskMeta.actionableQuestion}</p>
+              </div>
+
+              {/* Layout optimization: Grid with responsive columns, chart area takes up full space */}
+              <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-[1fr_380px] gap-3">
+                
+                {/* Chart Block Area Expanded */}
+                <div className="bg-white rounded-xl border border-slate-200 p-5 flex flex-col min-h-0 overflow-hidden shadow-sm">
+                  <div className="flex-1 w-full h-full min-h-0 block">
+                    <ChartRenderer
+                      taskMeta={currentTaskMeta}
+                      datasets={currentResult?.datasets ?? null}
+                      isLoading={isCurrentTaskLoading}
+                      error={currentResult?.error ?? null}
+                    />
+                  </div>
+                </div>
+
+                {/* AI Explanation Side Cards Panel */}
+                <div className="bg-white rounded-xl border border-slate-200 flex flex-col min-h-0 overflow-hidden shadow-sm">
+                  <div className="p-3 border-b border-slate-100 bg-slate-50/50 flex items-center gap-2">
+                    <span className="w-2 h-2 bg-emerald-500 rounded-full"/>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600">AI Narrative Analysis</h4>
+                  </div>
+                  <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar p-3 text-slate-600">
+                    {currentResult?.datasets ? (
+                      <AIInsightPanel
+                        taskId={currentResult.taskId}
+                        executionId={currentResult.executionId}
+                        datasets={currentResult.datasets}
+                        meta={currentResult.meta}
+                        studentContext={null}
+                      />
+                    ) : (
+                      <div className="text-xs text-slate-400 italic text-center pt-12">Awaiting processing pipeline execution output results...</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="h-full flex items-center justify-center text-slate-400 text-xs italic">Select an administrative data node framework item from the sidebar registry.</div>
+          )}
+        </section>
+      </main>
     </div>
   );
 }

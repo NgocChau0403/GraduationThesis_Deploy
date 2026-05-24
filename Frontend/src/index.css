@@ -274,3 +274,33 @@ code {
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 }
+
+/* ==========================================================================
+   ⚡ Fixed Viewport Utilities for Analytics PowerBI Layout
+   ========================================================================== */
+
+/* Chỉ áp dụng giới hạn khung màn hình cho riêng không gian Workspace */
+.workspace-fixed-layout {
+  height: 100vh;
+  max-height: 100vh;
+  overflow: hidden !important;
+}
+
+/* Custom scrollbar siêu nhỏ cho danh sách Task và AI Insight Panel con */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155; /* Slate-700 */
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #475569; /* Slate-600 */
+}
