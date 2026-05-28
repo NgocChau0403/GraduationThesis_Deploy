@@ -64,22 +64,29 @@ Docs/evaluation/
     performance_metrics.csv
     metrics_summary.json
 
-  reports/
-    import_evaluation.md
-    profiling_mapping_evaluation.md
-    task_availability_evaluation.md
-    sql_correctness_evaluation.md
-    api_contract_evaluation.md
-    visualization_evaluation.md
-    ai_explanation_evaluation.md
-    statistical_validity_evaluation.md
-    early_warning_evaluation.md
-    performance_evaluation.md
-    final_evaluation_summary.md
-
   scripts/
     README.md
 ```
+
+Report đọc cho người/thesis để ở folder riêng:
+
+```text
+Docs/evaluation_reports/
+  import_evaluation.docx
+  profiling_mapping_evaluation.docx
+  task_availability_evaluation.docx
+  sql_correctness_evaluation.docx
+  api_contract_evaluation.docx
+  visualization_evaluation.docx
+  ai_explanation_evaluation.docx
+  statistical_validity_evaluation.docx
+  early_warning_evaluation.docx
+  coverage_human_utility_evaluation.docx
+  performance_evaluation.docx
+  final_evaluation_summary.docx
+```
+
+Nếu nhóm viết bằng Google Docs, folder `Docs/evaluation_reports/` có thể chỉ chứa `README.md` ghi link tài liệu.
 
 Quy ước:
 
@@ -88,10 +95,10 @@ Quy ước:
 | `automatic_logs/` | Output thô do hệ thống tự chạy | JSON | Làm evidence ban đầu |
 | `groundtruth_logs/` | Kết quả đúng đã verify | JSON/CSV | Làm đáp án so sánh |
 | `comparison_results/` | Kết quả so sánh và metrics raw | JSON/CSV | Dùng cho script, audit, tính toán |
-| `reports/` | Báo cáo diễn giải cho người đọc | Markdown | Dùng viết thesis/proposal |
 | `scripts/` | Script chạy evaluation | JS/Python/SQL | Tự động hóa |
+| `Docs/evaluation_reports/` | Báo cáo diễn giải cho người đọc | DOCX/PDF/Google Docs/Markdown | Dùng viết thesis/proposal |
 
-Nói ngắn gọn: dữ liệu để tính toán lưu ở `comparison_results/`, còn phần giải thích để đọc và đưa vào thesis lưu ở `reports/`.
+Nói ngắn gọn: `Docs/evaluation/` dùng cho dữ liệu và script để tính toán; `Docs/evaluation_reports/` dùng cho tài liệu đọc và đưa vào thesis.
 
 ## 3. Scope Evaluation
 
@@ -123,7 +130,7 @@ Plan này cần bám vào 4 ý chính thầy đã note:
 |---|---|
 | Đánh giá 3 cấp độ: chạy được, chạy đúng, chạy tốt | Mỗi phần đều có mục tiêu runnable/correct/good. |
 | Kiểm tra mọi bước trong pipeline | Plan đi theo đúng pipeline: import, profiling, mapping, canonicalization, task availability, SQL, API contract, visualization, AI, early warning, performance. |
-| So sánh system automatic output với groundtruth | Mỗi phần đều yêu cầu lưu `automatic_log`, tạo `groundtruth_log`, sinh `comparison_results`, rồi viết `reports`. |
+| So sánh system automatic output với groundtruth | Mỗi phần đều yêu cầu lưu `automatic_log`, tạo `groundtruth_log`, sinh `comparison_results`, rồi viết report trong `Docs/evaluation_reports/`. |
 | Hệ thống phải tổng quát theo canonical schema | Evaluation dùng UCI/OULAD như test cases đại diện, nhưng metrics kiểm theo canonical tables, capabilities, registry tasks, output schema, không hardcode theo một dataset cụ thể. |
 
 ## 3.2. Đối Chiếu Với Kiến Trúc Hệ Thống
@@ -145,17 +152,17 @@ Plan này cần bám vào 4 ý chính thầy đã note:
 
 | STT | Phần cần evaluate | Mục tiêu | Automatic log cần lưu | Groundtruth tạo bằng gì | Metrics | Output cuối |
 |---:|---|---|---|---|---|---|
-| 1 | Import & Data Conversion | Kiểm tra raw CSV vào canonical schema đúng không | Raw row count, canonical count, inserted rows, FK errors, duplicate errors, import time | SQL đếm dòng, kiểm FK, kiểm duplicate, so raw CSV | Row count preservation, FK integrity, duplicate rate, null/range validity, import time | `comparison_results/import_comparison.json` + `reports/import_evaluation.md` |
-| 2 | Profiling & Mapping | Kiểm tra detect file và mapping đúng không | Delimiter, dataset type, file role, suggested mapping, confidence | Bảng mapping chuẩn do nhóm kiểm tra | Delimiter accuracy, file role accuracy, mapping precision/recall, manual correction rate | `comparison_results/profiling_mapping_metrics.csv` + `reports/profiling_mapping_evaluation.md` |
-| 3 | Task Availability | Kiểm tra task bật/tắt đúng theo data không | TaskId, status, missing requirements, warnings, confidence | Expected capability matrix cho UCI/OULAD | Accuracy, precision, recall, F1, false enable/disable rate | `comparison_results/task_availability_metrics.csv` + `reports/task_availability_evaluation.md` |
-| 4 | SQL Analysis Correctness | Kiểm tra kết quả task có recompute được không | TaskId, params, output datasets, row/column/value, execution time | SQL độc lập hoặc Python notebook | Task accuracy, row/column/value match, numerical error, schema match | `comparison_results/sql_correctness_metrics.csv` + `reports/sql_correctness_evaluation.md` |
-| 5 | API Response Contract | Kiểm tra response backend đúng format không | success, datasets, meta, query_labels, dataQuality, errors | Đối chiếu với output_schema trong task registry | API success rate, output contract pass rate, named dataset correctness | `comparison_results/api_contract_metrics.csv` + `reports/api_contract_evaluation.md` |
-| 6 | Visualization | Kiểm tra chart/table/card có đúng data không | viz_type, adapter, input rows, chart rows, skipped rows, diagnostics | Kiểm tay chart-data mapping và adapter output | Rendering success rate, chart-data consistency, label correctness, null handling | `comparison_results/visualization_metrics.csv` + `reports/visualization_evaluation.md` |
-| 7 | AI Explanation | Kiểm tra AI giải thích đúng, hữu ích, an toàn không | AI input, AI output, degraded, latency, model, token usage | Rubric chấm 1-5 bởi người kiểm tra | Faithfulness, correctness, actionability, safety, novelty, diversity, understandability | `comparison_results/ai_explanation_rubric_scores.csv` + `reports/ai_explanation_evaluation.md` |
-| 8 | Statistical Validity | Kiểm tra pattern có ý nghĩa hay chỉ là noise | Task result cho trend/comparison/correlation/risk | Python notebook hoặc SQL thống kê | p-value, effect size, robustness | `comparison_results/statistical_validity_metrics.csv` + `reports/statistical_validity_evaluation.md` |
-| 9 | Early-Warning Utility | Kiểm tra cảnh báo sớm có dự đoán fail/withdraw không | Risk result tại Week 4/8/12 | So với final_result OULAD | Precision, recall, F1, lead time, false positive/negative | `comparison_results/early_warning_metrics.csv` + `reports/early_warning_evaluation.md` |
-| 10 | Coverage & Human Utility | Kiểm tra task taxonomy/insight có đủ rộng và người dùng thấy hữu ích không | Task categories, user role, generated insights, rubric scores | Checklist taxonomy + người đánh giá chấm | Coverage rate, diversity, educator usefulness rating | `comparison_results/coverage_human_utility_metrics.csv` + `reports/coverage_human_utility_evaluation.md` |
-| 11 | System Performance | Kiểm tra hệ thống đủ nhanh/rẻ không | Timestamp, latency, timeout, token usage, cost | Tổng hợp log hệ thống | Import time, query latency, AI latency, cost, failure rate | `comparison_results/performance_metrics.csv` + `reports/performance_evaluation.md` |
+| 1 | Import & Data Conversion | Kiểm tra raw CSV vào canonical schema đúng không | Raw row count, canonical count, inserted rows, FK errors, duplicate errors, import time | SQL đếm dòng, kiểm FK, kiểm duplicate, so raw CSV | Row count preservation, FK integrity, duplicate rate, null/range validity, import time | `comparison_results/import_comparison.json` + `Docs/evaluation_reports/import_evaluation.docx` |
+| 2 | Profiling & Mapping | Kiểm tra detect file và mapping đúng không | Delimiter, dataset type, file role, suggested mapping, confidence | Bảng mapping chuẩn do nhóm kiểm tra | Delimiter accuracy, file role accuracy, mapping precision/recall, manual correction rate | `comparison_results/profiling_mapping_metrics.csv` + `Docs/evaluation_reports/profiling_mapping_evaluation.docx` |
+| 3 | Task Availability | Kiểm tra task bật/tắt đúng theo data không | TaskId, status, missing requirements, warnings, confidence | Expected capability matrix cho UCI/OULAD | Accuracy, precision, recall, F1, false enable/disable rate | `comparison_results/task_availability_metrics.csv` + `Docs/evaluation_reports/task_availability_evaluation.docx` |
+| 4 | SQL Analysis Correctness | Kiểm tra kết quả task có recompute được không | TaskId, params, output datasets, row/column/value, execution time | SQL độc lập hoặc Python notebook | Task accuracy, row/column/value match, numerical error, schema match | `comparison_results/sql_correctness_metrics.csv` + `Docs/evaluation_reports/sql_correctness_evaluation.docx` |
+| 5 | API Response Contract | Kiểm tra response backend đúng format không | success, datasets, meta, query_labels, dataQuality, errors | Đối chiếu với output_schema trong task registry | API success rate, output contract pass rate, named dataset correctness | `comparison_results/api_contract_metrics.csv` + `Docs/evaluation_reports/api_contract_evaluation.docx` |
+| 6 | Visualization | Kiểm tra chart/table/card có đúng data không | viz_type, adapter, input rows, chart rows, skipped rows, diagnostics | Kiểm tay chart-data mapping và adapter output | Rendering success rate, chart-data consistency, label correctness, null handling | `comparison_results/visualization_metrics.csv` + `Docs/evaluation_reports/visualization_evaluation.docx` |
+| 7 | AI Explanation | Kiểm tra AI giải thích đúng, hữu ích, an toàn không | AI input, AI output, degraded, latency, model, token usage | Rubric chấm 1-5 bởi người kiểm tra | Faithfulness, correctness, actionability, safety, novelty, diversity, understandability | `comparison_results/ai_explanation_rubric_scores.csv` + `Docs/evaluation_reports/ai_explanation_evaluation.docx` |
+| 8 | Statistical Validity | Kiểm tra pattern có ý nghĩa hay chỉ là noise | Task result cho trend/comparison/correlation/risk | Python notebook hoặc SQL thống kê | p-value, effect size, robustness | `comparison_results/statistical_validity_metrics.csv` + `Docs/evaluation_reports/statistical_validity_evaluation.docx` |
+| 9 | Early-Warning Utility | Kiểm tra cảnh báo sớm có dự đoán fail/withdraw không | Risk result tại Week 4/8/12 | So với final_result OULAD | Precision, recall, F1, lead time, false positive/negative | `comparison_results/early_warning_metrics.csv` + `Docs/evaluation_reports/early_warning_evaluation.docx` |
+| 10 | Coverage & Human Utility | Kiểm tra task taxonomy/insight có đủ rộng và người dùng thấy hữu ích không | Task categories, user role, generated insights, rubric scores | Checklist taxonomy + người đánh giá chấm | Coverage rate, diversity, educator usefulness rating | `comparison_results/coverage_human_utility_metrics.csv` + `Docs/evaluation_reports/coverage_human_utility_evaluation.docx` |
+| 11 | System Performance | Kiểm tra hệ thống đủ nhanh/rẻ không | Timestamp, latency, timeout, token usage, cost | Tổng hợp log hệ thống | Import time, query latency, AI latency, cost, failure rate | `comparison_results/performance_metrics.csv` + `Docs/evaluation_reports/performance_evaluation.docx` |
 
 ## 5. Hướng Dẫn Làm Từng Phần
 
@@ -837,7 +844,7 @@ Checklist này dùng để tự kiểm trước khi đem plan đi triển khai:
 | Có automatic log cho từng stage không? | Có |
 | Có groundtruth log cho từng stage quan trọng không? | Có |
 | Có comparison result để máy đọc/tính metric không? | Có |
-| Có report Markdown để người đọc hiểu kết quả không? | Có |
+| Có report riêng để người đọc hiểu kết quả không? | Có, đặt trong `Docs/evaluation_reports/` |
 | Có bao phủ UCI và OULAD không? | Có |
 | Có bao phủ student view và admin view không? | Có qua task sampling |
 | Có kiểm tra import, profiling, mapping, canonical schema không? | Có |
@@ -852,7 +859,7 @@ Checklist này dùng để tự kiểm trước khi đem plan đi triển khai:
 | Có kiểm tra performance/latency/cost không? | Có |
 | Có thể chứng minh hệ thống tổng quát theo canonical schema không? | Có, vì metrics dựa trên canonical schema/capability/task registry thay vì hardcode dataset |
 
-Nếu một dòng trong checklist này chưa có artifact tương ứng trong `automatic_logs`, `groundtruth_logs`, `comparison_results`, hoặc `reports`, nghĩa là phần đó chưa hoàn tất.
+Nếu một dòng trong checklist này chưa có artifact tương ứng trong `automatic_logs`, `groundtruth_logs`, `comparison_results`, hoặc `Docs/evaluation_reports/`, nghĩa là phần đó chưa hoàn tất.
 
 ## 10. Câu Tóm Tắt Cho Nhóm
 
