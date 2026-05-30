@@ -1,4 +1,4 @@
-# Kế Hoạch Evaluation Chi Tiết
+﻿# Kế Hoạch Evaluation Chi Tiết
 
 Tài liệu này dùng cho nhóm khi triển khai evaluation cho prototype thesis. Mục tiêu là biến yêu cầu của thầy thành các bước làm cụ thể: chạy gì, lưu log gì, tạo groundtruth ra sao, so sánh thế nào, và cuối cùng báo cáo metric nào.
 
@@ -129,7 +129,7 @@ Plan này cần bám vào 4 ý chính thầy đã note:
 | Yêu cầu của thầy | Cách plan này đáp ứng |
 |---|---|
 | Đánh giá 3 cấp độ: chạy được, chạy đúng, chạy tốt | Mỗi phần đều có mục tiêu runnable/correct/good. |
-| Kiểm tra mọi bước trong pipeline | Plan đi theo đúng pipeline: import, profiling, mapping, canonicalization, task availability, SQL, API contract, visualization, AI, early warning, performance. |
+| Kiểm tra mọi bước trong pipeline | Plan đi theo đúng pipeline: profiling, mapping, import, canonicalization, task availability, SQL, API contract, visualization, AI, early warning, performance. |
 | So sánh system automatic output với groundtruth | Mỗi phần đều yêu cầu lưu `automatic_log`, tạo `groundtruth_log`, sinh `comparison_results`, rồi viết report trong `Docs/evaluation_reports/`. |
 | Hệ thống phải tổng quát theo canonical schema | Evaluation dùng UCI/OULAD như test cases đại diện, nhưng metrics kiểm theo canonical tables, capabilities, registry tasks, output schema, không hardcode theo một dataset cụ thể. |
 
@@ -152,12 +152,12 @@ Plan này cần bám vào 4 ý chính thầy đã note:
 
 | STT | Phần cần evaluate | Mục tiêu | Automatic log cần lưu | Groundtruth tạo bằng gì | Metrics | Output cuối |
 |---:|---|---|---|---|---|---|
+
 | 1 | Import & Data Conversion | Kiểm tra raw CSV vào canonical schema đúng không | Raw row count, canonical count, inserted rows, FK errors, duplicate errors, import time | SQL đếm dòng, kiểm FK, kiểm duplicate, so raw CSV | Row count preservation, FK integrity, duplicate rate, null/range validity, import time | `comparison_results/import_comparison.json` + `Docs/evaluation_reports/import_evaluation.docx` |
 | 2 | Profiling & Mapping | Kiểm tra detect file và mapping đúng không | Delimiter, dataset type, file role, suggested mapping, confidence | Bảng mapping chuẩn do nhóm kiểm tra | Delimiter accuracy, file role accuracy, mapping precision/recall, manual correction rate | `comparison_results/profiling_mapping_metrics.csv` + `Docs/evaluation_reports/profiling_mapping_evaluation.docx` |
 | 3 | Task Availability | Kiểm tra task bật/tắt đúng theo data không | TaskId, status, missing requirements, warnings, confidence | Expected capability matrix cho UCI/OULAD | Accuracy, precision, recall, F1, false enable/disable rate | `comparison_results/task_availability_metrics.csv` + `Docs/evaluation_reports/task_availability_evaluation.docx` |
 | 4 | SQL Analysis Correctness | Kiểm tra kết quả task có recompute được không | TaskId, params, output datasets, row/column/value, execution time | SQL độc lập hoặc Python notebook | Task accuracy, row/column/value match, numerical error, schema match | `comparison_results/sql_correctness_metrics.csv` + `Docs/evaluation_reports/sql_correctness_evaluation.docx` |
 | 5 | API Response Contract | Kiểm tra response backend đúng format không | success, datasets, meta, query_labels, dataQuality, errors | Đối chiếu với output_schema trong task registry | API success rate, output contract pass rate, named dataset correctness | `comparison_results/api_contract_metrics.csv` + `Docs/evaluation_reports/api_contract_evaluation.docx` |
-| 6 | Visualization | Kiểm tra chart/table/card có đúng data không | viz_type, adapter, input rows, chart rows, skipped rows, diagnostics | Kiểm tay chart-data mapping và adapter output | Rendering success rate, chart-data consistency, label correctness, null handling | `comparison_results/visualization_metrics.csv` + `Docs/evaluation_reports/visualization_evaluation.docx` |
 | 7 | AI Explanation | Kiểm tra AI giải thích đúng, hữu ích, an toàn không | AI input, AI output, degraded, latency, model, token usage | Rubric chấm 1-5 bởi người kiểm tra | Faithfulness, correctness, actionability, safety, novelty, diversity, understandability | `comparison_results/ai_explanation_rubric_scores.csv` + `Docs/evaluation_reports/ai_explanation_evaluation.docx` |
 | 8 | Statistical Validity | Kiểm tra pattern có ý nghĩa hay chỉ là noise | Task result cho trend/comparison/correlation/risk | Python notebook hoặc SQL thống kê | p-value, effect size, robustness | `comparison_results/statistical_validity_metrics.csv` + `Docs/evaluation_reports/statistical_validity_evaluation.docx` |
 | 9 | Early-Warning Utility | Kiểm tra cảnh báo sớm có dự đoán fail/withdraw không | Risk result tại Week 4/8/12 | So với final_result OULAD | Precision, recall, F1, lead time, false positive/negative | `comparison_results/early_warning_metrics.csv` + `Docs/evaluation_reports/early_warning_evaluation.docx` |
@@ -166,7 +166,47 @@ Plan này cần bám vào 4 ý chính thầy đã note:
 
 ## 5. Hướng Dẫn Làm Từng Phần
 
-## Phần 1: Import & Data Conversion
+## Phần 1: Profiling & Mapping
+
+### Mục tiêu
+
+Kiểm tra hệ thống có hiểu đúng file CSV không: delimiter, dataset type, file role, column type, mapping.
+
+### Việc cần làm
+
+1. Chạy upload/profile cho UCI/OULAD hoặc dùng sample profiling nếu có script.
+2. Lưu kết quả detect:
+   - delimiter
+   - dataset type
+   - file role
+   - column type
+   - mapping suggestion
+   - confidence
+3. Tạo bảng mapping groundtruth.
+4. So sánh mapping hệ thống suggest với mapping đúng.
+
+### Mapping groundtruth ví dụ
+
+| Raw column | Canonical field |
+|---|---|
+| `id_student` | `student_id` |
+| `score` | `score_normalized` |
+| `sum_click` | `engagement_count` |
+| `date_submitted` | `submission_day` |
+| `G1/G2/G3` | assessment score fields |
+
+### Metrics
+
+| Metric | Cách hiểu |
+|---|---|
+| Delimiter accuracy | Đoán đúng dấu phân cách CSV không |
+| Dataset type accuracy | Đoán đúng UCI/OULAD/custom không |
+| File role accuracy | Đoán đúng vai trò file không |
+| Mapping precision | Mapping hệ thống suggest có bao nhiêu cái đúng |
+| Mapping recall | Mapping đúng cần có thì hệ thống tìm được bao nhiêu |
+| Manual correction rate | Bao nhiêu mapping phải sửa tay |
+
+## Phần 2: Import & Data Conversion
 
 ### Mục tiêu
 
@@ -264,46 +304,6 @@ OULAD   | ...      | ...            | 0         | 0                | Pass
 UCI MAT | ...      | ...            | 0         | 0                | Pass
 UCI POR | ...      | ...            | 0         | 0                | Pass
 ```
-
-## Phần 2: Profiling & Mapping
-
-### Mục tiêu
-
-Kiểm tra hệ thống có hiểu đúng file CSV không: delimiter, dataset type, file role, column type, mapping.
-
-### Việc cần làm
-
-1. Chạy upload/profile cho UCI/OULAD hoặc dùng sample profiling nếu có script.
-2. Lưu kết quả detect:
-   - delimiter
-   - dataset type
-   - file role
-   - column type
-   - mapping suggestion
-   - confidence
-3. Tạo bảng mapping groundtruth.
-4. So sánh mapping hệ thống suggest với mapping đúng.
-
-### Mapping groundtruth ví dụ
-
-| Raw column | Canonical field |
-|---|---|
-| `id_student` | `student_id` |
-| `score` | `score_normalized` |
-| `sum_click` | `engagement_count` |
-| `date_submitted` | `submission_day` |
-| `G1/G2/G3` | assessment score fields |
-
-### Metrics
-
-| Metric | Cách hiểu |
-|---|---|
-| Delimiter accuracy | Đoán đúng dấu phân cách CSV không |
-| Dataset type accuracy | Đoán đúng UCI/OULAD/custom không |
-| File role accuracy | Đoán đúng vai trò file không |
-| Mapping precision | Mapping hệ thống suggest có bao nhiêu cái đúng |
-| Mapping recall | Mapping đúng cần có thì hệ thống tìm được bao nhiêu |
-| Manual correction rate | Bao nhiêu mapping phải sửa tay |
 
 ## Phần 3: Task Availability
 
@@ -782,8 +782,8 @@ Nên làm theo thứ tự này:
 
 | Thứ tự | Việc làm | Lý do |
 |---:|---|---|
-| 1 | Import evaluation | Nếu dữ liệu sai thì các bước sau đều sai |
-| 2 | Profiling & mapping evaluation | Kiểm tra đầu vào và mapping |
+| 1 | Profiling & mapping evaluation | Kiểm tra hệ thống hiểu file và mapping trước khi import |
+| 2 | Import evaluation | Sau khi mapping đúng, kiểm tra dữ liệu vào canonical DB có đúng không |
 | 3 | Task availability evaluation | Biết task nào đáng được chạy |
 | 4 | SQL correctness evaluation | Kiểm tra lõi analytics |
 | 5 | API contract evaluation | Đảm bảo backend-frontend khớp |
@@ -800,14 +800,15 @@ Nếu thời gian ít, làm bản tối thiểu trước:
 
 | Ưu tiên | Việc phải làm |
 |---:|---|
-| 1 | Import correctness cho UCI + OULAD |
-| 2 | Task availability precision/recall cho toàn bộ task |
-| 3 | SQL correctness cho 15-20 task đại diện |
-| 4 | API output contract check cho các task đã chọn |
-| 5 | Visualization correctness cho các chart adapter chính |
-| 6 | AI explanation rubric cho 30 examples |
-| 7 | Coverage table cho task taxonomy |
-| 8 | Performance latency cho import/query/AI |
+| 1 | Profiling & mapping correctness cho UCI + OULAD |
+| 2 | Import correctness cho UCI + OULAD |
+| 3 | Task availability precision/recall cho toàn bộ task |
+| 4 | SQL correctness cho 15-20 task đại diện |
+| 5 | API output contract check cho các task đã chọn |
+| 6 | Visualization correctness cho các chart adapter chính |
+| 7 | AI explanation rubric cho 30 examples |
+| 8 | Coverage table cho task taxonomy |
+| 9 | Performance latency cho import/query/AI |
 
 Nếu còn thời gian, làm thêm:
 

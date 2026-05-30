@@ -1,0 +1,146 @@
+{
+  "evaluation_part": "basic_api_performance_benchmark",
+  "datasetId": "SAMPLE_UCI_POR",
+  "backend_url": "http://localhost:4000",
+  "generated_at": "2026-05-30T01:24:21.702Z",
+  "duration_ms": 1546,
+  "context": {
+    "class": {
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "course_id": "SAMPLE_UCI_POR_COURSE",
+      "source_dataset": "UCI",
+      "class_run": "por-sample",
+      "semester": "Fall",
+      "academic_year": "sample",
+      "duration_days": 112,
+      "delivery_mode": "offline",
+      "student_count": 649
+    }
+  },
+  "metrics": {
+    "request_count": 5,
+    "success_count": 5,
+    "failure_count": 0,
+    "success_rate": 100,
+    "latency": {
+      "count": 5,
+      "avg_ms": 304.609,
+      "min_ms": 76.274,
+      "max_ms": 867.943
+    }
+  },
+  "measurements": [
+    {
+      "label": "tasks_list",
+      "url": "http://localhost:4000/api/tasks?includeExperimental=true",
+      "http_status": 200,
+      "ok": true,
+      "latency_ms": 100.245,
+      "transport_error": null,
+      "response_summary": {
+        "success": true,
+        "count": 57,
+        "summary": null,
+        "pagination": null,
+        "keys": [
+          "success",
+          "count",
+          "filters",
+          "tasks"
+        ]
+      }
+    },
+    {
+      "label": "classes_list",
+      "url": "http://localhost:4000/api/classes?batchId=SAMPLE_UCI_POR",
+      "http_status": 200,
+      "ok": true,
+      "latency_ms": 76.274,
+      "transport_error": null,
+      "response_summary": {
+        "success": true,
+        "count": 1,
+        "summary": null,
+        "pagination": null,
+        "keys": [
+          "success",
+          "count",
+          "classes"
+        ]
+      }
+    },
+    {
+      "label": "students_page_200",
+      "url": "http://localhost:4000/api/students?batchId=SAMPLE_UCI_POR&classId=SAMPLE_UCI_POR_CLASS&pageSize=200",
+      "http_status": 200,
+      "ok": true,
+      "latency_ms": 83.858,
+      "transport_error": null,
+      "response_summary": {
+        "success": true,
+        "count": 200,
+        "summary": null,
+        "pagination": {
+          "page": 1,
+          "pageSize": 200,
+          "total": 649,
+          "totalPages": 4,
+          "hasNext": true,
+          "hasPrev": false
+        },
+        "keys": [
+          "success",
+          "pagination",
+          "count",
+          "students"
+        ]
+      }
+    },
+    {
+      "label": "task_validate_all",
+      "url": "http://localhost:4000/api/tasks/validate/SAMPLE_UCI_POR?classId=SAMPLE_UCI_POR_CLASS",
+      "http_status": 200,
+      "ok": true,
+      "latency_ms": 867.943,
+      "transport_error": null,
+      "response_summary": {
+        "success": true,
+        "count": null,
+        "summary": {
+          "total": 57,
+          "executable": 29,
+          "partial": 5,
+          "insufficient_data": 23,
+          "unsupported": 0
+        },
+        "pagination": null,
+        "keys": [
+          "success",
+          "datasetId",
+          "sourceDataset",
+          "classId",
+          "summary",
+          "results"
+        ]
+      }
+    },
+    {
+      "label": "dataset_active",
+      "url": "http://localhost:4000/api/datasets/active",
+      "http_status": 200,
+      "ok": true,
+      "latency_ms": 394.725,
+      "transport_error": null,
+      "response_summary": {
+        "success": true,
+        "count": null,
+        "summary": null,
+        "pagination": null,
+        "keys": [
+          "success",
+          "activeDataset"
+        ]
+      }
+    }
+  ]
+}
