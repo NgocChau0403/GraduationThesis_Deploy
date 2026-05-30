@@ -5,6 +5,9 @@ import {
 } from "../controllers/tasks.controller.js";
 import {
   validateAllTasksController,
+  getAvailableTasksController,
+  listTaskAvailabilityLogsController,
+  getTaskAvailabilityLogController,
   validateOneTaskController,
 } from "../controllers/taskValidator.controller.js";
 
@@ -140,6 +143,9 @@ router.get("/", getTasksController);
  *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.get("/validate/:datasetId", validateAllTasksController);
+router.get("/available", getAvailableTasksController);
+router.get("/availability-logs", listTaskAvailabilityLogsController);
+router.get("/availability-logs/:logId", getTaskAvailabilityLogController);
 
 /**
  * @swagger

@@ -1,4 +1,5 @@
 import taskRegistryService from "../services/taskRegistry.service.js";
+import { sanitizeTaskForClient } from "../services/taskPublicView.service.js";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // SANITIZER
@@ -13,12 +14,6 @@ import taskRegistryService from "../services/taskRegistry.service.js";
  *   - The frontend never needs raw SQL — it only needs metadata + results
  *   - This follows the principle of minimal surface area in public APIs
  */
-function sanitizeTask(task) {
-  // Destructure to explicitly exclude SQL fields, spread the rest
-  const { sqlQuery, sqlQueries, ...publicFields } = task;
-  return publicFields;
-}
-
 // ─────────────────────────────────────────────────────────────────────────────
 // CONTROLLERS
 // ─────────────────────────────────────────────────────────────────────────────
@@ -91,7 +86,7 @@ export async function getTasksController(req, res) {
       success: true,
       count:   tasks.length,
       filters: { scope, dataset, search, analysis },
-      tasks:   tasks.map(sanitizeTask),
+      tasks:   tasks.map(sanitizeTaskForClient),
     });
   } catch (err) {
     console.error("[getTasksController]", err);
@@ -129,7 +124,7 @@ export async function getTaskByIdController(req, res) {
 
     return res.status(200).json({
       success: true,
-      task:    sanitizeTask(task),
+      task:    sanitizeTaskForClient(task),
     });
   } catch (err) {
     console.error("[getTaskByIdController]", err);

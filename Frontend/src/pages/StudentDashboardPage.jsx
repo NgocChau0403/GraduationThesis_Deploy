@@ -2,8 +2,7 @@ import { useState, useEffect, useCallback, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useAppContext } from "../contexts/AppContext";
-import { useTaskRegistry } from "../hooks/useTaskRegistry";
-import { runAnalyticsTask, getStudents, fetchClasses, validateAnalyticsTask } from "../services/analyticsApi";
+import { runAnalyticsTask, getStudents, fetchClasses, fetchAvailableTasks } from "../services/analyticsApi";
 import ChartRenderer from "../components/ChartRenderer";
 import AIInsightPanel from "../components/AIInsightPanel";
 
@@ -20,35 +19,49 @@ const STUDENT_ALLOWED_TASK_IDS = new Set([
   ...STUDENT_CONDITIONAL_TASKS,
 ]);
 
-function getCompatFilter(datasetSource) {
-  if (!datasetSource) return () => true;
-  const src = datasetSource.toUpperCase();
-  return (task) =>
-    task.datasetCompatibility === "both" ||
-    task.datasetCompatibility === `${src}_only`;
-}
-
 const WORKSPACE_TABS = [
   { id: "student_basic", label: "Student - Core Stat Tasks", prefixes: STUDENT_BASIC_TASKS },
   { id: "student_advanced", label: "Student - Choice Electives", prefixes: STUDENT_ADVANCED_TASKS },
 ];
+
+function isTaskExecutable(task) {
+  return task?.availability?.status === "executable";
+}
+
+function getDisabledReason(task) {
+  const availability = task?.availability;
+  const firstMissing = availability?.missing_requirements?.[0];
+  return (
+    availability?.disabled_reason ||
+    firstMissing?.message ||
+    firstMissing ||
+    availability?.confidence_reason ||
+    "Task is not executable for this dataset/class."
+  );
+}
+
+function getAvailabilityLabel(task) {
+  const status = task?.availability?.status || "unknown";
+  if (status === "executable") return "Available";
+  if (status === "partial") return "Partial";
+  if (status === "insufficient_data") return "Insufficient";
+  if (status === "unsupported") return "Unsupported";
+  return status;
+}
+
+function getAvailabilityBadgeClass(task) {
+  const status = task?.availability?.status;
+  if (status === "executable") return "bg-emerald-50 text-emerald-700 border-emerald-100";
+  if (status === "partial") return "bg-amber-50 text-amber-700 border-amber-100";
+  if (status === "insufficient_data") return "bg-orange-50 text-orange-700 border-orange-100";
+  return "bg-slate-100 text-slate-500 border-slate-200";
+}
 
 export default function StudentDashboardPage() {
   const navigate = useNavigate();
   const { activeDataset, isLoading: appLoading } = useAppContext();
   const [currentTab, setCurrentTab] = useState("student_basic");
   const [activeTaskId, setActiveTaskId] = useState(STUDENT_BASIC_TASKS[0]);
-
-  const datasetSource = activeDataset?.source ?? null;
-  const isCompatible = useMemo(() => getCompatFilter(datasetSource), [datasetSource]);
-
-  const { tasks: allTasksRaw } = useTaskRegistry();
-  const allStudentTasks = useMemo(() =>
-    allTasksRaw
-      .filter((task) => STUDENT_ALLOWED_TASK_IDS.has(task.taskId))
-      .filter(isCompatible),
-    [allTasksRaw, isCompatible]
-  );
 
   const { data: classesData, isLoading: isClassesLoading, isError: isClassesError, error: classesQueryError } = useQuery({
     queryKey: ["classes", activeDataset?.id],
@@ -66,12 +79,22 @@ export default function StudentDashboardPage() {
   });
   const students = studentsData?.students ?? [];
 
-  const { data: engagementSummaryCapability } = useQuery({
-    queryKey: ["task-capability", "S-B03", activeDataset?.id, classId],
-    queryFn: () => validateAnalyticsTask("S-B03", activeDataset.id, classId),
+  const {
+    data: availableTasksData,
+    isLoading: isAvailabilityLoading,
+    isError: isAvailabilityError,
+    error: availabilityError,
+  } = useQuery({
+    queryKey: ["available-tasks", activeDataset?.id, classId, "student"],
+    queryFn: () => fetchAvailableTasks(activeDataset.id, classId, "student"),
     enabled: !!activeDataset?.id && !!classId,
     staleTime: 60 * 1000,
   });
+  const allTasksRaw = useMemo(() => availableTasksData?.tasks ?? [], [availableTasksData?.tasks]);
+  const allStudentTasks = useMemo(() =>
+    allTasksRaw.filter((task) => STUDENT_ALLOWED_TASK_IDS.has(task.taskId)),
+    [allTasksRaw]
+  );
 
   const [selectedStudentId, setSelectedStudentId] = useState("");
   const [taskResults, setTaskResults] = useState({});
@@ -106,20 +129,15 @@ export default function StudentDashboardPage() {
   }, [activeDataset?.id, enrollmentId]);
 
   const activeTabObj = useMemo(() => WORKSPACE_TABS.find(t => t.id === currentTab), [currentTab]);
-  
-  const conditionalTaskIds = useMemo(() => {
-    if (engagementSummaryCapability?.result?.status !== "executable") return [];
-    return STUDENT_CONDITIONAL_TASKS;
-  }, [engagementSummaryCapability]);
 
   const filteredTasks = useMemo(() => {
     if (!activeTabObj) return [];
     let combinedPrefixes = [...activeTabObj.prefixes];
     if (activeTabObj.id === "student_basic") {
-      combinedPrefixes = [...combinedPrefixes, ...conditionalTaskIds];
+      combinedPrefixes = [...combinedPrefixes, ...STUDENT_CONDITIONAL_TASKS];
     }
     return allStudentTasks.filter(t => combinedPrefixes.includes(t.taskId));
-  }, [allStudentTasks, activeTabObj, conditionalTaskIds]);
+  }, [allStudentTasks, activeTabObj]);
 
   const currentTaskMeta = useMemo(() => allStudentTasks.find(t => t.taskId === activeTaskId), [allStudentTasks, activeTaskId]);
   const currentResult = taskResults[activeTaskId];
@@ -134,21 +152,53 @@ export default function StudentDashboardPage() {
   };
 
   const handleTriggerAnalysis = () => {
+    if (!isTaskExecutable(currentTaskMeta)) return;
     runTask(activeTaskId, studentId, classId);
   };
 
   useEffect(() => {
-    if (!studentId || !classId || !activeDataset?.id) return;
+    if (!availableTasksData || !studentId || !classId || !activeDataset?.id) return;
+    if (!isTaskExecutable(currentTaskMeta)) return;
     setTaskResults({});
-    if (STUDENT_BASIC_TASKS.includes(activeTaskId) || conditionalTaskIds.includes(activeTaskId)) {
+    if (STUDENT_BASIC_TASKS.includes(activeTaskId) || STUDENT_CONDITIONAL_TASKS.includes(activeTaskId)) {
       runTask(activeTaskId, studentId, classId);
     }
-  }, [studentId, classId, activeDataset?.id, runTask, activeTaskId, conditionalTaskIds]);
+  }, [availableTasksData, studentId, classId, activeDataset?.id, runTask, activeTaskId, currentTaskMeta]);
 
-  if (appLoading || !activeDataset || isClassesLoading || isStudentsLoading) {
+  useEffect(() => {
+    if (!filteredTasks.length || !availableTasksData) return;
+    const activeTask = filteredTasks.find(t => t.taskId === activeTaskId);
+    if (isTaskExecutable(activeTask)) return;
+
+    const firstExecutable = filteredTasks.find(isTaskExecutable);
+    if (firstExecutable) setActiveTaskId(firstExecutable.taskId);
+    else if (!activeTask) setActiveTaskId(filteredTasks[0].taskId);
+  }, [filteredTasks, activeTaskId, availableTasksData]);
+
+  if (appLoading || !activeDataset || isClassesLoading || isStudentsLoading || isAvailabilityLoading) {
     return (
       <div className="h-screen bg-slate-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
+      </div>
+    );
+  }
+
+  if (isClassesError || isStudentsError || isAvailabilityError) {
+    const message =
+      classesQueryError?.message ||
+      studentsQueryError?.message ||
+      availabilityError?.message ||
+      "Unable to load dashboard data.";
+
+    return (
+      <div className="h-screen bg-slate-50 flex items-center justify-center p-6">
+        <div className="max-w-md rounded-lg border border-red-100 bg-white p-5 text-center shadow-sm">
+          <p className="text-sm font-bold text-red-700">Dashboard data could not be loaded</p>
+          <p className="mt-2 text-xs text-slate-500">{message}</p>
+          <button onClick={() => navigate("/choose-role")} className="mt-4 rounded border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">
+            Switch Role
+          </button>
+        </div>
       </div>
     );
   }
@@ -199,34 +249,54 @@ export default function StudentDashboardPage() {
 
           {/* List of row items */}
           <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar px-3 py-2 space-y-1.5">
-            {filteredTasks.map((task) => (
-              <button
-                key={task.taskId}
-                onClick={() => setActiveTaskId(task.taskId)}
-                className={`w-full rounded-lg border p-2.5 text-left transition-all block ${
-                  activeTaskId === task.taskId
-                    ? "border-emerald-500 bg-emerald-50/60 shadow-sm"
-                    : "border-slate-100 bg-white hover:border-slate-300 hover:bg-slate-50"
-                }`}
-              >
-                <div className="flex items-start gap-2">
-                  <code className="shrink-0 rounded bg-emerald-50 px-1.5 py-0.5 text-[10px] font-mono font-bold text-emerald-600 border border-emerald-100">
-                    {task.taskId}
-                  </code>
-                  <div className="min-w-0 flex-1">
-                    <p className="truncate text-xs font-bold text-slate-800">{task.taskName}</p>
-                    <p className="mt-0.5 text-[10px] text-slate-400 truncate font-medium">{task.actionableQuestion}</p>
+            {filteredTasks.map((task) => {
+              const executable = isTaskExecutable(task);
+              return (
+                <button
+                  key={task.taskId}
+                  onClick={() => setActiveTaskId(task.taskId)}
+                  disabled={!executable}
+                  title={executable ? task.taskName : getDisabledReason(task)}
+                  className={`w-full rounded-lg border p-2.5 text-left transition-all block disabled:cursor-not-allowed ${
+                    activeTaskId === task.taskId
+                      ? "border-emerald-500 bg-emerald-50/60 shadow-sm"
+                      : executable
+                        ? "border-slate-100 bg-white hover:border-slate-300 hover:bg-slate-50"
+                        : "border-slate-100 bg-slate-50 opacity-75"
+                  }`}
+                >
+                  <div className="flex items-start gap-2">
+                    <code className="shrink-0 rounded bg-emerald-50 px-1.5 py-0.5 text-[10px] font-mono font-bold text-emerald-600 border border-emerald-100">
+                      {task.taskId}
+                    </code>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <p className="truncate text-xs font-bold text-slate-800">{task.taskName}</p>
+                        <span className={`shrink-0 rounded border px-1.5 py-0.5 text-[9px] font-bold ${getAvailabilityBadgeClass(task)}`}>
+                          {getAvailabilityLabel(task)}
+                        </span>
+                      </div>
+                      <p className="mt-0.5 text-[10px] text-slate-400 truncate font-medium">{task.actionableQuestion}</p>
+                      {!executable && (
+                        <p className="mt-1 line-clamp-2 text-[10px] font-medium text-slate-500">{getDisabledReason(task)}</p>
+                      )}
+                    </div>
                   </div>
-                </div>
-              </button>
-            ))}
+                </button>
+              );
+            })}
+            {filteredTasks.length === 0 && (
+              <div className="rounded-lg border border-slate-100 bg-white p-3 text-xs text-slate-400">
+                No student tasks are available for this dataset/class.
+              </div>
+            )}
           </div>
 
           {/* Dynamic runtime trigger */}
           <div className="border-t border-slate-200 bg-white p-3 shrink-0">
             <button
               onClick={handleTriggerAnalysis}
-              disabled={isCurrentTaskLoading}
+              disabled={isCurrentTaskLoading || !isTaskExecutable(currentTaskMeta)}
               className="w-full rounded-lg py-2 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 transition-all text-white shadow-sm"
             >
               {isCurrentTaskLoading ? "⚡ Compiling Visual..." : "🚀 Run Selected Metric View"}
@@ -241,7 +311,15 @@ export default function StudentDashboardPage() {
               <div className="bg-white p-3 rounded-xl border border-slate-200 shrink-0 shadow-sm">
                 <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-emerald-50 text-emerald-600 border border-emerald-100 mr-2">{currentTaskMeta.taskId}</span>
                 <span className="text-sm font-bold text-slate-800">{currentTaskMeta.taskName}</span>
+                <span className={`ml-2 rounded border px-1.5 py-0.5 text-[10px] font-bold ${getAvailabilityBadgeClass(currentTaskMeta)}`}>
+                  {getAvailabilityLabel(currentTaskMeta)}
+                </span>
                 <p className="text-xs text-slate-500 mt-1 font-medium">{currentTaskMeta.actionableQuestion}</p>
+                {!isTaskExecutable(currentTaskMeta) && (
+                  <p className="mt-2 rounded border border-slate-100 bg-slate-50 px-2 py-1.5 text-xs font-medium text-slate-500">
+                    {getDisabledReason(currentTaskMeta)}
+                  </p>
+                )}
               </div>
 
               {/* Layout optimization: Chart area expanded */}
@@ -254,7 +332,7 @@ export default function StudentDashboardPage() {
                       taskMeta={currentTaskMeta}
                       datasets={currentResult?.datasets ?? null}
                       isLoading={isCurrentTaskLoading}
-                      error={currentResult?.error ?? null}
+                      error={currentResult?.error ?? (!isTaskExecutable(currentTaskMeta) ? getDisabledReason(currentTaskMeta) : null)}
                     />
                   </div>
                 </div>

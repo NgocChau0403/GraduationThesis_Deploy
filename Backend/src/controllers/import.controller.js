@@ -11,6 +11,16 @@ import {
   getUploadSession,
   updateUploadSession
 } from "../services/uploadSession.store.js";
+import {
+  listProfilingMappingLogs,
+  readProfilingMappingLog,
+  writeProfilingMappingLog
+} from "../services/profilingMappingLog.service.js";
+import {
+  listImportConversionLogs,
+  readImportConversionLog,
+  writeImportConversionLog
+} from "../services/importConversionLog.service.js";
 import { activateDatasetByBatchId } from "../services/activeDataset.service.js";
 
 import { detectCsvDelimiter } from "../services/fileFormat.service.js";
@@ -412,11 +422,30 @@ export async function profileImportController(req, res) {
       )
     );
 
+    let evaluationLog = null;
+
+    try {
+      evaluationLog = await writeProfilingMappingLog({
+        sessionId,
+        requestedDatasetName: datasetNameInput,
+        requestedSourceDataset: sourceDatasetInput,
+        resolvedDatasetName,
+        resolvedSourceDataset,
+        uploadedFiles: normalizedUploadedFiles,
+        bundleSchema,
+        bundleProfilingResult,
+        bundleMappingSuggestion
+      });
+    } catch (logError) {
+      console.warn("[EvaluationLog] Failed to write profiling mapping log:", logError);
+    }
+
     return res.json({
       success: true,
       sessionId,
       datasetName: resolvedDatasetName,
       sourceDataset: resolvedSourceDataset,
+      evaluationLog,
       bundleSchema,
       bundleProfilingResult,
       bundleMappingSuggestion,
@@ -436,6 +465,122 @@ export async function profileImportController(req, res) {
     return res.status(500).json({
       success: false,
       message: "Import profiling failed.",
+      error: error.message
+    });
+  }
+}
+
+// ==========================================
+// 5.1. /api/import/profile-logs
+// Lists automatic profiling/mapping evaluation logs
+// ==========================================
+
+export async function listProfilingMappingLogsController(req, res) {
+  try {
+    const limit = Number(req.query.limit || 50);
+    const logs = await listProfilingMappingLogs({
+      limit: Number.isFinite(limit) && limit > 0 ? limit : 50
+    });
+
+    return res.json({
+      success: true,
+      logs
+    });
+  } catch (error) {
+    console.error("List profiling mapping logs failed:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "List profiling mapping logs failed.",
+      error: error.message
+    });
+  }
+}
+
+// ==========================================
+// 5.2. /api/import/profile-logs/:logId
+// Returns one automatic profiling/mapping evaluation log
+// ==========================================
+
+export async function getProfilingMappingLogController(req, res) {
+  try {
+    const log = await readProfilingMappingLog(req.params.logId);
+
+    if (!log) {
+      return res.status(404).json({
+        success: false,
+        message: "Profiling mapping log not found."
+      });
+    }
+
+    return res.json({
+      success: true,
+      log
+    });
+  } catch (error) {
+    console.error("Read profiling mapping log failed:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Read profiling mapping log failed.",
+      error: error.message
+    });
+  }
+}
+
+// ==========================================
+// 5.3. /api/import/import-logs
+// Lists automatic import/conversion evaluation logs
+// ==========================================
+
+export async function listImportConversionLogsController(req, res) {
+  try {
+    const limit = Number(req.query.limit || 50);
+    const logs = await listImportConversionLogs({
+      limit: Number.isFinite(limit) && limit > 0 ? limit : 50
+    });
+
+    return res.json({
+      success: true,
+      logs
+    });
+  } catch (error) {
+    console.error("List import conversion logs failed:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "List import conversion logs failed.",
+      error: error.message
+    });
+  }
+}
+
+// ==========================================
+// 5.4. /api/import/import-logs/:logId
+// Returns one automatic import/conversion evaluation log
+// ==========================================
+
+export async function getImportConversionLogController(req, res) {
+  try {
+    const log = await readImportConversionLog(req.params.logId);
+
+    if (!log) {
+      return res.status(404).json({
+        success: false,
+        message: "Import conversion log not found."
+      });
+    }
+
+    return res.json({
+      success: true,
+      log
+    });
+  } catch (error) {
+    console.error("Read import conversion log failed:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Read import conversion log failed.",
       error: error.message
     });
   }
@@ -645,6 +790,7 @@ export async function runImportController(req, res) {
     // ------------------------------------------
     if (runTargets.length > 0) {
       const importBatchId = options.importBatchId || sessionId;
+      const importStartedAt = new Date();
       let allSuccess = true;
       const results = [];
 
@@ -696,11 +842,32 @@ export async function runImportController(req, res) {
         ? await prisma.appState.findUnique({ where: { id: 1 } })
         : null;
 
+      const importCompletedAt = new Date();
+      let importConversionLog = null;
+
+      try {
+        importConversionLog = await writeImportConversionLog({
+          session: {
+            ...session,
+            sessionId
+          },
+          runTargets,
+          results,
+          success: allSuccess,
+          importBatchId,
+          importStartedAt,
+          importCompletedAt
+        });
+      } catch (logError) {
+        console.warn("[EvaluationLog] Failed to write import conversion log:", logError);
+      }
+
       return res.json({
         success: allSuccess,
         sessionId,
         bundleMode: runTargets.length > 1,
         importBatchId,
+        importConversionLog,
         results,
         activeDataset: allSuccess ? toActiveDatasetFromAppState(appState) : null
       });

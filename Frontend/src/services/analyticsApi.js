@@ -77,6 +77,23 @@ export async function fetchTaskById(taskId) {
 }
 
 /**
+ * Fetch task metadata already merged with backend availability validation.
+ *
+ * @param {string} datasetId
+ * @param {string} [classId]
+ * @param {string} [role]
+ * @returns {Promise<{ success: boolean, summary: Object, tasks: Object[] }>}
+ */
+export async function fetchAvailableTasks(datasetId, classId, role) {
+  const params = new URLSearchParams({ datasetId });
+  if (classId) params.set("classId", classId);
+  if (role) params.set("role", role);
+
+  const response = await fetch(`${API_BASE}/tasks/available?${params}`);
+  return handleJsonResponse(response);
+}
+
+/**
  * Validate whether a task is executable for a dataset/class before showing it.
  *
  * @param {string} taskId

@@ -2,6 +2,10 @@ import express from "express";
 import multer from "multer";
 import {
   profileImportController,
+  listProfilingMappingLogsController,
+  getProfilingMappingLogController,
+  listImportConversionLogsController,
+  getImportConversionLogController,
   confirmMappingController,
   previewMappingController,
   runImportController
@@ -28,6 +32,10 @@ const upload = multer({
   }
 });
 
+router.get("/profile-logs", listProfilingMappingLogsController);
+router.get("/profile-logs/:logId", getProfilingMappingLogController);
+router.get("/import-logs", listImportConversionLogsController);
+router.get("/import-logs/:logId", getImportConversionLogController);
 router.post("/profile", upload.array("files"), profileImportController);
 router.post("/confirm-mapping", express.json(), confirmMappingController);
 router.post("/preview", express.json(), previewMappingController);
