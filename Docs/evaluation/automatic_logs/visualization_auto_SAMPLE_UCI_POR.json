@@ -1,0 +1,3383 @@
+{
+  "evaluation_part": "visualization_correctness",
+  "datasetId": "SAMPLE_UCI_POR",
+  "backend_url": "http://localhost:4000",
+  "generated_at": "2026-05-30T01:21:40.207Z",
+  "duration_ms": 94045,
+  "context": {
+    "class": {
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "course_id": "SAMPLE_UCI_POR_COURSE",
+      "source_dataset": "UCI",
+      "class_run": "por-sample",
+      "semester": "Fall",
+      "academic_year": "sample",
+      "duration_days": 112,
+      "delivery_mode": "offline",
+      "student_count": 649
+    },
+    "student_count_loaded": 200,
+    "params_used": {
+      "batch_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+      "s1": "SAMPLE_UCI_POR_STU_000001",
+      "s2": "SAMPLE_UCI_POR_STU_000002"
+    }
+  },
+  "metrics": {
+    "total_tasks_seen": 57,
+    "visualization_attempted": 55,
+    "skipped_by_api_count": 2,
+    "adapter_crash_count": 0,
+    "adapter_success_rate": 100,
+    "rendering_success_count": 38,
+    "rendering_success_rate": 69.09,
+    "expected_no_data_count": 16,
+    "expected_no_data_rate": 29.09,
+    "dataset_selection_pass_count": 55,
+    "dataset_selection_pass_rate": 100,
+    "adapter_consistency_pass_count": 55,
+    "adapter_consistency_pass_rate": 100,
+    "overall_pass_count": 54,
+    "overall_pass_rate": 98.18
+  },
+  "results": [
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-B01",
+      "taskName": "Performance overview",
+      "scope": "1 student",
+      "viz_type": "card",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "performance_summary"
+      ],
+      "selected_dataset_label": "performance_summary",
+      "selection_warnings": [
+        "Selected dataset block \"performance_summary\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 1,
+      "chart_row_count": 16,
+      "adapter_latency_ms": 0.293,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "card",
+        "selected_dataset_label": "performance_summary",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-B02",
+      "taskName": "Risk status card",
+      "scope": "1 student",
+      "viz_type": "card",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "risk_summary"
+      ],
+      "selected_dataset_label": "risk_summary",
+      "selection_warnings": [
+        "Selected dataset block \"risk_summary\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 1,
+      "chart_row_count": 1,
+      "adapter_latency_ms": 0.232,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "card",
+        "selected_dataset_label": "risk_summary",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-B03",
+      "taskName": "Engagement summary",
+      "scope": "1 student",
+      "viz_type": "card",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "engagement_summary"
+      ],
+      "selected_dataset_label": "engagement_summary",
+      "selection_warnings": [
+        "Selected dataset block \"engagement_summary\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 1,
+      "chart_row_count": 8,
+      "adapter_latency_ms": 0.03,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "card",
+        "selected_dataset_label": "engagement_summary",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T00",
+      "taskName": "Score prediction (What-If)",
+      "scope": "1 student",
+      "viz_type": "scatter_plot",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "regression_data"
+      ],
+      "selected_dataset_label": "regression_data",
+      "selection_warnings": [
+        "Selected dataset block \"regression_data\" by field match."
+      ],
+      "chart_required_fields": [
+        "engagement_score",
+        "avg_score"
+      ],
+      "api_row_count": 649,
+      "chart_row_count": 649,
+      "adapter_latency_ms": 0.399,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "scatter_plot",
+        "selected_dataset_label": "regression_data",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 649,
+        "valid_rows": 649,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T01",
+      "taskName": "Score trend analysis",
+      "scope": "1 student",
+      "viz_type": "line_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "score_trend"
+      ],
+      "selected_dataset_label": "score_trend",
+      "selection_warnings": [
+        "Selected dataset block \"score_trend\" by field match."
+      ],
+      "chart_required_fields": [
+        "assessment_order",
+        "score_normalized"
+      ],
+      "api_row_count": 3,
+      "chart_row_count": 3,
+      "adapter_latency_ms": 0.522,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "line_chart",
+        "selected_dataset_label": "score_trend",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 3,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T02",
+      "taskName": "Competency gap analysis",
+      "scope": "1 student",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "competency_scores"
+      ],
+      "selected_dataset_label": "competency_scores",
+      "selection_warnings": [
+        "Selected dataset block \"competency_scores\" by field match."
+      ],
+      "chart_required_fields": [
+        "competency_tag",
+        "avg_score"
+      ],
+      "api_row_count": 3,
+      "chart_row_count": 3,
+      "adapter_latency_ms": 0.243,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "competency_scores",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 3,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T03",
+      "taskName": "Peer comparison",
+      "scope": "1 student",
+      "viz_type": "card",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "peer_comparison"
+      ],
+      "selected_dataset_label": "peer_comparison",
+      "selection_warnings": [
+        "Selected dataset block \"peer_comparison\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 1,
+      "chart_row_count": 6,
+      "adapter_latency_ms": 0.027,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "card",
+        "selected_dataset_label": "peer_comparison",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T04",
+      "taskName": "At-risk self-check",
+      "scope": "1 student",
+      "viz_type": "checklist",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": false,
+      "analytics_http_status": 500,
+      "analytics_error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`",
+      "skip_reason": "analytics_api_failed_or_not_success",
+      "result": "skip"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T05",
+      "taskName": "Weekly engagement trend",
+      "scope": "1 student",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "weekly_engagement"
+      ],
+      "selected_dataset_label": "weekly_engagement",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"weekly_engagement\"."
+      ],
+      "chart_required_fields": [
+        "week_number",
+        "weekly_clicks"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.033,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "weekly_engagement",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T06",
+      "taskName": "Study consistency check",
+      "scope": "1 student",
+      "viz_type": "heatmap",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "consistency_data"
+      ],
+      "selected_dataset_label": "consistency_data",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"consistency_data\"."
+      ],
+      "chart_required_fields": [
+        "week_number",
+        "avg_clicks",
+        "final_outcome"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 1.034,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "heatmap",
+        "selected_dataset_label": "consistency_data",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T07",
+      "taskName": "Absence / inactivity impact",
+      "scope": "1 student",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "absence_data",
+        "score_series"
+      ],
+      "selected_dataset_label": "score_series",
+      "selection_warnings": [
+        "Selected dataset block \"score_series\" by field match."
+      ],
+      "chart_required_fields": [
+        "assessment_order",
+        "score_normalized"
+      ],
+      "api_row_count": 3,
+      "chart_row_count": 3,
+      "adapter_latency_ms": 0.106,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "score_series",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 3,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T08",
+      "taskName": "Assessment lateness impact",
+      "scope": "1 student",
+      "viz_type": "scatter_plot",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "partial",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "submission_lateness"
+      ],
+      "selected_dataset_label": "submission_lateness",
+      "selection_warnings": [
+        "Selected dataset block \"submission_lateness\" by field match."
+      ],
+      "chart_required_fields": [
+        "assessment_order",
+        "submission_delay_days",
+        "score_normalized"
+      ],
+      "api_row_count": 3,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.469,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "scatter_plot",
+        "selected_dataset_label": "submission_lateness",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 0,
+        "skipped_rows": 3,
+        "missing_fields": [
+          "submission_delay_days"
+        ],
+        "missing_field_counts": {
+          "submission_delay_days": 3
+        },
+        "warnings": [
+          "Skipped point: invalid x field \"submission_delay_days\".",
+          "Skipped point: invalid x field \"submission_delay_days\".",
+          "Skipped point: invalid x field \"submission_delay_days\"."
+        ],
+        "warning_count": 3,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T09",
+      "taskName": "Lifestyle risk vs performance",
+      "scope": "1 student",
+      "viz_type": "card",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "lifestyle_data"
+      ],
+      "selected_dataset_label": "lifestyle_data",
+      "selection_warnings": [
+        "Selected dataset block \"lifestyle_data\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 1,
+      "chart_row_count": 8,
+      "adapter_latency_ms": 0.03,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "card",
+        "selected_dataset_label": "lifestyle_data",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T10",
+      "taskName": "Resource engagement breakdown",
+      "scope": "1 student",
+      "viz_type": "pie_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "resource_usage"
+      ],
+      "selected_dataset_label": "resource_usage",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"resource_usage\"."
+      ],
+      "chart_required_fields": [
+        "resource_type",
+        "clicks"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.57,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "pie_chart",
+        "selected_dataset_label": "resource_usage",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T11",
+      "taskName": "Registration timing vs performance",
+      "scope": "1 student",
+      "viz_type": "card",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "partial",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "registration_data"
+      ],
+      "selected_dataset_label": "registration_data",
+      "selection_warnings": [
+        "Selected dataset block \"registration_data\" by field match."
+      ],
+      "chart_required_fields": [
+        "registration_lead_time",
+        "avg_score"
+      ],
+      "api_row_count": 1,
+      "chart_row_count": 2,
+      "adapter_latency_ms": 0.055,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "card",
+        "selected_dataset_label": "registration_data",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T12",
+      "taskName": "Procrastination analysis",
+      "scope": "1 student",
+      "viz_type": "card",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "partial",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "submission_series",
+        "punctuality_summary"
+      ],
+      "selected_dataset_label": "submission_series",
+      "selection_warnings": [
+        "Selected dataset block \"submission_series\" by field match."
+      ],
+      "chart_required_fields": [
+        "assessment_order",
+        "submission_delay_days",
+        "score_normalized"
+      ],
+      "api_row_count": 3,
+      "chart_row_count": 7,
+      "adapter_latency_ms": 0.04,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "card",
+        "selected_dataset_label": "submission_series",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 1,
+        "skipped_rows": 2,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T13",
+      "taskName": "Action plan generation",
+      "scope": "1 student",
+      "viz_type": "table",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "synthesis_data"
+      ],
+      "selected_dataset_label": "synthesis_data",
+      "selection_warnings": [
+        "Selected dataset block \"synthesis_data\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 1,
+      "chart_row_count": 1,
+      "adapter_latency_ms": 0.565,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "table",
+        "selected_dataset_label": "synthesis_data",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T14",
+      "taskName": "Social balance vs performance",
+      "scope": "1 student",
+      "viz_type": "card",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "social_data"
+      ],
+      "selected_dataset_label": "social_data",
+      "selection_warnings": [
+        "Selected dataset block \"social_data\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 1,
+      "chart_row_count": 5,
+      "adapter_latency_ms": 0.068,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "card",
+        "selected_dataset_label": "social_data",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T15",
+      "taskName": "Family context vs performance",
+      "scope": "1 student",
+      "viz_type": "card",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "family_data"
+      ],
+      "selected_dataset_label": "family_data",
+      "selection_warnings": [
+        "Selected dataset block \"family_data\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 1,
+      "chart_row_count": 6,
+      "adapter_latency_ms": 0.051,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "card",
+        "selected_dataset_label": "family_data",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T16",
+      "taskName": "Grade goal calculator",
+      "scope": "1 student",
+      "viz_type": "card",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "goal_projection"
+      ],
+      "selected_dataset_label": "goal_projection",
+      "selection_warnings": [
+        "Selected dataset block \"goal_projection\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 1,
+      "chart_row_count": 13,
+      "adapter_latency_ms": 0.068,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "card",
+        "selected_dataset_label": "goal_projection",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "S-T17",
+      "taskName": "Assessment status timeline",
+      "scope": "1 student",
+      "viz_type": "table",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "assessment_timeline"
+      ],
+      "selected_dataset_label": "assessment_timeline",
+      "selection_warnings": [
+        "Selected dataset block \"assessment_timeline\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 3,
+      "chart_row_count": 3,
+      "adapter_latency_ms": 0.058,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "table",
+        "selected_dataset_label": "assessment_timeline",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 3,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-B01",
+      "taskName": "Overall performance distribution",
+      "scope": "Cohort",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "score_distribution"
+      ],
+      "selected_dataset_label": "score_distribution",
+      "selection_warnings": [
+        "Selected dataset block \"score_distribution\" by field match."
+      ],
+      "chart_required_fields": [
+        "score_bucket",
+        "student_count"
+      ],
+      "api_row_count": 10,
+      "chart_row_count": 10,
+      "adapter_latency_ms": 0.092,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "histogram",
+        "selected_dataset_label": "score_distribution",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 10,
+        "valid_rows": 10,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-B02",
+      "taskName": "Completion / outcome summary",
+      "scope": "Cohort",
+      "viz_type": "pie_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "outcome_counts"
+      ],
+      "selected_dataset_label": "outcome_counts",
+      "selection_warnings": [
+        "Selected dataset block \"outcome_counts\" by field match."
+      ],
+      "chart_required_fields": [
+        "final_outcome",
+        "student_count"
+      ],
+      "api_row_count": 2,
+      "chart_row_count": 2,
+      "adapter_latency_ms": 0.16,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "pie_chart",
+        "selected_dataset_label": "outcome_counts",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 2,
+        "valid_rows": 2,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-B03",
+      "taskName": "Engagement distribution",
+      "scope": "Cohort",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "engagement_distribution"
+      ],
+      "selected_dataset_label": "engagement_distribution",
+      "selection_warnings": [
+        "Selected dataset block \"engagement_distribution\" by field match."
+      ],
+      "chart_required_fields": [
+        "study_effort_level",
+        "student_count"
+      ],
+      "api_row_count": 4,
+      "chart_row_count": 4,
+      "adapter_latency_ms": 0.069,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "engagement_distribution",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 4,
+        "valid_rows": 4,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-B04",
+      "taskName": "At-risk overview",
+      "scope": "Cohort",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "risk_overview"
+      ],
+      "selected_dataset_label": "risk_overview",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"risk_overview\"."
+      ],
+      "chart_required_fields": [
+        "week_number",
+        "avg_clicks",
+        "final_outcome"
+      ],
+      "api_row_count": 3,
+      "chart_row_count": 3,
+      "adapter_latency_ms": 0.021,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": false
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "risk_overview",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 3,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-S01",
+      "taskName": "Student full profile snapshot",
+      "scope": "1 student",
+      "viz_type": "table",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "student_profile"
+      ],
+      "selected_dataset_label": "student_profile",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"student_profile\"."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.036,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "table",
+        "selected_dataset_label": "student_profile",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-S02",
+      "taskName": "Student score trend",
+      "scope": "1 student",
+      "viz_type": "line_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "score_trend"
+      ],
+      "selected_dataset_label": "score_trend",
+      "selection_warnings": [
+        "Selected dataset block \"score_trend\" by field match."
+      ],
+      "chart_required_fields": [
+        "assessment_order",
+        "score_normalized"
+      ],
+      "api_row_count": 3,
+      "chart_row_count": 3,
+      "adapter_latency_ms": 0.195,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "line_chart",
+        "selected_dataset_label": "score_trend",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 3,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-S03",
+      "taskName": "Student engagement trajectory",
+      "scope": "1 student",
+      "viz_type": "line_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "engagement_trajectory"
+      ],
+      "selected_dataset_label": "engagement_trajectory",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"engagement_trajectory\"."
+      ],
+      "chart_required_fields": [
+        "week_number",
+        "weekly_clicks"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.016,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "line_chart",
+        "selected_dataset_label": "engagement_trajectory",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-S04",
+      "taskName": "Student risk flag breakdown",
+      "scope": "1 student",
+      "viz_type": "table",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "risk_flags"
+      ],
+      "selected_dataset_label": "risk_flags",
+      "selection_warnings": [
+        "Selected dataset block \"risk_flags\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 4,
+      "chart_row_count": 4,
+      "adapter_latency_ms": 0.03,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "table",
+        "selected_dataset_label": "risk_flags",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 4,
+        "valid_rows": 4,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-S05",
+      "taskName": "Student competency gap",
+      "scope": "1 student",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "competency_scores"
+      ],
+      "selected_dataset_label": "competency_scores",
+      "selection_warnings": [
+        "Selected dataset block \"competency_scores\" by field match."
+      ],
+      "chart_required_fields": [
+        "competency_tag",
+        "avg_score"
+      ],
+      "api_row_count": 3,
+      "chart_row_count": 3,
+      "adapter_latency_ms": 0.078,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "competency_scores",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 3,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-S06",
+      "taskName": "Student submission & punctuality",
+      "scope": "1 student",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "partial",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "submission_lateness"
+      ],
+      "selected_dataset_label": "submission_lateness",
+      "selection_warnings": [
+        "Selected dataset block \"submission_lateness\" by field match."
+      ],
+      "chart_required_fields": [
+        "assessment_order",
+        "submission_delay_days",
+        "score_normalized"
+      ],
+      "api_row_count": 3,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.055,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "submission_lateness",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 0,
+        "skipped_rows": 3,
+        "missing_fields": [
+          "submission_delay_days"
+        ],
+        "missing_field_counts": {
+          "submission_delay_days": 3
+        },
+        "warnings": [
+          "Skipped row: missing/invalid y field \"submission_delay_days\".",
+          "Skipped row: missing/invalid y field \"submission_delay_days\".",
+          "Skipped row: missing/invalid y field \"submission_delay_days\"."
+        ],
+        "warning_count": 3,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-S07",
+      "taskName": "Student background context",
+      "scope": "1 student",
+      "viz_type": "table",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "background_context"
+      ],
+      "selected_dataset_label": "background_context",
+      "selection_warnings": [
+        "Selected dataset block \"background_context\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 1,
+      "chart_row_count": 1,
+      "adapter_latency_ms": 0.035,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "table",
+        "selected_dataset_label": "background_context",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-S08",
+      "taskName": "Student intervention recommendation",
+      "scope": "1 student",
+      "viz_type": "table",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "synthesis_data"
+      ],
+      "selected_dataset_label": "synthesis_data",
+      "selection_warnings": [
+        "Selected dataset block \"synthesis_data\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 1,
+      "chart_row_count": 1,
+      "adapter_latency_ms": 0.032,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "table",
+        "selected_dataset_label": "synthesis_data",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-C01",
+      "taskName": "Compare performance trajectories",
+      "scope": "2 students",
+      "viz_type": "line_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "trajectory_comparison"
+      ],
+      "selected_dataset_label": "trajectory_comparison",
+      "selection_warnings": [
+        "Selected dataset block \"trajectory_comparison\" by field match."
+      ],
+      "chart_required_fields": [
+        "assessment_order",
+        "score_normalized"
+      ],
+      "api_row_count": 6,
+      "chart_row_count": 3,
+      "adapter_latency_ms": 0.597,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "line_chart",
+        "selected_dataset_label": "trajectory_comparison",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 6,
+        "valid_rows": 6,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [
+          "Multi-series line collapsed 6 rows into 3 x-buckets."
+        ],
+        "warning_count": 1,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-C02",
+      "taskName": "Compare engagement patterns",
+      "scope": "2 students",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "engagement_comparison"
+      ],
+      "selected_dataset_label": "engagement_comparison",
+      "selection_warnings": [
+        "Selected dataset block \"engagement_comparison\" by field match."
+      ],
+      "chart_required_fields": [
+        "student_id",
+        "engagement_score"
+      ],
+      "api_row_count": 6,
+      "chart_row_count": 2,
+      "adapter_latency_ms": 0.22,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "engagement_comparison",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 6,
+        "valid_rows": 2,
+        "skipped_rows": 4,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-C03",
+      "taskName": "Compare risk profile",
+      "scope": "2 students",
+      "viz_type": "table",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "risk_comparison"
+      ],
+      "selected_dataset_label": "risk_comparison",
+      "selection_warnings": [
+        "Selected dataset block \"risk_comparison\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 2,
+      "chart_row_count": 2,
+      "adapter_latency_ms": 0.061,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "table",
+        "selected_dataset_label": "risk_comparison",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 2,
+        "valid_rows": 2,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-C04",
+      "taskName": "Compare lifestyle context",
+      "scope": "2 students",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "lifestyle_comparison"
+      ],
+      "selected_dataset_label": "lifestyle_comparison",
+      "selection_warnings": [
+        "Selected dataset block \"lifestyle_comparison\" by field match."
+      ],
+      "chart_required_fields": [
+        "student_id",
+        "lifestyle_risk_score"
+      ],
+      "api_row_count": 10,
+      "chart_row_count": 2,
+      "adapter_latency_ms": 0.215,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "lifestyle_comparison",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 10,
+        "valid_rows": 2,
+        "skipped_rows": 8,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-C05",
+      "taskName": "Compare academic background",
+      "scope": "2 students",
+      "viz_type": "table",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "background_comparison"
+      ],
+      "selected_dataset_label": "background_comparison",
+      "selection_warnings": [
+        "Selected dataset block \"background_comparison\" by field match."
+      ],
+      "chart_required_fields": [
+        "student_id",
+        "highest_education"
+      ],
+      "api_row_count": 2,
+      "chart_row_count": 2,
+      "adapter_latency_ms": 0.053,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "table",
+        "selected_dataset_label": "background_comparison",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 2,
+        "valid_rows": 2,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-C06",
+      "taskName": "Compare resource usage",
+      "scope": "2 students",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "resource_comparison"
+      ],
+      "selected_dataset_label": "resource_comparison",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"resource_comparison\"."
+      ],
+      "chart_required_fields": [
+        "resource_type",
+        "pct_of_total"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.035,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "resource_comparison",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G01",
+      "taskName": "Identify low-engagement group",
+      "scope": "Many students",
+      "viz_type": "scatter_plot",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "low_engagement_group"
+      ],
+      "selected_dataset_label": "low_engagement_group",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"low_engagement_group\"."
+      ],
+      "chart_required_fields": [
+        "active_days",
+        "engagement_score",
+        "study_effort_level"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.019,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "scatter_plot",
+        "selected_dataset_label": "low_engagement_group",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G02",
+      "taskName": "Engagement–performance relationship",
+      "scope": "Many students",
+      "viz_type": "scatter_plot",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "engagement_performance_scatter"
+      ],
+      "selected_dataset_label": "engagement_performance_scatter",
+      "selection_warnings": [
+        "Selected dataset block \"engagement_performance_scatter\" by field match."
+      ],
+      "chart_required_fields": [
+        "engagement_score",
+        "avg_score",
+        "final_outcome"
+      ],
+      "api_row_count": 649,
+      "chart_row_count": 649,
+      "adapter_latency_ms": 0.48,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "scatter_plot",
+        "selected_dataset_label": "engagement_performance_scatter",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 649,
+        "valid_rows": 649,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G03",
+      "taskName": "Identify at-risk cohort",
+      "scope": "Many students",
+      "viz_type": "table",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": false,
+      "analytics_http_status": 500,
+      "analytics_error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`",
+      "skip_reason": "analytics_api_failed_or_not_success",
+      "result": "skip"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G04",
+      "taskName": "Assessment difficulty analysis",
+      "scope": "Many students",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "assessment_difficulty"
+      ],
+      "selected_dataset_label": "assessment_difficulty",
+      "selection_warnings": [
+        "Selected dataset block \"assessment_difficulty\" by field match."
+      ],
+      "chart_required_fields": [
+        "assessment_name",
+        "fail_rate_pct"
+      ],
+      "api_row_count": 3,
+      "chart_row_count": 3,
+      "adapter_latency_ms": 0.062,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "assessment_difficulty",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 3,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G05",
+      "taskName": "Submission behaviour analysis",
+      "scope": "Many students",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "partial",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "submission_behaviour"
+      ],
+      "selected_dataset_label": "submission_behaviour",
+      "selection_warnings": [
+        "Selected dataset block \"submission_behaviour\" by field match."
+      ],
+      "chart_required_fields": [
+        "final_outcome",
+        "assessment_type",
+        "score_normalized"
+      ],
+      "api_row_count": 4,
+      "chart_row_count": 2,
+      "adapter_latency_ms": 0.114,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": false
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "submission_behaviour",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 4,
+        "valid_rows": 2,
+        "skipped_rows": 2,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G06",
+      "taskName": "Activity type effectiveness",
+      "scope": "Many students",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "activity_effectiveness"
+      ],
+      "selected_dataset_label": "activity_effectiveness",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"activity_effectiveness\"."
+      ],
+      "chart_required_fields": [
+        "resource_type",
+        "avg_score_by_resource_type"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.018,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "activity_effectiveness",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G07",
+      "taskName": "Factor correlation analysis",
+      "scope": "Many students",
+      "viz_type": "heatmap",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "factor_correlation_matrix"
+      ],
+      "selected_dataset_label": "factor_correlation_matrix",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"factor_correlation_matrix\"."
+      ],
+      "chart_required_fields": [
+        "feature_name",
+        "correlation_with_avg_score"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.033,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "heatmap",
+        "selected_dataset_label": "factor_correlation_matrix",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G08",
+      "taskName": "Background group performance & engagement profile",
+      "scope": "Many students",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "demographic_performance"
+      ],
+      "selected_dataset_label": "demographic_performance",
+      "selection_warnings": [
+        "Selected dataset block \"demographic_performance\" by field match."
+      ],
+      "chart_required_fields": [
+        "group_value",
+        "avg_score"
+      ],
+      "api_row_count": 1,
+      "chart_row_count": 1,
+      "adapter_latency_ms": 0.048,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "demographic_performance",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G09",
+      "taskName": "Socioeconomic disadvantage impact",
+      "scope": "Many students",
+      "viz_type": "scatter_plot",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "disadvantage_impact"
+      ],
+      "selected_dataset_label": "disadvantage_impact",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"disadvantage_impact\"."
+      ],
+      "chart_required_fields": [
+        "disadvantage_score",
+        "avg_score",
+        "final_outcome"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.015,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "scatter_plot",
+        "selected_dataset_label": "disadvantage_impact",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G10",
+      "taskName": "Consistency analysis across cohort",
+      "scope": "Many students",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "consistency_distribution"
+      ],
+      "selected_dataset_label": "consistency_distribution",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"consistency_distribution\"."
+      ],
+      "chart_required_fields": [
+        "consistency_level",
+        "student_count"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.005,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "consistency_distribution",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G11",
+      "taskName": "Weekly engagement drop detection",
+      "scope": "Many students",
+      "viz_type": "line_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "weekly_drop_detection"
+      ],
+      "selected_dataset_label": "weekly_drop_detection",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"weekly_drop_detection\"."
+      ],
+      "chart_required_fields": [
+        "week_number",
+        "week_total_clicks"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.032,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "line_chart",
+        "selected_dataset_label": "weekly_drop_detection",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G12",
+      "taskName": "Background group pass/fail/withdrawal rate",
+      "scope": "Many students",
+      "viz_type": "bar_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "outcome_by_group"
+      ],
+      "selected_dataset_label": "outcome_by_group",
+      "selection_warnings": [
+        "Selected dataset block \"outcome_by_group\" by field match."
+      ],
+      "chart_required_fields": [
+        "group_value",
+        "student_count"
+      ],
+      "api_row_count": 4,
+      "chart_row_count": 2,
+      "adapter_latency_ms": 0.027,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "bar_chart",
+        "selected_dataset_label": "outcome_by_group",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 4,
+        "valid_rows": 2,
+        "skipped_rows": 2,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G13",
+      "taskName": "Lifestyle risk across cohort",
+      "scope": "Many students",
+      "viz_type": "scatter_plot",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "lifestyle_risk_scatter"
+      ],
+      "selected_dataset_label": "lifestyle_risk_scatter",
+      "selection_warnings": [
+        "Selected dataset block \"lifestyle_risk_scatter\" by field match."
+      ],
+      "chart_required_fields": [
+        "lifestyle_risk_score",
+        "avg_score"
+      ],
+      "api_row_count": 649,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.481,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "scatter_plot",
+        "selected_dataset_label": "lifestyle_risk_scatter",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 649,
+        "valid_rows": 0,
+        "skipped_rows": 649,
+        "missing_fields": [
+          "lifestyle_risk_score"
+        ],
+        "missing_field_counts": {
+          "lifestyle_risk_score": 649
+        },
+        "warnings": [
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\".",
+          "Skipped point: invalid x field \"lifestyle_risk_score\"."
+        ],
+        "warning_count": 649,
+        "warnings_truncated": true
+      },
+      "result": "fail"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G14",
+      "taskName": "Early withdrawal signal analysis",
+      "scope": "Many students",
+      "viz_type": "line_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "withdrawal_signal_trend"
+      ],
+      "selected_dataset_label": "withdrawal_signal_trend",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"withdrawal_signal_trend\"."
+      ],
+      "chart_required_fields": [
+        "week_number",
+        "avg_clicks",
+        "final_outcome"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.029,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "line_chart",
+        "selected_dataset_label": "withdrawal_signal_trend",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G15",
+      "taskName": "Intervention priority ranking",
+      "scope": "Many students",
+      "viz_type": "table",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "intervention_priority_list"
+      ],
+      "selected_dataset_label": "intervention_priority_list",
+      "selection_warnings": [
+        "No dataset block matched required chart fields; fallback to \"intervention_priority_list\"."
+      ],
+      "chart_required_fields": [
+        "student_id",
+        "at_risk_score",
+        "at_risk_label"
+      ],
+      "api_row_count": 0,
+      "chart_row_count": 0,
+      "adapter_latency_ms": 0.025,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": false,
+      "expected_no_data": true,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "table",
+        "selected_dataset_label": "intervention_priority_list",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 0,
+        "valid_rows": 0,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G16",
+      "taskName": "Admin action recommendation",
+      "scope": "Many students",
+      "viz_type": "table",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "insufficient_data",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "synthesis_data"
+      ],
+      "selected_dataset_label": "synthesis_data",
+      "selection_warnings": [
+        "Selected dataset block \"synthesis_data\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 1,
+      "chart_row_count": 1,
+      "adapter_latency_ms": 0.15,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "table",
+        "selected_dataset_label": "synthesis_data",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 1,
+        "valid_rows": 1,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G18",
+      "taskName": "Class performance trend",
+      "scope": "Cohort",
+      "viz_type": "line_chart",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "class_performance_trend"
+      ],
+      "selected_dataset_label": "class_performance_trend",
+      "selection_warnings": [
+        "Selected dataset block \"class_performance_trend\" by field match."
+      ],
+      "chart_required_fields": [
+        "assessment_order",
+        "class_avg_score"
+      ],
+      "api_row_count": 3,
+      "chart_row_count": 3,
+      "adapter_latency_ms": 0.262,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "line_chart",
+        "selected_dataset_label": "class_performance_trend",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 3,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    },
+    {
+      "datasetId": "SAMPLE_UCI_POR",
+      "taskId": "A-G19",
+      "taskName": "Assessment completion rate",
+      "scope": "Cohort",
+      "viz_type": "table",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "availability_status": "executable",
+      "validation_http_status": 200,
+      "visualization_attempted": true,
+      "analytics_http_status": 200,
+      "available_dataset_labels": [
+        "assessment_completion"
+      ],
+      "selected_dataset_label": "assessment_completion",
+      "selection_warnings": [
+        "Selected dataset block \"assessment_completion\" by field match."
+      ],
+      "chart_required_fields": [],
+      "api_row_count": 3,
+      "chart_row_count": 3,
+      "adapter_latency_ms": 0.082,
+      "adapter_crashed": false,
+      "adapter_error": null,
+      "renderable": true,
+      "expected_no_data": false,
+      "dataset_selection_pass": true,
+      "adapter_consistency_pass": true,
+      "adapter_checks": {
+        "adapter_returned_object": true,
+        "has_meta_object": true,
+        "input_rows_match": true,
+        "valid_rows_number": true,
+        "skipped_rows_number": true,
+        "missing_fields_array": true,
+        "warnings_array": true,
+        "required_fields_tracked": true
+      },
+      "adapter_meta": {
+        "chart_type": "table",
+        "selected_dataset_label": "assessment_completion",
+        "null_handling_policy": {
+          "numeric": "real_zero_kept_null_missing_not_coerced",
+          "category": "missing_category_not_silent_fallback",
+          "row": "invalid_rows_skipped_with_warnings"
+        },
+        "input_rows": 3,
+        "valid_rows": 3,
+        "skipped_rows": 0,
+        "missing_fields": [],
+        "missing_field_counts": {},
+        "warnings": [],
+        "warning_count": 0,
+        "warnings_truncated": false
+      },
+      "result": "pass"
+    }
+  ]
+}

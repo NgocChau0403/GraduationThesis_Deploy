@@ -1,0 +1,378 @@
+{
+  "evaluation_part": "system_performance",
+  "datasetId": "SAMPLE_UCI_POR",
+  "generated_at": "2026-05-30T01:24:29.441Z",
+  "duration_ms": 11,
+  "source_logs": {
+    "api_contract": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\api_contract_auto_SAMPLE_UCI_POR.json",
+    "visualization": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\visualization_auto_SAMPLE_UCI_POR.json",
+    "ai_explanations": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\ai_explanations_auto_SAMPLE_UCI_POR.json",
+    "coverage_human_utility": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\coverage_human_utility_auto_SAMPLE_UCI_POR.json",
+    "import_performance": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\import_performance_auto_SAMPLE_UCI_POR.json",
+    "basic_api_benchmark": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\performance_benchmark_auto_SAMPLE_UCI_POR.json"
+  },
+  "method": "Aggregated from existing automatic evaluation logs to avoid rerunning analytics and AI calls. This captures observed latency, reliability, timeout, token usage, and cost from prior SAMPLE_UCI_POR evaluation runs.",
+  "analytics_queries": {
+    "attempted_count": 57,
+    "success_count": 54,
+    "failure_count": 3,
+    "timeout_count": 3,
+    "success_rate": 94.74,
+    "failure_rate": 5.26,
+    "timeout_rate": 5.26,
+    "latency_all": {
+      "count": 57,
+      "avg_ms": 1643.25,
+      "median_ms": 32,
+      "p95_ms": 30053,
+      "min_ms": 15,
+      "max_ms": 30098
+    },
+    "latency_success_only": {
+      "count": 54,
+      "avg_ms": 64.09,
+      "median_ms": 31,
+      "p95_ms": 252,
+      "min_ms": 15,
+      "max_ms": 421
+    },
+    "failed_tasks": [
+      {
+        "taskId": "S-B01",
+        "taskName": "Performance overview",
+        "http_status": 500,
+        "latency_ms": 30098,
+        "timeout": true,
+        "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
+      },
+      {
+        "taskId": "S-T04",
+        "taskName": "At-risk self-check",
+        "http_status": 500,
+        "latency_ms": 30053,
+        "timeout": true,
+        "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
+      },
+      {
+        "taskId": "A-G03",
+        "taskName": "Identify at-risk cohort",
+        "http_status": 500,
+        "latency_ms": 30053,
+        "timeout": true,
+        "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
+      }
+    ],
+    "slow_tasks_over_threshold": [
+      {
+        "taskId": "S-B01",
+        "taskName": "Performance overview",
+        "http_status": 500,
+        "latency_ms": 30098,
+        "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
+      },
+      {
+        "taskId": "S-T04",
+        "taskName": "At-risk self-check",
+        "http_status": 500,
+        "latency_ms": 30053,
+        "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
+      },
+      {
+        "taskId": "A-G03",
+        "taskName": "Identify at-risk cohort",
+        "http_status": 500,
+        "latency_ms": 30053,
+        "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
+      }
+    ]
+  },
+  "import_performance": {
+    "available": true,
+    "status": "completed",
+    "preview_duration_ms": 275,
+    "apply_duration_ms": 1671,
+    "total_duration_ms": 2087,
+    "canonical_row_count": 3250,
+    "canonical_counts": {
+      "student": 649,
+      "course": 1,
+      "class": 1,
+      "enrollment": 649,
+      "assessment": 3,
+      "assessment_result": 1947,
+      "event": 0,
+      "engagement": 0
+    },
+    "raw_row_counts": {
+      "student-por.csv": 649
+    },
+    "validation_errors_count": 0,
+    "warnings_count": 0
+  },
+  "basic_api_benchmark": {
+    "available": true,
+    "request_count": 5,
+    "success_count": 5,
+    "failure_count": 0,
+    "success_rate": 100,
+    "latency": {
+      "count": 5,
+      "avg_ms": 304.609,
+      "min_ms": 76.274,
+      "max_ms": 867.943
+    },
+    "measurements": [
+      {
+        "label": "tasks_list",
+        "url": "http://localhost:4000/api/tasks?includeExperimental=true",
+        "http_status": 200,
+        "ok": true,
+        "latency_ms": 100.245,
+        "transport_error": null,
+        "response_summary": {
+          "success": true,
+          "count": 57,
+          "summary": null,
+          "pagination": null,
+          "keys": [
+            "success",
+            "count",
+            "filters",
+            "tasks"
+          ]
+        }
+      },
+      {
+        "label": "classes_list",
+        "url": "http://localhost:4000/api/classes?batchId=SAMPLE_UCI_POR",
+        "http_status": 200,
+        "ok": true,
+        "latency_ms": 76.274,
+        "transport_error": null,
+        "response_summary": {
+          "success": true,
+          "count": 1,
+          "summary": null,
+          "pagination": null,
+          "keys": [
+            "success",
+            "count",
+            "classes"
+          ]
+        }
+      },
+      {
+        "label": "students_page_200",
+        "url": "http://localhost:4000/api/students?batchId=SAMPLE_UCI_POR&classId=SAMPLE_UCI_POR_CLASS&pageSize=200",
+        "http_status": 200,
+        "ok": true,
+        "latency_ms": 83.858,
+        "transport_error": null,
+        "response_summary": {
+          "success": true,
+          "count": 200,
+          "summary": null,
+          "pagination": {
+            "page": 1,
+            "pageSize": 200,
+            "total": 649,
+            "totalPages": 4,
+            "hasNext": true,
+            "hasPrev": false
+          },
+          "keys": [
+            "success",
+            "pagination",
+            "count",
+            "students"
+          ]
+        }
+      },
+      {
+        "label": "task_validate_all",
+        "url": "http://localhost:4000/api/tasks/validate/SAMPLE_UCI_POR?classId=SAMPLE_UCI_POR_CLASS",
+        "http_status": 200,
+        "ok": true,
+        "latency_ms": 867.943,
+        "transport_error": null,
+        "response_summary": {
+          "success": true,
+          "count": null,
+          "summary": {
+            "total": 57,
+            "executable": 29,
+            "partial": 5,
+            "insufficient_data": 23,
+            "unsupported": 0
+          },
+          "pagination": null,
+          "keys": [
+            "success",
+            "datasetId",
+            "sourceDataset",
+            "classId",
+            "summary",
+            "results"
+          ]
+        }
+      },
+      {
+        "label": "dataset_active",
+        "url": "http://localhost:4000/api/datasets/active",
+        "http_status": 200,
+        "ok": true,
+        "latency_ms": 394.725,
+        "transport_error": null,
+        "response_summary": {
+          "success": true,
+          "count": null,
+          "summary": null,
+          "pagination": null,
+          "keys": [
+            "success",
+            "activeDataset"
+          ]
+        }
+      }
+    ]
+  },
+  "visualization": {
+    "attempted_count": 55,
+    "adapter_crash_count": 0,
+    "adapter_success_rate": 100,
+    "overall_pass_count": 54,
+    "overall_pass_rate": 98.18,
+    "expected_no_data_count": 16,
+    "skipped_by_api_count": 2,
+    "failed_visualization_count": 1,
+    "failed_visualization_tasks": [
+      {
+        "taskId": "A-G13",
+        "taskName": "Lifestyle risk across cohort",
+        "viz_type": "scatter_plot",
+        "api_row_count": 649,
+        "chart_row_count": 0,
+        "renderable": false,
+        "expected_no_data": false,
+        "adapter_error": null
+      }
+    ],
+    "adapter_latency": {
+      "count": 55,
+      "avg_ms": 0.16,
+      "median_ms": 0.06,
+      "p95_ms": 0.57,
+      "min_ms": 0.01,
+      "max_ms": 1.03
+    },
+    "adapter_latency_note": "Adapter latency is measured around adapter.adapt(rawRows, config), excluding React/Recharts browser rendering time."
+  },
+  "ai_explanations": {
+    "attempted_count": 17,
+    "response_count": 17,
+    "response_rate": 100,
+    "degraded_count": 0,
+    "degraded_rate": 0,
+    "schema_failed_count": 0,
+    "safety_flagged_count": 0,
+    "safety_flag_rate": 0,
+    "latency_client_observed": {
+      "count": 17,
+      "avg_ms": 6795.29,
+      "median_ms": 5946,
+      "p95_ms": 14281,
+      "min_ms": 3107,
+      "max_ms": 14281
+    },
+    "latency_python_reported": {
+      "count": 17,
+      "avg_ms": 6787.12,
+      "median_ms": 5934,
+      "p95_ms": 14243,
+      "min_ms": 3101,
+      "max_ms": 14243
+    },
+    "total_tokens": {
+      "count": 17,
+      "avg": 1182.12,
+      "median": 1098,
+      "p95": 2456,
+      "min": 764,
+      "max": 2456,
+      "unit": "tokens"
+    },
+    "prompt_tokens": {
+      "count": 17,
+      "avg": 796.18,
+      "median": 665,
+      "p95": 2157,
+      "min": 561,
+      "max": 2157,
+      "unit": "tokens"
+    },
+    "completion_tokens": {
+      "count": 17,
+      "avg": 385.94,
+      "median": 417,
+      "p95": 573,
+      "min": 189,
+      "max": 573,
+      "unit": "tokens"
+    },
+    "cost_per_explanation": {
+      "count": 17,
+      "avg": 0.000351,
+      "median": 0.00036,
+      "p95": 0.000503,
+      "min": 0.000202,
+      "max": 0.000503,
+      "unit": "usd"
+    },
+    "total_cost_usd": 0.005966,
+    "slow_tasks_over_threshold": []
+  },
+  "task_validation_and_coverage": {
+    "runner_duration_ms": 845,
+    "task_validation_total": 57,
+    "runnable_count": 57,
+    "runnable_rate": 100,
+    "executable_rate": 50.88,
+    "unsupported_rate": 0,
+    "note": "Coverage runner validates all tasks in one API call. Per-task validation latency was not separately instrumented in this aggregate log."
+  },
+  "threshold_evaluation": {
+    "thresholds": {
+      "analytics_query_ms": 5000,
+      "ai_explanation_ms": 15000,
+      "failure_rate_pct": 10,
+      "timeout_rate_pct": 10,
+      "degraded_rate_pct": 20
+    },
+    "checks": {
+      "analytics_failure_rate_acceptable": true,
+      "analytics_timeout_rate_acceptable": true,
+      "analytics_success_p95_latency_acceptable": true,
+      "ai_degraded_rate_acceptable": true,
+      "ai_p95_latency_acceptable": true,
+      "visualization_adapter_crash_free": true
+    },
+    "overall_performance_pass": true
+  },
+  "concise_summary": {
+    "analytics_success_rate": 94.74,
+    "analytics_failure_rate": 5.26,
+    "analytics_timeout_rate": 5.26,
+    "analytics_success_p95_latency_ms": 252,
+    "visualization_adapter_success_rate": 100,
+    "visualization_adapter_avg_latency_ms": 0.16,
+    "import_apply_duration_ms": 1671,
+    "basic_api_avg_latency_ms": 304.609,
+    "ai_response_rate": 100,
+    "ai_degraded_rate": 0,
+    "ai_avg_latency_ms": 6795.29,
+    "ai_p95_latency_ms": 14281,
+    "ai_avg_tokens": 1182.12,
+    "ai_total_cost_usd": 0.005966,
+    "overall_performance_pass": true
+  }
+}

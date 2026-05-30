@@ -1,0 +1,69 @@
+{
+  "evaluation_part": "import_performance",
+  "datasetId": "SAMPLE_UCI_POR",
+  "generated_at": "2026-05-30T01:19:45.918Z",
+  "status": "completed",
+  "preview_duration_ms": 275,
+  "apply_duration_ms": 1671,
+  "total_duration_ms": 2087,
+  "preview": {
+    "batchesToClear": [
+      "SAMPLE_UCI_POR"
+    ],
+    "activeImpact": {
+      "current": "SAMPLE_OULAD",
+      "kind": "sample",
+      "postApplyPlan": "restore current sample if reseed success and batch exists; fallback SAMPLE_OULAD if invalid"
+    },
+    "shouldSeedMatrix": [
+      {
+        "batchId": "SAMPLE_UCI_POR",
+        "wouldSeed": true
+      }
+    ],
+    "batches": [
+      {
+        "batchId": "SAMPLE_UCI_POR",
+        "canonicalRowCount": 3250,
+        "canonicalCounts": {
+          "student": 649,
+          "course": 1,
+          "class": 1,
+          "enrollment": 649,
+          "assessment": 3,
+          "assessment_result": 1947,
+          "event": 0,
+          "engagement": 0
+        },
+        "rawRowCounts": {
+          "student-por.csv": 649
+        },
+        "missingFiles": [],
+        "warningsCount": 0,
+        "validationErrorsCount": 0,
+        "validationErrors": []
+      }
+    ]
+  },
+  "apply": {
+    "perBatchResults": [
+      {
+        "batchId": "SAMPLE_UCI_POR",
+        "skipped": false,
+        "canonicalRowCount": 3250
+      }
+    ],
+    "activeSync": {
+      "strategy": "restore_existing_sample",
+      "activated": "SAMPLE_OULAD"
+    },
+    "activeStateAfter": {
+      "id": 1,
+      "active_dataset_id": "SAMPLE_OULAD",
+      "active_dataset_name": "OULAD Sample Dataset",
+      "active_dataset_type": "sample",
+      "active_dataset_source": "OULAD",
+      "active_dataset_set_at": "2026-05-24T22:03:00.788Z"
+    }
+  }
+}
