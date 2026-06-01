@@ -14,7 +14,9 @@ const ALLOWED_FIELD_STATUS = [
 const ALLOWED_ENTITY_SCOPE = [
   "student",
   "course",
+  "enrollment",
   "assessment",
+  "engagement",
   "engagement_event",
   "system"
 ];
@@ -139,6 +141,13 @@ function reportIssue({ mode, severity, message, errors, warnings }) {
 // ==========================================
 
 function getAllowedEntityScopes(canonicalFieldName, group) {
+  if (group === "enrollment") {
+    return ["enrollment", "student", "course"];
+  }
+  if (group === "engagement") {
+    return ["engagement", "engagement_event", "enrollment"];
+  }
+
   if (canonicalFieldName === "source_dataset") {
     return ["system", "student", "course", "assessment", "engagement_event"];
   }

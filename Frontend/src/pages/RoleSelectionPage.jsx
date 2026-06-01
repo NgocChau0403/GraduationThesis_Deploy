@@ -560,6 +560,13 @@ export default function ChooseRoleScreen() {
   );
 
   const handleSelectRole = (role) => {
+    console.log("[RoleSelection] select role", {
+      role,
+      isLoading,
+      isFirstUse,
+      activeDatasetId: activeDataset?.id ?? null,
+    });
+
     if (isLoading) return; // Prevent clicks while initializing
 
     if (role === "student") {

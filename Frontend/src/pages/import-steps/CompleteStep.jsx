@@ -1,8 +1,8 @@
-import React, { useEffect, useRef } from "react";
-import { useOutletContext, Link, useNavigate } from "react-router-dom";
+import React, { useEffect, useRef, useState } from "react";
+import { useOutletContext, useNavigate } from "react-router-dom";
 import ResultPanel from "../../components/import/ResultPanel";
 import { useAppContext } from "../../contexts/AppContext";
-import { setActiveDataset as apiSetActive } from "../../services/datasetApi";
+import { getActiveDataset, setActiveDataset as apiSetActive } from "../../services/datasetApi";
 
 /**
  * Step 4: Success State & Ingestion Summary
@@ -12,11 +12,15 @@ export default function CompleteStep() {
   const { runResult, sessionId, sourceDataset, datasetName, uploadedFiles } = useOutletContext();
   const { setActiveDataset, refreshImportHistory } = useAppContext();
   const hasAutoSet = useRef(false);
+  const [isSyncingDataset, setIsSyncingDataset] = useState(false);
+  const [syncError, setSyncError] = useState(null);
 
   // Auto-set the newly imported dataset as Active — only if pipeline actually succeeded
   useEffect(() => {
     if (runResult?.success && !hasAutoSet.current) {
       hasAutoSet.current = true;
+      setIsSyncingDataset(true);
+      setSyncError(null);
 
       // ─── Resolve importBatchId ───────────────────────────────────────────
       // Single-file mode: response.result.importBatchId
@@ -43,19 +47,44 @@ export default function CompleteStep() {
         setAt: new Date().toISOString(),
       };
 
-      // Gọi API báo cho DB biết dataset này đang active
-      apiSetActive(datasetObj)
-        .then((res) => {
-          if (res.success) {
-            // Cập nhật global state cho App
-            setActiveDataset(res.activeDataset || datasetObj);
-            // Refresh lại lịch sử ở DataSelectionPage
-            refreshImportHistory();
-          }
+      const activeFromRun = runResult.activeDataset || null;
+      const maybeSetActivePromise = activeFromRun
+        ? Promise.resolve({ success: true, activeDataset: activeFromRun })
+        : apiSetActive(datasetObj);
+
+      // Đồng bộ AppContext theo dataset active mới nhất
+      maybeSetActivePromise
+        .then(async (res) => {
+          const serverActive = await getActiveDataset().catch(() => null);
+          const nextActive = serverActive || res.activeDataset || datasetObj;
+          setActiveDataset(nextActive);
+          refreshImportHistory();
         })
-        .catch((err) => console.error("Failed to auto-set imported dataset:", err));
+        .catch((err) => {
+          setSyncError(err.message || "Failed to sync active dataset.");
+          console.error("Failed to auto-set imported dataset:", err);
+        })
+        .finally(() => {
+          setIsSyncingDataset(false);
+        });
     }
   }, [runResult, sessionId, sourceDataset, setActiveDataset, refreshImportHistory]);
+
+  const handleViewDashboard = async () => {
+    if (!runResult?.success) return;
+    if (isSyncingDataset) return;
+
+    try {
+      const serverActive = await getActiveDataset();
+      if (serverActive) {
+        setActiveDataset(serverActive);
+      }
+      navigate("/admin/dashboard");
+    } catch (err) {
+      console.error("Failed to refresh active dataset before dashboard navigation:", err);
+      navigate("/admin/dashboard");
+    }
+  };
 
   // Guard clause if someone tries to access this page without a result
   if (!runResult) {
@@ -132,15 +161,17 @@ export default function CompleteStep() {
       {/* ACTION BUTTONS */}
       <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
         {isSuccess ? (
-          <Link 
-            to="/admin/dashboard" 
-            className="group relative w-full sm:w-auto px-10 py-5 bg-slate-900 text-white rounded-[2rem] font-bold overflow-hidden transition-all hover:scale-105 active:scale-95"
+          <button
+            type="button"
+            onClick={handleViewDashboard}
+            disabled={isSyncingDataset}
+            className="group relative w-full sm:w-auto px-10 py-5 bg-slate-900 text-white rounded-[2rem] font-bold overflow-hidden transition-all hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-70"
           >
             <span className="relative z-10 flex items-center justify-center gap-2">
-              📊 View Dashboard Analytics
+              {isSyncingDataset ? "Syncing Active Dataset..." : "📊 View Dashboard Analytics"}
             </span>
             <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </Link>
+          </button>
         ) : (
           <button
             onClick={() => navigate("/import/review")}
@@ -165,6 +196,11 @@ export default function CompleteStep() {
             <strong>Tester Tip:</strong> You can now verify the imported records in the Postgres database{" "}
             using the <code>sessionId</code> provided in the logs above.
           </p>
+          {syncError && (
+            <p className="mt-3 text-xs text-red-600 font-semibold">
+              Active dataset sync warning: {syncError}
+            </p>
+          )}
         </div>
       )}
     </div>

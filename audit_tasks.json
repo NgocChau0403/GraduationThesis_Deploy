@@ -1,0 +1,629 @@
+{
+  "activeDataset": {
+    "id": "Import_2026-05-24",
+    "name": "student-mat",
+    "type": "custom",
+    "source": "UCI",
+    "setAt": "2026-05-24T06:14:13.384Z"
+  },
+  "classId": "bd6a708b28da07ffb2c438c5",
+  "studentId": "UCI_POR_STUDENT_0001",
+  "secondStudentId": "UCI_POR_STUDENT_0002",
+  "counts": {
+    "studentTasks": 15,
+    "adminTasks": 16,
+    "total": 31,
+    "pass": 14,
+    "fail": 10,
+    "partial": 7
+  },
+  "rows": [
+    {
+      "dashboard": "Student",
+      "taskId": "S-B01",
+      "taskName": "Performance overview",
+      "vizType": "card",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [],
+      "status": "PARTIAL",
+      "note": "No dataset block matched required chart fields; fallback to \"performance_summary\".",
+      "block": "performance_summary",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-B02",
+      "taskName": "Risk status card",
+      "vizType": "card",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [],
+      "status": "PARTIAL",
+      "note": "No dataset block matched required chart fields; fallback to \"risk_summary\".",
+      "block": "risk_summary",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-B03",
+      "taskName": "Engagement summary",
+      "vizType": "card",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [],
+      "status": "PASS",
+      "note": "",
+      "block": "engagement_summary",
+      "validRows": 1,
+      "actualFields": [
+        "total_engagement_count",
+        "total_clicks",
+        "active_days",
+        "engagement_score",
+        "class_avg_total_engagement_count",
+        "class_avg_active_days",
+        "class_avg_engagement_score",
+        "study_effort_level"
+      ]
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-T01",
+      "taskName": "Score trend analysis",
+      "vizType": "line_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "assessment_order",
+        "score_normalized"
+      ],
+      "status": "FAIL",
+      "note": "No dataset block matched required chart fields; fallback to \"score_trend\". | No valid data after applying missing-data policy (rows=0)",
+      "block": "score_trend",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-T02",
+      "taskName": "Competency gap analysis",
+      "vizType": "bar_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "competency_tag",
+        "avg_score"
+      ],
+      "status": "FAIL",
+      "note": "No dataset block matched required chart fields; fallback to \"competency_scores\". | No valid data after applying missing-data policy (rows=0)",
+      "block": "competency_scores",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-T03",
+      "taskName": "Peer comparison",
+      "vizType": "card",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [],
+      "status": "PARTIAL",
+      "note": "No dataset block matched required chart fields; fallback to \"peer_comparison\".",
+      "block": "peer_comparison",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-T04",
+      "taskName": "At-risk self-check",
+      "vizType": "checklist",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [],
+      "status": "FAIL",
+      "note": "No dataset block matched required chart fields; fallback to \"risk_flags\". | No valid data after applying missing-data policy (rows=0)",
+      "block": "risk_flags",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-T07",
+      "taskName": "Absence / inactivity impact",
+      "vizType": "bar_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "assessment_order",
+        "score_normalized"
+      ],
+      "status": "PARTIAL",
+      "note": "No dataset block matched required chart fields; fallback to \"absence_data\".",
+      "block": "absence_data",
+      "validRows": 1,
+      "actualFields": [
+        "absences",
+        "absence_rate"
+      ]
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-T08",
+      "taskName": "Assessment lateness impact",
+      "vizType": "scatter_plot",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "assessment_order",
+        "submission_delay_days",
+        "score_normalized"
+      ],
+      "status": "PARTIAL",
+      "note": "No dataset block matched required chart fields; fallback to \"submission_lateness\". | No numeric x/y pair for scatter",
+      "block": "submission_lateness",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-T09",
+      "taskName": "Lifestyle risk vs performance",
+      "vizType": "card",
+      "dataset": "UCI",
+      "compatibility": "UCI_only",
+      "requiredFields": [],
+      "status": "PASS",
+      "note": "",
+      "block": "lifestyle_data",
+      "validRows": 1,
+      "actualFields": [
+        "alcohol_weekday",
+        "alcohol_weekend",
+        "go_out_freq",
+        "health_status",
+        "family_relation",
+        "free_time",
+        "lifestyle_risk_score",
+        "avg_score"
+      ]
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-T11",
+      "taskName": "Registration timing vs performance",
+      "vizType": "card",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "registration_lead_time",
+        "avg_score"
+      ],
+      "status": "PASS",
+      "note": "",
+      "block": "registration_data",
+      "validRows": 1,
+      "actualFields": [
+        "registration_lead_time",
+        "avg_score"
+      ]
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-T12",
+      "taskName": "Procrastination analysis",
+      "vizType": "card",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "assessment_order",
+        "submission_delay_days",
+        "score_normalized"
+      ],
+      "status": "PARTIAL",
+      "note": "No dataset block matched required chart fields; fallback to \"submission_series\".",
+      "block": "submission_series",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-T13",
+      "taskName": "Action plan generation",
+      "vizType": "table",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [],
+      "status": "FAIL",
+      "note": "No dataset block matched required chart fields; fallback to \"synthesis_data\". | No valid data after applying missing-data policy (rows=0)",
+      "block": "synthesis_data",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-T14",
+      "taskName": "Social balance vs performance",
+      "vizType": "card",
+      "dataset": "UCI",
+      "compatibility": "UCI_only",
+      "requiredFields": [],
+      "status": "PASS",
+      "note": "",
+      "block": "social_data",
+      "validRows": 1,
+      "actualFields": [
+        "social_balance_score",
+        "free_time",
+        "go_out_freq",
+        "alcohol_weekday",
+        "avg_score"
+      ]
+    },
+    {
+      "dashboard": "Student",
+      "taskId": "S-T15",
+      "taskName": "Family context vs performance",
+      "vizType": "card",
+      "dataset": "UCI",
+      "compatibility": "UCI_only",
+      "requiredFields": [],
+      "status": "PASS",
+      "note": "",
+      "block": "family_data",
+      "validRows": 1,
+      "actualFields": [
+        "family_stability_score",
+        "family_relation",
+        "parent_cohabitation_status",
+        "mother_education_level",
+        "father_education_level",
+        "avg_score"
+      ]
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-B01",
+      "taskName": "Overall performance distribution",
+      "vizType": "bar_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "score_bucket",
+        "student_count"
+      ],
+      "status": "PASS",
+      "note": "",
+      "block": "score_distribution",
+      "validRows": 2,
+      "actualFields": [
+        "score_bucket",
+        "student_count",
+        "pct_of_class",
+        "avg_score_in_bucket"
+      ]
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-B02",
+      "taskName": "Completion / outcome summary",
+      "vizType": "pie_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "final_outcome",
+        "student_count"
+      ],
+      "status": "PASS",
+      "note": "",
+      "block": "outcome_counts",
+      "validRows": 1,
+      "actualFields": [
+        "final_outcome",
+        "student_count",
+        "pct_of_class"
+      ]
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-B04",
+      "taskName": "At-risk overview",
+      "vizType": "bar_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "at_risk_label",
+        "student_count"
+      ],
+      "status": "FAIL",
+      "note": "No dataset block matched required chart fields; fallback to \"risk_overview\". | No valid data after applying missing-data policy (rows=0)",
+      "block": "risk_overview",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-S02",
+      "taskName": "Student score trend",
+      "vizType": "line_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "assessment_order",
+        "score_normalized"
+      ],
+      "status": "FAIL",
+      "note": "No dataset block matched required chart fields; fallback to \"score_trend\". | No valid data after applying missing-data policy (rows=0)",
+      "block": "score_trend",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-S04",
+      "taskName": "Student risk flag breakdown",
+      "vizType": "table",
+      "dataset": "UCI",
+      "compatibility": "UCI_only",
+      "requiredFields": [],
+      "status": "PASS",
+      "note": "",
+      "block": "risk_flags",
+      "validRows": 1,
+      "actualFields": [
+        "flag_name",
+        "flag_value",
+        "threshold",
+        "triggered"
+      ]
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-S05",
+      "taskName": "Student competency gap",
+      "vizType": "bar_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "competency_tag",
+        "avg_score"
+      ],
+      "status": "FAIL",
+      "note": "No dataset block matched required chart fields; fallback to \"competency_scores\". | No valid data after applying missing-data policy (rows=0)",
+      "block": "competency_scores",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-S06",
+      "taskName": "Student submission & punctuality",
+      "vizType": "bar_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "assessment_order",
+        "submission_delay_days",
+        "score_normalized"
+      ],
+      "status": "FAIL",
+      "note": "No dataset block matched required chart fields; fallback to \"submission_lateness\". | No valid data after applying missing-data policy (rows=0)",
+      "block": "submission_lateness",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-S07",
+      "taskName": "Student background context",
+      "vizType": "table",
+      "dataset": "UCI",
+      "compatibility": "UCI_only",
+      "requiredFields": [],
+      "status": "PASS",
+      "note": "",
+      "block": "background_context",
+      "validRows": 1,
+      "actualFields": [
+        "highest_education",
+        "school",
+        "family_size",
+        "gender",
+        "age_years",
+        "age_group",
+        "school_support_flag",
+        "family_support_flag",
+        "has_paid_class",
+        "internet_access_flag",
+        "support_score",
+        "lifestyle_risk_score",
+        "social_balance_score",
+        "family_stability_score",
+        "previous_attempt_count",
+        "studytime",
+        "absences"
+      ]
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-C01",
+      "taskName": "Compare performance trajectories",
+      "vizType": "line_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "assessment_order",
+        "score_normalized"
+      ],
+      "status": "PASS",
+      "note": "",
+      "block": "trajectory_comparison",
+      "validRows": 6,
+      "actualFields": [
+        "student_id",
+        "assessment_order",
+        "week_of_class",
+        "assessment_type",
+        "score_normalized"
+      ]
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-C04",
+      "taskName": "Compare lifestyle context",
+      "vizType": "bar_chart",
+      "dataset": "UCI",
+      "compatibility": "UCI_only",
+      "requiredFields": [
+        "student_id",
+        "lifestyle_risk_score"
+      ],
+      "status": "PASS",
+      "note": "",
+      "block": "lifestyle_comparison",
+      "validRows": 10,
+      "actualFields": [
+        "student_id",
+        "lifestyle_dimension",
+        "lifestyle_risk_score",
+        "alcohol_weekday",
+        "alcohol_weekend",
+        "go_out_freq",
+        "health_status",
+        "free_time",
+        "composite_lifestyle_risk_score",
+        "social_balance_score"
+      ]
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-C05",
+      "taskName": "Compare academic background",
+      "vizType": "table",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "student_id",
+        "highest_education"
+      ],
+      "status": "PASS",
+      "note": "",
+      "block": "background_comparison",
+      "validRows": 2,
+      "actualFields": [
+        "student_id",
+        "highest_education",
+        "previous_attempt_count",
+        "imd_score_numeric",
+        "socioeconomic_band",
+        "disability_flag",
+        "disadvantage_score",
+        "support_score",
+        "family_stability_score"
+      ]
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-G03",
+      "taskName": "Identify at-risk cohort",
+      "vizType": "table",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [],
+      "status": "FAIL",
+      "note": "No dataset block matched required chart fields; fallback to \"at_risk_cohort\". | No valid data after applying missing-data policy (rows=0)",
+      "block": "at_risk_cohort",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-G04",
+      "taskName": "Assessment difficulty analysis",
+      "vizType": "bar_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "assessment_name",
+        "fail_rate_pct"
+      ],
+      "status": "PASS",
+      "note": "",
+      "block": "assessment_difficulty",
+      "validRows": 3,
+      "actualFields": [
+        "assessment_id",
+        "assessment_name",
+        "assessment_type",
+        "week_of_class",
+        "competency_tag",
+        "competency_source",
+        "total_submissions",
+        "fail_count",
+        "fail_rate_pct",
+        "avg_score"
+      ]
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-G05",
+      "taskName": "Submission behaviour analysis",
+      "vizType": "bar_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "final_outcome",
+        "assessment_type",
+        "score_normalized"
+      ],
+      "status": "FAIL",
+      "note": "No dataset block matched required chart fields; fallback to \"submission_behaviour\". | No valid data after applying missing-data policy (rows=0)",
+      "block": "submission_behaviour",
+      "validRows": 0,
+      "actualFields": []
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-G12",
+      "taskName": "Background group pass/fail/withdrawal rate",
+      "vizType": "bar_chart",
+      "dataset": "UCI",
+      "compatibility": "both",
+      "requiredFields": [
+        "group_value",
+        "student_count"
+      ],
+      "status": "PASS",
+      "note": "",
+      "block": "outcome_by_group",
+      "validRows": 2,
+      "actualFields": [
+        "group_value",
+        "final_outcome",
+        "student_count",
+        "pct_within_group"
+      ]
+    },
+    {
+      "dashboard": "Admin",
+      "taskId": "A-G13",
+      "taskName": "Lifestyle risk across cohort",
+      "vizType": "scatter_plot",
+      "dataset": "UCI",
+      "compatibility": "UCI_only",
+      "requiredFields": [
+        "lifestyle_risk_score",
+        "avg_score"
+      ],
+      "status": "PARTIAL",
+      "note": "No dataset block matched required chart fields; fallback to \"lifestyle_risk_scatter\". | No numeric x/y pair for scatter",
+      "block": "lifestyle_risk_scatter",
+      "validRows": 0,
+      "actualFields": []
+    }
+  ]
+}

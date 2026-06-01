@@ -12,6 +12,7 @@ const CompleteStep       = lazy(() => import("./pages/import-steps/CompleteStep"
 const DataSelectionPage  = lazy(() => import("./pages/DataSelectionPage"));
 const StudentDashboardPage = lazy(() => import("./pages/StudentDashboardPage"));
 const AdminDashboardPage = lazy(() => import("./pages/AdminDashboardPage"));
+const AnalyticsWorkspace = lazy(() => import("./pages/AnalyticsWorkspace"));
 
 // ── Minimal fallback shown while a lazy chunk loads ───────────────────────────
 function PageLoader() {
@@ -47,9 +48,14 @@ export default function App() {
           {/* 3. Data Selection */}
           <Route path="/data-selection" element={<DataSelectionPage />} />
 
-          {/* 4. Dashboards */}
+          {/* 4. Analytics Workspace (Phase 2 — task browsing + execution) */}
+          <Route path="/analytics" element={<AnalyticsWorkspace />} />
+
+          {/* 5. Dashboards */}
           <Route path="/student/dashboard" element={<StudentDashboardPage />} />
+          <Route path="/student/dashboard/:taskId" element={<StudentDashboardPage />} />
           <Route path="/admin/dashboard"   element={<AdminDashboardPage />} />
+          <Route path="/admin/dashboard/:taskId" element={<AdminDashboardPage />} />
 
           {/* 5. Import Workspace — Multi-step Flow */}
           <Route path="/import" element={<ImportPage />}>

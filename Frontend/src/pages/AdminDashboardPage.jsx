@@ -1,69 +1,624 @@
-import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect, useCallback, useMemo } from "react";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { useAppContext } from "../contexts/AppContext";
+import { runAnalyticsTask, fetchClasses, getStudents, fetchAvailableTasks } from "../services/analyticsApi";
+import ChartRenderer from "../components/ChartRenderer";
+import AIInsightPanel from "../components/AIInsightPanel";
+import {
+  buildAdminDashboardUrl,
+  getAdminTaskType,
+  resolveAdminDashboardUrlState,
+} from "../utils/dashboardUrlState";
+
+const ADMIN_BASIC_TASKS = ["A-B01", "A-B02", "A-B03", "A-B04"];
+const ADMIN_SINGLE_STUDENT_TASKS = ["A-S01", "A-S02", "A-S03", "A-S04", "A-S05", "A-S06", "A-S07", "A-S08"];
+const ADMIN_COMPARISON_TASKS = ["A-C01", "A-C02", "A-C03", "A-C04", "A-C05", "A-C06"];
+const ADMIN_COHORT_TASKS = [
+  "A-G01", "A-G02", "A-G03", "A-G04", "A-G05", "A-G06", "A-G07", "A-G08",
+  "A-G09", "A-G10", "A-G11", "A-G12", "A-G13", "A-G14", "A-G15", "A-G16",
+];
+const ADMIN_ALLOWED_TASK_IDS = new Set([
+  ...ADMIN_BASIC_TASKS,
+  ...ADMIN_SINGLE_STUDENT_TASKS,
+  ...ADMIN_COMPARISON_TASKS,
+  ...ADMIN_COHORT_TASKS,
+]);
+
+const WORKSPACE_TABS = [
+  { id: "admin_basic", label: "Admin - Basic Tasks", prefixes: ADMIN_BASIC_TASKS },
+  { id: "admin_single", label: "Admin - Single Student Tasks", prefixes: ADMIN_SINGLE_STUDENT_TASKS },
+  { id: "admin_compare", label: "Admin - Comparison Tasks", prefixes: ADMIN_COMPARISON_TASKS },
+  { id: "admin_cohort", label: "Admin - Cohort Tasks", prefixes: ADMIN_COHORT_TASKS },
+];
+
+function isTaskExecutable(task) {
+  return task?.availability?.status === "executable";
+}
+
+function getDisabledReason(task) {
+  const availability = task?.availability;
+  const firstMissing = availability?.missing_requirements?.[0];
+  return (
+    availability?.disabled_reason ||
+    firstMissing?.message ||
+    firstMissing ||
+    availability?.confidence_reason ||
+    "Task is not executable for this dataset/class."
+  );
+}
+
+function getAvailabilityLabel(task) {
+  const status = task?.availability?.status || "unknown";
+  if (status === "executable") return "Available";
+  if (status === "partial") return "Partial";
+  if (status === "insufficient_data") return "Insufficient";
+  if (status === "unsupported") return "Unsupported";
+  return status;
+}
+
+function getAvailabilityBadgeClass(task) {
+  const status = task?.availability?.status;
+  if (status === "executable") return "bg-emerald-50 text-emerald-700 border-emerald-100";
+  if (status === "partial") return "bg-amber-50 text-amber-700 border-amber-100";
+  if (status === "insufficient_data") return "bg-orange-50 text-orange-700 border-orange-100";
+  return "bg-slate-100 text-slate-500 border-slate-200";
+}
 
 export default function AdminDashboardPage() {
   const navigate = useNavigate();
-  const { activeDataset, isLoading } = useAppContext();
+  const location = useLocation();
+  const { taskId: routeTaskId } = useParams();
+  const [searchParams] = useSearchParams();
+  const { activeDataset, isLoading: appLoading } = useAppContext();
+  const [currentTab, setCurrentTab] = useState("admin_basic");
+  const [activeTaskId, setActiveTaskId] = useState(ADMIN_BASIC_TASKS[0]);
 
-  // Guard: Admin navigate trực tiếp vào /admin/dashboard khi chưa có dataset
+  const { data: classesData, isLoading: isClassesLoading, isError: isClassesError, error: classesQueryError } = useQuery({
+    queryKey: ["classes", activeDataset?.id],
+    queryFn: () => fetchClasses(activeDataset?.id),
+    enabled: !!activeDataset?.id,
+  });
+  const classes = useMemo(() => classesData?.classes ?? [], [classesData?.classes]);
+
+  const [selectedClassId, setSelectedClassId] = useState("");
+  const classId = selectedClassId || classes[0]?.class_id || "";
+
+  const { data: studentsData, isLoading: isStudentsLoading, isError: isStudentsError, error: studentsQueryError } = useQuery({
+    queryKey: ["students", activeDataset?.id, classId],
+    queryFn: () => getStudents(activeDataset?.id, classId),
+    enabled: !!activeDataset?.id && !!classId,
+  });
+  const students = useMemo(() => studentsData?.students ?? [], [studentsData?.students]);
+
+  const [selectedStudentId, setSelectedStudentId] = useState("");
+  const [selectedCompareStudentId, setSelectedCompareStudentId] = useState("");
+
+  const primaryStudentId = selectedStudentId || students[0]?.student_id || "";
+  const secondaryStudentId = selectedCompareStudentId || students.find((s) => s.student_id !== primaryStudentId)?.student_id || "";
+
+  const {
+    data: availableTasksData,
+    isLoading: isAvailabilityLoading,
+    isError: isAvailabilityError,
+    error: availabilityError,
+  } = useQuery({
+    queryKey: ["available-tasks", activeDataset?.id, classId, "admin"],
+    queryFn: () => fetchAvailableTasks(activeDataset.id, classId, "admin"),
+    enabled: !!activeDataset?.id && !!classId,
+    staleTime: 60 * 1000,
+  });
+  const allTasksRaw = useMemo(() => availableTasksData?.tasks ?? [], [availableTasksData?.tasks]);
+  const uniqueAdminTasks = useMemo(() => 
+    allTasksRaw
+      .filter((task) => ADMIN_ALLOWED_TASK_IDS.has(task.taskId))
+      .filter((task, idx, arr) => arr.findIndex((t) => t.taskId === task.taskId) === idx),
+    [allTasksRaw]
+  );
+
+  const taskMetaById = useMemo(() => {
+    const map = new Map();
+    for (const task of uniqueAdminTasks) {
+      map.set(task.taskId, task);
+    }
+    return map;
+  }, [uniqueAdminTasks]);
+
+  const [taskResults, setTaskResults] = useState({});
+  const [loadingTasks, setLoadingTasks] = useState(new Set());
+
+  const resolveEnrollmentId = useCallback((studentId) => 
+    students.find((s) => s.student_id === studentId)?.enrollment_id ?? null,
+    [students]
+  );
+
+  const runTask = useCallback(async (taskId, extraParams = {}) => {
+    if (!activeDataset?.id || !classId) return;
+
+    const task = taskMetaById.get(taskId);
+    if (!isTaskExecutable(task)) {
+      setTaskResults((prev) => ({
+        ...prev,
+        [taskId]: {
+          error: getDisabledReason(task),
+          taskId,
+          availability: task?.availability,
+        },
+      }));
+      return;
+    }
+
+    const params = {
+      batch_id: activeDataset.id,
+      class_id: classId,
+      ...extraParams,
+    };
+
+    if (params.student_id && !params.enrollment_id) {
+      const eid = resolveEnrollmentId(params.student_id);
+      if (eid) params.enrollment_id = eid;
+    }
+
+    setLoadingTasks((prev) => new Set([...prev, taskId]));
+    try {
+      const result = await runAnalyticsTask(taskId, params);
+      setTaskResults((prev) => ({ ...prev, [taskId]: result }));
+    } catch (err) {
+      console.error(`[AdminDashboard] Task ${taskId} failed:`, err.message);
+      setTaskResults((prev) => ({ ...prev, [taskId]: { error: err.message, taskId } }));
+    } finally {
+      setLoadingTasks((prev) => {
+        const next = new Set(prev);
+        next.delete(taskId);
+        return next;
+      });
+    }
+  }, [activeDataset?.id, classId, resolveEnrollmentId, taskMetaById]);
+
+  const activeTabObj = useMemo(() => WORKSPACE_TABS.find(t => t.id === currentTab), [currentTab]);
+  
+  const filteredTasks = useMemo(() => {
+    if (!activeTabObj) return [];
+    return uniqueAdminTasks.filter(t => activeTabObj.prefixes.includes(t.taskId));
+  }, [uniqueAdminTasks, activeTabObj]);
+
+  const resolveTaskForTab = useCallback((tabId) => {
+    const targetTab = WORKSPACE_TABS.find(t => t.id === tabId);
+    if (!targetTab) return null;
+
+    const candidateTasks = targetTab.prefixes
+      .map(taskId => uniqueAdminTasks.find(task => task.taskId === taskId))
+      .filter(Boolean);
+
+    return (
+      candidateTasks.find(isTaskExecutable) ||
+      candidateTasks[0] ||
+      null
+    );
+  }, [uniqueAdminTasks]);
+
+  const currentTaskMeta = useMemo(() => taskMetaById.get(activeTaskId), [taskMetaById, activeTaskId]);
+  const currentResult = taskResults[activeTaskId];
+  const isCurrentTaskLoading = loadingTasks.has(activeTaskId);
+  const adminTaskGroups = useMemo(() => ({
+    single: ADMIN_SINGLE_STUDENT_TASKS,
+    comparison: ADMIN_COMPARISON_TASKS,
+  }), []);
+
   useEffect(() => {
-    if (!isLoading && !activeDataset) {
+    if (isClassesLoading || !classes.length) return;
+    const requestedClassId = searchParams.get("classId");
+    if (requestedClassId && classes.some((item) => item.class_id === requestedClassId) && requestedClassId !== classId) {
+      setSelectedClassId(requestedClassId);
+      setSelectedStudentId("");
+      setSelectedCompareStudentId("");
+    }
+  }, [classes, classId, isClassesLoading, searchParams]);
+
+  useEffect(() => {
+    if (
+      appLoading ||
+      isClassesLoading ||
+      isStudentsLoading ||
+      isAvailabilityLoading ||
+      !activeDataset ||
+      !availableTasksData ||
+      !classes.length ||
+      !students.length ||
+      !uniqueAdminTasks.length
+    ) {
+      return;
+    }
+
+    const resolved = resolveAdminDashboardUrlState({
+      routeTaskId,
+      searchParams,
+      tasks: uniqueAdminTasks,
+      classes,
+      students,
+      tabs: WORKSPACE_TABS,
+      defaultTaskId: ADMIN_BASIC_TASKS[0],
+      taskGroups: adminTaskGroups,
+      currentUrl: `${location.pathname}${location.search}`,
+    });
+
+    if (resolved.classId && resolved.classId !== classId) {
+      setSelectedClassId(resolved.classId);
+      setSelectedStudentId("");
+      setSelectedCompareStudentId("");
+      return;
+    }
+    if (resolved.taskId && resolved.taskId !== activeTaskId) setActiveTaskId(resolved.taskId);
+    if (resolved.tabId && resolved.tabId !== currentTab) setCurrentTab(resolved.tabId);
+
+    if (resolved.taskType === "comparison") {
+      if (resolved.s1 && resolved.s1 !== primaryStudentId) setSelectedStudentId(resolved.s1);
+      if (resolved.s2 && resolved.s2 !== secondaryStudentId) setSelectedCompareStudentId(resolved.s2);
+    } else if (resolved.taskType === "single") {
+      if (resolved.studentId && resolved.studentId !== primaryStudentId) setSelectedStudentId(resolved.studentId);
+    }
+
+    if (resolved.shouldReplaceUrl) navigate(resolved.canonicalUrl, { replace: true });
+  }, [
+    activeDataset,
+    activeTaskId,
+    adminTaskGroups,
+    appLoading,
+    availableTasksData,
+    classId,
+    classes,
+    currentTab,
+    isAvailabilityLoading,
+    isClassesLoading,
+    isStudentsLoading,
+    location.pathname,
+    location.search,
+    navigate,
+    primaryStudentId,
+    routeTaskId,
+    searchParams,
+    secondaryStudentId,
+    students,
+    uniqueAdminTasks,
+  ]);
+
+  const handleTabChange = (tabId) => {
+    setCurrentTab(tabId);
+
+    const nextTask = resolveTaskForTab(tabId);
+    if (!nextTask) return;
+
+    const taskType = getAdminTaskType(nextTask.taskId, adminTaskGroups);
+    setActiveTaskId(nextTask.taskId);
+    navigate(buildAdminDashboardUrl({
+      taskId: nextTask.taskId,
+      classId,
+      studentId: primaryStudentId,
+      s1: primaryStudentId,
+      s2: secondaryStudentId,
+      taskType,
+    }));
+  };
+
+  const handleTaskSelect = (taskId) => {
+    setActiveTaskId(taskId);
+    const taskType = getAdminTaskType(taskId, adminTaskGroups);
+    navigate(buildAdminDashboardUrl({
+      taskId,
+      classId,
+      studentId: primaryStudentId,
+      s1: primaryStudentId,
+      s2: secondaryStudentId,
+      taskType,
+    }));
+  };
+
+  const handleClassChange = (nextClassId) => {
+    setSelectedClassId(nextClassId);
+    setSelectedStudentId("");
+    setSelectedCompareStudentId("");
+    const taskType = getAdminTaskType(activeTaskId, adminTaskGroups);
+    navigate(buildAdminDashboardUrl({
+      taskId: activeTaskId,
+      classId: nextClassId,
+      taskType,
+    }));
+  };
+
+  const handlePrimaryStudentChange = (nextStudentId) => {
+    setSelectedStudentId(nextStudentId);
+    const taskType = getAdminTaskType(activeTaskId, adminTaskGroups);
+    const nextSecondaryId = taskType === "comparison" && secondaryStudentId === nextStudentId
+      ? students.find((item) => item.student_id !== nextStudentId)?.student_id || ""
+      : secondaryStudentId;
+    if (taskType === "comparison" && nextSecondaryId !== secondaryStudentId) {
+      setSelectedCompareStudentId(nextSecondaryId);
+    }
+    navigate(buildAdminDashboardUrl({
+      taskId: activeTaskId,
+      classId,
+      studentId: nextStudentId,
+      s1: nextStudentId,
+      s2: nextSecondaryId,
+      taskType,
+    }));
+  };
+
+  const handleSecondaryStudentChange = (nextStudentId) => {
+    setSelectedCompareStudentId(nextStudentId);
+    navigate(buildAdminDashboardUrl({
+      taskId: activeTaskId,
+      classId,
+      s1: primaryStudentId,
+      s2: nextStudentId,
+      taskType: "comparison",
+    }));
+  };
+
+  const handleTriggerAnalysis = () => {
+    if (ADMIN_BASIC_TASKS.includes(activeTaskId) || ADMIN_COHORT_TASKS.includes(activeTaskId)) {
+      runTask(activeTaskId);
+    } else if (ADMIN_SINGLE_STUDENT_TASKS.includes(activeTaskId)) {
+      runTask(activeTaskId, { student_id: primaryStudentId });
+    } else if (ADMIN_COMPARISON_TASKS.includes(activeTaskId)) {
+      if (primaryStudentId && secondaryStudentId && primaryStudentId !== secondaryStudentId) {
+        runTask(activeTaskId, { s1: primaryStudentId, s2: secondaryStudentId });
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (!availableTasksData || !activeDataset?.id || !classId) return;
+    if (!isTaskExecutable(currentTaskMeta)) return;
+    setTaskResults({});
+    if (ADMIN_BASIC_TASKS.includes(activeTaskId)) {
+      runTask(activeTaskId);
+    }
+  }, [availableTasksData, activeDataset?.id, classId, activeTaskId, runTask, currentTaskMeta]);
+
+  useEffect(() => {
+    if (!filteredTasks.length || !availableTasksData) return;
+    const activeTask = filteredTasks.find(t => t.taskId === activeTaskId);
+    if (activeTask) return;
+
+    const firstExecutable = filteredTasks.find(isTaskExecutable);
+    if (firstExecutable) setActiveTaskId(firstExecutable.taskId);
+    else setActiveTaskId(filteredTasks[0].taskId);
+  }, [filteredTasks, activeTaskId, availableTasksData]);
+
+  useEffect(() => {
+    setSelectedStudentId("");
+    setSelectedCompareStudentId("");
+  }, [classId]);
+
+  useEffect(() => {
+    if (!appLoading && !activeDataset) {
       navigate("/data-selection", { replace: true });
     }
-  }, [isLoading, activeDataset, navigate]);
+  }, [appLoading, activeDataset, navigate]);
 
-  if (isLoading || !activeDataset) {
+  if (appLoading || !activeDataset || isClassesLoading || isStudentsLoading || isAvailabilityLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+      <div className="h-screen bg-slate-50 flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600" />
+      </div>
+    );
+  }
+
+  if (isClassesError || isStudentsError || isAvailabilityError) {
+    const message =
+      classesQueryError?.message ||
+      studentsQueryError?.message ||
+      availabilityError?.message ||
+      "Unable to load dashboard data.";
+
+    return (
+      <div className="h-screen bg-slate-50 flex items-center justify-center p-6">
+        <div className="max-w-md rounded-lg border border-red-100 bg-white p-5 text-center shadow-sm">
+          <p className="text-sm font-bold text-red-700">Dashboard data could not be loaded</p>
+          <p className="mt-2 text-xs text-slate-500">{message}</p>
+          <button onClick={() => navigate("/data-selection")} className="mt-4 rounded border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-50">
+            Switch Dataset
+          </button>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50">
-      <header className="bg-white border-b border-slate-200 px-4 py-3 flex flex-col gap-3 sm:px-6 sm:py-4 sm:flex-row sm:items-center sm:justify-between">
+    <div className="workspace-fixed-layout h-screen max-h-screen bg-slate-100 p-3 flex flex-col overflow-hidden text-slate-700 font-sans">
+      
+      {/* Light Clean Header */}
+      <header className="flex items-center justify-between px-4 py-2.5 bg-white rounded-t-xl border-b border-slate-200 shrink-0 shadow-sm">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 bg-blue-100 text-blue-600 rounded-xl flex items-center justify-center font-bold flex-shrink-0">
-            A
-          </div>
+          <div className="h-8 w-8 bg-blue-50 text-blue-600 rounded-lg flex items-center justify-center font-bold text-sm border border-blue-200">A</div>
           <div>
-            <h1 className="text-base font-bold text-slate-900 leading-tight sm:text-lg">Admin Dashboard</h1>
-            <p className="text-xs font-medium text-slate-500">
-              Active Dataset: <span className="text-blue-600">{activeDataset.name}</span>
-            </p>
+            <h1 className="text-sm font-bold text-slate-900">Admin Executive Report Canvas</h1>
+            <p className="text-[10px] text-slate-500">Dataset: <span className="text-blue-600 font-semibold">{activeDataset.name}</span></p>
           </div>
         </div>
-        <div className="flex gap-2 sm:gap-3">
-          <button
-            onClick={() => navigate("/data-selection")}
-            className="flex-1 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg px-3 py-2 transition-colors sm:flex-none sm:px-4"
+
+        <div className="flex items-center gap-3">
+          <select
+            value={classId}
+            onChange={(e) => handleClassChange(e.target.value)}
+            className="px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
           >
-            Switch Dataset
-          </button>
-          <button
-            onClick={() => navigate("/choose-role")}
-            className="flex-1 text-sm font-medium text-slate-600 hover:text-slate-900 border border-slate-200 rounded-lg px-3 py-2 hover:bg-slate-50 transition-colors sm:flex-none sm:px-4"
-          >
-            Switch Role
-          </button>
+            {classes.map((c) => (
+              <option key={c.class_id} value={c.class_id}>
+                {c.course_id} - {c.class_run} ({c.student_count} students)
+              </option>
+            ))}
+          </select>
+          <button onClick={() => navigate("/data-selection")} className="text-xs font-semibold text-blue-600 bg-blue-50 hover:bg-blue-100 border border-blue-200 rounded px-3 py-1.5 transition-colors">Switch Dataset</button>
+          <button onClick={() => navigate("/choose-role")} className="text-xs font-semibold text-slate-600 bg-white border border-slate-200 rounded px-3 py-1.5 hover:bg-slate-50 transition-colors">Switch Role</button>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto p-4 sm:p-6 md:p-10">
-        <div className="bg-white border-2 border-dashed border-slate-200 rounded-2xl p-8 text-center min-h-[40vh] flex flex-col items-center justify-center sm:p-12 sm:min-h-[60vh]">
-          <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4 text-slate-400">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path>
-              <path d="M22 12A10 10 0 0 0 12 2v10z"></path>
-            </svg>
+      {/* Main Framework Grid */}
+      <main className="flex-1 grid grid-cols-[340px_1fr] min-h-0 bg-white rounded-b-xl overflow-hidden shadow-sm border border-t-0 border-slate-200">
+        
+        {/* Left Control Side Panel */}
+        <section className="border-r border-slate-200 flex flex-col min-h-0 bg-slate-50/50">
+          
+          {/* Category Tabs Menu Dropdown */}
+          <div className="p-3 border-b border-slate-200 bg-white shrink-0">
+            <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Report Page / Analysis Category</label>
+            <select
+              value={currentTab}
+              onChange={(e) => handleTabChange(e.target.value)}
+              className="w-full px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 font-semibold focus:outline-none focus:border-blue-500"
+            >
+              {WORKSPACE_TABS.map(tab => (
+                <option key={tab.id} value={tab.id}>{tab.label}</option>
+              ))}
+            </select>
           </div>
-          <h2 className="text-2xl font-bold text-slate-700 mb-2">Admin Analytics Content</h2>
-          <p className="text-slate-500 max-w-md">
-            This dashboard is currently under construction. It will display class-wide analytics and performance monitoring tools based on the <b>{activeDataset.name}</b> data.
-          </p>
-        </div>
+
+          {/* Task Selection Rows Container */}
+          <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar px-3 py-2 space-y-1.5">
+            {filteredTasks.map((task) => {
+              const executable = isTaskExecutable(task);
+              return (
+                <button
+                  key={task.taskId}
+                  onClick={() => handleTaskSelect(task.taskId)}
+                  disabled={!executable}
+                  title={executable ? task.taskName : getDisabledReason(task)}
+                  className={`w-full rounded-lg border p-2.5 text-left transition-all block disabled:cursor-not-allowed ${
+                    activeTaskId === task.taskId
+                      ? "border-blue-500 bg-blue-50/60 shadow-sm"
+                      : executable
+                        ? "border-slate-100 bg-white hover:border-slate-300 hover:bg-slate-50"
+                        : "border-slate-100 bg-slate-50 opacity-75"
+                  }`}
+                >
+                  <div className="flex items-start gap-2">
+                    <code className="shrink-0 rounded bg-blue-50 px-1.5 py-0.5 text-[10px] font-mono font-bold text-blue-600 border border-blue-100">
+                      {task.taskId}
+                    </code>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <p className="truncate text-xs font-bold text-slate-800">{task.taskName}</p>
+                        <span className={`shrink-0 rounded border px-1.5 py-0.5 text-[9px] font-bold ${getAvailabilityBadgeClass(task)}`}>
+                          {getAvailabilityLabel(task)}
+                        </span>
+                      </div>
+                      <p className="mt-0.5 text-[10px] text-slate-400 truncate font-medium">{task.actionableQuestion}</p>
+                      {!executable && (
+                        <p className="mt-1 line-clamp-2 text-[10px] font-medium text-slate-500">{getDisabledReason(task)}</p>
+                      )}
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+            {filteredTasks.length === 0 && (
+              <div className="rounded-lg border border-slate-100 bg-white p-3 text-xs text-slate-400">
+                No admin tasks are available for this dataset/class.
+              </div>
+            )}
+          </div>
+
+          {/* Scope Controls Configuration Box */}
+          <div className="border-t border-slate-200 bg-white p-3 shrink-0 space-y-2">
+            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Query Execution Scope</div>
+            
+            {ADMIN_SINGLE_STUDENT_TASKS.includes(activeTaskId) && (
+              <div>
+                  <span className="block text-[10px] text-slate-400 font-medium mb-1">Target Student ID</span>
+                <select value={primaryStudentId} onChange={(e) => handlePrimaryStudentChange(e.target.value)} className="w-full rounded-lg bg-slate-50 border border-slate-200 px-2 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-blue-500">
+                  {students.map(s => <option key={s.student_id} value={s.student_id}>{s.student_id}</option>)}
+                </select>
+              </div>
+            )}
+
+            {ADMIN_COMPARISON_TASKS.includes(activeTaskId) && (
+              <div className="grid grid-cols-2 gap-2">
+                <div>
+                  <span className="block text-[10px] text-slate-400 font-medium mb-1">Student 1 ID</span>
+                  <select value={primaryStudentId} onChange={(e) => handlePrimaryStudentChange(e.target.value)} className="w-full rounded-lg bg-slate-50 border border-slate-200 px-2 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-blue-500">
+                    {students.map(s => <option key={s.student_id} value={s.student_id}>{s.student_id}</option>)}
+                  </select>
+                </div>
+                <div>
+                  <span className="block text-[10px] text-slate-400 font-medium mb-1">Student 2 ID</span>
+                  <select value={secondaryStudentId} onChange={(e) => handleSecondaryStudentChange(e.target.value)} className="w-full rounded-lg bg-slate-50 border border-slate-200 px-2 py-1.5 text-xs text-slate-700 focus:outline-none focus:border-blue-500">
+                    {students.map(s => <option key={s.student_id} value={s.student_id}>{s.student_id}</option>)}
+                  </select>
+                </div>
+              </div>
+            )}
+
+            <button
+              onClick={handleTriggerAnalysis}
+              disabled={isCurrentTaskLoading || !isTaskExecutable(currentTaskMeta)}
+              className="w-full rounded-lg py-2 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 transition-all text-white shadow-sm"
+            >
+              {isCurrentTaskLoading ? "⚡ Analyzing Metrics..." : "🚀 Run Analysis View"}
+            </button>
+          </div>
+        </section>
+
+        {/* Right Output Visual Area Canvas */}
+        <section className="flex flex-col min-h-0 bg-slate-50 p-4">
+          {currentTaskMeta ? (
+            <div className="h-full flex flex-col min-h-0 space-y-3">
+              <div className="bg-white p-3 rounded-xl border border-slate-200 shrink-0 shadow-sm">
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-blue-50 text-blue-600 border border-blue-100 mr-2">{currentTaskMeta.taskId}</span>
+                <span className="text-sm font-bold text-slate-800">{currentTaskMeta.taskName}</span>
+                <span className={`ml-2 rounded border px-1.5 py-0.5 text-[10px] font-bold ${getAvailabilityBadgeClass(currentTaskMeta)}`}>
+                  {getAvailabilityLabel(currentTaskMeta)}
+                </span>
+                <p className="text-xs text-slate-500 mt-1 font-medium">{currentTaskMeta.actionableQuestion}</p>
+                {!isTaskExecutable(currentTaskMeta) && (
+                  <p className="mt-2 rounded border border-slate-100 bg-slate-50 px-2 py-1.5 text-xs font-medium text-slate-500">
+                    {getDisabledReason(currentTaskMeta)}
+                  </p>
+                )}
+              </div>
+
+              {/* Layout optimization: Grid with responsive columns, chart area takes up full space */}
+              <div className="flex-1 min-h-0 grid grid-cols-1 xl:grid-cols-[1fr_380px] gap-3">
+                
+                {/* Chart Block Area Expanded */}
+                <div className="bg-white rounded-xl border border-slate-200 p-5 flex flex-col min-h-0 overflow-hidden shadow-sm">
+                  <div className="flex-1 w-full min-h-0 overflow-y-auto custom-scrollbar pr-1">
+                    <ChartRenderer
+                      taskMeta={currentTaskMeta}
+                      datasets={currentResult?.datasets ?? null}
+                      isLoading={isCurrentTaskLoading}
+                      error={currentResult?.error ?? (!isTaskExecutable(currentTaskMeta) ? getDisabledReason(currentTaskMeta) : null)}
+                    />
+                  </div>
+                </div>
+
+                {/* AI Explanation Side Cards Panel */}
+                <div className="bg-white rounded-xl border border-slate-200 flex flex-col min-h-0 overflow-hidden shadow-sm">
+                  <div className="p-3 border-b border-slate-100 bg-slate-50/50 flex items-center gap-2">
+                    <span className="w-2 h-2 bg-emerald-500 rounded-full"/>
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-600">AI Narrative Analysis</h4>
+                  </div>
+                  <div className="flex-1 min-h-0 overflow-y-auto custom-scrollbar p-3 text-slate-600">
+                    {currentResult?.datasets ? (
+                      <AIInsightPanel
+                        taskId={currentResult.taskId}
+                        executionId={currentResult.executionId}
+                        datasets={currentResult.datasets}
+                        meta={currentResult.meta}
+                        studentContext={null}
+                      />
+                    ) : (
+                      <div className="text-xs text-slate-400 italic text-center pt-12">Awaiting processing pipeline execution output results...</div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="h-full flex items-center justify-center text-slate-400 text-xs italic">Select an administrative data node framework item from the sidebar registry.</div>
+          )}
+        </section>
       </main>
     </div>
   );

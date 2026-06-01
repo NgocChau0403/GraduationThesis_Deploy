@@ -118,6 +118,8 @@ export async function insertNormalizedEntities({
     results.assessment_result = await insertInChunks(tx.assessmentResult, deduplicated.assessment_result, chunkSize);
     results.event = await insertInChunks(tx.event, deduplicated.event, chunkSize);
     results.engagement = await insertInChunks(tx.engagement, deduplicated.engagement, chunkSize);
+  }, {
+    timeout: 120000
   });
 
   return {

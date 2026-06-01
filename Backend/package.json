@@ -7,7 +7,13 @@
     "start": "node src/server.js",
     "dev": "nodemon --watch src src/server.js",
     "migrate": "prisma migrate dev",
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "samples:reseed": "node scripts/reseedSampleDatasets.mjs",
+    "samples:reseed:apply": "node scripts/reseedSampleDatasets.mjs --apply",
+    "registry:validate": "node scripts/validateRegistry.js",
+    "registry:stats": "node scripts/registryStats.js",
+    "registry:runtime": "node scripts/validateTasksAgainstDataset.js",
+    "registry:freeze": "node scripts/freezeRegistry.js"
   },
   "prisma": {
     "schema": "prisma/schema.prisma"
@@ -19,6 +25,7 @@
   "dependencies": {
     "@prisma/adapter-pg": "^7.7.0",
     "@prisma/client": "^7.7.0",
+    "axios": "^1.16.1",
     "cors": "^2.8.6",
     "csv-parser": "^3.2.0",
     "dotenv": "^17.4.2",

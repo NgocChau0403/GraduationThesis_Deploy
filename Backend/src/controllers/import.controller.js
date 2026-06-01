@@ -11,6 +11,17 @@ import {
   getUploadSession,
   updateUploadSession
 } from "../services/uploadSession.store.js";
+import {
+  listProfilingMappingLogs,
+  readProfilingMappingLog,
+  writeProfilingMappingLog
+} from "../services/profilingMappingLog.service.js";
+import {
+  listImportConversionLogs,
+  readImportConversionLog,
+  writeImportConversionLog
+} from "../services/importConversionLog.service.js";
+import { activateDatasetByBatchId } from "../services/activeDataset.service.js";
 
 import { detectCsvDelimiter } from "../services/fileFormat.service.js";
 import { normalizeText } from "../utils/textUtils.js";
@@ -19,6 +30,7 @@ import {
   detectDatasetType,
   detectBundleSchema
 } from "../services/schemaDetect.service.js";
+import { SAMPLE_BATCHES } from "../config/sampleBatches.js";
 
 // ==========================================
 // HELPERS
@@ -27,6 +39,53 @@ import {
 
 function isPlainObject(value) {
   return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+
+const SAMPLE_DATASETS = {
+  OULAD: {
+    id: SAMPLE_BATCHES.OULAD.batch_id,
+    name: SAMPLE_BATCHES.OULAD.batch_name,
+    type: "sample",
+    source: "OULAD",
+    legacyIds: ["OULAD"]
+  },
+  UCI: {
+    id: SAMPLE_BATCHES.UCI_MAT.batch_id,
+    name: SAMPLE_BATCHES.UCI_MAT.batch_name,
+    type: "sample",
+    source: "UCI",
+    legacyIds: ["UCI", SAMPLE_BATCHES.UCI_POR.batch_id]
+  }
+};
+
+function getDefaultSampleDataset() {
+  return SAMPLE_DATASETS.OULAD;
+}
+
+function getSampleDatasetById(id) {
+  return (
+    Object.values(SAMPLE_DATASETS).find(
+      (dataset) => dataset.id === id || dataset.legacyIds?.includes(id)
+    ) || null
+  );
+}
+
+function toActiveDatasetFromAppState(appState) {
+  if (!appState || !appState.active_dataset_id) {
+    return {
+      ...getDefaultSampleDataset(),
+      setAt: null
+    };
+  }
+
+  const sampleDataset = getSampleDatasetById(appState.active_dataset_id);
+  return {
+    id: appState.active_dataset_id,
+    name: appState.active_dataset_name || sampleDataset?.name || null,
+    type: appState.active_dataset_type || sampleDataset?.type || null,
+    source: appState.active_dataset_source || sampleDataset?.source || null,
+    setAt: appState.active_dataset_set_at
+  };
 }
 
 function buildFileId(fileName, index) {
@@ -153,13 +212,6 @@ async function upsertImportBatchHistory({
   const rowCount = countImportedRows({ runTargets, bundleMode, result });
 
   await prisma.$transaction(async (tx) => {
-    // 1. Ensure old active datasets are deactivated
-    await tx.importBatch.updateMany({
-      where: { is_active: true },
-      data: { is_active: false }
-    });
-
-    // 2. Upsert the new batch as active
     await tx.importBatch.upsert({
       where: { batch_id: importBatchId },
       update: {
@@ -167,7 +219,7 @@ async function upsertImportBatchHistory({
         source_dataset: sourceDataset,
         learning_mode: learningMode,
         imported_at: importedAt,
-        is_active: true, // AUTO-SET ACTIVE
+        is_active: false,
         is_sample: false,
         row_count: rowCount,
         status: "completed"
@@ -178,35 +230,15 @@ async function upsertImportBatchHistory({
         source_dataset: sourceDataset,
         learning_mode: learningMode,
         imported_at: importedAt,
-        is_active: true, // AUTO-SET ACTIVE
+        is_active: false,
         is_sample: false,
         row_count: rowCount,
         status: "completed"
       }
     });
-
-    // 3. Update AppState
-    await tx.appState.upsert({
-      where: { id: 1 },
-      update: {
-        active_dataset_id: importBatchId,
-        active_dataset_name: batchName,
-        active_dataset_type: "custom",
-        active_dataset_source: sourceDataset,
-        active_dataset_set_at: importedAt,
-        is_first_use: false
-      },
-      create: {
-        id: 1,
-        active_dataset_id: importBatchId,
-        active_dataset_name: batchName,
-        active_dataset_type: "custom",
-        active_dataset_source: sourceDataset,
-        active_dataset_set_at: importedAt,
-        is_first_use: false
-      }
-    });
   });
+
+  await activateDatasetByBatchId(importBatchId, { setAt: importedAt });
 }
 
 // ==========================================
@@ -250,12 +282,16 @@ export async function profileImportController(req, res) {
         separator: delimiterInfo.delimiter
       });
 
+      console.log(`[DEBUG] File ${file.originalname} - Delimiter: ${delimiterInfo.delimiter}, rawRows: ${rawRows.length}`);
+
       // ------------------------------------------
       // STEP 3 — Profile using same detected delimiter
       // ------------------------------------------
       const profilingResult = await profileCSV(file.path, {
         separator: delimiterInfo.delimiter
       });
+
+      console.log(`[DEBUG] File ${file.originalname} - profiling columns count: ${profilingResult.columns.length}`);
 
       // ------------------------------------------
       // STEP 4 — Detect dataset type + role
@@ -337,14 +373,14 @@ export async function profileImportController(req, res) {
     // STEP 8 — Rebuild mapping suggestions if
     // final dataset/source resolution changed
     // ------------------------------------------
-    const normalizedUploadedFiles = uploadedFiles.map((item) => ({
+    const normalizedUploadedFiles = await Promise.all(uploadedFiles.map(async (item) => ({
       ...item,
-      mappingSuggestion: suggestMappingsFromProfiling({
+      mappingSuggestion: await suggestMappingsFromProfiling({
         profilingResult: item.profilingResult,
         datasetName: resolvedDatasetName,
         sourceDataset: resolvedSourceDataset
       })
-    }));
+    })));
 
     const bundleProfilingResult = buildBundleProfilingResult(normalizedUploadedFiles);
     const bundleMappingSuggestion = buildBundleMappingSuggestion({
@@ -386,11 +422,30 @@ export async function profileImportController(req, res) {
       )
     );
 
+    let evaluationLog = null;
+
+    try {
+      evaluationLog = await writeProfilingMappingLog({
+        sessionId,
+        requestedDatasetName: datasetNameInput,
+        requestedSourceDataset: sourceDatasetInput,
+        resolvedDatasetName,
+        resolvedSourceDataset,
+        uploadedFiles: normalizedUploadedFiles,
+        bundleSchema,
+        bundleProfilingResult,
+        bundleMappingSuggestion
+      });
+    } catch (logError) {
+      console.warn("[EvaluationLog] Failed to write profiling mapping log:", logError);
+    }
+
     return res.json({
       success: true,
       sessionId,
       datasetName: resolvedDatasetName,
       sourceDataset: resolvedSourceDataset,
+      evaluationLog,
       bundleSchema,
       bundleProfilingResult,
       bundleMappingSuggestion,
@@ -410,6 +465,122 @@ export async function profileImportController(req, res) {
     return res.status(500).json({
       success: false,
       message: "Import profiling failed.",
+      error: error.message
+    });
+  }
+}
+
+// ==========================================
+// 5.1. /api/import/profile-logs
+// Lists automatic profiling/mapping evaluation logs
+// ==========================================
+
+export async function listProfilingMappingLogsController(req, res) {
+  try {
+    const limit = Number(req.query.limit || 50);
+    const logs = await listProfilingMappingLogs({
+      limit: Number.isFinite(limit) && limit > 0 ? limit : 50
+    });
+
+    return res.json({
+      success: true,
+      logs
+    });
+  } catch (error) {
+    console.error("List profiling mapping logs failed:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "List profiling mapping logs failed.",
+      error: error.message
+    });
+  }
+}
+
+// ==========================================
+// 5.2. /api/import/profile-logs/:logId
+// Returns one automatic profiling/mapping evaluation log
+// ==========================================
+
+export async function getProfilingMappingLogController(req, res) {
+  try {
+    const log = await readProfilingMappingLog(req.params.logId);
+
+    if (!log) {
+      return res.status(404).json({
+        success: false,
+        message: "Profiling mapping log not found."
+      });
+    }
+
+    return res.json({
+      success: true,
+      log
+    });
+  } catch (error) {
+    console.error("Read profiling mapping log failed:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Read profiling mapping log failed.",
+      error: error.message
+    });
+  }
+}
+
+// ==========================================
+// 5.3. /api/import/import-logs
+// Lists automatic import/conversion evaluation logs
+// ==========================================
+
+export async function listImportConversionLogsController(req, res) {
+  try {
+    const limit = Number(req.query.limit || 50);
+    const logs = await listImportConversionLogs({
+      limit: Number.isFinite(limit) && limit > 0 ? limit : 50
+    });
+
+    return res.json({
+      success: true,
+      logs
+    });
+  } catch (error) {
+    console.error("List import conversion logs failed:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "List import conversion logs failed.",
+      error: error.message
+    });
+  }
+}
+
+// ==========================================
+// 5.4. /api/import/import-logs/:logId
+// Returns one automatic import/conversion evaluation log
+// ==========================================
+
+export async function getImportConversionLogController(req, res) {
+  try {
+    const log = await readImportConversionLog(req.params.logId);
+
+    if (!log) {
+      return res.status(404).json({
+        success: false,
+        message: "Import conversion log not found."
+      });
+    }
+
+    return res.json({
+      success: true,
+      log
+    });
+  } catch (error) {
+    console.error("Read import conversion log failed:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Read import conversion log failed.",
       error: error.message
     });
   }
@@ -619,6 +790,7 @@ export async function runImportController(req, res) {
     // ------------------------------------------
     if (runTargets.length > 0) {
       const importBatchId = options.importBatchId || sessionId;
+      const importStartedAt = new Date();
       let allSuccess = true;
       const results = [];
 
@@ -666,12 +838,38 @@ export async function runImportController(req, res) {
         });
       }
 
+      const appState = allSuccess
+        ? await prisma.appState.findUnique({ where: { id: 1 } })
+        : null;
+
+      const importCompletedAt = new Date();
+      let importConversionLog = null;
+
+      try {
+        importConversionLog = await writeImportConversionLog({
+          session: {
+            ...session,
+            sessionId
+          },
+          runTargets,
+          results,
+          success: allSuccess,
+          importBatchId,
+          importStartedAt,
+          importCompletedAt
+        });
+      } catch (logError) {
+        console.warn("[EvaluationLog] Failed to write import conversion log:", logError);
+      }
+
       return res.json({
         success: allSuccess,
         sessionId,
         bundleMode: runTargets.length > 1,
         importBatchId,
-        results
+        importConversionLog,
+        results,
+        activeDataset: allSuccess ? toActiveDatasetFromAppState(appState) : null
       });
     }
   } catch (error) {

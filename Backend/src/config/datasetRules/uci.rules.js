@@ -95,7 +95,7 @@ export function mapUciColumn({ rawColumn }) {
     failures: {
       canonical_field: "previous_attempt_count",
       transform: "cast_int",
-      entity_scope: "student",
+      entity_scope: "enrollment",
       confidence: 0.95
     },
     address: {
@@ -163,9 +163,9 @@ export function mapUciColumn({ rawColumn }) {
       transform: "cast_int",
       status: "suggested",
       confidence: 0.96,
-      entity_scope: "engagement_event",
+      entity_scope: "enrollment",
       review_comment:
-        'Detected UCI absences column. This should later be materialized as engagement summary logic.'
+        'Detected UCI absences column — mapped to enrollment.absences (UCI-only field).'
     };
   }
 
