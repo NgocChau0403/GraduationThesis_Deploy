@@ -40,18 +40,71 @@ export default function MetricCardView({ data, config }) {
       {items.map((metric) => (
         <div 
           key={metric.key}
-          className="bg-slate-50 rounded-lg p-4 border border-slate-100 flex flex-col justify-center"
+          className="bg-slate-50 rounded-lg p-4 border border-slate-100 flex flex-col justify-center min-w-0"
         >
-          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">
+          <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1 truncate">
             {metric.label}
           </span>
-          <span className="text-2xl font-bold text-slate-800 font-mono">
-            {formatCellValue(metric.value)}
-          </span>
+          <MetricValue value={metric.value} />
         </div>
       ))}
     </div>
   );
+}
+
+function MetricValue({ value, size = "default" }) {
+  if (isNumericMetricValue(value)) {
+    const sizeClass = size === "compact" ? "text-xl" : "text-2xl";
+    return (
+      <span className={`${sizeClass} font-bold text-slate-800 font-mono`}>
+        {formatCellValue(value)}
+      </span>
+    );
+  }
+
+  const displayValue = formatCategoricalMetricValue(value);
+  return (
+    <span
+      className="mt-2 block max-w-full min-w-0 rounded-md bg-slate-100 px-2.5 py-1 text-sm font-semibold leading-snug text-slate-700 whitespace-normal break-words [overflow-wrap:anywhere]"
+      title={String(value ?? "")}
+    >
+      {displayValue}
+    </span>
+  );
+}
+
+function isNumericMetricValue(value) {
+  if (typeof value === "number") return Number.isFinite(value);
+  if (typeof value !== "string") return false;
+
+  const trimmed = value.trim();
+  if (!trimmed) return false;
+
+  return /^-?(\d+|\d{1,3}(,\d{3})+)(\.\d+)?%?$/.test(trimmed);
+}
+
+function formatCategoricalMetricValue(value) {
+  if (value === null || value === undefined) return formatCellValue(value);
+  if (typeof value !== "string") return formatCellValue(value);
+
+  const trimmed = value.trim();
+  if (!trimmed) return formatCellValue(value);
+
+  const displayLabels = {
+    weighted_by_assessment_weight: "Weighted by assessment weight",
+    unweighted_average_fallback: "Unweighted average fallback",
+    passing_but_below_target: "Passing but below target",
+    below_pass_threshold: "Below pass threshold",
+    strong_relative_performance: "Strong relative performance",
+    on_track: "On track",
+  };
+
+  if (displayLabels[trimmed]) return displayLabels[trimmed];
+
+  return trimmed
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
 function RiskStatusCard({ card }) {
@@ -84,14 +137,12 @@ function RiskStatusCard({ card }) {
           {card.metrics.map((metric) => (
             <div
               key={metric.key}
-              className="bg-slate-50 rounded-lg p-3 border border-slate-200 flex flex-col gap-1"
+              className="bg-slate-50 rounded-lg p-3 border border-slate-200 flex flex-col gap-1 min-w-0"
             >
-              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
+              <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider truncate">
                 {metric.label}
               </span>
-              <span className="text-xl font-bold text-slate-800 font-mono">
-                {formatRiskMetric(metric)}
-              </span>
+              <MetricValue value={formatRiskMetric(metric)} size="compact" />
             </div>
           ))}
         </div>

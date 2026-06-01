@@ -53,7 +53,9 @@ export default function App() {
 
           {/* 5. Dashboards */}
           <Route path="/student/dashboard" element={<StudentDashboardPage />} />
+          <Route path="/student/dashboard/:taskId" element={<StudentDashboardPage />} />
           <Route path="/admin/dashboard"   element={<AdminDashboardPage />} />
+          <Route path="/admin/dashboard/:taskId" element={<AdminDashboardPage />} />
 
           {/* 5. Import Workspace — Multi-step Flow */}
           <Route path="/import" element={<ImportPage />}>

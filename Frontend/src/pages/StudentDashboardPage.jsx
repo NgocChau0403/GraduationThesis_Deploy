@@ -1,15 +1,19 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useAppContext } from "../contexts/AppContext";
 import { runAnalyticsTask, getStudents, fetchClasses, fetchAvailableTasks } from "../services/analyticsApi";
 import ChartRenderer from "../components/ChartRenderer";
 import AIInsightPanel from "../components/AIInsightPanel";
+import {
+  buildStudentDashboardUrl,
+  resolveStudentDashboardUrlState,
+} from "../utils/dashboardUrlState";
 
-const STUDENT_BASIC_TASKS = ["S-B01", "S-B02", "S-T03"];
+const STUDENT_BASIC_TASKS = ["S-B01", "S-B02"];
 const STUDENT_CONDITIONAL_TASKS = ["S-B03"];
 const STUDENT_ADVANCED_TASKS = [
-  "S-T00", "S-T01", "S-T02", "S-T04", "S-T05", "S-T06", "S-T07",
+  "S-T00", "S-T03", "S-T01", "S-T02", "S-T04", "S-T05", "S-T06", "S-T07",
   "S-T08", "S-T09", "S-T10", "S-T11", "S-T12", "S-T13", "S-T14", "S-T15",
 ];
 
@@ -20,8 +24,8 @@ const STUDENT_ALLOWED_TASK_IDS = new Set([
 ]);
 
 const WORKSPACE_TABS = [
-  { id: "student_basic", label: "Student - Core Stat Tasks", prefixes: STUDENT_BASIC_TASKS },
-  { id: "student_advanced", label: "Student - Choice Electives", prefixes: STUDENT_ADVANCED_TASKS },
+  { id: "student_basic", label: "Student - Basic Tasks", prefixes: STUDENT_BASIC_TASKS },
+  { id: "student_advanced", label: "Student - Advanced Tasks", prefixes: STUDENT_ADVANCED_TASKS },
 ];
 
 function isTaskExecutable(task) {
@@ -59,6 +63,9 @@ function getAvailabilityBadgeClass(task) {
 
 export default function StudentDashboardPage() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { taskId: routeTaskId } = useParams();
+  const [searchParams] = useSearchParams();
   const { activeDataset, isLoading: appLoading } = useAppContext();
   const [currentTab, setCurrentTab] = useState("student_basic");
   const [activeTaskId, setActiveTaskId] = useState(STUDENT_BASIC_TASKS[0]);
@@ -68,7 +75,7 @@ export default function StudentDashboardPage() {
     queryFn: () => fetchClasses(activeDataset?.id),
     enabled: !!activeDataset?.id,
   });
-  const classes = classesData?.classes ?? [];
+  const classes = useMemo(() => classesData?.classes ?? [], [classesData?.classes]);
   const [selectedClassId, setSelectedClassId] = useState("");
   const classId = selectedClassId || classes[0]?.class_id || "";
 
@@ -77,7 +84,7 @@ export default function StudentDashboardPage() {
     queryFn: () => getStudents(activeDataset?.id, classId),
     enabled: !!activeDataset?.id && !!classId,
   });
-  const students = studentsData?.students ?? [];
+  const students = useMemo(() => studentsData?.students ?? [], [studentsData?.students]);
 
   const {
     data: availableTasksData,
@@ -139,16 +146,114 @@ export default function StudentDashboardPage() {
     return allStudentTasks.filter(t => combinedPrefixes.includes(t.taskId));
   }, [allStudentTasks, activeTabObj]);
 
+  const resolveTaskForTab = useCallback((tabId) => {
+    const targetTab = WORKSPACE_TABS.find(t => t.id === tabId);
+    if (!targetTab) return null;
+
+    const candidateTasks = targetTab.prefixes
+      .map(taskId => allStudentTasks.find(task => task.taskId === taskId))
+      .filter(Boolean);
+
+    return (
+      candidateTasks.find(isTaskExecutable) ||
+      candidateTasks[0] ||
+      null
+    );
+  }, [allStudentTasks]);
+
   const currentTaskMeta = useMemo(() => allStudentTasks.find(t => t.taskId === activeTaskId), [allStudentTasks, activeTaskId]);
   const currentResult = taskResults[activeTaskId];
   const isCurrentTaskLoading = loadingTasks.has(activeTaskId);
 
+  useEffect(() => {
+    if (isClassesLoading || !classes.length) return;
+    const requestedClassId = searchParams.get("classId");
+    if (requestedClassId && classes.some((item) => item.class_id === requestedClassId) && requestedClassId !== classId) {
+      setSelectedClassId(requestedClassId);
+      setSelectedStudentId("");
+    }
+  }, [classes, classId, isClassesLoading, searchParams]);
+
+  useEffect(() => {
+    if (
+      appLoading ||
+      isClassesLoading ||
+      isStudentsLoading ||
+      isAvailabilityLoading ||
+      !activeDataset ||
+      !availableTasksData ||
+      !classes.length ||
+      !students.length ||
+      !allStudentTasks.length
+    ) {
+      return;
+    }
+
+    const resolved = resolveStudentDashboardUrlState({
+      routeTaskId,
+      searchParams,
+      tasks: allStudentTasks,
+      classes,
+      students,
+      tabs: WORKSPACE_TABS,
+      defaultTaskId: STUDENT_BASIC_TASKS[0],
+      currentUrl: `${location.pathname}${location.search}`,
+    });
+
+    if (resolved.classId && resolved.classId !== classId) {
+      setSelectedClassId(resolved.classId);
+      setSelectedStudentId("");
+      return;
+    }
+    if (resolved.studentId && resolved.studentId !== studentId) setSelectedStudentId(resolved.studentId);
+    if (resolved.tabId && resolved.tabId !== currentTab) setCurrentTab(resolved.tabId);
+    if (resolved.taskId && resolved.taskId !== activeTaskId) setActiveTaskId(resolved.taskId);
+    if (resolved.shouldReplaceUrl) navigate(resolved.canonicalUrl, { replace: true });
+  }, [
+    activeDataset,
+    activeTaskId,
+    allStudentTasks,
+    appLoading,
+    availableTasksData,
+    classId,
+    classes,
+    currentTab,
+    isAvailabilityLoading,
+    isClassesLoading,
+    isStudentsLoading,
+    location.pathname,
+    location.search,
+    navigate,
+    routeTaskId,
+    searchParams,
+    studentId,
+    students,
+  ]);
+
   const handleTabChange = (tabId) => {
     setCurrentTab(tabId);
-    const targetTab = WORKSPACE_TABS.find(t => t.id === tabId);
-    if (targetTab && targetTab.prefixes.length > 0) {
-      setActiveTaskId(targetTab.prefixes[0]);
-    }
+
+    const nextTask = resolveTaskForTab(tabId);
+    if (!nextTask) return;
+
+    setActiveTaskId(nextTask.taskId);
+    navigate(buildStudentDashboardUrl({ taskId: nextTask.taskId, classId, studentId }));
+  };
+
+  const handleTaskSelect = (taskId) => {
+    setActiveTaskId(taskId);
+    navigate(buildStudentDashboardUrl({ taskId, classId, studentId }));
+  };
+
+  const handleClassChange = (nextClassId) => {
+    setSelectedClassId(nextClassId);
+    setSelectedStudentId("");
+    navigate(buildStudentDashboardUrl({ taskId: activeTaskId, classId: nextClassId, studentId: "" }));
+  };
+
+  const handleStudentChange = (nextStudentId) => {
+    setSelectedStudentId(nextStudentId);
+    navigate(buildStudentDashboardUrl({ taskId: activeTaskId, classId, studentId: nextStudentId }));
   };
 
   const handleTriggerAnalysis = () => {
@@ -168,11 +273,11 @@ export default function StudentDashboardPage() {
   useEffect(() => {
     if (!filteredTasks.length || !availableTasksData) return;
     const activeTask = filteredTasks.find(t => t.taskId === activeTaskId);
-    if (isTaskExecutable(activeTask)) return;
+    if (activeTask) return;
 
     const firstExecutable = filteredTasks.find(isTaskExecutable);
     if (firstExecutable) setActiveTaskId(firstExecutable.taskId);
-    else if (!activeTask) setActiveTaskId(filteredTasks[0].taskId);
+    else setActiveTaskId(filteredTasks[0].taskId);
   }, [filteredTasks, activeTaskId, availableTasksData]);
 
   if (appLoading || !activeDataset || isClassesLoading || isStudentsLoading || isAvailabilityLoading) {
@@ -217,11 +322,11 @@ export default function StudentDashboardPage() {
         </div>
 
         <div className="flex items-center gap-2">
-          <select value={classId} onChange={(e) => { setSelectedClassId(e.target.value); setSelectedStudentId(""); }} className="px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 font-semibold focus:outline-none focus:border-emerald-500">
+          <select value={classId} onChange={(e) => handleClassChange(e.target.value)} className="px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 font-semibold focus:outline-none focus:border-emerald-500">
             {classes.map(c => <option key={c.class_id} value={c.class_id}>{c.course_id} – {c.class_run} ({c.student_count} students)</option>)}
           </select>
 
-          <select value={studentId} onChange={(e) => setSelectedStudentId(e.target.value)} className="px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 font-semibold focus:outline-none focus:border-emerald-500">
+          <select value={studentId} onChange={(e) => handleStudentChange(e.target.value)} className="px-2 py-1.5 rounded-lg bg-slate-50 border border-slate-200 text-xs text-slate-700 font-semibold focus:outline-none focus:border-emerald-500">
             {students.map(s => <option key={s.student_id} value={s.student_id}>{s.student_id} {s.gender ? `(${s.gender})` : ""}</option>)}
           </select>
 
@@ -254,7 +359,7 @@ export default function StudentDashboardPage() {
               return (
                 <button
                   key={task.taskId}
-                  onClick={() => setActiveTaskId(task.taskId)}
+                  onClick={() => handleTaskSelect(task.taskId)}
                   disabled={!executable}
                   title={executable ? task.taskName : getDisabledReason(task)}
                   className={`w-full rounded-lg border p-2.5 text-left transition-all block disabled:cursor-not-allowed ${
@@ -327,7 +432,7 @@ export default function StudentDashboardPage() {
                 
                 {/* Expanded Chart Card Panel */}
                 <div className="bg-white rounded-xl border border-slate-200 p-5 flex flex-col min-h-0 overflow-hidden shadow-sm">
-                  <div className="flex-1 w-full h-full min-h-0 block">
+                  <div className="flex-1 w-full min-h-0 overflow-y-auto custom-scrollbar pr-1">
                     <ChartRenderer
                       taskMeta={currentTaskMeta}
                       datasets={currentResult?.datasets ?? null}
