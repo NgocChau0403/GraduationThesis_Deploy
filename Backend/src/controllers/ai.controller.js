@@ -78,6 +78,46 @@ function buildSemanticContext(task, datasets) {
   };
 }
 
+function buildAISummaryConfig(task) {
+  if (!task?.aiSummaryType) return null;
+
+  return {
+    summary_type:           task.aiSummaryType,
+    target_group:           task.aiTargetGroup ?? null,
+    comparison_groups:      Array.isArray(task.aiComparisonGroups) ? task.aiComparisonGroups : [],
+    time_column:            task.aiTimeColumn ?? null,
+    metric_column:          task.aiMetricColumn ?? null,
+    group_column:           task.aiGroupColumn ?? null,
+    reliability_column:     task.aiReliabilityColumn ?? null,
+    minimum_reliable_count: task.aiMinimumReliableCount ?? null,
+    category_column:        task.aiCategoryColumn ?? null,
+    count_column:           task.aiCountColumn ?? null,
+    percent_column:         task.aiPercentColumn ?? null,
+    metric_columns:         Array.isArray(task.aiMetricColumns) ? task.aiMetricColumns : [],
+    focus_categories:       Array.isArray(task.aiFocusCategories) ? task.aiFocusCategories : [],
+    category_order:         Array.isArray(task.aiCategoryOrder) ? task.aiCategoryOrder : [],
+    expected_categories:    Array.isArray(task.aiExpectedCategories) ? task.aiExpectedCategories : [],
+    sort_by:                task.aiSortBy ?? null,
+    sort_direction:         task.aiSortDirection ?? null,
+    flag_name_column:       task.aiFlagNameColumn ?? null,
+    flag_value_column:      task.aiFlagValueColumn ?? null,
+    threshold_column:       task.aiThresholdColumn ?? null,
+    triggered_column:       task.aiTriggeredColumn ?? null,
+    severity_column:        task.aiSeverityColumn ?? null,
+    description_column:     task.aiDescriptionColumn ?? null,
+    recommended_action_column: task.aiRecommendedActionColumn ?? null,
+    support_category_column:   task.aiSupportCategoryColumn ?? null,
+    severity_order:         Array.isArray(task.aiSeverityOrder) ? task.aiSeverityOrder : [],
+    flag_order:             Array.isArray(task.aiFlagOrder) ? task.aiFlagOrder : [],
+    max_flags:              task.aiMaxFlags ?? null,
+    secondary_metric_columns: Array.isArray(task.aiSecondaryMetricColumns) ? task.aiSecondaryMetricColumns : [],
+    flag_columns:             Array.isArray(task.aiFlagColumns) ? task.aiFlagColumns : [],
+    action_columns:           Array.isArray(task.aiActionColumns) ? task.aiActionColumns : [],
+    label_columns:            Array.isArray(task.aiLabelColumns) ? task.aiLabelColumns : [],
+    max_points:               task.aiMaxPoints ?? null,
+  };
+}
+
 function buildDatasetsSnapshot(datasets) {
   if (!datasets || typeof datasets !== "object") return null;
   const snapshot = {};
@@ -199,6 +239,7 @@ export async function explainController(req, res) {
     student_context:  studentContext ?? null,
     query_labels:     task.query_labels ?? [],
     semantic_context: buildSemanticContext(task, datasets),  // proxy competency detection
+    ai_summary_config: buildAISummaryConfig(task),
   };
 
   // ── Forward to Python AI service ────────────────────────────────────────────

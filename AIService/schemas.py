@@ -73,6 +73,46 @@ class SemanticContext(BaseModel):
     competency_proxy_note: str | None = None
 
 
+class AISummaryConfig(BaseModel):
+    """
+    Optional registry-driven instructions for compact prompt data summaries.
+    Older requests omit this and fall back to a generic conservative summary.
+    """
+    summary_type: str | None = None
+    target_group: str | None = None
+    comparison_groups: list[str] = Field(default_factory=list)
+    time_column: str | None = None
+    metric_column: str | None = None
+    group_column: str | None = None
+    reliability_column: str | None = None
+    minimum_reliable_count: int | float | None = None
+    category_column: str | None = None
+    count_column: str | None = None
+    percent_column: str | None = None
+    metric_columns: list[str] = Field(default_factory=list)
+    focus_categories: list[str] = Field(default_factory=list)
+    category_order: list[str] = Field(default_factory=list)
+    expected_categories: list[str] = Field(default_factory=list)
+    sort_by: str | None = None
+    sort_direction: str | None = None
+    flag_name_column: str | None = None
+    flag_value_column: str | None = None
+    threshold_column: str | None = None
+    triggered_column: str | None = None
+    severity_column: str | None = None
+    description_column: str | None = None
+    recommended_action_column: str | None = None
+    support_category_column: str | None = None
+    severity_order: list[str] = Field(default_factory=list)
+    flag_order: list[str] = Field(default_factory=list)
+    max_flags: int | None = None
+    secondary_metric_columns: list[str] = Field(default_factory=list)
+    flag_columns: list[str] = Field(default_factory=list)
+    action_columns: list[str] = Field(default_factory=list)
+    label_columns: list[str] = Field(default_factory=list)
+    max_points: int | None = None
+
+
 class ConfidenceInput(BaseModel):
     """
     Data quality signal from Node (from capabilityValidator output).
@@ -114,6 +154,9 @@ class ExplainRequest(BaseModel):
 
     # semantic context: proxy vs native competency detection (injected by Node)
     semantic_context: SemanticContext | None = None
+
+    # optional: registry-driven prompt summarization config
+    ai_summary_config: AISummaryConfig | None = None
 
 
 # 

@@ -60,6 +60,10 @@ CRITICAL RULES:
 - Generate 24 insights maximum
 - evidence[] must use exact field names from the dataset
 - delta = current_value - previous_value (signed, null for baselines)
+- Treat the DATA SUMMARY in the user prompt as authoritative evidence.
+- If target_group and comparison_groups are present, prioritize them over incidental rows or other groups.
+- Do NOT infer from raw rows that were omitted by summarization.
+- Mention reliability caveats when reliability_warnings or summarization_warnings are present.
 - Do NOT invent data points  only reference values present in the dataset
 - Do NOT include markdown, code fences, or any text outside the JSON object
 """
@@ -77,15 +81,16 @@ ANALYTICAL CONTEXT:
   - Granularity: {ac.granularity if ac else 'unknown'}
   - Aggregation level: {ac.aggregation_level if ac else 'unknown'}{confidence_note}
 
-DATASET(S):
+DATA SUMMARY:
 {data_summary}
 
 INSTRUCTION:
-Analyze the trend in this data. Identify:
+Analyze the trend using only the DATA SUMMARY above. If target_group and comparison_groups are present, answer through that target/comparison framing. Identify:
 1. The overall direction and magnitude of change
 2. Any notable turning points (when did the trend change)
 3. The highest and lowest values, and what they signify
 4. What this pattern suggests educationally
+5. Any reliability caveats provided in the summary
 
 Return your analysis as the JSON structure defined in your system instructions.
 """
