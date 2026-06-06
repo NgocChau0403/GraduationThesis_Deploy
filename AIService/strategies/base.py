@@ -29,8 +29,12 @@ import time
 import os
 import logging
 
-from openai import AsyncOpenAI
 from pydantic import ValidationError
+
+try:
+    from openai import AsyncOpenAI
+except ModuleNotFoundError:
+    AsyncOpenAI = None
 
 from schemas import (
     ExplainRequest, ExplainResponse,
@@ -39,8 +43,8 @@ from schemas import (
 
 logger = logging.getLogger("ai_service.strategy")
 
-#  OpenAI client (singleton) 
-_client = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY"))
+#  OpenAI client (singleton)
+_client = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY")) if AsyncOpenAI else None
 
 MODEL         = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
 MAX_TOKENS    = int(os.environ.get("AI_MAX_TOKENS", "1200"))
@@ -99,6 +103,8 @@ class BaseExplanationStrategy(ABC):
           openai.APIError          if API is down or rate-limited
           Any other Exception      caught by main.py  DEGRADED response
         """
+        if _client is None:
+            raise RuntimeError("openai package is not installed; cannot call LLM.")
         
         json_format_instruction = """
 OUTPUT FORMAT: You MUST return a valid JSON object with this exact structure:
@@ -290,23 +296,1130 @@ CRITICAL RULES:
     @staticmethod
     def summarize_datasets(req: ExplainRequest, max_rows: int = 20) -> str:
         """
-        Converts datasets dict to a readable string for the user prompt.
-        Truncates to max_rows to prevent token overflow.
-
-        Example output:
-          Dataset: score_over_time (12 rows)
-          [{"week_due": 2, "avg_score": 74.5}, ...]
+        Converts datasets into a compact, evidence-oriented prompt summary.
+        The max_rows argument is kept for backward-compatible call sites, but
+        first-N row slicing is no longer the primary summary mechanism.
         """
-        parts = []
-        for label, rows in req.datasets.items():
-            truncated = rows[:max_rows]
-            suffix    = f"  [... {len(rows) - max_rows} more rows truncated]" \
-                        if len(rows) > max_rows else ""
-            parts.append(
-                f"Dataset: {label} ({len(rows)} rows)\n"
-                f"{json.dumps(truncated, indent=2)}{suffix}"
+        cfg = getattr(req, "ai_summary_config", None)
+        if cfg and cfg.summary_type == "trend_comparison":
+            summary = BaseExplanationStrategy._summarize_trend_comparison(req)
+        elif cfg and cfg.summary_type == "categorical_distribution":
+            summary = BaseExplanationStrategy._summarize_categorical_distribution(req)
+        elif cfg and cfg.summary_type == "risk_flags":
+            summary = BaseExplanationStrategy._summarize_risk_flags(req)
+        elif cfg and cfg.summary_type == "trend_series":
+            summary = BaseExplanationStrategy._summarize_trend_series(req)
+        else:
+            summary = BaseExplanationStrategy._summarize_generic(req)
+
+        return BaseExplanationStrategy._dump_summary(summary)
+
+    @staticmethod
+    def _dump_summary(summary: dict, char_limit: int = 10000) -> str:
+        text = json.dumps(summary, indent=2, ensure_ascii=False, default=str)
+        if len(text) <= char_limit:
+            return text
+
+        trimmed = dict(summary)
+        warnings = list(trimmed.get("summarization_warnings") or [])
+        warnings.append(f"DATA SUMMARY truncated to {char_limit} characters.")
+        trimmed["summarization_warnings"] = warnings
+
+        for key in ("generic_diagnostic_sample", "categorical_group_samples", "first_rows", "last_rows"):
+            if key in trimmed:
+                trimmed.pop(key, None)
+
+        text = json.dumps(trimmed, indent=2, ensure_ascii=False, default=str)
+        if len(text) <= char_limit:
+            return text
+
+        minimal = {
+            "summary_type": summary.get("summary_type", "unknown"),
+            "summary_truncated": True,
+            "summarization_warnings": warnings,
+        }
+        for key in ("dataset_name", "row_count", "target_group", "comparison_groups"):
+            if key in summary:
+                minimal[key] = summary[key]
+        return json.dumps(minimal, indent=2, ensure_ascii=False, default=str)
+
+    @staticmethod
+    def _select_primary_dataset(req: ExplainRequest) -> tuple[str | None, list[dict]]:
+        datasets = req.datasets or {}
+        for label in req.query_labels or []:
+            rows = datasets.get(label)
+            if isinstance(rows, list):
+                return label, rows
+        for label, rows in datasets.items():
+            if isinstance(rows, list):
+                return label, rows
+        return None, []
+
+    @staticmethod
+    def _parse_number(value) -> float | None:
+        if value is None or isinstance(value, bool):
+            return None
+        if isinstance(value, (int, float)):
+            return float(value)
+        if isinstance(value, str):
+            stripped = value.strip()
+            if not stripped:
+                return None
+            try:
+                return float(stripped)
+            except ValueError:
+                return None
+        return None
+
+    @staticmethod
+    def _clean_number(value):
+        parsed = BaseExplanationStrategy._parse_number(value)
+        if parsed is None:
+            return value
+        return round(parsed, 4)
+
+    @staticmethod
+    def _compact_row(row: dict, max_fields: int = 12) -> dict:
+        if not isinstance(row, dict):
+            return {}
+        compact = {}
+        for key in list(row.keys())[:max_fields]:
+            value = row.get(key)
+            if isinstance(value, str) and len(value) > 120:
+                value = value[:117] + "..."
+            compact[key] = value
+        return compact
+
+    @staticmethod
+    def _summarize_trend_comparison(req: ExplainRequest) -> dict:
+        cfg = req.ai_summary_config
+        dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
+
+        summary = {
+            "summary_type": "trend_comparison",
+            "dataset_name": dataset_name,
+            "row_count": len(rows),
+            "target_group": cfg.target_group if cfg else None,
+            "comparison_groups": cfg.comparison_groups if cfg else [],
+            "target_trend": None,
+            "comparison_trends": {},
+            "reliability_warnings": [],
+            "summarization_warnings": [],
+        }
+
+        if not rows:
+            summary["summarization_warnings"].append("Primary dataset is empty.")
+            return summary
+
+        required = [
+            cfg.group_column if cfg else None,
+            cfg.time_column if cfg else None,
+            cfg.metric_column if cfg else None,
+            cfg.target_group if cfg else None,
+        ]
+        if any(not item for item in required):
+            summary["summarization_warnings"].append(
+                "trend_comparison config is incomplete; generic diagnostic sample included."
             )
-        return "\n\n".join(parts)
+            summary["generic_diagnostic_sample"] = BaseExplanationStrategy._summarize_generic(req, max_datasets=1)
+            return summary
+
+        group_col = cfg.group_column
+        time_col = cfg.time_column
+        metric_col = cfg.metric_column
+        rel_col = cfg.reliability_column
+        min_reliable = cfg.minimum_reliable_count
+
+        groups: dict[str, list[dict]] = {}
+        invalid_metric_rows = 0
+        invalid_time_rows = 0
+
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            group_value = row.get(group_col)
+            time_value = BaseExplanationStrategy._parse_number(row.get(time_col))
+            metric_value = BaseExplanationStrategy._parse_number(row.get(metric_col))
+            if time_value is None:
+                invalid_time_rows += 1
+                continue
+            if metric_value is None:
+                invalid_metric_rows += 1
+                continue
+
+            normalized = dict(row)
+            normalized["_ai_time_value"] = time_value
+            normalized["_ai_metric_value"] = metric_value
+            normalized["_ai_reliability_value"] = (
+                BaseExplanationStrategy._parse_number(row.get(rel_col)) if rel_col else None
+            )
+            groups.setdefault(str(group_value), []).append(normalized)
+
+        available_groups = sorted(groups.keys())
+        summary["available_groups"] = available_groups
+        if invalid_time_rows:
+            summary["summarization_warnings"].append(
+                f"Skipped {invalid_time_rows} rows with invalid {time_col}."
+            )
+        if invalid_metric_rows:
+            summary["summarization_warnings"].append(
+                f"Skipped {invalid_metric_rows} rows with invalid {metric_col}."
+            )
+
+        target_rows = groups.get(str(cfg.target_group), [])
+        if not target_rows:
+            summary["target_group_missing"] = True
+            summary["summarization_warnings"].append(
+                f"Target group '{cfg.target_group}' is missing from {group_col}; do not infer target trend."
+            )
+            summary["generic_diagnostic_sample"] = BaseExplanationStrategy._summarize_generic(req, max_datasets=1)
+            return summary
+
+        target_rows.sort(key=lambda row: row["_ai_time_value"])
+        target_trend = BaseExplanationStrategy._summarize_one_trend_group(
+            rows=target_rows,
+            group_name=str(cfg.target_group),
+            time_col=time_col,
+            metric_col=metric_col,
+            rel_col=rel_col,
+            min_reliable=min_reliable,
+        )
+        summary["target_trend"] = target_trend
+        summary["reliability_warnings"].extend(target_trend.get("reliability_warnings") or [])
+
+        for group in cfg.comparison_groups or []:
+            group_rows = groups.get(str(group), [])
+            if not group_rows:
+                summary["comparison_trends"][str(group)] = {
+                    "group": str(group),
+                    "missing": True,
+                }
+                summary["summarization_warnings"].append(
+                    f"Comparison group '{group}' is missing from {group_col}."
+                )
+                continue
+            group_rows.sort(key=lambda row: row["_ai_time_value"])
+            comparison = BaseExplanationStrategy._summarize_one_trend_group(
+                rows=group_rows,
+                group_name=str(group),
+                time_col=time_col,
+                metric_col=metric_col,
+                rel_col=rel_col,
+                min_reliable=min_reliable,
+                include_reliability_warnings=False,
+            )
+            comparison.pop("reliability_warnings", None)
+            summary["comparison_trends"][str(group)] = comparison
+
+        return summary
+
+    @staticmethod
+    def _summarize_one_trend_group(
+        rows: list[dict],
+        group_name: str,
+        time_col: str,
+        metric_col: str,
+        rel_col: str | None,
+        min_reliable: int | float | None,
+        include_reliability_warnings: bool = True,
+    ) -> dict:
+        def point(row: dict) -> dict:
+            result = {
+                time_col: BaseExplanationStrategy._clean_number(row.get(time_col)),
+                metric_col: round(row["_ai_metric_value"], 4),
+            }
+            if rel_col:
+                result[rel_col] = BaseExplanationStrategy._clean_number(row.get(rel_col))
+            return result
+
+        def change(prev: dict, curr: dict) -> dict:
+            delta = curr["_ai_metric_value"] - prev["_ai_metric_value"]
+            return {
+                "from": point(prev),
+                "to": point(curr),
+                "delta": round(delta, 4),
+            }
+
+        changes = [change(rows[i - 1], rows[i]) for i in range(1, len(rows))]
+        drops = [item for item in changes if item["delta"] < 0]
+        rises = [item for item in changes if item["delta"] > 0]
+        peak = max(rows, key=lambda row: row["_ai_metric_value"])
+        trough = min(rows, key=lambda row: row["_ai_metric_value"])
+
+        reliable_drops = []
+        if rel_col and min_reliable is not None:
+            for i in range(1, len(rows)):
+                prev = rows[i - 1]
+                curr = rows[i]
+                prev_rel = prev.get("_ai_reliability_value")
+                curr_rel = curr.get("_ai_reliability_value")
+                if (
+                    prev_rel is not None
+                    and curr_rel is not None
+                    and prev_rel >= min_reliable
+                    and curr_rel >= min_reliable
+                    and curr["_ai_metric_value"] < prev["_ai_metric_value"]
+                ):
+                    reliable_drops.append(change(prev, curr))
+
+        reliability_warnings = []
+        if include_reliability_warnings and rel_col and min_reliable is not None:
+            low_count_points = [
+                point(row)
+                for row in rows
+                if row.get("_ai_reliability_value") is not None
+                and row["_ai_reliability_value"] < min_reliable
+            ]
+            if low_count_points:
+                reliability_warnings.append({
+                    "warning": f"{len(low_count_points)} {group_name} points have {rel_col} below {min_reliable}; avoid over-weighting these weeks.",
+                    "low_count_points": low_count_points[:10],
+                })
+
+        return {
+            "group": group_name,
+            "point_count": len(rows),
+            "first_point": point(rows[0]),
+            "last_point": point(rows[-1]),
+            "peak": point(peak),
+            "trough": point(trough),
+            "largest_adjacent_drop": min(drops, key=lambda item: item["delta"]) if drops else None,
+            "largest_adjacent_rise": max(rises, key=lambda item: item["delta"]) if rises else None,
+            "largest_reliable_adjacent_drop": min(reliable_drops, key=lambda item: item["delta"]) if reliable_drops else None,
+            "reliability_warnings": reliability_warnings,
+        }
+
+    @staticmethod
+    def _summarize_categorical_distribution(req: ExplainRequest) -> dict:
+        cfg = req.ai_summary_config
+        dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
+
+        category_col = cfg.category_column if cfg else None
+        count_col = cfg.count_column if cfg else None
+        percent_col = cfg.percent_column if cfg else None
+        metric_cols = list(cfg.metric_columns or []) if cfg else []
+        focus_categories = list(cfg.focus_categories or []) if cfg else []
+        expected_categories = list(cfg.expected_categories or []) if cfg else []
+
+        summary = {
+            "summary_type": "categorical_distribution",
+            "dataset_name": dataset_name,
+            "row_count": len(rows),
+            "category_column": category_col,
+            "count_column": count_col,
+            "percent_column": percent_col,
+            "total_count": 0,
+            "category_distribution": [],
+            "largest_category": None,
+            "focus_categories": focus_categories,
+            "focus_total": {
+                "categories": focus_categories,
+                "present_categories": [],
+                "missing_categories": [],
+                "count": 0,
+                "percent": None,
+            },
+            "missing_expected_categories": [],
+            "missing_focus_categories": [],
+            "metric_columns": metric_cols,
+            "metric_evidence_by_category": {},
+            "summarization_warnings": [],
+        }
+
+        if not rows:
+            summary["summarization_warnings"].append("Primary dataset is empty.")
+            return summary
+
+        dict_rows = [row for row in rows if isinstance(row, dict)]
+        if not dict_rows:
+            summary["summarization_warnings"].append("Primary dataset has no object rows.")
+            return summary
+
+        missing_required = []
+        if not category_col:
+            missing_required.append("category_column")
+        if not count_col:
+            missing_required.append("count_column")
+
+        available_columns = set()
+        for row in dict_rows:
+            available_columns.update(row.keys())
+
+        for column in (category_col, count_col):
+            if column and column not in available_columns:
+                missing_required.append(column)
+
+        if missing_required:
+            summary["summarization_warnings"].append(
+                "categorical_distribution config is incomplete or required columns are missing: "
+                + ", ".join(missing_required)
+            )
+            summary["generic_diagnostic_sample"] = BaseExplanationStrategy._summarize_generic(req, max_datasets=1)
+            return summary
+
+        for column in [percent_col, *metric_cols]:
+            if column and column not in available_columns:
+                summary["summarization_warnings"].append(
+                    f"Configured optional column '{column}' is missing from dataset."
+                )
+
+        entries = []
+        invalid_count_rows = 0
+        invalid_percent_rows = 0
+        invalid_metric_counts = {column: 0 for column in metric_cols}
+
+        for index, row in enumerate(dict_rows):
+            category_raw = row.get(category_col)
+            category = "Unknown" if category_raw is None else str(category_raw)
+            count = BaseExplanationStrategy._parse_number(row.get(count_col))
+            if count is None:
+                invalid_count_rows += 1
+                continue
+
+            percent = None
+            if percent_col:
+                percent = BaseExplanationStrategy._parse_number(row.get(percent_col))
+                if row.get(percent_col) is not None and percent is None:
+                    invalid_percent_rows += 1
+
+            metrics = {}
+            for column in metric_cols:
+                metric_value = BaseExplanationStrategy._parse_number(row.get(column))
+                if row.get(column) is not None and metric_value is None:
+                    invalid_metric_counts[column] += 1
+                elif metric_value is not None:
+                    metrics[column] = round(metric_value, 4)
+
+            entries.append({
+                "category": category,
+                "count": round(count, 4),
+                "percent": round(percent, 4) if percent is not None else None,
+                "metrics": metrics,
+                "_row_index": index,
+            })
+
+        if invalid_count_rows:
+            summary["summarization_warnings"].append(
+                f"Skipped {invalid_count_rows} rows with invalid {count_col}."
+            )
+        if invalid_percent_rows and percent_col:
+            summary["summarization_warnings"].append(
+                f"Found {invalid_percent_rows} rows with invalid {percent_col}; percent evidence is partial."
+            )
+        for column, invalid_count in invalid_metric_counts.items():
+            if invalid_count:
+                summary["summarization_warnings"].append(
+                    f"Found {invalid_count} rows with invalid {column}; metric evidence is partial."
+                )
+
+        if not entries:
+            summary["summarization_warnings"].append("No valid category rows remained after parsing counts.")
+            return summary
+
+        order = list(cfg.category_order or []) if cfg else []
+        if order:
+            order_index = {str(category): index for index, category in enumerate(order)}
+            entries.sort(key=lambda item: (order_index.get(item["category"], len(order)), item["_row_index"]))
+        elif cfg and cfg.sort_by:
+            sort_by = cfg.sort_by
+            reverse = str(cfg.sort_direction or "").lower() == "desc"
+
+            def sort_value(item: dict):
+                if sort_by == category_col:
+                    return item["category"]
+                if sort_by == count_col:
+                    return item["count"]
+                if percent_col and sort_by == percent_col:
+                    return item["percent"] if item["percent"] is not None else float("-inf")
+                return item["metrics"].get(sort_by, float("-inf"))
+
+            entries.sort(key=sort_value, reverse=reverse)
+
+        present_categories = {item["category"] for item in entries}
+        summary["missing_expected_categories"] = [
+            category for category in expected_categories
+            if str(category) not in present_categories
+        ]
+        summary["missing_focus_categories"] = [
+            category for category in focus_categories
+            if str(category) not in present_categories
+        ]
+
+        if summary["missing_expected_categories"]:
+            summary["summarization_warnings"].append(
+                "Expected categories missing from dataset: "
+                + ", ".join(map(str, summary["missing_expected_categories"]))
+            )
+        if summary["missing_focus_categories"]:
+            summary["summarization_warnings"].append(
+                "Focus categories missing from dataset: "
+                + ", ".join(map(str, summary["missing_focus_categories"]))
+            )
+
+        total_count = sum(item["count"] for item in entries)
+        summary["total_count"] = round(total_count, 4)
+        largest = max(entries, key=lambda item: item["count"])
+        summary["largest_category"] = {
+            "category": largest["category"],
+            "count": largest["count"],
+            "percent": largest["percent"],
+        }
+
+        percent_values = [item["percent"] for item in entries if item["percent"] is not None]
+        if percent_col and percent_values:
+            percent_total = round(sum(percent_values), 4)
+            summary["percent_total"] = percent_total
+            if percent_total < 99 or percent_total > 101:
+                summary["summarization_warnings"].append(
+                    f"Percent total for {percent_col} is {percent_total}, outside expected 99-101 range."
+                )
+
+        focus_set = {str(category) for category in focus_categories}
+        focus_entries = [item for item in entries if item["category"] in focus_set]
+        focus_percent_values = [item["percent"] for item in focus_entries if item["percent"] is not None]
+        summary["focus_total"] = {
+            "categories": focus_categories,
+            "present_categories": [item["category"] for item in focus_entries],
+            "missing_categories": summary["missing_focus_categories"],
+            "count": round(sum(item["count"] for item in focus_entries), 4),
+            "percent": round(sum(focus_percent_values), 4) if focus_percent_values else None,
+        }
+
+        distribution = []
+        metric_evidence = {}
+        for item in entries:
+            public_item = {
+                "category": item["category"],
+                "count": item["count"],
+                "percent": item["percent"],
+            }
+            if item["metrics"]:
+                public_item["metrics"] = item["metrics"]
+                metric_evidence[item["category"]] = item["metrics"]
+            distribution.append(public_item)
+
+        summary["category_distribution"] = distribution[:40]
+        if len(distribution) > 40:
+            summary["summarization_warnings"].append(
+                f"Category distribution capped at 40 of {len(distribution)} categories."
+            )
+        summary["metric_evidence_by_category"] = metric_evidence
+
+        return summary
+
+    @staticmethod
+    def _parse_triggered(value) -> tuple[bool | None, bool]:
+        if isinstance(value, bool):
+            return value, True
+        if isinstance(value, int) and not isinstance(value, bool):
+            if value == 1:
+                return True, True
+            if value == 0:
+                return False, True
+        if isinstance(value, str):
+            normalized = value.strip().lower()
+            if normalized in {"true", "1"}:
+                return True, True
+            if normalized in {"false", "0"}:
+                return False, True
+        return None, False
+
+    @staticmethod
+    def _risk_value(raw_value):
+        parsed = BaseExplanationStrategy._parse_number(raw_value)
+        return round(parsed, 4) if parsed is not None else raw_value
+
+    @staticmethod
+    def _summarize_risk_flags(req: ExplainRequest) -> dict:
+        cfg = req.ai_summary_config
+        dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
+
+        flag_name_col = cfg.flag_name_column if cfg else None
+        flag_value_col = cfg.flag_value_column if cfg else None
+        threshold_col = cfg.threshold_column if cfg else None
+        triggered_col = cfg.triggered_column if cfg else None
+        severity_col = cfg.severity_column if cfg else None
+        description_col = cfg.description_column if cfg else None
+        action_col = cfg.recommended_action_column if cfg else None
+        support_col = cfg.support_category_column if cfg else None
+        severity_order = [str(item) for item in (cfg.severity_order or [])] if cfg else []
+        flag_order = [str(item) for item in (cfg.flag_order or [])] if cfg else []
+        max_flags = cfg.max_flags if cfg and cfg.max_flags else 20
+
+        summary = {
+            "summary_type": "risk_flags",
+            "dataset_name": dataset_name,
+            "row_count": len(rows),
+            "total_flags": 0,
+            "triggered_count": 0,
+            "non_triggered_count": 0,
+            "unknown_triggered_count": 0,
+            "severity_available": False,
+            "severity_counts": {},
+            "triggered_flags": [],
+            "non_triggered_flags": [],
+            "highest_severity_triggered": None,
+            "threshold_evidence": [],
+            "recommended_actions": [],
+            "summarization_warnings": [],
+        }
+
+        if not rows:
+            summary["summarization_warnings"].append("Primary dataset is empty.")
+            return summary
+
+        dict_rows = [row for row in rows if isinstance(row, dict)]
+        if not dict_rows:
+            summary["summarization_warnings"].append("Primary dataset has no object rows.")
+            return summary
+
+        required = {
+            "flag_name_column": flag_name_col,
+            "flag_value_column": flag_value_col,
+            "threshold_column": threshold_col,
+            "triggered_column": triggered_col,
+        }
+        missing_required = [name for name, column in required.items() if not column]
+
+        available_columns = set()
+        for row in dict_rows:
+            available_columns.update(row.keys())
+
+        for column in [flag_name_col, flag_value_col, threshold_col, triggered_col]:
+            if column and column not in available_columns:
+                missing_required.append(column)
+
+        if missing_required:
+            summary["summarization_warnings"].append(
+                "risk_flags config is incomplete or required columns are missing: "
+                + ", ".join(missing_required)
+            )
+            summary["generic_diagnostic_sample"] = BaseExplanationStrategy._summarize_generic(req, max_datasets=1)
+            return summary
+
+        for column in [severity_col, description_col, action_col, support_col]:
+            if column and column not in available_columns:
+                summary["summarization_warnings"].append(
+                    f"Configured optional column '{column}' is missing from dataset."
+                )
+
+        severity_available = bool(severity_col and severity_col in available_columns)
+        summary["severity_available"] = severity_available
+
+        severity_rank = {severity: index for index, severity in enumerate(severity_order)}
+        flag_rank = {flag_name: index for index, flag_name in enumerate(flag_order)}
+        entries = []
+
+        for index, row in enumerate(dict_rows):
+            flag_name = str(row.get(flag_name_col))
+            raw_triggered = row.get(triggered_col)
+            triggered, recognized = BaseExplanationStrategy._parse_triggered(raw_triggered)
+            if not recognized:
+                summary["unknown_triggered_count"] += 1
+                summary["summarization_warnings"].append(
+                    f"Unrecognized triggered value for {flag_name}: {raw_triggered!r}; value was not guessed."
+                )
+
+            raw_flag_value = row.get(flag_value_col)
+            raw_threshold = row.get(threshold_col)
+            entry = {
+                "flag_name": flag_name,
+                "triggered": triggered,
+                "triggered_raw": raw_triggered,
+                "flag_value": BaseExplanationStrategy._risk_value(raw_flag_value),
+                "flag_value_raw": raw_flag_value,
+                "threshold": BaseExplanationStrategy._risk_value(raw_threshold),
+                "threshold_raw": raw_threshold,
+                "_row_index": index,
+            }
+
+            if severity_available:
+                severity = row.get(severity_col)
+                if severity is not None:
+                    entry["severity"] = str(severity)
+                    summary["severity_counts"][entry["severity"]] = (
+                        summary["severity_counts"].get(entry["severity"], 0) + 1
+                    )
+            if description_col and description_col in row and row.get(description_col) is not None:
+                entry["flag_description"] = row.get(description_col)
+            if action_col and action_col in row and row.get(action_col) is not None:
+                entry["recommended_action"] = row.get(action_col)
+            if support_col and support_col in row and row.get(support_col) is not None:
+                entry["support_category"] = row.get(support_col)
+
+            entries.append(entry)
+
+        summary["total_flags"] = len(entries)
+        summary["triggered_count"] = sum(1 for entry in entries if entry["triggered"] is True)
+        summary["non_triggered_count"] = sum(1 for entry in entries if entry["triggered"] is False)
+
+        def sort_key(entry: dict) -> tuple:
+            severity = entry.get("severity")
+            severity_index = severity_rank.get(str(severity), len(severity_rank))
+            flag_index = flag_rank.get(entry["flag_name"], len(flag_rank))
+            return (severity_index, flag_index, entry["_row_index"])
+
+        triggered_entries = sorted(
+            [entry for entry in entries if entry["triggered"] is True],
+            key=sort_key,
+        )
+        other_entries = sorted(
+            [entry for entry in entries if entry["triggered"] is not True],
+            key=lambda entry: (
+                0 if entry["triggered"] is False else 1,
+                flag_rank.get(entry["flag_name"], len(flag_rank)),
+                entry["_row_index"],
+            ),
+        )
+
+        emitted = triggered_entries[:max_flags]
+        remaining_slots = max_flags - len(emitted)
+        if remaining_slots > 0:
+            emitted.extend(other_entries[:remaining_slots])
+
+        if len(entries) > max_flags:
+            summary["summarization_warnings"].append(
+                f"Risk flags capped at {max_flags} of {len(entries)} rows after prioritizing triggered flags."
+            )
+
+        def public_flag(entry: dict) -> dict:
+            result = {
+                "flag_name": entry["flag_name"],
+                "triggered": entry["triggered"],
+            }
+            if entry["triggered"] is None:
+                result["triggered_raw"] = entry["triggered_raw"]
+            for key in ("severity", "flag_description", "recommended_action", "support_category"):
+                if key in entry:
+                    result[key] = entry[key]
+            return result
+
+        def threshold_item(entry: dict) -> dict:
+            return {
+                "flag_name": entry["flag_name"],
+                "flag_value": entry["flag_value"],
+                "flag_value_raw": entry["flag_value_raw"],
+                "threshold": entry["threshold"],
+                "threshold_raw": entry["threshold_raw"],
+                "triggered": entry["triggered"],
+                "triggered_raw": entry["triggered_raw"],
+            }
+
+        summary["triggered_flags"] = [
+            public_flag(entry) for entry in emitted if entry["triggered"] is True
+        ]
+        summary["non_triggered_flags"] = [
+            public_flag(entry) for entry in emitted if entry["triggered"] is not True
+        ]
+        summary["threshold_evidence"] = [threshold_item(entry) for entry in emitted]
+        summary["recommended_actions"] = [
+            {
+                "flag_name": entry["flag_name"],
+                "recommended_action": entry["recommended_action"],
+            }
+            for entry in emitted
+            if entry["triggered"] is True and entry.get("recommended_action") is not None
+        ]
+
+        if triggered_entries and severity_available:
+            first = triggered_entries[0]
+            summary["highest_severity_triggered"] = first.get("severity")
+
+        return summary
+
+    @staticmethod
+    def _summarize_trend_series(req: ExplainRequest) -> dict:
+        cfg = req.ai_summary_config
+        dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
+
+        time_col = cfg.time_column if cfg else None
+        metric_col = cfg.metric_column if cfg else None
+        secondary_cols = list(cfg.secondary_metric_columns or []) if cfg else []
+        flag_cols = list(cfg.flag_columns or []) if cfg else []
+        action_cols = list(cfg.action_columns or []) if cfg else []
+        label_cols = list(cfg.label_columns or []) if cfg else []
+        max_points = cfg.max_points if cfg and cfg.max_points else 30
+        sort_desc = str(cfg.sort_direction or "asc").lower() == "desc" if cfg else False
+
+        summary = {
+            "summary_type": "trend_series",
+            "dataset_name": dataset_name,
+            "row_count": len(rows),
+            "time_column": time_col,
+            "metric_column": metric_col,
+            "point_count": 0,
+            "first_point": None,
+            "last_point": None,
+            "peak": None,
+            "trough": None,
+            "overall_change": None,
+            "largest_adjacent_drop": None,
+            "largest_adjacent_rise": None,
+            "flagged_points": [],
+            "secondary_metric_evidence": {},
+            "action_evidence": [],
+            "summarization_warnings": [],
+        }
+
+        if not rows:
+            summary["summarization_warnings"].append("Primary dataset is empty.")
+            return summary
+
+        dict_rows = [row for row in rows if isinstance(row, dict)]
+        if not dict_rows:
+            summary["summarization_warnings"].append("Primary dataset has no object rows.")
+            return summary
+
+        missing_required = []
+        if not time_col:
+            missing_required.append("time_column")
+        if not metric_col:
+            missing_required.append("metric_column")
+
+        available_columns = set()
+        for row in dict_rows:
+            available_columns.update(row.keys())
+        for column in (time_col, metric_col):
+            if column and column not in available_columns:
+                missing_required.append(column)
+
+        if missing_required:
+            summary["summarization_warnings"].append(
+                "trend_series config is incomplete or required columns are missing: "
+                + ", ".join(missing_required)
+            )
+            summary["generic_diagnostic_sample"] = BaseExplanationStrategy._summarize_generic(req, max_datasets=1)
+            return summary
+
+        for column in [*secondary_cols, *flag_cols, *action_cols, *label_cols]:
+            if column and column not in available_columns:
+                summary["summarization_warnings"].append(
+                    f"Configured optional column '{column}' is missing from dataset."
+                )
+
+        invalid_time_rows = 0
+        invalid_metric_rows = 0
+        invalid_flag_values = 0
+        points = []
+
+        for index, row in enumerate(dict_rows):
+            time_value = BaseExplanationStrategy._parse_number(row.get(time_col))
+            metric_value = BaseExplanationStrategy._parse_number(row.get(metric_col))
+            if time_value is None:
+                invalid_time_rows += 1
+                continue
+            if metric_value is None:
+                invalid_metric_rows += 1
+                continue
+
+            labels = {
+                column: row.get(column)
+                for column in label_cols
+                if column in row and row.get(column) is not None
+            }
+            secondary = {
+                column: BaseExplanationStrategy._risk_value(row.get(column))
+                for column in secondary_cols
+                if column in row and row.get(column) is not None
+            }
+            actions = {
+                column: row.get(column)
+                for column in action_cols
+                if column in row and row.get(column) is not None
+            }
+            flags = {}
+            raw_flags = {}
+            for column in flag_cols:
+                if column not in row:
+                    continue
+                parsed_flag, recognized = BaseExplanationStrategy._parse_triggered(row.get(column))
+                raw_flags[column] = row.get(column)
+                if recognized:
+                    flags[column] = parsed_flag
+                elif row.get(column) is not None:
+                    invalid_flag_values += 1
+                    flags[column] = None
+                    summary["summarization_warnings"].append(
+                        f"Unrecognized flag value for {column} at {time_col}={row.get(time_col)!r}: {row.get(column)!r}; value was not guessed."
+                    )
+
+            points.append({
+                time_col: BaseExplanationStrategy._risk_value(row.get(time_col)),
+                metric_col: round(metric_value, 4),
+                "labels": labels,
+                "secondary_metrics": secondary,
+                "flags": flags,
+                "flag_raw_values": raw_flags,
+                "actions": actions,
+                "_time_value": time_value,
+                "_metric_value": metric_value,
+                "_row_index": index,
+            })
+
+        if invalid_time_rows:
+            summary["summarization_warnings"].append(
+                f"Skipped {invalid_time_rows} rows with invalid {time_col}."
+            )
+        if invalid_metric_rows:
+            summary["summarization_warnings"].append(
+                f"Skipped {invalid_metric_rows} rows with invalid {metric_col}."
+            )
+        if invalid_flag_values:
+            summary["summarization_warnings"].append(
+                f"Found {invalid_flag_values} unrecognized configured flag values; flagged_points only use recognized true values."
+            )
+
+        if not points:
+            summary["summarization_warnings"].append("No valid trend points remained after parsing time and metric values.")
+            return summary
+
+        points.sort(key=lambda point: point["_time_value"], reverse=sort_desc)
+        summary["point_count"] = len(points)
+
+        def public_point(point: dict, include_flags: bool = False) -> dict:
+            result = {
+                time_col: point[time_col],
+                metric_col: point[metric_col],
+            }
+            if point["labels"]:
+                result["labels"] = point["labels"]
+            if point["secondary_metrics"]:
+                result["secondary_metrics"] = point["secondary_metrics"]
+            if include_flags and point["flags"]:
+                result["flags"] = point["flags"]
+                result["flag_raw_values"] = point["flag_raw_values"]
+            return result
+
+        def change(prev: dict, curr: dict) -> dict:
+            delta = curr["_metric_value"] - prev["_metric_value"]
+            return {
+                "from": public_point(prev),
+                "to": public_point(curr),
+                "delta": round(delta, 4),
+            }
+
+        first = points[0]
+        last = points[-1]
+        peak = max(points, key=lambda point: point["_metric_value"])
+        trough = min(points, key=lambda point: point["_metric_value"])
+        changes = [change(points[i - 1], points[i]) for i in range(1, len(points))]
+        drops = [item for item in changes if item["delta"] < 0]
+        rises = [item for item in changes if item["delta"] > 0]
+        delta = last["_metric_value"] - first["_metric_value"]
+        percent_change = None
+        if first["_metric_value"] != 0:
+            percent_change = round((delta / first["_metric_value"]) * 100, 4)
+
+        summary["first_point"] = public_point(first)
+        summary["last_point"] = public_point(last)
+        summary["peak"] = public_point(peak)
+        summary["trough"] = public_point(trough)
+        summary["overall_change"] = {
+            "from": public_point(first),
+            "to": public_point(last),
+            "delta": round(delta, 4),
+            "percent_change": percent_change,
+        }
+        summary["largest_adjacent_drop"] = min(drops, key=lambda item: item["delta"]) if drops else None
+        summary["largest_adjacent_rise"] = max(rises, key=lambda item: item["delta"]) if rises else None
+
+        emitted_points = points[:max_points]
+        if len(points) > max_points:
+            summary["summarization_warnings"].append(
+                f"Trend points capped at {max_points} of {len(points)} rows."
+            )
+
+        flagged = [
+            public_point(point, include_flags=True)
+            for point in emitted_points
+            if any(value is True for value in point["flags"].values())
+        ]
+        summary["flagged_points"] = flagged[:max_points]
+
+        secondary_evidence = {}
+        for column in secondary_cols:
+            values = [
+                BaseExplanationStrategy._parse_number(point["secondary_metrics"].get(column))
+                for point in points
+                if column in point["secondary_metrics"]
+            ]
+            values = [value for value in values if value is not None]
+            if values:
+                secondary_evidence[column] = {
+                    "count": len(values),
+                    "min": round(min(values), 4),
+                    "max": round(max(values), 4),
+                    "first": points[0]["secondary_metrics"].get(column),
+                    "last": points[-1]["secondary_metrics"].get(column),
+                }
+            else:
+                categorical_values = [
+                    point["secondary_metrics"].get(column)
+                    for point in points
+                    if column in point["secondary_metrics"]
+                ]
+                if categorical_values:
+                    secondary_evidence[column] = {
+                        "first": categorical_values[0],
+                        "last": categorical_values[-1],
+                        "distinct_values": sorted({str(value) for value in categorical_values})[:10],
+                    }
+        summary["secondary_metric_evidence"] = secondary_evidence
+
+        action_evidence = []
+        seen_actions = set()
+        for point in [
+            point for point in points if any(value is True for value in point["flags"].values())
+        ] + [points[-1]]:
+            for column, action in point["actions"].items():
+                key = (column, str(action))
+                if key in seen_actions:
+                    continue
+                seen_actions.add(key)
+                action_evidence.append({
+                    time_col: point[time_col],
+                    "action_column": column,
+                    "action": action,
+                })
+                if len(action_evidence) >= max_points:
+                    break
+            if len(action_evidence) >= max_points:
+                break
+        summary["action_evidence"] = action_evidence
+
+        return summary
+
+    @staticmethod
+    def _summarize_generic(req: ExplainRequest, max_datasets: int = 3) -> dict:
+        datasets = req.datasets or {}
+        summary = {
+            "summary_type": "generic_fallback",
+            "datasets": [],
+            "summarization_warnings": [],
+        }
+
+        items = list(datasets.items())
+        if not items:
+            summary["summarization_warnings"].append("No datasets were provided.")
+            return summary
+
+        if len(items) > max_datasets:
+            summary["summarization_warnings"].append(
+                f"Only summarized first {max_datasets} of {len(items)} datasets."
+            )
+
+        for dataset_name, rows in items[:max_datasets]:
+            if not isinstance(rows, list):
+                summary["datasets"].append({
+                    "dataset_name": dataset_name,
+                    "row_count": 0,
+                    "summarization_warnings": ["Dataset rows are not an array."],
+                })
+                continue
+            summary["datasets"].append(
+                BaseExplanationStrategy._summarize_generic_dataset(dataset_name, rows)
+            )
+
+        return summary
+
+    @staticmethod
+    def _summarize_generic_dataset(dataset_name: str, rows: list[dict]) -> dict:
+        row_count = len(rows)
+        dict_rows = [row for row in rows if isinstance(row, dict)]
+        columns = []
+        seen = set()
+        for row in dict_rows:
+            for key in row.keys():
+                if key not in seen:
+                    seen.add(key)
+                    columns.append(key)
+
+        result = {
+            "dataset_name": dataset_name,
+            "row_count": row_count,
+            "columns": columns[:40],
+            "first_rows": [BaseExplanationStrategy._compact_row(row) for row in dict_rows[:5]],
+            "last_rows": [BaseExplanationStrategy._compact_row(row) for row in dict_rows[-5:]] if row_count > 5 else [],
+            "numeric_stats": {},
+            "categorical_group_samples": {},
+            "summarization_warnings": [],
+        }
+
+        if row_count == 0:
+            result["summarization_warnings"].append("Dataset is empty.")
+            return result
+
+        if len(columns) > 40:
+            result["summarization_warnings"].append(
+                f"Column list capped at 40 of {len(columns)} columns."
+            )
+
+        if row_count > 10:
+            result["summarization_warnings"].append(
+                "Generic fallback includes first 5 and last 5 rows plus column summaries; raw rows are not exhaustive."
+            )
+
+        numeric_columns = []
+        categorical_columns = []
+        for column in columns:
+            values = [row.get(column) for row in dict_rows if row.get(column) is not None]
+            if not values:
+                continue
+            numeric_count = sum(
+                1 for value in values
+                if BaseExplanationStrategy._parse_number(value) is not None
+            )
+            if numeric_count > 0:
+                numeric_columns.append(column)
+            else:
+                categorical_columns.append(column)
+
+        for column in numeric_columns[:8]:
+            numbers = [
+                BaseExplanationStrategy._parse_number(row.get(column))
+                for row in dict_rows
+            ]
+            numbers = [value for value in numbers if value is not None]
+            if not numbers:
+                continue
+            result["numeric_stats"][column] = {
+                "count": len(numbers),
+                "min": round(min(numbers), 4),
+                "max": round(max(numbers), 4),
+                "avg": round(sum(numbers) / len(numbers), 4),
+            }
+
+        if len(numeric_columns) > 8:
+            result["summarization_warnings"].append(
+                f"Numeric stats capped at 8 of {len(numeric_columns)} numeric columns."
+            )
+
+        for column in categorical_columns[:4]:
+            counts = {}
+            samples = {}
+            for row in dict_rows:
+                value = row.get(column)
+                if value is None:
+                    continue
+                key = str(value)
+                counts[key] = counts.get(key, 0) + 1
+                samples.setdefault(key, BaseExplanationStrategy._compact_row(row))
+            top_groups = sorted(counts.items(), key=lambda item: (-item[1], item[0]))[:5]
+            result["categorical_group_samples"][column] = [
+                {
+                    "value": value,
+                    "count": count,
+                    "sample_row": samples[value],
+                }
+                for value, count in top_groups
+            ]
+
+        if len(categorical_columns) > 4:
+            result["summarization_warnings"].append(
+                f"Categorical samples capped at 4 of {len(categorical_columns)} categorical columns."
+            )
+
+        return result
 
     @staticmethod
     def get_audience_tone(target_audience: list[str]) -> str:

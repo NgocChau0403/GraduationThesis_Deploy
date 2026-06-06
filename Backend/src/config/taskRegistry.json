@@ -346,6 +346,30 @@
     },
     "datasetCompatibility": "both",
     "aiPromptHint": "Identify trend direction, assessments below pass/target thresholds, and the concrete recommended_action for the weakest recent assessment.",
+    "aiSummaryType": "trend_series",
+    "aiTimeColumn": "assessment_order",
+    "aiMetricColumn": "score_normalized",
+    "aiSecondaryMetricColumns": [
+      "class_avg_score",
+      "score_vs_class_avg",
+      "performance_trend",
+      "pass_flag"
+    ],
+    "aiFlagColumns": [
+      "below_pass_threshold",
+      "below_target_threshold"
+    ],
+    "aiActionColumns": [
+      "support_level",
+      "recommended_action"
+    ],
+    "aiLabelColumns": [
+      "assessment_name",
+      "assessment_type",
+      "week_of_class"
+    ],
+    "aiSortDirection": "asc",
+    "aiMaxPoints": 30,
     "sqlQuery": "WITH\nscore_context AS (\n  SELECT CASE WHEN MAX(ar.score_normalized) <= 20 THEN 20::float8 ELSE 100::float8 END AS score_scale,\n         CASE WHEN MAX(ar.score_normalized) <= 20 THEN 10::float8 ELSE 40::float8 END AS pass_threshold,\n         CASE WHEN MAX(ar.score_normalized) <= 20 THEN 14::float8 ELSE 70::float8 END AS target_threshold\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  WHERE a.class_id = :class_id\n),\nclass_assessment AS (\n  SELECT ar.assessment_id,\n         ROUND(AVG(ar.score_normalized)::numeric, 2)::float8 AS class_avg_score\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  WHERE a.class_id = :class_id\n  GROUP BY ar.assessment_id\n),\nstudent_trend AS (\n  SELECT ar.student_id,\n         REGR_SLOPE(ar.score_normalized, a.assessment_order)::float8 AS performance_trend\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  WHERE ar.student_id = :student_id\n    AND a.class_id = :class_id\n  GROUP BY ar.student_id\n)\nSELECT a.assessment_order,\n       a.week_of_class,\n       a.assessment_type,\n       a.assessment_name,\n       ar.score_normalized,\n       (ar.score_normalized >= sc.pass_threshold) AS pass_flag,\n       ca.class_avg_score,\n       ROUND((ar.score_normalized - ca.class_avg_score)::numeric, 2)::float8 AS score_vs_class_avg,\n       sc.score_scale,\n       sc.pass_threshold,\n       sc.target_threshold,\n       (ar.score_normalized < sc.pass_threshold) AS below_pass_threshold,\n       (ar.score_normalized < sc.target_threshold) AS below_target_threshold,\n       st.performance_trend,\n       CASE\n         WHEN ar.score_normalized < sc.pass_threshold THEN 'urgent_support'\n         WHEN ar.score_normalized < sc.target_threshold THEN 'targeted_practice'\n         WHEN ar.score_normalized < ca.class_avg_score THEN 'monitor'\n         ELSE 'maintain'\n       END AS support_level,\n       CASE\n         WHEN ar.score_normalized < sc.pass_threshold THEN 'Review this assessment with tutor support; focus on missed core concepts before the next assessment.'\n         WHEN ar.score_normalized < sc.target_threshold THEN 'Practice similar questions and review feedback to move from pass-level to target-level performance.'\n         WHEN ar.score_normalized < ca.class_avg_score THEN 'You are passing but below class average here; review feedback and compare preparation habits.'\n         ELSE 'Keep the current preparation pattern and use feedback to protect this level.'\n       END AS recommended_action\nFROM assessment_result ar\nJOIN assessment a ON ar.assessment_id = a.assessment_id\nJOIN class_assessment ca ON ca.assessment_id = ar.assessment_id\nCROSS JOIN score_context sc\nLEFT JOIN student_trend st ON st.student_id = ar.student_id\nWHERE ar.student_id = :student_id\n  AND a.class_id = :class_id\nORDER BY a.assessment_order",
     "viz_type": "line_chart",
     "visualization_config": {
@@ -579,6 +603,29 @@
     },
     "datasetCompatibility": "both",
     "aiPromptHint": "Treat this as a checklist: list triggered flags first, then explain each using flag_value vs threshold, severity, flag_description, and recommended_action. Keep non-triggered flags brief.",
+    "aiSummaryType": "risk_flags",
+    "aiFlagNameColumn": "flag_name",
+    "aiFlagValueColumn": "flag_value",
+    "aiThresholdColumn": "threshold",
+    "aiTriggeredColumn": "triggered",
+    "aiSeverityColumn": "severity",
+    "aiDescriptionColumn": "flag_description",
+    "aiRecommendedActionColumn": "recommended_action",
+    "aiSupportCategoryColumn": "support_category",
+    "aiSeverityOrder": [
+      "high",
+      "medium",
+      "low",
+      "info"
+    ],
+    "aiFlagOrder": [
+      "flag_low_score",
+      "flag_repeated",
+      "flag_low_engagement",
+      "flag_low_punctuality",
+      "flag_neg_trend"
+    ],
+    "aiMaxFlags": 10,
     "sqlQuery": "WITH\nscore_context AS MATERIALIZED (\n  SELECT CASE\n           WHEN MAX(ar.score_normalized) <= 20 THEN 20::float8\n           ELSE 100::float8\n         END AS score_scale,\n         CASE\n           WHEN MAX(ar.score_normalized) <= 20 THEN 10::float8\n           ELSE 40::float8\n         END AS pass_threshold,\n         CASE\n           WHEN MAX(ar.score_normalized) <= 20 THEN 14::float8\n           ELSE 70::float8\n         END AS target_threshold\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment e ON ar.enrollment_id = e.enrollment_id\n                   AND a.class_id = e.class_id\n  WHERE e.class_id = :class_id\n),\nscore_agg AS (\n  SELECT ar.student_id,\n         ROUND((\n           CASE\n             WHEN SUM(a.weight_pct) FILTER (\n                    WHERE a.weight_pct IS NOT NULL\n                      AND ar.score_normalized IS NOT NULL\n                  ) > 0\n               THEN SUM(ar.score_normalized * a.weight_pct) FILTER (\n                      WHERE a.weight_pct IS NOT NULL\n                        AND ar.score_normalized IS NOT NULL\n                    ) / NULLIF(SUM(a.weight_pct) FILTER (\n                      WHERE a.weight_pct IS NOT NULL\n                        AND ar.score_normalized IS NOT NULL\n                    ), 0)\n             ELSE AVG(ar.score_normalized)\n           END\n         )::numeric, 2)::float8 AS avg_score,\n         ROUND(AVG(ar.score_normalized)::numeric, 2)::float8 AS unweighted_avg_score,\n         ROUND((\n           SUM(ar.score_normalized * a.weight_pct) FILTER (\n             WHERE a.weight_pct IS NOT NULL\n               AND ar.score_normalized IS NOT NULL\n           ) / NULLIF(SUM(a.weight_pct) FILTER (\n             WHERE a.weight_pct IS NOT NULL\n               AND ar.score_normalized IS NOT NULL\n           ), 0)\n         )::numeric, 2)::float8 AS weighted_avg_score,\n         CASE\n           WHEN SUM(a.weight_pct) FILTER (\n                  WHERE a.weight_pct IS NOT NULL\n                    AND ar.score_normalized IS NOT NULL\n                ) > 0\n             THEN 'weighted_by_assessment_weight'\n           ELSE 'unweighted_average_fallback'\n         END AS score_strategy,\n         ROUND(AVG((ar.score_normalized >= sc.pass_threshold)::int)::numeric, 4)::float8 AS pass_rate,\n         COUNT(*)::int AS assessment_count,\n         sc.score_scale,\n         sc.pass_threshold,\n         sc.target_threshold,\n         REGR_SLOPE(ar.score_normalized, a.assessment_order)::float8 AS perf_trend\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment e ON ar.enrollment_id = e.enrollment_id\n                   AND a.class_id = e.class_id\n  CROSS JOIN score_context sc\n  WHERE e.class_id = :class_id\n  GROUP BY ar.student_id, sc.score_scale, sc.pass_threshold, sc.target_threshold\n),\npunctuality AS (\n  SELECT ar.student_id,\n         CASE\n           WHEN COUNT(*) FILTER (\n                  WHERE a.due_day IS NOT NULL\n                    AND ar.submission_day IS NOT NULL\n                ) > 0\n             THEN COUNT(*) FILTER (WHERE ar.submission_day <= a.due_day) * 1.0\n                  / NULLIF(COUNT(*) FILTER (\n                      WHERE a.due_day IS NOT NULL\n                        AND ar.submission_day IS NOT NULL\n                    ), 0)\n           ELSE 1.0\n         END AS punctuality_rate\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment e ON ar.enrollment_id = e.enrollment_id\n                   AND a.class_id = e.class_id\n  WHERE e.class_id = :class_id\n  GROUP BY ar.student_id\n),\neng_agg AS (\n  SELECT e.student_id,\n         COALESCE(SUM(eng.engagement_count), 0)::float8 AS total_clicks,\n         COUNT(DISTINCT eng.event_day)::float8 AS active_days,\n         (COUNT(eng.engagement_id) > 0) AS has_engagement_data\n  FROM enrollment e\n  LEFT JOIN engagement eng ON e.enrollment_id = eng.enrollment_id\n  WHERE e.class_id = :class_id\n  GROUP BY e.student_id\n),\nclass_max AS (\n  SELECT NULLIF(MAX(total_clicks), 0) AS mc,\n         NULLIF(MAX(active_days), 0) AS ma\n  FROM eng_agg\n),\neng_score AS MATERIALIZED (\n  SELECT ea.student_id,\n         ea.has_engagement_data,\n         CASE\n           WHEN ea.has_engagement_data\n             THEN COALESCE(ea.total_clicks / cm.mc, 0) * 0.5\n                  + COALESCE(ea.active_days / cm.ma, 0) * 0.5\n           ELSE NULL\n         END AS engagement_score\n  FROM eng_agg ea\n  CROSS JOIN class_max cm\n),\nrisk_flags AS (\n  SELECT sa.student_id,\n         e.enrollment_id,\n         sa.avg_score,\n         sa.unweighted_avg_score,\n         sa.weighted_avg_score,\n         sa.score_strategy,\n         sa.pass_rate,\n         sa.assessment_count,\n         sa.score_scale,\n         sa.pass_threshold,\n         sa.target_threshold,\n         sa.perf_trend,\n         COALESCE(es.engagement_score, 0) AS engagement_score,\n         COALESCE(es.has_engagement_data, false) AS engagement_score_available,\n         COALESCE(p.punctuality_rate, 1)::float8 AS punctuality_rate,\n         COALESCE(e.previous_attempt_count, 0) AS previous_attempt_count,\n         e.final_outcome,\n         (sa.avg_score < sa.pass_threshold) AS flag_low_score,\n         (COALESCE(e.previous_attempt_count, 0) > 0) AS flag_repeated,\n         (COALESCE(es.has_engagement_data, false)\n           AND COALESCE(es.engagement_score, 1) < 0.15) AS flag_low_engagement,\n         (COALESCE(p.punctuality_rate, 1) < 0.7) AS flag_low_punctuality,\n         (sa.perf_trend < 0) AS flag_neg_trend,\n         ((CASE WHEN sa.avg_score < sa.pass_threshold THEN 1 ELSE 0 END)\n          + (CASE WHEN COALESCE(e.previous_attempt_count, 0) > 0 THEN 1 ELSE 0 END)\n          + (CASE WHEN COALESCE(es.has_engagement_data, false)\n                    AND COALESCE(es.engagement_score, 1) < 0.15 THEN 1 ELSE 0 END)\n          + (CASE WHEN COALESCE(p.punctuality_rate, 1) < 0.7 THEN 1 ELSE 0 END)\n          + (CASE WHEN sa.perf_trend < 0 THEN 1 ELSE 0 END)) AS sum_flags\n  FROM score_agg sa\n  JOIN enrollment e ON e.student_id = sa.student_id\n                   AND e.class_id = :class_id\n  LEFT JOIN eng_score es ON es.student_id = sa.student_id\n  LEFT JOIN punctuality p ON p.student_id = sa.student_id\n)\nSELECT flag_name,\n       flag_value,\n       threshold,\n       triggered,\n       severity,\n       flag_description,\n       recommended_action,\n       support_category\nFROM (\n  SELECT 'flag_low_score' AS flag_name,\n         rf.avg_score AS flag_value,\n         rf.pass_threshold AS threshold,\n         rf.flag_low_score AS triggered,\n         CASE WHEN rf.flag_low_score THEN 'high' ELSE 'info' END AS severity,\n         'Average score is below the pass threshold for this dataset scale.' AS flag_description,\n         'Review the weakest assessment topics and schedule tutor support before the next assessment.' AS recommended_action,\n         'academic_performance' AS support_category,\n         1 AS sort_order\n  FROM risk_flags rf\n  WHERE rf.student_id = :student_id\n  UNION ALL\n  SELECT 'flag_repeated',\n         rf.previous_attempt_count::float8,\n         0::float8,\n         rf.flag_repeated,\n         CASE WHEN rf.flag_repeated THEN 'medium' ELSE 'info' END,\n         'This student has previous attempts, which can indicate accumulated difficulty or re-enrolment risk.',\n         'Check prior attempt context and confirm whether the student needs a catch-up plan.',\n         'academic_history',\n         2\n  FROM risk_flags rf\n  WHERE rf.student_id = :student_id\n  UNION ALL\n  SELECT 'flag_low_engagement',\n         rf.engagement_score::float8,\n         0.15::float8,\n         rf.flag_low_engagement,\n         CASE WHEN rf.flag_low_engagement THEN 'medium' ELSE 'info' END,\n         CASE WHEN rf.engagement_score_available\n              THEN 'Engagement score is below the low-engagement threshold.'\n              ELSE 'Engagement data is not available for this dataset, so this flag is not counted.' END,\n         CASE WHEN rf.engagement_score_available\n              THEN 'Set a weekly study routine and interact with course resources before assessment deadlines.'\n              ELSE 'Use assessment trend and score feedback instead of engagement-based recommendations.' END,\n         'engagement',\n         3\n  FROM risk_flags rf\n  WHERE rf.student_id = :student_id\n  UNION ALL\n  SELECT 'flag_low_punctuality',\n         rf.punctuality_rate::float8,\n         0.7::float8,\n         rf.flag_low_punctuality,\n         CASE WHEN rf.flag_low_punctuality THEN 'medium' ELSE 'info' END,\n         'Submission punctuality is below the expected threshold.',\n         'Use deadline reminders and submit drafts earlier to reduce late-submission risk.',\n         'time_management',\n         4\n  FROM risk_flags rf\n  WHERE rf.student_id = :student_id\n  UNION ALL\n  SELECT 'flag_neg_trend',\n         COALESCE(rf.perf_trend, 0)::float8,\n         0::float8,\n         rf.flag_neg_trend,\n         CASE WHEN rf.flag_neg_trend THEN 'medium' ELSE 'info' END,\n         'Scores are trending downward across assessments.',\n         'Compare recent feedback with earlier stronger work and intervene before the next assessment.',\n         'trend_monitoring',\n         5\n  FROM risk_flags rf\n  WHERE rf.student_id = :student_id\n) flags\nORDER BY sort_order",
     "viz_type": "checklist",
     "visualization_config": {
@@ -1738,6 +1785,22 @@
     },
     "datasetCompatibility": "both",
     "aiPromptHint": "State pass/fail/withdrawal counts. Highlight proportion at-risk.",
+    "aiSummaryType": "categorical_distribution",
+    "aiCategoryColumn": "final_outcome",
+    "aiCountColumn": "student_count",
+    "aiPercentColumn": "pct_of_class",
+    "aiFocusCategories": [
+      "Fail",
+      "Withdrawn"
+    ],
+    "aiExpectedCategories": [
+      "Distinction",
+      "Pass",
+      "Fail",
+      "Withdrawn"
+    ],
+    "aiSortBy": "student_count",
+    "aiSortDirection": "desc",
     "sqlQuery": "SELECT final_outcome, COUNT(*) AS student_count, ROUND(COUNT(*)*100.0/NULLIF(SUM(COUNT(*)) OVER(), 0),1) AS pct_of_class FROM enrollment WHERE class_id=:class_id GROUP BY final_outcome ORDER BY student_count DESC",
     "viz_type": "pie_chart",
     "visualization_config": {
@@ -1803,6 +1866,29 @@
     },
     "datasetCompatibility": "both",
     "aiPromptHint": "Describe proportion of low/medium/high effort students. Flag the low tail.",
+    "aiSummaryType": "categorical_distribution",
+    "aiCategoryColumn": "study_effort_level",
+    "aiCountColumn": "student_count",
+    "aiPercentColumn": "pct_of_class",
+    "aiMetricColumns": [
+      "avg_engagement_score"
+    ],
+    "aiFocusCategories": [
+      "very_low",
+      "low"
+    ],
+    "aiCategoryOrder": [
+      "very_low",
+      "low",
+      "medium",
+      "high"
+    ],
+    "aiExpectedCategories": [
+      "very_low",
+      "low",
+      "medium",
+      "high"
+    ],
     "sqlQuery": "WITH eng_agg AS (SELECT e.student_id, e.enrollment_id, COALESCE(SUM(eng.engagement_count), 0)::float8 AS total_clicks, COUNT(DISTINCT eng.event_day)::float8 AS active_days FROM enrollment e LEFT JOIN engagement eng ON e.enrollment_id = eng.enrollment_id WHERE e.class_id = :class_id GROUP BY e.student_id, e.enrollment_id), class_stats AS (SELECT MAX(total_clicks) AS max_clicks, MAX(active_days) AS max_active FROM eng_agg), scored AS (SELECT ea.student_id, ea.total_clicks, ea.active_days, CASE WHEN cs.max_clicks IS NULL AND cs.max_active IS NULL THEN NULL ELSE COALESCE((ea.total_clicks / NULLIF(cs.max_clicks, 0)) * 0.5, 0) + COALESCE((ea.active_days / NULLIF(cs.max_active, 0)) * 0.5, 0) END AS engagement_score FROM eng_agg ea CROSS JOIN class_stats cs), ranked AS (SELECT *, CASE NTILE(4) OVER (ORDER BY engagement_score ASC, total_clicks ASC) WHEN 1 THEN 'very_low' WHEN 2 THEN 'low' WHEN 3 THEN 'medium' ELSE 'high' END AS study_effort_level FROM scored) SELECT study_effort_level, COUNT(*)::int AS student_count, ROUND((COUNT(*) * 100.0 / NULLIF(SUM(COUNT(*)) OVER (), 0))::numeric, 1)::float8 AS pct_of_class, ROUND(AVG(engagement_score)::numeric, 4)::float8 AS avg_engagement_score FROM ranked GROUP BY study_effort_level ORDER BY CASE study_effort_level WHEN 'very_low' THEN 1 WHEN 'low' THEN 2 WHEN 'medium' THEN 3 ELSE 4 END",
     "viz_type": "bar_chart",
     "visualization_config": {
@@ -2187,6 +2273,24 @@
     },
     "datasetCompatibility": "UCI_only",
     "aiPromptHint": "For each triggered flag, state the exact value and why it crosses the threshold. Prioritise the top 2 for immediate action.",
+    "aiSummaryType": "risk_flags",
+    "aiFlagNameColumn": "flag_name",
+    "aiFlagValueColumn": "flag_value",
+    "aiThresholdColumn": "threshold",
+    "aiTriggeredColumn": "triggered",
+    "aiSeverityOrder": [
+      "high",
+      "medium",
+      "low",
+      "info"
+    ],
+    "aiFlagOrder": [
+      "flag_low_score",
+      "flag_high_absence",
+      "flag_low_punctuality",
+      "flag_neg_trend"
+    ],
+    "aiMaxFlags": 10,
     "sqlQuery": "WITH\nscore_agg AS (\n  SELECT ar.student_id,\n         AVG(ar.score_normalized)                             AS avg_score,\n         REGR_SLOPE(ar.score_normalized, a.assessment_order) AS perf_trend\n  FROM assessment_result ar\n  JOIN assessment  a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment  e ON ar.student_id    = e.student_id\n                    AND a.class_id       = e.class_id\n  WHERE e.class_id = :class_id\n  GROUP BY ar.student_id\n),\npunctuality AS (\n  SELECT ar.student_id,\n         COUNT(*) FILTER (WHERE ar.submission_day <= a.due_day) * 1.0\n           / NULLIF(COUNT(*), 0)                              AS punctuality_rate\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment e ON ar.student_id   = e.student_id\n                   AND a.class_id      = e.class_id\n  WHERE e.class_id = :class_id\n  GROUP BY ar.student_id\n)\nSELECT flag_name, flag_value, threshold, triggered\nFROM (\n  SELECT 'flag_low_score'        AS flag_name,\n         sa.avg_score            AS flag_value,\n         40                      AS threshold,\n         (sa.avg_score < 40)     AS triggered\n  FROM score_agg sa\n  WHERE sa.student_id = :student_id\n  UNION ALL\n  SELECT 'flag_high_absence'     AS flag_name,\n         e.absences::float       AS flag_value,\n         10                      AS threshold,\n         (e.absences > 10)       AS triggered\n  FROM enrollment e\n  WHERE e.student_id = :student_id AND e.class_id = :class_id\n  UNION ALL\n  SELECT 'flag_low_punctuality'  AS flag_name,\n         p.punctuality_rate      AS flag_value,\n         0.7                     AS threshold,\n         (p.punctuality_rate < 0.7) AS triggered\n  FROM punctuality p\n  WHERE p.student_id = :student_id\n  UNION ALL\n  SELECT 'flag_neg_trend'        AS flag_name,\n         COALESCE(sa.perf_trend, 0) AS flag_value,\n         0                       AS threshold,\n         (sa.perf_trend < 0)     AS triggered\n  FROM score_agg sa\n  WHERE sa.student_id = :student_id\n) flags",
     "viz_type": "table",
     "visualization_config": {
@@ -3793,6 +3897,28 @@
     },
     "datasetCompatibility": "OULAD_only",
     "aiPromptHint": "Describe the distribution of students across high, medium, and low consistency using student_count and pct_students. Use avg_weekly_stddev and avg_active_weeks to explain what low consistency means, then recommend study-routine interventions for the low group.",
+    "aiSummaryType": "categorical_distribution",
+    "aiCategoryColumn": "consistency_level",
+    "aiCountColumn": "student_count",
+    "aiPercentColumn": "pct_students",
+    "aiMetricColumns": [
+      "avg_weekly_stddev",
+      "avg_weekly_clicks",
+      "avg_active_weeks"
+    ],
+    "aiFocusCategories": [
+      "low"
+    ],
+    "aiCategoryOrder": [
+      "high",
+      "medium",
+      "low"
+    ],
+    "aiExpectedCategories": [
+      "high",
+      "medium",
+      "low"
+    ],
     "sqlQuery": "WITH class_enrollments AS ( SELECT enrollment_id, student_id FROM enrollment WHERE class_id = :class_id AND source_dataset = 'OULAD' ), weekly_clicks AS ( SELECT ce.student_id, eng.week_number, SUM(eng.engagement_count)::float8 AS weekly_total FROM class_enrollments ce JOIN engagement eng ON ce.enrollment_id = eng.enrollment_id WHERE eng.week_number IS NOT NULL GROUP BY ce.student_id, eng.week_number ), student_consistency AS ( SELECT ce.student_id, COALESCE(STDDEV(wc.weekly_total), 0)::float8 AS weekly_stddev, COALESCE(AVG(wc.weekly_total), 0)::float8 AS weekly_avg, COALESCE(SUM(wc.weekly_total), 0)::float8 AS total_clicks, COUNT(wc.week_number)::int AS active_weeks FROM class_enrollments ce LEFT JOIN weekly_clicks wc ON ce.student_id = wc.student_id GROUP BY ce.student_id ), active_thresholds AS ( SELECT PERCENTILE_CONT(0.33) WITHIN GROUP (ORDER BY weekly_stddev) AS p33, PERCENTILE_CONT(0.66) WITHIN GROUP (ORDER BY weekly_stddev) AS p66 FROM student_consistency WHERE total_clicks > 0 ), classified AS ( SELECT sc.student_id, sc.weekly_stddev, sc.weekly_avg, sc.total_clicks, sc.active_weeks, CASE WHEN sc.total_clicks = 0 THEN 'low' WHEN sc.weekly_stddev <= COALESCE(at.p33, sc.weekly_stddev) THEN 'high' WHEN sc.weekly_stddev <= COALESCE(at.p66, sc.weekly_stddev) THEN 'medium' ELSE 'low' END AS consistency_level FROM student_consistency sc CROSS JOIN active_thresholds at ) SELECT consistency_level, COUNT(*)::int AS student_count, ROUND((COUNT(*) * 1.0 / NULLIF(SUM(COUNT(*)) OVER (), 0))::numeric, 4)::float8 AS pct_students, ROUND(AVG(weekly_stddev)::numeric, 2)::float8 AS avg_weekly_stddev, ROUND(AVG(weekly_avg)::numeric, 2)::float8 AS avg_weekly_clicks, ROUND(AVG(active_weeks)::numeric, 2)::float8 AS avg_active_weeks FROM classified GROUP BY consistency_level ORDER BY CASE consistency_level WHEN 'high' THEN 1 WHEN 'medium' THEN 2 ELSE 3 END",
     "viz_type": "bar_chart",
     "visualization_config": {
@@ -3871,6 +3997,21 @@
     },
     "datasetCompatibility": "OULAD_only",
     "aiPromptHint": "Use early_warning_week [FE] to pinpoint critical weeks. Recommend admin action timing (e.g. week 5 intervention).",
+    "aiSummaryType": "trend_series",
+    "aiTimeColumn": "week_number",
+    "aiMetricColumn": "week_total_clicks",
+    "aiSecondaryMetricColumns": [
+      "cohort_avg_clicks",
+      "rolling_3wk_avg",
+      "drop_pct"
+    ],
+    "aiFlagColumns": [
+      "is_drop_week"
+    ],
+    "aiActionColumns": [],
+    "aiLabelColumns": [],
+    "aiSortDirection": "asc",
+    "aiMaxPoints": 40,
     "sqlQuery": "-- [OULAD only]WITH weekly_totals AS (  SELECT eng.week_number,         SUM(eng.engagement_count) AS week_total_clicks  FROM enrollment e  JOIN engagement eng ON e.enrollment_id = eng.enrollment_id  WHERE e.class_id = :class_id AND e.source_dataset = 'OULAD'  GROUP BY eng.week_number),weekly_avg AS (  SELECT week_number,         week_total_clicks,         AVG(week_total_clicks) OVER ()                                     AS cohort_avg_clicks,         AVG(week_total_clicks) OVER (           ORDER BY week_number           ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING         )                                                                   AS rolling_3wk_avg  FROM weekly_totals)SELECT week_number,       week_total_clicks,       cohort_avg_clicks,       rolling_3wk_avg,       week_total_clicks < rolling_3wk_avg * 0.5                            AS is_drop_week,       (week_total_clicks - rolling_3wk_avg) / NULLIF(rolling_3wk_avg, 0)  AS drop_pct FROM weekly_avg ORDER BY week_number",
     "viz_type": "line_chart",
     "visualization_config": {
@@ -4074,6 +4215,17 @@
     },
     "datasetCompatibility": "OULAD_only",
     "aiPromptHint": "Use early_warning_week [FE] to show when engagement collapsed for withdrawn students. Compare to passing students.",
+    "aiSummaryType": "trend_comparison",
+    "aiTargetGroup": "Withdrawn",
+    "aiComparisonGroups": [
+      "Pass",
+      "Distinction"
+    ],
+    "aiTimeColumn": "week_number",
+    "aiMetricColumn": "avg_clicks",
+    "aiGroupColumn": "final_outcome",
+    "aiReliabilityColumn": "student_count",
+    "aiMinimumReliableCount": 10,
     "sqlQuery": "-- [OULAD only]WITH weekly AS (SELECT e.student_id, e.final_outcome, eng.week_number, SUM(eng.engagement_count) AS weekly_clicks, AVG(SUM(eng.engagement_count)) OVER(PARTITION BY e.student_id ORDER BY eng.week_number ROWS BETWEEN 3 PRECEDING AND 1 PRECEDING) AS rolling_avg FROM enrollment e JOIN engagement eng ON e.enrollment_id=eng.enrollment_id WHERE e.class_id=:class_id AND e.source_dataset='OULAD' GROUP BY e.student_id, e.final_outcome, eng.week_number)SELECT week_number, final_outcome, ROUND(AVG(weekly_clicks),2) AS avg_clicks, COUNT(*) AS student_count FROM weekly GROUP BY week_number, final_outcome ORDER BY final_outcome, week_number",
     "viz_type": "line_chart",
     "visualization_config": {
@@ -4328,6 +4480,23 @@
     },
     "datasetCompatibility": "both",
     "aiPromptHint": "Describe class_avg_score trend by assessment_order, then pass_rate and completion_rate trend. Identify the weakest checkpoint (lowest score and/or pass_rate) and recommend the top instructor/admin intervention timing.",
+    "aiSummaryType": "trend_series",
+    "aiTimeColumn": "assessment_order",
+    "aiMetricColumn": "class_avg_score",
+    "aiSecondaryMetricColumns": [
+      "pass_rate",
+      "completion_rate",
+      "submissions_count"
+    ],
+    "aiFlagColumns": [],
+    "aiActionColumns": [],
+    "aiLabelColumns": [
+      "assessment_name",
+      "assessment_type",
+      "week_of_class"
+    ],
+    "aiSortDirection": "asc",
+    "aiMaxPoints": 30,
     "sqlQuery": "WITH score_context AS (SELECT CASE WHEN COALESCE(MAX(ar.score_normalized), 100) <= 20 THEN 20::float8 ELSE 100::float8 END AS score_scale, CASE WHEN COALESCE(MAX(ar.score_normalized), 100) <= 20 THEN 10::float8 ELSE 40::float8 END AS pass_threshold, CASE WHEN COALESCE(MAX(ar.score_normalized), 100) <= 20 THEN 14::float8 ELSE 70::float8 END AS target_threshold FROM assessment_result ar JOIN assessment a ON ar.assessment_id = a.assessment_id WHERE a.class_id = :class_id), class_students AS (SELECT COUNT(DISTINCT e.student_id)::int AS class_size FROM enrollment e WHERE e.class_id = :class_id) SELECT a.assessment_order, a.assessment_name, a.assessment_type, a.week_of_class, COUNT(ar.result_id)::int AS submissions_count, ROUND(AVG(ar.score_normalized)::numeric, 2)::float8 AS class_avg_score, ROUND(AVG((ar.score_normalized >= sc.pass_threshold)::int)::numeric, 4)::float8 AS pass_rate, ROUND((COUNT(ar.result_id) * 1.0 / NULLIF(cs.class_size, 0))::numeric, 4)::float8 AS completion_rate, sc.score_scale, sc.pass_threshold, sc.target_threshold FROM assessment a CROSS JOIN score_context sc CROSS JOIN class_students cs LEFT JOIN assessment_result ar ON ar.assessment_id = a.assessment_id WHERE a.class_id = :class_id GROUP BY a.assessment_order, a.assessment_name, a.assessment_type, a.week_of_class, sc.score_scale, sc.pass_threshold, sc.target_threshold, cs.class_size ORDER BY a.assessment_order ASC, a.assessment_name ASC",
     "viz_type": "line_chart",
     "visualization_config": {
