@@ -1,8 +1,8 @@
 {
   "evaluation_part": "system_performance",
   "datasetId": "SAMPLE_UCI_POR",
-  "generated_at": "2026-05-30T01:24:29.441Z",
-  "duration_ms": 11,
+  "generated_at": "2026-06-06T07:47:40.017Z",
+  "duration_ms": 9,
   "source_logs": {
     "api_contract": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\api_contract_auto_SAMPLE_UCI_POR.json",
     "visualization": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\visualization_auto_SAMPLE_UCI_POR.json",
@@ -268,68 +268,83 @@
     "adapter_latency_note": "Adapter latency is measured around adapter.adapt(rawRows, config), excluding React/Recharts browser rendering time."
   },
   "ai_explanations": {
-    "attempted_count": 17,
-    "response_count": 17,
+    "attempted_count": 31,
+    "response_count": 31,
     "response_rate": 100,
-    "degraded_count": 0,
-    "degraded_rate": 0,
+    "degraded_count": 2,
+    "degraded_rate": 6.45,
     "schema_failed_count": 0,
     "safety_flagged_count": 0,
     "safety_flag_rate": 0,
     "latency_client_observed": {
-      "count": 17,
-      "avg_ms": 6795.29,
-      "median_ms": 5946,
-      "p95_ms": 14281,
-      "min_ms": 3107,
-      "max_ms": 14281
+      "count": 31,
+      "avg_ms": 7066.68,
+      "median_ms": 6090,
+      "p95_ms": 15016,
+      "min_ms": 2573,
+      "max_ms": 15017
     },
     "latency_python_reported": {
-      "count": 17,
-      "avg_ms": 6787.12,
-      "median_ms": 5934,
-      "p95_ms": 14243,
-      "min_ms": 3101,
-      "max_ms": 14243
+      "count": 31,
+      "avg_ms": 7059.71,
+      "median_ms": 6084,
+      "p95_ms": 15001,
+      "min_ms": 2571,
+      "max_ms": 15001
     },
     "total_tokens": {
-      "count": 17,
-      "avg": 1182.12,
-      "median": 1098,
-      "p95": 2456,
-      "min": 764,
-      "max": 2456,
+      "count": 31,
+      "avg": 1748.87,
+      "median": 1664,
+      "p95": 3279,
+      "min": 0,
+      "max": 3358,
       "unit": "tokens"
     },
     "prompt_tokens": {
-      "count": 17,
-      "avg": 796.18,
-      "median": 665,
-      "p95": 2157,
-      "min": 561,
-      "max": 2157,
+      "count": 29,
+      "avg": 1469.28,
+      "median": 1352,
+      "p95": 2675,
+      "min": 566,
+      "max": 3007,
       "unit": "tokens"
     },
     "completion_tokens": {
-      "count": 17,
-      "avg": 385.94,
+      "count": 29,
+      "avg": 400.21,
       "median": 417,
-      "p95": 573,
-      "min": 189,
-      "max": 573,
+      "p95": 642,
+      "min": 166,
+      "max": 687,
       "unit": "tokens"
     },
     "cost_per_explanation": {
-      "count": 17,
-      "avg": 0.000351,
-      "median": 0.00036,
-      "p95": 0.000503,
-      "min": 0.000202,
-      "max": 0.000503,
+      "count": 31,
+      "avg": 0.000431,
+      "median": 0.000432,
+      "p95": 0.000691,
+      "min": 0,
+      "max": 0.000764,
       "unit": "usd"
     },
-    "total_cost_usd": 0.005966,
-    "slow_tasks_over_threshold": []
+    "total_cost_usd": 0.013355,
+    "slow_tasks_over_threshold": [
+      {
+        "taskId": "S-B02",
+        "taskName": "Risk status card",
+        "ai_latency_ms": 15017,
+        "total_tokens": null,
+        "cost_usd": null
+      },
+      {
+        "taskId": "S-T04",
+        "taskName": "At-risk self-check",
+        "ai_latency_ms": 15016,
+        "total_tokens": null,
+        "cost_usd": null
+      }
+    ]
   },
   "task_validation_and_coverage": {
     "runner_duration_ms": 845,
@@ -353,10 +368,10 @@
       "analytics_timeout_rate_acceptable": true,
       "analytics_success_p95_latency_acceptable": true,
       "ai_degraded_rate_acceptable": true,
-      "ai_p95_latency_acceptable": true,
+      "ai_p95_latency_acceptable": false,
       "visualization_adapter_crash_free": true
     },
-    "overall_performance_pass": true
+    "overall_performance_pass": false
   },
   "concise_summary": {
     "analytics_success_rate": 94.74,
@@ -368,11 +383,11 @@
     "import_apply_duration_ms": 1671,
     "basic_api_avg_latency_ms": 304.609,
     "ai_response_rate": 100,
-    "ai_degraded_rate": 0,
-    "ai_avg_latency_ms": 6795.29,
-    "ai_p95_latency_ms": 14281,
-    "ai_avg_tokens": 1182.12,
-    "ai_total_cost_usd": 0.005966,
-    "overall_performance_pass": true
+    "ai_degraded_rate": 6.45,
+    "ai_avg_latency_ms": 7066.68,
+    "ai_p95_latency_ms": 15016,
+    "ai_avg_tokens": 1748.87,
+    "ai_total_cost_usd": 0.013355,
+    "overall_performance_pass": false
   }
 }
