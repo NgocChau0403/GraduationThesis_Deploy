@@ -22,7 +22,7 @@ const router = express.Router();
  *                               task.visualization_config
  *                → POST http://localhost:8000/explain (Python FastAPI)
  *                → ExplanationStrategyFactory picks Strategy class
- *                → LLM call (JSON mode, max_tokens=800, temp=0.3)
+ *                → LLM call (JSON mode, max_tokens=800, temp=0, seed=42)
  *                → SafetyFilter (5 categories)
  *                → ObservabilityLogger (ai_explanation_log table)
  *                → Response back to Frontend
@@ -112,6 +112,10 @@ const router = express.Router();
  *                     based_on: ["sufficient_data"]
  *                   explanation_type: "temporal"
  *                   explanation_strategy: "trend"
+ *                   ai_summary_method: "task_aware_data_summarization"
+ *                   ai_summary_version: "v1"
+ *                   baseline_available: true
+ *                   input_summary_type: "trend_series"
  *                   safety_flags: []
  *                   meta:
  *                     model: "gpt-4o-mini"
@@ -133,6 +137,10 @@ const router = express.Router();
  *                     recommendations: []
  *                     warnings: ["LLM service timeout. Please try again later."]
  *                   confidence: { level: null, reason: null, based_on: [] }
+ *                   ai_summary_method: "unavailable"
+ *                   ai_summary_version: "unavailable"
+ *                   baseline_available: true
+ *                   input_summary_type: "unavailable"
  *                   safety_flags: []
  *                   meta: { model: null, latency_ms: 15001, token_usage: null, strategy: null, granularity: null, cost_usd: null }
  *       400:

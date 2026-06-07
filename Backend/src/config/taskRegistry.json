@@ -4359,6 +4359,26 @@
     },
     "datasetCompatibility": "both",
     "aiPromptHint": "Rank by at_risk_score [FE] descending. List triggered flags per student. Provide action per priority group.",
+    "aiSummaryType": "ranking",
+    "aiEntityColumn": "student_id",
+    "aiMetricColumn": "at_risk_score",
+    "aiSortDirection": "desc",
+    "aiSecondaryMetricColumns": [
+      "avg_score"
+    ],
+    "aiLabelColumns": [
+      "at_risk_label",
+      "final_outcome"
+    ],
+    "aiFlagColumns": [
+      "flag_low_score",
+      "flag_repeated",
+      "flag_low_engagement",
+      "flag_low_punctuality",
+      "flag_neg_trend"
+    ],
+    "aiTopK": 10,
+    "aiBottomK": 5,
     "sqlQuery": "WITH score_agg AS (SELECT ar.student_id, AVG(ar.score_normalized) AS avg_score, REGR_SLOPE(ar.score_normalized, a.assessment_order) AS perf_trend FROM assessment_result ar JOIN assessment a ON ar.assessment_id = a.assessment_id JOIN enrollment e ON ar.student_id = e.student_id AND a.class_id = e.class_id WHERE e.class_id = :class_id GROUP BY ar.student_id), eng_agg AS (SELECT e.student_id, SUM(eng.engagement_count) AS total_clicks, COUNT(DISTINCT eng.event_day) AS active_days FROM enrollment e JOIN engagement eng ON e.enrollment_id = eng.enrollment_id WHERE e.class_id = :class_id GROUP BY e.student_id), class_max AS (SELECT MAX(total_clicks) AS mc, MAX(active_days) AS ma FROM eng_agg), eng_score AS (SELECT ea.student_id, (ea.total_clicks / NULLIF(cm.mc, 0)) * 0.5 + (ea.active_days / NULLIF(cm.ma, 0)) * 0.5 AS engagement_score FROM eng_agg ea, class_max cm), punctuality AS (SELECT ar.student_id, COUNT(*) FILTER (WHERE ar.submission_day <= a.due_day) * 1.0 / NULLIF(COUNT(*), 0) AS punctuality_rate FROM assessment_result ar JOIN assessment a ON ar.assessment_id = a.assessment_id JOIN enrollment e ON ar.student_id = e.student_id AND a.class_id = e.class_id WHERE e.class_id = :class_id GROUP BY ar.student_id), risk_flags AS (SELECT sa.student_id, e.enrollment_id, sa.avg_score, e.final_outcome, CASE WHEN sa.avg_score < 40 THEN 1 ELSE 0 END AS flag_low_score, CASE WHEN e.previous_attempt_count > 0 THEN 1 ELSE 0 END AS flag_repeated, CASE WHEN es.engagement_score < 0.15 THEN 1 ELSE 0 END AS flag_low_engagement, CASE WHEN COALESCE(p.punctuality_rate, 1) < 0.7 THEN 1 ELSE 0 END AS flag_low_punctuality, CASE WHEN sa.perf_trend < 0 THEN 1 ELSE 0 END AS flag_neg_trend, (CASE WHEN sa.avg_score < 40 THEN 1 ELSE 0 END + CASE WHEN e.previous_attempt_count > 0 THEN 1 ELSE 0 END + CASE WHEN es.engagement_score < 0.15 THEN 1 ELSE 0 END + CASE WHEN COALESCE(p.punctuality_rate, 1) < 0.7 THEN 1 ELSE 0 END + CASE WHEN sa.perf_trend < 0 THEN 1 ELSE 0 END) AS sum_flags FROM score_agg sa JOIN eng_score es ON es.student_id = sa.student_id JOIN enrollment e ON e.student_id = sa.student_id AND e.class_id = :class_id LEFT JOIN punctuality p ON p.student_id = sa.student_id) SELECT rf.student_id, s.gender, s.age_group, s.region, rf.avg_score, rf.sum_flags AS at_risk_score, CASE WHEN rf.sum_flags >= 3 THEN 'high' WHEN rf.sum_flags = 2 THEN 'medium' ELSE 'low' END AS at_risk_label, rf.flag_low_score, rf.flag_repeated, rf.flag_low_engagement, rf.flag_low_punctuality, rf.flag_neg_trend, rf.final_outcome FROM risk_flags rf JOIN student s ON rf.student_id = s.student_id ORDER BY at_risk_score DESC, rf.avg_score ASC LIMIT 50",
     "viz_type": "table",
     "visualization_config": {

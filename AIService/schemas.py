@@ -83,16 +83,23 @@ class AISummaryConfig(BaseModel):
     comparison_groups: list[str] = Field(default_factory=list)
     time_column: str | None = None
     metric_column: str | None = None
+    entity_column: str | None = None
     group_column: str | None = None
     reliability_column: str | None = None
     minimum_reliable_count: int | float | None = None
     category_column: str | None = None
+    bin_column: str | None = None
     count_column: str | None = None
     percent_column: str | None = None
     metric_columns: list[str] = Field(default_factory=list)
     focus_categories: list[str] = Field(default_factory=list)
+    focus_bins: list[str] = Field(default_factory=list)
     category_order: list[str] = Field(default_factory=list)
     expected_categories: list[str] = Field(default_factory=list)
+    bin_order: list[str] = Field(default_factory=list)
+    expected_bins: list[str] = Field(default_factory=list)
+    numeric_threshold: int | float | None = None
+    threshold_direction: str | None = None
     sort_by: str | None = None
     sort_direction: str | None = None
     flag_name_column: str | None = None
@@ -111,6 +118,8 @@ class AISummaryConfig(BaseModel):
     action_columns: list[str] = Field(default_factory=list)
     label_columns: list[str] = Field(default_factory=list)
     max_points: int | None = None
+    top_k: int | None = None
+    bottom_k: int | None = None
 
 
 class ConfidenceInput(BaseModel):
@@ -261,6 +270,11 @@ class ExplainResponse(BaseModel):
     confidence:           ConfidenceInfo
     explanation_strategy: str
     explanation_type:     str | None = None
+    ai_summary_method:    str
+    ai_summary_version:   str
+    baseline_available:   bool
+    input_summary_type:   str
+    ai_summary_method_warning: str | None = None
     safety_flags:         list[str] = Field(default_factory=list)
     degraded:             bool = False
     meta:                 AIMeta

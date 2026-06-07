@@ -1,0 +1,243 @@
+{
+  "taskId": "A-G14",
+  "datasetId": "withdrawal_signal_trend",
+  "method": "task_aware_data_summarization",
+  "input_summary_type": "trend_comparison",
+  "input_data_summary": "{\n  \"summary_type\": \"trend_comparison\",\n  \"dataset_name\": \"withdrawal_signal_trend\",\n  \"row_count\": 16,\n  \"target_group\": \"Withdrawn\",\n  \"comparison_groups\": [\n    \"Pass\",\n    \"Distinction\"\n  ],\n  \"target_trend\": {\n    \"group\": \"Withdrawn\",\n    \"point_count\": 6,\n    \"first_point\": {\n      \"week_number\": 1.0,\n      \"avg_clicks\": 76.91,\n      \"student_count\": 46.0\n    },\n    \"last_point\": {\n      \"week_number\": 29.0,\n      \"avg_clicks\": 6.33,\n      \"student_count\": 3.0\n    },\n    \"peak\": {\n      \"week_number\": 3.0,\n      \"avg_clicks\": 127.82,\n      \"student_count\": 45.0\n    },\n    \"trough\": {\n      \"week_number\": 29.0,\n      \"avg_clicks\": 6.33,\n      \"student_count\": 3.0\n    },\n    \"largest_adjacent_drop\": {\n      \"from\": {\n        \"week_number\": 4.0,\n        \"avg_clicks\": 73.54,\n        \"student_count\": 41.0\n      },\n      \"to\": {\n        \"week_number\": 13.0,\n        \"avg_clicks\": 17.18,\n        \"student_count\": 22.0\n      },\n      \"delta\": -56.36\n    },\n    \"largest_adjacent_rise\": {\n      \"from\": {\n        \"week_number\": 1.0,\n        \"avg_clicks\": 76.91,\n        \"student_count\": 46.0\n      },\n      \"to\": {\n        \"week_number\": 2.0,\n        \"avg_clicks\": 106.34,\n        \"student_count\": 44.0\n      },\n      \"delta\": 29.43\n    },\n    \"largest_reliable_adjacent_drop\": {\n      \"from\": {\n        \"week_number\": 4.0,\n        \"avg_clicks\": 73.54,\n        \"student_count\": 41.0\n      },\n      \"to\": {\n        \"week_number\": 13.0,\n        \"avg_clicks\": 17.18,\n        \"student_count\": 22.0\n      },\n      \"delta\": -56.36\n    },\n    \"reliability_warnings\": [\n      {\n        \"warning\": \"1 Withdrawn points have student_count below 10; avoid over-weighting these weeks.\",\n        \"low_count_points\": [\n          {\n            \"week_number\": 29.0,\n            \"avg_clicks\": 6.33,\n            \"student_count\": 3.0\n          }\n        ]\n      }\n    ]\n  },\n  \"comparison_trends\": {\n    \"Pass\": {\n      \"group\": \"Pass\",\n      \"point_count\": 3,\n      \"first_point\": {\n        \"week_number\": 1.0,\n        \"avg_clicks\": 120.0,\n        \"student_count\": 120.0\n      },\n      \"last_point\": {\n        \"week_number\": 3.0,\n        \"avg_clicks\": 116.0,\n        \"student_count\": 119.0\n      },\n      \"peak\": {\n        \"week_number\": 1.0,\n        \"avg_clicks\": 120.0,\n        \"student_count\": 120.0\n      },\n      \"trough\": {\n        \"week_number\": 2.0,\n        \"avg_clicks\": 115.0,\n        \"student_count\": 121.0\n      },\n      \"largest_adjacent_drop\": {\n        \"from\": {\n          \"week_number\": 1.0,\n          \"avg_clicks\": 120.0,\n          \"student_count\": 120.0\n        },\n        \"to\": {\n          \"week_number\": 2.0,\n          \"avg_clicks\": 115.0,\n          \"student_count\": 121.0\n        },\n        \"delta\": -5.0\n      },\n      \"largest_adjacent_rise\": {\n        \"from\": {\n          \"week_number\": 2.0,\n          \"avg_clicks\": 115.0,\n          \"student_count\": 121.0\n        },\n        \"to\": {\n          \"week_number\": 3.0,\n          \"avg_clicks\": 116.0,\n          \"student_count\": 119.0\n        },\n        \"delta\": 1.0\n      },\n      \"largest_reliable_adjacent_drop\": {\n        \"from\": {\n          \"week_number\": 1.0,\n          \"avg_clicks\": 120.0,\n          \"student_count\": 120.0\n        },\n        \"to\": {\n          \"week_number\": 2.0,\n          \"avg_clicks\": 115.0,\n          \"student_count\": 121.0\n        },\n        \"delta\": -5.0\n      }\n    },\n    \"Distinction\": {\n      \"group\": \"Distinction\",\n      \"point_count\": 5,\n      \"first_point\": {\n        \"week_number\": 1.0,\n        \"avg_clicks\": 197.44,\n        \"student_count\": 18.0\n      },\n      \"last_point\": {\n        \"week_number\": 16.0,\n        \"avg_clicks\": 100.61,\n        \"student_count\": 18.0\n      },\n      \"peak\": {\n        \"week_number\": 1.0,\n        \"avg_clicks\": 197.44,\n        \"student_count\": 18.0\n      },\n      \"trough\": {\n        \"week_number\": 12.0,\n        \"avg_clicks\": 61.06,\n        \"student_count\": 16.0\n      },\n      \"largest_adjacent_drop\": {\n        \"from\": {\n          \"week_number\": 3.0,\n          \"avg_clicks\": 157.0,\n          \"student_count\": 20.0\n        },\n        \"to\": {\n          \"week_number\": 12.0,\n          \"avg_clicks\": 61.06,\n          \"student_count\": 16.0\n        },\n        \"delta\": -95.94\n      },\n      \"largest_adjacent_rise\": {\n        \"from\": {\n          \"week_number\": 12.0,\n          \"avg_clicks\": 61.06,\n          \"student_count\": 16.0\n        },\n        \"to\": {\n          \"week_number\": 16.0,\n          \"avg_clicks\": 100.61,\n          \"student_count\": 18.0\n        },\n        \"delta\": 39.55\n      },\n      \"largest_reliable_adjacent_drop\": {\n        \"from\": {\n          \"week_number\": 3.0,\n          \"avg_clicks\": 157.0,\n          \"student_count\": 20.0\n        },\n        \"to\": {\n          \"week_number\": 12.0,\n          \"avg_clicks\": 61.06,\n          \"student_count\": 16.0\n        },\n        \"delta\": -95.94\n      }\n    }\n  },\n  \"reliability_warnings\": [\n    {\n      \"warning\": \"1 Withdrawn points have student_count below 10; avoid over-weighting these weeks.\",\n      \"low_count_points\": [\n        {\n          \"week_number\": 29.0,\n          \"avg_clicks\": 6.33,\n          \"student_count\": 3.0\n        }\n      ]\n    }\n  ],\n  \"summarization_warnings\": [],\n  \"available_groups\": [\n    \"Distinction\",\n    \"Fail\",\n    \"Pass\",\n    \"Withdrawn\"\n  ]\n}",
+  "summary_debug_payload": {
+    "summary_type": "trend_comparison",
+    "dataset_name": "withdrawal_signal_trend",
+    "row_count": 16,
+    "target_group": "Withdrawn",
+    "comparison_groups": [
+      "Pass",
+      "Distinction"
+    ],
+    "target_trend": {
+      "group": "Withdrawn",
+      "point_count": 6,
+      "first_point": {
+        "week_number": 1.0,
+        "avg_clicks": 76.91,
+        "student_count": 46.0
+      },
+      "last_point": {
+        "week_number": 29.0,
+        "avg_clicks": 6.33,
+        "student_count": 3.0
+      },
+      "peak": {
+        "week_number": 3.0,
+        "avg_clicks": 127.82,
+        "student_count": 45.0
+      },
+      "trough": {
+        "week_number": 29.0,
+        "avg_clicks": 6.33,
+        "student_count": 3.0
+      },
+      "largest_adjacent_drop": {
+        "from": {
+          "week_number": 4.0,
+          "avg_clicks": 73.54,
+          "student_count": 41.0
+        },
+        "to": {
+          "week_number": 13.0,
+          "avg_clicks": 17.18,
+          "student_count": 22.0
+        },
+        "delta": -56.36
+      },
+      "largest_adjacent_rise": {
+        "from": {
+          "week_number": 1.0,
+          "avg_clicks": 76.91,
+          "student_count": 46.0
+        },
+        "to": {
+          "week_number": 2.0,
+          "avg_clicks": 106.34,
+          "student_count": 44.0
+        },
+        "delta": 29.43
+      },
+      "largest_reliable_adjacent_drop": {
+        "from": {
+          "week_number": 4.0,
+          "avg_clicks": 73.54,
+          "student_count": 41.0
+        },
+        "to": {
+          "week_number": 13.0,
+          "avg_clicks": 17.18,
+          "student_count": 22.0
+        },
+        "delta": -56.36
+      },
+      "reliability_warnings": [
+        {
+          "warning": "1 Withdrawn points have student_count below 10; avoid over-weighting these weeks.",
+          "low_count_points": [
+            {
+              "week_number": 29.0,
+              "avg_clicks": 6.33,
+              "student_count": 3.0
+            }
+          ]
+        }
+      ]
+    },
+    "comparison_trends": {
+      "Pass": {
+        "group": "Pass",
+        "point_count": 3,
+        "first_point": {
+          "week_number": 1.0,
+          "avg_clicks": 120.0,
+          "student_count": 120.0
+        },
+        "last_point": {
+          "week_number": 3.0,
+          "avg_clicks": 116.0,
+          "student_count": 119.0
+        },
+        "peak": {
+          "week_number": 1.0,
+          "avg_clicks": 120.0,
+          "student_count": 120.0
+        },
+        "trough": {
+          "week_number": 2.0,
+          "avg_clicks": 115.0,
+          "student_count": 121.0
+        },
+        "largest_adjacent_drop": {
+          "from": {
+            "week_number": 1.0,
+            "avg_clicks": 120.0,
+            "student_count": 120.0
+          },
+          "to": {
+            "week_number": 2.0,
+            "avg_clicks": 115.0,
+            "student_count": 121.0
+          },
+          "delta": -5.0
+        },
+        "largest_adjacent_rise": {
+          "from": {
+            "week_number": 2.0,
+            "avg_clicks": 115.0,
+            "student_count": 121.0
+          },
+          "to": {
+            "week_number": 3.0,
+            "avg_clicks": 116.0,
+            "student_count": 119.0
+          },
+          "delta": 1.0
+        },
+        "largest_reliable_adjacent_drop": {
+          "from": {
+            "week_number": 1.0,
+            "avg_clicks": 120.0,
+            "student_count": 120.0
+          },
+          "to": {
+            "week_number": 2.0,
+            "avg_clicks": 115.0,
+            "student_count": 121.0
+          },
+          "delta": -5.0
+        }
+      },
+      "Distinction": {
+        "group": "Distinction",
+        "point_count": 5,
+        "first_point": {
+          "week_number": 1.0,
+          "avg_clicks": 197.44,
+          "student_count": 18.0
+        },
+        "last_point": {
+          "week_number": 16.0,
+          "avg_clicks": 100.61,
+          "student_count": 18.0
+        },
+        "peak": {
+          "week_number": 1.0,
+          "avg_clicks": 197.44,
+          "student_count": 18.0
+        },
+        "trough": {
+          "week_number": 12.0,
+          "avg_clicks": 61.06,
+          "student_count": 16.0
+        },
+        "largest_adjacent_drop": {
+          "from": {
+            "week_number": 3.0,
+            "avg_clicks": 157.0,
+            "student_count": 20.0
+          },
+          "to": {
+            "week_number": 12.0,
+            "avg_clicks": 61.06,
+            "student_count": 16.0
+          },
+          "delta": -95.94
+        },
+        "largest_adjacent_rise": {
+          "from": {
+            "week_number": 12.0,
+            "avg_clicks": 61.06,
+            "student_count": 16.0
+          },
+          "to": {
+            "week_number": 16.0,
+            "avg_clicks": 100.61,
+            "student_count": 18.0
+          },
+          "delta": 39.55
+        },
+        "largest_reliable_adjacent_drop": {
+          "from": {
+            "week_number": 3.0,
+            "avg_clicks": 157.0,
+            "student_count": 20.0
+          },
+          "to": {
+            "week_number": 12.0,
+            "avg_clicks": 61.06,
+            "student_count": 16.0
+          },
+          "delta": -95.94
+        }
+      }
+    },
+    "reliability_warnings": [
+      {
+        "warning": "1 Withdrawn points have student_count below 10; avoid over-weighting these weeks.",
+        "low_count_points": [
+          {
+            "week_number": 29.0,
+            "avg_clicks": 6.33,
+            "student_count": 3.0
+          }
+        ]
+      }
+    ],
+    "summarization_warnings": [],
+    "available_groups": [
+      "Distinction",
+      "Fail",
+      "Pass",
+      "Withdrawn"
+    ]
+  },
+  "ai_response": null,
+  "latency": 0.803,
+  "rubric_score": null,
+  "notes": "Input summary comparison only; no model call was made."
+}

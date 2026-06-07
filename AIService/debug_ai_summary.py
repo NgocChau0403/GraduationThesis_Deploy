@@ -3,10 +3,15 @@ Debug AI prompt summaries without calling the LLM.
 
 Usage:
   python debug_ai_summary.py --task A-G14
+  python debug_ai_summary.py --task A-G14 --method baseline_first_20_rows
+  python debug_ai_summary.py --task A-G14 --method task_aware_data_summarization
+  python debug_ai_summary.py --task A-G14 --compare-methods --write-log
   python debug_ai_summary.py --self-test
   python debug_ai_summary.py --self-test-categorical
   python debug_ai_summary.py --self-test-risk-flags
   python debug_ai_summary.py --self-test-trend-series
+  python debug_ai_summary.py --self-test-ranking
+  python debug_ai_summary.py --self-test-numeric-distribution
   python debug_ai_summary.py --task A-G14 --input-json path/to/datasets.json
 
 The optional input JSON can be either:
@@ -21,6 +26,8 @@ import argparse
 import json
 import os
 import sys
+import time
+from datetime import datetime, timezone
 from pathlib import Path
 
 os.environ.setdefault("OPENAI_API_KEY", "debug-no-llm-call")
@@ -31,6 +38,8 @@ from strategies.base import BaseExplanationStrategy
 
 ROOT = Path(__file__).resolve().parents[1]
 TASK_REGISTRY = ROOT / "Backend" / "src" / "config" / "taskRegistry.json"
+EVALUATION_ROOT = ROOT / "Docs" / "evaluation" / "ai_explanation"
+SUMMARY_METHODS = ("task_aware_data_summarization", "baseline_first_20_rows")
 
 
 def load_task(task_id: str) -> dict:
@@ -50,16 +59,23 @@ def build_ai_summary_config(task: dict) -> AISummaryConfig | None:
         comparison_groups=task.get("aiComparisonGroups") or [],
         time_column=task.get("aiTimeColumn"),
         metric_column=task.get("aiMetricColumn"),
+        entity_column=task.get("aiEntityColumn"),
         group_column=task.get("aiGroupColumn"),
         reliability_column=task.get("aiReliabilityColumn"),
         minimum_reliable_count=task.get("aiMinimumReliableCount"),
         category_column=task.get("aiCategoryColumn"),
+        bin_column=task.get("aiBinColumn"),
         count_column=task.get("aiCountColumn"),
         percent_column=task.get("aiPercentColumn"),
         metric_columns=task.get("aiMetricColumns") or [],
         focus_categories=task.get("aiFocusCategories") or [],
+        focus_bins=task.get("aiFocusBins") or [],
         category_order=task.get("aiCategoryOrder") or [],
         expected_categories=task.get("aiExpectedCategories") or [],
+        bin_order=task.get("aiBinOrder") or [],
+        expected_bins=task.get("aiExpectedBins") or [],
+        numeric_threshold=task.get("aiNumericThreshold"),
+        threshold_direction=task.get("aiThresholdDirection"),
         sort_by=task.get("aiSortBy"),
         sort_direction=task.get("aiSortDirection"),
         flag_name_column=task.get("aiFlagNameColumn"),
@@ -78,6 +94,8 @@ def build_ai_summary_config(task: dict) -> AISummaryConfig | None:
         action_columns=task.get("aiActionColumns") or [],
         label_columns=task.get("aiLabelColumns") or [],
         max_points=task.get("aiMaxPoints"),
+        top_k=task.get("aiTopK"),
+        bottom_k=task.get("aiBottomK"),
     )
 
 
@@ -110,6 +128,20 @@ def sample_task_datasets(task_id: str) -> dict[str, list[dict]]:
                 {"final_outcome": "Fail", "student_count": "60", "pct_of_class": "15.0"},
                 {"final_outcome": "Withdrawn", "student_count": "40", "pct_of_class": "10.0"},
                 {"final_outcome": "Distinction", "student_count": "40", "pct_of_class": "10.0"},
+            ]
+        }
+    if task_id == "A-B01":
+        return {
+            "score_distribution": [
+                {"score_bucket": "40-50", "student_count": "12", "pct_of_class": "12.0", "avg_score_in_bucket": "45.5"},
+                {"score_bucket": "0-10", "student_count": "3", "pct_of_class": "3.0", "avg_score_in_bucket": "7.0"},
+                {"score_bucket": "No score", "student_count": "1", "pct_of_class": "1.0", "avg_score_in_bucket": None},
+                {"score_bucket": "30-40", "student_count": "10", "pct_of_class": "10.0", "avg_score_in_bucket": "35.0"},
+                {"score_bucket": "10-20", "student_count": "5", "pct_of_class": "5.0", "avg_score_in_bucket": "15.0"},
+                {"score_bucket": "80-90", "student_count": "30", "pct_of_class": "30.0", "avg_score_in_bucket": "84.0"},
+                {"score_bucket": "20-30", "student_count": "9", "pct_of_class": "9.0", "avg_score_in_bucket": "25.0"},
+                {"score_bucket": "60-70", "student_count": "20", "pct_of_class": "20.0", "avg_score_in_bucket": "64.0"},
+                {"score_bucket": "90-100", "student_count": "10", "pct_of_class": "10.0", "avg_score_in_bucket": "93.0"},
             ]
         }
     if task_id == "A-B03":
@@ -276,6 +308,17 @@ def sample_task_datasets(task_id: str) -> dict[str, list[dict]]:
                 {"week_number": "5", "week_total_clicks": "780", "cohort_avg_clicks": "760", "rolling_3wk_avg": "656.67", "is_drop_week": False, "drop_pct": "0.1878"},
             ]
         }
+    if task_id == "A-G15":
+        return {
+            "intervention_priority_list": [
+                {"student_id": "S004", "gender": "F", "age_group": "25-34", "region": "North", "avg_score": "67.0", "at_risk_score": "1", "at_risk_label": "low", "flag_low_score": 0, "flag_repeated": 0, "flag_low_engagement": 1, "flag_low_punctuality": 0, "flag_neg_trend": 0, "final_outcome": "Pass"},
+                {"student_id": "S001", "gender": "M", "age_group": "18-24", "region": "South", "avg_score": "38.5", "at_risk_score": "5", "at_risk_label": "high", "flag_low_score": 1, "flag_repeated": 1, "flag_low_engagement": 1, "flag_low_punctuality": 1, "flag_neg_trend": 1, "final_outcome": "Fail"},
+                {"student_id": "S006", "gender": "F", "age_group": "35-44", "region": "West", "avg_score": "70.0", "at_risk_score": "0.5", "at_risk_label": "low", "flag_low_score": 0, "flag_repeated": 0, "flag_low_engagement": 0, "flag_low_punctuality": 0, "flag_neg_trend": 1, "final_outcome": "Pass"},
+                {"student_id": "S003", "gender": "M", "age_group": "25-34", "region": "East", "avg_score": "41.0", "at_risk_score": 4, "at_risk_label": "high", "flag_low_score": 0, "flag_repeated": 1, "flag_low_engagement": 1, "flag_low_punctuality": 1, "flag_neg_trend": 1, "final_outcome": "Withdrawn"},
+                {"student_id": "S002", "gender": "F", "age_group": "18-24", "region": "North", "avg_score": "39.0", "at_risk_score": "5", "at_risk_label": "high", "flag_low_score": 1, "flag_repeated": 0, "flag_low_engagement": 1, "flag_low_punctuality": 1, "flag_neg_trend": 1, "final_outcome": "Fail"},
+                {"student_id": "S005", "gender": "M", "age_group": "45-54", "region": "South", "avg_score": "61.5", "at_risk_score": "2", "at_risk_label": "medium", "flag_low_score": 0, "flag_repeated": 1, "flag_low_engagement": 0, "flag_low_punctuality": 0, "flag_neg_trend": 1, "final_outcome": "Pass"},
+            ]
+        }
     return {"withdrawal_signal_trend": sample_a_g14_rows()}
 
 
@@ -314,6 +357,7 @@ def build_request(task_id: str, datasets: dict[str, list[dict]]) -> ExplainReque
 
 
 def run_self_test() -> None:
+    os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
     generic_req = build_request("A-G14", {"empty": []})
     generic_req.ai_summary_config = None
     generic_summary = BaseExplanationStrategy.summarize_datasets(generic_req)
@@ -347,10 +391,63 @@ def run_self_test() -> None:
     assert missing_summary["target_group_missing"] is True
     assert "Withdrawn" in missing_summary["summarization_warnings"][0]
 
+    baseline_req = build_request("A-G14", {"generic": rows})
+    baseline_result = BaseExplanationStrategy.build_summary_result(
+        baseline_req,
+        method_override="baseline_first_20_rows",
+        include_debug_payload=True,
+    )
+    baseline_payload = baseline_result["metadata"]["summary_debug_payload"]
+    baseline_dataset = baseline_payload["datasets"][0]
+    assert baseline_result["metadata"]["input_summary_type"] == "raw_first_20_rows"
+    assert baseline_dataset["included_row_count"] == 20
+    assert baseline_dataset["truncated_row_count"] == 5
+    assert baseline_dataset["rows"][-1]["idx"] == 19
+    assert "Dataset: generic (25 rows)" in baseline_result["summary_text"]
+    assert "[... 5 more rows truncated]" in baseline_result["summary_text"]
+
     print("debug_ai_summary self-test passed")
 
 
+def summarize_for_method(req: ExplainRequest, method: str) -> dict:
+    start = time.perf_counter()
+    result = BaseExplanationStrategy.build_summary_result(
+        req,
+        method_override=method,
+        include_debug_payload=True,
+    )
+    latency_ms = round((time.perf_counter() - start) * 1000, 3)
+    return {
+        "taskId": req.task_id,
+        "datasetId": next(iter(req.datasets.keys()), None),
+        "method": result["metadata"]["ai_summary_method"],
+        "input_summary_type": result["metadata"]["input_summary_type"],
+        "input_data_summary": result["summary_text"],
+        "summary_debug_payload": result["metadata"].get("summary_debug_payload"),
+        "ai_response": None,
+        "latency": latency_ms,
+        "rubric_score": None,
+        "notes": "Input summary comparison only; no model call was made.",
+    }
+
+
+def log_dir_for_method(method: str) -> Path:
+    if method == "baseline_first_20_rows":
+        return EVALUATION_ROOT / "baseline_first_20"
+    return EVALUATION_ROOT / "task_aware_summary"
+
+
+def write_summary_log(record: dict) -> Path:
+    output_dir = log_dir_for_method(record["method"])
+    output_dir.mkdir(parents=True, exist_ok=True)
+    timestamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    path = output_dir / f"{record['taskId']}_{record['method']}_{timestamp}.json"
+    path.write_text(json.dumps(record, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
+    return path
+
+
 def run_self_test_categorical() -> None:
+    os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
     a_b02_req = build_request("A-B02", sample_task_datasets("A-B02"))
     a_b02_summary = json.loads(BaseExplanationStrategy.summarize_datasets(a_b02_req))
     assert a_b02_summary["summary_type"] == "categorical_distribution"
@@ -442,6 +539,7 @@ def run_self_test_categorical() -> None:
 
 
 def run_self_test_risk_flags() -> None:
+    os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
     s_t04_req = build_request("S-T04", sample_task_datasets("S-T04"))
     s_t04_summary = json.loads(BaseExplanationStrategy.summarize_datasets(s_t04_req))
     assert s_t04_summary["summary_type"] == "risk_flags"
@@ -523,6 +621,7 @@ def run_self_test_risk_flags() -> None:
 
 
 def run_self_test_trend_series() -> None:
+    os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
     s_t01_req = build_request("S-T01", sample_task_datasets("S-T01"))
     s_t01_summary = json.loads(BaseExplanationStrategy.summarize_datasets(s_t01_req))
     assert s_t01_summary["summary_type"] == "trend_series"
@@ -599,14 +698,240 @@ def run_self_test_trend_series() -> None:
     print("debug_ai_summary trend_series self-test passed")
 
 
+def ranking_config(top_k: int = 2, bottom_k: int = 2) -> AISummaryConfig:
+    return AISummaryConfig(
+        summary_type="ranking",
+        entity_column="student_id",
+        metric_column="at_risk_score",
+        sort_direction="desc",
+        secondary_metric_columns=["avg_score"],
+        label_columns=["at_risk_label", "final_outcome"],
+        flag_columns=[
+            "flag_low_score",
+            "flag_repeated",
+            "flag_low_engagement",
+            "flag_low_punctuality",
+            "flag_neg_trend",
+        ],
+        top_k=top_k,
+        bottom_k=bottom_k,
+    )
+
+
+def numeric_distribution_config(
+    *,
+    bin_order: list[str] | None = None,
+    focus_bins: list[str] | None = None,
+    threshold: int | float = 40,
+) -> AISummaryConfig:
+    default_order = [
+        "0-10",
+        "10-20",
+        "20-30",
+        "30-40",
+        "40-50",
+        "50-60",
+        "60-70",
+        "70-80",
+        "80-90",
+        "90-100",
+        "No score",
+    ]
+    return AISummaryConfig(
+        summary_type="numeric_distribution",
+        bin_column="score_bucket",
+        count_column="student_count",
+        percent_column="pct_of_class",
+        metric_columns=["avg_score_in_bucket"],
+        bin_order=default_order if bin_order is None else bin_order,
+        expected_bins=default_order,
+        focus_bins=focus_bins if focus_bins is not None else ["0-10", "10-20", "20-30", "30-40"],
+        numeric_threshold=threshold,
+        threshold_direction="below",
+    )
+
+
+def run_self_test_ranking() -> None:
+    os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
+    rows = sample_task_datasets("A-G15")["intervention_priority_list"]
+
+    generic_req = build_request("A-G15", {"intervention_priority_list": rows})
+    generic_req.ai_summary_config = None
+    generic_summary = json.loads(BaseExplanationStrategy.summarize_datasets(generic_req))
+    assert generic_summary["summary_type"] == "generic_fallback"
+
+    ranking_req = build_request("A-G15", {"intervention_priority_list": rows})
+    ranking_req.ai_summary_config = ranking_config()
+    ranking_summary = json.loads(BaseExplanationStrategy.summarize_datasets(ranking_req))
+    assert ranking_summary["summary_type"] == "ranking"
+    assert ranking_summary["dataset_name"] == "intervention_priority_list"
+    assert ranking_summary["entity_column"] == "student_id"
+    assert ranking_summary["metric_column"] == "at_risk_score"
+    assert ranking_summary["sort_direction"] == "desc"
+    assert len(ranking_summary["top_items"]) == 2
+    assert len(ranking_summary["bottom_items"]) == 2
+    assert [item["student_id"] for item in ranking_summary["top_items"]] == ["S001", "S002"]
+    assert [item["student_id"] for item in ranking_summary["bottom_items"]] == ["S004", "S006"]
+    assert ranking_summary["top_items"][0]["at_risk_score"] == 5.0
+    assert ranking_summary["bottom_items"][-1]["at_risk_score"] == 0.5
+    assert ranking_summary["median_item"]["student_id"] == "S005"
+    assert ranking_summary["metric_stats"]["count"] == 6
+    assert ranking_summary["metric_stats"]["max"] == 5.0
+    assert ranking_summary["metric_stats"]["min"] == 0.5
+    assert ranking_summary["metric_stats"]["median"] == 3.0
+    assert ranking_summary["top_items"][0]["labels"] == {
+        "at_risk_label": "high",
+        "final_outcome": "Fail",
+    }
+    assert ranking_summary["top_items"][0]["secondary_metrics"]["avg_score"] == 38.5
+    assert "flag_low_score" in ranking_summary["top_items"][0]["flags"]
+    assert any(item["student_id"] == "S001" for item in ranking_summary["flag_evidence"])
+
+    forbidden = {"gender", "age_group", "region"}
+    for item in ranking_summary["top_items"] + ranking_summary["bottom_items"]:
+        assert forbidden.isdisjoint(item.keys())
+        assert forbidden.isdisjoint(item.get("labels", {}).keys())
+        assert forbidden.isdisjoint(item.get("secondary_metrics", {}).keys())
+
+    tie_req = build_request("A-G15", {"intervention_priority_list": rows})
+    tie_req.ai_summary_config = ranking_config(top_k=1, bottom_k=1)
+    tie_summary = json.loads(BaseExplanationStrategy.summarize_datasets(tie_req))
+    assert any("top_items boundary" in warning for warning in tie_summary["tie_warnings"])
+
+    missing_entity_req = build_request("A-G15", {"intervention_priority_list": rows})
+    missing_entity_req.ai_summary_config = ranking_config()
+    missing_entity_req.ai_summary_config.entity_column = "missing_student_id"
+    missing_entity_summary = json.loads(BaseExplanationStrategy.summarize_datasets(missing_entity_req))
+    assert any("missing_student_id" in warning for warning in missing_entity_summary["summarization_warnings"])
+
+    missing_metric_req = build_request("A-G15", {"intervention_priority_list": rows})
+    missing_metric_req.ai_summary_config = ranking_config()
+    missing_metric_req.ai_summary_config.metric_column = "missing_at_risk_score"
+    missing_metric_summary = json.loads(BaseExplanationStrategy.summarize_datasets(missing_metric_req))
+    assert any("missing_at_risk_score" in warning for warning in missing_metric_summary["summarization_warnings"])
+
+    invalid_metric_req = build_request("A-G15", {
+        "intervention_priority_list": [
+            {"student_id": "S001", "at_risk_score": "bad"},
+            {"student_id": "S002", "at_risk_score": "3"},
+        ]
+    })
+    invalid_metric_req.ai_summary_config = ranking_config()
+    invalid_metric_summary = json.loads(BaseExplanationStrategy.summarize_datasets(invalid_metric_req))
+    assert invalid_metric_summary["metric_stats"]["count"] == 1
+    assert any("invalid at_risk_score" in warning for warning in invalid_metric_summary["summarization_warnings"])
+
+    assert set(SUMMARY_METHODS) == {"task_aware_data_summarization", "baseline_first_20_rows"}
+
+    print("debug_ai_summary ranking self-test passed")
+
+
+def run_self_test_numeric_distribution() -> None:
+    os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
+    rows = sample_task_datasets("A-B01")["score_distribution"]
+
+    generic_req = build_request("A-B01", {"score_distribution": rows})
+    generic_req.ai_summary_config = None
+    generic_summary = json.loads(BaseExplanationStrategy.summarize_datasets(generic_req))
+    assert generic_summary["summary_type"] == "generic_fallback"
+
+    numeric_req = build_request("A-B01", {"score_distribution": rows})
+    numeric_req.ai_summary_config = numeric_distribution_config()
+    numeric_summary = json.loads(BaseExplanationStrategy.summarize_datasets(numeric_req))
+    assert numeric_summary["summary_type"] == "numeric_distribution"
+    assert numeric_summary["dataset_name"] == "score_distribution"
+    assert numeric_summary["bin_column"] == "score_bucket"
+    assert [item["bin"] for item in numeric_summary["bin_distribution"]] == [
+        "0-10",
+        "10-20",
+        "20-30",
+        "30-40",
+        "40-50",
+        "60-70",
+        "80-90",
+        "90-100",
+        "No score",
+    ]
+    assert numeric_summary["bin_distribution"][0]["count"] == 3.0
+    assert numeric_summary["bin_distribution"][0]["metrics"]["avg_score_in_bucket"] == 7.0
+    assert numeric_summary["bin_distribution"][-1]["bin"] == "No score"
+    assert numeric_summary["total_count"] == 100.0
+    assert numeric_summary["dominant_bin"]["bin"] == "80-90"
+    assert numeric_summary["focus_total"]["present_bins"] == ["0-10", "10-20", "20-30", "30-40"]
+    assert numeric_summary["focus_total"]["count"] == 27.0
+    assert numeric_summary["focus_total"]["percent"] == 27.0
+    assert numeric_summary["threshold_summary"]["bins"] == ["0-10", "10-20", "20-30", "30-40"]
+    assert numeric_summary["threshold_summary"]["count"] == 27.0
+    assert numeric_summary["missing_expected_bins"] == ["50-60", "70-80"]
+    assert not any("Percent total" in warning for warning in numeric_summary["summarization_warnings"])
+
+    fallback_order_req = build_request("A-B01", {"score_distribution": rows})
+    fallback_order_req.ai_summary_config = numeric_distribution_config(bin_order=[])
+    fallback_order_summary = json.loads(BaseExplanationStrategy.summarize_datasets(fallback_order_req))
+    assert [item["bin"] for item in fallback_order_summary["bin_distribution"]][-1] == "No score"
+    assert [item["bin"] for item in fallback_order_summary["bin_distribution"]][:4] == [
+        "0-10",
+        "10-20",
+        "20-30",
+        "30-40",
+    ]
+
+    explicit_no_score_req = build_request("A-B01", {"score_distribution": rows})
+    explicit_no_score_req.ai_summary_config = numeric_distribution_config(
+        bin_order=["No score", "0-10", "10-20", "20-30", "30-40", "40-50", "60-70", "80-90", "90-100"]
+    )
+    explicit_no_score_summary = json.loads(BaseExplanationStrategy.summarize_datasets(explicit_no_score_req))
+    assert explicit_no_score_summary["bin_distribution"][0]["bin"] == "No score"
+
+    mismatch_req = build_request("A-B01", {"score_distribution": rows})
+    mismatch_req.ai_summary_config = numeric_distribution_config(focus_bins=["0-10"])
+    mismatch_summary = json.loads(BaseExplanationStrategy.summarize_datasets(mismatch_req))
+    assert any("disagree" in warning for warning in mismatch_summary["summarization_warnings"])
+
+    bad_percent_req = build_request("A-B01", {
+        "score_distribution": [
+            {"score_bucket": "0-10", "student_count": "1", "pct_of_class": "20"},
+            {"score_bucket": "10-20", "student_count": "1", "pct_of_class": "20"},
+        ]
+    })
+    bad_percent_req.ai_summary_config = numeric_distribution_config(
+        bin_order=["0-10", "10-20"],
+        focus_bins=["0-10", "10-20"],
+        threshold=20,
+    )
+    bad_percent_summary = json.loads(BaseExplanationStrategy.summarize_datasets(bad_percent_req))
+    assert any("Percent total" in warning for warning in bad_percent_summary["summarization_warnings"])
+
+    missing_bin_req = build_request("A-B01", {"score_distribution": rows})
+    missing_bin_req.ai_summary_config = numeric_distribution_config()
+    missing_bin_req.ai_summary_config.bin_column = "missing_score_bucket"
+    missing_bin_summary = json.loads(BaseExplanationStrategy.summarize_datasets(missing_bin_req))
+    assert any("missing_score_bucket" in warning for warning in missing_bin_summary["summarization_warnings"])
+
+    missing_count_req = build_request("A-B01", {"score_distribution": rows})
+    missing_count_req.ai_summary_config = numeric_distribution_config()
+    missing_count_req.ai_summary_config.count_column = "missing_student_count"
+    missing_count_summary = json.loads(BaseExplanationStrategy.summarize_datasets(missing_count_req))
+    assert any("missing_student_count" in warning for warning in missing_count_summary["summarization_warnings"])
+
+    assert set(SUMMARY_METHODS) == {"task_aware_data_summarization", "baseline_first_20_rows"}
+
+    print("debug_ai_summary numeric_distribution self-test passed")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", default="A-G14")
     parser.add_argument("--input-json")
+    parser.add_argument("--method", choices=SUMMARY_METHODS)
+    parser.add_argument("--compare-methods", action="store_true")
+    parser.add_argument("--write-log", action="store_true")
     parser.add_argument("--self-test", action="store_true")
     parser.add_argument("--self-test-categorical", action="store_true")
     parser.add_argument("--self-test-risk-flags", action="store_true")
     parser.add_argument("--self-test-trend-series", action="store_true")
+    parser.add_argument("--self-test-ranking", action="store_true")
+    parser.add_argument("--self-test-numeric-distribution", action="store_true")
     args = parser.parse_args()
 
     if args.self_test:
@@ -621,9 +946,28 @@ def main() -> None:
     if args.self_test_trend_series:
         run_self_test_trend_series()
         return
+    if args.self_test_ranking:
+        run_self_test_ranking()
+        return
+    if args.self_test_numeric_distribution:
+        run_self_test_numeric_distribution()
+        return
 
     req = build_request(args.task, load_datasets(args.input_json, args.task))
-    print(BaseExplanationStrategy.summarize_datasets(req))
+    methods = list(SUMMARY_METHODS) if args.compare_methods else [args.method or os.environ.get("AI_SUMMARY_METHOD") or "task_aware_data_summarization"]
+
+    records = []
+    for method in methods:
+        record = summarize_for_method(req, method)
+        records.append(record)
+        if args.write_log:
+            path = write_summary_log(record)
+            print(f"Wrote {path}")
+
+    if args.compare_methods:
+        print(json.dumps(records, indent=2, ensure_ascii=False, default=str))
+    else:
+        print(records[0]["input_data_summary"])
 
 
 if __name__ == "__main__":

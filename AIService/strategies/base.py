@@ -28,6 +28,7 @@ import json
 import time
 import os
 import logging
+import re
 
 from pydantic import ValidationError
 
@@ -48,7 +49,12 @@ _client = AsyncOpenAI(api_key=os.environ.get("OPENAI_API_KEY")) if AsyncOpenAI e
 
 MODEL         = os.environ.get("OPENAI_MODEL", "gpt-4o-mini")
 MAX_TOKENS    = int(os.environ.get("AI_MAX_TOKENS", "1200"))
-TEMPERATURE   = float(os.environ.get("AI_TEMPERATURE", "0.3"))
+TEMPERATURE   = float(os.environ.get("AI_TEMPERATURE", "0"))
+SEED          = int(os.environ.get("AI_SEED", "42"))
+
+TASK_AWARE_SUMMARY_METHOD = "task_aware_data_summarization"
+BASELINE_SUMMARY_METHOD = "baseline_first_20_rows"
+VALID_AI_SUMMARY_METHODS = {TASK_AWARE_SUMMARY_METHOD, BASELINE_SUMMARY_METHOD}
 
 
 class BaseExplanationStrategy(ABC):
@@ -161,6 +167,7 @@ CRITICAL RULES:
             ],
             max_tokens       = MAX_TOKENS,
             temperature      = TEMPERATURE,
+            seed             = SEED,
             response_format  = {"type": "json_object"},
         )
 
@@ -235,6 +242,7 @@ CRITICAL RULES:
             safety_flags         = safety_flags,
             degraded             = False,
             meta                 = meta,
+            **self.get_summary_response_metadata(request),
         )
 
     #  Shared: Confidence Source Derivation 
@@ -296,23 +304,151 @@ CRITICAL RULES:
     @staticmethod
     def summarize_datasets(req: ExplainRequest, max_rows: int = 20) -> str:
         """
-        Converts datasets into a compact, evidence-oriented prompt summary.
-        The max_rows argument is kept for backward-compatible call sites, but
-        first-N row slicing is no longer the primary summary mechanism.
+        Entrypoint used by strategies to build prompt data summaries.
+        AI_SUMMARY_METHOD chooses between the historical baseline and the
+        task-aware summarizer without changing strategy call sites.
         """
+        result = BaseExplanationStrategy.build_summary_result(req, max_rows=max_rows)
+        BaseExplanationStrategy._attach_summary_metadata(req, result["metadata"])
+        return result["summary_text"]
+
+    @staticmethod
+    def build_summary_result(
+        req: ExplainRequest,
+        max_rows: int = 20,
+        method_override: str | None = None,
+        include_debug_payload: bool = False,
+    ) -> dict:
+        method, warning = BaseExplanationStrategy._resolve_ai_summary_method(method_override)
+
+        if method == BASELINE_SUMMARY_METHOD:
+            summary_text, debug_payload = BaseExplanationStrategy.summarize_baseline_first_20_rows(
+                req,
+                max_rows=max_rows,
+            )
+            input_summary_type = "raw_first_20_rows"
+            version = "baseline"
+        else:
+            summary, summary_text = BaseExplanationStrategy.summarize_task_aware_data_summarization(req)
+            debug_payload = summary
+            input_summary_type = summary.get("summary_type") or "task_aware_summary"
+            version = "v1"
+
+        metadata = {
+            "ai_summary_method": method,
+            "ai_summary_version": version,
+            "baseline_available": True,
+            "input_summary_type": input_summary_type,
+        }
+        if warning:
+            metadata["ai_summary_method_warning"] = warning
+        if include_debug_payload:
+            metadata["summary_debug_payload"] = debug_payload
+
+        return {
+            "summary_text": summary_text,
+            "metadata": metadata,
+        }
+
+    @staticmethod
+    def summarize_task_aware_data_summarization(req: ExplainRequest) -> tuple[dict, str]:
+        summary = BaseExplanationStrategy._build_task_aware_summary(req)
+        return summary, BaseExplanationStrategy._dump_summary(summary)
+
+    @staticmethod
+    def summarize_baseline_first_20_rows(req: ExplainRequest, max_rows: int = 20) -> tuple[str, dict]:
+        """
+        Historical baseline prompt format: plain text dataset blocks containing
+        rows[:max_rows]. Structured debug payload is separate from prompt text.
+        """
+        parts = []
+        debug_datasets = []
+        for label, rows in (req.datasets or {}).items():
+            safe_rows = rows if isinstance(rows, list) else []
+            truncated = safe_rows[:max_rows]
+            truncated_count = max(len(safe_rows) - max_rows, 0)
+            suffix = (
+                f"  [... {truncated_count} more rows truncated]"
+                if truncated_count > 0 else ""
+            )
+            parts.append(
+                f"Dataset: {label} ({len(safe_rows)} rows)\n"
+                f"{json.dumps(truncated, indent=2, ensure_ascii=False, default=str)}{suffix}"
+            )
+            debug_datasets.append({
+                "dataset_name": label,
+                "row_count": len(safe_rows),
+                "included_row_count": len(truncated),
+                "truncated_row_count": truncated_count,
+                "rows": truncated,
+            })
+
+        debug_payload = {
+            "summary_type": "baseline_first_20_rows",
+            "input_summary_type": "raw_first_20_rows",
+            "datasets": debug_datasets,
+        }
+        return "\n\n".join(parts), debug_payload
+
+    @staticmethod
+    def _build_task_aware_summary(req: ExplainRequest) -> dict:
         cfg = getattr(req, "ai_summary_config", None)
         if cfg and cfg.summary_type == "trend_comparison":
-            summary = BaseExplanationStrategy._summarize_trend_comparison(req)
+            return BaseExplanationStrategy._summarize_trend_comparison(req)
         elif cfg and cfg.summary_type == "categorical_distribution":
-            summary = BaseExplanationStrategy._summarize_categorical_distribution(req)
+            return BaseExplanationStrategy._summarize_categorical_distribution(req)
         elif cfg and cfg.summary_type == "risk_flags":
-            summary = BaseExplanationStrategy._summarize_risk_flags(req)
+            return BaseExplanationStrategy._summarize_risk_flags(req)
         elif cfg and cfg.summary_type == "trend_series":
-            summary = BaseExplanationStrategy._summarize_trend_series(req)
-        else:
-            summary = BaseExplanationStrategy._summarize_generic(req)
+            return BaseExplanationStrategy._summarize_trend_series(req)
+        elif cfg and cfg.summary_type == "ranking":
+            return BaseExplanationStrategy._summarize_ranking(req)
+        elif cfg and cfg.summary_type == "numeric_distribution":
+            return BaseExplanationStrategy._summarize_numeric_distribution(req)
+        return BaseExplanationStrategy._summarize_generic(req)
 
-        return BaseExplanationStrategy._dump_summary(summary)
+    @staticmethod
+    def _resolve_ai_summary_method(method_override: str | None = None) -> tuple[str, str | None]:
+        raw_method = method_override if method_override is not None else os.environ.get("AI_SUMMARY_METHOD")
+        method = (raw_method or TASK_AWARE_SUMMARY_METHOD).strip()
+        if method in VALID_AI_SUMMARY_METHODS:
+            return method, None
+
+        warning = (
+            f"Invalid AI_SUMMARY_METHOD={method}; "
+            f"fallback to {TASK_AWARE_SUMMARY_METHOD}"
+        )
+        logger.warning(warning)
+        return TASK_AWARE_SUMMARY_METHOD, warning
+
+    @staticmethod
+    def _attach_summary_metadata(req: ExplainRequest, metadata: dict) -> None:
+        object.__setattr__(req, "_ai_summary_metadata", metadata)
+
+    @staticmethod
+    def get_summary_response_metadata(req: ExplainRequest) -> dict:
+        metadata = getattr(req, "_ai_summary_metadata", None)
+        if metadata:
+            return {k: v for k, v in metadata.items() if k != "summary_debug_payload"}
+
+        method, warning = BaseExplanationStrategy._resolve_ai_summary_method()
+        if method == BASELINE_SUMMARY_METHOD:
+            result = {
+                "ai_summary_method": BASELINE_SUMMARY_METHOD,
+                "ai_summary_version": "baseline",
+                "baseline_available": True,
+                "input_summary_type": "raw_first_20_rows",
+            }
+        else:
+            result = {
+                "ai_summary_method": TASK_AWARE_SUMMARY_METHOD,
+                "ai_summary_version": "v1",
+                "baseline_available": True,
+                "input_summary_type": "task_aware_summary",
+            }
+        if warning:
+            result["ai_summary_method_warning"] = warning
+        return result
 
     @staticmethod
     def _dump_summary(summary: dict, char_limit: int = 10000) -> str:
@@ -338,7 +474,21 @@ CRITICAL RULES:
             "summary_truncated": True,
             "summarization_warnings": warnings,
         }
-        for key in ("dataset_name", "row_count", "target_group", "comparison_groups"):
+        for key in (
+            "dataset_name",
+            "row_count",
+            "target_group",
+            "comparison_groups",
+            "entity_column",
+            "metric_column",
+            "sort_direction",
+            "top_items",
+            "bottom_items",
+            "median_item",
+            "metric_stats",
+            "tie_warnings",
+            "flag_evidence",
+        ):
             if key in summary:
                 minimal[key] = summary[key]
         return json.dumps(minimal, indent=2, ensure_ascii=False, default=str)
@@ -1286,6 +1436,496 @@ CRITICAL RULES:
             if len(action_evidence) >= max_points:
                 break
         summary["action_evidence"] = action_evidence
+
+        return summary
+
+    @staticmethod
+    def _parse_numeric_bin_range(label) -> tuple[float | None, float | None]:
+        if label is None:
+            return None, None
+        text = str(label).strip()
+        if not text:
+            return None, None
+        match = re.match(
+            r"^\s*(-?\d+(?:\.\d+)?)\s*(?:-|–|—|to)\s*(-?\d+(?:\.\d+)?)\s*$",
+            text,
+            flags=re.IGNORECASE,
+        )
+        if match:
+            return float(match.group(1)), float(match.group(2))
+        return None, None
+
+    @staticmethod
+    def _summarize_numeric_distribution(req: ExplainRequest) -> dict:
+        cfg = req.ai_summary_config
+        dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
+
+        bin_col = cfg.bin_column if cfg else None
+        count_col = cfg.count_column if cfg else None
+        percent_col = cfg.percent_column if cfg else None
+        metric_cols = list(cfg.metric_columns or []) if cfg else []
+        bin_order = [str(item) for item in (cfg.bin_order or [])] if cfg else []
+        expected_bins = [str(item) for item in (cfg.expected_bins or [])] if cfg else []
+        focus_bins = [str(item) for item in (cfg.focus_bins or [])] if cfg else []
+        threshold = cfg.numeric_threshold if cfg else None
+        threshold_direction = str(cfg.threshold_direction or "").lower() if cfg else ""
+
+        summary = {
+            "summary_type": "numeric_distribution",
+            "dataset_name": dataset_name,
+            "row_count": len(rows),
+            "bin_column": bin_col,
+            "count_column": count_col,
+            "percent_column": percent_col,
+            "bin_distribution": [],
+            "total_count": 0,
+            "dominant_bin": None,
+            "focus_bins": focus_bins,
+            "focus_total": {
+                "bins": focus_bins,
+                "present_bins": [],
+                "missing_bins": [],
+                "count": 0,
+                "percent": None,
+            },
+            "threshold_summary": None,
+            "missing_expected_bins": [],
+            "metric_evidence_by_bin": {},
+            "summarization_warnings": [],
+        }
+
+        if not rows:
+            summary["summarization_warnings"].append("Primary dataset is empty.")
+            return summary
+
+        dict_rows = [row for row in rows if isinstance(row, dict)]
+        if not dict_rows:
+            summary["summarization_warnings"].append("Primary dataset has no object rows.")
+            return summary
+
+        available_columns = set()
+        for row in dict_rows:
+            available_columns.update(row.keys())
+
+        missing_required = []
+        if not bin_col:
+            missing_required.append("bin_column")
+        if not count_col:
+            missing_required.append("count_column")
+        for column in (bin_col, count_col):
+            if column and column not in available_columns:
+                missing_required.append(column)
+
+        if missing_required:
+            summary["summarization_warnings"].append(
+                "numeric_distribution config is incomplete or required columns are missing: "
+                + ", ".join(missing_required)
+            )
+            summary["generic_diagnostic_sample"] = BaseExplanationStrategy._summarize_generic(req, max_datasets=1)
+            return summary
+
+        for column in [percent_col, *metric_cols]:
+            if column and column not in available_columns:
+                summary["summarization_warnings"].append(
+                    f"Configured optional column '{column}' is missing from dataset."
+                )
+
+        invalid_count_rows = 0
+        invalid_percent_values = 0
+        entries = []
+        order_rank = {value: index for index, value in enumerate(bin_order)}
+
+        for index, row in enumerate(dict_rows):
+            bin_value = row.get(bin_col)
+            bin_key = str(bin_value)
+            count_value = BaseExplanationStrategy._parse_number(row.get(count_col))
+            if count_value is None:
+                invalid_count_rows += 1
+                continue
+
+            percent_value = None
+            if percent_col and row.get(percent_col) is not None:
+                percent_value = BaseExplanationStrategy._parse_number(row.get(percent_col))
+                if percent_value is None:
+                    invalid_percent_values += 1
+
+            metrics = {
+                column: BaseExplanationStrategy._risk_value(row.get(column))
+                for column in metric_cols
+                if column in row and row.get(column) is not None
+            }
+            lower, upper = BaseExplanationStrategy._parse_numeric_bin_range(bin_value)
+            explicit_order = order_rank.get(bin_key)
+            is_special_no_score = bin_key.strip().lower() == "no score"
+
+            entries.append({
+                "bin": bin_value,
+                "count": round(count_value, 4),
+                "percent": round(percent_value, 4) if percent_value is not None else None,
+                "metrics": metrics,
+                "_bin_key": bin_key,
+                "_lower": lower,
+                "_upper": upper,
+                "_explicit_order": explicit_order,
+                "_is_special_no_score": is_special_no_score,
+                "_row_index": index,
+            })
+
+        if invalid_count_rows:
+            summary["summarization_warnings"].append(
+                f"Skipped {invalid_count_rows} rows with invalid {count_col}."
+            )
+        if invalid_percent_values:
+            summary["summarization_warnings"].append(
+                f"Found {invalid_percent_values} invalid {percent_col} values; those percents were omitted."
+            )
+
+        if not entries:
+            summary["summarization_warnings"].append("No valid numeric distribution bins remained after parsing counts.")
+            return summary
+
+        def sort_key(entry: dict):
+            if entry["_explicit_order"] is not None:
+                return (0, entry["_explicit_order"], entry["_row_index"])
+            if entry["_lower"] is not None and entry["_upper"] is not None:
+                return (1, entry["_lower"], entry["_upper"], entry["_row_index"])
+            if entry["_is_special_no_score"]:
+                return (3, entry["_row_index"])
+            return (2, entry["_bin_key"], entry["_row_index"])
+
+        entries.sort(key=sort_key)
+
+        total_count = round(sum(entry["count"] for entry in entries), 4)
+        summary["total_count"] = total_count
+
+        distribution = []
+        metric_evidence = {}
+        for entry in entries:
+            item = {
+                "bin": entry["bin"],
+                "count": entry["count"],
+                "percent": entry["percent"],
+            }
+            if entry["metrics"]:
+                item["metrics"] = entry["metrics"]
+                metric_evidence[entry["_bin_key"]] = entry["metrics"]
+            distribution.append(item)
+
+        summary["bin_distribution"] = distribution[:40]
+        if len(distribution) > 40:
+            summary["summarization_warnings"].append(
+                f"Bin distribution capped at 40 of {len(distribution)} bins."
+            )
+        summary["metric_evidence_by_bin"] = metric_evidence
+
+        dominant = max(entries, key=lambda entry: (entry["count"], -entry["_row_index"]))
+        summary["dominant_bin"] = {
+            "bin": dominant["bin"],
+            "count": dominant["count"],
+            "percent": dominant["percent"],
+        }
+        if dominant["metrics"]:
+            summary["dominant_bin"]["metrics"] = dominant["metrics"]
+
+        present_keys = {entry["_bin_key"] for entry in entries}
+        if expected_bins:
+            summary["missing_expected_bins"] = [
+                bin_value for bin_value in expected_bins
+                if bin_value not in present_keys
+            ]
+
+        focus_entries = [
+            entry for entry in entries
+            if entry["_bin_key"] in set(focus_bins)
+        ]
+        focus_percent_values = [
+            entry["percent"] for entry in focus_entries
+            if entry["percent"] is not None
+        ]
+        summary["focus_total"] = {
+            "bins": focus_bins,
+            "present_bins": [entry["_bin_key"] for entry in focus_entries],
+            "missing_bins": [
+                bin_value for bin_value in focus_bins
+                if bin_value not in present_keys
+            ],
+            "count": round(sum(entry["count"] for entry in focus_entries), 4),
+            "percent": round(sum(focus_percent_values), 4) if focus_percent_values else None,
+        }
+
+        threshold_entries = []
+        parsed_threshold = BaseExplanationStrategy._parse_number(threshold)
+        if parsed_threshold is not None and threshold_direction:
+            for entry in entries:
+                lower = entry["_lower"]
+                upper = entry["_upper"]
+                if lower is None or upper is None:
+                    continue
+                include = False
+                if threshold_direction in {"below", "under"}:
+                    include = upper <= parsed_threshold
+                elif threshold_direction in {"at_or_below", "below_or_equal", "lte"}:
+                    include = upper <= parsed_threshold
+                elif threshold_direction in {"above", "over"}:
+                    include = lower >= parsed_threshold
+                elif threshold_direction in {"at_or_above", "above_or_equal", "gte"}:
+                    include = lower >= parsed_threshold
+                else:
+                    summary["summarization_warnings"].append(
+                        f"Unsupported threshold_direction '{threshold_direction}'."
+                    )
+                    break
+                if include:
+                    threshold_entries.append(entry)
+
+            threshold_percent_values = [
+                entry["percent"] for entry in threshold_entries
+                if entry["percent"] is not None
+            ]
+            summary["threshold_summary"] = {
+                "threshold": round(parsed_threshold, 4),
+                "direction": threshold_direction,
+                "bins": [entry["_bin_key"] for entry in threshold_entries],
+                "count": round(sum(entry["count"] for entry in threshold_entries), 4),
+                "percent": round(sum(threshold_percent_values), 4) if threshold_percent_values else None,
+            }
+
+            focus_set = set(summary["focus_total"]["present_bins"])
+            threshold_set = set(summary["threshold_summary"]["bins"])
+            if focus_bins and focus_set != threshold_set:
+                summary["summarization_warnings"].append(
+                    "Configured focus bins and threshold-derived bins disagree."
+                )
+
+        percent_values = [
+            entry["percent"] for entry in entries
+            if entry["percent"] is not None
+        ]
+        if percent_values:
+            percent_total = round(sum(percent_values), 4)
+            if percent_total < 99 or percent_total > 101:
+                summary["summarization_warnings"].append(
+                    f"Percent total is {percent_total}, outside expected 100% tolerance."
+                )
+
+        return summary
+
+    @staticmethod
+    def _summarize_ranking(req: ExplainRequest) -> dict:
+        cfg = req.ai_summary_config
+        dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
+
+        entity_col = cfg.entity_column if cfg else None
+        metric_col = cfg.metric_column if cfg else None
+        sort_direction = str(cfg.sort_direction or "desc").lower() if cfg else "desc"
+        sort_desc = sort_direction != "asc"
+        secondary_cols = list(cfg.secondary_metric_columns or []) if cfg else []
+        label_cols = list(cfg.label_columns or []) if cfg else []
+        flag_cols = list(cfg.flag_columns or []) if cfg else []
+        top_k = cfg.top_k if cfg and cfg.top_k else 10
+        bottom_k = cfg.bottom_k if cfg and cfg.bottom_k else 5
+        top_k = max(0, min(int(top_k), 50))
+        bottom_k = max(0, min(int(bottom_k), 50))
+
+        summary = {
+            "summary_type": "ranking",
+            "dataset_name": dataset_name,
+            "row_count": len(rows),
+            "entity_column": entity_col,
+            "metric_column": metric_col,
+            "sort_direction": "desc" if sort_desc else "asc",
+            "top_items": [],
+            "bottom_items": [],
+            "median_item": None,
+            "metric_stats": {},
+            "tie_warnings": [],
+            "flag_evidence": [],
+            "summarization_warnings": [],
+        }
+
+        if not rows:
+            summary["summarization_warnings"].append("Primary dataset is empty.")
+            return summary
+
+        dict_rows = [row for row in rows if isinstance(row, dict)]
+        if not dict_rows:
+            summary["summarization_warnings"].append("Primary dataset has no object rows.")
+            return summary
+
+        available_columns = set()
+        for row in dict_rows:
+            available_columns.update(row.keys())
+
+        missing_required = []
+        if not entity_col:
+            missing_required.append("entity_column")
+        if not metric_col:
+            missing_required.append("metric_column")
+        for column in (entity_col, metric_col):
+            if column and column not in available_columns:
+                missing_required.append(column)
+
+        if missing_required:
+            summary["summarization_warnings"].append(
+                "ranking config is incomplete or required columns are missing: "
+                + ", ".join(missing_required)
+            )
+            summary["generic_diagnostic_sample"] = BaseExplanationStrategy._summarize_generic(req, max_datasets=1)
+            return summary
+
+        for column in [*secondary_cols, *label_cols, *flag_cols]:
+            if column and column not in available_columns:
+                summary["summarization_warnings"].append(
+                    f"Configured optional column '{column}' is missing from dataset."
+                )
+
+        invalid_metric_rows = 0
+        invalid_flag_values = 0
+        entries = []
+
+        for index, row in enumerate(dict_rows):
+            metric_value = BaseExplanationStrategy._parse_number(row.get(metric_col))
+            if metric_value is None:
+                invalid_metric_rows += 1
+                continue
+
+            labels = {
+                column: row.get(column)
+                for column in label_cols
+                if column in row and row.get(column) is not None
+            }
+            secondary = {
+                column: BaseExplanationStrategy._risk_value(row.get(column))
+                for column in secondary_cols
+                if column in row and row.get(column) is not None
+            }
+            flags = {}
+            raw_flags = {}
+            for column in flag_cols:
+                if column not in row:
+                    continue
+                parsed_flag, recognized = BaseExplanationStrategy._parse_triggered(row.get(column))
+                raw_flags[column] = row.get(column)
+                if recognized:
+                    flags[column] = parsed_flag
+                elif row.get(column) is not None:
+                    invalid_flag_values += 1
+                    flags[column] = None
+
+            entries.append({
+                entity_col: row.get(entity_col),
+                metric_col: round(metric_value, 4),
+                "labels": labels,
+                "secondary_metrics": secondary,
+                "flags": flags,
+                "flag_raw_values": raw_flags,
+                "_metric_value": metric_value,
+                "_row_index": index,
+            })
+
+        if invalid_metric_rows:
+            summary["summarization_warnings"].append(
+                f"Skipped {invalid_metric_rows} rows with invalid {metric_col}."
+            )
+        if invalid_flag_values:
+            summary["summarization_warnings"].append(
+                f"Found {invalid_flag_values} unrecognized configured flag values; flags only use recognized true/false values."
+            )
+
+        if not entries:
+            summary["summarization_warnings"].append("No valid ranking rows remained after parsing metric values.")
+            return summary
+
+        entries.sort(
+            key=lambda entry: (entry["_metric_value"], -entry["_row_index"] if sort_desc else entry["_row_index"]),
+            reverse=sort_desc,
+        )
+        values_for_stats = sorted(entry["_metric_value"] for entry in entries)
+
+        def median_value(values: list[float]) -> float:
+            midpoint = len(values) // 2
+            if len(values) % 2:
+                return values[midpoint]
+            return (values[midpoint - 1] + values[midpoint]) / 2
+
+        def public_item(entry: dict, rank: int | None = None) -> dict:
+            item = {
+                entity_col: entry.get(entity_col),
+                metric_col: entry.get(metric_col),
+            }
+            if rank is not None:
+                item["rank"] = rank
+            if entry["labels"]:
+                item["labels"] = entry["labels"]
+            if entry["secondary_metrics"]:
+                item["secondary_metrics"] = entry["secondary_metrics"]
+            if entry["flags"]:
+                item["flags"] = entry["flags"]
+                item["flag_raw_values"] = entry["flag_raw_values"]
+            return item
+
+        def boundary_tie_warning(selection_name: str, selected: list[dict], cutoff_entry: dict | None) -> str | None:
+            if not selected or cutoff_entry is None:
+                return None
+            cutoff = cutoff_entry["_metric_value"]
+            matching_total = sum(1 for entry in entries if entry["_metric_value"] == cutoff)
+            matching_selected = sum(1 for entry in selected if entry["_metric_value"] == cutoff)
+            if matching_total > matching_selected:
+                return (
+                    f"{selection_name} boundary has {matching_total} tied items at "
+                    f"{metric_col}={round(cutoff, 4)}; only {matching_selected} are included."
+                )
+            return None
+
+        top_entries = entries[:top_k] if top_k else []
+        bottom_entries = entries[-bottom_k:] if bottom_k else []
+        median_entry = entries[len(entries) // 2]
+
+        summary["top_items"] = [
+            public_item(entry, rank=index + 1)
+            for index, entry in enumerate(top_entries)
+        ]
+        summary["bottom_items"] = [
+            public_item(entry, rank=len(entries) - len(bottom_entries) + index + 1)
+            for index, entry in enumerate(bottom_entries)
+        ]
+        summary["median_item"] = public_item(median_entry, rank=entries.index(median_entry) + 1)
+        summary["metric_stats"] = {
+            "count": len(values_for_stats),
+            "min": round(values_for_stats[0], 4),
+            "max": round(values_for_stats[-1], 4),
+            "mean": round(sum(values_for_stats) / len(values_for_stats), 4),
+            "median": round(median_value(values_for_stats), 4),
+        }
+
+        top_warning = boundary_tie_warning("top_items", top_entries, top_entries[-1] if top_entries else None)
+        bottom_warning = boundary_tie_warning("bottom_items", bottom_entries, bottom_entries[0] if bottom_entries else None)
+        if top_warning:
+            summary["tie_warnings"].append(top_warning)
+        if bottom_warning:
+            summary["tie_warnings"].append(bottom_warning)
+
+        flag_evidence = []
+        seen_entities = set()
+        for entry in [*top_entries, *bottom_entries]:
+            entity = entry.get(entity_col)
+            if entity in seen_entities:
+                continue
+            seen_entities.add(entity)
+            true_flags = [
+                column
+                for column, value in entry["flags"].items()
+                if value is True
+            ]
+            if not true_flags and not entry["flags"]:
+                continue
+            flag_evidence.append({
+                entity_col: entity,
+                "true_flags": true_flags,
+                "flags": entry["flags"],
+                "flag_raw_values": entry["flag_raw_values"],
+            })
+        summary["flag_evidence"] = flag_evidence
 
         return summary
 

@@ -244,6 +244,12 @@ export default function AIInsightPanel({
             {/* AI Meta footer */}
             {aiOutput.meta && (
               <div className="flex items-center gap-3 text-[9px] text-slate-400 pt-2 border-t border-slate-100">
+                {aiOutput.ai_summary_method && (
+                  <span>
+                    AI Summary Method: {aiOutput.ai_summary_method}
+                    {aiOutput.ai_summary_version ? ` ${aiOutput.ai_summary_version}` : ""}
+                  </span>
+                )}
                 {aiOutput.meta.model && <span>Model: {aiOutput.meta.model}</span>}
                 {aiOutput.meta.latency_ms && <span>⏱ {aiOutput.meta.latency_ms}ms</span>}
                 {aiOutput.meta.token_usage && (

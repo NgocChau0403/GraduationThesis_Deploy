@@ -1,0 +1,3839 @@
+{
+  "run_id": "task_availability_20260607T092649Z_85ae65",
+  "created_at": "2026-06-07T09:26:49.577Z",
+  "datasetId": "Import_2026-05-30",
+  "batchId": "Import_2026-05-30",
+  "sourceDataset": "UCI",
+  "classId": "6e7eb9ea9e1ee52102e988bd",
+  "request_context": {
+    "source_endpoint": "/api/tasks/available",
+    "mode": "available_tasks",
+    "ui_role": "student",
+    "includeExperimental": false
+  },
+  "batch": {
+    "batch_id": "Import_2026-05-30",
+    "batch_name": "student-por",
+    "source_dataset": "UCI",
+    "learning_mode": "offline",
+    "row_count": 649,
+    "status": "completed",
+    "is_active": true,
+    "is_sample": false,
+    "imported_at": "2026-05-30T05:30:53.356Z"
+  },
+  "summary": {
+    "total": 48,
+    "executable": 25,
+    "partial": 5,
+    "insufficient_data": 18,
+    "unsupported": 0,
+    "layer_counts": {
+      "structural_fail": 0,
+      "semantic_fail": 23,
+      "analytical_warn": 7,
+      "data_sufficiency_fail": 18
+    },
+    "confidence_counts": {
+      "HIGH": 0,
+      "MEDIUM": 30,
+      "LOW": 18,
+      "null": 0
+    }
+  },
+  "ui_summary": {
+    "total_returned_to_ui": 48,
+    "executable": 25,
+    "disabled": 23,
+    "partial": 5,
+    "insufficient_data": 18,
+    "unsupported": 0
+  },
+  "dataset_snapshot": {
+    "batch_id": "Import_2026-05-30",
+    "class_id": "6e7eb9ea9e1ee52102e988bd",
+    "table_counts": {
+      "student": 649,
+      "course": 1,
+      "class": 1,
+      "enrollment": 649,
+      "assessment": 3,
+      "assessment_result": 1947,
+      "event": 0,
+      "engagement": 0
+    },
+    "available_tables": [
+      "student",
+      "course",
+      "class",
+      "enrollment",
+      "assessment",
+      "assessment_result"
+    ],
+    "metrics": {
+      "table_counts": {
+        "student": 649,
+        "course": 1,
+        "class": 1,
+        "enrollment": 649,
+        "assessment": 3,
+        "assessment_result": 1947,
+        "event": 0,
+        "engagement": 0
+      },
+      "enrollment_rows": 649,
+      "distinct_students": 649,
+      "absences_non_null_rows": 649,
+      "studytime_non_null_rows": 649,
+      "registration_non_null_rows": 0,
+      "final_outcome_non_null_rows": 649,
+      "assessment_rows": 3,
+      "due_day_non_null_rows": 0,
+      "week_of_class_non_null_rows": 0,
+      "distinct_weeks_in_assessment": 0,
+      "competency_tag_non_null_rows": 0,
+      "assessment_name_non_null_rows": 3,
+      "assessment_result_rows": 1947,
+      "score_non_null_rows": 1947,
+      "submission_day_non_null_rows": 0,
+      "engagement_rows": 0,
+      "positive_engagement_rows": 0,
+      "distinct_engagement_weeks": 0,
+      "distinct_engagement_days": 0,
+      "event_rows": 0,
+      "resource_type_non_null_rows": 0,
+      "student_rows": 649,
+      "demographics_students": 649,
+      "lifestyle_students": 649,
+      "family_students": 649,
+      "socioeconomic_students": 0
+    },
+    "capabilities": {
+      "assessment_scores": true,
+      "final_outcome": true,
+      "submission_history": true,
+      "submission_timestamps": false,
+      "demographics": true,
+      "lifestyle_factors": true,
+      "family_context": true,
+      "socioeconomic_context": false,
+      "engagement_tracking": false,
+      "resource_clickstream": false,
+      "temporal_activity": false,
+      "absence_tracking": true,
+      "studytime_tracking": true,
+      "competency_tagging": false,
+      "proxy_competency_available": true,
+      "multi_student_comparison": true,
+      "registration_timing": false
+    },
+    "available_capabilities": [
+      "absence_tracking",
+      "assessment_scores",
+      "demographics",
+      "family_context",
+      "final_outcome",
+      "lifestyle_factors",
+      "multi_student_comparison",
+      "proxy_competency_available",
+      "studytime_tracking",
+      "submission_history"
+    ]
+  },
+  "tasks": [
+    {
+      "taskId": "S-B01",
+      "taskName": "Performance overview",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "final_outcome"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "final_outcome"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "S-B02",
+      "taskName": "Risk status card",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "engagement_tracking"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": [
+          "engagement_tracking"
+        ]
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "OPTIONAL_ENRICHMENT_MISSING"
+      ]
+    },
+    {
+      "taskId": "S-B03",
+      "taskName": "Engagement summary",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Required capability missing: engagement_tracking",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: engagement_tracking"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores"
+      ],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "S-B03",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "S-T01",
+      "taskName": "Score trend analysis",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "warn",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "submission_history"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "submission_history"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [
+        {
+          "code": "INSUFFICIENT_TEMPORAL_POINTS",
+          "severity": "warning",
+          "message": "Trend analysis requires ≥ 2 time points — found 0. Results may be unreliable.",
+          "context": {
+            "found": 0,
+            "required": 2
+          },
+          "field": null
+        }
+      ],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "S-T02",
+      "taskName": "Competency gap analysis",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "competency_tagging",
+          "proxy_competency_available"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "proxy_competency_available"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": [
+          "competency_tagging"
+        ]
+      },
+      "warnings": [],
+      "semantic_advisories": [
+        {
+          "code": "SEMANTIC_PROXY_COMPETENCY",
+          "severity": "info",
+          "message": "[SEMANTIC_WARNING] Task S-T02 using proxy competency inference (dataset \"UCI\" lacks native competency ontology - assessment_name used as fallback proxy).",
+          "context": {
+            "task_id": "S-T02",
+            "source_dataset": "UCI",
+            "proxy_field": "assessment_name",
+            "native_field": "competency_tag",
+            "semantic_note": "competency_tag uses a 3-tier COALESCE fallback: (1) native competency_tag if dataset has competency ontology, (2) assessment_name as proxy (UCI: G1/G2/G3, OULAD: TMA01/CMA01), (3) 'Unknown' as final safety net."
+          },
+          "field": null
+        }
+      ],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "OPTIONAL_ENRICHMENT_MISSING"
+      ]
+    },
+    {
+      "taskId": "S-T03",
+      "taskName": "Peer comparison",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "multi_student_comparison"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "engagement_tracking"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "multi_student_comparison"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": [
+          "engagement_tracking"
+        ]
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "OPTIONAL_ENRICHMENT_MISSING"
+      ]
+    },
+    {
+      "taskId": "S-T04",
+      "taskName": "At-risk self-check",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "engagement_tracking",
+          "absence_tracking"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "absence_tracking"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": [
+          "engagement_tracking"
+        ]
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "OPTIONAL_ENRICHMENT_MISSING"
+      ]
+    },
+    {
+      "taskId": "S-T05",
+      "taskName": "Weekly engagement trend",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Required capability missing: engagement_tracking",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: engagement_tracking"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "warn",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "S-T05",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: temporal_activity",
+          "context": {
+            "task_id": "S-T05",
+            "capability": "temporal_activity",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [
+        {
+          "code": "INSUFFICIENT_TEMPORAL_POINTS",
+          "severity": "warning",
+          "message": "Trend analysis requires ≥ 2 time points — found 0. Results may be unreliable.",
+          "context": {
+            "found": 0,
+            "required": 2
+          },
+          "field": null
+        }
+      ],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "S-T06",
+      "taskName": "Study consistency check",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Task depends on OULAD week-level engagement patterns and outcome labels.",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Task depends on OULAD week-level engagement patterns and outcome labels."
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity",
+          "final_outcome"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "final_outcome"
+      ],
+      "missing_requirements": [
+        {
+          "code": "DATASET_SPECIFIC_BY_DESIGN",
+          "severity": "error",
+          "message": "Task depends on OULAD week-level engagement patterns and outcome labels.",
+          "context": {
+            "expected_source_dataset": "OULAD",
+            "actual_source_dataset": "UCI",
+            "task_id": "S-T06"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "S-T06",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: temporal_activity",
+          "context": {
+            "task_id": "S-T06",
+            "capability": "temporal_activity",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING",
+        "DATASET_SPECIFIC_BY_DESIGN"
+      ]
+    },
+    {
+      "taskId": "S-T07",
+      "taskName": "Absence / inactivity impact",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "absence_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "absence_tracking"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "S-T08",
+      "taskName": "Assessment lateness impact",
+      "executable": false,
+      "status": "partial",
+      "disabled_reason": "Required capability missing: submission_timestamps",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: submission_timestamps"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "submission_timestamps"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "assessment_scores"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores"
+      ],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: submission_timestamps",
+          "context": {
+            "task_id": "S-T08",
+            "capability": "submission_timestamps",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "submission_timestamps"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "S-T09",
+      "taskName": "Lifestyle risk vs performance",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "lifestyle_factors"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "lifestyle_factors"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "S-T10",
+      "taskName": "Resource engagement breakdown",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Required capability missing: engagement_tracking",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: engagement_tracking"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "resource_clickstream"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "S-T10",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: resource_clickstream",
+          "context": {
+            "task_id": "S-T10",
+            "capability": "resource_clickstream",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "resource_clickstream"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "S-T11",
+      "taskName": "Registration timing vs performance",
+      "executable": false,
+      "status": "partial",
+      "disabled_reason": "Required capability missing: registration_timing",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: registration_timing"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "registration_timing"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "submission_timestamps"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores"
+      ],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: registration_timing",
+          "context": {
+            "task_id": "S-T11",
+            "capability": "registration_timing",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "OPTIONAL_ENRICHMENT_MISSING",
+          "severity": "warning",
+          "message": "Optional enrichment missing: submission_timestamps",
+          "context": {
+            "task_id": "S-T11",
+            "capability": "submission_timestamps",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "registration_timing"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "submission_timestamps"
+        ]
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING",
+        "OPTIONAL_ENRICHMENT_MISSING"
+      ]
+    },
+    {
+      "taskId": "S-T12",
+      "taskName": "Procrastination analysis",
+      "executable": false,
+      "status": "partial",
+      "disabled_reason": "Required capability missing: submission_timestamps",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: submission_timestamps"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "submission_timestamps"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores"
+      ],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: submission_timestamps",
+          "context": {
+            "task_id": "S-T12",
+            "capability": "submission_timestamps",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "submission_timestamps"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "S-T13",
+      "taskName": "Action plan generation",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "engagement_tracking"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": [
+          "engagement_tracking"
+        ]
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "OPTIONAL_ENRICHMENT_MISSING"
+      ]
+    },
+    {
+      "taskId": "S-T14",
+      "taskName": "Social balance vs performance",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "lifestyle_factors"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "lifestyle_factors"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "S-T15",
+      "taskName": "Family context vs performance",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "family_context"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "family_context"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "A-B01",
+      "taskName": "Overall performance distribution",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "final_outcome"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "final_outcome"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "A-B02",
+      "taskName": "Completion / outcome summary",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "final_outcome"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "final_outcome"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "A-B03",
+      "taskName": "Engagement distribution",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Required capability missing: engagement_tracking",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: engagement_tracking"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "temporal_activity"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-B03",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "OPTIONAL_ENRICHMENT_MISSING",
+          "severity": "warning",
+          "message": "Optional enrichment missing: temporal_activity",
+          "context": {
+            "task_id": "A-B03",
+            "capability": "temporal_activity",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "temporal_activity"
+        ]
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING",
+        "OPTIONAL_ENRICHMENT_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-B04",
+      "taskName": "At-risk overview",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Task depends on OULAD week-level engagement patterns and outcome labels.",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Task depends on OULAD week-level engagement patterns and outcome labels."
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity",
+          "final_outcome"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "final_outcome"
+      ],
+      "missing_requirements": [
+        {
+          "code": "DATASET_SPECIFIC_BY_DESIGN",
+          "severity": "error",
+          "message": "Task depends on OULAD week-level engagement patterns and outcome labels.",
+          "context": {
+            "expected_source_dataset": "OULAD",
+            "actual_source_dataset": "UCI",
+            "task_id": "A-B04"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-B04",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: temporal_activity",
+          "context": {
+            "task_id": "A-B04",
+            "capability": "temporal_activity",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING",
+        "DATASET_SPECIFIC_BY_DESIGN"
+      ]
+    },
+    {
+      "taskId": "A-S02",
+      "taskName": "Student score trend",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "warn",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "submission_history"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "submission_history"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [
+        {
+          "code": "INSUFFICIENT_TEMPORAL_POINTS",
+          "severity": "warning",
+          "message": "Trend analysis requires ≥ 2 time points — found 0. Results may be unreliable.",
+          "context": {
+            "found": 0,
+            "required": 2
+          },
+          "field": null
+        }
+      ],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "A-S03",
+      "taskName": "Student engagement trajectory",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Required capability missing: engagement_tracking",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: engagement_tracking"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "warn",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-S03",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: temporal_activity",
+          "context": {
+            "task_id": "A-S03",
+            "capability": "temporal_activity",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [
+        {
+          "code": "INSUFFICIENT_TEMPORAL_POINTS",
+          "severity": "warning",
+          "message": "Trend analysis requires ≥ 2 time points — found 0. Results may be unreliable.",
+          "context": {
+            "found": 0,
+            "required": 2
+          },
+          "field": null
+        }
+      ],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-S04",
+      "taskName": "Student risk flag breakdown",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "absence_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "absence_tracking"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "A-S05",
+      "taskName": "Student competency gap",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "competency_tagging",
+          "proxy_competency_available"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "proxy_competency_available"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": [
+          "competency_tagging"
+        ]
+      },
+      "warnings": [],
+      "semantic_advisories": [
+        {
+          "code": "SEMANTIC_PROXY_COMPETENCY",
+          "severity": "info",
+          "message": "[SEMANTIC_WARNING] Task A-S05 using proxy competency inference (dataset \"UCI\" lacks native competency ontology - assessment_name used as fallback proxy).",
+          "context": {
+            "task_id": "A-S05",
+            "source_dataset": "UCI",
+            "proxy_field": "assessment_name",
+            "native_field": "competency_tag",
+            "semantic_note": "competency_tag uses a 3-tier COALESCE fallback: (1) native competency_tag if dataset has competency ontology, (2) assessment_name as proxy (UCI: G1/G2/G3, OULAD: TMA01/CMA01), (3) 'Unknown' as final safety net."
+          },
+          "field": null
+        }
+      ],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "OPTIONAL_ENRICHMENT_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-S06",
+      "taskName": "Student submission & punctuality",
+      "executable": false,
+      "status": "partial",
+      "disabled_reason": "Required capability missing: submission_timestamps",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: submission_timestamps"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "submission_timestamps"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "assessment_scores"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores"
+      ],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: submission_timestamps",
+          "context": {
+            "task_id": "A-S06",
+            "capability": "submission_timestamps",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "submission_timestamps"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-S07",
+      "taskName": "Student background context",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "demographics",
+          "lifestyle_factors"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "family_context"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "demographics",
+        "lifestyle_factors",
+        "family_context"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "A-C01",
+      "taskName": "Compare performance trajectories",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "warn",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "multi_student_comparison"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "multi_student_comparison"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [
+        {
+          "code": "INSUFFICIENT_TEMPORAL_POINTS",
+          "severity": "warning",
+          "message": "Trend analysis requires ≥ 2 time points — found 0. Results may be unreliable.",
+          "context": {
+            "found": 0,
+            "required": 2
+          },
+          "field": null
+        }
+      ],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "A-C02",
+      "taskName": "Compare engagement patterns",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Task depends on OULAD engagement/online activity signals.",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Task depends on OULAD engagement/online activity signals."
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "multi_student_comparison"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "multi_student_comparison"
+      ],
+      "missing_requirements": [
+        {
+          "code": "DATASET_SPECIFIC_BY_DESIGN",
+          "severity": "error",
+          "message": "Task depends on OULAD engagement/online activity signals.",
+          "context": {
+            "expected_source_dataset": "OULAD",
+            "actual_source_dataset": "UCI",
+            "task_id": "A-C02"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-C02",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING",
+        "DATASET_SPECIFIC_BY_DESIGN"
+      ]
+    },
+    {
+      "taskId": "A-C03",
+      "taskName": "Compare risk profile",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Task depends on OULAD engagement/online activity signals.",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Task depends on OULAD engagement/online activity signals."
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "engagement_tracking",
+          "multi_student_comparison"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "multi_student_comparison"
+      ],
+      "missing_requirements": [
+        {
+          "code": "DATASET_SPECIFIC_BY_DESIGN",
+          "severity": "error",
+          "message": "Task depends on OULAD engagement/online activity signals.",
+          "context": {
+            "expected_source_dataset": "OULAD",
+            "actual_source_dataset": "UCI",
+            "task_id": "A-C03"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-C03",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING",
+        "DATASET_SPECIFIC_BY_DESIGN"
+      ]
+    },
+    {
+      "taskId": "A-C04",
+      "taskName": "Compare lifestyle context",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "lifestyle_factors",
+          "multi_student_comparison"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "lifestyle_factors",
+        "multi_student_comparison"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "A-C05",
+      "taskName": "Compare academic background",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "multi_student_comparison"
+        ],
+        "required_any": [
+          "socioeconomic_context",
+          "family_context"
+        ],
+        "optional_enrichments": [
+          "socioeconomic_context",
+          "family_context"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "multi_student_comparison",
+        "family_context"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": [
+          "socioeconomic_context"
+        ]
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "OPTIONAL_ENRICHMENT_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-C06",
+      "taskName": "Compare resource usage",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Required capability missing: engagement_tracking",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: engagement_tracking"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "resource_clickstream",
+          "multi_student_comparison"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "multi_student_comparison"
+      ],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-C06",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: resource_clickstream",
+          "context": {
+            "task_id": "A-C06",
+            "capability": "resource_clickstream",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "resource_clickstream"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-G01",
+      "taskName": "Identify low-engagement group",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Required capability missing: engagement_tracking",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: engagement_tracking"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-G01",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-G02",
+      "taskName": "Engagement–performance relationship",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Task depends on OULAD engagement/online activity signals.",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Task depends on OULAD engagement/online activity signals."
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores"
+      ],
+      "missing_requirements": [
+        {
+          "code": "DATASET_SPECIFIC_BY_DESIGN",
+          "severity": "error",
+          "message": "Task depends on OULAD engagement/online activity signals.",
+          "context": {
+            "expected_source_dataset": "OULAD",
+            "actual_source_dataset": "UCI",
+            "task_id": "A-G02"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-G02",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING",
+        "DATASET_SPECIFIC_BY_DESIGN"
+      ]
+    },
+    {
+      "taskId": "A-G03",
+      "taskName": "Identify at-risk cohort",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "engagement_tracking",
+          "absence_tracking"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "absence_tracking"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": [
+          "engagement_tracking"
+        ]
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "OPTIONAL_ENRICHMENT_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-G04",
+      "taskName": "Assessment difficulty analysis",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "competency_tagging",
+          "proxy_competency_available"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "proxy_competency_available"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": [
+          "competency_tagging"
+        ]
+      },
+      "warnings": [],
+      "semantic_advisories": [
+        {
+          "code": "SEMANTIC_PROXY_COMPETENCY",
+          "severity": "info",
+          "message": "[SEMANTIC_WARNING] Task A-G04 using proxy competency inference (dataset \"UCI\" lacks native competency ontology - assessment_name used as fallback proxy).",
+          "context": {
+            "task_id": "A-G04",
+            "source_dataset": "UCI",
+            "proxy_field": "assessment_name",
+            "native_field": "competency_tag",
+            "semantic_note": "competency_tag uses a 3-tier COALESCE fallback: (1) native competency_tag if dataset has competency ontology, (2) assessment_name as proxy (UCI: G1/G2/G3, OULAD: TMA01/CMA01), (3) 'Unknown' as final safety net."
+          },
+          "field": null
+        }
+      ],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "OPTIONAL_ENRICHMENT_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-G05",
+      "taskName": "Submission behaviour analysis",
+      "executable": false,
+      "status": "partial",
+      "disabled_reason": "Required capability missing: submission_timestamps",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: submission_timestamps"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "submission_history",
+          "submission_timestamps"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "submission_history"
+      ],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: submission_timestamps",
+          "context": {
+            "task_id": "A-G05",
+            "capability": "submission_timestamps",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "submission_timestamps"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-G06",
+      "taskName": "Activity type effectiveness",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Required capability missing: engagement_tracking",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: engagement_tracking"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "resource_clickstream"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-G06",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: resource_clickstream",
+          "context": {
+            "task_id": "A-G06",
+            "capability": "resource_clickstream",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "resource_clickstream"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-G07",
+      "taskName": "Factor correlation analysis",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Required capability missing: engagement_tracking",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: engagement_tracking"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "demographics"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "demographics"
+      ],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-G07",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-G08",
+      "taskName": "Background group performance & engagement profile",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Task depends on OULAD engagement/online activity signals.",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Task depends on OULAD engagement/online activity signals."
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "engagement_tracking",
+          "demographics"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "demographics"
+      ],
+      "missing_requirements": [
+        {
+          "code": "DATASET_SPECIFIC_BY_DESIGN",
+          "severity": "error",
+          "message": "Task depends on OULAD engagement/online activity signals.",
+          "context": {
+            "expected_source_dataset": "OULAD",
+            "actual_source_dataset": "UCI",
+            "task_id": "A-G08"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-G08",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING",
+        "DATASET_SPECIFIC_BY_DESIGN"
+      ]
+    },
+    {
+      "taskId": "A-G09",
+      "taskName": "Socioeconomic disadvantage impact",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "demographics"
+        ],
+        "required_any": [],
+        "optional_enrichments": [
+          "socioeconomic_context"
+        ]
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "demographics"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": [
+          "socioeconomic_context"
+        ]
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": [
+        "OPTIONAL_ENRICHMENT_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-G10",
+      "taskName": "Consistency analysis across cohort",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Required capability missing: engagement_tracking",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: engagement_tracking"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "pass",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-G10",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: temporal_activity",
+          "context": {
+            "task_id": "A-G10",
+            "capability": "temporal_activity",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-G11",
+      "taskName": "Weekly engagement drop detection",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Required capability missing: engagement_tracking",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Required capability missing: engagement_tracking"
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "warn",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [],
+      "missing_requirements": [
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-G11",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: temporal_activity",
+          "context": {
+            "task_id": "A-G11",
+            "capability": "temporal_activity",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [
+        {
+          "code": "INSUFFICIENT_TEMPORAL_POINTS",
+          "severity": "warning",
+          "message": "Trend analysis requires ≥ 2 time points — found 0. Results may be unreliable.",
+          "context": {
+            "found": 0,
+            "required": 2
+          },
+          "field": null
+        }
+      ],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING"
+      ]
+    },
+    {
+      "taskId": "A-G12",
+      "taskName": "Background group pass/fail/withdrawal rate",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "final_outcome",
+          "demographics"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "final_outcome",
+        "demographics"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "A-G13",
+      "taskName": "Lifestyle risk across cohort",
+      "executable": true,
+      "status": "executable",
+      "disabled_reason": null,
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": true,
+        "failed_layer": null,
+        "why_disabled": null
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "pass",
+        "analytical": "pass",
+        "data_sufficiency": "pass"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "assessment_scores",
+          "lifestyle_factors"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "assessment_scores",
+        "lifestyle_factors"
+      ],
+      "missing_requirements": [],
+      "missing_capabilities": {
+        "required_all": [],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [],
+      "semantic_advisories": [],
+      "confidence": "MEDIUM",
+      "confidence_reason": "649 students × 3 assessments (0 weeks) — adequate for most analyses.",
+      "availability_reason_codes": []
+    },
+    {
+      "taskId": "A-G14",
+      "taskName": "Early withdrawal signal analysis",
+      "executable": false,
+      "status": "insufficient_data",
+      "disabled_reason": "Task depends on OULAD week-level engagement patterns and outcome labels.",
+      "decision_explanation": {
+        "rule": "Task is clickable only when status === executable.",
+        "clickable": false,
+        "failed_layer": "semantic",
+        "why_disabled": "Task depends on OULAD week-level engagement patterns and outcome labels."
+      },
+      "layer_results": {
+        "structural": "pass",
+        "semantic": "fail",
+        "analytical": "warn",
+        "data_sufficiency": "fail"
+      },
+      "requiredCapabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity",
+          "final_outcome"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "availableCapabilities": [
+        "absence_tracking",
+        "assessment_scores",
+        "demographics",
+        "family_context",
+        "final_outcome",
+        "lifestyle_factors",
+        "multi_student_comparison",
+        "proxy_competency_available",
+        "studytime_tracking",
+        "submission_history"
+      ],
+      "matchedCapabilities": [
+        "final_outcome"
+      ],
+      "missing_requirements": [
+        {
+          "code": "DATASET_SPECIFIC_BY_DESIGN",
+          "severity": "error",
+          "message": "Task depends on OULAD week-level engagement patterns and outcome labels.",
+          "context": {
+            "expected_source_dataset": "OULAD",
+            "actual_source_dataset": "UCI",
+            "task_id": "A-G14"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: engagement_tracking",
+          "context": {
+            "task_id": "A-G14",
+            "capability": "engagement_tracking",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "REQUIRED_CAPABILITY_MISSING",
+          "severity": "error",
+          "message": "Required capability missing: temporal_activity",
+          "context": {
+            "task_id": "A-G14",
+            "capability": "temporal_activity",
+            "batch_id": "Import_2026-05-30"
+          },
+          "field": null
+        },
+        {
+          "code": "LEGACY_DATASET_COMPAT_HINT",
+          "severity": "warning",
+          "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+          "context": {
+            "datasetCompatibility": "OULAD_only",
+            "sourceDataset": "UCI",
+            "mode": "legacy_hint_only"
+          },
+          "field": null
+        },
+        {
+          "code": "ENGAGEMENT_BELOW_MINIMUM",
+          "severity": "error",
+          "message": "No positive engagement activity found (0 engagement rows).",
+          "context": {
+            "found": 0,
+            "required": 1,
+            "rowCount": 0
+          },
+          "field": null
+        }
+      ],
+      "missing_capabilities": {
+        "required_all": [
+          "engagement_tracking",
+          "temporal_activity"
+        ],
+        "required_any": [],
+        "optional_enrichments": []
+      },
+      "warnings": [
+        {
+          "code": "INSUFFICIENT_TEMPORAL_POINTS",
+          "severity": "warning",
+          "message": "Trend analysis requires ≥ 2 time points — found 0. Results may be unreliable.",
+          "context": {
+            "found": 0,
+            "required": 2
+          },
+          "field": null
+        }
+      ],
+      "semantic_advisories": [],
+      "confidence": "LOW",
+      "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+      "availability_reason_codes": [
+        "REQUIRED_CAPABILITY_MISSING",
+        "DATASET_SPECIFIC_BY_DESIGN"
+      ]
+    }
+  ]
+}

@@ -29,6 +29,7 @@ load_dotenv()
 
 from schemas import ExplainRequest, ExplainResponse
 from strategies.factory import ExplanationStrategyFactory
+from strategies.base import BaseExplanationStrategy
 from safety import SafetyFilter
 
 #  Logging 
@@ -199,6 +200,7 @@ def _build_degraded_response(req: ExplainRequest, latency_ms: int, reason: str) 
         },
         "explanation_type":     req.explanation_strategy,
         "explanation_strategy": req.explanation_strategy,
+        **BaseExplanationStrategy.get_summary_response_metadata(req),
         "safety_flags":         [],
         "meta": {
             "model":       None,

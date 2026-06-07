@@ -1,0 +1,115 @@
+{
+  "taskId": "A-G15",
+  "datasetId": "intervention_priority_list",
+  "method": "baseline_first_20_rows",
+  "input_summary_type": "raw_first_20_rows",
+  "input_data_summary": "Dataset: intervention_priority_list (6 rows)\n[\n  {\n    \"student_id\": \"S004\",\n    \"gender\": \"F\",\n    \"age_group\": \"25-34\",\n    \"region\": \"North\",\n    \"avg_score\": \"67.0\",\n    \"at_risk_score\": \"1\",\n    \"at_risk_label\": \"low\",\n    \"flag_low_score\": 0,\n    \"flag_repeated\": 0,\n    \"flag_low_engagement\": 1,\n    \"flag_low_punctuality\": 0,\n    \"flag_neg_trend\": 0,\n    \"final_outcome\": \"Pass\"\n  },\n  {\n    \"student_id\": \"S001\",\n    \"gender\": \"M\",\n    \"age_group\": \"18-24\",\n    \"region\": \"South\",\n    \"avg_score\": \"38.5\",\n    \"at_risk_score\": \"5\",\n    \"at_risk_label\": \"high\",\n    \"flag_low_score\": 1,\n    \"flag_repeated\": 1,\n    \"flag_low_engagement\": 1,\n    \"flag_low_punctuality\": 1,\n    \"flag_neg_trend\": 1,\n    \"final_outcome\": \"Fail\"\n  },\n  {\n    \"student_id\": \"S006\",\n    \"gender\": \"F\",\n    \"age_group\": \"35-44\",\n    \"region\": \"West\",\n    \"avg_score\": \"70.0\",\n    \"at_risk_score\": \"0.5\",\n    \"at_risk_label\": \"low\",\n    \"flag_low_score\": 0,\n    \"flag_repeated\": 0,\n    \"flag_low_engagement\": 0,\n    \"flag_low_punctuality\": 0,\n    \"flag_neg_trend\": 1,\n    \"final_outcome\": \"Pass\"\n  },\n  {\n    \"student_id\": \"S003\",\n    \"gender\": \"M\",\n    \"age_group\": \"25-34\",\n    \"region\": \"East\",\n    \"avg_score\": \"41.0\",\n    \"at_risk_score\": 4,\n    \"at_risk_label\": \"high\",\n    \"flag_low_score\": 0,\n    \"flag_repeated\": 1,\n    \"flag_low_engagement\": 1,\n    \"flag_low_punctuality\": 1,\n    \"flag_neg_trend\": 1,\n    \"final_outcome\": \"Withdrawn\"\n  },\n  {\n    \"student_id\": \"S002\",\n    \"gender\": \"F\",\n    \"age_group\": \"18-24\",\n    \"region\": \"North\",\n    \"avg_score\": \"39.0\",\n    \"at_risk_score\": \"5\",\n    \"at_risk_label\": \"high\",\n    \"flag_low_score\": 1,\n    \"flag_repeated\": 0,\n    \"flag_low_engagement\": 1,\n    \"flag_low_punctuality\": 1,\n    \"flag_neg_trend\": 1,\n    \"final_outcome\": \"Fail\"\n  },\n  {\n    \"student_id\": \"S005\",\n    \"gender\": \"M\",\n    \"age_group\": \"45-54\",\n    \"region\": \"South\",\n    \"avg_score\": \"61.5\",\n    \"at_risk_score\": \"2\",\n    \"at_risk_label\": \"medium\",\n    \"flag_low_score\": 0,\n    \"flag_repeated\": 1,\n    \"flag_low_engagement\": 0,\n    \"flag_low_punctuality\": 0,\n    \"flag_neg_trend\": 1,\n    \"final_outcome\": \"Pass\"\n  }\n]",
+  "summary_debug_payload": {
+    "summary_type": "baseline_first_20_rows",
+    "input_summary_type": "raw_first_20_rows",
+    "datasets": [
+      {
+        "dataset_name": "intervention_priority_list",
+        "row_count": 6,
+        "included_row_count": 6,
+        "truncated_row_count": 0,
+        "rows": [
+          {
+            "student_id": "S004",
+            "gender": "F",
+            "age_group": "25-34",
+            "region": "North",
+            "avg_score": "67.0",
+            "at_risk_score": "1",
+            "at_risk_label": "low",
+            "flag_low_score": 0,
+            "flag_repeated": 0,
+            "flag_low_engagement": 1,
+            "flag_low_punctuality": 0,
+            "flag_neg_trend": 0,
+            "final_outcome": "Pass"
+          },
+          {
+            "student_id": "S001",
+            "gender": "M",
+            "age_group": "18-24",
+            "region": "South",
+            "avg_score": "38.5",
+            "at_risk_score": "5",
+            "at_risk_label": "high",
+            "flag_low_score": 1,
+            "flag_repeated": 1,
+            "flag_low_engagement": 1,
+            "flag_low_punctuality": 1,
+            "flag_neg_trend": 1,
+            "final_outcome": "Fail"
+          },
+          {
+            "student_id": "S006",
+            "gender": "F",
+            "age_group": "35-44",
+            "region": "West",
+            "avg_score": "70.0",
+            "at_risk_score": "0.5",
+            "at_risk_label": "low",
+            "flag_low_score": 0,
+            "flag_repeated": 0,
+            "flag_low_engagement": 0,
+            "flag_low_punctuality": 0,
+            "flag_neg_trend": 1,
+            "final_outcome": "Pass"
+          },
+          {
+            "student_id": "S003",
+            "gender": "M",
+            "age_group": "25-34",
+            "region": "East",
+            "avg_score": "41.0",
+            "at_risk_score": 4,
+            "at_risk_label": "high",
+            "flag_low_score": 0,
+            "flag_repeated": 1,
+            "flag_low_engagement": 1,
+            "flag_low_punctuality": 1,
+            "flag_neg_trend": 1,
+            "final_outcome": "Withdrawn"
+          },
+          {
+            "student_id": "S002",
+            "gender": "F",
+            "age_group": "18-24",
+            "region": "North",
+            "avg_score": "39.0",
+            "at_risk_score": "5",
+            "at_risk_label": "high",
+            "flag_low_score": 1,
+            "flag_repeated": 0,
+            "flag_low_engagement": 1,
+            "flag_low_punctuality": 1,
+            "flag_neg_trend": 1,
+            "final_outcome": "Fail"
+          },
+          {
+            "student_id": "S005",
+            "gender": "M",
+            "age_group": "45-54",
+            "region": "South",
+            "avg_score": "61.5",
+            "at_risk_score": "2",
+            "at_risk_label": "medium",
+            "flag_low_score": 0,
+            "flag_repeated": 1,
+            "flag_low_engagement": 0,
+            "flag_low_punctuality": 0,
+            "flag_neg_trend": 1,
+            "final_outcome": "Pass"
+          }
+        ]
+      }
+    ]
+  },
+  "ai_response": null,
+  "latency": 0.567,
+  "rubric_score": null,
+  "notes": "Input summary comparison only; no model call was made."
+}
