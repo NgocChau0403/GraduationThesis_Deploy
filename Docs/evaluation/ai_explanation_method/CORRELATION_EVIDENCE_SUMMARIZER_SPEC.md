@@ -2,9 +2,15 @@
 
 ## Implementation Status
 
-Status: proposed / not implemented yet.
+Status: implemented / migrated / evidence logged.
 
-This phase is documentation-only. It defines the proposed internal `correlation_evidence` summary contract under `task_aware_data_summarization`, but does not implement code, migrate any task, change SQL, update frontend behavior, edit roadmap files, create evaluation logs, or add any new top-level `AI_SUMMARY_METHOD` value.
+Status note:
+
+- The `correlation_evidence` summarizer is implemented under task-aware data summarization (`task_aware_data_summarization`).
+- The external thesis baseline remains `baseline_first_20_rows`.
+- Previous internal behavior was `generic_fallback`.
+- Representative task `A-G02` has been migrated.
+- Baseline vs task-aware evidence logs have been generated.
 
 ## Top-Level Method Boundary
 
@@ -230,7 +236,7 @@ Do not migrate `A-G09`, `A-G13`, `S-T14`, or `S-T15` as part of the first implem
 ## Acceptance Criteria
 
 - `CORRELATION_EVIDENCE_SUMMARIZER_SPEC.md` exists.
-- The spec is method-new and status is `proposed / not implemented yet`.
+- The spec is method-new and status is `implemented / migrated / evidence logged`.
 - Old external baseline and current internal fallback behavior are documented.
 - The new `correlation_evidence` contract is decision-complete for future implementation.
 - Pearson default, p-value non-computation, and `high_x_low_y` outlier meaning are explicit.

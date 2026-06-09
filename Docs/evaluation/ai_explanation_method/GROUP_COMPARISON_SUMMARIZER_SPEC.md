@@ -1,11 +1,15 @@
 # Group Comparison Summarizer Spec
 
 ## Implementation Status
-Status: proposed / not implemented yet.
+Status: implemented / migrated / evidence logged.
 
-This spec is a contract for a future internal `group_comparison` summarizer. This phase is documentation-only and does not modify code, registry metadata, SQL, frontend, roadmap, evaluation logs, or `AI_SUMMARY_METHOD` values.
+Status note:
 
-Implementation, runtime verification, registry migration, and evidence generation must be separate follow-up phases.
+- The `group_comparison` summarizer is implemented under task-aware data summarization (`task_aware_data_summarization`).
+- The external thesis baseline remains `baseline_first_20_rows`.
+- Previous internal behavior was `generic_fallback`.
+- Representative task `A-G08` has been migrated.
+- Baseline vs task-aware evidence logs have been generated.
 
 ## Top-Level Method Boundary
 The external thesis comparison remains:
