@@ -1,0 +1,124 @@
+{
+  "taskId": "A-G08",
+  "datasetId": "background_group_profile",
+  "method": "task_aware_data_summarization",
+  "input_summary_type": "group_comparison",
+  "input_data_summary": "{\n  \"summary_type\": \"group_comparison\",\n  \"dataset_name\": \"background_group_profile\",\n  \"row_count\": 4,\n  \"group_column\": \"group_value\",\n  \"metric_column\": \"avg_score\",\n  \"count_column\": \"student_count\",\n  \"gap_column\": \"score_vs_cohort\",\n  \"group_metrics\": [\n    {\n      \"group\": \"high_band\",\n      \"student_count\": 80.0,\n      \"avg_score\": 72.0,\n      \"gap\": 6.5,\n      \"gap_basis\": \"explicit_gap_column\",\n      \"score_vs_cohort\": 6.5,\n      \"secondary_metrics\": {\n        \"avg_engagement_score\": 0.72\n      }\n    },\n    {\n      \"group\": \"low_band\",\n      \"student_count\": 20.0,\n      \"avg_score\": 55.0,\n      \"gap\": -10.5,\n      \"gap_basis\": \"explicit_gap_column\",\n      \"score_vs_cohort\": -10.5,\n      \"secondary_metrics\": {\n        \"avg_engagement_score\": 0.21\n      }\n    },\n    {\n      \"group\": \"medium_band\",\n      \"student_count\": 120.0,\n      \"avg_score\": 64.0,\n      \"gap\": -1.5,\n      \"gap_basis\": \"explicit_gap_column\",\n      \"score_vs_cohort\": -1.5,\n      \"secondary_metrics\": {\n        \"avg_engagement_score\": 0.45\n      }\n    },\n    {\n      \"group\": \"tiny_band\",\n      \"student_count\": 5.0,\n      \"avg_score\": 70.0,\n      \"gap\": 4.0,\n      \"gap_basis\": \"explicit_gap_column\",\n      \"score_vs_cohort\": 4.0,\n      \"secondary_metrics\": {\n        \"avg_engagement_score\": 0.4\n      }\n    }\n  ],\n  \"gaps\": [\n    {\n      \"group\": \"low_band\",\n      \"gap\": -10.5,\n      \"gap_basis\": \"explicit_gap_column\",\n      \"avg_score\": 55.0,\n      \"student_count\": 20.0\n    },\n    {\n      \"group\": \"medium_band\",\n      \"gap\": -1.5,\n      \"gap_basis\": \"explicit_gap_column\",\n      \"avg_score\": 64.0,\n      \"student_count\": 120.0\n    },\n    {\n      \"group\": \"tiny_band\",\n      \"gap\": 4.0,\n      \"gap_basis\": \"explicit_gap_column\",\n      \"avg_score\": 70.0,\n      \"student_count\": 5.0\n    },\n    {\n      \"group\": \"high_band\",\n      \"gap\": 6.5,\n      \"gap_basis\": \"explicit_gap_column\",\n      \"avg_score\": 72.0,\n      \"student_count\": 80.0\n    }\n  ],\n  \"dominant_group\": {\n    \"group\": \"medium_band\",\n    \"student_count\": 120.0,\n    \"basis\": \"largest_count\"\n  },\n  \"weakest_group\": {\n    \"group\": \"low_band\",\n    \"avg_score\": 55.0,\n    \"basis\": \"most_negative_gap\",\n    \"gap\": -10.5,\n    \"gap_basis\": \"explicit_gap_column\"\n  },\n  \"missing_groups\": [],\n  \"low_count_warnings\": [\n    {\n      \"group\": \"tiny_band\",\n      \"count\": 5.0,\n      \"minimum_reliable_count\": 10.0,\n      \"warning\": \"Group 'tiny_band' has student_count below 10.0; avoid over-weighting this comparison.\"\n    }\n  ],\n  \"fairness_warnings\": [\n    \"Group comparison is descriptive only; do not infer that group membership causes performance differences.\"\n  ],\n  \"causal_claim_allowed\": false,\n  \"summarization_warnings\": [\n    \"Group comparison is descriptive only; do not infer that group membership causes performance differences.\"\n  ]\n}",
+  "summary_debug_payload": {
+    "summary_type": "group_comparison",
+    "dataset_name": "background_group_profile",
+    "row_count": 4,
+    "group_column": "group_value",
+    "metric_column": "avg_score",
+    "count_column": "student_count",
+    "gap_column": "score_vs_cohort",
+    "group_metrics": [
+      {
+        "group": "high_band",
+        "student_count": 80.0,
+        "avg_score": 72.0,
+        "gap": 6.5,
+        "gap_basis": "explicit_gap_column",
+        "score_vs_cohort": 6.5,
+        "secondary_metrics": {
+          "avg_engagement_score": 0.72
+        }
+      },
+      {
+        "group": "low_band",
+        "student_count": 20.0,
+        "avg_score": 55.0,
+        "gap": -10.5,
+        "gap_basis": "explicit_gap_column",
+        "score_vs_cohort": -10.5,
+        "secondary_metrics": {
+          "avg_engagement_score": 0.21
+        }
+      },
+      {
+        "group": "medium_band",
+        "student_count": 120.0,
+        "avg_score": 64.0,
+        "gap": -1.5,
+        "gap_basis": "explicit_gap_column",
+        "score_vs_cohort": -1.5,
+        "secondary_metrics": {
+          "avg_engagement_score": 0.45
+        }
+      },
+      {
+        "group": "tiny_band",
+        "student_count": 5.0,
+        "avg_score": 70.0,
+        "gap": 4.0,
+        "gap_basis": "explicit_gap_column",
+        "score_vs_cohort": 4.0,
+        "secondary_metrics": {
+          "avg_engagement_score": 0.4
+        }
+      }
+    ],
+    "gaps": [
+      {
+        "group": "low_band",
+        "gap": -10.5,
+        "gap_basis": "explicit_gap_column",
+        "avg_score": 55.0,
+        "student_count": 20.0
+      },
+      {
+        "group": "medium_band",
+        "gap": -1.5,
+        "gap_basis": "explicit_gap_column",
+        "avg_score": 64.0,
+        "student_count": 120.0
+      },
+      {
+        "group": "tiny_band",
+        "gap": 4.0,
+        "gap_basis": "explicit_gap_column",
+        "avg_score": 70.0,
+        "student_count": 5.0
+      },
+      {
+        "group": "high_band",
+        "gap": 6.5,
+        "gap_basis": "explicit_gap_column",
+        "avg_score": 72.0,
+        "student_count": 80.0
+      }
+    ],
+    "dominant_group": {
+      "group": "medium_band",
+      "student_count": 120.0,
+      "basis": "largest_count"
+    },
+    "weakest_group": {
+      "group": "low_band",
+      "avg_score": 55.0,
+      "basis": "most_negative_gap",
+      "gap": -10.5,
+      "gap_basis": "explicit_gap_column"
+    },
+    "missing_groups": [],
+    "low_count_warnings": [
+      {
+        "group": "tiny_band",
+        "count": 5.0,
+        "minimum_reliable_count": 10.0,
+        "warning": "Group 'tiny_band' has student_count below 10.0; avoid over-weighting this comparison."
+      }
+    ],
+    "fairness_warnings": [
+      "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+    ],
+    "causal_claim_allowed": false,
+    "summarization_warnings": [
+      "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+    ]
+  },
+  "ai_response": null,
+  "latency": 1.176,
+  "rubric_score": null,
+  "notes": "Input summary comparison only; no model call was made."
+}
