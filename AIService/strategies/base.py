@@ -407,6 +407,8 @@ CRITICAL RULES:
             return BaseExplanationStrategy._summarize_numeric_distribution(req)
         elif cfg and cfg.summary_type == "group_comparison":
             return BaseExplanationStrategy._summarize_group_comparison(req)
+        elif cfg and cfg.summary_type == "correlation_evidence":
+            return BaseExplanationStrategy._summarize_correlation_evidence(req)
         return BaseExplanationStrategy._summarize_generic(req)
 
     @staticmethod
@@ -496,6 +498,20 @@ CRITICAL RULES:
             "weakest_group",
             "low_count_warnings",
             "fairness_warnings",
+            "x_column",
+            "y_column",
+            "coefficient",
+            "coefficient_method",
+            "coefficient_source",
+            "sample_size",
+            "p_value",
+            "outliers",
+            "direction",
+            "strength",
+            "strength_claim_allowed",
+            "significance_claim_allowed",
+            "parse_warnings",
+            "statistical_warnings",
             "causal_claim_allowed",
         ):
             if key in summary:
@@ -1463,6 +1479,302 @@ CRITICAL RULES:
         if match:
             return float(match.group(1)), float(match.group(2))
         return None, None
+
+    @staticmethod
+    def _summarize_correlation_evidence(req: ExplainRequest) -> dict:
+        cfg = req.ai_summary_config
+        dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
+
+        x_col = cfg.x_column if cfg else None
+        y_col = cfg.y_column if cfg else None
+        entity_col = cfg.entity_column if cfg else None
+        color_col = cfg.color_column if cfg else None
+        coefficient_col = cfg.coefficient_column if cfg else None
+        coefficient_method = str((cfg.coefficient_method if cfg else None) or "pearson").lower()
+        sample_size_col = cfg.sample_size_column if cfg else None
+        p_value_col = cfg.p_value_column if cfg else None
+        outlier_policy = str((cfg.outlier_policy if cfg else None) or "").lower()
+        min_sample_value = BaseExplanationStrategy._parse_number(
+            cfg.minimum_sample_size if cfg and cfg.minimum_sample_size is not None else 30
+        )
+        if min_sample_value is None:
+            min_sample_value = 30.0
+        top_k = cfg.top_k if cfg and cfg.top_k is not None else 10
+        top_k = max(0, min(int(top_k), 50))
+
+        summary = {
+            "summary_type": "correlation_evidence",
+            "dataset_name": dataset_name,
+            "row_count": len(rows),
+            "x_column": x_col,
+            "y_column": y_col,
+            "entity_column": entity_col,
+            "coefficient": None,
+            "coefficient_method": coefficient_method,
+            "coefficient_source": "unavailable",
+            "sample_size": 0,
+            "p_value": None,
+            "outliers": [],
+            "direction": "unknown",
+            "strength": None,
+            "strength_claim_allowed": False,
+            "significance_claim_allowed": False,
+            "causal_claim_allowed": False,
+            "parse_warnings": [],
+            "statistical_warnings": [],
+            "summarization_warnings": [],
+        }
+
+        def add_parse_warning(message: str) -> None:
+            summary["parse_warnings"].append(message)
+            summary["summarization_warnings"].append(message)
+
+        def add_statistical_warning(message: str) -> None:
+            summary["statistical_warnings"].append(message)
+            summary["summarization_warnings"].append(message)
+
+        if not rows:
+            summary["summarization_warnings"].append("Primary dataset is empty.")
+            return summary
+
+        dict_rows = [row for row in rows if isinstance(row, dict)]
+        if not dict_rows:
+            summary["summarization_warnings"].append("Primary dataset has no object rows.")
+            return summary
+
+        available_columns = set()
+        for row in dict_rows:
+            available_columns.update(row.keys())
+
+        missing_required = []
+        if not x_col:
+            missing_required.append("x_column")
+        if not y_col:
+            missing_required.append("y_column")
+        for column in (x_col, y_col):
+            if column and column not in available_columns:
+                missing_required.append(column)
+
+        if missing_required:
+            summary["summarization_warnings"].append(
+                "correlation_evidence config is incomplete or required columns are missing: "
+                + ", ".join(missing_required)
+            )
+            summary["generic_diagnostic_sample"] = BaseExplanationStrategy._summarize_generic(req, max_datasets=1)
+            return summary
+
+        for column, label in [
+            (entity_col, "entity_column"),
+            (color_col, "color_column"),
+            (coefficient_col, "coefficient_column"),
+            (sample_size_col, "sample_size_column"),
+            (p_value_col, "p_value_column"),
+        ]:
+            if column and column not in available_columns:
+                summary["summarization_warnings"].append(
+                    f"Configured optional {label} '{column}' is missing from dataset."
+                )
+
+        valid_pairs = []
+        invalid_x = 0
+        invalid_y = 0
+        for index, row in enumerate(dict_rows):
+            x_value = BaseExplanationStrategy._parse_number(row.get(x_col))
+            y_value = BaseExplanationStrategy._parse_number(row.get(y_col))
+            if x_value is None:
+                invalid_x += 1
+                continue
+            if y_value is None:
+                invalid_y += 1
+                continue
+            valid_pairs.append({
+                "x": x_value,
+                "y": y_value,
+                "row": row,
+                "row_index": index,
+            })
+
+        if invalid_x:
+            add_parse_warning(f"Skipped {invalid_x} rows with invalid {x_col}.")
+        if invalid_y:
+            add_parse_warning(f"Skipped {invalid_y} rows with invalid {y_col}.")
+
+        summary["sample_size"] = len(valid_pairs)
+        if not valid_pairs:
+            add_statistical_warning("No valid paired numeric observations remained after parsing x/y values.")
+            return summary
+
+        explicit_sample_sizes = []
+        invalid_sample_size_values = 0
+        if sample_size_col and sample_size_col in available_columns:
+            for row in dict_rows:
+                if row.get(sample_size_col) is None:
+                    continue
+                parsed = BaseExplanationStrategy._parse_number(row.get(sample_size_col))
+                if parsed is None:
+                    invalid_sample_size_values += 1
+                else:
+                    explicit_sample_sizes.append(parsed)
+            if explicit_sample_sizes:
+                first_sample_size = explicit_sample_sizes[0]
+                summary["sample_size"] = round(first_sample_size, 4)
+                if any(value != first_sample_size for value in explicit_sample_sizes[1:]):
+                    add_statistical_warning(
+                        f"Configured sample size column '{sample_size_col}' has multiple values; using the first valid value."
+                    )
+            if invalid_sample_size_values:
+                add_parse_warning(
+                    f"Found {invalid_sample_size_values} invalid {sample_size_col} values; sample size evidence is partial."
+                )
+
+        effective_sample_size = BaseExplanationStrategy._parse_number(summary["sample_size"]) or 0.0
+        reliable_sample_size = effective_sample_size >= min_sample_value
+        if not reliable_sample_size:
+            add_statistical_warning(
+                f"Valid paired sample size {round(effective_sample_size, 4)} is below minimum_sample_size {round(min_sample_value, 4)}; coefficient strength is not reliable."
+            )
+
+        explicit_coefficients = []
+        invalid_coefficient_values = 0
+        if coefficient_col and coefficient_col in available_columns:
+            for row in dict_rows:
+                if row.get(coefficient_col) is None:
+                    continue
+                parsed = BaseExplanationStrategy._parse_number(row.get(coefficient_col))
+                if parsed is None:
+                    invalid_coefficient_values += 1
+                else:
+                    explicit_coefficients.append(parsed)
+            if explicit_coefficients:
+                first_coefficient = explicit_coefficients[0]
+                summary["coefficient"] = round(first_coefficient, 4)
+                summary["coefficient_source"] = "explicit_column"
+                if any(value != first_coefficient for value in explicit_coefficients[1:]):
+                    add_statistical_warning(
+                        f"Configured coefficient column '{coefficient_col}' has multiple values; using the first valid value."
+                    )
+            if invalid_coefficient_values:
+                add_parse_warning(
+                    f"Found {invalid_coefficient_values} invalid {coefficient_col} values; coefficient evidence is partial."
+                )
+
+        def variance(values: list[float]) -> float:
+            mean = sum(values) / len(values)
+            return sum((value - mean) ** 2 for value in values)
+
+        if summary["coefficient"] is None:
+            if coefficient_method != "pearson":
+                add_statistical_warning(
+                    f"Coefficient method '{coefficient_method}' is not implemented for derivation; coefficient unavailable."
+                )
+            elif not reliable_sample_size:
+                summary["coefficient_source"] = "unavailable"
+            else:
+                x_values = [item["x"] for item in valid_pairs]
+                y_values = [item["y"] for item in valid_pairs]
+                x_variance = variance(x_values)
+                y_variance = variance(y_values)
+                if x_variance == 0 or y_variance == 0:
+                    add_statistical_warning(
+                        f"Cannot derive Pearson coefficient because {x_col} or {y_col} has zero variance."
+                    )
+                else:
+                    x_mean = sum(x_values) / len(x_values)
+                    y_mean = sum(y_values) / len(y_values)
+                    covariance = sum((item["x"] - x_mean) * (item["y"] - y_mean) for item in valid_pairs)
+                    coefficient = covariance / ((x_variance * y_variance) ** 0.5)
+                    summary["coefficient"] = round(coefficient, 4)
+                    summary["coefficient_source"] = "derived_from_pairs"
+
+        p_values = []
+        invalid_p_values = 0
+        if p_value_col and p_value_col in available_columns:
+            for row in dict_rows:
+                if row.get(p_value_col) is None:
+                    continue
+                parsed = BaseExplanationStrategy._parse_number(row.get(p_value_col))
+                if parsed is None:
+                    invalid_p_values += 1
+                else:
+                    p_values.append(parsed)
+            if p_values:
+                first_p_value = p_values[0]
+                summary["p_value"] = round(first_p_value, 6)
+                if any(value != first_p_value for value in p_values[1:]):
+                    add_statistical_warning(
+                        f"Configured p-value column '{p_value_col}' has multiple values; using the first valid value."
+                    )
+            if invalid_p_values:
+                add_parse_warning(
+                    f"Found {invalid_p_values} invalid {p_value_col} values; p-value evidence is partial."
+                )
+        elif p_value_col:
+            add_statistical_warning(
+                f"Configured p-value column '{p_value_col}' is unavailable; significance claims are not allowed."
+            )
+
+        coefficient = BaseExplanationStrategy._parse_number(summary["coefficient"])
+        if coefficient is not None:
+            if coefficient > 0:
+                summary["direction"] = "positive"
+            elif coefficient < 0:
+                summary["direction"] = "negative"
+            else:
+                summary["direction"] = "none"
+            if reliable_sample_size:
+                abs_coefficient = abs(coefficient)
+                if abs_coefficient < 0.3:
+                    summary["strength"] = "weak"
+                elif abs_coefficient < 0.7:
+                    summary["strength"] = "moderate"
+                else:
+                    summary["strength"] = "strong"
+                summary["strength_claim_allowed"] = True
+        else:
+            add_statistical_warning("Coefficient evidence is unavailable; strength claims are not allowed.")
+
+        if summary["p_value"] is not None:
+            summary["significance_claim_allowed"] = True
+        else:
+            add_statistical_warning("No p-value evidence is available; statistical significance claims are not allowed.")
+
+        def quantile(values: list[float], q: float) -> float:
+            ordered = sorted(values)
+            if len(ordered) == 1:
+                return ordered[0]
+            position = (len(ordered) - 1) * q
+            lower = int(position)
+            upper = min(lower + 1, len(ordered) - 1)
+            fraction = position - lower
+            return ordered[lower] + (ordered[upper] - ordered[lower]) * fraction
+
+        if outlier_policy:
+            if outlier_policy == "high_x_low_y":
+                x_q3 = quantile([item["x"] for item in valid_pairs], 0.75)
+                y_q1 = quantile([item["y"] for item in valid_pairs], 0.25)
+                outlier_candidates = [
+                    item for item in valid_pairs
+                    if item["x"] >= x_q3 and item["y"] <= y_q1
+                ]
+                outlier_candidates.sort(key=lambda item: (-item["x"], item["y"], item["row_index"]))
+                outliers = []
+                for item in outlier_candidates[:top_k]:
+                    row = item["row"]
+                    outlier = {
+                        x_col: round(item["x"], 4),
+                        y_col: round(item["y"], 4),
+                        "policy": outlier_policy,
+                    }
+                    if entity_col and entity_col in row:
+                        outlier[entity_col] = row.get(entity_col)
+                    if color_col and color_col in row:
+                        outlier[color_col] = row.get(color_col)
+                    outliers.append(outlier)
+                summary["outliers"] = outliers
+            else:
+                add_statistical_warning(f"Unknown outlier policy '{outlier_policy}'; no outliers emitted.")
+
+        return summary
 
     @staticmethod
     def _summarize_group_comparison(req: ExplainRequest) -> dict:

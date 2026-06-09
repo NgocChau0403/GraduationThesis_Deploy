@@ -82,12 +82,21 @@ class AISummaryConfig(BaseModel):
     target_group: str | None = None
     comparison_groups: list[str] = Field(default_factory=list)
     time_column: str | None = None
+    x_column: str | None = None
+    y_column: str | None = None
     metric_column: str | None = None
     entity_column: str | None = None
+    color_column: str | None = None
+    coefficient_column: str | None = None
+    coefficient_method: str | None = None
+    sample_size_column: str | None = None
+    p_value_column: str | None = None
+    outlier_policy: str | None = None
     group_column: str | None = None
     gap_column: str | None = None
     reliability_column: str | None = None
     minimum_reliable_count: int | float | None = None
+    minimum_sample_size: int | float | None = None
     category_column: str | None = None
     bin_column: str | None = None
     count_column: str | None = None

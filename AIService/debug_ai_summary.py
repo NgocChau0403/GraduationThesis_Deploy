@@ -13,6 +13,7 @@ Usage:
   python debug_ai_summary.py --self-test-ranking
   python debug_ai_summary.py --self-test-numeric-distribution
   python debug_ai_summary.py --self-test-group-comparison
+  python debug_ai_summary.py --self-test-correlation-evidence
   python debug_ai_summary.py --task A-G14 --input-json path/to/datasets.json
 
 The optional input JSON can be either:
@@ -59,12 +60,21 @@ def build_ai_summary_config(task: dict) -> AISummaryConfig | None:
         target_group=task.get("aiTargetGroup"),
         comparison_groups=task.get("aiComparisonGroups") or [],
         time_column=task.get("aiTimeColumn"),
+        x_column=task.get("aiXColumn"),
+        y_column=task.get("aiYColumn"),
         metric_column=task.get("aiMetricColumn"),
         entity_column=task.get("aiEntityColumn"),
+        color_column=task.get("aiColorColumn"),
+        coefficient_column=task.get("aiCoefficientColumn"),
+        coefficient_method=task.get("aiCoefficientMethod"),
+        sample_size_column=task.get("aiSampleSizeColumn"),
+        p_value_column=task.get("aiPValueColumn"),
+        outlier_policy=task.get("aiOutlierPolicy"),
         group_column=task.get("aiGroupColumn"),
         gap_column=task.get("aiGapColumn"),
         reliability_column=task.get("aiReliabilityColumn"),
         minimum_reliable_count=task.get("aiMinimumReliableCount"),
+        minimum_sample_size=task.get("aiMinimumSampleSize"),
         category_column=task.get("aiCategoryColumn"),
         bin_column=task.get("aiBinColumn"),
         count_column=task.get("aiCountColumn"),
@@ -124,6 +134,20 @@ def sample_a_g14_rows() -> list[dict]:
 
 
 def sample_task_datasets(task_id: str) -> dict[str, list[dict]]:
+    if task_id == "A-G02":
+        return {
+            "engagement_performance_scatter": [
+                {"student_id": "S001", "engagement_score": "0.10", "avg_score": "40", "final_outcome": "Fail"},
+                {"student_id": "S002", "engagement_score": "0.20", "avg_score": "45", "final_outcome": "Fail"},
+                {"student_id": "S003", "engagement_score": "0.30", "avg_score": "50", "final_outcome": "Pass"},
+                {"student_id": "S004", "engagement_score": "0.40", "avg_score": "55", "final_outcome": "Pass"},
+                {"student_id": "S005", "engagement_score": "0.50", "avg_score": "60", "final_outcome": "Pass"},
+                {"student_id": "S006", "engagement_score": "0.60", "avg_score": "65", "final_outcome": "Distinction"},
+                {"student_id": "S007", "engagement_score": "0.90", "avg_score": "42", "final_outcome": "Fail"},
+                {"student_id": "S008", "engagement_score": "bad", "avg_score": "70", "final_outcome": "Pass"},
+                {"student_id": "S009", "engagement_score": "0.80", "avg_score": "bad", "final_outcome": "Fail"},
+            ]
+        }
     if task_id == "A-B02":
         return {
             "outcome_counts": [
@@ -788,6 +812,31 @@ def group_comparison_config(
     )
 
 
+def correlation_evidence_config(
+    *,
+    coefficient_column: str | None = None,
+    sample_size_column: str | None = None,
+    p_value_column: str | None = None,
+    outlier_policy: str | None = "high_x_low_y",
+    minimum_sample_size: int = 6,
+    top_k: int = 1,
+) -> AISummaryConfig:
+    return AISummaryConfig(
+        summary_type="correlation_evidence",
+        x_column="engagement_score",
+        y_column="avg_score",
+        entity_column="student_id",
+        color_column="final_outcome",
+        coefficient_column=coefficient_column,
+        coefficient_method="pearson",
+        sample_size_column=sample_size_column,
+        p_value_column=p_value_column,
+        outlier_policy=outlier_policy,
+        minimum_sample_size=minimum_sample_size,
+        top_k=top_k,
+    )
+
+
 def run_self_test_ranking() -> None:
     os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
     rows = sample_task_datasets("A-G15")["intervention_priority_list"]
@@ -1036,6 +1085,123 @@ def run_self_test_group_comparison() -> None:
     print("debug_ai_summary group_comparison self-test passed")
 
 
+def run_self_test_correlation_evidence() -> None:
+    os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
+    rows = sample_task_datasets("A-G02")["engagement_performance_scatter"]
+
+    generic_req = build_request("A-G02", {"engagement_performance_scatter": rows})
+    generic_req.ai_summary_config = None
+    generic_summary = json.loads(BaseExplanationStrategy.summarize_datasets(generic_req))
+    assert generic_summary["summary_type"] == "generic_fallback"
+
+    correlation_req = build_request("A-G02", {"engagement_performance_scatter": rows})
+    correlation_req.ai_summary_config = correlation_evidence_config()
+    correlation_summary = json.loads(BaseExplanationStrategy.summarize_datasets(correlation_req))
+    assert correlation_summary["summary_type"] == "correlation_evidence"
+    assert correlation_summary["dataset_name"] == "engagement_performance_scatter"
+    assert correlation_summary["x_column"] == "engagement_score"
+    assert correlation_summary["y_column"] == "avg_score"
+    assert correlation_summary["entity_column"] == "student_id"
+    assert correlation_summary["coefficient_method"] == "pearson"
+    assert correlation_summary["coefficient_source"] == "derived_from_pairs"
+    assert correlation_summary["sample_size"] == 7
+    assert correlation_summary["coefficient"] is not None
+    assert correlation_summary["direction"] == "positive"
+    assert correlation_summary["strength_claim_allowed"] is True
+    assert correlation_summary["significance_claim_allowed"] is False
+    assert correlation_summary["causal_claim_allowed"] is False
+    assert correlation_summary["p_value"] is None
+    assert any("invalid engagement_score" in warning for warning in correlation_summary["parse_warnings"])
+    assert any("invalid avg_score" in warning for warning in correlation_summary["parse_warnings"])
+    assert any("No p-value evidence" in warning for warning in correlation_summary["statistical_warnings"])
+    assert len(correlation_summary["outliers"]) == 1
+    assert correlation_summary["outliers"][0]["student_id"] == "S007"
+    assert correlation_summary["outliers"][0]["final_outcome"] == "Fail"
+
+    explicit_rows = [
+        {
+            **row,
+            "correlation": "0.88",
+            "sample_size": "100",
+            "p_value": "0.012",
+        }
+        for row in rows
+    ]
+    explicit_req = build_request("A-G02", {"engagement_performance_scatter": explicit_rows})
+    explicit_req.ai_summary_config = correlation_evidence_config(
+        coefficient_column="correlation",
+        sample_size_column="sample_size",
+        p_value_column="p_value",
+    )
+    explicit_summary = json.loads(BaseExplanationStrategy.summarize_datasets(explicit_req))
+    assert explicit_summary["coefficient"] == 0.88
+    assert explicit_summary["coefficient_source"] == "explicit_column"
+    assert explicit_summary["sample_size"] == 100.0
+    assert explicit_summary["p_value"] == 0.012
+    assert explicit_summary["strength"] == "strong"
+    assert explicit_summary["strength_claim_allowed"] is True
+    assert explicit_summary["significance_claim_allowed"] is True
+    assert explicit_summary["causal_claim_allowed"] is False
+
+    no_p_value_req = build_request("A-G02", {"engagement_performance_scatter": explicit_rows})
+    no_p_value_req.ai_summary_config = correlation_evidence_config(coefficient_column="correlation")
+    no_p_value_summary = json.loads(BaseExplanationStrategy.summarize_datasets(no_p_value_req))
+    assert no_p_value_summary["p_value"] is None
+    assert no_p_value_summary["significance_claim_allowed"] is False
+
+    small_req = build_request("A-G02", {"engagement_performance_scatter": rows[:5]})
+    small_req.ai_summary_config = correlation_evidence_config(minimum_sample_size=10, top_k=2)
+    small_summary = json.loads(BaseExplanationStrategy.summarize_datasets(small_req))
+    assert small_summary["coefficient"] is None
+    assert small_summary["coefficient_source"] == "unavailable"
+    assert small_summary["strength_claim_allowed"] is False
+    assert any("below minimum_sample_size" in warning for warning in small_summary["statistical_warnings"])
+
+    descriptive_outlier_rows = [
+        {"student_id": "S101", "engagement_score": "0.1", "avg_score": "30", "final_outcome": "Fail"},
+        {"student_id": "S102", "engagement_score": "0.2", "avg_score": "40", "final_outcome": "Fail"},
+        {"student_id": "S103", "engagement_score": "0.9", "avg_score": "20", "final_outcome": "Fail"},
+    ]
+    descriptive_req = build_request("A-G02", {"engagement_performance_scatter": descriptive_outlier_rows})
+    descriptive_req.ai_summary_config = correlation_evidence_config(minimum_sample_size=10)
+    descriptive_summary = json.loads(BaseExplanationStrategy.summarize_datasets(descriptive_req))
+    assert descriptive_summary["coefficient"] is None
+    assert descriptive_summary["outliers"]
+    assert any("below minimum_sample_size" in warning for warning in descriptive_summary["statistical_warnings"])
+
+    zero_variance_req = build_request("A-G02", {
+        "engagement_performance_scatter": [
+            {"student_id": "S001", "engagement_score": "1", "avg_score": "40"},
+            {"student_id": "S002", "engagement_score": "1", "avg_score": "50"},
+            {"student_id": "S003", "engagement_score": "1", "avg_score": "60"},
+            {"student_id": "S004", "engagement_score": "1", "avg_score": "70"},
+            {"student_id": "S005", "engagement_score": "1", "avg_score": "80"},
+            {"student_id": "S006", "engagement_score": "1", "avg_score": "90"},
+        ]
+    })
+    zero_variance_req.ai_summary_config = correlation_evidence_config()
+    zero_variance_summary = json.loads(BaseExplanationStrategy.summarize_datasets(zero_variance_req))
+    assert zero_variance_summary["coefficient"] is None
+    assert any("zero variance" in warning for warning in zero_variance_summary["statistical_warnings"])
+
+    missing_x_req = build_request("A-G02", {"engagement_performance_scatter": rows})
+    missing_x_req.ai_summary_config = correlation_evidence_config()
+    missing_x_req.ai_summary_config.x_column = "missing_engagement_score"
+    missing_x_summary = json.loads(BaseExplanationStrategy.summarize_datasets(missing_x_req))
+    assert any("missing_engagement_score" in warning for warning in missing_x_summary["summarization_warnings"])
+    assert "generic_diagnostic_sample" in missing_x_summary
+
+    unknown_policy_req = build_request("A-G02", {"engagement_performance_scatter": rows})
+    unknown_policy_req.ai_summary_config = correlation_evidence_config(outlier_policy="unknown_policy")
+    unknown_policy_summary = json.loads(BaseExplanationStrategy.summarize_datasets(unknown_policy_req))
+    assert unknown_policy_summary["outliers"] == []
+    assert any("Unknown outlier policy" in warning for warning in unknown_policy_summary["statistical_warnings"])
+
+    assert set(SUMMARY_METHODS) == {"task_aware_data_summarization", "baseline_first_20_rows"}
+
+    print("debug_ai_summary correlation_evidence self-test passed")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", default="A-G14")
@@ -1050,6 +1216,7 @@ def main() -> None:
     parser.add_argument("--self-test-ranking", action="store_true")
     parser.add_argument("--self-test-numeric-distribution", action="store_true")
     parser.add_argument("--self-test-group-comparison", action="store_true")
+    parser.add_argument("--self-test-correlation-evidence", action="store_true")
     args = parser.parse_args()
 
     if args.self_test:
@@ -1072,6 +1239,9 @@ def main() -> None:
         return
     if args.self_test_group_comparison:
         run_self_test_group_comparison()
+        return
+    if args.self_test_correlation_evidence:
+        run_self_test_correlation_evidence()
         return
 
     req = build_request(args.task, load_datasets(args.input_json, args.task))
