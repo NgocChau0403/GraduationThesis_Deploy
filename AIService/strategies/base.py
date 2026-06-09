@@ -405,6 +405,8 @@ CRITICAL RULES:
             return BaseExplanationStrategy._summarize_ranking(req)
         elif cfg and cfg.summary_type == "numeric_distribution":
             return BaseExplanationStrategy._summarize_numeric_distribution(req)
+        elif cfg and cfg.summary_type == "group_comparison":
+            return BaseExplanationStrategy._summarize_group_comparison(req)
         return BaseExplanationStrategy._summarize_generic(req)
 
     @staticmethod
@@ -488,6 +490,13 @@ CRITICAL RULES:
             "metric_stats",
             "tie_warnings",
             "flag_evidence",
+            "group_metrics",
+            "gaps",
+            "dominant_group",
+            "weakest_group",
+            "low_count_warnings",
+            "fairness_warnings",
+            "causal_claim_allowed",
         ):
             if key in summary:
                 minimal[key] = summary[key]
@@ -1454,6 +1463,300 @@ CRITICAL RULES:
         if match:
             return float(match.group(1)), float(match.group(2))
         return None, None
+
+    @staticmethod
+    def _summarize_group_comparison(req: ExplainRequest) -> dict:
+        cfg = req.ai_summary_config
+        dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
+
+        group_col = cfg.group_column if cfg else None
+        metric_col = cfg.metric_column if cfg else None
+        count_col = cfg.count_column if cfg else None
+        gap_col = cfg.gap_column if cfg else None
+        metric_cols = list(cfg.metric_columns or []) if cfg else []
+        expected_groups = [str(item) for item in (cfg.expected_groups or [])] if cfg else []
+        target_group = str(cfg.target_group) if cfg and cfg.target_group is not None else None
+        comparison_groups = [str(item) for item in (cfg.comparison_groups or [])] if cfg else []
+        min_reliable = cfg.minimum_reliable_count if cfg else None
+        sort_by = cfg.sort_by if cfg else None
+        sort_direction = str(cfg.sort_direction or "asc").lower() if cfg else "asc"
+        sort_desc = sort_direction == "desc"
+        top_k = cfg.top_k if cfg and cfg.top_k is not None else 10
+        bottom_k = cfg.bottom_k if cfg and cfg.bottom_k is not None else 5
+        top_k = max(0, min(int(top_k), 50))
+        bottom_k = max(0, min(int(bottom_k), 50))
+
+        summary = {
+            "summary_type": "group_comparison",
+            "dataset_name": dataset_name,
+            "row_count": len(rows),
+            "group_column": group_col,
+            "metric_column": metric_col,
+            "count_column": count_col,
+            "gap_column": gap_col,
+            "group_metrics": [],
+            "gaps": [],
+            "dominant_group": None,
+            "weakest_group": None,
+            "missing_groups": [],
+            "low_count_warnings": [],
+            "fairness_warnings": [
+                "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+            ],
+            "causal_claim_allowed": False,
+            "summarization_warnings": [],
+        }
+
+        if not rows:
+            summary["summarization_warnings"].append("Primary dataset is empty.")
+            return summary
+
+        dict_rows = [row for row in rows if isinstance(row, dict)]
+        if not dict_rows:
+            summary["summarization_warnings"].append("Primary dataset has no object rows.")
+            return summary
+
+        available_columns = set()
+        for row in dict_rows:
+            available_columns.update(row.keys())
+
+        missing_required = []
+        if not group_col:
+            missing_required.append("group_column")
+        if not metric_col:
+            missing_required.append("metric_column")
+        if not count_col:
+            missing_required.append("count_column")
+        for column in (group_col, metric_col, count_col):
+            if column and column not in available_columns:
+                missing_required.append(column)
+
+        if missing_required:
+            summary["summarization_warnings"].append(
+                "group_comparison config is incomplete or required columns are missing: "
+                + ", ".join(missing_required)
+            )
+            summary["generic_diagnostic_sample"] = BaseExplanationStrategy._summarize_generic(req, max_datasets=1)
+            return summary
+
+        for column in [gap_col, *metric_cols]:
+            if column and column not in available_columns:
+                summary["summarization_warnings"].append(
+                    f"Configured optional column '{column}' is missing from dataset."
+                )
+
+        invalid_count_rows = 0
+        invalid_metric_rows = 0
+        invalid_gap_values = 0
+        invalid_secondary_counts = {column: 0 for column in metric_cols}
+        entries = []
+
+        for index, row in enumerate(dict_rows):
+            group_value = row.get(group_col)
+            group_key = str(group_value)
+            count_value = BaseExplanationStrategy._parse_number(row.get(count_col))
+            metric_value = BaseExplanationStrategy._parse_number(row.get(metric_col))
+            if count_value is None:
+                invalid_count_rows += 1
+                continue
+            if metric_value is None:
+                invalid_metric_rows += 1
+                continue
+
+            gap_value = None
+            if gap_col and gap_col in row and row.get(gap_col) is not None:
+                gap_value = BaseExplanationStrategy._parse_number(row.get(gap_col))
+                if gap_value is None:
+                    invalid_gap_values += 1
+
+            secondary_metrics = {}
+            for column in metric_cols:
+                if column not in row or row.get(column) is None:
+                    continue
+                parsed_secondary = BaseExplanationStrategy._parse_number(row.get(column))
+                if parsed_secondary is None:
+                    invalid_secondary_counts[column] += 1
+                    secondary_metrics[column] = row.get(column)
+                else:
+                    secondary_metrics[column] = round(parsed_secondary, 4)
+
+            entries.append({
+                "group": group_value,
+                "group_key": group_key,
+                "count": round(count_value, 4),
+                "metric": round(metric_value, 4),
+                "secondary_metrics": secondary_metrics,
+                "gap": round(gap_value, 4) if gap_value is not None else None,
+                "gap_basis": "explicit_gap_column" if gap_value is not None else None,
+                "_count_value": count_value,
+                "_metric_value": metric_value,
+                "_gap_value": gap_value,
+                "_row_index": index,
+            })
+
+        if invalid_count_rows:
+            summary["summarization_warnings"].append(
+                f"Skipped {invalid_count_rows} rows with invalid {count_col}."
+            )
+        if invalid_metric_rows:
+            summary["summarization_warnings"].append(
+                f"Skipped {invalid_metric_rows} rows with invalid {metric_col}."
+            )
+        if invalid_gap_values:
+            summary["summarization_warnings"].append(
+                f"Found {invalid_gap_values} invalid {gap_col} values; those gaps were omitted."
+            )
+        for column, invalid_count in invalid_secondary_counts.items():
+            if invalid_count:
+                summary["summarization_warnings"].append(
+                    f"Found {invalid_count} invalid {column} values; secondary metric evidence is partial."
+                )
+
+        if not entries:
+            summary["summarization_warnings"].append("No valid group comparison rows remained after parsing required values.")
+            return summary
+
+        has_explicit_gap = any(entry["_gap_value"] is not None for entry in entries)
+        if not has_explicit_gap:
+            total_weight = sum(entry["_count_value"] for entry in entries)
+            if total_weight > 0:
+                cohort_mean = sum(entry["_metric_value"] * entry["_count_value"] for entry in entries) / total_weight
+                for entry in entries:
+                    gap = entry["_metric_value"] - cohort_mean
+                    entry["gap"] = round(gap, 4)
+                    entry["gap_basis"] = "derived_from_weighted_cohort_mean"
+                    entry["_gap_value"] = gap
+                summary["gap_column"] = None
+                summary["summarization_warnings"].append(
+                    f"No explicit gap column configured; gaps derived from {metric_col} relative to weighted cohort mean."
+                )
+            else:
+                summary["summarization_warnings"].append("Could not derive gaps because total group count is zero.")
+
+        if min_reliable is not None:
+            min_reliable_value = BaseExplanationStrategy._parse_number(min_reliable)
+            if min_reliable_value is not None:
+                for entry in entries:
+                    if entry["_count_value"] < min_reliable_value:
+                        warning = {
+                            "group": entry["group"],
+                            "count": entry["count"],
+                            "minimum_reliable_count": round(min_reliable_value, 4),
+                            "warning": f"Group '{entry['group_key']}' has {count_col} below {round(min_reliable_value, 4)}; avoid over-weighting this comparison.",
+                        }
+                        summary["low_count_warnings"].append(warning)
+
+        present_groups = {entry["group_key"] for entry in entries}
+        missing_groups = []
+        for kind, configured in [
+            ("target_group", [target_group] if target_group is not None else []),
+            ("comparison_group", comparison_groups),
+            ("expected_group", expected_groups),
+        ]:
+            for group in configured:
+                if str(group) not in present_groups:
+                    missing_groups.append({
+                        "group": group,
+                        "kind": kind,
+                    })
+        summary["missing_groups"] = missing_groups
+        if missing_groups:
+            summary["summarization_warnings"].append(
+                "Configured groups missing from dataset: "
+                + ", ".join(f"{item['kind']}={item['group']}" for item in missing_groups)
+            )
+
+        def public_group_metric(entry: dict) -> dict:
+            item = {
+                "group": entry["group"],
+                count_col: entry["count"],
+                metric_col: entry["metric"],
+            }
+            if entry["gap"] is not None:
+                item["gap"] = entry["gap"]
+                item["gap_basis"] = entry["gap_basis"]
+                if gap_col and entry["gap_basis"] == "explicit_gap_column":
+                    item[gap_col] = entry["gap"]
+            if entry["secondary_metrics"]:
+                item["secondary_metrics"] = entry["secondary_metrics"]
+            return item
+
+        group_metrics = [public_group_metric(entry) for entry in entries]
+        summary["group_metrics"] = group_metrics[:40]
+        if len(group_metrics) > 40:
+            summary["summarization_warnings"].append(
+                f"Group metrics capped at 40 of {len(group_metrics)} groups."
+            )
+
+        dominant = max(entries, key=lambda entry: (entry["_count_value"], -entry["_row_index"]))
+        summary["dominant_group"] = {
+            "group": dominant["group"],
+            count_col: dominant["count"],
+            "basis": "largest_count",
+        }
+
+        gap_entries = [entry for entry in entries if entry["_gap_value"] is not None]
+        weakest_basis = "most_negative_gap" if gap_entries else "lowest_metric"
+        weakest_source = gap_entries if gap_entries else entries
+        weakest = min(
+            weakest_source,
+            key=lambda entry: (
+                entry["_gap_value"] if gap_entries else entry["_metric_value"],
+                entry["_row_index"],
+            ),
+        )
+        summary["weakest_group"] = {
+            "group": weakest["group"],
+            metric_col: weakest["metric"],
+            "basis": weakest_basis,
+        }
+        if weakest["gap"] is not None:
+            summary["weakest_group"]["gap"] = weakest["gap"]
+            summary["weakest_group"]["gap_basis"] = weakest["gap_basis"]
+
+        def sort_value(entry: dict) -> float:
+            if sort_by == count_col:
+                return entry["_count_value"]
+            if sort_by == metric_col:
+                return entry["_metric_value"]
+            if sort_by == gap_col or sort_by == "gap" or (not sort_by and entry["_gap_value"] is not None):
+                return entry["_gap_value"] if entry["_gap_value"] is not None else float("inf")
+            if sort_by in metric_cols:
+                parsed = BaseExplanationStrategy._parse_number(entry["secondary_metrics"].get(sort_by))
+                return parsed if parsed is not None else float("inf")
+            return entry["_gap_value"] if entry["_gap_value"] is not None else entry["_metric_value"]
+
+        sorted_for_gaps = sorted(
+            entries,
+            key=lambda entry: (sort_value(entry), entry["_row_index"]),
+            reverse=sort_desc,
+        )
+        top_entries = sorted_for_gaps[:top_k] if top_k else []
+        bottom_entries = sorted_for_gaps[-bottom_k:] if bottom_k else []
+        selected = []
+        seen = set()
+        for entry in [*top_entries, *bottom_entries]:
+            key = (entry["group_key"], entry["_row_index"])
+            if key in seen:
+                continue
+            seen.add(key)
+            selected.append(entry)
+        summary["gaps"] = [
+            {
+                "group": entry["group"],
+                "gap": entry["gap"],
+                "gap_basis": entry["gap_basis"],
+                metric_col: entry["metric"],
+                count_col: entry["count"],
+            }
+            for entry in selected
+            if entry["gap"] is not None
+        ]
+
+        if summary["fairness_warnings"]:
+            summary["summarization_warnings"].append(summary["fairness_warnings"][0])
+
+        return summary
 
     @staticmethod
     def _summarize_numeric_distribution(req: ExplainRequest) -> dict:

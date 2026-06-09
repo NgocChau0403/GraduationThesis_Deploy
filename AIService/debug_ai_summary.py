@@ -12,6 +12,7 @@ Usage:
   python debug_ai_summary.py --self-test-trend-series
   python debug_ai_summary.py --self-test-ranking
   python debug_ai_summary.py --self-test-numeric-distribution
+  python debug_ai_summary.py --self-test-group-comparison
   python debug_ai_summary.py --task A-G14 --input-json path/to/datasets.json
 
 The optional input JSON can be either:
@@ -61,6 +62,7 @@ def build_ai_summary_config(task: dict) -> AISummaryConfig | None:
         metric_column=task.get("aiMetricColumn"),
         entity_column=task.get("aiEntityColumn"),
         group_column=task.get("aiGroupColumn"),
+        gap_column=task.get("aiGapColumn"),
         reliability_column=task.get("aiReliabilityColumn"),
         minimum_reliable_count=task.get("aiMinimumReliableCount"),
         category_column=task.get("aiCategoryColumn"),
@@ -72,6 +74,7 @@ def build_ai_summary_config(task: dict) -> AISummaryConfig | None:
         focus_bins=task.get("aiFocusBins") or [],
         category_order=task.get("aiCategoryOrder") or [],
         expected_categories=task.get("aiExpectedCategories") or [],
+        expected_groups=task.get("aiExpectedGroups") or [],
         bin_order=task.get("aiBinOrder") or [],
         expected_bins=task.get("aiExpectedBins") or [],
         numeric_threshold=task.get("aiNumericThreshold"),
@@ -317,6 +320,15 @@ def sample_task_datasets(task_id: str) -> dict[str, list[dict]]:
                 {"student_id": "S003", "gender": "M", "age_group": "25-34", "region": "East", "avg_score": "41.0", "at_risk_score": 4, "at_risk_label": "high", "flag_low_score": 0, "flag_repeated": 1, "flag_low_engagement": 1, "flag_low_punctuality": 1, "flag_neg_trend": 1, "final_outcome": "Withdrawn"},
                 {"student_id": "S002", "gender": "F", "age_group": "18-24", "region": "North", "avg_score": "39.0", "at_risk_score": "5", "at_risk_label": "high", "flag_low_score": 1, "flag_repeated": 0, "flag_low_engagement": 1, "flag_low_punctuality": 1, "flag_neg_trend": 1, "final_outcome": "Fail"},
                 {"student_id": "S005", "gender": "M", "age_group": "45-54", "region": "South", "avg_score": "61.5", "at_risk_score": "2", "at_risk_label": "medium", "flag_low_score": 0, "flag_repeated": 1, "flag_low_engagement": 0, "flag_low_punctuality": 0, "flag_neg_trend": 1, "final_outcome": "Pass"},
+            ]
+        }
+    if task_id == "A-G08":
+        return {
+            "background_group_profile": [
+                {"group_value": "high_band", "student_count": "80", "avg_score": "72.0", "avg_engagement_score": "0.72", "score_vs_cohort": "6.5"},
+                {"group_value": "low_band", "student_count": "20", "avg_score": "55.0", "avg_engagement_score": "0.21", "score_vs_cohort": "-10.5"},
+                {"group_value": "medium_band", "student_count": "120", "avg_score": "64.0", "avg_engagement_score": "0.45", "score_vs_cohort": "-1.5"},
+                {"group_value": "tiny_band", "student_count": "5", "avg_score": "70.0", "avg_engagement_score": "0.40", "score_vs_cohort": "4.0"},
             ]
         }
     return {"withdrawal_signal_trend": sample_a_g14_rows()}
@@ -751,6 +763,31 @@ def numeric_distribution_config(
     )
 
 
+def group_comparison_config(
+    *,
+    gap_column: str | None = "score_vs_cohort",
+    expected_groups: list[str] | None = None,
+    top_k: int = 2,
+    bottom_k: int = 1,
+) -> AISummaryConfig:
+    return AISummaryConfig(
+        summary_type="group_comparison",
+        group_column="group_value",
+        metric_column="avg_score",
+        count_column="student_count",
+        metric_columns=["avg_engagement_score"],
+        gap_column=gap_column,
+        expected_groups=expected_groups if expected_groups is not None else ["high_band", "low_band", "medium_band", "missing_expected"],
+        target_group="low_band",
+        comparison_groups=["high_band", "missing_comparison"],
+        sort_by=gap_column or "gap",
+        sort_direction="asc",
+        minimum_reliable_count=10,
+        top_k=top_k,
+        bottom_k=bottom_k,
+    )
+
+
 def run_self_test_ranking() -> None:
     os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
     rows = sample_task_datasets("A-G15")["intervention_priority_list"]
@@ -919,6 +956,86 @@ def run_self_test_numeric_distribution() -> None:
     print("debug_ai_summary numeric_distribution self-test passed")
 
 
+def run_self_test_group_comparison() -> None:
+    os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
+    rows = sample_task_datasets("A-G08")["background_group_profile"]
+
+    generic_req = build_request("A-G08", {"background_group_profile": rows})
+    generic_req.ai_summary_config = None
+    generic_summary = json.loads(BaseExplanationStrategy.summarize_datasets(generic_req))
+    assert generic_summary["summary_type"] == "generic_fallback"
+
+    group_req = build_request("A-G08", {"background_group_profile": rows})
+    group_req.ai_summary_config = group_comparison_config()
+    group_summary = json.loads(BaseExplanationStrategy.summarize_datasets(group_req))
+    assert group_summary["summary_type"] == "group_comparison"
+    assert group_summary["dataset_name"] == "background_group_profile"
+    assert group_summary["group_column"] == "group_value"
+    assert group_summary["metric_column"] == "avg_score"
+    assert group_summary["count_column"] == "student_count"
+    assert group_summary["gap_column"] == "score_vs_cohort"
+    assert group_summary["causal_claim_allowed"] is False
+    assert group_summary["fairness_warnings"]
+    assert any("descriptive only" in warning for warning in group_summary["fairness_warnings"])
+    assert any("descriptive only" in warning for warning in group_summary["summarization_warnings"])
+
+    by_group = {item["group"]: item for item in group_summary["group_metrics"]}
+    assert by_group["medium_band"]["student_count"] == 120.0
+    assert by_group["low_band"]["avg_score"] == 55.0
+    assert by_group["low_band"]["score_vs_cohort"] == -10.5
+    assert by_group["high_band"]["secondary_metrics"]["avg_engagement_score"] == 0.72
+
+    assert group_summary["dominant_group"] == {
+        "group": "medium_band",
+        "student_count": 120.0,
+        "basis": "largest_count",
+    }
+    assert group_summary["weakest_group"]["group"] == "low_band"
+    assert group_summary["weakest_group"]["basis"] == "most_negative_gap"
+    assert group_summary["weakest_group"]["gap"] == -10.5
+    assert any(item["group"] == "tiny_band" for item in group_summary["low_count_warnings"])
+    assert any(item["group"] == "missing_expected" and item["kind"] == "expected_group" for item in group_summary["missing_groups"])
+    assert any(item["group"] == "missing_comparison" and item["kind"] == "comparison_group" for item in group_summary["missing_groups"])
+    assert len(group_summary["gaps"]) == 3
+    assert [item["group"] for item in group_summary["gaps"][:2]] == ["low_band", "medium_band"]
+
+    derived_rows = [
+        {"group_value": "group_a", "student_count": "10", "avg_score": "50"},
+        {"group_value": "group_b", "student_count": "30", "avg_score": "70"},
+    ]
+    derived_req = build_request("A-G08", {"background_group_profile": derived_rows})
+    derived_req.ai_summary_config = group_comparison_config(gap_column=None, expected_groups=["group_a", "group_b"])
+    derived_summary = json.loads(BaseExplanationStrategy.summarize_datasets(derived_req))
+    assert derived_summary["summary_type"] == "group_comparison"
+    derived_by_group = {item["group"]: item for item in derived_summary["group_metrics"]}
+    assert derived_by_group["group_a"]["gap"] == -15.0
+    assert derived_by_group["group_a"]["gap_basis"] == "derived_from_weighted_cohort_mean"
+    assert derived_summary["weakest_group"]["basis"] == "most_negative_gap"
+    assert any("derived" in warning for warning in derived_summary["summarization_warnings"])
+
+    missing_group_req = build_request("A-G08", {"background_group_profile": rows})
+    missing_group_req.ai_summary_config = group_comparison_config()
+    missing_group_req.ai_summary_config.group_column = "missing_group_value"
+    missing_group_summary = json.loads(BaseExplanationStrategy.summarize_datasets(missing_group_req))
+    assert any("missing_group_value" in warning for warning in missing_group_summary["summarization_warnings"])
+
+    missing_metric_req = build_request("A-G08", {"background_group_profile": rows})
+    missing_metric_req.ai_summary_config = group_comparison_config()
+    missing_metric_req.ai_summary_config.metric_column = "missing_avg_score"
+    missing_metric_summary = json.loads(BaseExplanationStrategy.summarize_datasets(missing_metric_req))
+    assert any("missing_avg_score" in warning for warning in missing_metric_summary["summarization_warnings"])
+
+    missing_count_req = build_request("A-G08", {"background_group_profile": rows})
+    missing_count_req.ai_summary_config = group_comparison_config()
+    missing_count_req.ai_summary_config.count_column = "missing_student_count"
+    missing_count_summary = json.loads(BaseExplanationStrategy.summarize_datasets(missing_count_req))
+    assert any("missing_student_count" in warning for warning in missing_count_summary["summarization_warnings"])
+
+    assert set(SUMMARY_METHODS) == {"task_aware_data_summarization", "baseline_first_20_rows"}
+
+    print("debug_ai_summary group_comparison self-test passed")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", default="A-G14")
@@ -932,6 +1049,7 @@ def main() -> None:
     parser.add_argument("--self-test-trend-series", action="store_true")
     parser.add_argument("--self-test-ranking", action="store_true")
     parser.add_argument("--self-test-numeric-distribution", action="store_true")
+    parser.add_argument("--self-test-group-comparison", action="store_true")
     args = parser.parse_args()
 
     if args.self_test:
@@ -951,6 +1069,9 @@ def main() -> None:
         return
     if args.self_test_numeric_distribution:
         run_self_test_numeric_distribution()
+        return
+    if args.self_test_group_comparison:
+        run_self_test_group_comparison()
         return
 
     req = build_request(args.task, load_datasets(args.input_json, args.task))

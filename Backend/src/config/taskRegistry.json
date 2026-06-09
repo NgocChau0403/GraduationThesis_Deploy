@@ -3788,6 +3788,21 @@
     },
     "datasetCompatibility": "OULAD_only",
     "aiPromptHint": "For each demographic group, compare mean avg_score [FE] and engagement_score [FE] to cohort average. Use colour intensity to show deviation. Avoid causal claims. Note: output is continuous score — distinct from A-G12 which uses categorical final_outcome.",
+    "aiSummaryType": "group_comparison",
+    "aiGroupColumn": "group_value",
+    "aiMetricColumn": "avg_score",
+    "aiCountColumn": "student_count",
+    "aiMetricColumns": [
+      "avg_engagement_score"
+    ],
+    "aiGapColumn": "score_vs_cohort",
+    "aiExpectedGroups": [],
+    "aiComparisonGroups": [],
+    "aiSortBy": "score_vs_cohort",
+    "aiSortDirection": "asc",
+    "aiMinimumReliableCount": 10,
+    "aiTopK": 10,
+    "aiBottomK": 5,
     "sqlQuery": "WITH score_agg AS ( SELECT ar.student_id, AVG(ar.score_normalized) AS avg_score FROM assessment_result ar JOIN assessment a ON ar.assessment_id = a.assessment_id JOIN enrollment e ON ar.student_id = e.student_id AND a.class_id = e.class_id WHERE e.class_id = :class_id GROUP BY ar.student_id ), eng_agg AS ( SELECT e.student_id, COALESCE(SUM(eng.engagement_count), 0) AS total_clicks, COUNT(DISTINCT eng.event_day) AS active_days FROM enrollment e LEFT JOIN engagement eng ON e.enrollment_id = eng.enrollment_id WHERE e.class_id = :class_id GROUP BY e.student_id ), class_max AS ( SELECT MAX(total_clicks) AS mc, MAX(active_days) AS ma FROM eng_agg ), eng_score AS ( SELECT ea.student_id, COALESCE((ea.total_clicks::float / NULLIF(cm.mc, 0)) * 0.5, 0) + COALESCE((ea.active_days::float / NULLIF(cm.ma, 0)) * 0.5, 0) AS engagement_score FROM eng_agg ea CROSS JOIN class_max cm ) SELECT COALESCE(s.socioeconomic_band, 'Unknown') AS group_value, COUNT(DISTINCT e.student_id) AS student_count, ROUND(AVG(sa.avg_score)::numeric, 2)::float AS avg_score, ROUND(AVG(es.engagement_score)::numeric, 4)::float AS avg_engagement_score, ROUND((AVG(sa.avg_score) - AVG(AVG(sa.avg_score)) OVER ())::numeric, 2)::float AS score_vs_cohort FROM student s JOIN enrollment e ON s.student_id = e.student_id JOIN score_agg sa ON e.student_id = sa.student_id JOIN eng_score es ON e.student_id = es.student_id WHERE e.class_id = :class_id GROUP BY COALESCE(s.socioeconomic_band, 'Unknown') ORDER BY avg_score DESC",
     "viz_type": "bar_chart",
     "visualization_config": {

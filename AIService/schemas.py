@@ -85,6 +85,7 @@ class AISummaryConfig(BaseModel):
     metric_column: str | None = None
     entity_column: str | None = None
     group_column: str | None = None
+    gap_column: str | None = None
     reliability_column: str | None = None
     minimum_reliable_count: int | float | None = None
     category_column: str | None = None
@@ -96,6 +97,7 @@ class AISummaryConfig(BaseModel):
     focus_bins: list[str] = Field(default_factory=list)
     category_order: list[str] = Field(default_factory=list)
     expected_categories: list[str] = Field(default_factory=list)
+    expected_groups: list[str] = Field(default_factory=list)
     bin_order: list[str] = Field(default_factory=list)
     expected_bins: list[str] = Field(default_factory=list)
     numeric_threshold: int | float | None = None
