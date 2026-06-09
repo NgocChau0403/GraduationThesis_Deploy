@@ -1,0 +1,79 @@
+{
+  "taskId": "A-G02",
+  "datasetId": "engagement_performance_scatter",
+  "method": "baseline_first_20_rows",
+  "input_summary_type": "raw_first_20_rows",
+  "input_data_summary": "Dataset: engagement_performance_scatter (9 rows)\n[\n  {\n    \"student_id\": \"S001\",\n    \"engagement_score\": \"0.10\",\n    \"avg_score\": \"40\",\n    \"final_outcome\": \"Fail\"\n  },\n  {\n    \"student_id\": \"S002\",\n    \"engagement_score\": \"0.20\",\n    \"avg_score\": \"45\",\n    \"final_outcome\": \"Fail\"\n  },\n  {\n    \"student_id\": \"S003\",\n    \"engagement_score\": \"0.30\",\n    \"avg_score\": \"50\",\n    \"final_outcome\": \"Pass\"\n  },\n  {\n    \"student_id\": \"S004\",\n    \"engagement_score\": \"0.40\",\n    \"avg_score\": \"55\",\n    \"final_outcome\": \"Pass\"\n  },\n  {\n    \"student_id\": \"S005\",\n    \"engagement_score\": \"0.50\",\n    \"avg_score\": \"60\",\n    \"final_outcome\": \"Pass\"\n  },\n  {\n    \"student_id\": \"S006\",\n    \"engagement_score\": \"0.60\",\n    \"avg_score\": \"65\",\n    \"final_outcome\": \"Distinction\"\n  },\n  {\n    \"student_id\": \"S007\",\n    \"engagement_score\": \"0.90\",\n    \"avg_score\": \"42\",\n    \"final_outcome\": \"Fail\"\n  },\n  {\n    \"student_id\": \"S008\",\n    \"engagement_score\": \"bad\",\n    \"avg_score\": \"70\",\n    \"final_outcome\": \"Pass\"\n  },\n  {\n    \"student_id\": \"S009\",\n    \"engagement_score\": \"0.80\",\n    \"avg_score\": \"bad\",\n    \"final_outcome\": \"Fail\"\n  }\n]",
+  "summary_debug_payload": {
+    "summary_type": "baseline_first_20_rows",
+    "input_summary_type": "raw_first_20_rows",
+    "datasets": [
+      {
+        "dataset_name": "engagement_performance_scatter",
+        "row_count": 9,
+        "included_row_count": 9,
+        "truncated_row_count": 0,
+        "rows": [
+          {
+            "student_id": "S001",
+            "engagement_score": "0.10",
+            "avg_score": "40",
+            "final_outcome": "Fail"
+          },
+          {
+            "student_id": "S002",
+            "engagement_score": "0.20",
+            "avg_score": "45",
+            "final_outcome": "Fail"
+          },
+          {
+            "student_id": "S003",
+            "engagement_score": "0.30",
+            "avg_score": "50",
+            "final_outcome": "Pass"
+          },
+          {
+            "student_id": "S004",
+            "engagement_score": "0.40",
+            "avg_score": "55",
+            "final_outcome": "Pass"
+          },
+          {
+            "student_id": "S005",
+            "engagement_score": "0.50",
+            "avg_score": "60",
+            "final_outcome": "Pass"
+          },
+          {
+            "student_id": "S006",
+            "engagement_score": "0.60",
+            "avg_score": "65",
+            "final_outcome": "Distinction"
+          },
+          {
+            "student_id": "S007",
+            "engagement_score": "0.90",
+            "avg_score": "42",
+            "final_outcome": "Fail"
+          },
+          {
+            "student_id": "S008",
+            "engagement_score": "bad",
+            "avg_score": "70",
+            "final_outcome": "Pass"
+          },
+          {
+            "student_id": "S009",
+            "engagement_score": "0.80",
+            "avg_score": "bad",
+            "final_outcome": "Fail"
+          }
+        ]
+      }
+    ]
+  },
+  "ai_response": null,
+  "latency": 0.126,
+  "rubric_score": null,
+  "notes": "Input summary comparison only; no model call was made."
+}
