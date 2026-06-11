@@ -2,8 +2,8 @@
   "evaluation_part": "api_response_contract",
   "datasetId": "SAMPLE_UCI_POR",
   "backend_url": "http://localhost:4000",
-  "generated_at": "2026-05-29T22:59:59.768Z",
-  "duration_ms": 95233,
+  "generated_at": "2026-06-11T19:23:55.673Z",
+  "duration_ms": 3240,
   "context": {
     "class": {
       "class_id": "SAMPLE_UCI_POR_CLASS",
@@ -29,16 +29,16 @@
   "metrics": {
     "total_tasks_seen": 57,
     "analytics_runs_attempted": 57,
-    "api_success_count": 54,
-    "api_success_rate": 94.74,
+    "api_success_count": 57,
+    "api_success_rate": 100,
     "contract_pass_count": 57,
     "contract_pass_rate": 100,
     "named_dataset_match_rate": 100,
     "data_quality_metadata_rate": 100,
-    "error_response_count": 3,
-    "error_contract_pass_rate": 100,
+    "error_response_count": 0,
+    "error_contract_pass_rate": null,
     "empty_dataset_response_count": 14,
-    "empty_dataset_rate": 25.93
+    "empty_dataset_rate": 24.56
   },
   "results": [
     {
@@ -53,19 +53,48 @@
       "missing_requirements": [],
       "warnings": [],
       "analytics_run_attempted": true,
-      "http_status": 500,
-      "response_success": false,
+      "http_status": 200,
+      "response_success": true,
       "contract_pass": true,
       "checks": {
-        "has_success_false": true,
+        "has_success_true": true,
         "has_executionId": true,
-        "has_error": true,
-        "unsupported_has_capability_when_present": true,
-        "schema_mismatch_has_diagnostics": true
+        "taskId_matches": true,
+        "has_datasets_object": true,
+        "datasets_are_arrays": true,
+        "has_meta_object": true,
+        "has_query_labels_array": true,
+        "query_labels_match_datasets": true,
+        "has_dataQuality_object": true,
+        "dataQuality_has_status": true,
+        "dataQuality_has_confidence": true,
+        "dataQuality_warnings_array": true
       },
-      "datasets_summary": {},
-      "latency_ms": 30098,
-      "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
+      "datasets_summary": {
+        "performance_summary": {
+          "row_count": 1,
+          "columns": [
+            "avg_score",
+            "pass_rate",
+            "performance_trend",
+            "final_outcome",
+            "class_avg_score",
+            "score_vs_class_avg",
+            "score_percentile",
+            "cohort_size",
+            "unweighted_avg_score",
+            "weighted_avg_score",
+            "score_strategy",
+            "assessment_count",
+            "score_scale",
+            "pass_threshold",
+            "target_threshold",
+            "performance_band"
+          ]
+        }
+      },
+      "latency_ms": 47,
+      "error": null
     },
     {
       "datasetId": "SAMPLE_UCI_POR",
@@ -114,7 +143,7 @@
           ]
         }
       },
-      "latency_ms": 132,
+      "latency_ms": 65,
       "error": null
     },
     {
@@ -182,7 +211,7 @@
           ]
         }
       },
-      "latency_ms": 83,
+      "latency_ms": 20,
       "error": null
     },
     {
@@ -259,7 +288,7 @@
           ]
         }
       },
-      "latency_ms": 223,
+      "latency_ms": 93,
       "error": null
     },
     {
@@ -314,7 +343,7 @@
           ]
         }
       },
-      "latency_ms": 42,
+      "latency_ms": 29,
       "error": null
     },
     {
@@ -359,7 +388,7 @@
           ]
         }
       },
-      "latency_ms": 26,
+      "latency_ms": 15,
       "error": null
     },
     {
@@ -404,7 +433,7 @@
           ]
         }
       },
-      "latency_ms": 53,
+      "latency_ms": 22,
       "error": null
     },
     {
@@ -419,19 +448,40 @@
       "missing_requirements": [],
       "warnings": [],
       "analytics_run_attempted": true,
-      "http_status": 500,
-      "response_success": false,
+      "http_status": 200,
+      "response_success": true,
       "contract_pass": true,
       "checks": {
-        "has_success_false": true,
+        "has_success_true": true,
         "has_executionId": true,
-        "has_error": true,
-        "unsupported_has_capability_when_present": true,
-        "schema_mismatch_has_diagnostics": true
+        "taskId_matches": true,
+        "has_datasets_object": true,
+        "datasets_are_arrays": true,
+        "has_meta_object": true,
+        "has_query_labels_array": true,
+        "query_labels_match_datasets": true,
+        "has_dataQuality_object": true,
+        "dataQuality_has_status": true,
+        "dataQuality_has_confidence": true,
+        "dataQuality_warnings_array": true
       },
-      "datasets_summary": {},
-      "latency_ms": 30053,
-      "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
+      "datasets_summary": {
+        "risk_flags": {
+          "row_count": 5,
+          "columns": [
+            "flag_name",
+            "flag_value",
+            "threshold",
+            "triggered",
+            "severity",
+            "flag_description",
+            "recommended_action",
+            "support_category"
+          ]
+        }
+      },
+      "latency_ms": 215,
+      "error": null
     },
     {
       "datasetId": "SAMPLE_UCI_POR",
@@ -499,7 +549,7 @@
           "columns": []
         }
       },
-      "latency_ms": 30,
+      "latency_ms": 15,
       "error": null
     },
     {
@@ -628,7 +678,7 @@
           ]
         }
       },
-      "latency_ms": 24,
+      "latency_ms": 22,
       "error": null
     },
     {
@@ -688,7 +738,7 @@
           ]
         }
       },
-      "latency_ms": 20,
+      "latency_ms": 15,
       "error": null
     },
     {
@@ -735,7 +785,7 @@
           ]
         }
       },
-      "latency_ms": 23,
+      "latency_ms": 18,
       "error": null
     },
     {
@@ -814,7 +864,7 @@
           "columns": []
         }
       },
-      "latency_ms": 31,
+      "latency_ms": 18,
       "error": null
     },
     {
@@ -940,7 +990,7 @@
           ]
         }
       },
-      "latency_ms": 30,
+      "latency_ms": 25,
       "error": null
     },
     {
@@ -991,7 +1041,7 @@
           ]
         }
       },
-      "latency_ms": 99,
+      "latency_ms": 78,
       "error": null
     },
     {
@@ -1035,7 +1085,7 @@
           ]
         }
       },
-      "latency_ms": 18,
+      "latency_ms": 22,
       "error": null
     },
     {
@@ -1080,7 +1130,7 @@
           ]
         }
       },
-      "latency_ms": 19,
+      "latency_ms": 17,
       "error": null
     },
     {
@@ -1132,7 +1182,7 @@
           ]
         }
       },
-      "latency_ms": 52,
+      "latency_ms": 29,
       "error": null
     },
     {
@@ -1180,7 +1230,7 @@
           ]
         }
       },
-      "latency_ms": 20,
+      "latency_ms": 19,
       "error": null
     },
     {
@@ -1223,7 +1273,7 @@
           ]
         }
       },
-      "latency_ms": 32,
+      "latency_ms": 25,
       "error": null
     },
     {
@@ -1339,7 +1389,7 @@
           ]
         }
       },
-      "latency_ms": 76,
+      "latency_ms": 22,
       "error": null
     },
     {
@@ -1421,7 +1471,7 @@
           ]
         }
       },
-      "latency_ms": 252,
+      "latency_ms": 140,
       "error": null
     },
     {
@@ -1480,7 +1530,7 @@
           "columns": []
         }
       },
-      "latency_ms": 48,
+      "latency_ms": 42,
       "error": null
     },
     {
@@ -1525,7 +1575,7 @@
           ]
         }
       },
-      "latency_ms": 20,
+      "latency_ms": 15,
       "error": null
     },
     {
@@ -1647,7 +1697,7 @@
           ]
         }
       },
-      "latency_ms": 45,
+      "latency_ms": 39,
       "error": null
     },
     {
@@ -1692,7 +1742,7 @@
           ]
         }
       },
-      "latency_ms": 25,
+      "latency_ms": 21,
       "error": null
     },
     {
@@ -1751,7 +1801,7 @@
           ]
         }
       },
-      "latency_ms": 26,
+      "latency_ms": 21,
       "error": null
     },
     {
@@ -1807,7 +1857,7 @@
           ]
         }
       },
-      "latency_ms": 17,
+      "latency_ms": 16,
       "error": null
     },
     {
@@ -1896,7 +1946,7 @@
           ]
         }
       },
-      "latency_ms": 32,
+      "latency_ms": 43,
       "error": null
     },
     {
@@ -1940,7 +1990,7 @@
           ]
         }
       },
-      "latency_ms": 18,
+      "latency_ms": 21,
       "error": null
     },
     {
@@ -2120,7 +2170,7 @@
           ]
         }
       },
-      "latency_ms": 38,
+      "latency_ms": 31,
       "error": null
     },
     {
@@ -2169,7 +2219,7 @@
           ]
         }
       },
-      "latency_ms": 26,
+      "latency_ms": 16,
       "error": null
     },
     {
@@ -2217,7 +2267,7 @@
           ]
         }
       },
-      "latency_ms": 16,
+      "latency_ms": 14,
       "error": null
     },
     {
@@ -2296,7 +2346,7 @@
           "columns": []
         }
       },
-      "latency_ms": 23,
+      "latency_ms": 17,
       "error": null
     },
     {
@@ -2365,7 +2415,7 @@
           "columns": []
         }
       },
-      "latency_ms": 85,
+      "latency_ms": 17,
       "error": null
     },
     {
@@ -2449,7 +2499,7 @@
           ]
         }
       },
-      "latency_ms": 414,
+      "latency_ms": 75,
       "error": null
     },
     {
@@ -2464,19 +2514,55 @@
       "missing_requirements": [],
       "warnings": [],
       "analytics_run_attempted": true,
-      "http_status": 500,
-      "response_success": false,
+      "http_status": 200,
+      "response_success": true,
       "contract_pass": true,
       "checks": {
-        "has_success_false": true,
+        "has_success_true": true,
         "has_executionId": true,
-        "has_error": true,
-        "unsupported_has_capability_when_present": true,
-        "schema_mismatch_has_diagnostics": true
+        "taskId_matches": true,
+        "has_datasets_object": true,
+        "datasets_are_arrays": true,
+        "has_meta_object": true,
+        "has_query_labels_array": true,
+        "query_labels_match_datasets": true,
+        "has_dataQuality_object": true,
+        "dataQuality_has_status": true,
+        "dataQuality_has_confidence": true,
+        "dataQuality_warnings_array": true
       },
-      "datasets_summary": {},
-      "latency_ms": 30053,
-      "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
+      "datasets_summary": {
+        "at_risk_cohort": {
+          "row_count": 50,
+          "columns": [
+            "student_id",
+            "enrollment_id",
+            "avg_score",
+            "score_strategy",
+            "score_scale",
+            "pass_threshold",
+            "target_threshold",
+            "engagement_score",
+            "engagement_score_available",
+            "punctuality_rate",
+            "previous_attempt_count",
+            "at_risk_score",
+            "at_risk_label",
+            "triggered_flags",
+            "triggered_flags_summary",
+            "primary_support_category",
+            "recommended_admin_action",
+            "flag_low_score",
+            "flag_repeated",
+            "flag_low_engagement",
+            "flag_low_punctuality",
+            "flag_neg_trend",
+            "final_outcome"
+          ]
+        }
+      },
+      "latency_ms": 182,
+      "error": null
     },
     {
       "datasetId": "SAMPLE_UCI_POR",
@@ -2524,7 +2610,7 @@
           ]
         }
       },
-      "latency_ms": 45,
+      "latency_ms": 26,
       "error": null
     },
     {
@@ -2584,7 +2670,7 @@
           ]
         }
       },
-      "latency_ms": 50,
+      "latency_ms": 33,
       "error": null
     },
     {
@@ -2663,7 +2749,7 @@
           "columns": []
         }
       },
-      "latency_ms": 34,
+      "latency_ms": 31,
       "error": null
     },
     {
@@ -2732,7 +2818,7 @@
           "columns": []
         }
       },
-      "latency_ms": 65,
+      "latency_ms": 38,
       "error": null
     },
     {
@@ -2817,7 +2903,7 @@
           ]
         }
       },
-      "latency_ms": 192,
+      "latency_ms": 77,
       "error": null
     },
     {
@@ -2855,7 +2941,7 @@
           "columns": []
         }
       },
-      "latency_ms": 36,
+      "latency_ms": 40,
       "error": null
     },
     {
@@ -2934,7 +3020,7 @@
           "columns": []
         }
       },
-      "latency_ms": 28,
+      "latency_ms": 16,
       "error": null
     },
     {
@@ -3013,7 +3099,7 @@
           "columns": []
         }
       },
-      "latency_ms": 23,
+      "latency_ms": 16,
       "error": null
     },
     {
@@ -3056,7 +3142,7 @@
           ]
         }
       },
-      "latency_ms": 42,
+      "latency_ms": 16,
       "error": null
     },
     {
@@ -3102,7 +3188,7 @@
           ]
         }
       },
-      "latency_ms": 149,
+      "latency_ms": 36,
       "error": null
     },
     {
@@ -3191,7 +3277,7 @@
           "columns": []
         }
       },
-      "latency_ms": 28,
+      "latency_ms": 14,
       "error": null
     },
     {
@@ -3260,7 +3346,7 @@
           "columns": []
         }
       },
-      "latency_ms": 50,
+      "latency_ms": 21,
       "error": null
     },
     {
@@ -3346,7 +3432,7 @@
           ]
         }
       },
-      "latency_ms": 421,
+      "latency_ms": 119,
       "error": null
     },
     {
@@ -3396,7 +3482,7 @@
           ]
         }
       },
-      "latency_ms": 46,
+      "latency_ms": 30,
       "error": null
     },
     {
@@ -3445,7 +3531,7 @@
           ]
         }
       },
-      "latency_ms": 27,
+      "latency_ms": 22,
       "error": null
     }
   ]

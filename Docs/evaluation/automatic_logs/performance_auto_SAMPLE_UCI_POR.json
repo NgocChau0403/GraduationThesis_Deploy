@@ -1,90 +1,43 @@
 {
   "evaluation_part": "system_performance",
   "datasetId": "SAMPLE_UCI_POR",
-  "generated_at": "2026-06-06T07:47:40.017Z",
-  "duration_ms": 9,
+  "generated_at": "2026-06-11T19:24:03.511Z",
+  "duration_ms": 7,
   "source_logs": {
-    "api_contract": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\api_contract_auto_SAMPLE_UCI_POR.json",
-    "visualization": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\visualization_auto_SAMPLE_UCI_POR.json",
-    "ai_explanations": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\ai_explanations_auto_SAMPLE_UCI_POR.json",
-    "coverage_human_utility": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\coverage_human_utility_auto_SAMPLE_UCI_POR.json",
-    "import_performance": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\import_performance_auto_SAMPLE_UCI_POR.json",
-    "basic_api_benchmark": "D:\\-Graduation_Thesis-Import-pipeline\\Docs\\evaluation\\automatic_logs\\performance_benchmark_auto_SAMPLE_UCI_POR.json"
+    "api_contract": "C:\\[Graduation_Thesis]Prototype\\Docs\\evaluation\\automatic_logs\\api_contract_auto_SAMPLE_UCI_POR.json",
+    "visualization": "C:\\[Graduation_Thesis]Prototype\\Docs\\evaluation\\automatic_logs\\visualization_auto_SAMPLE_UCI_POR.json",
+    "ai_explanations": "C:\\[Graduation_Thesis]Prototype\\Docs\\evaluation\\automatic_logs\\ai_explanations_auto_SAMPLE_UCI_POR.json",
+    "coverage_human_utility": "C:\\[Graduation_Thesis]Prototype\\Docs\\evaluation\\automatic_logs\\coverage_human_utility_auto_SAMPLE_UCI_POR.json",
+    "import_performance": "C:\\[Graduation_Thesis]Prototype\\Docs\\evaluation\\automatic_logs\\import_performance_auto_SAMPLE_UCI_POR.json",
+    "basic_api_benchmark": "C:\\[Graduation_Thesis]Prototype\\Docs\\evaluation\\automatic_logs\\performance_benchmark_auto_SAMPLE_UCI_POR.json"
   },
   "method": "Aggregated from existing automatic evaluation logs to avoid rerunning analytics and AI calls. This captures observed latency, reliability, timeout, token usage, and cost from prior SAMPLE_UCI_POR evaluation runs.",
   "analytics_queries": {
     "attempted_count": 57,
-    "success_count": 54,
-    "failure_count": 3,
-    "timeout_count": 3,
-    "success_rate": 94.74,
-    "failure_rate": 5.26,
-    "timeout_rate": 5.26,
+    "success_count": 57,
+    "failure_count": 0,
+    "timeout_count": 0,
+    "success_rate": 100,
+    "failure_rate": 0,
+    "timeout_rate": 0,
     "latency_all": {
       "count": 57,
-      "avg_ms": 1643.25,
-      "median_ms": 32,
-      "p95_ms": 30053,
-      "min_ms": 15,
-      "max_ms": 30098
+      "avg_ms": 38.3,
+      "median_ms": 22,
+      "p95_ms": 140,
+      "min_ms": 14,
+      "max_ms": 215
     },
     "latency_success_only": {
-      "count": 54,
-      "avg_ms": 64.09,
-      "median_ms": 31,
-      "p95_ms": 252,
-      "min_ms": 15,
-      "max_ms": 421
+      "count": 57,
+      "avg_ms": 38.3,
+      "median_ms": 22,
+      "p95_ms": 140,
+      "min_ms": 14,
+      "max_ms": 215
     },
-    "failed_tasks": [
-      {
-        "taskId": "S-B01",
-        "taskName": "Performance overview",
-        "http_status": 500,
-        "latency_ms": 30098,
-        "timeout": true,
-        "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
-      },
-      {
-        "taskId": "S-T04",
-        "taskName": "At-risk self-check",
-        "http_status": 500,
-        "latency_ms": 30053,
-        "timeout": true,
-        "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
-      },
-      {
-        "taskId": "A-G03",
-        "taskName": "Identify at-risk cohort",
-        "http_status": 500,
-        "latency_ms": 30053,
-        "timeout": true,
-        "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
-      }
-    ],
-    "slow_tasks_over_threshold": [
-      {
-        "taskId": "S-B01",
-        "taskName": "Performance overview",
-        "http_status": 500,
-        "latency_ms": 30098,
-        "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
-      },
-      {
-        "taskId": "S-T04",
-        "taskName": "At-risk self-check",
-        "http_status": 500,
-        "latency_ms": 30053,
-        "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
-      },
-      {
-        "taskId": "A-G03",
-        "taskName": "Identify at-risk cohort",
-        "http_status": 500,
-        "latency_ms": 30053,
-        "error": "\nInvalid `prisma.$queryRawUnsafe()` invocation:\n\n\nRaw query failed. Code: `57014`. Message: `canceling statement due to statement timeout`"
-      }
-    ]
+    "failed_tasks": [],
+    "slow_tasks_over_threshold": []
   },
   "import_performance": {
     "available": true,
@@ -237,114 +190,88 @@
     ]
   },
   "visualization": {
-    "attempted_count": 55,
+    "attempted_count": 48,
     "adapter_crash_count": 0,
     "adapter_success_rate": 100,
-    "overall_pass_count": 54,
-    "overall_pass_rate": 98.18,
-    "expected_no_data_count": 16,
-    "skipped_by_api_count": 2,
-    "failed_visualization_count": 1,
-    "failed_visualization_tasks": [
-      {
-        "taskId": "A-G13",
-        "taskName": "Lifestyle risk across cohort",
-        "viz_type": "scatter_plot",
-        "api_row_count": 649,
-        "chart_row_count": 0,
-        "renderable": false,
-        "expected_no_data": false,
-        "adapter_error": null
-      }
-    ],
+    "overall_pass_count": 48,
+    "overall_pass_rate": 100,
+    "expected_no_data_count": 14,
+    "skipped_by_api_count": 0,
+    "failed_visualization_count": 0,
+    "failed_visualization_tasks": [],
     "adapter_latency": {
-      "count": 55,
-      "avg_ms": 0.16,
-      "median_ms": 0.06,
-      "p95_ms": 0.57,
+      "count": 48,
+      "avg_ms": 0.12,
+      "median_ms": 0.04,
+      "p95_ms": 0.44,
       "min_ms": 0.01,
-      "max_ms": 1.03
+      "max_ms": 0.54
     },
     "adapter_latency_note": "Adapter latency is measured around adapter.adapt(rawRows, config), excluding React/Recharts browser rendering time."
   },
   "ai_explanations": {
-    "attempted_count": 31,
-    "response_count": 31,
+    "attempted_count": 52,
+    "response_count": 52,
     "response_rate": 100,
-    "degraded_count": 2,
-    "degraded_rate": 6.45,
+    "degraded_count": 0,
+    "degraded_rate": 0,
     "schema_failed_count": 0,
-    "safety_flagged_count": 0,
-    "safety_flag_rate": 0,
+    "safety_flagged_count": 1,
+    "safety_flag_rate": 1.92,
     "latency_client_observed": {
-      "count": 31,
-      "avg_ms": 7066.68,
-      "median_ms": 6090,
-      "p95_ms": 15016,
-      "min_ms": 2573,
-      "max_ms": 15017
+      "count": 52,
+      "avg_ms": 6727.25,
+      "median_ms": 6478,
+      "p95_ms": 11970,
+      "min_ms": 2625,
+      "max_ms": 13129
     },
     "latency_python_reported": {
-      "count": 31,
-      "avg_ms": 7059.71,
-      "median_ms": 6084,
-      "p95_ms": 15001,
-      "min_ms": 2571,
-      "max_ms": 15001
+      "count": 52,
+      "avg_ms": 6715.02,
+      "median_ms": 6476,
+      "p95_ms": 11956,
+      "min_ms": 2610,
+      "max_ms": 13115
     },
     "total_tokens": {
-      "count": 31,
-      "avg": 1748.87,
-      "median": 1664,
-      "p95": 3279,
-      "min": 0,
-      "max": 3358,
+      "count": 52,
+      "avg": 1589.31,
+      "median": 1459,
+      "p95": 2891,
+      "min": 757,
+      "max": 3899,
       "unit": "tokens"
     },
     "prompt_tokens": {
-      "count": 29,
-      "avg": 1469.28,
-      "median": 1352,
-      "p95": 2675,
+      "count": 52,
+      "avg": 1207.88,
+      "median": 1072,
+      "p95": 2341,
       "min": 566,
-      "max": 3007,
+      "max": 3218,
       "unit": "tokens"
     },
     "completion_tokens": {
-      "count": 29,
-      "avg": 400.21,
-      "median": 417,
-      "p95": 642,
-      "min": 166,
-      "max": 687,
+      "count": 52,
+      "avg": 381.42,
+      "median": 388,
+      "p95": 599,
+      "min": 150,
+      "max": 794,
       "unit": "tokens"
     },
     "cost_per_explanation": {
-      "count": 31,
-      "avg": 0.000431,
-      "median": 0.000432,
-      "p95": 0.000691,
-      "min": 0,
-      "max": 0.000764,
+      "count": 52,
+      "avg": 0.00041,
+      "median": 0.000391,
+      "p95": 0.000703,
+      "min": 0.000181,
+      "max": 0.000891,
       "unit": "usd"
     },
-    "total_cost_usd": 0.013355,
-    "slow_tasks_over_threshold": [
-      {
-        "taskId": "S-B02",
-        "taskName": "Risk status card",
-        "ai_latency_ms": 15017,
-        "total_tokens": null,
-        "cost_usd": null
-      },
-      {
-        "taskId": "S-T04",
-        "taskName": "At-risk self-check",
-        "ai_latency_ms": 15016,
-        "total_tokens": null,
-        "cost_usd": null
-      }
-    ]
+    "total_cost_usd": 0.021322,
+    "slow_tasks_over_threshold": []
   },
   "task_validation_and_coverage": {
     "runner_duration_ms": 845,
@@ -368,26 +295,26 @@
       "analytics_timeout_rate_acceptable": true,
       "analytics_success_p95_latency_acceptable": true,
       "ai_degraded_rate_acceptable": true,
-      "ai_p95_latency_acceptable": false,
+      "ai_p95_latency_acceptable": true,
       "visualization_adapter_crash_free": true
     },
-    "overall_performance_pass": false
+    "overall_performance_pass": true
   },
   "concise_summary": {
-    "analytics_success_rate": 94.74,
-    "analytics_failure_rate": 5.26,
-    "analytics_timeout_rate": 5.26,
-    "analytics_success_p95_latency_ms": 252,
+    "analytics_success_rate": 100,
+    "analytics_failure_rate": 0,
+    "analytics_timeout_rate": 0,
+    "analytics_success_p95_latency_ms": 140,
     "visualization_adapter_success_rate": 100,
-    "visualization_adapter_avg_latency_ms": 0.16,
+    "visualization_adapter_avg_latency_ms": 0.12,
     "import_apply_duration_ms": 1671,
     "basic_api_avg_latency_ms": 304.609,
     "ai_response_rate": 100,
-    "ai_degraded_rate": 6.45,
-    "ai_avg_latency_ms": 7066.68,
-    "ai_p95_latency_ms": 15016,
-    "ai_avg_tokens": 1748.87,
-    "ai_total_cost_usd": 0.013355,
-    "overall_performance_pass": false
+    "ai_degraded_rate": 0,
+    "ai_avg_latency_ms": 6727.25,
+    "ai_p95_latency_ms": 11970,
+    "ai_avg_tokens": 1589.31,
+    "ai_total_cost_usd": 0.021322,
+    "overall_performance_pass": true
   }
 }
