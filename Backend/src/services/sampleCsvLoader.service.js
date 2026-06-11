@@ -6,6 +6,7 @@ import { detectCsvDelimiter } from "./fileFormat.service.js";
 import { parseCsvFileToRawRows } from "./csvParse.service.js";
 import { buildOuladSampleFromStreams } from "./sampleAdapters/ouladSample.adapter.js";
 import { buildUciSampleFromRows } from "./sampleAdapters/uciSample.adapter.js";
+import { computeStudentFeatures } from "./compositeFeatures.service.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -212,6 +213,9 @@ export async function loadSampleBatchFromCsv(batchId, options = {}) {
       sourceFileName: fileDef.name,
     });
     dataset = built.dataset;
+    if (dataset?.students) {
+      dataset.students = computeStudentFeatures(dataset.students);
+    }
     warnings.push(...(built.warnings || []));
     errors.push(...(built.errors || []));
   } else {
