@@ -461,6 +461,18 @@
     "semanticNote": "competency_tag uses a 3-tier COALESCE fallback: (1) native competency_tag if dataset has competency ontology, (2) assessment_name as proxy (UCI: G1/G2/G3, OULAD: TMA01/CMA01), (3) 'Unknown' as final safety net.",
     "sqlQuery": "SELECT COALESCE(a.competency_tag, a.assessment_name, 'Unknown') AS competency_tag, CASE WHEN a.competency_tag IS NOT NULL THEN 'native' WHEN a.assessment_name IS NOT NULL THEN 'proxy' ELSE 'unknown' END AS competency_source, a.assessment_type, ROUND(AVG(ar.score_normalized)::numeric,2)::float8 AS avg_score, ROUND(AVG(ar.pass_flag::int)::numeric,4)::float8 AS pass_rate, COUNT(*) AS assessment_count FROM assessment_result ar JOIN assessment a ON ar.assessment_id=a.assessment_id WHERE ar.student_id=:student_id AND a.class_id=:class_id GROUP BY COALESCE(a.competency_tag, a.assessment_name, 'Unknown'), CASE WHEN a.competency_tag IS NOT NULL THEN 'native' WHEN a.assessment_name IS NOT NULL THEN 'proxy' ELSE 'unknown' END, a.assessment_type ORDER BY avg_score ASC",
     "viz_type": "bar_chart",
+    "output_schema": {
+      "required_columns": [
+        "competency_tag",
+        "avg_score"
+      ],
+      "optional_columns": [
+        "competency_source",
+        "assessment_type",
+        "pass_rate",
+        "assessment_count"
+      ]
+    },
     "visualization_config": {
       "x_field": "competency_tag",
       "y_field": "avg_score",
@@ -856,6 +868,18 @@
     "datasetCompatibility": "both",
     "aiPromptHint": "Use absence_rate [FE] to show proportion of missed sessions. Correlate with avg_score [FE].",
     "viz_type": "bar_chart",
+    "output_schema": {
+      "required_columns": [
+        "assessment_order",
+        "score_normalized"
+      ],
+      "optional_columns": [
+        "week_of_class",
+        "pass_flag",
+        "absences",
+        "absence_rate"
+      ]
+    },
     "visualization_config": {
       "x_field": "assessment_order",
       "y_field": "score_normalized",
@@ -1020,6 +1044,20 @@
     "aiPromptHint": "Highlight which sub-factor drives highest risk. Frame as correlation, not causation.",
     "sqlQuery": "SELECT s.alcohol_weekday,\n       s.alcohol_weekend,\n       s.go_out_freq,\n       s.health_status,\n       s.family_relation,\n       s.free_time,\n       s.lifestyle_risk_score,\n       ROUND(\n         (SELECT AVG(ar.score_normalized)::numeric\n          FROM assessment_result ar\n          JOIN assessment a ON ar.assessment_id = a.assessment_id\n          WHERE ar.student_id = :student_id\n            AND a.class_id   = :class_id\n         ), 2\n       )::float8 AS avg_score\nFROM student s\nWHERE s.student_id = :student_id",
     "viz_type": "card",
+    "output_schema": {
+      "required_columns": [
+        "lifestyle_risk_score",
+        "avg_score"
+      ],
+      "optional_columns": [
+        "alcohol_weekday",
+        "alcohol_weekend",
+        "go_out_freq",
+        "health_status",
+        "family_relation",
+        "free_time"
+      ]
+    },
     "visualization_config": {
       "x_field": "lifestyle_risk_score",
       "y_field": "avg_score",
@@ -1392,6 +1430,17 @@
     "aiPromptHint": "Use social_balance_score [FE]. Emphasise correlation, not causation.",
     "sqlQuery": "SELECT s.social_balance_score,\n       s.free_time,\n       s.go_out_freq,\n       s.alcohol_weekday,\n       ROUND(\n         (SELECT AVG(ar.score_normalized)::numeric\n          FROM assessment_result ar\n          JOIN assessment a ON ar.assessment_id = a.assessment_id\n          WHERE ar.student_id = :student_id\n            AND a.class_id   = :class_id\n         ), 2\n       )::float8 AS avg_score\nFROM student s\nWHERE s.student_id = :student_id",
     "viz_type": "card",
+    "output_schema": {
+      "required_columns": [
+        "social_balance_score",
+        "avg_score"
+      ],
+      "optional_columns": [
+        "free_time",
+        "go_out_freq",
+        "alcohol_weekday"
+      ]
+    },
     "visualization_config": {
       "x_field": "social_balance_score",
       "y_field": "avg_score",
@@ -1466,6 +1515,18 @@
     "aiPromptHint": "Use family_stability_score [FE]. Frame findings as associative, not causal. Avoid prescriptive suggestions.",
     "sqlQuery": "SELECT s.family_stability_score,\n       s.family_relation,\n       s.parent_cohabitation_status,\n       s.mother_education_level, s.father_education_level,\n       ROUND(\n         (SELECT AVG(ar.score_normalized)::numeric\n          FROM assessment_result ar\n          JOIN assessment a ON ar.assessment_id = a.assessment_id\n          WHERE ar.student_id = :student_id\n            AND a.class_id   = :class_id\n         ), 2\n       )::float8 AS avg_score\nFROM student s\nWHERE s.student_id = :student_id",
     "viz_type": "card",
+    "output_schema": {
+      "required_columns": [
+        "family_stability_score",
+        "avg_score"
+      ],
+      "optional_columns": [
+        "family_relation",
+        "parent_cohabitation_status",
+        "mother_education_level",
+        "father_education_level"
+      ]
+    },
     "visualization_config": {
       "x_field": "family_stability_score",
       "y_field": "avg_score",
@@ -2409,6 +2470,18 @@
     "semanticNote": "competency_tag uses a 3-tier COALESCE fallback: (1) native competency_tag if dataset has competency ontology, (2) assessment_name as proxy (UCI: G1/G2/G3, OULAD: TMA01/CMA01), (3) 'Unknown' as final safety net.",
     "sqlQuery": "SELECT COALESCE(a.competency_tag, a.assessment_name, 'Unknown') AS competency_tag, CASE WHEN a.competency_tag IS NOT NULL THEN 'native' WHEN a.assessment_name IS NOT NULL THEN 'proxy' ELSE 'unknown' END AS competency_source, a.assessment_type, ROUND(AVG(ar.score_normalized)::numeric,2)::float8 AS avg_score, ROUND(AVG(ar.pass_flag::int)::numeric,4)::float8 AS pass_rate, COUNT(*) AS assessment_count FROM assessment_result ar JOIN assessment a ON ar.assessment_id=a.assessment_id WHERE ar.student_id=:student_id AND a.class_id=:class_id GROUP BY COALESCE(a.competency_tag, a.assessment_name, 'Unknown'), CASE WHEN a.competency_tag IS NOT NULL THEN 'native' WHEN a.assessment_name IS NOT NULL THEN 'proxy' ELSE 'unknown' END, a.assessment_type ORDER BY avg_score ASC",
     "viz_type": "bar_chart",
+    "output_schema": {
+      "required_columns": [
+        "competency_tag",
+        "avg_score"
+      ],
+      "optional_columns": [
+        "competency_source",
+        "assessment_type",
+        "pass_rate",
+        "assessment_count"
+      ]
+    },
     "visualization_config": {
       "x_field": "competency_tag",
       "y_field": "avg_score",
@@ -3479,6 +3552,22 @@
     "semanticNote": "competency_tag uses a 3-tier COALESCE fallback: (1) native competency_tag if dataset has competency ontology, (2) assessment_name as proxy (UCI: G1/G2/G3, OULAD: TMA01/CMA01), (3) 'Unknown' as final safety net.",
     "sqlQuery": "SELECT a.assessment_id, a.assessment_name, a.assessment_type, a.week_of_class, COALESCE(a.competency_tag, a.assessment_name, 'Unknown') AS competency_tag, CASE WHEN a.competency_tag IS NOT NULL THEN 'native' WHEN a.assessment_name IS NOT NULL THEN 'proxy' ELSE 'unknown' END AS competency_source, COUNT(*) AS total_submissions, COUNT(*) FILTER (WHERE ar.score_normalized < 40) AS fail_count, ROUND((COUNT(*) FILTER (WHERE ar.score_normalized < 40) * 100.0 / NULLIF(COUNT(*), 0))::numeric, 1)::float8 AS fail_rate_pct, ROUND(AVG(ar.score_normalized)::numeric, 2)::float8 AS avg_score FROM assessment_result ar JOIN assessment a ON ar.assessment_id = a.assessment_id JOIN enrollment e ON ar.student_id = e.student_id AND e.class_id = :class_id WHERE e.class_id = :class_id GROUP BY a.assessment_id, a.assessment_name, a.assessment_type, a.week_of_class, COALESCE(a.competency_tag, a.assessment_name, 'Unknown'), CASE WHEN a.competency_tag IS NOT NULL THEN 'native' WHEN a.assessment_name IS NOT NULL THEN 'proxy' ELSE 'unknown' END ORDER BY fail_rate_pct DESC",
     "viz_type": "bar_chart",
+    "output_schema": {
+      "required_columns": [
+        "assessment_name",
+        "fail_rate_pct"
+      ],
+      "optional_columns": [
+        "assessment_id",
+        "assessment_type",
+        "week_of_class",
+        "competency_tag",
+        "competency_source",
+        "total_submissions",
+        "fail_count",
+        "avg_score"
+      ]
+    },
     "visualization_config": {
       "x_field": "assessment_name",
       "y_field": "fail_rate_pct",
@@ -4149,6 +4238,16 @@
     "aiPromptHint": "For each demographic group, state fail rate and withdrawal rate as percentages. Flag groups where fail+withdrawn > cohort threshold. Note: output is categorical final_outcome — distinct from A-G08 which uses continuous avg_score.",
     "sqlQuery": "WITH grouped AS ( SELECT COALESCE(NULLIF(s.socioeconomic_band, ''), NULLIF(s.school, ''), NULLIF(s.region, ''), NULLIF(s.age_group, ''), 'Unknown') AS group_value, e.final_outcome FROM student s JOIN enrollment e ON s.student_id = e.student_id WHERE e.class_id = :class_id ) SELECT group_value, final_outcome, COUNT(*) AS student_count, ROUND(COUNT(*) * 100.0 / NULLIF(SUM(COUNT(*)) OVER (PARTITION BY group_value), 0), 1) AS pct_within_group FROM grouped GROUP BY group_value, final_outcome ORDER BY group_value, final_outcome",
     "viz_type": "bar_chart",
+    "output_schema": {
+      "required_columns": [
+        "group_value",
+        "final_outcome",
+        "pct_within_group"
+      ],
+      "optional_columns": [
+        "student_count"
+      ]
+    },
     "visualization_config": {
       "x_field": "group_value",
       "y_field": "pct_within_group",
@@ -4221,6 +4320,19 @@
     "aiPromptHint": "Rank students by lifestyle_risk_score. Correlate with avg_score. Frame as correlational, not prescriptive.",
     "sqlQuery": "WITH score_agg AS (\n  SELECT ar.student_id,\n         AVG(ar.score_normalized)                              AS avg_score,\n         REGR_SLOPE(ar.score_normalized, a.assessment_order)  AS perf_trend\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment  e ON ar.student_id   = e.student_id\n                     AND a.class_id     = e.class_id\n  WHERE e.class_id = :class_id\n  GROUP BY ar.student_id\n)\nSELECT e.student_id, s.alcohol_weekday, s.alcohol_weekend, s.go_out_freq, s.health_status, s.lifestyle_risk_score, sa.avg_score FROM student s JOIN enrollment e ON s.student_id=e.student_id JOIN score_agg sa ON e.student_id=sa.student_id WHERE e.class_id=:class_id AND s.source_dataset='UCI' ORDER BY s.lifestyle_risk_score DESC",
     "viz_type": "scatter_plot",
+    "output_schema": {
+      "required_columns": [
+        "student_id",
+        "lifestyle_risk_score",
+        "avg_score"
+      ],
+      "optional_columns": [
+        "alcohol_weekday",
+        "alcohol_weekend",
+        "go_out_freq",
+        "health_status"
+      ]
+    },
     "visualization_config": {
       "x_field": "lifestyle_risk_score",
       "y_field": "avg_score",
