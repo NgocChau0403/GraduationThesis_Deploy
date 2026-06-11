@@ -127,6 +127,7 @@ export default function ChartRenderer({ taskMeta, datasets, isLoading, error }) 
   const hasNativeRows = safeRows.some((r) => r?.competency_source === "native");
   const showProxyBadge = hasProxyRows && !hasNativeRows;
   const showMixedBadge = hasProxyRows && hasNativeRows;
+  const absenceContext = buildAbsenceContext(taskMeta, datasets);
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
@@ -139,6 +140,7 @@ export default function ChartRenderer({ taskMeta, datasets, isLoading, error }) 
 
       {showProxyBadge && <ProxyCompetencyBadge mode="proxy" tooltip={taskMeta.semanticNote} />}
       {showMixedBadge && <ProxyCompetencyBadge mode="mixed" tooltip={taskMeta.semanticNote} />}
+      {absenceContext && <AbsenceContextAnnotation context={absenceContext} />}
 
       {hasRenderableData(vizType, chartData) ? (
         <ChartComponent data={chartData} config={config} />
@@ -152,6 +154,31 @@ export default function ChartRenderer({ taskMeta, datasets, isLoading, error }) 
       <ChartDiagnosticsPanel diagnostics={diagnostics} />
     </div>
   );
+}
+
+function buildAbsenceContext(taskMeta, datasets) {
+  if (taskMeta?.taskId !== "S-T07") return null;
+  const absenceRows = Array.isArray(datasets?.absence_data) ? datasets.absence_data : [];
+  const firstRow = absenceRows[0];
+  if (!firstRow) return null;
+
+  const absences = firstRow.absences;
+  const absenceRate = firstRow.absence_rate;
+  const hasAbsences = absences !== null && absences !== undefined && absences !== "";
+  const hasAbsenceRate = absenceRate !== null && absenceRate !== undefined && absenceRate !== "";
+  if (!hasAbsences && !hasAbsenceRate) return null;
+
+  return {
+    absences: hasAbsences ? formatDisplayValue(absences) : null,
+    absenceRate: hasAbsenceRate ? formatPercentValue(absenceRate) : null,
+  };
+}
+
+function formatPercentValue(value) {
+  const numeric = Number(value);
+  if (!Number.isFinite(numeric)) return formatDisplayValue(value);
+  const pct = numeric <= 1 ? numeric * 100 : numeric;
+  return `${Number(pct.toFixed(1))}%`;
 }
 
 function buildDiagnostics({
@@ -320,6 +347,25 @@ function ProxyCompetencyBadge({ mode, tooltip }) {
           ? "Competency Mode: Derived from assessment structure"
           : "Competency Mode: Mixed (native + proxy)"}
       </span>
+    </div>
+  );
+}
+
+function AbsenceContextAnnotation({ context }) {
+  return (
+    <div className="mb-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
+      {context.absences !== null && (
+        <div className="rounded-lg border border-sky-100 bg-sky-50 px-3 py-2">
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-sky-700">Absences</p>
+          <p className="mt-1 text-sm font-bold text-slate-800">{context.absences}</p>
+        </div>
+      )}
+      {context.absenceRate !== null && (
+        <div className="rounded-lg border border-sky-100 bg-sky-50 px-3 py-2">
+          <p className="text-[10px] font-semibold uppercase tracking-wide text-sky-700">Absence Rate</p>
+          <p className="mt-1 text-sm font-bold text-slate-800">{context.absenceRate}</p>
+        </div>
+      )}
     </div>
   );
 }

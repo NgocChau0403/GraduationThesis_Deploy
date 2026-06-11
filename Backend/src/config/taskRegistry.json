@@ -468,8 +468,8 @@
       "color_field": "competency_tag",
       "orientation": "horizontal",
       "variant": "ranked",
-      "x_label": "Competency Tag",
-      "y_label": "Average Score",
+      "x_label": "Competency / Assessment Proxy",
+      "y_label": "Average Score (0-100)",
       "semantic_roles": {
         "x": "category",
         "y": "performance_metric"
@@ -863,8 +863,8 @@
       "color_field": null,
       "orientation": "vertical",
       "variant": "categorical",
-      "x_label": "Assessment",
-      "y_label": "Normalized Score",
+      "x_label": "Assessment Order",
+      "y_label": "Normalized Score (0-100)",
       "semantic_roles": {
         "x": "time",
         "y": "performance_metric"
@@ -1759,7 +1759,7 @@
       "color_field": null,
       "orientation": "vertical",
       "variant": "histogram",
-      "x_label": "Score Range",
+      "x_label": "Score Range (0-100)",
       "y_label": "Number of Students",
       "semantic_roles": {
         "x": "category",
@@ -2416,8 +2416,8 @@
       "color_field": "competency_tag",
       "orientation": "horizontal",
       "variant": "ranked",
-      "x_label": "Competency Tag",
-      "y_label": "Average Score",
+      "x_label": "Competency / Assessment Proxy",
+      "y_label": "Average Score (0-100)",
       "semantic_roles": {
         "x": "category",
         "y": "performance_metric"
@@ -4151,7 +4151,7 @@
     "viz_type": "bar_chart",
     "visualization_config": {
       "x_field": "group_value",
-      "y_field": "student_count",
+      "y_field": "pct_within_group",
       "series_field": "final_outcome",
       "color_field": "final_outcome",
       "orientation": "vertical",
