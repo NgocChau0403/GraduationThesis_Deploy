@@ -24,7 +24,7 @@
 
 ## Vấn đề về Ai explanation
 - Hỏi Ai cần thông tin gì để đánh giá, có thể dùng file log
-- Implement task-aware summarizer thay cho giới hạn row data truyền vào câu prompt
+- [DONE] Implement task-aware summarizer thay cho giới hạn row data truyền vào câu prompt
 - (để sau) Phần 7: lấy file log cho codex đánh giá, human survey 
 
 ## Task 6/6/2026

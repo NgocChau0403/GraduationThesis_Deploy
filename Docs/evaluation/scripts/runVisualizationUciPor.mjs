@@ -16,6 +16,8 @@ import {
 
 const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:4000";
 const DATASET_ID = "SAMPLE_UCI_POR";
+const CLASS_ID = "SAMPLE_UCI_POR_CLASS";
+const TASK_SOURCE = "/api/tasks/available";
 const OUTPUT_DIR = path.resolve("Docs/evaluation/automatic_logs");
 const OUTPUT_FILE = path.join(OUTPUT_DIR, "visualization_auto_SAMPLE_UCI_POR.json");
 
@@ -208,9 +210,10 @@ function summarizeMetrics(results) {
 async function main() {
   const startedAt = new Date();
 
-  const taskRes = await requestJson(`${BACKEND_URL}/api/tasks?includeExperimental=true`);
+  const taskUrl = `${BACKEND_URL}${TASK_SOURCE}?datasetId=${encodeURIComponent(DATASET_ID)}&classId=${encodeURIComponent(CLASS_ID)}`;
+  const taskRes = await requestJson(taskUrl);
   if (!taskRes.ok || !Array.isArray(taskRes.body?.tasks)) {
-    throw new Error(`Cannot fetch tasks from ${BACKEND_URL}/api/tasks. Status: ${taskRes.httpStatus}`);
+    throw new Error(`Cannot fetch tasks from ${taskUrl}. Status: ${taskRes.httpStatus}`);
   }
 
   const classesRes = await requestJson(`${BACKEND_URL}/api/classes?batchId=${encodeURIComponent(DATASET_ID)}`);
@@ -218,7 +221,8 @@ async function main() {
     throw new Error(`Cannot fetch classes for ${DATASET_ID}. Status: ${classesRes.httpStatus}`);
   }
 
-  const classInfo = pickPrimaryClass(classesRes.body.classes);
+  const classInfo = classesRes.body.classes.find((item) => item.class_id === CLASS_ID)
+    || pickPrimaryClass(classesRes.body.classes);
   if (!classInfo?.class_id) throw new Error(`No class found for ${DATASET_ID}.`);
 
   const studentsUrl = `${BACKEND_URL}/api/students?batchId=${encodeURIComponent(DATASET_ID)}&classId=${encodeURIComponent(classInfo.class_id)}&pageSize=200`;
@@ -362,8 +366,13 @@ async function main() {
 
   const output = {
     evaluation_part: "visualization_correctness",
+    evaluation_mode: "normal_ui_visibility",
     datasetId: DATASET_ID,
     backend_url: BACKEND_URL,
+    task_source: TASK_SOURCE,
+    task_source_url: taskUrl,
+    includeExperimental: false,
+    normal_ui_visibility: true,
     generated_at: new Date().toISOString(),
     duration_ms: Date.now() - startedAt.getTime(),
     context: {

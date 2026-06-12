@@ -19,20 +19,23 @@ class TaskRegistryService {
   constructor() {
     this.tasks = [];
     this.isLoaded = false;
+    this.loadedMtimeMs = 0;
   }
 
   /**
    * Internal helper to load tasks from JSON if not already loaded.
    */
   _ensureLoaded() {
-    if (this.isLoaded) return;
-
     try {
+      const registryStat = fs.statSync(REGISTRY_PATH);
+      if (this.isLoaded && this.loadedMtimeMs === registryStat.mtimeMs) return;
+
       const rawData = fs.readFileSync(REGISTRY_PATH, "utf-8");
       this.tasks = JSON.parse(rawData);
       // Pre-process all SQL templates to strip -- comments at load time
       // so that buildPositionalQuery never encounters :params inside comments
       this.tasks.forEach(task => this._preprocessSql(task));
+      this.loadedMtimeMs = registryStat.mtimeMs;
       this.isLoaded = true;
     } catch (error) {
       console.error("Failed to load taskRegistry.json:", error);

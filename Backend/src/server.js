@@ -49,7 +49,21 @@ app.get("/api/health", (req, res) => {
 });
 
 app.listen(PORT, async () => {
-  await seedSampleDatasets();
-  await clearExpiredUploadSessions();
   console.log(`Server running at http://localhost:${PORT}`);
+
+  if (process.env.AUTO_SEED_SAMPLES === "true") {
+    try {
+      await seedSampleDatasets();
+    } catch (error) {
+      console.error("Sample dataset seeding failed during startup:", error);
+    }
+  } else {
+    console.log("Sample dataset auto-seeding skipped. Set AUTO_SEED_SAMPLES=true to enable.");
+  }
+
+  try {
+    await clearExpiredUploadSessions();
+  } catch (error) {
+    console.error("Failed to clear expired upload sessions:", error);
+  }
 });
