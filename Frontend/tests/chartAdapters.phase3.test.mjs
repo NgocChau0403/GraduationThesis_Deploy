@@ -48,9 +48,80 @@ test("bar adapter skips row with missing y (no fake zero)", () => {
     { cohort: "B", cnt: null },
   ];
   const out = barAdapter.adapt(raw, { x_field: "cohort", y_field: "cnt" });
-  assert.deepEqual(out.data, [{ x: "A", y: 5 }]);
+  assert.equal(out.data.length, 1);
+  assert.equal(out.data[0].x, "A");
+  assert.equal(out.data[0].y, 5);
+  assert.equal(out.data[0].__categoryRaw, "A");
+  assert.equal(out.data[0].__categoryLabel, "A");
   assert.equal(out.meta.skipped_rows, 1);
   assert.ok(out.meta.missing_fields.includes("cnt"));
+});
+
+test("bar adapter formats assessment_order display without mutating raw values", () => {
+  const raw = [
+    { assessment_order: 0, score_normalized: 11 },
+    { assessment_order: 1, score_normalized: 12.5 },
+    { assessment_order: 2, score_normalized: 10 },
+  ];
+  const out = barAdapter.adapt(raw, {
+    x_field: "assessment_order",
+    y_field: "score_normalized",
+    x_label: "Assessment",
+    y_label: "Normalized Score (0-100)",
+  });
+
+  assert.deepEqual(out.data.map((row) => row.__categoryLabel), [
+    "Assessment 1",
+    "Assessment 2",
+    "Assessment 3",
+  ]);
+  assert.deepEqual(out.data.map((row) => row.__categoryRaw), [0, 1, 2]);
+  assert.deepEqual(out.data.map((row) => row.assessment_order), [0, 1, 2]);
+  assert.deepEqual(out.data.map((row) => row.y), [11, 12.5, 10]);
+  assert.deepEqual(out.data.map((row) => row.score_normalized), [11, 12.5, 10]);
+});
+
+test("bar adapter keeps non-numeric assessment_order readable", () => {
+  const out = barAdapter.adapt(
+    [{ assessment_order: "Final", score_normalized: 78.35 }],
+    { x_field: "assessment_order", y_field: "score_normalized" }
+  );
+
+  assert.equal(out.data[0].__categoryRaw, "Final");
+  assert.equal(out.data[0].__categoryLabel, "Final");
+});
+
+test("bar adapter formats week_number without shifting the week", () => {
+  const out = barAdapter.adapt(
+    [{ week_number: 5, weekly_clicks: 1500000 }],
+    { x_field: "week_number", y_field: "weekly_clicks" }
+  );
+
+  assert.equal(out.data[0].__categoryRaw, 5);
+  assert.equal(out.data[0].__categoryLabel, "Week 5");
+  assert.equal(out.data[0].week_number, 5);
+  assert.equal(out.data[0].y, 1500000);
+});
+
+test("grouped bar adapter preserves series values and display category label", () => {
+  const raw = [
+    { resource_type: "forum", student_id: "student_1", pct_of_total: 60 },
+    { resource_type: "forum", student_id: "student_2", pct_of_total: 40 },
+  ];
+  const out = barAdapter.adapt(raw, {
+    x_field: "resource_type",
+    y_field: "pct_of_total",
+    series_field: "student_id",
+    variant: "grouped",
+  });
+
+  assert.equal(out.data.length, 1);
+  assert.equal(out.data[0].x, "forum");
+  assert.equal(out.data[0].__categoryRaw, "forum");
+  assert.equal(out.data[0].__categoryLabel, "forum");
+  assert.equal(out.data[0].student_1, 60);
+  assert.equal(out.data[0].student_2, 40);
+  assert.deepEqual(out.bars.map((bar) => bar.dataKey), ["student_1", "student_2"]);
 });
 
 test("heatmap adapter keeps null numeric as missing cell", () => {
