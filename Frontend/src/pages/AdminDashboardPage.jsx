@@ -10,20 +10,19 @@ import {
   getAdminTaskType,
   resolveAdminDashboardUrlState,
 } from "../utils/dashboardUrlState";
+import {
+  ADMIN_BASIC_TASKS,
+  ADMIN_SINGLE_STUDENT_TASKS,
+  ADMIN_COMPARISON_TASKS,
+  ADMIN_COHORT_TASKS,
+  filterUniqueAdminTasks,
+  getAvailabilityBadgeClass,
+  getAvailabilityLabel,
+  getDisabledReason,
+  isTaskExecutable,
+} from "../utils/adminTaskVisibility";
 
-const ADMIN_BASIC_TASKS = ["A-B01", "A-B02", "A-B03", "A-B04"];
-const ADMIN_SINGLE_STUDENT_TASKS = ["A-S01", "A-S02", "A-S03", "A-S04", "A-S05", "A-S06", "A-S07", "A-S08"];
-const ADMIN_COMPARISON_TASKS = ["A-C01", "A-C02", "A-C03", "A-C04", "A-C05", "A-C06"];
-const ADMIN_COHORT_TASKS = [
-  "A-G01", "A-G02", "A-G03", "A-G04", "A-G05", "A-G06", "A-G07", "A-G08",
-  "A-G09", "A-G10", "A-G11", "A-G12", "A-G13", "A-G14", "A-G15", "A-G16",
-];
-const ADMIN_ALLOWED_TASK_IDS = new Set([
-  ...ADMIN_BASIC_TASKS,
-  ...ADMIN_SINGLE_STUDENT_TASKS,
-  ...ADMIN_COMPARISON_TASKS,
-  ...ADMIN_COHORT_TASKS,
-]);
+const INCLUDE_EXPERIMENTAL_ADMIN_TASKS = true;
 
 const WORKSPACE_TABS = [
   { id: "admin_basic", label: "Admin - Basic Tasks", prefixes: ADMIN_BASIC_TASKS },
@@ -31,39 +30,6 @@ const WORKSPACE_TABS = [
   { id: "admin_compare", label: "Admin - Comparison Tasks", prefixes: ADMIN_COMPARISON_TASKS },
   { id: "admin_cohort", label: "Admin - Cohort Tasks", prefixes: ADMIN_COHORT_TASKS },
 ];
-
-function isTaskExecutable(task) {
-  return task?.availability?.status === "executable";
-}
-
-function getDisabledReason(task) {
-  const availability = task?.availability;
-  const firstMissing = availability?.missing_requirements?.[0];
-  return (
-    availability?.disabled_reason ||
-    firstMissing?.message ||
-    firstMissing ||
-    availability?.confidence_reason ||
-    "Task is not executable for this dataset/class."
-  );
-}
-
-function getAvailabilityLabel(task) {
-  const status = task?.availability?.status || "unknown";
-  if (status === "executable") return "Available";
-  if (status === "partial") return "Partial";
-  if (status === "insufficient_data") return "Insufficient";
-  if (status === "unsupported") return "Unsupported";
-  return status;
-}
-
-function getAvailabilityBadgeClass(task) {
-  const status = task?.availability?.status;
-  if (status === "executable") return "bg-emerald-50 text-emerald-700 border-emerald-100";
-  if (status === "partial") return "bg-amber-50 text-amber-700 border-amber-100";
-  if (status === "insufficient_data") return "bg-orange-50 text-orange-700 border-orange-100";
-  return "bg-slate-100 text-slate-500 border-slate-200";
-}
 
 export default function AdminDashboardPage() {
   const navigate = useNavigate();
@@ -103,18 +69,13 @@ export default function AdminDashboardPage() {
     isError: isAvailabilityError,
     error: availabilityError,
   } = useQuery({
-    queryKey: ["available-tasks", activeDataset?.id, classId, "admin"],
-    queryFn: () => fetchAvailableTasks(activeDataset.id, classId, "admin"),
+    queryKey: ["available-tasks", activeDataset?.id, classId, "admin", { includeExperimental: INCLUDE_EXPERIMENTAL_ADMIN_TASKS }],
+    queryFn: () => fetchAvailableTasks(activeDataset.id, classId, "admin", { includeExperimental: INCLUDE_EXPERIMENTAL_ADMIN_TASKS }),
     enabled: !!activeDataset?.id && !!classId,
     staleTime: 60 * 1000,
   });
   const allTasksRaw = useMemo(() => availableTasksData?.tasks ?? [], [availableTasksData?.tasks]);
-  const uniqueAdminTasks = useMemo(() => 
-    allTasksRaw
-      .filter((task) => ADMIN_ALLOWED_TASK_IDS.has(task.taskId))
-      .filter((task, idx, arr) => arr.findIndex((t) => t.taskId === task.taskId) === idx),
-    [allTasksRaw]
-  );
+  const uniqueAdminTasks = useMemo(() => filterUniqueAdminTasks(allTasksRaw), [allTasksRaw]);
 
   const taskMetaById = useMemo(() => {
     const map = new Map();

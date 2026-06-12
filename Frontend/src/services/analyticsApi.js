@@ -14,7 +14,7 @@
  */
 
 const API_BASE =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:4000/api";
+  import.meta.env?.VITE_API_BASE_URL || "http://localhost:4000/api";
 
 // ─── Response Helper ────────────────────────────────────────────────────────
 
@@ -82,12 +82,15 @@ export async function fetchTaskById(taskId) {
  * @param {string} datasetId
  * @param {string} [classId]
  * @param {string} [role]
+ * @param {Object} [options]
+ * @param {boolean} [options.includeExperimental]
  * @returns {Promise<{ success: boolean, summary: Object, tasks: Object[] }>}
  */
-export async function fetchAvailableTasks(datasetId, classId, role) {
+export async function fetchAvailableTasks(datasetId, classId, role, options = {}) {
   const params = new URLSearchParams({ datasetId });
   if (classId) params.set("classId", classId);
   if (role) params.set("role", role);
+  if (options.includeExperimental === true) params.set("includeExperimental", "true");
 
   const response = await fetch(`${API_BASE}/tasks/available?${params}`);
   return handleJsonResponse(response);
