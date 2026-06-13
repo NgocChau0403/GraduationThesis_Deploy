@@ -1,3 +1,5 @@
+import { parseImdBandMidpoint } from "../compositeFeatures.service.js";
+
 function norm(value) {
   if (value === null || value === undefined) return "";
   return String(value).trim();
@@ -132,6 +134,7 @@ export async function buildOuladSampleFromStreams({
     const enrollmentKey = `${classEntry.class_id}::${studentId}`;
     const enrollmentId = toEnrollmentId(batchId, classEntry.class_id, studentId);
 
+    const socioeconomicBand = norm(row.imd_band) || null;
     if (!studentsById.has(studentId)) {
       studentsById.set(studentId, {
         student_id: studentId,
@@ -145,8 +148,8 @@ export async function buildOuladSampleFromStreams({
         school: null,
         family_size: null,
         highest_education: norm(row.highest_education) || null,
-        socioeconomic_band: norm(row.imd_band) || null,
-        imd_score_numeric: null,
+        socioeconomic_band: socioeconomicBand,
+        imd_score_numeric: parseImdBandMidpoint(socioeconomicBand),
         disability_flag: toBoolFromYN(row.disability),
         higher_education_intent_flag: null,
         internet_access_flag: null,

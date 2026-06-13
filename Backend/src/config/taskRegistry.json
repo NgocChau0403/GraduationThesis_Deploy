@@ -4014,11 +4014,28 @@
     },
     "requiredCapabilities": [
       "assessment_scores",
-      "demographics"
+      "demographics",
+      "socioeconomic_context",
+      "disadvantage_scoring"
     ],
-    "optionalCapabilities": [
-      "socioeconomic_context"
-    ],
+    "optionalCapabilities": [],
+    "availability_contract": {
+      "required_all": [
+        "assessment_scores",
+        "demographics",
+        "socioeconomic_context",
+        "disadvantage_scoring"
+      ],
+      "chart_required_fields": [
+        "disadvantage_score",
+        "avg_score",
+        "final_outcome"
+      ],
+      "dataset_specific": {
+        "source_dataset": "OULAD",
+        "reason": "Task depends on OULAD IMD-derived disadvantage_score and score outcomes."
+      }
+    },
     "fallbackStrategy": "show_partial_data",
     "registry_status": "validated",
     "semanticReliability": {

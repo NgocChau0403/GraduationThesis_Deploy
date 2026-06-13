@@ -274,6 +274,12 @@ function ChartDiagnosticsPanel({ diagnostics }) {
     null_handling_policy,
     warnings,
   } = diagnostics;
+  const hasMissingRows = skipped_rows > 0 || missing_fields.length > 0;
+  const hasWarnings = warnings.length > 0;
+  if (!hasMissingRows && !hasWarnings) return null;
+  const missingSummary = missing_fields
+    .map((f) => `${f}=${missing_field_counts[f] ?? 0}`)
+    .join(", ");
 
   return (
     <div className="mt-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
@@ -284,33 +290,24 @@ function ChartDiagnosticsPanel({ diagnostics }) {
         <p>
           Valid rows: <span className="font-semibold text-slate-700">{valid_rows}</span>
         </p>
-        <p>
-          Skipped rows: <span className="font-semibold text-slate-700">{skipped_rows}</span>
-        </p>
-        <p>
-          Missing fields:{" "}
-          <span className="font-mono text-slate-700">
-            {missing_fields.length > 0 ? missing_fields.join(", ") : "none"}
-          </span>
-        </p>
+        {skipped_rows > 0 && (
+          <p>
+            Skipped rows: <span className="font-semibold text-slate-700">{skipped_rows}</span>
+          </p>
+        )}
       </div>
-
-      <p className="text-[11px] text-slate-500 mt-2">
-        Null policy: <span className="font-mono text-slate-600">{formatDisplayValue(null_handling_policy)}</span>
-      </p>
 
       {missing_fields.length > 0 && (
         <p className="text-[11px] text-slate-500 mt-1">
-          Missing counts:{" "}
-          <span className="font-mono text-slate-600">
-            {missing_fields
-              .map((f) => `${f}=${missing_field_counts[f] ?? 0}`)
-              .join(", ")}
-          </span>
+          Missing values filtered: <span className="font-mono text-slate-600">{missingSummary}</span>
         </p>
       )}
 
-      {warnings.length > 0 && (
+      <p className="text-[11px] text-slate-500 mt-1">
+        Null policy: <span className="font-mono text-slate-600">{formatDisplayValue(null_handling_policy)}</span>
+      </p>
+
+      {hasWarnings && (
         <ul className="mt-2 space-y-1 text-[11px] text-amber-700">
           {warnings.map((warning, idx) => (
             <li key={`${formatDisplayValue(warning)}-${idx}`}>- {formatDisplayValue(warning)}</li>

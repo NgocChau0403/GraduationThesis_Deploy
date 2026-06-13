@@ -205,7 +205,10 @@ export async function buildCanonicalCapabilitySnapshot({ batchId, classId = null
           s.disability_flag IS NOT NULL OR
           s.disadvantage_score IS NOT NULL
         ) THEN s.student_id
-      END)::int AS socioeconomic_students
+      END)::int AS socioeconomic_students,
+      COUNT(DISTINCT CASE
+        WHEN s.disadvantage_score IS NOT NULL THEN s.student_id
+      END)::int AS disadvantage_score_students
     FROM student s
     JOIN enrollment e
       ON e.student_id = s.student_id
@@ -249,6 +252,7 @@ export async function buildCanonicalCapabilitySnapshot({ batchId, classId = null
     lifestyle_students: toInt(student.lifestyle_students),
     family_students: toInt(student.family_students),
     socioeconomic_students: toInt(student.socioeconomic_students),
+    disadvantage_score_students: toInt(student.disadvantage_score_students),
   };
 
   const capabilities = {
@@ -262,6 +266,7 @@ export async function buildCanonicalCapabilitySnapshot({ batchId, classId = null
     lifestyle_factors: metrics.lifestyle_students >= 1,
     family_context: metrics.family_students >= 1,
     socioeconomic_context: metrics.socioeconomic_students >= 1,
+    disadvantage_scoring: metrics.disadvantage_score_students >= 2,
     engagement_tracking: metrics.positive_engagement_rows >= 1,
     resource_clickstream:
       metrics.positive_engagement_rows >= 1 && metrics.resource_type_non_null_rows >= 1,

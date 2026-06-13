@@ -70,6 +70,7 @@ function deriveStatus(layers) {
 class CapabilityValidatorService {
   constructor() {
     this.snapshotCache = new Map();
+    this.snapshotCacheTtlMs = 30_000;
   }
 
   _snapshotCacheKey(batchId, classId) {
@@ -78,11 +79,15 @@ class CapabilityValidatorService {
 
   async _getSnapshot(batchId, classId) {
     const key = this._snapshotCacheKey(batchId, classId);
-    if (this.snapshotCache.has(key)) {
-      return this.snapshotCache.get(key);
+    const cached = this.snapshotCache.get(key);
+    if (cached && Date.now() - cached.createdAt < this.snapshotCacheTtlMs) {
+      return cached.snapshot;
     }
     const snapshot = await buildCanonicalCapabilitySnapshot({ batchId, classId });
-    this.snapshotCache.set(key, snapshot);
+    this.snapshotCache.set(key, {
+      createdAt: Date.now(),
+      snapshot,
+    });
     return snapshot;
   }
 

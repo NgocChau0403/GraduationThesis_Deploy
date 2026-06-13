@@ -36,18 +36,19 @@ function adaptSingle(rawData, { x_field, y_field, diag }) {
     const y = toFiniteNumber(row?.[y_field]);
     if (x === null && row?.[x_field] !== 0) {
       registerMissingField(diag, x_field);
-      diag.warnings.push(`Skipped point: invalid x field "${x_field}".`);
       continue;
     }
     if (y === null && row?.[y_field] !== 0) {
       registerMissingField(diag, y_field);
-      diag.warnings.push(`Skipped point: invalid y field "${y_field}".`);
       continue;
     }
     points.push({ x, y });
   }
 
   diag.valid_rows = points.length;
+  if (points.length === 0 && rawData.length > 0) {
+    diag.warnings.push(`No valid scatter points after filtering missing "${x_field}" or "${y_field}".`);
+  }
   return {
     series: [{ name: y_field, data: points }],
     xKey: "x",
@@ -67,12 +68,10 @@ function adaptColored(rawData, { x_field, y_field, color_field, diag }) {
 
     if (x === null && row?.[x_field] !== 0) {
       registerMissingField(diag, x_field);
-      diag.warnings.push(`Skipped point: invalid x field "${x_field}".`);
       continue;
     }
     if (y === null && row?.[y_field] !== 0) {
       registerMissingField(diag, y_field);
-      diag.warnings.push(`Skipped point: invalid y field "${y_field}".`);
       continue;
     }
 
@@ -82,6 +81,9 @@ function adaptColored(rawData, { x_field, y_field, color_field, diag }) {
   }
 
   diag.valid_rows = validPoints;
+  if (validPoints === 0 && rawData.length > 0) {
+    diag.warnings.push(`No valid scatter points after filtering missing "${x_field}" or "${y_field}".`);
+  }
   const series = Object.entries(groups).map(([name, data]) => ({ name, data }));
   return {
     series,

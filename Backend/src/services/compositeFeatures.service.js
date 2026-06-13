@@ -37,6 +37,24 @@ function normalize01(value, min, max) {
   return Math.max(0, Math.min(1, normalized));
 }
 
+export function parseImdBandMidpoint(value) {
+  if (value === null || value === undefined || value === "") return null;
+  const text = String(value).trim();
+  if (!text || text === "?") return null;
+
+  const match = text.match(/(\d+(?:\.\d+)?)\s*-\s*(\d+(?:\.\d+)?)/);
+  if (match) {
+    const lower = Number(match[1]);
+    const upper = Number(match[2]);
+    if (Number.isFinite(lower) && Number.isFinite(upper)) {
+      return (lower + upper) / 2;
+    }
+  }
+
+  const numeric = toNumber(text.replace("%", ""));
+  return numeric === null ? null : numeric;
+}
+
 function hasNoFormalEducation(value) {
   const normalized = normalizeText(value);
   return FEATURE_RULES.education_levels.no_formal_values.includes(normalized);
@@ -94,7 +112,8 @@ function computeLifestyleFeatures(studentRecord) {
 }
 
 function computeSocioeconomicFeatures(studentRecord) {
-  const imdScore = toNumber(studentRecord?.imd_score_numeric);
+  const parsedImdScore = parseImdBandMidpoint(studentRecord?.socioeconomic_band);
+  const imdScore = toNumber(studentRecord?.imd_score_numeric) ?? parsedImdScore;
   const disabilityFlag = toBoolean(studentRecord?.disability_flag);
   const highestEducation = studentRecord?.highest_education;
 
@@ -105,6 +124,7 @@ function computeSocioeconomicFeatures(studentRecord) {
   const hasAnySignal = imdScore !== null || disabilityFlag === true || hasNoFormalEducation(highestEducation);
 
   return {
+    imd_score_numeric: imdScore,
     disadvantage_score: hasAnySignal ? disadvantageScore : null
   };
 }

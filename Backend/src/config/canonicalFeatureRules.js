@@ -38,6 +38,6 @@ export const FEATURE_RULES = {
   },
 
   education_levels: {
-    no_formal_values: ["no_formal", "no formal", "none", "unknown"]
+    no_formal_values: ["no_formal", "no_formal_quals", "none", "unknown"]
   }
 };
