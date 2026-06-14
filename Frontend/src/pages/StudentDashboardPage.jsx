@@ -256,18 +256,11 @@ export default function StudentDashboardPage() {
     navigate(buildStudentDashboardUrl({ taskId: activeTaskId, classId, studentId: nextStudentId }));
   };
 
-  const handleTriggerAnalysis = () => {
-    if (!isTaskExecutable(currentTaskMeta)) return;
-    runTask(activeTaskId, studentId, classId);
-  };
-
   useEffect(() => {
     if (!availableTasksData || !studentId || !classId || !activeDataset?.id) return;
     if (!isTaskExecutable(currentTaskMeta)) return;
     setTaskResults({});
-    if (STUDENT_BASIC_TASKS.includes(activeTaskId) || STUDENT_CONDITIONAL_TASKS.includes(activeTaskId)) {
-      runTask(activeTaskId, studentId, classId);
-    }
+    runTask(activeTaskId, studentId, classId);
   }, [availableTasksData, studentId, classId, activeDataset?.id, runTask, activeTaskId, currentTaskMeta]);
 
   useEffect(() => {
@@ -398,15 +391,6 @@ export default function StudentDashboardPage() {
           </div>
 
           {/* Dynamic runtime trigger */}
-          <div className="border-t border-slate-200 bg-white p-3 shrink-0">
-            <button
-              onClick={handleTriggerAnalysis}
-              disabled={isCurrentTaskLoading || !isTaskExecutable(currentTaskMeta)}
-              className="w-full rounded-lg py-2 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 transition-all text-white shadow-sm"
-            >
-              {isCurrentTaskLoading ? "⚡ Compiling Visual..." : "🚀 Run Selected Metric View"}
-            </button>
-          </div>
         </section>
 
         {/* Central Visualization Workspace Viewport */}

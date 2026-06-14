@@ -39,7 +39,7 @@ except ModuleNotFoundError:
 
 from schemas import (
     ExplainRequest, ExplainResponse,
-    ExplanationBody, ConfidenceInfo, AIMeta, TokenUsage
+    ExplanationBody, Insight, ConfidenceInfo, AIMeta, TokenUsage
 )
 
 logger = logging.getLogger("ai_service.strategy")
@@ -205,6 +205,11 @@ CRITICAL RULES:
 
         # Validate LLM-generated explanation body
         explanation = ExplanationBody.model_validate(raw.get("explanation", raw))
+        if self._should_suppress_recommendations(request):
+            explanation.recommendations = []
+        if self._should_suppress_educational_implications(request):
+            explanation.educational_implications = []
+        self._normalize_task_aware_action_rationale(request, explanation)
 
         # Derive confidence.based_on[] (Python logic  LLM doesn't decide this)
         confidence_level  = raw.get("confidence", {}).get("level") or \
@@ -246,6 +251,242 @@ CRITICAL RULES:
         )
 
     #  Shared: Confidence Source Derivation 
+
+    @staticmethod
+    def _should_suppress_recommendations(req: ExplainRequest) -> bool:
+        """
+        Some task-aware dashboard cards already render concrete actions in the
+        primary visualization. Keep the AI text explanatory so the UI does not
+        show duplicated "Recommended action" and "Recommendations" sections.
+        """
+        if req.task_id == "A-G16":
+            return True
+
+        method, _warning = BaseExplanationStrategy._resolve_ai_summary_method()
+        return (
+            method == TASK_AWARE_SUMMARY_METHOD
+            and req.task_id in {"S-T13", "A-S04", "A-S08"}
+        )
+
+    @staticmethod
+    def _should_suppress_educational_implications(req: ExplainRequest) -> bool:
+        """
+        Some admin action cards already render concrete action guidance.
+        Educational implications often become action wording, so keep the AI
+        output to summary + evidence insights.
+        """
+        if req.task_id == "A-G16":
+            return True
+
+        method, _warning = BaseExplanationStrategy._resolve_ai_summary_method()
+        return method == TASK_AWARE_SUMMARY_METHOD and req.task_id in {"A-S04", "A-S08"}
+
+    @staticmethod
+    def _normalize_task_aware_action_rationale(req: ExplainRequest, explanation: ExplanationBody) -> None:
+        """
+        Task-aware action cards already render the actual action text. The AI
+        panel should therefore explain why each visible card item exists. LLMs
+        sometimes drift back to generic titles such as "Low Engagement Score";
+        normalize those into the task-specific "Why ..." titles used by the UI.
+        """
+        method, _warning = BaseExplanationStrategy._resolve_ai_summary_method()
+        if method != TASK_AWARE_SUMMARY_METHOD:
+            return
+
+        if req.task_id == "A-S08":
+            BaseExplanationStrategy._normalize_a_s08_rationale(req, explanation)
+        elif req.task_id == "A-S04":
+            BaseExplanationStrategy._normalize_a_s04_rationale(req, explanation)
+
+    @staticmethod
+    def _normalize_a_s08_rationale(req: ExplainRequest, explanation: ExplanationBody) -> None:
+        step_titles = {
+            "step1": "Why advisor check-in is Step 1",
+            "step2": "Why engagement is Step 2",
+            "step3": "Why time management is Step 3",
+            "step4": "Why academic support is Step 4",
+        }
+
+        for insight in explanation.insights:
+            normalized_title = BaseExplanationStrategy._a_s08_rationale_title(insight)
+            if normalized_title:
+                insight.title = normalized_title
+            if insight.title.startswith("Why "):
+                insight.description = BaseExplanationStrategy._append_rationale_sentence(
+                    insight.description,
+                    "This explains why that visible step is included on the 7-day card."
+                )
+
+        present = {insight.title for insight in explanation.insights}
+        rows = BaseExplanationStrategy._flatten_dataset_rows(req)
+        risk_score = BaseExplanationStrategy._first_numeric(rows, ["at_risk_score", "risk_score"])
+        risk_label = BaseExplanationStrategy._first_text(rows, ["at_risk_label", "risk_label"])
+        engagement = BaseExplanationStrategy._first_numeric(rows, ["engagement_score"])
+        punctuality = BaseExplanationStrategy._first_numeric(rows, ["punctuality_rate", "submission_punctuality"])
+        avg_score = BaseExplanationStrategy._first_numeric(rows, ["avg_score", "average_score"])
+
+        if step_titles["step1"] not in present and (risk_score is not None or risk_label):
+            value_text = BaseExplanationStrategy._format_metric_pair("risk score", risk_score, "risk label", risk_label)
+            explanation.insights.insert(0, Insight(
+                title=step_titles["step1"],
+                description=f"The card starts with an advisor check-in rationale because {value_text} classifies this as an active risk case rather than passive monitoring.",
+                severity="medium",
+            ))
+
+        if step_titles["step2"] not in {insight.title for insight in explanation.insights} and engagement is not None:
+            explanation.insights.append(Insight(
+                title=step_titles["step2"],
+                description=f"Engagement score is {engagement:.2f}, below the 0.15 low-engagement threshold, so the card includes an engagement-focused rationale.",
+                severity="high" if engagement < 0.15 else "medium",
+            ))
+
+        if step_titles["step3"] not in {insight.title for insight in explanation.insights} and punctuality is not None:
+            explanation.insights.append(Insight(
+                title=step_titles["step3"],
+                description=f"Punctuality rate is {punctuality:.2f}, below the 0.70 expected threshold, so the card includes a time-management rationale.",
+                severity="medium",
+            ))
+
+        if step_titles["step4"] not in {insight.title for insight in explanation.insights} and avg_score is not None:
+            explanation.insights.append(Insight(
+                title=step_titles["step4"],
+                description=f"Average score is {avg_score:.2f}; this score context explains why academic performance remains visible in the 7-day plan.",
+                severity="medium",
+            ))
+
+    @staticmethod
+    def _a_s08_rationale_title(insight: Insight) -> str | None:
+        title_text = insight.title.lower()
+        evidence_text = " ".join(
+            f"{item.metric} {item.value} {item.delta} {item.context}"
+            for item in insight.evidence
+        ).lower()
+        primary_text = f"{title_text} {evidence_text}"
+        description_text = insight.description.lower()
+
+        if any(marker in primary_text for marker in ["advisor", "at_risk", "risk score", "risk label"]):
+            return "Why advisor check-in is Step 1"
+        if any(marker in primary_text for marker in ["punctuality", "submission", "deadline", "time management"]):
+            return "Why time management is Step 3"
+        if any(marker in primary_text for marker in ["engagement", "activity", "participation"]):
+            return "Why engagement is Step 2"
+        if any(marker in primary_text for marker in ["avg_score", "average score", "score", "academic"]):
+            return "Why academic support is Step 4"
+
+        if any(marker in description_text for marker in ["punctuality", "submission", "deadline", "time management"]):
+            return "Why time management is Step 3"
+        if any(marker in description_text for marker in ["engagement score", "active participation"]):
+            return "Why engagement is Step 2"
+        if any(marker in description_text for marker in ["average score", "academic performance"]):
+            return "Why academic support is Step 4"
+        if "risk" in description_text:
+            return "Why advisor check-in is Step 1"
+
+        return None
+
+    @staticmethod
+    def _normalize_a_s04_rationale(req: ExplainRequest, explanation: ExplanationBody) -> None:
+        explanation.summary = BaseExplanationStrategy._clean_a_s04_summary(explanation.summary)
+        for insight in explanation.insights:
+            text = f"{insight.title} {insight.description}".lower()
+            if "low score" in text or "average score" in text or "flag_low_score" in text:
+                insight.title = "Why Low Score is High"
+            elif "punctuality" in text or "flag_low_punctuality" in text:
+                insight.title = "Why Low Punctuality is Active"
+            elif "absence" in text or "flag_high_absence" in text:
+                insight.title = "Why High Absence is Active"
+            elif "trend" in text or "flag_neg_trend" in text:
+                insight.title = "Why Negative Trend is Active"
+
+            if insight.title.startswith("Why "):
+                insight.description = BaseExplanationStrategy._clean_a_s04_description(insight.description)
+                insight.description = BaseExplanationStrategy._append_rationale_sentence(
+                    insight.description,
+                    "This explains why that visible checklist flag is surfaced in the card."
+                )
+
+    @staticmethod
+    def _clean_a_s04_summary(summary: str) -> str:
+        replacements = {
+            "flag_low_score": "Low Score",
+            "flag_low_punctuality": "Low Punctuality",
+            "flag_high_absence": "High Absence",
+            "flag_neg_trend": "Negative Trend",
+            "significant academic and time management challenges": "active score and punctuality risk signals",
+            "academic and time management challenges": "score and punctuality risk signals",
+        }
+        cleaned = summary
+        for old, new in replacements.items():
+            cleaned = re.sub(re.escape(old), new, cleaned, flags=re.IGNORECASE)
+        return cleaned
+
+    @staticmethod
+    def _clean_a_s04_description(description: str) -> str:
+        replacements = {
+            r",?\s*warranting attention\.?": ".",
+            r"\bThis indicates a substantial gap in academic performance,?\s*": "This is the metric reason for the High severity label. ",
+            r"\bThis reflects a critical issue in time management that could impact overall performance\.?": "This is the metric reason the punctuality flag is active.",
+            r"\bcritical issue\b": "active risk signal",
+            r"\bneeds?\b": "has",
+            r"\brequires?\b": "has",
+            r"\bshould\b": "can",
+        }
+        cleaned = description
+        for pattern, replacement in replacements.items():
+            cleaned = re.sub(pattern, replacement, cleaned, flags=re.IGNORECASE)
+        cleaned = re.sub(r"\s+\.", ".", cleaned)
+        cleaned = re.sub(r"\.{2,}", ".", cleaned)
+        cleaned = re.sub(r"\s+", " ", cleaned).strip()
+        return cleaned
+
+    @staticmethod
+    def _append_rationale_sentence(description: str, sentence: str) -> str:
+        if sentence.lower() in description.lower():
+            return description
+        return f"{description.rstrip()} {sentence}"
+
+    @staticmethod
+    def _flatten_dataset_rows(req: ExplainRequest) -> list[dict]:
+        return [
+            row
+            for rows in req.datasets.values()
+            for row in rows
+            if isinstance(row, dict)
+        ]
+
+    @staticmethod
+    def _first_numeric(rows: list[dict], keys: list[str]) -> float | None:
+        for row in rows:
+            for key in keys:
+                value = row.get(key)
+                try:
+                    numeric = float(value)
+                except (TypeError, ValueError):
+                    continue
+                if numeric == numeric:
+                    return numeric
+        return None
+
+    @staticmethod
+    def _first_text(rows: list[dict], keys: list[str]) -> str | None:
+        for row in rows:
+            for key in keys:
+                value = row.get(key)
+                if value is None:
+                    continue
+                text = str(value).strip()
+                if text:
+                    return text
+        return None
+
+    @staticmethod
+    def _format_metric_pair(label_a: str, value_a: float | None, label_b: str, value_b: str | None) -> str:
+        parts = []
+        if value_a is not None:
+            parts.append(f"{label_a}={value_a:g}")
+        if value_b:
+            parts.append(f"{label_b}={value_b}")
+        return " and ".join(parts) if parts else "the returned risk fields"
 
     def _derive_confidence_sources(self, level: str, req: ExplainRequest) -> list[str]:
         """

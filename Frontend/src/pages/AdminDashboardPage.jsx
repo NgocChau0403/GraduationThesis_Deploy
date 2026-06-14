@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo, useRef } from "react";
 import { useLocation, useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useAppContext } from "../contexts/AppContext";
@@ -39,6 +39,8 @@ export default function AdminDashboardPage() {
   const { activeDataset, isLoading: appLoading } = useAppContext();
   const [currentTab, setCurrentTab] = useState("admin_basic");
   const [activeTaskId, setActiveTaskId] = useState(ADMIN_BASIC_TASKS[0]);
+  const [analysisRunNonce, setAnalysisRunNonce] = useState(0);
+  const latestTaskRunRef = useRef(0);
 
   const { data: classesData, isLoading: isClassesLoading, isError: isClassesError, error: classesQueryError } = useQuery({
     queryKey: ["classes", activeDataset?.id],
@@ -95,6 +97,8 @@ export default function AdminDashboardPage() {
 
   const runTask = useCallback(async (taskId, extraParams = {}) => {
     if (!activeDataset?.id || !classId) return;
+    const runId = latestTaskRunRef.current + 1;
+    latestTaskRunRef.current = runId;
 
     const task = taskMetaById.get(taskId);
     if (!isTaskExecutable(task)) {
@@ -123,16 +127,20 @@ export default function AdminDashboardPage() {
     setLoadingTasks((prev) => new Set([...prev, taskId]));
     try {
       const result = await runAnalyticsTask(taskId, params);
+      if (latestTaskRunRef.current !== runId) return;
       setTaskResults((prev) => ({ ...prev, [taskId]: result }));
     } catch (err) {
+      if (latestTaskRunRef.current !== runId) return;
       console.error(`[AdminDashboard] Task ${taskId} failed:`, err.message);
       setTaskResults((prev) => ({ ...prev, [taskId]: { error: err.message, taskId } }));
     } finally {
-      setLoadingTasks((prev) => {
-        const next = new Set(prev);
-        next.delete(taskId);
-        return next;
-      });
+      if (latestTaskRunRef.current === runId) {
+        setLoadingTasks((prev) => {
+          const next = new Set(prev);
+          next.delete(taskId);
+          return next;
+        });
+      }
     }
   }, [activeDataset?.id, classId, resolveEnrollmentId, taskMetaById]);
 
@@ -263,6 +271,7 @@ export default function AdminDashboardPage() {
 
   const handleTaskSelect = (taskId) => {
     setActiveTaskId(taskId);
+    setAnalysisRunNonce((value) => value + 1);
     const taskType = getAdminTaskType(taskId, adminTaskGroups);
     navigate(buildAdminDashboardUrl({
       taskId,
@@ -316,26 +325,36 @@ export default function AdminDashboardPage() {
     }));
   };
 
-  const handleTriggerAnalysis = () => {
+  const runActiveTask = useCallback(() => {
     if (ADMIN_BASIC_TASKS.includes(activeTaskId) || ADMIN_COHORT_TASKS.includes(activeTaskId)) {
       runTask(activeTaskId);
     } else if (ADMIN_SINGLE_STUDENT_TASKS.includes(activeTaskId)) {
-      runTask(activeTaskId, { student_id: primaryStudentId });
+      if (primaryStudentId) {
+        runTask(activeTaskId, { student_id: primaryStudentId });
+      }
     } else if (ADMIN_COMPARISON_TASKS.includes(activeTaskId)) {
       if (primaryStudentId && secondaryStudentId && primaryStudentId !== secondaryStudentId) {
         runTask(activeTaskId, { s1: primaryStudentId, s2: secondaryStudentId });
       }
     }
-  };
+  }, [activeTaskId, primaryStudentId, runTask, secondaryStudentId]);
 
   useEffect(() => {
     if (!availableTasksData || !activeDataset?.id || !classId) return;
     if (!isTaskExecutable(currentTaskMeta)) return;
     setTaskResults({});
-    if (ADMIN_BASIC_TASKS.includes(activeTaskId)) {
-      runTask(activeTaskId);
-    }
-  }, [availableTasksData, activeDataset?.id, classId, activeTaskId, runTask, currentTaskMeta]);
+    runActiveTask();
+  }, [
+    availableTasksData,
+    activeDataset?.id,
+    classId,
+    activeTaskId,
+    analysisRunNonce,
+    primaryStudentId,
+    secondaryStudentId,
+    currentTaskMeta,
+    runActiveTask,
+  ]);
 
   useEffect(() => {
     if (!filteredTasks.length || !availableTasksData) return;
@@ -481,10 +500,8 @@ export default function AdminDashboardPage() {
             )}
           </div>
 
-          {/* Scope Controls Configuration Box */}
+          {(ADMIN_SINGLE_STUDENT_TASKS.includes(activeTaskId) || ADMIN_COMPARISON_TASKS.includes(activeTaskId)) && (
           <div className="border-t border-slate-200 bg-white p-3 shrink-0 space-y-2">
-            <div className="text-[10px] font-bold text-slate-400 uppercase tracking-wide">Query Execution Scope</div>
-            
             {ADMIN_SINGLE_STUDENT_TASKS.includes(activeTaskId) && (
               <div>
                   <span className="block text-[10px] text-slate-400 font-medium mb-1">Target Student ID</span>
@@ -510,15 +527,8 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
             )}
-
-            <button
-              onClick={handleTriggerAnalysis}
-              disabled={isCurrentTaskLoading || !isTaskExecutable(currentTaskMeta)}
-              className="w-full rounded-lg py-2 text-xs font-bold bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 transition-all text-white shadow-sm"
-            >
-              {isCurrentTaskLoading ? "⚡ Analyzing Metrics..." : "🚀 Run Analysis View"}
-            </button>
           </div>
+          )}
         </section>
 
         {/* Right Output Visual Area Canvas */}

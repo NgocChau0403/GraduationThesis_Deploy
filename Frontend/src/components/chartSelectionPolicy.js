@@ -106,5 +106,5 @@ export function isDatasetCandidate({ rows, vizType, config, chartRequiredFields 
   }
 
   if (chartRequiredFields.length === 0) return true;
-  return chartRequiredFields.some((field) => hasField(field));
+  return chartRequiredFields.every((field) => hasField(field));
 }

@@ -38,7 +38,7 @@ export default function PieChartView({ data, config }) {
           labelLine={{ stroke: "#94a3b8" }}
         >
           {chartData.map((entry, idx) => (
-            <Cell key={idx} fill={getStableColor(entry.name)} />
+            <Cell key={idx} fill={getPieSliceColor(entry.name)} />
           ))}
         </Pie>
         <Tooltip
@@ -50,4 +50,19 @@ export default function PieChartView({ data, config }) {
       </ResponsiveContainer>
     </div>
   );
+}
+
+function getPieSliceColor(name) {
+  const normalized = String(name || "").trim().toLowerCase();
+  const outcomeColors = {
+    distinction: "#7c3aed",
+    pass: "#10b981",
+    fail: "#ef4444",
+    withdrawn: "#f97316",
+    withdraw: "#f97316",
+    unknown: "#94a3b8",
+    other: "#64748b",
+  };
+
+  return outcomeColors[normalized] || getStableColor(name);
 }

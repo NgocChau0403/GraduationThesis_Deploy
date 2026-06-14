@@ -1,4 +1,5 @@
 import { formatCellValue } from "../../utils/responseTransformer";
+import { getChecklistDisplayValue } from "../../chartAdapters/checklist.adapter";
 
 export default function ChecklistView({ data }) {
   const items = data?.items ?? [];
@@ -72,15 +73,17 @@ function ChecklistItem({ item }) {
       <div className="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
         <div className="bg-white/80 border border-slate-200 rounded-md px-3 py-2">
           <span className="text-slate-500 uppercase tracking-wider">Current value</span>
-          <div className="mt-1 font-mono text-slate-800">{formatCellValue(item.currentValue)}</div>
+          <div className="mt-1 font-mono text-slate-800">
+            {getChecklistDisplayValue(item.flagName, item.currentValue)}
+          </div>
         </div>
         <div className="bg-white/80 border border-slate-200 rounded-md px-3 py-2">
-          <span className="text-slate-500 uppercase tracking-wider">Threshold</span>
-          <div className="mt-1 font-mono text-slate-800">{formatCellValue(item.threshold)}</div>
+          <span className="text-slate-500 uppercase tracking-wider">Risk rule</span>
+          <div className="mt-1 font-mono text-slate-800">{item.riskRule || formatCellValue(item.threshold)}</div>
         </div>
         <div className="bg-white/80 border border-slate-200 rounded-md px-3 py-2">
           <span className="text-slate-500 uppercase tracking-wider">Support area</span>
-          <div className="mt-1 font-semibold text-slate-800">{humanizeFlagName(item.supportCategory)}</div>
+          <div className="mt-1 font-semibold text-slate-800">{formatSupportCategory(item.supportCategory)}</div>
         </div>
       </div>
 
@@ -123,6 +126,21 @@ function humanizeFlagName(text) {
     .replace(/^flag_/, "")
     .replace(/_/g, " ")
     .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function formatSupportCategory(value) {
+  const labels = {
+    academic_performance: "Academic Performance",
+    academic_history: "Academic History",
+    attendance: "Attendance",
+    engagement: "Engagement",
+    time_management: "Time Management",
+    trend_monitoring: "Trend Monitoring",
+    monitor: "Monitoring",
+    general: "General",
+  };
+  const key = String(value ?? "").trim().toLowerCase();
+  return labels[key] ?? humanizeFlagName(value);
 }
 
 function capitalize(text) {

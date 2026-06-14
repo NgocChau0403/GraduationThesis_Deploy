@@ -18,13 +18,10 @@ export function adapt(rawData, config = {}) {
 
   diag.input_rows = rawData.length;
   const { x_field, y_field } = config;
-  const allKeys = Object.keys(rawData[0] || {});
   const valueField = y_field;
   const colField = x_field;
-  const rowField =
-    config.series_field ||
-    allKeys.find((k) => k !== colField && k !== valueField) ||
-    colField;
+  const rowField = config.series_field || null;
+  const defaultRowLabel = config.y_label || valueField || "Value";
 
   const rowsSet = new Set();
   const colsSet = new Set();
@@ -32,7 +29,7 @@ export function adapt(rawData, config = {}) {
   const numericValues = [];
 
   for (const row of rawData) {
-    const r = toCategoryValue(row?.[rowField]);
+    const r = rowField ? toCategoryValue(row?.[rowField]) : defaultRowLabel;
     const c = toCategoryValue(row?.[colField]);
     if (r === null) {
       registerMissingField(diag, rowField);
@@ -58,7 +55,7 @@ export function adapt(rawData, config = {}) {
   }
 
   const rows = [...rowsSet];
-  const cols = [...colsSet].sort(sortCategoryLike);
+  const cols = buildContinuousColumns([...colsSet], colField);
   const cells = [];
   for (const r of rows) {
     for (const c of cols) {
@@ -96,4 +93,20 @@ function sortCategoryLike(a, b) {
   const bothNumeric = Number.isFinite(na) && Number.isFinite(nb);
   if (bothNumeric) return na - nb;
   return String(a).localeCompare(String(b));
+}
+
+function buildContinuousColumns(cols, field) {
+  const sorted = cols.sort(sortCategoryLike);
+  if (field !== "week_number" || sorted.length === 0) return sorted;
+
+  const numeric = sorted.map((col) => Number(col)).filter(Number.isFinite);
+  if (numeric.length !== sorted.length) return sorted;
+
+  const min = Math.min(...numeric);
+  const max = Math.max(...numeric);
+  const continuous = [];
+  for (let week = min; week <= max; week += 1) {
+    continuous.push(String(week));
+  }
+  return continuous;
 }

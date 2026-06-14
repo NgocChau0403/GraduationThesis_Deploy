@@ -45,6 +45,8 @@ const CHART_MAP = {
   checklist: ChecklistView,
 };
 
+const SHOW_CHART_DIAGNOSTICS = false;
+
 export default function ChartRenderer({ taskMeta, datasets, isLoading, error }) {
   if (isLoading) return <ChartSkeleton />;
   if (error) {
@@ -59,8 +61,11 @@ export default function ChartRenderer({ taskMeta, datasets, isLoading, error }) 
   }
   if (!taskMeta || !datasets) return null;
 
-  const vizType = taskMeta.viz_type;
-  const config = taskMeta.visualization_config || {};
+  const vizType = resolveFrontendVizType(taskMeta);
+  const config = normalizeVisualizationConfig(
+    taskMeta,
+    taskMeta.visualization_config || {}
+  );
   const chartRequiredFields = deriveChartRequiredFields(taskMeta, config, vizType);
 
   const resolved = resolveDatasetForVisualization({
@@ -94,7 +99,21 @@ export default function ChartRenderer({ taskMeta, datasets, isLoading, error }) 
 
   let chartData;
   try {
-    chartData = adapter.adapt(safeRows, adapterConfig);
+    const rowsForAdapter = taskMeta?.taskId === "S-T07"
+      ? buildAbsenceImpactRows(datasets)
+      : taskMeta?.taskId === "A-G11"
+        ? normalizeWeeklyDropRows(safeRows)
+        : taskMeta?.taskId === "A-G12"
+          ? normalizeBackgroundOutcomeRows(safeRows)
+          : safeRows;
+
+    if (taskMeta?.taskId === "S-T03") {
+      chartData = adaptPeerComparisonChart(rowsForAdapter, adapterConfig);
+    } else if (taskMeta?.taskId === "S-B03") {
+      chartData = adaptEngagementSummaryChart(rowsForAdapter, adapterConfig);
+    } else {
+      chartData = adapter.adapt(rowsForAdapter, adapterConfig);
+    }
   } catch (error) {
     console.error("[ChartRenderer] Adapter crashed", {
       taskId: taskMeta?.taskId,
@@ -121,29 +140,34 @@ export default function ChartRenderer({ taskMeta, datasets, isLoading, error }) 
     adapterMeta,
   });
 
-  const hasProxyRows = safeRows.some(
+  const shouldShowCompetencyBadge = isCompetencyProxyTask(taskMeta);
+  const hasProxyRows = shouldShowCompetencyBadge && safeRows.some(
     (r) => r?.competency_source === "proxy" || r?.competency_source === "unknown"
   );
-  const hasNativeRows = safeRows.some((r) => r?.competency_source === "native");
+  const hasNativeRows = shouldShowCompetencyBadge && safeRows.some((r) => r?.competency_source === "native");
   const showProxyBadge = hasProxyRows && !hasNativeRows;
   const showMixedBadge = hasProxyRows && hasNativeRows;
-  const absenceContext = buildAbsenceContext(taskMeta, datasets);
+  const absenceContext = vizType === "card" ? null : buildAbsenceContext(taskMeta, datasets);
 
   return (
     <div className="bg-white rounded-xl border border-slate-200 p-4 shadow-sm">
       <div className="mb-3 flex items-center justify-between">
         <h4 className="text-sm font-semibold text-slate-700">{taskMeta.taskName}</h4>
         <span className="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 font-medium">
-          {vizType.replace("_", " ")}
+          {getDisplayedVizType(vizType, config, taskMeta)}
         </span>
       </div>
 
-      {showProxyBadge && <ProxyCompetencyBadge mode="proxy" tooltip={taskMeta.semanticNote} />}
-      {showMixedBadge && <ProxyCompetencyBadge mode="mixed" tooltip={taskMeta.semanticNote} />}
+      {(showProxyBadge || showMixedBadge) && (
+        <div className="mb-6 flex flex-wrap items-center gap-2">
+          {showProxyBadge && <ProxyCompetencyBadge mode="proxy" tooltip={taskMeta.semanticNote} />}
+          {showMixedBadge && <ProxyCompetencyBadge mode="mixed" tooltip={taskMeta.semanticNote} />}
+        </div>
+      )}
       {absenceContext && <AbsenceContextAnnotation context={absenceContext} />}
 
       {hasRenderableData(vizType, chartData) ? (
-        <ChartComponent data={chartData} config={config} />
+        <ChartComponent data={chartData} config={{ ...adapterConfig, __task_id: taskMeta.taskId }} />
       ) : (
         <NoDataState
           datasetLabel={resolved.selectedDatasetLabel}
@@ -151,9 +175,472 @@ export default function ChartRenderer({ taskMeta, datasets, isLoading, error }) 
         />
       )}
 
-      <ChartDiagnosticsPanel diagnostics={diagnostics} />
+      {SHOW_CHART_DIAGNOSTICS && <ChartDiagnosticsPanel diagnostics={diagnostics} />}
     </div>
   );
+}
+
+function resolveFrontendVizType(taskMeta) {
+  if (taskMeta?.taskId === "S-B03") return "bar_chart";
+  if (taskMeta?.taskId === "S-T07") return "card";
+  if (taskMeta?.taskId === "A-S01") return "card";
+  if (taskMeta?.taskId === "A-S08") return "card";
+  if (taskMeta?.taskId === "A-C03") return "card";
+  if (taskMeta?.taskId === "A-C05") return "card";
+  if (taskMeta?.taskId === "A-G03") return "card";
+  if (taskMeta?.taskId === "A-G15") return "card";
+  if (taskMeta?.taskId === "A-G16") return "card";
+  if (taskMeta?.taskId === "A-G07") return "bar_chart";
+  return taskMeta?.viz_type;
+}
+
+function getDisplayedVizType(vizType, config, taskMeta) {
+  if (taskMeta?.taskId === "A-S07") return "context";
+  if (config?.variant === "histogram") return "histogram";
+  return String(vizType || "").replace("_", " ");
+}
+
+function isCompetencyProxyTask(taskMeta) {
+  const text = [
+    taskMeta?.taskId,
+    taskMeta?.taskName,
+    taskMeta?.semanticNote,
+    taskMeta?.visualization_config?.x_field,
+  ].filter(Boolean).join(" ").toLowerCase();
+
+  return text.includes("competency") && taskMeta?.taskId !== "A-G04";
+}
+
+function normalizeVisualizationConfig(taskMeta, config) {
+  if (taskMeta?.taskId === "A-S01") {
+    return {
+      ...config,
+      variant: "student_profile",
+    };
+  }
+
+  if (taskMeta?.taskId === "A-S08") {
+    return {
+      ...config,
+      variant: "intervention_plan",
+    };
+  }
+
+  if (taskMeta?.taskId === "A-C03") {
+    return {
+      ...config,
+      variant: "risk_comparison",
+    };
+  }
+
+  if (taskMeta?.taskId === "A-C05") {
+    return {
+      ...config,
+      variant: "academic_background_comparison",
+    };
+  }
+
+  if (taskMeta?.taskId === "A-G03") {
+    return {
+      ...config,
+      variant: "at_risk_contact_queue",
+    };
+  }
+
+  if (taskMeta?.taskId === "A-G15") {
+    return {
+      ...config,
+      variant: "intervention_priority_ranking",
+      queue_limit: 10,
+      queue_label: "Intervention priority ranking",
+    };
+  }
+
+  if (taskMeta?.taskId === "A-G16") {
+    return {
+      ...config,
+      variant: "admin_action_recommendation",
+    };
+  }
+
+  if (taskMeta?.taskId === "A-G07") {
+    return {
+      ...config,
+      x_field: "feature_name",
+      y_field: "correlation_with_avg_score",
+      series_field: null,
+      color_field: "correlation_with_avg_score",
+      orientation: "horizontal",
+      variant: "correlation_rank",
+      x_label: "Factor",
+      y_label: "Correlation with Avg Score",
+      semantic_roles: {
+        ...(config.semantic_roles || {}),
+        x: "category",
+        y: "correlation_metric",
+        color: "correlation_metric",
+      },
+    };
+  }
+
+  if (taskMeta?.taskId === "S-T03") {
+    return {
+      ...config,
+      x_field: "metric_name",
+      y_field: "metric_value",
+      series_field: "comparison_group",
+      color_field: "comparison_group",
+      orientation: "horizontal",
+      variant: "grouped",
+      x_label: "Metric",
+      y_label: "Value (0-100)",
+      semantic_roles: {
+        ...(config.semantic_roles || {}),
+        x: "category",
+        y: "performance_metric",
+        series: "category",
+      },
+    };
+  }
+
+  if (taskMeta?.taskId === "S-B03") {
+    return {
+      ...config,
+      x_field: "metric_name",
+      y_field: "metric_value",
+      series_field: "comparison_group",
+      color_field: "comparison_group",
+      orientation: "horizontal",
+      variant: "grouped",
+      x_label: "Engagement metric",
+      y_label: "You as % of class average",
+      semantic_roles: {
+        ...(config.semantic_roles || {}),
+        x: "category",
+        y: "engagement_metric",
+        series: "category",
+      },
+    };
+  }
+
+  if (taskMeta?.taskId === "S-T07") {
+    return {
+      ...config,
+      variant: "absence_impact_summary",
+    };
+  }
+
+  if (taskMeta?.taskId === "A-S06") {
+    return {
+      ...config,
+      x_field: "assessment_order",
+      y_field: "submission_delay_days",
+      orientation: "vertical",
+      variant: "signed_delay",
+      x_label: "Assessment",
+      y_label: "Submission Delay (days)",
+      semantic_roles: {
+        ...(config.semantic_roles || {}),
+        x: "time",
+        y: "behavioral_metric",
+      },
+    };
+  }
+
+  if (taskMeta?.taskId === "A-S03") {
+    return {
+      ...config,
+      x_field: "week_number",
+      y_field: "weekly_clicks",
+      series_field: null,
+      y_fields: ["weekly_clicks", "rolling_3wk_avg"],
+      series_labels: {
+        weekly_clicks: "Weekly clicks",
+        rolling_3wk_avg: "Rolling 3-week average",
+      },
+      variant: "multi_line",
+      x_label: "Week",
+      y_label: "Engagement Clicks",
+      semantic_roles: {
+        ...(config.semantic_roles || {}),
+        x: "time",
+        y: "engagement_metric",
+        series: "metric",
+      },
+    };
+  }
+
+  if (taskMeta?.taskId === "A-G11") {
+    return {
+      ...config,
+      x_field: "week_number",
+      y_field: "weekly_clicks",
+      series_field: null,
+      y_fields: ["weekly_clicks", "rolling_3wk_avg"],
+      series_labels: {
+        weekly_clicks: "Weekly clicks",
+        rolling_3wk_avg: "Rolling 3-week average",
+      },
+      variant: "multi_line",
+      x_label: "Week",
+      y_label: "Total Clicks",
+      semantic_roles: {
+        ...(config.semantic_roles || {}),
+        x: "time",
+        y: "engagement_metric",
+        series: "metric",
+      },
+    };
+  }
+
+  if (taskMeta?.taskId === "A-G12") {
+    return {
+      ...config,
+      x_field: "group_value",
+      y_field: "fail_or_withdrawn_pct",
+      series_field: null,
+      orientation: "horizontal",
+      variant: "ranked",
+      x_label: "Demographic Group",
+      y_label: "Fail + Withdrawn (%)",
+      semantic_roles: {
+        ...(config.semantic_roles || {}),
+        x: "category",
+        y: "risk_rate",
+        series: null,
+      },
+    };
+  }
+
+  return config;
+}
+
+function normalizeWeeklyDropRows(rows) {
+  return rows.map((row) => ({
+    ...row,
+    weekly_clicks: row?.weekly_clicks ?? row?.week_total_clicks,
+  }));
+}
+
+function normalizeBackgroundOutcomeRows(rows) {
+  const classifiedRows = rows.map((row) => ({
+    row,
+    groupKind: classifyBackgroundGroupValue(row?.group_value),
+  }));
+  const preferredGroupKind = classifiedRows.some((item) => item.groupKind === "socioeconomic_band")
+    ? "socioeconomic_band"
+    : null;
+  const byGroup = new Map();
+
+  for (const item of classifiedRows) {
+    if (preferredGroupKind && item.groupKind !== preferredGroupKind) continue;
+
+    const row = item.row;
+    const groupValue = String(row?.group_value ?? "Unknown").trim() || "Unknown";
+    const outcome = String(row?.final_outcome ?? "").trim().toLowerCase();
+    const pct = Number(row?.pct_within_group);
+    const count = Number(row?.student_count);
+
+    if (!byGroup.has(groupValue)) {
+      byGroup.set(groupValue, {
+        group_value: groupValue,
+        fail_pct: 0,
+        withdrawn_pct: 0,
+        pass_pct: 0,
+        distinction_pct: 0,
+        student_count: 0,
+      });
+    }
+
+    const group = byGroup.get(groupValue);
+    if (Number.isFinite(count)) group.student_count += count;
+    if (!Number.isFinite(pct)) continue;
+
+    if (outcome === "fail") group.fail_pct += pct;
+    else if (outcome === "withdrawn" || outcome === "withdraw") group.withdrawn_pct += pct;
+    else if (outcome === "pass") group.pass_pct += pct;
+    else if (outcome === "distinction") group.distinction_pct += pct;
+  }
+
+  return [...byGroup.values()].map((group) => ({
+    ...group,
+    fail_or_withdrawn_pct: Number((group.fail_pct + group.withdrawn_pct).toFixed(1)),
+  }));
+}
+
+function classifyBackgroundGroupValue(value) {
+  const text = String(value ?? "").trim();
+  if (/^\d+\s*-\s*\d+%$/.test(text)) return "socioeconomic_band";
+  if (/region$/i.test(text) || /ireland|england|scotland|wales/i.test(text)) return "region";
+  if (/qualification|level|education|graduate/i.test(text)) return "education";
+  if (/^\d+\s*-\s*\d+$/.test(text)) return "age_group";
+  return "other";
+}
+
+function adaptPeerComparisonChart(rawRows, config) {
+  const rows = Array.isArray(rawRows) ? rawRows : [];
+  const grouped = new Map();
+  const series = new Set();
+
+  for (const row of rows) {
+    const metricName = String(row?.metric_name ?? "").trim();
+    const comparisonGroup = String(row?.comparison_group ?? "").trim();
+    const metricValue = Number(row?.metric_value);
+    if (!metricName || !comparisonGroup || !Number.isFinite(metricValue)) continue;
+
+    if (!grouped.has(metricName)) {
+      grouped.set(metricName, {
+        x: metricName,
+        metric_name: metricName,
+        __categoryRaw: metricName,
+        __categoryLabel: metricName,
+      });
+    }
+    grouped.get(metricName)[comparisonGroup] = metricValue;
+    series.add(comparisonGroup);
+  }
+
+  const preferredSeries = ["You", "Cohort benchmark"];
+  const bars = [
+    ...preferredSeries.filter((name) => series.has(name)),
+    ...[...series].filter((name) => !preferredSeries.includes(name)),
+  ].map((name) => ({ dataKey: name, name }));
+
+  return {
+    data: [...grouped.values()],
+    xKey: "x",
+    bars,
+    stacked: false,
+    categoryField: "metric_name",
+    valueField: "metric_value",
+    categoryLabel: config.x_label || "Metric",
+    valueLabel: config.y_label || "Value (0-100)",
+    valueKind: "score",
+    meta: {
+      valid_rows: grouped.size,
+      input_rows: rows.length,
+      skipped_rows: Math.max(0, rows.length - grouped.size * Math.max(1, bars.length)),
+      missing_field_counts: {},
+      warnings: [],
+      null_handling_policy: "real zero is preserved; null/missing is not coerced",
+    },
+  };
+}
+
+function adaptEngagementSummaryChart(rawRows, config) {
+  const rows = Array.isArray(rawRows) ? rawRows : [];
+  const source = rows[0] || {};
+  const metrics = [
+    {
+      name: "Total clicks",
+      student: source.total_clicks ?? source.total_engagement_count,
+      cohort: source.class_avg_total_engagement_count,
+    },
+    {
+      name: "Active days",
+      student: source.active_days,
+      cohort: source.class_avg_active_days,
+    },
+    {
+      name: "Engagement score",
+      student: source.engagement_score,
+      cohort: source.class_avg_engagement_score,
+    },
+  ];
+
+  const data = metrics
+    .map((metric) => {
+      const studentValue = Number(metric.student);
+      const cohortValue = Number(metric.cohort);
+      if (!Number.isFinite(studentValue) || !Number.isFinite(cohortValue) || cohortValue <= 0) {
+        return null;
+      }
+
+      return {
+        x: metric.name,
+        metric_name: metric.name,
+        __categoryRaw: metric.name,
+        __categoryLabel: metric.name,
+        You: Number(studentValue.toFixed(4)),
+        "Class average": Number(cohortValue.toFixed(4)),
+        student_raw_value: studentValue,
+        cohort_raw_value: cohortValue,
+      };
+    })
+    .filter(Boolean);
+
+  return {
+    data,
+    xKey: "x",
+    bars: [
+      { dataKey: "You", name: "You" },
+      { dataKey: "Class average", name: "Class average" },
+    ],
+    stacked: false,
+    categoryField: "metric_name",
+    valueField: "metric_value",
+    categoryLabel: config.x_label || "Engagement metric",
+    valueLabel: "Actual value",
+    valueKind: "engagement_raw",
+    meta: {
+      valid_rows: data.length,
+      input_rows: rows.length,
+      skipped_rows: metrics.length - data.length,
+      missing_field_counts: {},
+      warnings: [],
+      null_handling_policy: "metrics without a finite class average are skipped",
+    },
+  };
+}
+
+function buildAbsenceImpactRows(datasets) {
+  const absenceRows = Array.isArray(datasets?.absence_data) ? datasets.absence_data : [];
+  const scoreRows = Array.isArray(datasets?.score_series) ? datasets.score_series : [];
+  const absenceRow = absenceRows[0] || {};
+  const scored = scoreRows
+    .map((row, index) => ({
+      score: Number(row?.score_normalized),
+      order: Number(row?.assessment_order ?? index + 1),
+      passFlag: row?.pass_flag,
+    }))
+    .filter((row) => Number.isFinite(row.score));
+
+  const scores = scored.map((row) => row.score);
+  const avgScore = scores.length > 0
+    ? scores.reduce((sum, score) => sum + score, 0) / scores.length
+    : null;
+  const latestScore = scored.length > 0 ? scored[scored.length - 1].score : null;
+  const minScore = scores.length > 0 ? Math.min(...scores) : null;
+  const maxScore = scores.length > 0 ? Math.max(...scores) : null;
+  const performanceTrend = calculateSimpleSlope(scored);
+
+  return [{
+    absences: absenceRow.absences,
+    absence_rate: absenceRow.absence_rate,
+    avg_score: avgScore,
+    latest_score: latestScore,
+    min_score: minScore,
+    max_score: maxScore,
+    performance_trend: performanceTrend,
+    assessment_count: scored.length,
+  }];
+}
+
+function calculateSimpleSlope(rows) {
+  if (!Array.isArray(rows) || rows.length < 2) return null;
+  const clean = rows.filter((row) =>
+    Number.isFinite(row.order) && Number.isFinite(row.score)
+  );
+  if (clean.length < 2) return null;
+  const meanX = clean.reduce((sum, row) => sum + row.order, 0) / clean.length;
+  const meanY = clean.reduce((sum, row) => sum + row.score, 0) / clean.length;
+  const denominator = clean.reduce((sum, row) => sum + (row.order - meanX) ** 2, 0);
+  if (denominator === 0) return null;
+  const numerator = clean.reduce(
+    (sum, row) => sum + (row.order - meanX) * (row.score - meanY),
+    0
+  );
+  return numerator / denominator;
 }
 
 function buildAbsenceContext(taskMeta, datasets) {
@@ -241,12 +728,23 @@ function hasRenderableData(vizType, chartData) {
   }
   if (vizType === "card") {
     if (chartData.type === "risk_status") return true;
+    if (chartData.type === "student_profile") return true;
+    if (chartData.type === "action_plan") return true;
+    if (chartData.type === "risk_comparison") return true;
+    if (chartData.type === "academic_background_comparison") return true;
+    if (chartData.type === "at_risk_contact_queue") return true;
+    if (chartData.type === "admin_action_recommendation") return true;
+    if (chartData.type === "procrastination_summary") return true;
+    if (chartData.type === "absence_impact_summary") return true;
     return Array.isArray(chartData.items) && chartData.items.length > 0;
   }
   if (vizType === "checklist") {
     return Array.isArray(chartData.items) && chartData.items.length > 0;
   }
   if (vizType === "table") {
+    if (chartData.type === "action_plan") {
+      return Array.isArray(chartData.actions) && chartData.actions.length > 0;
+    }
     return Array.isArray(chartData.rows) && chartData.rows.length > 0;
   }
   return Array.isArray(chartData.data) && chartData.data.length > 0;
@@ -326,9 +824,9 @@ function ProxyCompetencyBadge({ mode, tooltip }) {
       style={{
         display: "inline-flex",
         alignItems: "center",
-        gap: "5px",
-        marginBottom: "10px",
-        padding: "3px 10px",
+        gap: "7px",
+        marginBottom: 0,
+        padding: "6px 12px",
         borderRadius: "999px",
         fontSize: "11px",
         fontWeight: 500,

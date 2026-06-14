@@ -53,6 +53,8 @@ function adaptSingle(rawData, { x_field, y_field, diag }) {
     series: [{ name: y_field, data: points }],
     xKey: "x",
     yKey: "y",
+    stats: buildScatterStats(points),
+    trendLine: buildTrendLine(points),
     meta: finalizeDiagnostics(diag),
   };
 }
@@ -84,11 +86,86 @@ function adaptColored(rawData, { x_field, y_field, color_field, diag }) {
   if (validPoints === 0 && rawData.length > 0) {
     diag.warnings.push(`No valid scatter points after filtering missing "${x_field}" or "${y_field}".`);
   }
-  const series = Object.entries(groups).map(([name, data]) => ({ name, data }));
+  const series = Object.entries(groups)
+    .map(([name, data]) => ({ name, data }))
+    .sort((a, b) => {
+      if (a.name === "Selected student") return 1;
+      if (b.name === "Selected student") return -1;
+      return a.name.localeCompare(b.name);
+    });
+  const allPoints = series.flatMap((item) => item.data);
   return {
     series,
     xKey: "x",
     yKey: "y",
+    stats: buildScatterStats(allPoints),
+    trendLine: buildTrendLine(allPoints),
     meta: finalizeDiagnostics(diag),
   };
+}
+
+function buildScatterStats(points) {
+  if (!Array.isArray(points) || points.length < 2) {
+    return null;
+  }
+
+  const n = points.length;
+  const meanX = points.reduce((sum, point) => sum + point.x, 0) / n;
+  const meanY = points.reduce((sum, point) => sum + point.y, 0) / n;
+  let covariance = 0;
+  let varianceX = 0;
+  let varianceY = 0;
+
+  for (const point of points) {
+    const dx = point.x - meanX;
+    const dy = point.y - meanY;
+    covariance += dx * dy;
+    varianceX += dx * dx;
+    varianceY += dy * dy;
+  }
+
+  if (varianceX === 0 || varianceY === 0) {
+    return {
+      count: n,
+      slope: null,
+      correlation: null,
+      direction: "flat",
+      strength: "unknown",
+    };
+  }
+
+  const slope = covariance / varianceX;
+  const correlation = covariance / Math.sqrt(varianceX * varianceY);
+  const absCorrelation = Math.abs(correlation);
+
+  return {
+    count: n,
+    slope,
+    correlation,
+    direction: slope < -0.05 ? "negative" : slope > 0.05 ? "positive" : "flat",
+    strength: absCorrelation >= 0.7 ? "strong" : absCorrelation >= 0.4 ? "moderate" : "weak",
+  };
+}
+
+function buildTrendLine(points) {
+  const stats = buildScatterStats(points);
+  if (!stats || stats.slope === null) {
+    return null;
+  }
+
+  const xs = points.map((point) => point.x);
+  const minX = Math.min(...xs);
+  const maxX = Math.max(...xs);
+  if (minX === maxX) {
+    return null;
+  }
+
+  const meanX = points.reduce((sum, point) => sum + point.x, 0) / points.length;
+  const meanY = points.reduce((sum, point) => sum + point.y, 0) / points.length;
+  const intercept = meanY - stats.slope * meanX;
+
+  return [
+    { x: minX, y: intercept + stats.slope * minX },
+    { x: maxX, y: intercept + stats.slope * maxX },
+  ];
 }
