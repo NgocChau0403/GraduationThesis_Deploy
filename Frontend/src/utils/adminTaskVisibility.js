@@ -1,3 +1,8 @@
+import {
+  getSanitizedDisabledReason,
+  issueMessage,
+} from "./availabilityMessages";
+
 export const ADMIN_BASIC_TASKS = ["A-B01", "A-B02", "A-B03", "A-B04"];
 export const ADMIN_SINGLE_STUDENT_TASKS = ["A-S01", "A-S02", "A-S03", "A-S04", "A-S05", "A-S06", "A-S07", "A-S08"];
 export const ADMIN_COMPARISON_TASKS = ["A-C01", "A-C02", "A-C03", "A-C04", "A-C05", "A-C06"];
@@ -19,22 +24,8 @@ export function isTaskExecutable(task) {
   return task?.availability?.status === "executable";
 }
 
-function issueMessage(issue) {
-  if (!issue) return null;
-  if (typeof issue === "string") return issue;
-  if (typeof issue === "object") return issue.message || issue.code || JSON.stringify(issue);
-  return String(issue);
-}
-
 export function getDisabledReason(task) {
-  const availability = task?.availability;
-  const firstMissing = availability?.missing_requirements?.[0];
-  return (
-    availability?.disabled_reason ||
-    issueMessage(firstMissing) ||
-    availability?.confidence_reason ||
-    "Task is not executable for this dataset/class."
-  );
+  return getSanitizedDisabledReason(task, "Required data is missing for this task.");
 }
 
 export function hasDatasetMismatchEvidence(task) {

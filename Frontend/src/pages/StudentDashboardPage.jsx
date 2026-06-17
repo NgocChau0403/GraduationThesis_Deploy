@@ -9,6 +9,7 @@ import {
   buildStudentDashboardUrl,
   resolveStudentDashboardUrlState,
 } from "../utils/dashboardUrlState";
+import { getSanitizedDisabledReason } from "../utils/availabilityMessages";
 
 const STUDENT_BASIC_TASKS = ["S-B01", "S-B02"];
 const STUDENT_CONDITIONAL_TASKS = ["S-B03"];
@@ -33,15 +34,7 @@ function isTaskExecutable(task) {
 }
 
 function getDisabledReason(task) {
-  const availability = task?.availability;
-  const firstMissing = availability?.missing_requirements?.[0];
-  return (
-    availability?.disabled_reason ||
-    firstMissing?.message ||
-    firstMissing ||
-    availability?.confidence_reason ||
-    "Task is not executable for this dataset/class."
-  );
+  return getSanitizedDisabledReason(task, "Required data is missing for this task.");
 }
 
 function getAvailabilityLabel(task) {
