@@ -1,0 +1,1181 @@
+{
+  "validator": "validate_trend_series_multi_evidence.py",
+  "generated_at": "2026-06-18T12:28:38.322692+00:00",
+  "backend_url": "http://localhost:4000",
+  "config_source": "canonical_pre_migration",
+  "parse_contract": {
+    "positive_config_passed": true,
+    "negative_case_count": 3,
+    "negative_cases_passed": 3,
+    "negative_results": [
+      {
+        "case": "missing_time_column",
+        "rejected": true,
+        "detail": "1 validation error for AISummaryConfig\n  Value error, trend_series requires time_column [type=value_error, input_value={'summary_type': 'trend_s...mn': 'score_normalized'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+      },
+      {
+        "case": "missing_metric_column",
+        "rejected": true,
+        "detail": "1 validation error for AISummaryConfig\n  Value error, trend_series requires metric_column [type=value_error, input_value={'summary_type': 'trend_s...mn': 'assessment_order'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+      },
+      {
+        "case": "duplicate_secondary_metric_columns",
+        "rejected": true,
+        "detail": "1 validation error for AISummaryConfig\n  Value error, secondary_metric_columns must be unique [type=value_error, input_value={'summary_type': 'trend_s...vg_score', 'avg_score']}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+      }
+    ],
+    "errors": [],
+    "passed": true
+  },
+  "case_count": 4,
+  "passed": 4,
+  "failed": 0,
+  "overall_pass": true,
+  "cases": [
+    {
+      "case_id": "A-S06_SAMPLE_OULAD_CCC_2014J",
+      "task_id": "A-S06",
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781785711966_2705e30d",
+      "analytics_meta": {
+        "taskId": "A-S06",
+        "isMultiQuery": false,
+        "rowCount": 5,
+        "executionTimeMs": 13,
+        "queryHash": "6e5a8c27",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "submission_lateness"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "summary": {
+        "summary_type": "trend_series",
+        "dataset_name": "submission_lateness",
+        "row_count": 5,
+        "time_column": "assessment_order",
+        "metric_column": "submission_delay_days",
+        "metric_units": {
+          "submission_delay_days": "days_relative_to_due_date",
+          "submission_delay_avg": "days_late_average_positive_only",
+          "punctuality_rate": "ratio_0_1",
+          "score_normalized": "score_on_runtime_scale"
+        },
+        "metric_directions": {
+          "submission_delay_days": "higher_is_worse",
+          "submission_delay_avg": "higher_is_worse",
+          "punctuality_rate": "higher_is_better",
+          "score_normalized": "higher_is_better"
+        },
+        "dataset_roles": {},
+        "point_count": 4,
+        "first_point": {
+          "assessment_order": 1.0,
+          "submission_delay_days": 3.0,
+          "labels": {
+            "assessment_type": "CMA",
+            "assessment_name": "24295"
+          },
+          "secondary_metrics": {
+            "score_normalized": 100.0,
+            "submission_delay_avg": 3.25,
+            "punctuality_rate": 0.0
+          }
+        },
+        "last_point": {
+          "assessment_order": 8.0,
+          "submission_delay_days": 5.0,
+          "labels": {
+            "assessment_type": "CMA",
+            "assessment_name": "24298"
+          },
+          "secondary_metrics": {
+            "score_normalized": 83.0,
+            "submission_delay_avg": 3.25,
+            "punctuality_rate": 0.0
+          }
+        },
+        "peak": {
+          "assessment_order": 8.0,
+          "submission_delay_days": 5.0,
+          "labels": {
+            "assessment_type": "CMA",
+            "assessment_name": "24298"
+          },
+          "secondary_metrics": {
+            "score_normalized": 83.0,
+            "submission_delay_avg": 3.25,
+            "punctuality_rate": 0.0
+          }
+        },
+        "trough": {
+          "assessment_order": 3.0,
+          "submission_delay_days": 2.0,
+          "labels": {
+            "assessment_type": "CMA",
+            "assessment_name": "24296"
+          },
+          "secondary_metrics": {
+            "score_normalized": 87.0,
+            "submission_delay_avg": 3.25,
+            "punctuality_rate": 0.0
+          }
+        },
+        "overall_change": {
+          "from": {
+            "assessment_order": 1.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24295"
+            },
+            "secondary_metrics": {
+              "score_normalized": 100.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            }
+          },
+          "to": {
+            "assessment_order": 8.0,
+            "submission_delay_days": 5.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24298"
+            },
+            "secondary_metrics": {
+              "score_normalized": 83.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            }
+          },
+          "delta": 2.0,
+          "percent_change": 66.6667
+        },
+        "largest_adjacent_drop": {
+          "from": {
+            "assessment_order": 1.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24295"
+            },
+            "secondary_metrics": {
+              "score_normalized": 100.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            }
+          },
+          "to": {
+            "assessment_order": 3.0,
+            "submission_delay_days": 2.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24296"
+            },
+            "secondary_metrics": {
+              "score_normalized": 87.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            }
+          },
+          "delta": -1.0
+        },
+        "largest_adjacent_rise": {
+          "from": {
+            "assessment_order": 5.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24297"
+            },
+            "secondary_metrics": {
+              "score_normalized": 90.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            }
+          },
+          "to": {
+            "assessment_order": 8.0,
+            "submission_delay_days": 5.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24298"
+            },
+            "secondary_metrics": {
+              "score_normalized": 83.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            }
+          },
+          "delta": 2.0
+        },
+        "flagged_points": [
+          {
+            "assessment_order": 1.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24295"
+            },
+            "secondary_metrics": {
+              "score_normalized": 100.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          },
+          {
+            "assessment_order": 3.0,
+            "submission_delay_days": 2.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24296"
+            },
+            "secondary_metrics": {
+              "score_normalized": 87.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          },
+          {
+            "assessment_order": 5.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24297"
+            },
+            "secondary_metrics": {
+              "score_normalized": 90.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          },
+          {
+            "assessment_order": 8.0,
+            "submission_delay_days": 5.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24298"
+            },
+            "secondary_metrics": {
+              "score_normalized": 83.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          }
+        ],
+        "secondary_metric_evidence": {
+          "score_normalized": {
+            "count": 4,
+            "min": 83.0,
+            "max": 100.0,
+            "first": 100.0,
+            "last": 83.0
+          },
+          "submission_delay_avg": {
+            "count": 4,
+            "min": 3.25,
+            "max": 3.25,
+            "first": 3.25,
+            "last": 3.25
+          },
+          "punctuality_rate": {
+            "count": 4,
+            "min": 0.0,
+            "max": 0.0,
+            "first": 0.0,
+            "last": 0.0
+          }
+        },
+        "secondary_metric_associations": {
+          "score_normalized": {
+            "paired_point_count": 4,
+            "method": "pearson_on_aligned_points",
+            "correlation": -0.4015,
+            "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+            "small_sample": true
+          },
+          "submission_delay_avg": {
+            "paired_point_count": 4,
+            "method": "pearson_on_aligned_points",
+            "correlation": null,
+            "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+            "small_sample": true
+          },
+          "punctuality_rate": {
+            "paired_point_count": 4,
+            "method": "pearson_on_aligned_points",
+            "correlation": null,
+            "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+            "small_sample": true
+          }
+        },
+        "multi_dataset_evidence": [],
+        "small_sample_caveats": [
+          {
+            "point_count": 4,
+            "minimum_sample_size": 6.0,
+            "warning": "Only 4 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+          }
+        ],
+        "causal_claim_allowed": false,
+        "action_evidence": [],
+        "summarization_warnings": [
+          "Skipped 1 rows with invalid submission_delay_days.",
+          "Only 4 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+        ]
+      },
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "S-T08_SAMPLE_OULAD_CCC_2014J",
+      "task_id": "S-T08",
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781785717959_ae090c53",
+      "analytics_meta": {
+        "taskId": "S-T08",
+        "isMultiQuery": false,
+        "rowCount": 5,
+        "executionTimeMs": 4,
+        "queryHash": "b95d6ff6",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "submission_lateness"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "summary": {
+        "summary_type": "trend_series",
+        "dataset_name": "submission_lateness",
+        "row_count": 5,
+        "time_column": "assessment_order",
+        "metric_column": "submission_delay_days",
+        "metric_units": {
+          "submission_delay_days": "days_relative_to_due_date",
+          "submission_delay_avg": "days_late_average_positive_only",
+          "punctuality_rate": "ratio_0_1",
+          "score_normalized": "score_on_runtime_scale"
+        },
+        "metric_directions": {
+          "submission_delay_days": "higher_is_worse",
+          "submission_delay_avg": "higher_is_worse",
+          "punctuality_rate": "higher_is_better",
+          "score_normalized": "higher_is_better"
+        },
+        "dataset_roles": {},
+        "point_count": 4,
+        "first_point": {
+          "assessment_order": 1.0,
+          "submission_delay_days": 3.0,
+          "labels": {
+            "assessment_type": "CMA",
+            "assessment_name": "24295"
+          },
+          "secondary_metrics": {
+            "score_normalized": 100.0,
+            "submission_delay_avg": 3.25,
+            "punctuality_rate": 0.0
+          }
+        },
+        "last_point": {
+          "assessment_order": 8.0,
+          "submission_delay_days": 5.0,
+          "labels": {
+            "assessment_type": "CMA",
+            "assessment_name": "24298"
+          },
+          "secondary_metrics": {
+            "score_normalized": 83.0,
+            "submission_delay_avg": 3.25,
+            "punctuality_rate": 0.0
+          }
+        },
+        "peak": {
+          "assessment_order": 8.0,
+          "submission_delay_days": 5.0,
+          "labels": {
+            "assessment_type": "CMA",
+            "assessment_name": "24298"
+          },
+          "secondary_metrics": {
+            "score_normalized": 83.0,
+            "submission_delay_avg": 3.25,
+            "punctuality_rate": 0.0
+          }
+        },
+        "trough": {
+          "assessment_order": 3.0,
+          "submission_delay_days": 2.0,
+          "labels": {
+            "assessment_type": "CMA",
+            "assessment_name": "24296"
+          },
+          "secondary_metrics": {
+            "score_normalized": 87.0,
+            "submission_delay_avg": 3.25,
+            "punctuality_rate": 0.0
+          }
+        },
+        "overall_change": {
+          "from": {
+            "assessment_order": 1.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24295"
+            },
+            "secondary_metrics": {
+              "score_normalized": 100.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            }
+          },
+          "to": {
+            "assessment_order": 8.0,
+            "submission_delay_days": 5.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24298"
+            },
+            "secondary_metrics": {
+              "score_normalized": 83.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            }
+          },
+          "delta": 2.0,
+          "percent_change": 66.6667
+        },
+        "largest_adjacent_drop": {
+          "from": {
+            "assessment_order": 1.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24295"
+            },
+            "secondary_metrics": {
+              "score_normalized": 100.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            }
+          },
+          "to": {
+            "assessment_order": 3.0,
+            "submission_delay_days": 2.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24296"
+            },
+            "secondary_metrics": {
+              "score_normalized": 87.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            }
+          },
+          "delta": -1.0
+        },
+        "largest_adjacent_rise": {
+          "from": {
+            "assessment_order": 5.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24297"
+            },
+            "secondary_metrics": {
+              "score_normalized": 90.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            }
+          },
+          "to": {
+            "assessment_order": 8.0,
+            "submission_delay_days": 5.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24298"
+            },
+            "secondary_metrics": {
+              "score_normalized": 83.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            }
+          },
+          "delta": 2.0
+        },
+        "flagged_points": [
+          {
+            "assessment_order": 1.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24295"
+            },
+            "secondary_metrics": {
+              "score_normalized": 100.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          },
+          {
+            "assessment_order": 3.0,
+            "submission_delay_days": 2.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24296"
+            },
+            "secondary_metrics": {
+              "score_normalized": 87.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          },
+          {
+            "assessment_order": 5.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24297"
+            },
+            "secondary_metrics": {
+              "score_normalized": 90.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          },
+          {
+            "assessment_order": 8.0,
+            "submission_delay_days": 5.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24298"
+            },
+            "secondary_metrics": {
+              "score_normalized": 83.0,
+              "submission_delay_avg": 3.25,
+              "punctuality_rate": 0.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          }
+        ],
+        "secondary_metric_evidence": {
+          "score_normalized": {
+            "count": 4,
+            "min": 83.0,
+            "max": 100.0,
+            "first": 100.0,
+            "last": 83.0
+          },
+          "submission_delay_avg": {
+            "count": 4,
+            "min": 3.25,
+            "max": 3.25,
+            "first": 3.25,
+            "last": 3.25
+          },
+          "punctuality_rate": {
+            "count": 4,
+            "min": 0.0,
+            "max": 0.0,
+            "first": 0.0,
+            "last": 0.0
+          }
+        },
+        "secondary_metric_associations": {
+          "score_normalized": {
+            "paired_point_count": 4,
+            "method": "pearson_on_aligned_points",
+            "correlation": -0.4015,
+            "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+            "small_sample": true
+          },
+          "submission_delay_avg": {
+            "paired_point_count": 4,
+            "method": "pearson_on_aligned_points",
+            "correlation": null,
+            "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+            "small_sample": true
+          },
+          "punctuality_rate": {
+            "paired_point_count": 4,
+            "method": "pearson_on_aligned_points",
+            "correlation": null,
+            "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+            "small_sample": true
+          }
+        },
+        "multi_dataset_evidence": [],
+        "small_sample_caveats": [
+          {
+            "point_count": 4,
+            "minimum_sample_size": 6.0,
+            "warning": "Only 4 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+          }
+        ],
+        "causal_claim_allowed": false,
+        "action_evidence": [],
+        "summarization_warnings": [
+          "Skipped 1 rows with invalid submission_delay_days.",
+          "Only 4 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+        ]
+      },
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "S-T12_SAMPLE_OULAD_CCC_2014J",
+      "task_id": "S-T12",
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781785718110_db382dd4",
+      "analytics_meta": {
+        "taskId": "S-T12",
+        "isMultiQuery": true,
+        "queryCount": 2,
+        "executionTimeMs": 9,
+        "queryHash": "2c35e8fc",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "submission_series",
+          "punctuality_summary"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "summary": {
+        "summary_type": "trend_series",
+        "dataset_name": "submission_series",
+        "row_count": 5,
+        "time_column": "assessment_order",
+        "metric_column": "submission_delay_days",
+        "metric_units": {
+          "submission_delay_days": "days_relative_to_due_date",
+          "score_normalized": "score_on_runtime_scale"
+        },
+        "metric_directions": {
+          "submission_delay_days": "higher_is_worse",
+          "score_normalized": "higher_is_better"
+        },
+        "dataset_roles": {
+          "submission_series": "primary_series",
+          "punctuality_summary": "context_summary"
+        },
+        "point_count": 4,
+        "first_point": {
+          "assessment_order": 1.0,
+          "submission_delay_days": 3.0,
+          "labels": {
+            "assessment_type": "CMA",
+            "assessment_name": "24295"
+          },
+          "secondary_metrics": {
+            "score_normalized": 100.0
+          }
+        },
+        "last_point": {
+          "assessment_order": 8.0,
+          "submission_delay_days": 5.0,
+          "labels": {
+            "assessment_type": "CMA",
+            "assessment_name": "24298"
+          },
+          "secondary_metrics": {
+            "score_normalized": 83.0
+          }
+        },
+        "peak": {
+          "assessment_order": 8.0,
+          "submission_delay_days": 5.0,
+          "labels": {
+            "assessment_type": "CMA",
+            "assessment_name": "24298"
+          },
+          "secondary_metrics": {
+            "score_normalized": 83.0
+          }
+        },
+        "trough": {
+          "assessment_order": 3.0,
+          "submission_delay_days": 2.0,
+          "labels": {
+            "assessment_type": "CMA",
+            "assessment_name": "24296"
+          },
+          "secondary_metrics": {
+            "score_normalized": 87.0
+          }
+        },
+        "overall_change": {
+          "from": {
+            "assessment_order": 1.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24295"
+            },
+            "secondary_metrics": {
+              "score_normalized": 100.0
+            }
+          },
+          "to": {
+            "assessment_order": 8.0,
+            "submission_delay_days": 5.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24298"
+            },
+            "secondary_metrics": {
+              "score_normalized": 83.0
+            }
+          },
+          "delta": 2.0,
+          "percent_change": 66.6667
+        },
+        "largest_adjacent_drop": {
+          "from": {
+            "assessment_order": 1.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24295"
+            },
+            "secondary_metrics": {
+              "score_normalized": 100.0
+            }
+          },
+          "to": {
+            "assessment_order": 3.0,
+            "submission_delay_days": 2.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24296"
+            },
+            "secondary_metrics": {
+              "score_normalized": 87.0
+            }
+          },
+          "delta": -1.0
+        },
+        "largest_adjacent_rise": {
+          "from": {
+            "assessment_order": 5.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24297"
+            },
+            "secondary_metrics": {
+              "score_normalized": 90.0
+            }
+          },
+          "to": {
+            "assessment_order": 8.0,
+            "submission_delay_days": 5.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24298"
+            },
+            "secondary_metrics": {
+              "score_normalized": 83.0
+            }
+          },
+          "delta": 2.0
+        },
+        "flagged_points": [
+          {
+            "assessment_order": 1.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24295"
+            },
+            "secondary_metrics": {
+              "score_normalized": 100.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          },
+          {
+            "assessment_order": 3.0,
+            "submission_delay_days": 2.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24296"
+            },
+            "secondary_metrics": {
+              "score_normalized": 87.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          },
+          {
+            "assessment_order": 5.0,
+            "submission_delay_days": 3.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24297"
+            },
+            "secondary_metrics": {
+              "score_normalized": 90.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          },
+          {
+            "assessment_order": 8.0,
+            "submission_delay_days": 5.0,
+            "labels": {
+              "assessment_type": "CMA",
+              "assessment_name": "24298"
+            },
+            "secondary_metrics": {
+              "score_normalized": 83.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          }
+        ],
+        "secondary_metric_evidence": {
+          "score_normalized": {
+            "count": 4,
+            "min": 83.0,
+            "max": 100.0,
+            "first": 100.0,
+            "last": 83.0
+          }
+        },
+        "secondary_metric_associations": {
+          "score_normalized": {
+            "paired_point_count": 4,
+            "method": "pearson_on_aligned_points",
+            "correlation": -0.4015,
+            "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+            "small_sample": true
+          }
+        },
+        "multi_dataset_evidence": [
+          {
+            "dataset_name": "punctuality_summary",
+            "role": "context_summary",
+            "row_count": 1,
+            "columns": [
+              "submission_delay_avg",
+              "punctuality_rate"
+            ],
+            "first_row": {
+              "submission_delay_avg": "3.25",
+              "punctuality_rate": "0"
+            },
+            "numeric_stats": {
+              "submission_delay_avg": {
+                "count": 1,
+                "min": 3.25,
+                "max": 3.25,
+                "avg": 3.25
+              },
+              "punctuality_rate": {
+                "count": 1,
+                "min": 0.0,
+                "max": 0.0,
+                "avg": 0.0
+              }
+            }
+          }
+        ],
+        "small_sample_caveats": [
+          {
+            "point_count": 4,
+            "minimum_sample_size": 6.0,
+            "warning": "Only 4 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+          }
+        ],
+        "causal_claim_allowed": false,
+        "action_evidence": [],
+        "summarization_warnings": [
+          "Skipped 1 rows with invalid submission_delay_days.",
+          "Only 4 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+        ]
+      },
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "S-T07_SAMPLE_UCI_POR",
+      "task_id": "S-T07",
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781785718235_0bd0376c",
+      "analytics_meta": {
+        "taskId": "S-T07",
+        "isMultiQuery": true,
+        "queryCount": 2,
+        "executionTimeMs": 21,
+        "queryHash": "0f494364",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "absence_data",
+          "score_series"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "summary": {
+        "summary_type": "trend_series",
+        "dataset_name": "score_series",
+        "row_count": 3,
+        "time_column": "assessment_order",
+        "metric_column": "score_normalized",
+        "metric_units": {
+          "score_normalized": "score_on_runtime_scale",
+          "week_of_class": "course_week"
+        },
+        "metric_directions": {
+          "score_normalized": "higher_is_better",
+          "week_of_class": "time_index"
+        },
+        "dataset_roles": {
+          "absence_data": "context_snapshot",
+          "score_series": "primary_series"
+        },
+        "point_count": 3,
+        "first_point": {
+          "assessment_order": 1.0,
+          "score_normalized": 0.0,
+          "secondary_metrics": {
+            "week_of_class": 3.0
+          }
+        },
+        "last_point": {
+          "assessment_order": 3.0,
+          "score_normalized": 55.0,
+          "secondary_metrics": {
+            "week_of_class": 14.0
+          }
+        },
+        "peak": {
+          "assessment_order": 2.0,
+          "score_normalized": 55.0,
+          "secondary_metrics": {
+            "week_of_class": 8.0
+          }
+        },
+        "trough": {
+          "assessment_order": 1.0,
+          "score_normalized": 0.0,
+          "secondary_metrics": {
+            "week_of_class": 3.0
+          }
+        },
+        "overall_change": {
+          "from": {
+            "assessment_order": 1.0,
+            "score_normalized": 0.0,
+            "secondary_metrics": {
+              "week_of_class": 3.0
+            }
+          },
+          "to": {
+            "assessment_order": 3.0,
+            "score_normalized": 55.0,
+            "secondary_metrics": {
+              "week_of_class": 14.0
+            }
+          },
+          "delta": 55.0,
+          "percent_change": null
+        },
+        "largest_adjacent_drop": null,
+        "largest_adjacent_rise": {
+          "from": {
+            "assessment_order": 1.0,
+            "score_normalized": 0.0,
+            "secondary_metrics": {
+              "week_of_class": 3.0
+            }
+          },
+          "to": {
+            "assessment_order": 2.0,
+            "score_normalized": 55.0,
+            "secondary_metrics": {
+              "week_of_class": 8.0
+            }
+          },
+          "delta": 55.0
+        },
+        "flagged_points": [
+          {
+            "assessment_order": 2.0,
+            "score_normalized": 55.0,
+            "secondary_metrics": {
+              "week_of_class": 8.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          },
+          {
+            "assessment_order": 3.0,
+            "score_normalized": 55.0,
+            "secondary_metrics": {
+              "week_of_class": 14.0
+            },
+            "flags": {
+              "pass_flag": true
+            },
+            "flag_raw_values": {
+              "pass_flag": true
+            }
+          }
+        ],
+        "secondary_metric_evidence": {
+          "week_of_class": {
+            "count": 3,
+            "min": 3.0,
+            "max": 14.0,
+            "first": 3.0,
+            "last": 14.0
+          }
+        },
+        "secondary_metric_associations": {
+          "week_of_class": {
+            "paired_point_count": 3,
+            "method": "pearson_on_aligned_points",
+            "correlation": 0.8386,
+            "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+            "small_sample": true
+          }
+        },
+        "multi_dataset_evidence": [
+          {
+            "dataset_name": "absence_data",
+            "role": "context_snapshot",
+            "row_count": 1,
+            "columns": [
+              "absences",
+              "absence_rate"
+            ],
+            "first_row": {
+              "absences": 4,
+              "absence_rate": "0.125"
+            },
+            "numeric_stats": {
+              "absences": {
+                "count": 1,
+                "min": 4.0,
+                "max": 4.0,
+                "avg": 4.0
+              },
+              "absence_rate": {
+                "count": 1,
+                "min": 0.125,
+                "max": 0.125,
+                "avg": 0.125
+              }
+            }
+          }
+        ],
+        "small_sample_caveats": [
+          {
+            "point_count": 3,
+            "minimum_sample_size": 6.0,
+            "warning": "Only 3 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+          }
+        ],
+        "causal_claim_allowed": false,
+        "action_evidence": [],
+        "summarization_warnings": [
+          "Only 3 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+        ]
+      },
+      "passed": true,
+      "errors": []
+    }
+  ]
+}

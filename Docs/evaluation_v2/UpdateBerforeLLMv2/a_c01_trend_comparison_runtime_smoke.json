@@ -1,0 +1,35 @@
+{
+  "smoke": "a_c01_trend_comparison_runtime_smoke",
+  "generated_at": "2026-06-18",
+  "backend_url": "http://localhost:4000",
+  "ai_service_url": "http://localhost:8000",
+  "task_id": "A-C01",
+  "case_id": "A-C01_SAMPLE_UCI_POR",
+  "flow": [
+    "POST /api/analytics/run",
+    "POST /api/ai/explain"
+  ],
+  "analytics": {
+    "status": 200,
+    "dataset_id": "SAMPLE_UCI_POR",
+    "params": {
+      "batch_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "s1": "SAMPLE_UCI_POR_STU_000001",
+      "s2": "SAMPLE_UCI_POR_STU_000002"
+    },
+    "expected_row_count": 6
+  },
+  "ai_explain": {
+    "status": 200,
+    "degraded": false,
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "input_summary_type": "trend_comparison",
+    "explanation_strategy": "comparison",
+    "meta_strategy": "comparison",
+    "warning_count": 0,
+    "latency_ms": 8864
+  },
+  "passed": true
+}

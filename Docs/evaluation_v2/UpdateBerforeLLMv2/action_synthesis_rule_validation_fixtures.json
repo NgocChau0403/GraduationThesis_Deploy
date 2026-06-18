@@ -1,0 +1,205 @@
+{
+  "fixture_version": "1.0.0",
+  "cases": [
+    {
+      "case_id": "valid_canonical_catalog",
+      "expected_valid": true,
+      "catalog_file": "action_synthesis_rules.v1.json"
+    },
+    {
+      "case_id": "invalid_sensitive_trigger",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "operation": "set",
+          "path": "rule_sets.2.evidence_contract.5.allowed_as_trigger",
+          "value": true
+        },
+        {
+          "operation": "set",
+          "path": "rule_sets.2.rules.0.trigger.all.0.evidence_id",
+          "value": "lifestyle_risk_score"
+        }
+      ],
+      "expected_error_contains": "sensitive evidence lifestyle_risk_score cannot be allowed as trigger"
+    },
+    {
+      "case_id": "invalid_missing_rule_version",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "operation": "delete",
+          "path": "rule_sets.0.rule_version"
+        }
+      ],
+      "expected_error_contains": "missing rule_version"
+    },
+    {
+      "case_id": "invalid_unavailable_trigger_without_guard",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "operation": "set",
+          "path": "rule_sets.2.rules.3.trigger.all",
+          "value": [
+            {
+              "evidence_id": "engagement_score",
+              "operator": "lt",
+              "value": 0.15
+            }
+          ]
+        }
+      ],
+      "expected_error_contains": "requires availability guard engagement_score_available"
+    },
+    {
+      "case_id": "invalid_unknown_evidence_reference",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "operation": "set",
+          "path": "rule_sets.1.rules.0.trigger.all.0.evidence_id",
+          "value": "unknown_backend_signal"
+        }
+      ],
+      "expected_error_contains": "unknown evidence unknown_backend_signal"
+    },
+    {
+      "case_id": "invalid_missing_provenance",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "operation": "set",
+          "path": "rule_sets.0.rules.0.provenance_requirements",
+          "value": [
+            "dataset_label",
+            "column",
+            "raw_value"
+          ]
+        }
+      ],
+      "expected_error_contains": "missing required provenance fields"
+    },
+    {
+      "case_id": "invalid_prompt_hint_source",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "operation": "set",
+          "path": "action_source",
+          "value": "aiPromptHint"
+        }
+      ],
+      "expected_error_contains": "action_source must be versioned_registry_rules"
+    },
+    {
+      "case_id": "invalid_best_resource_claim",
+      "expected_valid": false,
+      "mutations": [
+        {
+          "operation": "set",
+          "path": "rule_sets.0.rules.3.action.action_text",
+          "value": "Deploy the best-performing resource because it improves learning outcomes."
+        }
+      ],
+      "expected_error_contains": "best_resource_type action makes an effectiveness claim"
+    }
+  ],
+  "runtime_cases": [
+    {
+      "case_id": "A-G16_OULAD_actual_row",
+      "task_id": "A-G16",
+      "dataset_label": "synthesis_data",
+      "row": {
+        "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+        "low_engagement_count": 1240,
+        "high_risk_count": 906,
+        "hardest_assessment": "24299",
+        "best_resource_type": "quiz",
+        "total_students": 1998
+      },
+      "expected_matched_rule_ids": [
+        "A-G16-R01",
+        "A-G16-R02",
+        "A-G16-R03",
+        "A-G16-R04"
+      ]
+    },
+    {
+      "case_id": "A-S08_OULAD_actual_row",
+      "task_id": "A-S08",
+      "dataset_label": "synthesis_data",
+      "row": {
+        "avg_score": 91.2,
+        "performance_trend": -0.7187500000000001,
+        "engagement_score": 0.20237855036820618,
+        "punctuality_rate": "0",
+        "early_warning_week": 0,
+        "support_score": 0,
+        "at_risk_score": 3,
+        "at_risk_label": "high",
+        "final_outcome": "Distinction"
+      },
+      "expected_matched_rule_ids": [
+        "A-S08-R01",
+        "A-S08-R02",
+        "A-S08-R03"
+      ],
+      "expected_conflict_ids": [
+        "A-S08-C01"
+      ]
+    },
+    {
+      "case_id": "S-T13_UCI_actual_row",
+      "task_id": "S-T13",
+      "dataset_label": "synthesis_data",
+      "row": {
+        "avg_score": 41.25,
+        "performance_trend": 27.5,
+        "engagement_score": 0,
+        "engagement_score_available": false,
+        "absence_rate": 1,
+        "lifestyle_risk_score": 0.375,
+        "score_strategy": "weighted_by_assessment_weight",
+        "score_scale": 100,
+        "pass_threshold": 40,
+        "target_threshold": 70,
+        "at_risk_score": 0,
+        "at_risk_label": "low"
+      },
+      "expected_matched_rule_ids": [
+        "S-T13-R02",
+        "S-T13-R05"
+      ],
+      "expected_unmatched_rule_ids": [
+        "S-T13-R04"
+      ]
+    },
+    {
+      "case_id": "S-T13_OULAD_actual_row",
+      "task_id": "S-T13",
+      "dataset_label": "synthesis_data",
+      "row": {
+        "avg_score": 94.34,
+        "performance_trend": -0.7187500000000001,
+        "engagement_score": 0.20237855036820618,
+        "engagement_score_available": true,
+        "absence_rate": null,
+        "lifestyle_risk_score": null,
+        "score_strategy": "weighted_by_assessment_weight",
+        "score_scale": 100,
+        "pass_threshold": 40,
+        "target_threshold": 70,
+        "at_risk_score": 3,
+        "at_risk_label": "high"
+      },
+      "expected_matched_rule_ids": [
+        "S-T13-R03",
+        "S-T13-R06"
+      ],
+      "expected_conflict_ids": [
+        "S-T13-C01"
+      ]
+    }
+  ]
+}

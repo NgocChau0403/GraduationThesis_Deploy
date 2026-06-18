@@ -14,6 +14,9 @@ Usage:
   python debug_ai_summary.py --self-test-numeric-distribution
   python debug_ai_summary.py --self-test-group-comparison
   python debug_ai_summary.py --self-test-correlation-evidence
+  python debug_ai_summary.py --self-test-multi-metric-comparison
+  python debug_ai_summary.py --self-test-metric-snapshot
+  python debug_ai_summary.py --self-test-action-synthesis
   python debug_ai_summary.py --task A-G14 --input-json path/to/datasets.json
 
 The optional input JSON can be either:
@@ -34,7 +37,13 @@ from pathlib import Path
 
 os.environ.setdefault("OPENAI_API_KEY", "debug-no-llm-call")
 
-from schemas import AISummaryConfig, ConfidenceInput, ExplainRequest
+from schemas import (
+    AISummaryConfig,
+    ConfidenceInput,
+    ExplainRequest,
+    ExplanationBody,
+    Insight,
+)
 from strategies.base import BaseExplanationStrategy
 
 
@@ -59,6 +68,11 @@ def build_ai_summary_config(task: dict) -> AISummaryConfig | None:
         summary_type=task.get("aiSummaryType"),
         target_group=task.get("aiTargetGroup"),
         comparison_groups=task.get("aiComparisonGroups") or [],
+        dynamic_comparison_groups=task.get("aiDynamicComparisonGroups") is True,
+        comparison_alignment_columns=(
+            task.get("aiComparisonAlignmentColumns") or []
+        ),
+        divergence_threshold=task.get("aiDivergenceThreshold"),
         time_column=task.get("aiTimeColumn"),
         x_column=task.get("aiXColumn"),
         y_column=task.get("aiYColumn"),
@@ -71,6 +85,8 @@ def build_ai_summary_config(task: dict) -> AISummaryConfig | None:
         p_value_column=task.get("aiPValueColumn"),
         outlier_policy=task.get("aiOutlierPolicy"),
         group_column=task.get("aiGroupColumn"),
+        group_key_columns=task.get("aiGroupKeyColumns") or [],
+        series_column=task.get("aiSeriesColumn"),
         gap_column=task.get("aiGapColumn"),
         reliability_column=task.get("aiReliabilityColumn"),
         minimum_reliable_count=task.get("aiMinimumReliableCount"),
@@ -80,6 +96,27 @@ def build_ai_summary_config(task: dict) -> AISummaryConfig | None:
         count_column=task.get("aiCountColumn"),
         percent_column=task.get("aiPercentColumn"),
         metric_columns=task.get("aiMetricColumns") or [],
+        status_columns=task.get("aiStatusColumns") or [],
+        threshold_columns=task.get("aiThresholdColumns") or [],
+        benchmark_columns=task.get("aiBenchmarkColumns") or [],
+        sensitive_columns=task.get("aiSensitiveColumns") or [],
+        metric_availability_columns=task.get("aiMetricAvailabilityColumns") or {},
+        threshold_sources=task.get("aiThresholdSources") or {},
+        benchmark_sources=task.get("aiBenchmarkSources") or {},
+        metric_key_column=task.get("aiMetricKeyColumn"),
+        metric_value_column=task.get("aiMetricValueColumn"),
+        entity_order=task.get("aiEntityOrder") or [],
+        metric_directions=task.get("aiMetricDirections") or {},
+        metric_units=task.get("aiMetricUnits") or {},
+        metric_thresholds=task.get("aiMetricThresholds") or {},
+        minimum_entity_count=task.get("aiMinimumEntityCount") or 2,
+        require_metric_directions=task.get("aiRequireMetricDirections") is True,
+        require_metric_units=task.get("aiRequireMetricUnits") is True,
+        require_metric_thresholds=task.get("aiRequireMetricThresholds") is True,
+        selected_entity_column=task.get("aiSelectedEntityColumn"),
+        entity_evidence_available_column=task.get("aiEntityEvidenceAvailableColumn"),
+        sensitive_context_policy=task.get("aiSensitiveContextPolicy"),
+        require_sensitive_context_policy=task.get("aiRequireSensitiveContextPolicy") is True,
         focus_categories=task.get("aiFocusCategories") or [],
         focus_bins=task.get("aiFocusBins") or [],
         category_order=task.get("aiCategoryOrder") or [],
@@ -106,6 +143,32 @@ def build_ai_summary_config(task: dict) -> AISummaryConfig | None:
         flag_columns=task.get("aiFlagColumns") or [],
         action_columns=task.get("aiActionColumns") or [],
         label_columns=task.get("aiLabelColumns") or [],
+        evidence_columns=task.get("aiEvidenceColumns") or [],
+        evidence_dataset_roles=task.get("aiEvidenceDatasetRoles") or {},
+        action_source=task.get("aiActionSource"),
+        action_rule_set_id=task.get("aiActionRuleSetId"),
+        action_rule_version=task.get("aiActionRuleVersion"),
+        action_evidence_contract=task.get("aiActionEvidenceContract") or [],
+        action_derived_evidence=task.get("aiActionDerivedEvidence") or [],
+        action_conflict_rules=task.get("aiActionConflictRules") or [],
+        action_rules=task.get("aiActionRules") or [],
+        priority_column=task.get("aiPriorityColumn"),
+        owner_column=task.get("aiOwnerColumn"),
+        time_horizon_column=task.get("aiTimeHorizonColumn"),
+        trigger_columns=task.get("aiTriggerColumns") or [],
+        max_actions=task.get("aiMaxActions"),
+        provenance_required_fields=task.get("aiProvenanceRequiredFields") or [],
+        require_complete_action_provenance=(
+            task.get("aiRequireCompleteActionProvenance") is not False
+        ),
+        unsupported_action_behavior=(
+            task.get("aiUnsupportedActionBehavior")
+            or "emit_unsupported_actions"
+        ),
+        sensitive_action_policy=task.get("aiSensitiveActionPolicy"),
+        require_sensitive_action_policy=(
+            task.get("aiRequireSensitiveActionPolicy") is True
+        ),
         max_points=task.get("aiMaxPoints"),
         top_k=task.get("aiTopK"),
         bottom_k=task.get("aiBottomK"),
@@ -427,6 +490,97 @@ def run_self_test() -> None:
     assert missing_summary["target_group_missing"] is True
     assert "Withdrawn" in missing_summary["summarization_warnings"][0]
 
+    dynamic_rows = [
+        {
+            "student_id": "S001",
+            "assessment_order": 1,
+            "assessment_type": "quiz",
+            "score_normalized": 40,
+        },
+        {
+            "student_id": "S001",
+            "assessment_order": 2,
+            "assessment_type": "quiz",
+            "score_normalized": 55,
+        },
+        {
+            "student_id": "S001",
+            "assessment_order": 2,
+            "assessment_type": "quiz",
+            "score_normalized": 57,
+        },
+        {
+            "student_id": "S001",
+            "assessment_order": 3,
+            "assessment_type": "exam",
+            "score_normalized": 70,
+        },
+        {
+            "student_id": "S002",
+            "assessment_order": 1,
+            "assessment_type": "quiz",
+            "score_normalized": 50,
+        },
+        {
+            "student_id": "S002",
+            "assessment_order": 2,
+            "assessment_type": "quiz",
+            "score_normalized": 55,
+        },
+        {
+            "student_id": "S002",
+            "assessment_order": 3,
+            "assessment_type": "exam",
+            "score_normalized": 60,
+        },
+    ]
+    dynamic_req = build_request(
+        "A-C01",
+        {"trajectory_comparison": dynamic_rows},
+    )
+    dynamic_req.ai_summary_config = AISummaryConfig(
+        summary_type="trend_comparison",
+        dynamic_comparison_groups=True,
+        comparison_alignment_columns=[
+            "assessment_order",
+            "assessment_type",
+        ],
+        divergence_threshold=5,
+        group_column="student_id",
+        time_column="assessment_order",
+        metric_column="score_normalized",
+        minimum_entity_count=2,
+        max_points=50,
+    )
+    dynamic_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(dynamic_req)
+    )
+    assert dynamic_summary["available_groups"] == ["S001", "S002"]
+    pairwise = dynamic_summary["pairwise_comparison"]
+    assert pairwise["shared_point_count"] == 3
+    assert pairwise["gap_series"][1]["group_values"]["S001"]["value"] == 56
+    assert pairwise["gap_series"][1]["group_values"]["S001"]["duplicate_count"] == 2
+    assert pairwise["first_divergence"]["alignment"]["assessment_order"] == 1
+    assert pairwise["largest_absolute_gap"]["absolute_gap"] == 10
+    assert pairwise["net_change_by_group"] == {"S001": 30, "S002": 10}
+    assert pairwise["faster_improving_group"] == "S001"
+
+    one_group_req = build_request(
+        "A-C01",
+        {
+            "trajectory_comparison": [
+                row for row in dynamic_rows if row["student_id"] == "S001"
+            ]
+        },
+    )
+    one_group_req.ai_summary_config = dynamic_req.ai_summary_config
+    one_group_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(one_group_req)
+    )
+    assert one_group_summary["evidence_status"] == "insufficient_evidence"
+    assert one_group_summary["pairwise_comparison"] is None
+    assert one_group_summary["missing_group_evidence"]
+
     baseline_req = build_request("A-G14", {"generic": rows})
     baseline_result = BaseExplanationStrategy.build_summary_result(
         baseline_req,
@@ -599,7 +753,11 @@ def run_self_test_risk_flags() -> None:
     assert a_s04_summary["severity_counts"] == {}
     assert not any("severity" in item for item in a_s04_summary["triggered_flags"])
     assert a_s04_summary["recommended_actions"] == []
-    assert a_s04_summary["summarization_warnings"] == []
+    assert a_s04_summary["summarization_warnings"] == [
+        "Configured optional column 'flag_description' is missing from dataset.",
+        "Configured optional column 'recommended_action' is missing from dataset.",
+        "Configured optional column 'support_category' is missing from dataset.",
+    ]
     assert [item["flag_name"] for item in a_s04_summary["triggered_flags"]] == [
         "flag_high_absence",
         "flag_low_punctuality",
@@ -727,6 +885,67 @@ def run_self_test_trend_series() -> None:
     assert capped_summary["point_count"] == 35
     assert any("capped" in warning for warning in capped_summary["summarization_warnings"])
 
+    multi_dataset_req = build_request(
+        "S-T12",
+        {
+            "punctuality_summary": [
+                {"submission_delay_avg": "3.25", "punctuality_rate": "0"},
+            ],
+            "submission_series": [
+                {
+                    "assessment_order": 1,
+                    "submission_delay_days": 3,
+                    "score_normalized": 100,
+                    "pass_flag": True,
+                },
+                {
+                    "assessment_order": 2,
+                    "submission_delay_days": 2,
+                    "score_normalized": 87,
+                    "pass_flag": True,
+                },
+                {
+                    "assessment_order": 3,
+                    "submission_delay_days": 6,
+                    "score_normalized": 70,
+                    "pass_flag": True,
+                },
+            ],
+        },
+    )
+    multi_dataset_req.ai_summary_config = AISummaryConfig(
+        summary_type="trend_series",
+        time_column="assessment_order",
+        metric_column="submission_delay_days",
+        secondary_metric_columns=["score_normalized"],
+        flag_columns=["pass_flag"],
+        evidence_dataset_roles={
+            "submission_series": "primary_series",
+            "punctuality_summary": "context_summary",
+        },
+        metric_units={
+            "submission_delay_days": "days_relative_to_due_date",
+            "score_normalized": "score_on_runtime_scale",
+        },
+        metric_directions={
+            "submission_delay_days": "higher_is_worse",
+            "score_normalized": "higher_is_better",
+        },
+        minimum_sample_size=6,
+    )
+    multi_dataset_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(multi_dataset_req)
+    )
+    assert multi_dataset_summary["dataset_name"] == "submission_series"
+    assert multi_dataset_summary["point_count"] == 3
+    assert multi_dataset_summary["multi_dataset_evidence"][0]["dataset_name"] == "punctuality_summary"
+    assert multi_dataset_summary["small_sample_caveats"]
+    assert multi_dataset_summary["causal_claim_allowed"] is False
+    score_assoc = multi_dataset_summary["secondary_metric_associations"]["score_normalized"]
+    assert score_assoc["paired_point_count"] == 3
+    assert score_assoc["claim_limit"].startswith("descriptive_association_only")
+    assert multi_dataset_summary["metric_units"]["submission_delay_days"] == "days_relative_to_due_date"
+
     empty_req = build_request("S-T01", {"score_trend": []})
     empty_summary = json.loads(BaseExplanationStrategy.summarize_datasets(empty_req))
     assert "Primary dataset is empty." in empty_summary["summarization_warnings"]
@@ -793,15 +1012,23 @@ def group_comparison_config(
     expected_groups: list[str] | None = None,
     top_k: int = 2,
     bottom_k: int = 1,
+    group_key_columns: list[str] | None = None,
+    series_column: str | None = None,
+    focus_categories: list[str] | None = None,
+    metric_column: str = "avg_score",
+    metric_columns: list[str] | None = None,
 ) -> AISummaryConfig:
     return AISummaryConfig(
         summary_type="group_comparison",
         group_column="group_value",
-        metric_column="avg_score",
+        group_key_columns=group_key_columns or [],
+        series_column=series_column,
+        metric_column=metric_column,
         count_column="student_count",
-        metric_columns=["avg_engagement_score"],
+        metric_columns=metric_columns if metric_columns is not None else ["avg_engagement_score"],
         gap_column=gap_column,
         expected_groups=expected_groups if expected_groups is not None else ["high_band", "low_band", "medium_band", "missing_expected"],
+        focus_categories=focus_categories or [],
         target_group="low_band",
         comparison_groups=["high_band", "missing_comparison"],
         sort_by=gap_column or "gap",
@@ -812,6 +1039,94 @@ def group_comparison_config(
     )
 
 
+def multi_metric_comparison_config(**overrides) -> AISummaryConfig:
+    values = {
+        "summary_type": "multi_metric_comparison",
+        "entity_column": "student_id",
+        "metric_columns": ["avg_score", "engagement_score", "active_days"],
+        "entity_order": ["S001", "S002"],
+        "metric_units": {
+            "avg_score": "score_0_100",
+            "engagement_score": "ratio_0_1",
+            "active_days": "days",
+        },
+        "metric_directions": {
+            "avg_score": "higher_is_better",
+            "engagement_score": "higher_is_better",
+            "active_days": "higher_is_better",
+        },
+        "minimum_entity_count": 2,
+        "require_metric_units": True,
+        "require_metric_directions": True,
+        "label_columns": ["risk_label"],
+        "flag_columns": ["flag_low_score"],
+        "selected_entity_column": "is_selected",
+    }
+    values.update(overrides)
+    return AISummaryConfig(**values)
+
+
+def action_synthesis_config(task_id: str, **overrides) -> AISummaryConfig:
+    catalog_path = (
+        ROOT
+        / "Docs"
+        / "evaluation_v2"
+        / "ai_explanation_judge_v2"
+        / "action_synthesis_rules.v1.json"
+    )
+    catalog = json.loads(catalog_path.read_text(encoding="utf-8"))
+    rule_set = next(
+        item for item in catalog["rule_sets"] if item["task_id"] == task_id
+    )
+    evidence_columns = [
+        item["column"] for item in rule_set["evidence_contract"]
+    ]
+    trigger_columns = sorted({
+        condition["evidence_id"]
+        for rule in rule_set["rules"]
+        for condition in [
+            *rule["trigger"]["all"],
+            *rule["trigger"]["any"],
+        ]
+        if condition["evidence_id"] in evidence_columns
+    })
+    values = {
+        "summary_type": "action_synthesis",
+        "evidence_columns": evidence_columns,
+        "evidence_dataset_roles": rule_set["source_dataset_roles"],
+        "action_source": "versioned_registry_rules",
+        "action_rule_set_id": rule_set["rule_set_id"],
+        "action_rule_version": rule_set["rule_version"],
+        "action_evidence_contract": rule_set["evidence_contract"],
+        "action_derived_evidence": rule_set["derived_evidence"],
+        "action_conflict_rules": rule_set["conflict_rules"],
+        "action_rules": rule_set["rules"],
+        "trigger_columns": trigger_columns,
+        "max_actions": rule_set["max_actions"],
+        "provenance_required_fields": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version",
+        ],
+        "require_complete_action_provenance": True,
+        "unsupported_action_behavior": rule_set[
+            "unsupported_action_behavior"
+        ],
+        "sensitive_action_policy": "exclude_sensitive_triggers",
+        "require_sensitive_action_policy": any(
+            item["sensitive"] for item in rule_set["evidence_contract"]
+        ),
+    }
+    values.update(overrides)
+    return AISummaryConfig(**values)
+
+
 def correlation_evidence_config(
     *,
     coefficient_column: str | None = None,
@@ -820,6 +1135,10 @@ def correlation_evidence_config(
     outlier_policy: str | None = "high_x_low_y",
     minimum_sample_size: int = 6,
     top_k: int = 1,
+    selected_entity_column: str | None = None,
+    label_columns: list[str] | None = None,
+    sensitive_columns: list[str] | None = None,
+    sensitive_context_policy: str | None = None,
 ) -> AISummaryConfig:
     return AISummaryConfig(
         summary_type="correlation_evidence",
@@ -834,6 +1153,10 @@ def correlation_evidence_config(
         outlier_policy=outlier_policy,
         minimum_sample_size=minimum_sample_size,
         top_k=top_k,
+        selected_entity_column=selected_entity_column,
+        label_columns=label_columns or [],
+        sensitive_columns=sensitive_columns or [],
+        sensitive_context_policy=sensitive_context_policy,
     )
 
 
@@ -1062,6 +1385,58 @@ def run_self_test_group_comparison() -> None:
     assert derived_summary["weakest_group"]["basis"] == "most_negative_gap"
     assert any("derived" in warning for warning in derived_summary["summarization_warnings"])
 
+    composite_rows = [
+        {
+            "group_value": "GP",
+            "final_outcome": "Fail",
+            "student_count": "32",
+            "pct_within_group": "7.6",
+        },
+        {
+            "group_value": "GP",
+            "final_outcome": "Pass",
+            "student_count": "391",
+            "pct_within_group": "92.4",
+        },
+        {
+            "group_value": "MS",
+            "final_outcome": "Fail",
+            "student_count": "68",
+            "pct_within_group": "30.1",
+        },
+        {
+            "group_value": "MS",
+            "final_outcome": "Pass",
+            "student_count": "158",
+            "pct_within_group": "69.9",
+        },
+    ]
+    composite_req = build_request("A-G12", {"outcome_by_group": composite_rows})
+    composite_req.ai_summary_config = group_comparison_config(
+        gap_column=None,
+        group_key_columns=["group_value", "final_outcome"],
+        series_column="final_outcome",
+        focus_categories=["Fail", "Withdrawn"],
+        metric_column="pct_within_group",
+        metric_columns=[],
+    )
+    composite_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(composite_req)
+    )
+    assert composite_summary["composite_group_keys"] is True
+    assert composite_summary["group_key_columns"] == ["group_value", "final_outcome"]
+    assert composite_summary["series_column"] == "final_outcome"
+    assert composite_summary["group_metrics"][0]["group_key_values"] == {
+        "group_value": "GP",
+        "final_outcome": "Fail",
+    }
+    assert composite_summary["group_series"][0]["group"] == "GP"
+    focus_by_group = {
+        item["group"]: item for item in composite_summary["focus_summary"]
+    }
+    assert focus_by_group["MS"]["focus_metric_total"] == 30.1
+    assert focus_by_group["MS"]["focus_count_total"] == 68.0
+
     missing_group_req = build_request("A-G08", {"background_group_profile": rows})
     missing_group_req.ai_summary_config = group_comparison_config()
     missing_group_req.ai_summary_config.group_column = "missing_group_value"
@@ -1197,9 +1572,750 @@ def run_self_test_correlation_evidence() -> None:
     assert unknown_policy_summary["outliers"] == []
     assert any("Unknown outlier policy" in warning for warning in unknown_policy_summary["statistical_warnings"])
 
+    selected_rows = [
+        {
+            "student_id": "S001",
+            "lifestyle_risk_score": "0.8",
+            "avg_score": "40",
+            "is_current_student": True,
+            "point_role": "Selected student",
+            "score_percentile": "12.5",
+            "family_relation": "4",
+        },
+        {
+            "student_id": "S002",
+            "lifestyle_risk_score": "0.2",
+            "avg_score": "70",
+            "is_current_student": False,
+            "point_role": "Classmate",
+            "score_percentile": "80",
+            "family_relation": "5",
+        },
+        {
+            "student_id": "S003",
+            "lifestyle_risk_score": "0.5",
+            "avg_score": "55",
+            "is_current_student": False,
+            "point_role": "Classmate",
+            "score_percentile": "50",
+            "family_relation": "3",
+        },
+        {
+            "student_id": "S004",
+            "lifestyle_risk_score": "0.7",
+            "avg_score": "45",
+            "is_current_student": False,
+            "point_role": "Classmate",
+            "score_percentile": "20",
+            "family_relation": "2",
+        },
+        {
+            "student_id": "S005",
+            "lifestyle_risk_score": "0.1",
+            "avg_score": "85",
+            "is_current_student": False,
+            "point_role": "Classmate",
+            "score_percentile": "95",
+            "family_relation": "5",
+        },
+        {
+            "student_id": "S006",
+            "lifestyle_risk_score": "0.9",
+            "avg_score": "35",
+            "is_current_student": False,
+            "point_role": "Classmate",
+            "score_percentile": "5",
+            "family_relation": "1",
+        },
+    ]
+    selected_req = build_request("S-T09", {"lifestyle_risk_scatter": selected_rows})
+    selected_req.ai_summary_config = correlation_evidence_config(
+        selected_entity_column="is_current_student",
+        label_columns=["point_role"],
+        sensitive_columns=["family_relation"],
+        sensitive_context_policy="descriptive_only",
+    )
+    selected_req.ai_summary_config.x_column = "lifestyle_risk_score"
+    selected_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(selected_req)
+    )
+    assert selected_summary["selected_entity_column"] == "is_current_student"
+    assert selected_summary["selected_entity_count"] == 1
+    selected_item = selected_summary["selected_entity_evidence"][0]
+    assert selected_item["student_id"] == "S001"
+    assert selected_item["lifestyle_risk_score"] == 0.8
+    assert selected_item["avg_score"] == 40.0
+    assert selected_item["label_context"]["point_role"] == "Selected student"
+    assert selected_item["percentile_context"]["score_percentile"] == "12.5"
+    assert selected_item["sensitive_context"]["family_relation"] == "4"
+    assert selected_item["cohort_context"]["coefficient_source"] == "derived_from_pairs"
+
     assert set(SUMMARY_METHODS) == {"task_aware_data_summarization", "baseline_first_20_rows"}
 
     print("debug_ai_summary correlation_evidence self-test passed")
+
+
+def run_self_test_multi_metric_comparison() -> None:
+    os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
+
+    wide_rows = [
+        {
+            "student_id": "S002",
+            "avg_score": "72",
+            "engagement_score": "0.65",
+            "active_days": "18",
+            "risk_label": "low",
+            "flag_low_score": 0,
+            "is_selected": False,
+        },
+        {
+            "student_id": "S001",
+            "avg_score": "58",
+            "engagement_score": "0.40",
+            "active_days": None,
+            "risk_label": "medium",
+            "flag_low_score": 1,
+            "is_selected": True,
+        },
+    ]
+    wide_req = build_request("A-C03", {"risk_comparison": wide_rows})
+    wide_req.ai_summary_config = multi_metric_comparison_config()
+    wide_summary = json.loads(BaseExplanationStrategy.summarize_datasets(wide_req))
+    assert wide_summary["summary_type"] == "multi_metric_comparison"
+    assert wide_summary["validation_metadata"]["status"] == "passed"
+    assert wide_summary["entities"] == ["S001", "S002"]
+    assert wide_summary["comparison_matrix"][0]["metrics"]["avg_score"] == 58.0
+    assert wide_summary["comparison_matrix"][0]["metrics"]["active_days"] is None
+    assert wide_summary["comparison_matrix"][0]["flags"]["flag_low_score"] is True
+    assert wide_summary["selected_entity_evidence"][0]["student_id"] == "S001"
+    assert wide_summary["metric_extrema"]["avg_score"]["max"]["student_id"] == "S002"
+    assert any(
+        item["metric"] == "avg_score" and item["gap_right_minus_left"] == 14.0
+        for item in wide_summary["pairwise_gaps"]
+    )
+    assert any(
+        item["entity"] == "S001" and item["metric"] == "active_days"
+        for item in wide_summary["missing_metric_evidence"]
+    )
+
+    long_rows = [
+        {"comparison_group": "You", "metric_name": "Average score", "metric_value": "62"},
+        {"comparison_group": "Cohort", "metric_name": "Average score", "metric_value": "68"},
+        {"comparison_group": "You", "metric_name": "Score percentile", "metric_value": "45"},
+        {"comparison_group": "Cohort", "metric_name": "Score percentile", "metric_value": "50"},
+    ]
+    long_req = build_request("S-T03", {"peer_comparison": long_rows})
+    long_req.ai_summary_config = multi_metric_comparison_config(
+        entity_column=None,
+        group_column="comparison_group",
+        metric_columns=[],
+        metric_key_column="metric_name",
+        metric_value_column="metric_value",
+        entity_order=["You", "Cohort"],
+        metric_units={
+            "Average score": "score_0_100",
+            "Score percentile": "percent_0_100",
+        },
+        metric_directions={
+            "Average score": "higher_is_better",
+            "Score percentile": "higher_is_better",
+        },
+        label_columns=[],
+        flag_columns=[],
+        selected_entity_column=None,
+    )
+    long_summary = json.loads(BaseExplanationStrategy.summarize_datasets(long_req))
+    assert long_summary["validation_metadata"]["status"] == "passed"
+    assert long_summary["metric_keys"] == ["Average score", "Score percentile"]
+    assert long_summary["comparison_matrix"][0]["metrics"]["Average score"] == 62.0
+    assert long_summary["pairwise_gaps"][0]["gap_right_minus_left"] == 6.0
+
+    hybrid_rows = [
+        {"student_id": "S001", "resource_type": "forum", "clicks": "10", "ratio": "0.2"},
+        {"student_id": "S002", "resource_type": "forum", "clicks": "5", "ratio": "0.1"},
+        {"student_id": "S001", "resource_type": "quiz", "clicks": "20", "ratio": "0.4"},
+        {"student_id": "S002", "resource_type": "quiz", "clicks": "30", "ratio": "0.6"},
+    ]
+    hybrid_req = build_request("A-C06", {"resource_comparison": hybrid_rows})
+    hybrid_req.ai_summary_config = multi_metric_comparison_config(
+        metric_key_column="resource_type",
+        metric_columns=["clicks", "ratio"],
+        metric_units={"clicks": "count", "ratio": "ratio_0_1"},
+        metric_directions={"clicks": "context_only", "ratio": "context_only"},
+        label_columns=[],
+        flag_columns=[],
+        selected_entity_column=None,
+    )
+    hybrid_summary = json.loads(BaseExplanationStrategy.summarize_datasets(hybrid_req))
+    assert hybrid_summary["validation_metadata"]["status"] == "passed"
+    assert hybrid_summary["evidence_status"] == "sufficient"
+    assert hybrid_summary["comparison_matrix"][0]["metrics"]["forum"]["clicks"] == 10.0
+    assert hybrid_summary["metric_extrema"]["quiz.clicks"]["max"]["student_id"] == "S002"
+
+    one_entity_req = build_request(
+        "A-C06",
+        {"resource_comparison": [hybrid_rows[0], hybrid_rows[2]]},
+    )
+    one_entity_req.ai_summary_config = hybrid_req.ai_summary_config
+    one_entity_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(one_entity_req)
+    )
+    assert one_entity_summary["validation_metadata"]["status"] == "passed"
+    assert one_entity_summary["evidence_status"] == "insufficient_evidence"
+    assert one_entity_summary["evidence_requirements"] == {
+        "minimum_entity_count": 2,
+        "expected_entities": ["S001", "S002"],
+        "observed_entity_count": 1,
+        "missing_expected_entities": ["S002"],
+    }
+    assert one_entity_summary["missing_expected_entities"] == ["S002"]
+    assert any(
+        "Configured expected entities/groups are missing from dataset: S002"
+        in warning
+        for warning in one_entity_summary["summarization_warnings"]
+    )
+    assert "generic_diagnostic_sample" not in one_entity_summary
+
+    zero_activity_rows = [
+        *hybrid_rows[:2],
+        {
+            "student_id": "S003",
+            "resource_type": None,
+            "clicks": 0,
+            "ratio": None,
+            "has_engagement_data": False,
+            "total_clicks": 0,
+            "used_resource_types": 0,
+            "evidence_row_type": "no_recorded_resource_usage",
+        },
+    ]
+    zero_activity_req = build_request(
+        "A-C06",
+        {"resource_comparison": zero_activity_rows},
+    )
+    zero_activity_req.ai_summary_config = multi_metric_comparison_config(
+        metric_key_column="resource_type",
+        metric_columns=["clicks", "ratio"],
+        metric_units={"clicks": "count", "ratio": "ratio_0_1"},
+        metric_directions={"clicks": "context_only", "ratio": "context_only"},
+        label_columns=[
+            "has_engagement_data",
+            "total_clicks",
+            "used_resource_types",
+            "evidence_row_type",
+        ],
+        flag_columns=[],
+        selected_entity_column=None,
+        entity_evidence_available_column="has_engagement_data",
+    )
+    zero_activity_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(zero_activity_req)
+    )
+    assert zero_activity_summary["evidence_status"] == "sufficient"
+    zero_entity = next(
+        item
+        for item in zero_activity_summary["comparison_matrix"]
+        if item["student_id"] == "S003"
+    )
+    assert zero_entity["metrics"] == {}
+    assert zero_entity["labels"]["has_engagement_data"] is False
+    assert zero_entity["labels"]["evidence_row_type"] == "no_recorded_resource_usage"
+    assert zero_activity_summary["missing_entity_evidence"] == [
+        {
+            "entity": "S003",
+            "reason": "entity has no recorded source evidence for metric comparison",
+            "evidence_column": "has_engagement_data",
+            "evidence_value": False,
+            "labels": {
+                "has_engagement_data": False,
+                "total_clicks": 0,
+                "used_resource_types": 0,
+                "evidence_row_type": "no_recorded_resource_usage",
+            },
+        }
+    ]
+    assert not any(
+        item["entity"] == "S003"
+        for item in zero_activity_summary["missing_metric_evidence"]
+    )
+
+    missing_metadata_req = build_request("A-C03", {"risk_comparison": wide_rows})
+    missing_metadata_req.ai_summary_config = multi_metric_comparison_config(
+        metric_units={"avg_score": "score_0_100"}
+    )
+    missing_metadata_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(missing_metadata_req)
+    )
+    assert missing_metadata_summary["validation_metadata"]["status"] == "failed"
+    assert "generic_diagnostic_sample" in missing_metadata_summary
+    assert any(
+        "metric_units missing" in warning
+        for warning in missing_metadata_summary["summarization_warnings"]
+    )
+
+    sensitive_req = build_request("A-C05", {"background_comparison": wide_rows})
+    sensitive_req.ai_summary_config = multi_metric_comparison_config(
+        require_sensitive_context_policy=True,
+        sensitive_context_policy=None,
+    )
+    sensitive_summary = json.loads(BaseExplanationStrategy.summarize_datasets(sensitive_req))
+    assert sensitive_summary["validation_metadata"]["status"] == "failed"
+    assert any(
+        "sensitive_context_policy missing" in warning
+        for warning in sensitive_summary["summarization_warnings"]
+    )
+
+    assert set(SUMMARY_METHODS) == {
+        "task_aware_data_summarization",
+        "baseline_first_20_rows",
+    }
+    print("debug_ai_summary multi_metric_comparison self-test passed")
+
+
+def run_self_test_metric_snapshot() -> None:
+    os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
+
+    performance_req = build_request(
+        "S-B01",
+        {
+            "performance_summary": [{
+                "avg_score": 41.25,
+                "pass_rate": 0.6667,
+                "performance_band": "passing_but_below_target",
+                "pass_threshold": 40,
+                "target_threshold": 70,
+                "class_avg_score": 58.31,
+                "score_scale": 100,
+            }]
+        },
+    )
+    performance_req.ai_summary_config = AISummaryConfig(
+        summary_type="metric_snapshot",
+        metric_columns=["avg_score", "pass_rate"],
+        status_columns=["performance_band"],
+        threshold_columns=["pass_threshold", "target_threshold"],
+        benchmark_columns=["class_avg_score"],
+        label_columns=["score_scale"],
+        metric_units={
+            "avg_score": "score_on_runtime_scale",
+            "pass_rate": "ratio_0_1",
+            "pass_threshold": "score_on_runtime_scale",
+            "target_threshold": "score_on_runtime_scale",
+            "class_avg_score": "score_on_runtime_scale",
+        },
+        threshold_sources={
+            "pass_threshold": "runtime_score_context",
+            "target_threshold": "runtime_score_context",
+        },
+        benchmark_sources={"class_avg_score": "class_cohort"},
+        require_metric_units=True,
+    )
+    performance_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(performance_req)
+    )
+    assert performance_summary["summary_type"] == "metric_snapshot"
+    assert performance_summary["validation_metadata"]["status"] == "passed"
+    assert performance_summary["evidence_status"] == "sufficient"
+    assert performance_summary["metric_snapshot"]["avg_score"]["value"] == 41.25
+    assert performance_summary["status_evidence"]["performance_band"] == (
+        "passing_but_below_target"
+    )
+    assert performance_summary["threshold_evidence"]["pass_threshold"] == {
+        "value": 40,
+        "unit": "score_on_runtime_scale",
+        "source": "runtime_score_context",
+    }
+    assert performance_summary["benchmark_evidence"]["class_avg_score"] == {
+        "value": 58.31,
+        "unit": "score_on_runtime_scale",
+        "source": "class_cohort",
+    }
+
+    unavailable_req = build_request(
+        "S-B02",
+        {
+            "risk_summary": [{
+                "avg_score": 41.25,
+                "engagement_score": 0,
+                "engagement_score_available": False,
+                "at_risk_label": "low",
+            }]
+        },
+    )
+    unavailable_req.ai_summary_config = AISummaryConfig(
+        summary_type="metric_snapshot",
+        metric_columns=["avg_score", "engagement_score"],
+        status_columns=["engagement_score_available", "at_risk_label"],
+        metric_availability_columns={
+            "engagement_score": "engagement_score_available"
+        },
+        metric_units={
+            "avg_score": "score_on_runtime_scale",
+            "engagement_score": "ratio_0_1",
+        },
+        require_metric_units=True,
+    )
+    unavailable_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(unavailable_req)
+    )
+    engagement = unavailable_summary["metric_snapshot"]["engagement_score"]
+    assert engagement["value"] == 0
+    assert engagement["available"] is False
+    assert any(
+        item["column"] == "engagement_score"
+        and "unavailable" in item["reason"]
+        for item in unavailable_summary["missing_evidence"]
+    )
+    assert unavailable_summary["evidence_status"] == "sufficient"
+
+    sensitive_req = build_request(
+        "A-S07",
+        {
+            "background_context": [{
+                "support_score": 0.25,
+                "highest_education": None,
+                "gender": "F",
+            }]
+        },
+    )
+    sensitive_req.ai_summary_config = AISummaryConfig(
+        summary_type="metric_snapshot",
+        metric_columns=["support_score"],
+        sensitive_columns=["highest_education", "gender", "support_score"],
+        metric_units={"support_score": "ratio_0_1"},
+        require_metric_units=True,
+        sensitive_context_policy=(
+            "descriptive_context_only_no_causal_or_prescriptive_inference"
+        ),
+        require_sensitive_context_policy=True,
+    )
+    sensitive_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(sensitive_req)
+    )
+    assert sensitive_summary["sensitive_context_present"] is True
+    assert sensitive_summary["sensitive_context"]["highest_education"] is None
+    assert any(
+        item["column"] == "highest_education"
+        for item in sensitive_summary["missing_evidence"]
+    )
+
+    invalid_req = build_request(
+        "S-B01",
+        {"performance_summary": [{"avg_score": 50}, {"avg_score": 60}]},
+    )
+    invalid_req.ai_summary_config = AISummaryConfig(
+        summary_type="metric_snapshot",
+        metric_columns=["avg_score"],
+    )
+    invalid_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(invalid_req)
+    )
+    assert invalid_summary["summary_type"] == "metric_snapshot"
+    assert invalid_summary["validation_metadata"]["status"] == "failed"
+    assert invalid_summary["evidence_status"] == "not_evaluated"
+    assert "generic_diagnostic_sample" not in invalid_summary
+
+    missing_config_req = build_request(
+        "S-B01",
+        {"performance_summary": [{"avg_score": 50}]},
+    )
+    missing_config_req.ai_summary_config = AISummaryConfig(
+        summary_type="metric_snapshot",
+        metric_columns=[],
+    )
+    missing_config_summary = json.loads(
+        BaseExplanationStrategy.summarize_datasets(missing_config_req)
+    )
+    assert missing_config_summary["summary_type"] == "metric_snapshot"
+    assert missing_config_summary["validation_metadata"]["status"] == "failed"
+    assert "generic_diagnostic_sample" not in missing_config_summary
+
+    print("debug_ai_summary metric_snapshot self-test passed")
+
+
+def run_self_test_action_synthesis() -> None:
+    os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
+
+    admin_req = build_request(
+        "A-G16",
+        {
+            "synthesis_data": [{
+                "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+                "low_engagement_count": 1240,
+                "high_risk_count": 906,
+                "hardest_assessment": "24299",
+                "best_resource_type": "quiz",
+                "total_students": 1998,
+            }]
+        },
+    )
+    admin_req.ai_summary_config = action_synthesis_config("A-G16")
+    admin_summary = BaseExplanationStrategy._build_task_aware_summary(admin_req)
+    assert admin_summary["summary_type"] == "action_synthesis"
+    assert [item["action_id"] for item in admin_summary["prioritized_actions"]] == [
+        "admin_launch_engagement_outreach",
+        "admin_review_high_risk_caseload",
+        "admin_review_assessment_support",
+        "admin_review_most_used_resource_format",
+    ]
+    assert all(
+        item["provenance_status"] == "complete"
+        for item in admin_summary["prioritized_actions"]
+    )
+    assert len(admin_summary["action_evidence_links"]) == 4
+    derived = next(
+        item for item in admin_summary["evidence_items"]
+        if item["column"] == "high_risk_rate"
+    )
+    assert derived["parsed_value"] == round(906 / 1998, 10)
+    assert len(derived["source_evidence_item_ids"]) == 2
+
+    staff_req = build_request(
+        "A-S08",
+        {
+            "synthesis_data": [{
+                "avg_score": 91.2,
+                "performance_trend": -0.7187500000000001,
+                "engagement_score": 0.20237855036820618,
+                "punctuality_rate": "0",
+                "early_warning_week": 0,
+                "support_score": 0,
+                "at_risk_score": 3,
+                "at_risk_label": "high",
+                "final_outcome": "Distinction",
+            }]
+        },
+    )
+    staff_req.ai_summary_config = action_synthesis_config("A-S08")
+    staff_summary = BaseExplanationStrategy._build_task_aware_summary(staff_req)
+    assert [item["action_id"] for item in staff_summary["prioritized_actions"]] == [
+        "staff_review_student_risk_profile",
+        "staff_create_submission_support_plan",
+        "staff_review_recent_assessment_pattern",
+    ]
+    punctuality = next(
+        item for item in staff_summary["evidence_items"]
+        if item["column"] == "punctuality_rate"
+    )
+    assert punctuality["raw_value"] == "0"
+    assert punctuality["parsed_value"] == 0.0
+    assert staff_summary["conflicting_evidence"][0]["conflict_id"] == "A-S08-C01"
+    assert not any(
+        "support_score" in evidence_id
+        for item in staff_summary["prioritized_actions"]
+        for evidence_id in item["evidence_item_ids"]
+    )
+
+    unavailable_req = build_request(
+        "S-T13",
+        {
+            "synthesis_data": [{
+                "avg_score": 41.25,
+                "performance_trend": 27.5,
+                "engagement_score": 0,
+                "engagement_score_available": False,
+                "absence_rate": 1,
+                "lifestyle_risk_score": 0.375,
+                "score_strategy": "weighted_by_assessment_weight",
+                "score_scale": 100,
+                "pass_threshold": 40,
+                "target_threshold": 70,
+                "at_risk_score": 0,
+                "at_risk_label": "low",
+            }]
+        },
+    )
+    unavailable_req.ai_summary_config = action_synthesis_config("S-T13")
+    unavailable_summary = BaseExplanationStrategy._build_task_aware_summary(
+        unavailable_req
+    )
+    assert [item["action_id"] for item in unavailable_summary["prioritized_actions"]] == [
+        "student_create_attendance_routine",
+        "student_set_next_score_target",
+    ]
+    assert "student_rebuild_engagement_routine" not in {
+        item["action_id"] for item in unavailable_summary["prioritized_actions"]
+    }
+    engagement = next(
+        item for item in unavailable_summary["evidence_items"]
+        if item["column"] == "engagement_score"
+    )
+    assert engagement["raw_value"] == 0
+    assert engagement["available"] is False
+    engagement_rule = next(
+        item for item in unavailable_summary["rule_evaluations"]
+        if item["rule_id"] == "S-T13-R04"
+    )
+    assert engagement_rule["matched"] is False
+    assert engagement_rule["blocked_by_unavailable_evidence"] is True
+
+    conflict_req = build_request(
+        "S-T13",
+        {
+            "synthesis_data": [{
+                "avg_score": 94.34,
+                "performance_trend": -0.7187500000000001,
+                "engagement_score": 0.20237855036820618,
+                "engagement_score_available": True,
+                "absence_rate": None,
+                "lifestyle_risk_score": None,
+                "score_strategy": "weighted_by_assessment_weight",
+                "score_scale": 100,
+                "pass_threshold": 40,
+                "target_threshold": 70,
+                "at_risk_score": 3,
+                "at_risk_label": "high",
+            }]
+        },
+    )
+    conflict_req.ai_summary_config = action_synthesis_config("S-T13")
+    conflict_summary = BaseExplanationStrategy._build_task_aware_summary(
+        conflict_req
+    )
+    assert [item["action_id"] for item in conflict_summary["prioritized_actions"]] == [
+        "student_request_advisor_check_in",
+        "student_review_recent_assessment_feedback",
+    ]
+    assert conflict_summary["conflicting_evidence"][0]["conflict_id"] == "S-T13-C01"
+    assert any(
+        item["evidence_id"] == "absence_rate"
+        and item["reason"] == "evidence value is null"
+        for item in conflict_summary["missing_evidence"]
+    )
+
+    unsupported_req = build_request(
+        "S-T13",
+        {"synthesis_data": [{"avg_score": 50}]},
+    )
+    unsupported_req.ai_summary_config = AISummaryConfig(
+        summary_type="action_synthesis",
+        unsupported_action_behavior="emit_unsupported_actions",
+    )
+    unsupported_summary = BaseExplanationStrategy._build_task_aware_summary(
+        unsupported_req
+    )
+    assert unsupported_summary["prioritized_actions"] == []
+    assert unsupported_summary["unsupported_actions"][0]["reason"] == (
+        "missing_action_source"
+    )
+    assert "generic_diagnostic_sample" not in unsupported_summary
+
+    capped_req = build_request("A-G16", admin_req.datasets)
+    capped_req.ai_summary_config = action_synthesis_config("A-G16", max_actions=2)
+    capped_summary = BaseExplanationStrategy._build_task_aware_summary(capped_req)
+    assert len(capped_summary["prioritized_actions"]) == 2
+    assert any(
+        "capped at 2" in warning
+        for warning in capped_summary["summarization_warnings"]
+    )
+
+    duplicate_rules = [
+        rule.model_dump(mode="json")
+        for rule in admin_req.ai_summary_config.action_rules
+    ]
+    duplicate_rule = dict(duplicate_rules[0])
+    duplicate_rule["rule_id"] = "A-G16-R01-DUPLICATE-ACTION"
+    duplicate_rules.append(duplicate_rule)
+    dedupe_req = build_request("A-G16", admin_req.datasets)
+    dedupe_req.ai_summary_config = action_synthesis_config(
+        "A-G16",
+        action_rules=duplicate_rules,
+    )
+    dedupe_summary = BaseExplanationStrategy._build_task_aware_summary(dedupe_req)
+    deduped_action = next(
+        item for item in dedupe_summary["prioritized_actions"]
+        if item["action_id"] == "admin_review_high_risk_caseload"
+    )
+    assert deduped_action["rule_ids"] == [
+        "A-G16-R01",
+        "A-G16-R01-DUPLICATE-ACTION",
+    ]
+    assert len([
+        item for item in dedupe_summary["prioritized_actions"]
+        if item["action_id"] == "admin_review_high_risk_caseload"
+    ]) == 1
+
+    candidate_req = build_request(
+        "A-G16",
+        {
+            "candidate_actions": [{
+                "recommended_action": "Review the next deadline.",
+                "trigger_signal": "late_submission",
+            }]
+        },
+    )
+    candidate_req.ai_summary_config = AISummaryConfig(
+        summary_type="action_synthesis",
+        evidence_columns=["trigger_signal"],
+        evidence_dataset_roles={"candidate_actions": "primary_evidence"},
+        action_source="candidate_action_columns",
+        action_columns=["recommended_action"],
+        trigger_columns=["trigger_signal"],
+        max_actions=2,
+        require_complete_action_provenance=False,
+        unsupported_action_behavior="emit_unsupported_actions",
+    )
+    candidate_summary = BaseExplanationStrategy._build_task_aware_summary(
+        candidate_req
+    )
+    assert candidate_summary["prioritized_actions"][0]["priority"] is None
+    assert candidate_summary["prioritized_actions"][0]["owner"] == "unspecified"
+
+    compact_text = BaseExplanationStrategy._dump_summary(admin_summary, char_limit=700)
+    compact = json.loads(compact_text)
+    for key in (
+        "source_datasets",
+        "evidence_items",
+        "prioritized_actions",
+        "action_evidence_links",
+        "unsupported_actions",
+        "conflicting_evidence",
+        "missing_evidence",
+    ):
+        assert key in compact
+    linked_ids = {
+        evidence_id
+        for link in compact["action_evidence_links"]
+        for evidence_id in link["evidence_item_ids"]
+    }
+    compact_evidence_ids = {
+        item["evidence_item_id"] for item in compact["evidence_items"]
+    }
+    assert linked_ids.issubset(compact_evidence_ids)
+
+    system_prompt, user_prompt = (
+        BaseExplanationStrategy._build_action_synthesis_llm_prompts(admin_req)
+    )
+    assert "prioritized_actions" in user_prompt
+    assert "action_evidence_links" in user_prompt
+    assert "claim_limits" in user_prompt
+    assert "recommendations MUST be []" in system_prompt
+    if admin_req.ai_prompt_hint:
+        assert admin_req.ai_prompt_hint not in system_prompt
+        assert admin_req.ai_prompt_hint not in user_prompt
+
+    legacy_explanation = ExplanationBody(
+        summary="Existing rule-generated rationale.",
+        insights=[
+            Insight(
+                title="Rule-generated action",
+                description="Only the supplied action is explained.",
+                severity="medium",
+            )
+        ],
+    )
+    before_normalization = legacy_explanation.model_dump()
+    BaseExplanationStrategy._normalize_task_aware_action_rationale(
+        admin_req,
+        legacy_explanation,
+    )
+    assert legacy_explanation.model_dump() == before_normalization
+
+    assert set(SUMMARY_METHODS) == {
+        "task_aware_data_summarization",
+        "baseline_first_20_rows",
+    }
+    print("debug_ai_summary action_synthesis self-test passed")
 
 
 def main() -> None:
@@ -1217,6 +2333,9 @@ def main() -> None:
     parser.add_argument("--self-test-numeric-distribution", action="store_true")
     parser.add_argument("--self-test-group-comparison", action="store_true")
     parser.add_argument("--self-test-correlation-evidence", action="store_true")
+    parser.add_argument("--self-test-multi-metric-comparison", action="store_true")
+    parser.add_argument("--self-test-metric-snapshot", action="store_true")
+    parser.add_argument("--self-test-action-synthesis", action="store_true")
     args = parser.parse_args()
 
     if args.self_test:
@@ -1242,6 +2361,15 @@ def main() -> None:
         return
     if args.self_test_correlation_evidence:
         run_self_test_correlation_evidence()
+        return
+    if args.self_test_multi_metric_comparison:
+        run_self_test_multi_metric_comparison()
+        return
+    if args.self_test_metric_snapshot:
+        run_self_test_metric_snapshot()
+        return
+    if args.self_test_action_synthesis:
+        run_self_test_action_synthesis()
         return
 
     req = build_request(args.task, load_datasets(args.input_json, args.task))

@@ -1,0 +1,244 @@
+{
+  "scope": {
+    "task_ids": [
+      "A-S01",
+      "A-S07",
+      "S-B01",
+      "S-B02",
+      "S-B03"
+    ],
+    "dataset_ids": [
+      "SAMPLE_UCI_POR",
+      "SAMPLE_OULAD"
+    ],
+    "registry_migrated": false,
+    "source": "Saved V1 full analytics response.datasets"
+  },
+  "summary": {
+    "total_cases": 10,
+    "applicable_cases": 7,
+    "passed_cases": 7,
+    "failed_cases": 0,
+    "not_applicable_cases": 3,
+    "classifications": {
+      "evaluated": 7,
+      "insufficient_data": 2,
+      "blocked": 1
+    }
+  },
+  "cases": [
+    {
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-S01",
+      "artifact_path": "Docs/evaluation_v1/ai_explanation_full_matrix/runs/SAMPLE_UCI_POR/task_aware_data_summarization/tasks/A-S01.json",
+      "artifact_status": "insufficient_data",
+      "case_classification": "insufficient_data",
+      "dataset_row_counts": {},
+      "validation_status": "not_applicable"
+    },
+    {
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-S07",
+      "artifact_path": "Docs/evaluation_v1/ai_explanation_full_matrix/runs/SAMPLE_UCI_POR/task_aware_data_summarization/tasks/A-S07.json",
+      "artifact_status": "evaluated",
+      "case_classification": "evaluated",
+      "dataset_row_counts": {
+        "background_context": 1
+      },
+      "validation_status": "passed",
+      "summary_type": "metric_snapshot",
+      "validation_metadata_status": "passed",
+      "evidence_status": "sufficient",
+      "dataset_name": "background_context",
+      "row_count": 1,
+      "metric_count": 7,
+      "status_count": 4,
+      "threshold_count": 0,
+      "benchmark_count": 0,
+      "missing_evidence_count": 1,
+      "sensitive_context_present": true,
+      "generic_fallback": false,
+      "generic_diagnostic_fallback": false,
+      "errors": [],
+      "warnings": [
+        "Sensitive/background context is descriptive only under policy 'descriptive_context_only_no_causal_or_prescriptive_inference'; do not infer causality, risk cause, or recommendations from it."
+      ]
+    },
+    {
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-B01",
+      "artifact_path": "Docs/evaluation_v1/ai_explanation_full_matrix/runs/SAMPLE_UCI_POR/task_aware_data_summarization/tasks/S-B01.json",
+      "artifact_status": "evaluated",
+      "case_classification": "evaluated",
+      "dataset_row_counts": {
+        "performance_summary": 1
+      },
+      "validation_status": "passed",
+      "summary_type": "metric_snapshot",
+      "validation_metadata_status": "passed",
+      "evidence_status": "sufficient",
+      "dataset_name": "performance_summary",
+      "row_count": 1,
+      "metric_count": 9,
+      "status_count": 3,
+      "threshold_count": 2,
+      "benchmark_count": 2,
+      "missing_evidence_count": 0,
+      "sensitive_context_present": false,
+      "generic_fallback": false,
+      "generic_diagnostic_fallback": false,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-B02",
+      "artifact_path": "Docs/evaluation_v1/ai_explanation_full_matrix/runs/SAMPLE_UCI_POR/task_aware_data_summarization/tasks/S-B02.json",
+      "artifact_status": "evaluated",
+      "case_classification": "evaluated",
+      "dataset_row_counts": {
+        "risk_summary": 1
+      },
+      "validation_status": "passed",
+      "summary_type": "metric_snapshot",
+      "validation_metadata_status": "passed",
+      "evidence_status": "sufficient",
+      "dataset_name": "risk_summary",
+      "row_count": 1,
+      "metric_count": 5,
+      "status_count": 3,
+      "threshold_count": 2,
+      "benchmark_count": 0,
+      "missing_evidence_count": 1,
+      "sensitive_context_present": false,
+      "generic_fallback": false,
+      "generic_diagnostic_fallback": false,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-B03",
+      "artifact_path": "Docs/evaluation_v1/ai_explanation_full_matrix/runs/SAMPLE_UCI_POR/task_aware_data_summarization/tasks/S-B03.json",
+      "artifact_status": "insufficient_data",
+      "case_classification": "insufficient_data",
+      "dataset_row_counts": {},
+      "validation_status": "not_applicable"
+    },
+    {
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "A-S01",
+      "artifact_path": "Docs/evaluation_v1/ai_explanation_full_matrix/runs/SAMPLE_OULAD/task_aware_data_summarization/tasks/A-S01.json",
+      "artifact_status": "evaluated",
+      "case_classification": "evaluated",
+      "dataset_row_counts": {
+        "student_profile": 1
+      },
+      "validation_status": "passed",
+      "summary_type": "metric_snapshot",
+      "validation_metadata_status": "passed",
+      "evidence_status": "sufficient",
+      "dataset_name": "student_profile",
+      "row_count": 1,
+      "metric_count": 4,
+      "status_count": 3,
+      "threshold_count": 0,
+      "benchmark_count": 0,
+      "missing_evidence_count": 0,
+      "sensitive_context_present": true,
+      "generic_fallback": false,
+      "generic_diagnostic_fallback": false,
+      "errors": [],
+      "warnings": [
+        "Sensitive/background context is descriptive only under policy 'descriptive_context_only_no_causal_or_prescriptive_inference'; do not infer causality, risk cause, or recommendations from it."
+      ]
+    },
+    {
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "A-S07",
+      "artifact_path": "Docs/evaluation_v1/ai_explanation_full_matrix/runs/SAMPLE_OULAD/task_aware_data_summarization/tasks/A-S07.json",
+      "artifact_status": "blocked",
+      "case_classification": "blocked",
+      "dataset_row_counts": {},
+      "validation_status": "not_applicable"
+    },
+    {
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "S-B01",
+      "artifact_path": "Docs/evaluation_v1/ai_explanation_full_matrix/runs/SAMPLE_OULAD/task_aware_data_summarization/tasks/S-B01.json",
+      "artifact_status": "evaluated",
+      "case_classification": "evaluated",
+      "dataset_row_counts": {
+        "performance_summary": 1
+      },
+      "validation_status": "passed",
+      "summary_type": "metric_snapshot",
+      "validation_metadata_status": "passed",
+      "evidence_status": "sufficient",
+      "dataset_name": "performance_summary",
+      "row_count": 1,
+      "metric_count": 9,
+      "status_count": 3,
+      "threshold_count": 2,
+      "benchmark_count": 2,
+      "missing_evidence_count": 0,
+      "sensitive_context_present": false,
+      "generic_fallback": false,
+      "generic_diagnostic_fallback": false,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "S-B02",
+      "artifact_path": "Docs/evaluation_v1/ai_explanation_full_matrix/runs/SAMPLE_OULAD/task_aware_data_summarization/tasks/S-B02.json",
+      "artifact_status": "evaluated",
+      "case_classification": "evaluated",
+      "dataset_row_counts": {
+        "risk_summary": 1
+      },
+      "validation_status": "passed",
+      "summary_type": "metric_snapshot",
+      "validation_metadata_status": "passed",
+      "evidence_status": "sufficient",
+      "dataset_name": "risk_summary",
+      "row_count": 1,
+      "metric_count": 5,
+      "status_count": 3,
+      "threshold_count": 2,
+      "benchmark_count": 0,
+      "missing_evidence_count": 0,
+      "sensitive_context_present": false,
+      "generic_fallback": false,
+      "generic_diagnostic_fallback": false,
+      "errors": [],
+      "warnings": []
+    },
+    {
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "S-B03",
+      "artifact_path": "Docs/evaluation_v1/ai_explanation_full_matrix/runs/SAMPLE_OULAD/task_aware_data_summarization/tasks/S-B03.json",
+      "artifact_status": "evaluated",
+      "case_classification": "evaluated",
+      "dataset_row_counts": {
+        "engagement_summary": 1
+      },
+      "validation_status": "passed",
+      "summary_type": "metric_snapshot",
+      "validation_metadata_status": "passed",
+      "evidence_status": "sufficient",
+      "dataset_name": "engagement_summary",
+      "row_count": 1,
+      "metric_count": 3,
+      "status_count": 1,
+      "threshold_count": 0,
+      "benchmark_count": 3,
+      "missing_evidence_count": 0,
+      "sensitive_context_present": false,
+      "generic_fallback": false,
+      "generic_diagnostic_fallback": false,
+      "errors": [],
+      "warnings": []
+    }
+  ]
+}

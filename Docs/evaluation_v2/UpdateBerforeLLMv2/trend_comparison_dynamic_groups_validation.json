@@ -1,0 +1,2023 @@
+{
+  "validator": "validate_trend_comparison_dynamic_groups.py",
+  "generated_at": "2026-06-18T12:02:50.908031+00:00",
+  "backend_url": "http://localhost:4000",
+  "task_id": "A-C01",
+  "config_source": "canonical_pre_migration",
+  "parse_contract": {
+    "positive_config_passed": true,
+    "negative_case_count": 3,
+    "negative_cases_passed": 3,
+    "negative_results": [
+      {
+        "case": "missing_alignment_columns",
+        "rejected": true,
+        "detail": "1 validation error for AISummaryConfig\n  Value error, dynamic trend_comparison requires comparison_alignment_columns [type=value_error, input_value={'summary_type': 'trend_c...mn': 'score_normalized'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+      },
+      {
+        "case": "missing_divergence_threshold",
+        "rejected": true,
+        "detail": "1 validation error for AISummaryConfig\n  Value error, dynamic trend_comparison requires divergence_threshold [type=value_error, input_value={'summary_type': 'trend_c...mn': 'score_normalized'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+      },
+      {
+        "case": "mixed_static_and_dynamic_groups",
+        "rejected": true,
+        "detail": "1 validation error for AISummaryConfig\n  Value error, dynamic trend_comparison must not define target_group or comparison_groups [type=value_error, input_value={'summary_type': 'trend_c...mn': 'score_normalized'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+      }
+    ],
+    "errors": [],
+    "passed": true
+  },
+  "case_count": 2,
+  "passed": 2,
+  "failed": 0,
+  "overall_pass": true,
+  "cases": [
+    {
+      "case_id": "A-C01_SAMPLE_UCI_POR",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      },
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781784163119_fc5a3cb9",
+      "analytics_meta": {
+        "taskId": "A-C01",
+        "isMultiQuery": false,
+        "rowCount": 6,
+        "executionTimeMs": 4,
+        "queryHash": "af0a4805",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "trajectory_comparison"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "analytics_datasets": {
+        "trajectory_comparison": [
+          {
+            "student_id": "SAMPLE_UCI_POR_STU_000001",
+            "assessment_order": 1,
+            "week_of_class": 3,
+            "assessment_type": "quiz",
+            "score_normalized": 0
+          },
+          {
+            "student_id": "SAMPLE_UCI_POR_STU_000001",
+            "assessment_order": 2,
+            "week_of_class": 8,
+            "assessment_type": "quiz",
+            "score_normalized": 55
+          },
+          {
+            "student_id": "SAMPLE_UCI_POR_STU_000001",
+            "assessment_order": 3,
+            "week_of_class": 14,
+            "assessment_type": "exam",
+            "score_normalized": 55
+          },
+          {
+            "student_id": "SAMPLE_UCI_POR_STU_000002",
+            "assessment_order": 1,
+            "week_of_class": 3,
+            "assessment_type": "quiz",
+            "score_normalized": 45
+          },
+          {
+            "student_id": "SAMPLE_UCI_POR_STU_000002",
+            "assessment_order": 2,
+            "week_of_class": 8,
+            "assessment_type": "quiz",
+            "score_normalized": 55
+          },
+          {
+            "student_id": "SAMPLE_UCI_POR_STU_000002",
+            "assessment_order": 3,
+            "week_of_class": 14,
+            "assessment_type": "exam",
+            "score_normalized": 55
+          }
+        ]
+      },
+      "summary": {
+        "summary_type": "trend_comparison",
+        "dataset_name": "trajectory_comparison",
+        "row_count": 6,
+        "dynamic_comparison_groups": true,
+        "group_column": "student_id",
+        "time_column": "assessment_order",
+        "metric_column": "score_normalized",
+        "alignment_columns": [
+          "assessment_order",
+          "assessment_type"
+        ],
+        "divergence_threshold": 5.0,
+        "available_groups": [
+          "SAMPLE_UCI_POR_STU_000001",
+          "SAMPLE_UCI_POR_STU_000002"
+        ],
+        "evidence_status": "sufficient_evidence",
+        "group_trends": {
+          "SAMPLE_UCI_POR_STU_000001": {
+            "group": "SAMPLE_UCI_POR_STU_000001",
+            "point_count": 3,
+            "series_points": [
+              {
+                "assessment_order": 1.0,
+                "assessment_type": "quiz",
+                "score_normalized": 0.0,
+                "source_row_index": 0
+              },
+              {
+                "assessment_order": 2.0,
+                "assessment_type": "quiz",
+                "score_normalized": 55.0,
+                "source_row_index": 1
+              },
+              {
+                "assessment_order": 3.0,
+                "assessment_type": "exam",
+                "score_normalized": 55.0,
+                "source_row_index": 2
+              }
+            ],
+            "first_point": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz",
+              "score_normalized": 0.0,
+              "source_row_index": 0
+            },
+            "last_point": {
+              "assessment_order": 3.0,
+              "assessment_type": "exam",
+              "score_normalized": 55.0,
+              "source_row_index": 2
+            },
+            "net_change": 55.0,
+            "peak": {
+              "assessment_order": 2.0,
+              "assessment_type": "quiz",
+              "score_normalized": 55.0,
+              "source_row_index": 1
+            },
+            "trough": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz",
+              "score_normalized": 0.0,
+              "source_row_index": 0
+            },
+            "largest_adjacent_drop": null,
+            "largest_adjacent_rise": {
+              "from": {
+                "assessment_order": 1.0,
+                "assessment_type": "quiz",
+                "score_normalized": 0.0,
+                "source_row_index": 0
+              },
+              "to": {
+                "assessment_order": 2.0,
+                "assessment_type": "quiz",
+                "score_normalized": 55.0,
+                "source_row_index": 1
+              },
+              "delta": 55.0
+            }
+          },
+          "SAMPLE_UCI_POR_STU_000002": {
+            "group": "SAMPLE_UCI_POR_STU_000002",
+            "point_count": 3,
+            "series_points": [
+              {
+                "assessment_order": 1.0,
+                "assessment_type": "quiz",
+                "score_normalized": 45.0,
+                "source_row_index": 3
+              },
+              {
+                "assessment_order": 2.0,
+                "assessment_type": "quiz",
+                "score_normalized": 55.0,
+                "source_row_index": 4
+              },
+              {
+                "assessment_order": 3.0,
+                "assessment_type": "exam",
+                "score_normalized": 55.0,
+                "source_row_index": 5
+              }
+            ],
+            "first_point": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz",
+              "score_normalized": 45.0,
+              "source_row_index": 3
+            },
+            "last_point": {
+              "assessment_order": 3.0,
+              "assessment_type": "exam",
+              "score_normalized": 55.0,
+              "source_row_index": 5
+            },
+            "net_change": 10.0,
+            "peak": {
+              "assessment_order": 2.0,
+              "assessment_type": "quiz",
+              "score_normalized": 55.0,
+              "source_row_index": 4
+            },
+            "trough": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz",
+              "score_normalized": 45.0,
+              "source_row_index": 3
+            },
+            "largest_adjacent_drop": null,
+            "largest_adjacent_rise": {
+              "from": {
+                "assessment_order": 1.0,
+                "assessment_type": "quiz",
+                "score_normalized": 45.0,
+                "source_row_index": 3
+              },
+              "to": {
+                "assessment_order": 2.0,
+                "assessment_type": "quiz",
+                "score_normalized": 55.0,
+                "source_row_index": 4
+              },
+              "delta": 10.0
+            }
+          }
+        },
+        "pairwise_comparison": {
+          "groups": [
+            "SAMPLE_UCI_POR_STU_000001",
+            "SAMPLE_UCI_POR_STU_000002"
+          ],
+          "shared_point_count": 3,
+          "unmatched_point_count_by_group": {
+            "SAMPLE_UCI_POR_STU_000001": 0,
+            "SAMPLE_UCI_POR_STU_000002": 0
+          },
+          "gap_series": [
+            {
+              "alignment": {
+                "assessment_order": 1.0,
+                "assessment_type": "quiz"
+              },
+              "group_values": {
+                "SAMPLE_UCI_POR_STU_000001": {
+                  "value": 0.0,
+                  "source_values": [
+                    0.0
+                  ],
+                  "source_row_indexes": [
+                    0
+                  ],
+                  "duplicate_count": 1
+                },
+                "SAMPLE_UCI_POR_STU_000002": {
+                  "value": 45.0,
+                  "source_values": [
+                    45.0
+                  ],
+                  "source_row_indexes": [
+                    3
+                  ],
+                  "duplicate_count": 1
+                }
+              },
+              "gap": -45.0,
+              "absolute_gap": 45.0
+            },
+            {
+              "alignment": {
+                "assessment_order": 2.0,
+                "assessment_type": "quiz"
+              },
+              "group_values": {
+                "SAMPLE_UCI_POR_STU_000001": {
+                  "value": 55.0,
+                  "source_values": [
+                    55.0
+                  ],
+                  "source_row_indexes": [
+                    1
+                  ],
+                  "duplicate_count": 1
+                },
+                "SAMPLE_UCI_POR_STU_000002": {
+                  "value": 55.0,
+                  "source_values": [
+                    55.0
+                  ],
+                  "source_row_indexes": [
+                    4
+                  ],
+                  "duplicate_count": 1
+                }
+              },
+              "gap": 0.0,
+              "absolute_gap": 0.0
+            },
+            {
+              "alignment": {
+                "assessment_order": 3.0,
+                "assessment_type": "exam"
+              },
+              "group_values": {
+                "SAMPLE_UCI_POR_STU_000001": {
+                  "value": 55.0,
+                  "source_values": [
+                    55.0
+                  ],
+                  "source_row_indexes": [
+                    2
+                  ],
+                  "duplicate_count": 1
+                },
+                "SAMPLE_UCI_POR_STU_000002": {
+                  "value": 55.0,
+                  "source_values": [
+                    55.0
+                  ],
+                  "source_row_indexes": [
+                    5
+                  ],
+                  "duplicate_count": 1
+                }
+              },
+              "gap": 0.0,
+              "absolute_gap": 0.0
+            }
+          ],
+          "first_shared_point": {
+            "alignment": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz"
+            },
+            "group_values": {
+              "SAMPLE_UCI_POR_STU_000001": {
+                "value": 0.0,
+                "source_values": [
+                  0.0
+                ],
+                "source_row_indexes": [
+                  0
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_UCI_POR_STU_000002": {
+                "value": 45.0,
+                "source_values": [
+                  45.0
+                ],
+                "source_row_indexes": [
+                  3
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": -45.0,
+            "absolute_gap": 45.0
+          },
+          "last_shared_point": {
+            "alignment": {
+              "assessment_order": 3.0,
+              "assessment_type": "exam"
+            },
+            "group_values": {
+              "SAMPLE_UCI_POR_STU_000001": {
+                "value": 55.0,
+                "source_values": [
+                  55.0
+                ],
+                "source_row_indexes": [
+                  2
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_UCI_POR_STU_000002": {
+                "value": 55.0,
+                "source_values": [
+                  55.0
+                ],
+                "source_row_indexes": [
+                  5
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": 0.0,
+            "absolute_gap": 0.0
+          },
+          "first_divergence": {
+            "alignment": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz"
+            },
+            "group_values": {
+              "SAMPLE_UCI_POR_STU_000001": {
+                "value": 0.0,
+                "source_values": [
+                  0.0
+                ],
+                "source_row_indexes": [
+                  0
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_UCI_POR_STU_000002": {
+                "value": 45.0,
+                "source_values": [
+                  45.0
+                ],
+                "source_row_indexes": [
+                  3
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": -45.0,
+            "absolute_gap": 45.0
+          },
+          "largest_absolute_gap": {
+            "alignment": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz"
+            },
+            "group_values": {
+              "SAMPLE_UCI_POR_STU_000001": {
+                "value": 0.0,
+                "source_values": [
+                  0.0
+                ],
+                "source_row_indexes": [
+                  0
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_UCI_POR_STU_000002": {
+                "value": 45.0,
+                "source_values": [
+                  45.0
+                ],
+                "source_row_indexes": [
+                  3
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": -45.0,
+            "absolute_gap": 45.0
+          },
+          "net_change_by_group": {
+            "SAMPLE_UCI_POR_STU_000001": 55.0,
+            "SAMPLE_UCI_POR_STU_000002": 10.0
+          },
+          "faster_improving_group": "SAMPLE_UCI_POR_STU_000001",
+          "comparison_warnings": []
+        },
+        "missing_group_evidence": [],
+        "summarization_warnings": []
+      },
+      "deterministic_rerun": true,
+      "compact_output": {
+        "summary_type": "trend_comparison",
+        "summary_truncated": true,
+        "summarization_warnings": [
+          "DATA SUMMARY truncated to 1500 characters."
+        ],
+        "dataset_name": "trajectory_comparison",
+        "row_count": 6,
+        "dynamic_comparison_groups": true,
+        "group_column": "student_id",
+        "time_column": "assessment_order",
+        "alignment_columns": [
+          "assessment_order",
+          "assessment_type"
+        ],
+        "divergence_threshold": 5.0,
+        "available_groups": [
+          "SAMPLE_UCI_POR_STU_000001",
+          "SAMPLE_UCI_POR_STU_000002"
+        ],
+        "group_trends": {
+          "SAMPLE_UCI_POR_STU_000001": {
+            "group": "SAMPLE_UCI_POR_STU_000001",
+            "point_count": 3,
+            "series_points": [
+              {
+                "assessment_order": 1.0,
+                "assessment_type": "quiz",
+                "score_normalized": 0.0,
+                "source_row_index": 0
+              },
+              {
+                "assessment_order": 2.0,
+                "assessment_type": "quiz",
+                "score_normalized": 55.0,
+                "source_row_index": 1
+              },
+              {
+                "assessment_order": 3.0,
+                "assessment_type": "exam",
+                "score_normalized": 55.0,
+                "source_row_index": 2
+              }
+            ],
+            "first_point": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz",
+              "score_normalized": 0.0,
+              "source_row_index": 0
+            },
+            "last_point": {
+              "assessment_order": 3.0,
+              "assessment_type": "exam",
+              "score_normalized": 55.0,
+              "source_row_index": 2
+            },
+            "net_change": 55.0,
+            "peak": {
+              "assessment_order": 2.0,
+              "assessment_type": "quiz",
+              "score_normalized": 55.0,
+              "source_row_index": 1
+            },
+            "trough": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz",
+              "score_normalized": 0.0,
+              "source_row_index": 0
+            },
+            "largest_adjacent_drop": null,
+            "largest_adjacent_rise": {
+              "from": {
+                "assessment_order": 1.0,
+                "assessment_type": "quiz",
+                "score_normalized": 0.0,
+                "source_row_index": 0
+              },
+              "to": {
+                "assessment_order": 2.0,
+                "assessment_type": "quiz",
+                "score_normalized": 55.0,
+                "source_row_index": 1
+              },
+              "delta": 55.0
+            }
+          },
+          "SAMPLE_UCI_POR_STU_000002": {
+            "group": "SAMPLE_UCI_POR_STU_000002",
+            "point_count": 3,
+            "series_points": [
+              {
+                "assessment_order": 1.0,
+                "assessment_type": "quiz",
+                "score_normalized": 45.0,
+                "source_row_index": 3
+              },
+              {
+                "assessment_order": 2.0,
+                "assessment_type": "quiz",
+                "score_normalized": 55.0,
+                "source_row_index": 4
+              },
+              {
+                "assessment_order": 3.0,
+                "assessment_type": "exam",
+                "score_normalized": 55.0,
+                "source_row_index": 5
+              }
+            ],
+            "first_point": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz",
+              "score_normalized": 45.0,
+              "source_row_index": 3
+            },
+            "last_point": {
+              "assessment_order": 3.0,
+              "assessment_type": "exam",
+              "score_normalized": 55.0,
+              "source_row_index": 5
+            },
+            "net_change": 10.0,
+            "peak": {
+              "assessment_order": 2.0,
+              "assessment_type": "quiz",
+              "score_normalized": 55.0,
+              "source_row_index": 4
+            },
+            "trough": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz",
+              "score_normalized": 45.0,
+              "source_row_index": 3
+            },
+            "largest_adjacent_drop": null,
+            "largest_adjacent_rise": {
+              "from": {
+                "assessment_order": 1.0,
+                "assessment_type": "quiz",
+                "score_normalized": 45.0,
+                "source_row_index": 3
+              },
+              "to": {
+                "assessment_order": 2.0,
+                "assessment_type": "quiz",
+                "score_normalized": 55.0,
+                "source_row_index": 4
+              },
+              "delta": 10.0
+            }
+          }
+        },
+        "pairwise_comparison": {
+          "groups": [
+            "SAMPLE_UCI_POR_STU_000001",
+            "SAMPLE_UCI_POR_STU_000002"
+          ],
+          "shared_point_count": 3,
+          "unmatched_point_count_by_group": {
+            "SAMPLE_UCI_POR_STU_000001": 0,
+            "SAMPLE_UCI_POR_STU_000002": 0
+          },
+          "gap_series": [
+            {
+              "alignment": {
+                "assessment_order": 1.0,
+                "assessment_type": "quiz"
+              },
+              "group_values": {
+                "SAMPLE_UCI_POR_STU_000001": {
+                  "value": 0.0,
+                  "source_values": [
+                    0.0
+                  ],
+                  "source_row_indexes": [
+                    0
+                  ],
+                  "duplicate_count": 1
+                },
+                "SAMPLE_UCI_POR_STU_000002": {
+                  "value": 45.0,
+                  "source_values": [
+                    45.0
+                  ],
+                  "source_row_indexes": [
+                    3
+                  ],
+                  "duplicate_count": 1
+                }
+              },
+              "gap": -45.0,
+              "absolute_gap": 45.0
+            },
+            {
+              "alignment": {
+                "assessment_order": 2.0,
+                "assessment_type": "quiz"
+              },
+              "group_values": {
+                "SAMPLE_UCI_POR_STU_000001": {
+                  "value": 55.0,
+                  "source_values": [
+                    55.0
+                  ],
+                  "source_row_indexes": [
+                    1
+                  ],
+                  "duplicate_count": 1
+                },
+                "SAMPLE_UCI_POR_STU_000002": {
+                  "value": 55.0,
+                  "source_values": [
+                    55.0
+                  ],
+                  "source_row_indexes": [
+                    4
+                  ],
+                  "duplicate_count": 1
+                }
+              },
+              "gap": 0.0,
+              "absolute_gap": 0.0
+            },
+            {
+              "alignment": {
+                "assessment_order": 3.0,
+                "assessment_type": "exam"
+              },
+              "group_values": {
+                "SAMPLE_UCI_POR_STU_000001": {
+                  "value": 55.0,
+                  "source_values": [
+                    55.0
+                  ],
+                  "source_row_indexes": [
+                    2
+                  ],
+                  "duplicate_count": 1
+                },
+                "SAMPLE_UCI_POR_STU_000002": {
+                  "value": 55.0,
+                  "source_values": [
+                    55.0
+                  ],
+                  "source_row_indexes": [
+                    5
+                  ],
+                  "duplicate_count": 1
+                }
+              },
+              "gap": 0.0,
+              "absolute_gap": 0.0
+            }
+          ],
+          "first_shared_point": {
+            "alignment": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz"
+            },
+            "group_values": {
+              "SAMPLE_UCI_POR_STU_000001": {
+                "value": 0.0,
+                "source_values": [
+                  0.0
+                ],
+                "source_row_indexes": [
+                  0
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_UCI_POR_STU_000002": {
+                "value": 45.0,
+                "source_values": [
+                  45.0
+                ],
+                "source_row_indexes": [
+                  3
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": -45.0,
+            "absolute_gap": 45.0
+          },
+          "last_shared_point": {
+            "alignment": {
+              "assessment_order": 3.0,
+              "assessment_type": "exam"
+            },
+            "group_values": {
+              "SAMPLE_UCI_POR_STU_000001": {
+                "value": 55.0,
+                "source_values": [
+                  55.0
+                ],
+                "source_row_indexes": [
+                  2
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_UCI_POR_STU_000002": {
+                "value": 55.0,
+                "source_values": [
+                  55.0
+                ],
+                "source_row_indexes": [
+                  5
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": 0.0,
+            "absolute_gap": 0.0
+          },
+          "first_divergence": {
+            "alignment": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz"
+            },
+            "group_values": {
+              "SAMPLE_UCI_POR_STU_000001": {
+                "value": 0.0,
+                "source_values": [
+                  0.0
+                ],
+                "source_row_indexes": [
+                  0
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_UCI_POR_STU_000002": {
+                "value": 45.0,
+                "source_values": [
+                  45.0
+                ],
+                "source_row_indexes": [
+                  3
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": -45.0,
+            "absolute_gap": 45.0
+          },
+          "largest_absolute_gap": {
+            "alignment": {
+              "assessment_order": 1.0,
+              "assessment_type": "quiz"
+            },
+            "group_values": {
+              "SAMPLE_UCI_POR_STU_000001": {
+                "value": 0.0,
+                "source_values": [
+                  0.0
+                ],
+                "source_row_indexes": [
+                  0
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_UCI_POR_STU_000002": {
+                "value": 45.0,
+                "source_values": [
+                  45.0
+                ],
+                "source_row_indexes": [
+                  3
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": -45.0,
+            "absolute_gap": 45.0
+          },
+          "net_change_by_group": {
+            "SAMPLE_UCI_POR_STU_000001": 55.0,
+            "SAMPLE_UCI_POR_STU_000002": 10.0
+          },
+          "faster_improving_group": "SAMPLE_UCI_POR_STU_000001",
+          "comparison_warnings": []
+        },
+        "missing_group_evidence": [],
+        "metric_column": "score_normalized",
+        "evidence_status": "sufficient_evidence"
+      },
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "A-C01_SAMPLE_OULAD",
+      "dataset_id": "SAMPLE_OULAD",
+      "params": {
+        "batch_id": "SAMPLE_OULAD",
+        "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+        "s1": "SAMPLE_OULAD_STU_100788",
+        "s2": "SAMPLE_OULAD_STU_102209"
+      },
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781784163384_acc81f6d",
+      "analytics_meta": {
+        "taskId": "A-C01",
+        "isMultiQuery": false,
+        "rowCount": 20,
+        "executionTimeMs": 4,
+        "queryHash": "9b9850c5",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "trajectory_comparison"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "analytics_datasets": {
+        "trajectory_comparison": [
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 1,
+            "week_of_class": 3,
+            "assessment_type": "TMA",
+            "score_normalized": 92
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 1,
+            "week_of_class": 3,
+            "assessment_type": "CMA",
+            "score_normalized": 100
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 2,
+            "week_of_class": 7,
+            "assessment_type": "TMA",
+            "score_normalized": 90
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 3,
+            "week_of_class": 10,
+            "assessment_type": "CMA",
+            "score_normalized": 87
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 3,
+            "week_of_class": 14,
+            "assessment_type": "TMA",
+            "score_normalized": 89
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 4,
+            "week_of_class": 19,
+            "assessment_type": "TMA",
+            "score_normalized": 61
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 5,
+            "week_of_class": 25,
+            "assessment_type": "TMA",
+            "score_normalized": 87
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 5,
+            "week_of_class": 21,
+            "assessment_type": "CMA",
+            "score_normalized": 90
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 6,
+            "week_of_class": 34,
+            "assessment_type": "CMA",
+            "score_normalized": 90
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 7,
+            "week_of_class": 34,
+            "assessment_type": "CMA",
+            "score_normalized": 92
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 8,
+            "week_of_class": 31,
+            "assessment_type": "CMA",
+            "score_normalized": 83
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 8,
+            "week_of_class": 34,
+            "assessment_type": "CMA",
+            "score_normalized": 97
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 9,
+            "week_of_class": null,
+            "assessment_type": "Exam",
+            "score_normalized": 96
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 9,
+            "week_of_class": 34,
+            "assessment_type": "CMA",
+            "score_normalized": 85
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 10,
+            "week_of_class": 34,
+            "assessment_type": "CMA",
+            "score_normalized": 88
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 11,
+            "week_of_class": 34,
+            "assessment_type": "CMA",
+            "score_normalized": 93
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "assessment_order": 12,
+            "week_of_class": 34,
+            "assessment_type": "CMA",
+            "score_normalized": 99
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_102209",
+            "assessment_order": 1,
+            "week_of_class": 3,
+            "assessment_type": "CMA",
+            "score_normalized": 56
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_102209",
+            "assessment_order": 2,
+            "week_of_class": 5,
+            "assessment_type": "TMA",
+            "score_normalized": 56
+          },
+          {
+            "student_id": "SAMPLE_OULAD_STU_102209",
+            "assessment_order": 3,
+            "week_of_class": 10,
+            "assessment_type": "CMA",
+            "score_normalized": 51
+          }
+        ]
+      },
+      "summary": {
+        "summary_type": "trend_comparison",
+        "dataset_name": "trajectory_comparison",
+        "row_count": 20,
+        "dynamic_comparison_groups": true,
+        "group_column": "student_id",
+        "time_column": "assessment_order",
+        "metric_column": "score_normalized",
+        "alignment_columns": [
+          "assessment_order",
+          "assessment_type"
+        ],
+        "divergence_threshold": 5.0,
+        "available_groups": [
+          "SAMPLE_OULAD_STU_100788",
+          "SAMPLE_OULAD_STU_102209"
+        ],
+        "evidence_status": "sufficient_evidence",
+        "group_trends": {
+          "SAMPLE_OULAD_STU_100788": {
+            "group": "SAMPLE_OULAD_STU_100788",
+            "point_count": 17,
+            "series_points": [
+              {
+                "assessment_order": 1.0,
+                "assessment_type": "CMA",
+                "score_normalized": 100.0,
+                "source_row_index": 1
+              },
+              {
+                "assessment_order": 1.0,
+                "assessment_type": "TMA",
+                "score_normalized": 92.0,
+                "source_row_index": 0
+              },
+              {
+                "assessment_order": 2.0,
+                "assessment_type": "TMA",
+                "score_normalized": 90.0,
+                "source_row_index": 2
+              },
+              {
+                "assessment_order": 3.0,
+                "assessment_type": "CMA",
+                "score_normalized": 87.0,
+                "source_row_index": 3
+              },
+              {
+                "assessment_order": 3.0,
+                "assessment_type": "TMA",
+                "score_normalized": 89.0,
+                "source_row_index": 4
+              },
+              {
+                "assessment_order": 4.0,
+                "assessment_type": "TMA",
+                "score_normalized": 61.0,
+                "source_row_index": 5
+              },
+              {
+                "assessment_order": 5.0,
+                "assessment_type": "CMA",
+                "score_normalized": 90.0,
+                "source_row_index": 7
+              },
+              {
+                "assessment_order": 5.0,
+                "assessment_type": "TMA",
+                "score_normalized": 87.0,
+                "source_row_index": 6
+              },
+              {
+                "assessment_order": 6.0,
+                "assessment_type": "CMA",
+                "score_normalized": 90.0,
+                "source_row_index": 8
+              },
+              {
+                "assessment_order": 7.0,
+                "assessment_type": "CMA",
+                "score_normalized": 92.0,
+                "source_row_index": 9
+              },
+              {
+                "assessment_order": 8.0,
+                "assessment_type": "CMA",
+                "score_normalized": 83.0,
+                "source_row_index": 10
+              },
+              {
+                "assessment_order": 8.0,
+                "assessment_type": "CMA",
+                "score_normalized": 97.0,
+                "source_row_index": 11
+              },
+              {
+                "assessment_order": 9.0,
+                "assessment_type": "CMA",
+                "score_normalized": 85.0,
+                "source_row_index": 13
+              },
+              {
+                "assessment_order": 9.0,
+                "assessment_type": "Exam",
+                "score_normalized": 96.0,
+                "source_row_index": 12
+              },
+              {
+                "assessment_order": 10.0,
+                "assessment_type": "CMA",
+                "score_normalized": 88.0,
+                "source_row_index": 14
+              },
+              {
+                "assessment_order": 11.0,
+                "assessment_type": "CMA",
+                "score_normalized": 93.0,
+                "source_row_index": 15
+              },
+              {
+                "assessment_order": 12.0,
+                "assessment_type": "CMA",
+                "score_normalized": 99.0,
+                "source_row_index": 16
+              }
+            ],
+            "first_point": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA",
+              "score_normalized": 100.0,
+              "source_row_index": 1
+            },
+            "last_point": {
+              "assessment_order": 12.0,
+              "assessment_type": "CMA",
+              "score_normalized": 99.0,
+              "source_row_index": 16
+            },
+            "net_change": -1.0,
+            "peak": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA",
+              "score_normalized": 100.0,
+              "source_row_index": 1
+            },
+            "trough": {
+              "assessment_order": 4.0,
+              "assessment_type": "TMA",
+              "score_normalized": 61.0,
+              "source_row_index": 5
+            },
+            "largest_adjacent_drop": {
+              "from": {
+                "assessment_order": 3.0,
+                "assessment_type": "TMA",
+                "score_normalized": 89.0,
+                "source_row_index": 4
+              },
+              "to": {
+                "assessment_order": 4.0,
+                "assessment_type": "TMA",
+                "score_normalized": 61.0,
+                "source_row_index": 5
+              },
+              "delta": -28.0
+            },
+            "largest_adjacent_rise": {
+              "from": {
+                "assessment_order": 4.0,
+                "assessment_type": "TMA",
+                "score_normalized": 61.0,
+                "source_row_index": 5
+              },
+              "to": {
+                "assessment_order": 5.0,
+                "assessment_type": "CMA",
+                "score_normalized": 90.0,
+                "source_row_index": 7
+              },
+              "delta": 29.0
+            }
+          },
+          "SAMPLE_OULAD_STU_102209": {
+            "group": "SAMPLE_OULAD_STU_102209",
+            "point_count": 3,
+            "series_points": [
+              {
+                "assessment_order": 1.0,
+                "assessment_type": "CMA",
+                "score_normalized": 56.0,
+                "source_row_index": 17
+              },
+              {
+                "assessment_order": 2.0,
+                "assessment_type": "TMA",
+                "score_normalized": 56.0,
+                "source_row_index": 18
+              },
+              {
+                "assessment_order": 3.0,
+                "assessment_type": "CMA",
+                "score_normalized": 51.0,
+                "source_row_index": 19
+              }
+            ],
+            "first_point": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA",
+              "score_normalized": 56.0,
+              "source_row_index": 17
+            },
+            "last_point": {
+              "assessment_order": 3.0,
+              "assessment_type": "CMA",
+              "score_normalized": 51.0,
+              "source_row_index": 19
+            },
+            "net_change": -5.0,
+            "peak": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA",
+              "score_normalized": 56.0,
+              "source_row_index": 17
+            },
+            "trough": {
+              "assessment_order": 3.0,
+              "assessment_type": "CMA",
+              "score_normalized": 51.0,
+              "source_row_index": 19
+            },
+            "largest_adjacent_drop": {
+              "from": {
+                "assessment_order": 2.0,
+                "assessment_type": "TMA",
+                "score_normalized": 56.0,
+                "source_row_index": 18
+              },
+              "to": {
+                "assessment_order": 3.0,
+                "assessment_type": "CMA",
+                "score_normalized": 51.0,
+                "source_row_index": 19
+              },
+              "delta": -5.0
+            },
+            "largest_adjacent_rise": null
+          }
+        },
+        "pairwise_comparison": {
+          "groups": [
+            "SAMPLE_OULAD_STU_100788",
+            "SAMPLE_OULAD_STU_102209"
+          ],
+          "shared_point_count": 3,
+          "unmatched_point_count_by_group": {
+            "SAMPLE_OULAD_STU_100788": 14,
+            "SAMPLE_OULAD_STU_102209": 0
+          },
+          "gap_series": [
+            {
+              "alignment": {
+                "assessment_order": 1.0,
+                "assessment_type": "CMA"
+              },
+              "group_values": {
+                "SAMPLE_OULAD_STU_100788": {
+                  "value": 100.0,
+                  "source_values": [
+                    100.0
+                  ],
+                  "source_row_indexes": [
+                    1
+                  ],
+                  "duplicate_count": 1
+                },
+                "SAMPLE_OULAD_STU_102209": {
+                  "value": 56.0,
+                  "source_values": [
+                    56.0
+                  ],
+                  "source_row_indexes": [
+                    17
+                  ],
+                  "duplicate_count": 1
+                }
+              },
+              "gap": 44.0,
+              "absolute_gap": 44.0
+            },
+            {
+              "alignment": {
+                "assessment_order": 2.0,
+                "assessment_type": "TMA"
+              },
+              "group_values": {
+                "SAMPLE_OULAD_STU_100788": {
+                  "value": 90.0,
+                  "source_values": [
+                    90.0
+                  ],
+                  "source_row_indexes": [
+                    2
+                  ],
+                  "duplicate_count": 1
+                },
+                "SAMPLE_OULAD_STU_102209": {
+                  "value": 56.0,
+                  "source_values": [
+                    56.0
+                  ],
+                  "source_row_indexes": [
+                    18
+                  ],
+                  "duplicate_count": 1
+                }
+              },
+              "gap": 34.0,
+              "absolute_gap": 34.0
+            },
+            {
+              "alignment": {
+                "assessment_order": 3.0,
+                "assessment_type": "CMA"
+              },
+              "group_values": {
+                "SAMPLE_OULAD_STU_100788": {
+                  "value": 87.0,
+                  "source_values": [
+                    87.0
+                  ],
+                  "source_row_indexes": [
+                    3
+                  ],
+                  "duplicate_count": 1
+                },
+                "SAMPLE_OULAD_STU_102209": {
+                  "value": 51.0,
+                  "source_values": [
+                    51.0
+                  ],
+                  "source_row_indexes": [
+                    19
+                  ],
+                  "duplicate_count": 1
+                }
+              },
+              "gap": 36.0,
+              "absolute_gap": 36.0
+            }
+          ],
+          "first_shared_point": {
+            "alignment": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA"
+            },
+            "group_values": {
+              "SAMPLE_OULAD_STU_100788": {
+                "value": 100.0,
+                "source_values": [
+                  100.0
+                ],
+                "source_row_indexes": [
+                  1
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_OULAD_STU_102209": {
+                "value": 56.0,
+                "source_values": [
+                  56.0
+                ],
+                "source_row_indexes": [
+                  17
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": 44.0,
+            "absolute_gap": 44.0
+          },
+          "last_shared_point": {
+            "alignment": {
+              "assessment_order": 3.0,
+              "assessment_type": "CMA"
+            },
+            "group_values": {
+              "SAMPLE_OULAD_STU_100788": {
+                "value": 87.0,
+                "source_values": [
+                  87.0
+                ],
+                "source_row_indexes": [
+                  3
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_OULAD_STU_102209": {
+                "value": 51.0,
+                "source_values": [
+                  51.0
+                ],
+                "source_row_indexes": [
+                  19
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": 36.0,
+            "absolute_gap": 36.0
+          },
+          "first_divergence": {
+            "alignment": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA"
+            },
+            "group_values": {
+              "SAMPLE_OULAD_STU_100788": {
+                "value": 100.0,
+                "source_values": [
+                  100.0
+                ],
+                "source_row_indexes": [
+                  1
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_OULAD_STU_102209": {
+                "value": 56.0,
+                "source_values": [
+                  56.0
+                ],
+                "source_row_indexes": [
+                  17
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": 44.0,
+            "absolute_gap": 44.0
+          },
+          "largest_absolute_gap": {
+            "alignment": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA"
+            },
+            "group_values": {
+              "SAMPLE_OULAD_STU_100788": {
+                "value": 100.0,
+                "source_values": [
+                  100.0
+                ],
+                "source_row_indexes": [
+                  1
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_OULAD_STU_102209": {
+                "value": 56.0,
+                "source_values": [
+                  56.0
+                ],
+                "source_row_indexes": [
+                  17
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": 44.0,
+            "absolute_gap": 44.0
+          },
+          "net_change_by_group": {
+            "SAMPLE_OULAD_STU_100788": -13.0,
+            "SAMPLE_OULAD_STU_102209": -5.0
+          },
+          "faster_improving_group": "SAMPLE_OULAD_STU_102209",
+          "comparison_warnings": []
+        },
+        "missing_group_evidence": [],
+        "summarization_warnings": []
+      },
+      "deterministic_rerun": true,
+      "compact_output": {
+        "summary_type": "trend_comparison",
+        "summary_truncated": true,
+        "summarization_warnings": [
+          "DATA SUMMARY truncated to 1500 characters."
+        ],
+        "dataset_name": "trajectory_comparison",
+        "row_count": 20,
+        "dynamic_comparison_groups": true,
+        "group_column": "student_id",
+        "time_column": "assessment_order",
+        "alignment_columns": [
+          "assessment_order",
+          "assessment_type"
+        ],
+        "divergence_threshold": 5.0,
+        "available_groups": [
+          "SAMPLE_OULAD_STU_100788",
+          "SAMPLE_OULAD_STU_102209"
+        ],
+        "group_trends": {
+          "SAMPLE_OULAD_STU_100788": {
+            "group": "SAMPLE_OULAD_STU_100788",
+            "point_count": 17,
+            "series_points": [
+              {
+                "assessment_order": 1.0,
+                "assessment_type": "CMA",
+                "score_normalized": 100.0,
+                "source_row_index": 1
+              },
+              {
+                "assessment_order": 1.0,
+                "assessment_type": "TMA",
+                "score_normalized": 92.0,
+                "source_row_index": 0
+              },
+              {
+                "assessment_order": 2.0,
+                "assessment_type": "TMA",
+                "score_normalized": 90.0,
+                "source_row_index": 2
+              },
+              {
+                "assessment_order": 3.0,
+                "assessment_type": "CMA",
+                "score_normalized": 87.0,
+                "source_row_index": 3
+              },
+              {
+                "assessment_order": 3.0,
+                "assessment_type": "TMA",
+                "score_normalized": 89.0,
+                "source_row_index": 4
+              },
+              {
+                "assessment_order": 4.0,
+                "assessment_type": "TMA",
+                "score_normalized": 61.0,
+                "source_row_index": 5
+              },
+              {
+                "assessment_order": 5.0,
+                "assessment_type": "CMA",
+                "score_normalized": 90.0,
+                "source_row_index": 7
+              },
+              {
+                "assessment_order": 5.0,
+                "assessment_type": "TMA",
+                "score_normalized": 87.0,
+                "source_row_index": 6
+              },
+              {
+                "assessment_order": 6.0,
+                "assessment_type": "CMA",
+                "score_normalized": 90.0,
+                "source_row_index": 8
+              },
+              {
+                "assessment_order": 7.0,
+                "assessment_type": "CMA",
+                "score_normalized": 92.0,
+                "source_row_index": 9
+              },
+              {
+                "assessment_order": 8.0,
+                "assessment_type": "CMA",
+                "score_normalized": 83.0,
+                "source_row_index": 10
+              },
+              {
+                "assessment_order": 8.0,
+                "assessment_type": "CMA",
+                "score_normalized": 97.0,
+                "source_row_index": 11
+              },
+              {
+                "assessment_order": 9.0,
+                "assessment_type": "CMA",
+                "score_normalized": 85.0,
+                "source_row_index": 13
+              },
+              {
+                "assessment_order": 9.0,
+                "assessment_type": "Exam",
+                "score_normalized": 96.0,
+                "source_row_index": 12
+              },
+              {
+                "assessment_order": 10.0,
+                "assessment_type": "CMA",
+                "score_normalized": 88.0,
+                "source_row_index": 14
+              },
+              {
+                "assessment_order": 11.0,
+                "assessment_type": "CMA",
+                "score_normalized": 93.0,
+                "source_row_index": 15
+              },
+              {
+                "assessment_order": 12.0,
+                "assessment_type": "CMA",
+                "score_normalized": 99.0,
+                "source_row_index": 16
+              }
+            ],
+            "first_point": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA",
+              "score_normalized": 100.0,
+              "source_row_index": 1
+            },
+            "last_point": {
+              "assessment_order": 12.0,
+              "assessment_type": "CMA",
+              "score_normalized": 99.0,
+              "source_row_index": 16
+            },
+            "net_change": -1.0,
+            "peak": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA",
+              "score_normalized": 100.0,
+              "source_row_index": 1
+            },
+            "trough": {
+              "assessment_order": 4.0,
+              "assessment_type": "TMA",
+              "score_normalized": 61.0,
+              "source_row_index": 5
+            },
+            "largest_adjacent_drop": {
+              "from": {
+                "assessment_order": 3.0,
+                "assessment_type": "TMA",
+                "score_normalized": 89.0,
+                "source_row_index": 4
+              },
+              "to": {
+                "assessment_order": 4.0,
+                "assessment_type": "TMA",
+                "score_normalized": 61.0,
+                "source_row_index": 5
+              },
+              "delta": -28.0
+            },
+            "largest_adjacent_rise": {
+              "from": {
+                "assessment_order": 4.0,
+                "assessment_type": "TMA",
+                "score_normalized": 61.0,
+                "source_row_index": 5
+              },
+              "to": {
+                "assessment_order": 5.0,
+                "assessment_type": "CMA",
+                "score_normalized": 90.0,
+                "source_row_index": 7
+              },
+              "delta": 29.0
+            }
+          },
+          "SAMPLE_OULAD_STU_102209": {
+            "group": "SAMPLE_OULAD_STU_102209",
+            "point_count": 3,
+            "series_points": [
+              {
+                "assessment_order": 1.0,
+                "assessment_type": "CMA",
+                "score_normalized": 56.0,
+                "source_row_index": 17
+              },
+              {
+                "assessment_order": 2.0,
+                "assessment_type": "TMA",
+                "score_normalized": 56.0,
+                "source_row_index": 18
+              },
+              {
+                "assessment_order": 3.0,
+                "assessment_type": "CMA",
+                "score_normalized": 51.0,
+                "source_row_index": 19
+              }
+            ],
+            "first_point": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA",
+              "score_normalized": 56.0,
+              "source_row_index": 17
+            },
+            "last_point": {
+              "assessment_order": 3.0,
+              "assessment_type": "CMA",
+              "score_normalized": 51.0,
+              "source_row_index": 19
+            },
+            "net_change": -5.0,
+            "peak": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA",
+              "score_normalized": 56.0,
+              "source_row_index": 17
+            },
+            "trough": {
+              "assessment_order": 3.0,
+              "assessment_type": "CMA",
+              "score_normalized": 51.0,
+              "source_row_index": 19
+            },
+            "largest_adjacent_drop": {
+              "from": {
+                "assessment_order": 2.0,
+                "assessment_type": "TMA",
+                "score_normalized": 56.0,
+                "source_row_index": 18
+              },
+              "to": {
+                "assessment_order": 3.0,
+                "assessment_type": "CMA",
+                "score_normalized": 51.0,
+                "source_row_index": 19
+              },
+              "delta": -5.0
+            },
+            "largest_adjacent_rise": null
+          }
+        },
+        "pairwise_comparison": {
+          "groups": [
+            "SAMPLE_OULAD_STU_100788",
+            "SAMPLE_OULAD_STU_102209"
+          ],
+          "shared_point_count": 3,
+          "unmatched_point_count_by_group": {
+            "SAMPLE_OULAD_STU_100788": 14,
+            "SAMPLE_OULAD_STU_102209": 0
+          },
+          "gap_series": [
+            {
+              "alignment": {
+                "assessment_order": 1.0,
+                "assessment_type": "CMA"
+              },
+              "group_values": {
+                "SAMPLE_OULAD_STU_100788": {
+                  "value": 100.0,
+                  "source_values": [
+                    100.0
+                  ],
+                  "source_row_indexes": [
+                    1
+                  ],
+                  "duplicate_count": 1
+                },
+                "SAMPLE_OULAD_STU_102209": {
+                  "value": 56.0,
+                  "source_values": [
+                    56.0
+                  ],
+                  "source_row_indexes": [
+                    17
+                  ],
+                  "duplicate_count": 1
+                }
+              },
+              "gap": 44.0,
+              "absolute_gap": 44.0
+            },
+            {
+              "alignment": {
+                "assessment_order": 2.0,
+                "assessment_type": "TMA"
+              },
+              "group_values": {
+                "SAMPLE_OULAD_STU_100788": {
+                  "value": 90.0,
+                  "source_values": [
+                    90.0
+                  ],
+                  "source_row_indexes": [
+                    2
+                  ],
+                  "duplicate_count": 1
+                },
+                "SAMPLE_OULAD_STU_102209": {
+                  "value": 56.0,
+                  "source_values": [
+                    56.0
+                  ],
+                  "source_row_indexes": [
+                    18
+                  ],
+                  "duplicate_count": 1
+                }
+              },
+              "gap": 34.0,
+              "absolute_gap": 34.0
+            },
+            {
+              "alignment": {
+                "assessment_order": 3.0,
+                "assessment_type": "CMA"
+              },
+              "group_values": {
+                "SAMPLE_OULAD_STU_100788": {
+                  "value": 87.0,
+                  "source_values": [
+                    87.0
+                  ],
+                  "source_row_indexes": [
+                    3
+                  ],
+                  "duplicate_count": 1
+                },
+                "SAMPLE_OULAD_STU_102209": {
+                  "value": 51.0,
+                  "source_values": [
+                    51.0
+                  ],
+                  "source_row_indexes": [
+                    19
+                  ],
+                  "duplicate_count": 1
+                }
+              },
+              "gap": 36.0,
+              "absolute_gap": 36.0
+            }
+          ],
+          "first_shared_point": {
+            "alignment": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA"
+            },
+            "group_values": {
+              "SAMPLE_OULAD_STU_100788": {
+                "value": 100.0,
+                "source_values": [
+                  100.0
+                ],
+                "source_row_indexes": [
+                  1
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_OULAD_STU_102209": {
+                "value": 56.0,
+                "source_values": [
+                  56.0
+                ],
+                "source_row_indexes": [
+                  17
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": 44.0,
+            "absolute_gap": 44.0
+          },
+          "last_shared_point": {
+            "alignment": {
+              "assessment_order": 3.0,
+              "assessment_type": "CMA"
+            },
+            "group_values": {
+              "SAMPLE_OULAD_STU_100788": {
+                "value": 87.0,
+                "source_values": [
+                  87.0
+                ],
+                "source_row_indexes": [
+                  3
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_OULAD_STU_102209": {
+                "value": 51.0,
+                "source_values": [
+                  51.0
+                ],
+                "source_row_indexes": [
+                  19
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": 36.0,
+            "absolute_gap": 36.0
+          },
+          "first_divergence": {
+            "alignment": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA"
+            },
+            "group_values": {
+              "SAMPLE_OULAD_STU_100788": {
+                "value": 100.0,
+                "source_values": [
+                  100.0
+                ],
+                "source_row_indexes": [
+                  1
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_OULAD_STU_102209": {
+                "value": 56.0,
+                "source_values": [
+                  56.0
+                ],
+                "source_row_indexes": [
+                  17
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": 44.0,
+            "absolute_gap": 44.0
+          },
+          "largest_absolute_gap": {
+            "alignment": {
+              "assessment_order": 1.0,
+              "assessment_type": "CMA"
+            },
+            "group_values": {
+              "SAMPLE_OULAD_STU_100788": {
+                "value": 100.0,
+                "source_values": [
+                  100.0
+                ],
+                "source_row_indexes": [
+                  1
+                ],
+                "duplicate_count": 1
+              },
+              "SAMPLE_OULAD_STU_102209": {
+                "value": 56.0,
+                "source_values": [
+                  56.0
+                ],
+                "source_row_indexes": [
+                  17
+                ],
+                "duplicate_count": 1
+              }
+            },
+            "gap": 44.0,
+            "absolute_gap": 44.0
+          },
+          "net_change_by_group": {
+            "SAMPLE_OULAD_STU_100788": -13.0,
+            "SAMPLE_OULAD_STU_102209": -5.0
+          },
+          "faster_improving_group": "SAMPLE_OULAD_STU_102209",
+          "comparison_warnings": []
+        },
+        "missing_group_evidence": [],
+        "metric_column": "score_normalized",
+        "evidence_status": "sufficient_evidence"
+      },
+      "passed": true,
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "validator": "validate_action_synthesis_request_schema.py",
+  "valid_contract_cases": 3,
+  "invalid_contract_cases": 7,
+  "passed": 12,
+  "failed": 0,
+  "overall_pass": true,
+  "validation_boundary": {
+    "parse_time": [
+      "Pydantic field types, enums and semantic-version format",
+      "non-empty and well-formed trigger expressions",
+      "unique evidence, rule and conflict identifiers",
+      "rule references to declared raw or derived evidence",
+      "availability guards for availability-aware evidence",
+      "sensitive evidence exclusion from triggers",
+      "action-source structural requirements",
+      "global provenance declaration coverage"
+    ],
+    "summarizer_time": [
+      "runtime dataset labels, rows and columns exist",
+      "raw values can be parsed without replacing missing with zero",
+      "availability state permits evidence evaluation",
+      "derived evidence can be computed",
+      "rules and conflicts match actual evidence",
+      "prioritized actions have complete evidence links",
+      "unsupported_actions, missing_evidence and warnings are emitted"
+    ]
+  },
+  "results": [
+    {
+      "case_id": "A-G16_canonical_contract",
+      "passed": true,
+      "rule_count": 4,
+      "evidence_count": 6,
+      "round_trip_rule_version": "1.0.0"
+    },
+    {
+      "case_id": "A-S08_canonical_contract",
+      "passed": true,
+      "rule_count": 4,
+      "evidence_count": 9,
+      "round_trip_rule_version": "1.0.0"
+    },
+    {
+      "case_id": "S-T13_canonical_contract",
+      "passed": true,
+      "rule_count": 6,
+      "evidence_count": 12,
+      "round_trip_rule_version": "1.0.0"
+    },
+    {
+      "case_id": "versioned_rules_missing_version",
+      "passed": true,
+      "expected_error": "versioned_registry_rules requires action_rule_version",
+      "actual_error": "1 validation error for AISummaryConfig\n  Value error, versioned_registry_rules requires action_rule_version [type=value_error, input_value={'summary_type': 'action_...ve_action_policy': True}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "case_id": "availability_evidence_without_guard",
+      "passed": true,
+      "expected_error": "requires availability guard engagement_score_available",
+      "actual_error": "1 validation error for AISummaryConfig\n  Value error, rule S-T13-R04 requires availability guard engagement_score_available [type=value_error, input_value={'summary_type': 'action_...ve_action_policy': True}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "case_id": "sensitive_evidence_allowed_as_trigger",
+      "passed": true,
+      "expected_error": "sensitive evidence lifestyle_risk_score cannot be allowed as trigger",
+      "actual_error": "1 validation error for AISummaryConfig\naction_evidence_contract.5\n  Value error, sensitive evidence lifestyle_risk_score cannot be allowed as trigger [type=value_error, input_value={'column': 'lifestyle_ris... as an action trigger.'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "case_id": "unknown_rule_evidence",
+      "passed": true,
+      "expected_error": "references unknown evidence unknown_backend_signal",
+      "actual_error": "1 validation error for AISummaryConfig\n  Value error, rule S-T13-R01 references unknown evidence unknown_backend_signal [type=value_error, input_value={'summary_type': 'action_...ve_action_policy': True}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "case_id": "candidate_source_without_action_columns",
+      "passed": true,
+      "expected_error": "candidate_action_columns source requires action_columns",
+      "actual_error": "1 validation error for AISummaryConfig\n  Value error, candidate_action_columns source requires action_columns [type=value_error, input_value={'summary_type': 'action_...ndidate_action_columns'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "case_id": "missing_mandatory_global_provenance",
+      "passed": true,
+      "expected_error": "provenance_required_fields is missing mandatory fields",
+      "actual_error": "1 validation error for AISummaryConfig\n  Value error, provenance_required_fields is missing mandatory fields: dataset_role, parsed_value, row_index, rule_id, rule_version, unit [type=value_error, input_value={'summary_type': 'action_...ve_action_policy': True}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "case_id": "condition_with_two_operands",
+      "passed": true,
+      "expected_error": "condition must define exactly one of value or compare_to_evidence_id",
+      "actual_error": "1 validation error for AISummaryConfig\naction_rules.0.trigger.all.0\n  Value error, condition must define exactly one of value or compare_to_evidence_id [type=value_error, input_value={'evidence_id': 'avg_scor...threshold', 'value': 40}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+    },
+    {
+      "case_id": "missing_action_source_deferred_to_summarizer",
+      "passed": true
+    },
+    {
+      "case_id": "node_transport_mapping",
+      "passed": true,
+      "missing_mappings": []
+    }
+  ]
+}

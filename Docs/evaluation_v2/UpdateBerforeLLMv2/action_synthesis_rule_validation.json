@@ -1,0 +1,175 @@
+{
+  "validator": "validate_action_synthesis_rules.py",
+  "catalog": "C:\\[Graduation_Thesis]Prototype\\Docs\\evaluation_v2\\ai_explanation_judge_v2\\action_synthesis_rules.v1.json",
+  "catalog_valid": true,
+  "catalog_errors": [],
+  "fixture_count": 8,
+  "fixture_passed": 8,
+  "fixture_failed": 0,
+  "fixture_results": [
+    {
+      "case_id": "valid_canonical_catalog",
+      "expected_valid": true,
+      "actual_valid": true,
+      "expectation_met": true,
+      "expected_error_contains": null,
+      "errors": []
+    },
+    {
+      "case_id": "invalid_sensitive_trigger",
+      "expected_valid": false,
+      "actual_valid": false,
+      "expectation_met": true,
+      "expected_error_contains": "sensitive evidence lifestyle_risk_score cannot be allowed as trigger",
+      "errors": [
+        "rule_sets[2]: sensitive evidence lifestyle_risk_score cannot be allowed as trigger"
+      ]
+    },
+    {
+      "case_id": "invalid_missing_rule_version",
+      "expected_valid": false,
+      "actual_valid": false,
+      "expectation_met": true,
+      "expected_error_contains": "missing rule_version",
+      "errors": [
+        "rule_sets[0]: missing rule_version"
+      ]
+    },
+    {
+      "case_id": "invalid_unavailable_trigger_without_guard",
+      "expected_valid": false,
+      "actual_valid": false,
+      "expectation_met": true,
+      "expected_error_contains": "requires availability guard engagement_score_available",
+      "errors": [
+        "rule_sets[2].rules[3]: evidence engagement_score requires availability guard engagement_score_available"
+      ]
+    },
+    {
+      "case_id": "invalid_unknown_evidence_reference",
+      "expected_valid": false,
+      "actual_valid": false,
+      "expectation_met": true,
+      "expected_error_contains": "unknown evidence unknown_backend_signal",
+      "errors": [
+        "rule_sets[1].rules[0].trigger.condition[0]: unknown evidence unknown_backend_signal"
+      ]
+    },
+    {
+      "case_id": "invalid_missing_provenance",
+      "expected_valid": false,
+      "actual_valid": false,
+      "expectation_met": true,
+      "expected_error_contains": "missing required provenance fields",
+      "errors": [
+        "rule_sets[0].rules[0]: missing required provenance fields dataset_role, parsed_value, row_index, rule_id, rule_version, unit"
+      ]
+    },
+    {
+      "case_id": "invalid_prompt_hint_source",
+      "expected_valid": false,
+      "actual_valid": false,
+      "expectation_met": true,
+      "expected_error_contains": "action_source must be versioned_registry_rules",
+      "errors": [
+        "action_source must be versioned_registry_rules"
+      ]
+    },
+    {
+      "case_id": "invalid_best_resource_claim",
+      "expected_valid": false,
+      "actual_valid": false,
+      "expectation_met": true,
+      "expected_error_contains": "best_resource_type action makes an effectiveness claim",
+      "errors": [
+        "rule_sets[0].rules[3]: best_resource_type action makes an effectiveness claim"
+      ]
+    }
+  ],
+  "runtime_case_count": 4,
+  "runtime_case_passed": 4,
+  "runtime_case_failed": 0,
+  "runtime_case_results": [
+    {
+      "case_id": "A-G16_OULAD_actual_row",
+      "task_id": "A-G16",
+      "expectation_met": true,
+      "matched_rule_ids": [
+        "A-G16-R01",
+        "A-G16-R02",
+        "A-G16-R03",
+        "A-G16-R04"
+      ],
+      "expected_matched_rule_ids": [
+        "A-G16-R01",
+        "A-G16-R02",
+        "A-G16-R03",
+        "A-G16-R04"
+      ],
+      "matched_conflict_ids": [],
+      "expected_conflict_ids": [],
+      "unavailable_evidence": []
+    },
+    {
+      "case_id": "A-S08_OULAD_actual_row",
+      "task_id": "A-S08",
+      "expectation_met": true,
+      "matched_rule_ids": [
+        "A-S08-R01",
+        "A-S08-R02",
+        "A-S08-R03"
+      ],
+      "expected_matched_rule_ids": [
+        "A-S08-R01",
+        "A-S08-R02",
+        "A-S08-R03"
+      ],
+      "matched_conflict_ids": [
+        "A-S08-C01"
+      ],
+      "expected_conflict_ids": [
+        "A-S08-C01"
+      ],
+      "unavailable_evidence": []
+    },
+    {
+      "case_id": "S-T13_UCI_actual_row",
+      "task_id": "S-T13",
+      "expectation_met": true,
+      "matched_rule_ids": [
+        "S-T13-R02",
+        "S-T13-R05"
+      ],
+      "expected_matched_rule_ids": [
+        "S-T13-R02",
+        "S-T13-R05"
+      ],
+      "matched_conflict_ids": [],
+      "expected_conflict_ids": [],
+      "unavailable_evidence": [
+        "engagement_score"
+      ]
+    },
+    {
+      "case_id": "S-T13_OULAD_actual_row",
+      "task_id": "S-T13",
+      "expectation_met": true,
+      "matched_rule_ids": [
+        "S-T13-R03",
+        "S-T13-R06"
+      ],
+      "expected_matched_rule_ids": [
+        "S-T13-R03",
+        "S-T13-R06"
+      ],
+      "matched_conflict_ids": [
+        "S-T13-C01"
+      ],
+      "expected_conflict_ids": [
+        "S-T13-C01"
+      ],
+      "unavailable_evidence": []
+    }
+  ],
+  "overall_pass": true
+}

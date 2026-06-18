@@ -1,0 +1,89 @@
+{
+  "smoke": "correlation_evidence_selected_entity_runtime_smoke",
+  "generated_at": "2026-06-18",
+  "backend_url": "http://localhost:4000",
+  "ai_service_url": "http://localhost:8000",
+  "flow": [
+    "POST /api/analytics/run",
+    "POST /api/ai/explain"
+  ],
+  "cases": [
+    {
+      "case_id": "S-T09_SAMPLE_UCI_POR",
+      "task_id": "S-T09",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001"
+      },
+      "ai_explain": {
+        "status": 200,
+        "degraded": false,
+        "ai_summary_method": "task_aware_data_summarization",
+        "input_summary_type": "correlation_evidence",
+        "meta_strategy": "correlation",
+        "warning_count": 0,
+        "latency_ms": 6085
+      },
+      "passed": true
+    },
+    {
+      "case_id": "S-T11_SAMPLE_OULAD_CCC_2014J",
+      "task_id": "S-T11",
+      "params": {
+        "batch_id": "SAMPLE_OULAD",
+        "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+        "student_id": "SAMPLE_OULAD_STU_100788"
+      },
+      "ai_explain": {
+        "status": 200,
+        "degraded": false,
+        "ai_summary_method": "task_aware_data_summarization",
+        "input_summary_type": "correlation_evidence",
+        "meta_strategy": "correlation",
+        "warning_count": 0,
+        "latency_ms": 5873
+      },
+      "passed": true
+    },
+    {
+      "case_id": "S-T14_SAMPLE_UCI_POR",
+      "task_id": "S-T14",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001"
+      },
+      "ai_explain": {
+        "status": 200,
+        "degraded": false,
+        "ai_summary_method": "task_aware_data_summarization",
+        "input_summary_type": "correlation_evidence",
+        "meta_strategy": "correlation",
+        "warning_count": 0,
+        "latency_ms": 5330
+      },
+      "passed": true
+    },
+    {
+      "case_id": "S-T15_SAMPLE_UCI_POR",
+      "task_id": "S-T15",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001"
+      },
+      "ai_explain": {
+        "status": 200,
+        "degraded": false,
+        "ai_summary_method": "task_aware_data_summarization",
+        "input_summary_type": "correlation_evidence",
+        "meta_strategy": "correlation",
+        "warning_count": 0,
+        "latency_ms": 4914
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}

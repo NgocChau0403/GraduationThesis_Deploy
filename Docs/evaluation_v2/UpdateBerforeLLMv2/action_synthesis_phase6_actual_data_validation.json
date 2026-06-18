@@ -1,0 +1,2089 @@
+{
+  "validator": "validate_action_synthesis_actual_data.py",
+  "generated_at": "2026-06-18T11:16:57.099351+00:00",
+  "backend_url": "http://localhost:4000",
+  "ai_service_url": "http://localhost:8000",
+  "config_source": "registry",
+  "ai_service_contract": {
+    "health_status": 200,
+    "health": {
+      "status": "ok",
+      "service": "ai-explanation-service",
+      "version": "1.0.0",
+      "strategies_available": [
+        "trend",
+        "comparison",
+        "distribution",
+        "correlation",
+        "risk",
+        "behavioral",
+        "ranking",
+        "recommendation",
+        "progress"
+      ]
+    },
+    "openapi_status": 200,
+    "missing_action_schema_fields": [],
+    "invalid_config_status": 422,
+    "invalid_config_rejected_before_llm": true,
+    "invalid_config_response": {
+      "detail": [
+        {
+          "type": "value_error",
+          "loc": [
+            "body",
+            "ai_summary_config"
+          ],
+          "msg": "Value error, versioned_registry_rules requires action_rule_version",
+          "input": {
+            "summary_type": "action_synthesis",
+            "action_source": "versioned_registry_rules",
+            "action_rule_set_id": "invalid.missing.version",
+            "action_rules": []
+          },
+          "ctx": {
+            "error": {}
+          }
+        }
+      ]
+    },
+    "passed": true
+  },
+  "case_count": 4,
+  "passed": 4,
+  "failed": 0,
+  "overall_pass": true,
+  "cases": [
+    {
+      "case_id": "A-G16_SAMPLE_OULAD",
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "A-G16",
+      "config_source": "registry",
+      "params": {
+        "batch_id": "SAMPLE_OULAD",
+        "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J"
+      },
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781781359467_860cc411",
+      "analytics_meta": {
+        "taskId": "A-G16",
+        "isMultiQuery": false,
+        "rowCount": 1,
+        "executionTimeMs": 14180,
+        "queryHash": "79677c75",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "synthesis_data"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "analytics_datasets": {
+        "synthesis_data": [
+          {
+            "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+            "low_engagement_count": 1240,
+            "high_risk_count": 906,
+            "hardest_assessment": "24299",
+            "best_resource_type": "quiz",
+            "total_students": 1998
+          }
+        ]
+      },
+      "matched_rule_ids": [
+        "A-G16-R01",
+        "A-G16-R02",
+        "A-G16-R03",
+        "A-G16-R04"
+      ],
+      "unmatched_rule_ids": [],
+      "prioritized_action_ids": [
+        "admin_launch_engagement_outreach",
+        "admin_review_high_risk_caseload",
+        "admin_review_assessment_support",
+        "admin_review_most_used_resource_format"
+      ],
+      "conflict_ids": [],
+      "missing_evidence": [],
+      "unsupported_actions": [],
+      "action_provenance": [
+        {
+          "action_id": "admin_launch_engagement_outreach",
+          "rule_id": "A-G16-R02",
+          "rule_version": "1.0.0",
+          "evidence_item_ids": [
+            "ev-derived-low_engagement_rate"
+          ],
+          "complete": true,
+          "sensitive_links": []
+        },
+        {
+          "action_id": "admin_review_high_risk_caseload",
+          "rule_id": "A-G16-R01",
+          "rule_version": "1.0.0",
+          "evidence_item_ids": [
+            "ev-derived-high_risk_rate"
+          ],
+          "complete": true,
+          "sensitive_links": []
+        },
+        {
+          "action_id": "admin_review_assessment_support",
+          "rule_id": "A-G16-R03",
+          "rule_version": "1.0.0",
+          "evidence_item_ids": [
+            "ev-synthesis_data-0-hardest_assessment"
+          ],
+          "complete": true,
+          "sensitive_links": []
+        },
+        {
+          "action_id": "admin_review_most_used_resource_format",
+          "rule_id": "A-G16-R04",
+          "rule_version": "1.0.0",
+          "evidence_item_ids": [
+            "ev-synthesis_data-0-best_resource_type"
+          ],
+          "complete": true,
+          "sensitive_links": []
+        }
+      ],
+      "deterministic_rerun": true,
+      "summary": {
+        "summary_type": "action_synthesis",
+        "action_rule_set_id": "A-G16.action_synthesis",
+        "action_rule_version": "1.0.0",
+        "source_datasets": [
+          {
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_count": 1,
+            "available": true
+          }
+        ],
+        "evidence_items": [
+          {
+            "evidence_item_id": "ev-synthesis_data-0-class_id",
+            "task_id": "A-G16",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "class_id",
+            "raw_value": "SAMPLE_OULAD_CLASS_CCC_2014J",
+            "parsed_value": "SAMPLE_OULAD_CLASS_CCC_2014J",
+            "unit": "identifier",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-low_engagement_count",
+            "task_id": "A-G16",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "low_engagement_count",
+            "raw_value": 1240,
+            "parsed_value": 1240.0,
+            "unit": "student_count",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-high_risk_count",
+            "task_id": "A-G16",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "high_risk_count",
+            "raw_value": 906,
+            "parsed_value": 906.0,
+            "unit": "student_count",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-hardest_assessment",
+            "task_id": "A-G16",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "hardest_assessment",
+            "raw_value": "24299",
+            "parsed_value": 24299.0,
+            "unit": "assessment_identifier",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-best_resource_type",
+            "task_id": "A-G16",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "best_resource_type",
+            "raw_value": "quiz",
+            "parsed_value": "quiz",
+            "unit": "resource_type",
+            "available": true,
+            "sensitive": false,
+            "semantic_alias": "most_used_resource_type"
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-total_students",
+            "task_id": "A-G16",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "total_students",
+            "raw_value": 1998,
+            "parsed_value": 1998.0,
+            "unit": "student_count",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-derived-low_engagement_rate",
+            "task_id": "A-G16",
+            "dataset_label": "derived",
+            "dataset_role": "derived_evidence",
+            "row_index": null,
+            "column": "low_engagement_rate",
+            "raw_value": null,
+            "parsed_value": 0.6206206206,
+            "unit": "ratio_0_1",
+            "available": true,
+            "sensitive": false,
+            "operation": "safe_divide",
+            "source_columns": [
+              "low_engagement_count",
+              "total_students"
+            ],
+            "source_evidence_item_ids": [
+              "ev-synthesis_data-0-low_engagement_count",
+              "ev-synthesis_data-0-total_students"
+            ]
+          },
+          {
+            "evidence_item_id": "ev-derived-high_risk_rate",
+            "task_id": "A-G16",
+            "dataset_label": "derived",
+            "dataset_role": "derived_evidence",
+            "row_index": null,
+            "column": "high_risk_rate",
+            "raw_value": null,
+            "parsed_value": 0.4534534535,
+            "unit": "ratio_0_1",
+            "available": true,
+            "sensitive": false,
+            "operation": "safe_divide",
+            "source_columns": [
+              "high_risk_count",
+              "total_students"
+            ],
+            "source_evidence_item_ids": [
+              "ev-synthesis_data-0-high_risk_count",
+              "ev-synthesis_data-0-total_students"
+            ]
+          }
+        ],
+        "prioritized_actions": [
+          {
+            "action_id": "admin_launch_engagement_outreach",
+            "action_text": "Coordinate a targeted engagement outreach and check whether access, scheduling, or course-navigation barriers need follow-up.",
+            "priority": "high",
+            "owner": "student_support_team",
+            "time_horizon_days": 7,
+            "support_category": "engagement_support",
+            "claim_limits": [
+              "Do not claim low engagement caused low performance.",
+              "Do not infer a specific barrier from the aggregate signal."
+            ],
+            "rule_id": "A-G16-R02",
+            "rule_ids": [
+              "A-G16-R02"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-derived-low_engagement_rate"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "admin_review_high_risk_caseload",
+            "action_text": "Review the high-risk student caseload, assign named follow-up owners, and confirm which students need direct support.",
+            "priority": "high",
+            "owner": "academic_admin",
+            "time_horizon_days": 7,
+            "support_category": "risk_coordination",
+            "claim_limits": [
+              "Do not infer causes from the aggregate count.",
+              "Do not identify individual students unless a separate student-level evidence source is available."
+            ],
+            "rule_id": "A-G16-R01",
+            "rule_ids": [
+              "A-G16-R01"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-derived-high_risk_rate"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "admin_review_assessment_support",
+            "action_text": "Ask the module team to review learner support and preparation materials for the identified assessment.",
+            "priority": "medium",
+            "owner": "module_lead",
+            "time_horizon_days": 14,
+            "support_category": "assessment_support",
+            "claim_limits": [
+              "Do not state a fail-rate value because the runtime row does not expose it.",
+              "Do not claim the assessment itself caused failure."
+            ],
+            "rule_id": "A-G16-R03",
+            "rule_ids": [
+              "A-G16-R03"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-hardest_assessment"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "admin_review_most_used_resource_format",
+            "action_text": "Review whether the most-used resource format can support the planned outreach, while separately checking its learning suitability.",
+            "priority": "low",
+            "owner": "learning_design_team",
+            "time_horizon_days": 14,
+            "support_category": "resource_planning",
+            "claim_limits": [
+              "Refer to this field as most-used, not best-performing.",
+              "Do not claim engagement clicks demonstrate learning effectiveness."
+            ],
+            "rule_id": "A-G16-R04",
+            "rule_ids": [
+              "A-G16-R04"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-best_resource_type"
+            ],
+            "provenance_status": "complete"
+          }
+        ],
+        "action_evidence_links": [
+          {
+            "action_id": "admin_launch_engagement_outreach",
+            "rule_id": "A-G16-R02",
+            "rule_ids": [
+              "A-G16-R02"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-derived-low_engagement_rate"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "admin_review_high_risk_caseload",
+            "rule_id": "A-G16-R01",
+            "rule_ids": [
+              "A-G16-R01"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-derived-high_risk_rate"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "admin_review_assessment_support",
+            "rule_id": "A-G16-R03",
+            "rule_ids": [
+              "A-G16-R03"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-hardest_assessment"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "admin_review_most_used_resource_format",
+            "rule_id": "A-G16-R04",
+            "rule_ids": [
+              "A-G16-R04"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-best_resource_type"
+            ],
+            "provenance_status": "complete"
+          }
+        ],
+        "unsupported_actions": [],
+        "conflicting_evidence": [],
+        "missing_evidence": [],
+        "rule_evaluations": [
+          {
+            "rule_id": "A-G16-R01",
+            "rule_version": "1.0.0",
+            "matched": true,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "high_risk_rate",
+                  "operator": "gte",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-derived-high_risk_rate"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-derived-high_risk_rate"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "A-G16-R02",
+            "rule_version": "1.0.0",
+            "matched": true,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "low_engagement_rate",
+                  "operator": "gte",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-derived-low_engagement_rate"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-derived-low_engagement_rate"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "A-G16-R03",
+            "rule_version": "1.0.0",
+            "matched": true,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "hardest_assessment",
+                  "operator": "is_present",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-hardest_assessment"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-hardest_assessment"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "A-G16-R04",
+            "rule_version": "1.0.0",
+            "matched": true,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "best_resource_type",
+                  "operator": "is_present",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-best_resource_type"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-best_resource_type"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          }
+        ],
+        "summarization_warnings": [
+          "The LLM may paraphrase prioritized_actions but must not invent new actions or rules."
+        ]
+      },
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "A-S08_SAMPLE_OULAD",
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "A-S08",
+      "config_source": "registry",
+      "params": {
+        "batch_id": "SAMPLE_OULAD",
+        "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+        "student_id": "SAMPLE_OULAD_STU_100788",
+        "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788"
+      },
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781781391285_756a48ca",
+      "analytics_meta": {
+        "taskId": "A-S08",
+        "isMultiQuery": false,
+        "rowCount": 1,
+        "executionTimeMs": 7286,
+        "queryHash": "f905e537",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "synthesis_data"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "analytics_datasets": {
+        "synthesis_data": [
+          {
+            "avg_score": 91.2,
+            "performance_trend": -0.7187500000000001,
+            "engagement_score": 0.20237855036820618,
+            "punctuality_rate": "0",
+            "early_warning_week": 0,
+            "support_score": 0,
+            "at_risk_score": 3,
+            "at_risk_label": "high",
+            "final_outcome": "Distinction"
+          }
+        ]
+      },
+      "matched_rule_ids": [
+        "A-S08-R01",
+        "A-S08-R02",
+        "A-S08-R03"
+      ],
+      "unmatched_rule_ids": [
+        "A-S08-R04"
+      ],
+      "prioritized_action_ids": [
+        "staff_review_student_risk_profile",
+        "staff_create_submission_support_plan",
+        "staff_review_recent_assessment_pattern"
+      ],
+      "conflict_ids": [
+        "A-S08-C01"
+      ],
+      "missing_evidence": [],
+      "unsupported_actions": [],
+      "action_provenance": [
+        {
+          "action_id": "staff_review_student_risk_profile",
+          "rule_id": "A-S08-R01",
+          "rule_version": "1.0.0",
+          "evidence_item_ids": [
+            "ev-synthesis_data-0-at_risk_score",
+            "ev-synthesis_data-0-at_risk_label"
+          ],
+          "complete": true,
+          "sensitive_links": []
+        },
+        {
+          "action_id": "staff_create_submission_support_plan",
+          "rule_id": "A-S08-R02",
+          "rule_version": "1.0.0",
+          "evidence_item_ids": [
+            "ev-synthesis_data-0-punctuality_rate"
+          ],
+          "complete": true,
+          "sensitive_links": []
+        },
+        {
+          "action_id": "staff_review_recent_assessment_pattern",
+          "rule_id": "A-S08-R03",
+          "rule_version": "1.0.0",
+          "evidence_item_ids": [
+            "ev-synthesis_data-0-performance_trend"
+          ],
+          "complete": true,
+          "sensitive_links": []
+        }
+      ],
+      "deterministic_rerun": true,
+      "summary": {
+        "summary_type": "action_synthesis",
+        "action_rule_set_id": "A-S08.action_synthesis",
+        "action_rule_version": "1.0.0",
+        "source_datasets": [
+          {
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_count": 1,
+            "available": true
+          }
+        ],
+        "evidence_items": [
+          {
+            "evidence_item_id": "ev-synthesis_data-0-avg_score",
+            "task_id": "A-S08",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "avg_score",
+            "raw_value": 91.2,
+            "parsed_value": 91.2,
+            "unit": "score_runtime_scale",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-performance_trend",
+            "task_id": "A-S08",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "performance_trend",
+            "raw_value": -0.7187500000000001,
+            "parsed_value": -0.71875,
+            "unit": "score_change_per_assessment_order",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-engagement_score",
+            "task_id": "A-S08",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "engagement_score",
+            "raw_value": 0.20237855036820618,
+            "parsed_value": 0.2023785504,
+            "unit": "ratio_0_1",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-punctuality_rate",
+            "task_id": "A-S08",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "punctuality_rate",
+            "raw_value": "0",
+            "parsed_value": 0.0,
+            "unit": "ratio_0_1",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-early_warning_week",
+            "task_id": "A-S08",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "early_warning_week",
+            "raw_value": 0,
+            "parsed_value": 0.0,
+            "unit": "week_number",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-support_score",
+            "task_id": "A-S08",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "support_score",
+            "raw_value": 0,
+            "parsed_value": 0.0,
+            "unit": "dataset_specific_score",
+            "available": true,
+            "sensitive": true
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-at_risk_score",
+            "task_id": "A-S08",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "at_risk_score",
+            "raw_value": 3,
+            "parsed_value": 3.0,
+            "unit": "flag_count",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-at_risk_label",
+            "task_id": "A-S08",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "at_risk_label",
+            "raw_value": "high",
+            "parsed_value": "high",
+            "unit": "risk_band",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-final_outcome",
+            "task_id": "A-S08",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "final_outcome",
+            "raw_value": "Distinction",
+            "parsed_value": "Distinction",
+            "unit": "outcome_category",
+            "available": true,
+            "sensitive": false
+          }
+        ],
+        "prioritized_actions": [
+          {
+            "action_id": "staff_review_student_risk_profile",
+            "action_text": "Assign an academic advisor to review the student's current risk profile and coordinate the next follow-up.",
+            "priority": "high",
+            "owner": "academic_advisor",
+            "time_horizon_days": 2,
+            "support_category": "case_coordination",
+            "claim_limits": [
+              "Treat the composite risk score as a screening signal, not a diagnosis.",
+              "Do not use support_score to justify the action."
+            ],
+            "rule_id": "A-S08-R01",
+            "rule_ids": [
+              "A-S08-R01"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-at_risk_score",
+              "ev-synthesis_data-0-at_risk_label"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "staff_create_submission_support_plan",
+            "action_text": "Ask the tutor to agree a short submission plan with clear upcoming deadlines and one follow-up check.",
+            "priority": "high",
+            "owner": "tutor",
+            "time_horizon_days": 7,
+            "support_category": "submission_support",
+            "claim_limits": [
+              "Do not infer why submissions were late.",
+              "Preserve the raw punctuality value, including numeric strings."
+            ],
+            "rule_id": "A-S08-R02",
+            "rule_ids": [
+              "A-S08-R02"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-punctuality_rate"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "staff_review_recent_assessment_pattern",
+            "action_text": "Review the student's recent assessment sequence and identify one concrete academic follow-up.",
+            "priority": "medium",
+            "owner": "tutor",
+            "time_horizon_days": 7,
+            "support_category": "academic_support",
+            "claim_limits": [
+              "Do not claim the negative slope proves future decline.",
+              "Do not ignore conflicting positive outcome evidence."
+            ],
+            "rule_id": "A-S08-R03",
+            "rule_ids": [
+              "A-S08-R03"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-performance_trend"
+            ],
+            "provenance_status": "complete"
+          }
+        ],
+        "action_evidence_links": [
+          {
+            "action_id": "staff_review_student_risk_profile",
+            "rule_id": "A-S08-R01",
+            "rule_ids": [
+              "A-S08-R01"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-at_risk_score",
+              "ev-synthesis_data-0-at_risk_label"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "staff_create_submission_support_plan",
+            "rule_id": "A-S08-R02",
+            "rule_ids": [
+              "A-S08-R02"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-punctuality_rate"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "staff_review_recent_assessment_pattern",
+            "rule_id": "A-S08-R03",
+            "rule_ids": [
+              "A-S08-R03"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-performance_trend"
+            ],
+            "provenance_status": "complete"
+          }
+        ],
+        "unsupported_actions": [],
+        "conflicting_evidence": [
+          {
+            "conflict_id": "A-S08-C01",
+            "behavior": "preserve_and_warn",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-final_outcome",
+              "ev-synthesis_data-0-at_risk_label",
+              "ev-synthesis_data-0-performance_trend"
+            ],
+            "warning": "Conflicting evidence is preserved; actions must be phrased with uncertainty and must not hide this conflict."
+          }
+        ],
+        "missing_evidence": [],
+        "rule_evaluations": [
+          {
+            "rule_id": "A-S08-R01",
+            "rule_version": "1.0.0",
+            "matched": true,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "at_risk_score",
+                  "operator": "gte",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-at_risk_score"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                },
+                {
+                  "evidence_id": "at_risk_label",
+                  "operator": "eq",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-at_risk_label"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-at_risk_score",
+              "ev-synthesis_data-0-at_risk_label"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "A-S08-R02",
+            "rule_version": "1.0.0",
+            "matched": true,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "punctuality_rate",
+                  "operator": "lt",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-punctuality_rate"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-punctuality_rate"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "A-S08-R03",
+            "rule_version": "1.0.0",
+            "matched": true,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "performance_trend",
+                  "operator": "lt",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-performance_trend"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-performance_trend"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "A-S08-R04",
+            "rule_version": "1.0.0",
+            "matched": false,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "engagement_score",
+                  "operator": "lt",
+                  "matched": false,
+                  "evidence_item_ids": [],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          }
+        ],
+        "summarization_warnings": [
+          "Sensitive/background evidence is preserved for audit only and was not used to trigger actions.",
+          "Conflicting evidence was detected and must remain visible in the generated explanation.",
+          "The LLM may paraphrase prioritized_actions but must not invent new actions or rules."
+        ]
+      },
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "S-T13_SAMPLE_UCI_POR",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T13",
+      "config_source": "registry",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001"
+      },
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781781401456_7a61fa0f",
+      "analytics_meta": {
+        "taskId": "S-T13",
+        "isMultiQuery": false,
+        "rowCount": 1,
+        "executionTimeMs": 40,
+        "queryHash": "aa7fe164",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "synthesis_data"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "analytics_datasets": {
+        "synthesis_data": [
+          {
+            "avg_score": 41.25,
+            "performance_trend": 27.5,
+            "engagement_score": 0,
+            "engagement_score_available": false,
+            "absence_rate": 1,
+            "lifestyle_risk_score": 0.375,
+            "score_strategy": "weighted_by_assessment_weight",
+            "score_scale": 100,
+            "pass_threshold": 40,
+            "target_threshold": 70,
+            "at_risk_score": 1,
+            "at_risk_label": "low"
+          }
+        ]
+      },
+      "matched_rule_ids": [
+        "S-T13-R02",
+        "S-T13-R05"
+      ],
+      "unmatched_rule_ids": [
+        "S-T13-R01",
+        "S-T13-R03",
+        "S-T13-R04",
+        "S-T13-R06"
+      ],
+      "prioritized_action_ids": [
+        "student_create_attendance_routine",
+        "student_set_next_score_target"
+      ],
+      "conflict_ids": [],
+      "missing_evidence": [
+        {
+          "evidence_id": "engagement_score",
+          "reason": "evidence is unavailable according to availability column",
+          "dataset_label": "synthesis_data",
+          "row_index": 0,
+          "raw_value": 0,
+          "availability_column": "engagement_score_available",
+          "availability_raw_value": false
+        }
+      ],
+      "unsupported_actions": [],
+      "action_provenance": [
+        {
+          "action_id": "student_create_attendance_routine",
+          "rule_id": "S-T13-R05",
+          "rule_version": "1.0.0",
+          "evidence_item_ids": [
+            "ev-synthesis_data-0-absence_rate"
+          ],
+          "complete": true,
+          "sensitive_links": []
+        },
+        {
+          "action_id": "student_set_next_score_target",
+          "rule_id": "S-T13-R02",
+          "rule_version": "1.0.0",
+          "evidence_item_ids": [
+            "ev-synthesis_data-0-avg_score",
+            "ev-synthesis_data-0-pass_threshold",
+            "ev-synthesis_data-0-target_threshold"
+          ],
+          "complete": true,
+          "sensitive_links": []
+        }
+      ],
+      "deterministic_rerun": true,
+      "summary": {
+        "summary_type": "action_synthesis",
+        "action_rule_set_id": "S-T13.action_synthesis",
+        "action_rule_version": "1.0.0",
+        "source_datasets": [
+          {
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_count": 1,
+            "available": true
+          }
+        ],
+        "evidence_items": [
+          {
+            "evidence_item_id": "ev-synthesis_data-0-avg_score",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "avg_score",
+            "raw_value": 41.25,
+            "parsed_value": 41.25,
+            "unit": "score_runtime_scale",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-performance_trend",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "performance_trend",
+            "raw_value": 27.5,
+            "parsed_value": 27.5,
+            "unit": "score_change_per_assessment_order",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-engagement_score",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "engagement_score",
+            "raw_value": 0,
+            "parsed_value": 0.0,
+            "unit": "ratio_0_1",
+            "available": false,
+            "sensitive": false,
+            "availability_column": "engagement_score_available",
+            "availability_raw_value": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-engagement_score_available",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "engagement_score_available",
+            "raw_value": false,
+            "parsed_value": false,
+            "unit": "boolean",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-absence_rate",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "absence_rate",
+            "raw_value": 1,
+            "parsed_value": 1.0,
+            "unit": "ratio_0_1",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-lifestyle_risk_score",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "lifestyle_risk_score",
+            "raw_value": 0.375,
+            "parsed_value": 0.375,
+            "unit": "ratio_0_1",
+            "available": true,
+            "sensitive": true
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-score_strategy",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "score_strategy",
+            "raw_value": "weighted_by_assessment_weight",
+            "parsed_value": "weighted_by_assessment_weight",
+            "unit": "strategy_identifier",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-score_scale",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "score_scale",
+            "raw_value": 100,
+            "parsed_value": 100.0,
+            "unit": "score_scale",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-pass_threshold",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "pass_threshold",
+            "raw_value": 40,
+            "parsed_value": 40.0,
+            "unit": "score_runtime_scale",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-target_threshold",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "target_threshold",
+            "raw_value": 70,
+            "parsed_value": 70.0,
+            "unit": "score_runtime_scale",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-at_risk_score",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "at_risk_score",
+            "raw_value": 1,
+            "parsed_value": 1.0,
+            "unit": "flag_count",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-at_risk_label",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "at_risk_label",
+            "raw_value": "low",
+            "parsed_value": "low",
+            "unit": "risk_band",
+            "available": true,
+            "sensitive": false
+          }
+        ],
+        "prioritized_actions": [
+          {
+            "action_id": "student_create_attendance_routine",
+            "action_text": "Plan next week's attendance in advance and set a reminder for each scheduled learning session.",
+            "priority": "medium",
+            "owner": "student",
+            "time_horizon_days": 7,
+            "support_category": "attendance",
+            "claim_limits": [
+              "Do not infer the reason for absence.",
+              "Do not trigger when absence_rate is null."
+            ],
+            "rule_id": "S-T13-R05",
+            "rule_ids": [
+              "S-T13-R05"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-absence_rate"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "student_set_next_score_target",
+            "action_text": "Choose one upcoming assessment goal and schedule two focused study sessions toward the stated target threshold.",
+            "priority": "medium",
+            "owner": "student",
+            "time_horizon_days": 7,
+            "support_category": "study_planning",
+            "claim_limits": [
+              "Do not promise that the action will achieve the target.",
+              "Preserve the runtime threshold values and score scale."
+            ],
+            "rule_id": "S-T13-R02",
+            "rule_ids": [
+              "S-T13-R02"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-avg_score",
+              "ev-synthesis_data-0-pass_threshold",
+              "ev-synthesis_data-0-target_threshold"
+            ],
+            "provenance_status": "complete"
+          }
+        ],
+        "action_evidence_links": [
+          {
+            "action_id": "student_create_attendance_routine",
+            "rule_id": "S-T13-R05",
+            "rule_ids": [
+              "S-T13-R05"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-absence_rate"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "student_set_next_score_target",
+            "rule_id": "S-T13-R02",
+            "rule_ids": [
+              "S-T13-R02"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-avg_score",
+              "ev-synthesis_data-0-pass_threshold",
+              "ev-synthesis_data-0-target_threshold"
+            ],
+            "provenance_status": "complete"
+          }
+        ],
+        "unsupported_actions": [],
+        "conflicting_evidence": [],
+        "missing_evidence": [
+          {
+            "evidence_id": "engagement_score",
+            "reason": "evidence is unavailable according to availability column",
+            "dataset_label": "synthesis_data",
+            "row_index": 0,
+            "raw_value": 0,
+            "availability_column": "engagement_score_available",
+            "availability_raw_value": false
+          }
+        ],
+        "rule_evaluations": [
+          {
+            "rule_id": "S-T13-R01",
+            "rule_version": "1.0.0",
+            "matched": false,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "avg_score",
+                  "operator": "lt",
+                  "matched": false,
+                  "evidence_item_ids": [],
+                  "blocked_by_unavailable_evidence": false,
+                  "compare_to_evidence_id": "pass_threshold"
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "S-T13-R02",
+            "rule_version": "1.0.0",
+            "matched": true,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "avg_score",
+                  "operator": "gte",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-avg_score",
+                    "ev-synthesis_data-0-pass_threshold"
+                  ],
+                  "blocked_by_unavailable_evidence": false,
+                  "compare_to_evidence_id": "pass_threshold"
+                },
+                {
+                  "evidence_id": "avg_score",
+                  "operator": "lt",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-avg_score",
+                    "ev-synthesis_data-0-target_threshold"
+                  ],
+                  "blocked_by_unavailable_evidence": false,
+                  "compare_to_evidence_id": "target_threshold"
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-avg_score",
+              "ev-synthesis_data-0-pass_threshold",
+              "ev-synthesis_data-0-target_threshold"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "S-T13-R03",
+            "rule_version": "1.0.0",
+            "matched": false,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "performance_trend",
+                  "operator": "lt",
+                  "matched": false,
+                  "evidence_item_ids": [],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "S-T13-R04",
+            "rule_version": "1.0.0",
+            "matched": false,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "engagement_score_available",
+                  "operator": "is_true",
+                  "matched": false,
+                  "evidence_item_ids": [],
+                  "blocked_by_unavailable_evidence": false
+                },
+                {
+                  "evidence_id": "engagement_score",
+                  "operator": "lt",
+                  "matched": false,
+                  "evidence_item_ids": [],
+                  "blocked_by_unavailable_evidence": true,
+                  "missing_evidence": [
+                    "engagement_score"
+                  ]
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [],
+            "missing_evidence": [
+              "engagement_score"
+            ],
+            "blocked_by_unavailable_evidence": true
+          },
+          {
+            "rule_id": "S-T13-R05",
+            "rule_version": "1.0.0",
+            "matched": true,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "absence_rate",
+                  "operator": "gte",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-absence_rate"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-absence_rate"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "S-T13-R06",
+            "rule_version": "1.0.0",
+            "matched": false,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "at_risk_score",
+                  "operator": "gte",
+                  "matched": false,
+                  "evidence_item_ids": [],
+                  "blocked_by_unavailable_evidence": false
+                },
+                {
+                  "evidence_id": "at_risk_label",
+                  "operator": "eq",
+                  "matched": false,
+                  "evidence_item_ids": [],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          }
+        ],
+        "summarization_warnings": [
+          "Sensitive/background evidence is preserved for audit only and was not used to trigger actions.",
+          "The LLM may paraphrase prioritized_actions but must not invent new actions or rules."
+        ]
+      },
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "S-T13_SAMPLE_OULAD",
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "S-T13",
+      "config_source": "registry",
+      "params": {
+        "batch_id": "SAMPLE_OULAD",
+        "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+        "student_id": "SAMPLE_OULAD_STU_100788",
+        "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788"
+      },
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781781401549_20197765",
+      "analytics_meta": {
+        "taskId": "S-T13",
+        "isMultiQuery": false,
+        "rowCount": 1,
+        "executionTimeMs": 9345,
+        "queryHash": "275d499a",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "synthesis_data"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "analytics_datasets": {
+        "synthesis_data": [
+          {
+            "avg_score": 94.34,
+            "performance_trend": -0.7187500000000001,
+            "engagement_score": 0.20237855036820618,
+            "engagement_score_available": true,
+            "absence_rate": null,
+            "lifestyle_risk_score": null,
+            "score_strategy": "weighted_by_assessment_weight",
+            "score_scale": 100,
+            "pass_threshold": 40,
+            "target_threshold": 70,
+            "at_risk_score": 3,
+            "at_risk_label": "high"
+          }
+        ]
+      },
+      "matched_rule_ids": [
+        "S-T13-R03",
+        "S-T13-R06"
+      ],
+      "unmatched_rule_ids": [
+        "S-T13-R01",
+        "S-T13-R02",
+        "S-T13-R04",
+        "S-T13-R05"
+      ],
+      "prioritized_action_ids": [
+        "student_request_advisor_check_in",
+        "student_review_recent_assessment_feedback"
+      ],
+      "conflict_ids": [
+        "S-T13-C01"
+      ],
+      "missing_evidence": [
+        {
+          "evidence_id": "absence_rate",
+          "reason": "evidence value is null",
+          "dataset_label": "synthesis_data",
+          "row_index": 0
+        },
+        {
+          "evidence_id": "lifestyle_risk_score",
+          "reason": "evidence value is null",
+          "dataset_label": "synthesis_data",
+          "row_index": 0
+        }
+      ],
+      "unsupported_actions": [],
+      "action_provenance": [
+        {
+          "action_id": "student_request_advisor_check_in",
+          "rule_id": "S-T13-R06",
+          "rule_version": "1.0.0",
+          "evidence_item_ids": [
+            "ev-synthesis_data-0-at_risk_score",
+            "ev-synthesis_data-0-at_risk_label"
+          ],
+          "complete": true,
+          "sensitive_links": []
+        },
+        {
+          "action_id": "student_review_recent_assessment_feedback",
+          "rule_id": "S-T13-R03",
+          "rule_version": "1.0.0",
+          "evidence_item_ids": [
+            "ev-synthesis_data-0-performance_trend"
+          ],
+          "complete": true,
+          "sensitive_links": []
+        }
+      ],
+      "deterministic_rerun": true,
+      "summary": {
+        "summary_type": "action_synthesis",
+        "action_rule_set_id": "S-T13.action_synthesis",
+        "action_rule_version": "1.0.0",
+        "source_datasets": [
+          {
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_count": 1,
+            "available": true
+          }
+        ],
+        "evidence_items": [
+          {
+            "evidence_item_id": "ev-synthesis_data-0-avg_score",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "avg_score",
+            "raw_value": 94.34,
+            "parsed_value": 94.34,
+            "unit": "score_runtime_scale",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-performance_trend",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "performance_trend",
+            "raw_value": -0.7187500000000001,
+            "parsed_value": -0.71875,
+            "unit": "score_change_per_assessment_order",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-engagement_score",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "engagement_score",
+            "raw_value": 0.20237855036820618,
+            "parsed_value": 0.2023785504,
+            "unit": "ratio_0_1",
+            "available": true,
+            "sensitive": false,
+            "availability_column": "engagement_score_available",
+            "availability_raw_value": true
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-engagement_score_available",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "engagement_score_available",
+            "raw_value": true,
+            "parsed_value": true,
+            "unit": "boolean",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-absence_rate",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "absence_rate",
+            "raw_value": null,
+            "parsed_value": null,
+            "unit": "ratio_0_1",
+            "available": false,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-lifestyle_risk_score",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "lifestyle_risk_score",
+            "raw_value": null,
+            "parsed_value": null,
+            "unit": "ratio_0_1",
+            "available": false,
+            "sensitive": true
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-score_strategy",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "score_strategy",
+            "raw_value": "weighted_by_assessment_weight",
+            "parsed_value": "weighted_by_assessment_weight",
+            "unit": "strategy_identifier",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-score_scale",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "score_scale",
+            "raw_value": 100,
+            "parsed_value": 100.0,
+            "unit": "score_scale",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-pass_threshold",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "pass_threshold",
+            "raw_value": 40,
+            "parsed_value": 40.0,
+            "unit": "score_runtime_scale",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-target_threshold",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "target_threshold",
+            "raw_value": 70,
+            "parsed_value": 70.0,
+            "unit": "score_runtime_scale",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-at_risk_score",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "at_risk_score",
+            "raw_value": 3,
+            "parsed_value": 3.0,
+            "unit": "flag_count",
+            "available": true,
+            "sensitive": false
+          },
+          {
+            "evidence_item_id": "ev-synthesis_data-0-at_risk_label",
+            "task_id": "S-T13",
+            "dataset_label": "synthesis_data",
+            "dataset_role": "primary_evidence",
+            "row_index": 0,
+            "column": "at_risk_label",
+            "raw_value": "high",
+            "parsed_value": "high",
+            "unit": "risk_band",
+            "available": true,
+            "sensitive": false
+          }
+        ],
+        "prioritized_actions": [
+          {
+            "action_id": "student_request_advisor_check_in",
+            "action_text": "Request a short advisor check-in to review the combined signals and choose the first support step.",
+            "priority": "high",
+            "owner": "student",
+            "time_horizon_days": 3,
+            "support_category": "support_coordination",
+            "claim_limits": [
+              "Treat the composite score as a screening signal, not a diagnosis.",
+              "Do not use lifestyle_risk_score as action evidence."
+            ],
+            "rule_id": "S-T13-R06",
+            "rule_ids": [
+              "S-T13-R06"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-at_risk_score",
+              "ev-synthesis_data-0-at_risk_label"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "student_review_recent_assessment_feedback",
+            "action_text": "Review feedback from your most recent assessments and write down one change to apply next week.",
+            "priority": "medium",
+            "owner": "student",
+            "time_horizon_days": 7,
+            "support_category": "reflection",
+            "claim_limits": [
+              "Do not claim the slope proves future decline.",
+              "Do not infer a cause for the trend."
+            ],
+            "rule_id": "S-T13-R03",
+            "rule_ids": [
+              "S-T13-R03"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-performance_trend"
+            ],
+            "provenance_status": "complete"
+          }
+        ],
+        "action_evidence_links": [
+          {
+            "action_id": "student_request_advisor_check_in",
+            "rule_id": "S-T13-R06",
+            "rule_ids": [
+              "S-T13-R06"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-at_risk_score",
+              "ev-synthesis_data-0-at_risk_label"
+            ],
+            "provenance_status": "complete"
+          },
+          {
+            "action_id": "student_review_recent_assessment_feedback",
+            "rule_id": "S-T13-R03",
+            "rule_ids": [
+              "S-T13-R03"
+            ],
+            "rule_version": "1.0.0",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-performance_trend"
+            ],
+            "provenance_status": "complete"
+          }
+        ],
+        "unsupported_actions": [],
+        "conflicting_evidence": [
+          {
+            "conflict_id": "S-T13-C01",
+            "behavior": "preserve_and_warn",
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-avg_score",
+              "ev-synthesis_data-0-target_threshold",
+              "ev-synthesis_data-0-at_risk_label"
+            ],
+            "warning": "Conflicting evidence is preserved; actions must be phrased with uncertainty and must not hide this conflict."
+          }
+        ],
+        "missing_evidence": [
+          {
+            "evidence_id": "absence_rate",
+            "reason": "evidence value is null",
+            "dataset_label": "synthesis_data",
+            "row_index": 0
+          },
+          {
+            "evidence_id": "lifestyle_risk_score",
+            "reason": "evidence value is null",
+            "dataset_label": "synthesis_data",
+            "row_index": 0
+          }
+        ],
+        "rule_evaluations": [
+          {
+            "rule_id": "S-T13-R01",
+            "rule_version": "1.0.0",
+            "matched": false,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "avg_score",
+                  "operator": "lt",
+                  "matched": false,
+                  "evidence_item_ids": [],
+                  "blocked_by_unavailable_evidence": false,
+                  "compare_to_evidence_id": "pass_threshold"
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "S-T13-R02",
+            "rule_version": "1.0.0",
+            "matched": false,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "avg_score",
+                  "operator": "gte",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-avg_score",
+                    "ev-synthesis_data-0-pass_threshold"
+                  ],
+                  "blocked_by_unavailable_evidence": false,
+                  "compare_to_evidence_id": "pass_threshold"
+                },
+                {
+                  "evidence_id": "avg_score",
+                  "operator": "lt",
+                  "matched": false,
+                  "evidence_item_ids": [],
+                  "blocked_by_unavailable_evidence": false,
+                  "compare_to_evidence_id": "target_threshold"
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-avg_score",
+              "ev-synthesis_data-0-pass_threshold"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "S-T13-R03",
+            "rule_version": "1.0.0",
+            "matched": true,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "performance_trend",
+                  "operator": "lt",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-performance_trend"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-performance_trend"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "S-T13-R04",
+            "rule_version": "1.0.0",
+            "matched": false,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "engagement_score_available",
+                  "operator": "is_true",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-engagement_score_available"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                },
+                {
+                  "evidence_id": "engagement_score",
+                  "operator": "lt",
+                  "matched": false,
+                  "evidence_item_ids": [],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-engagement_score_available"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          },
+          {
+            "rule_id": "S-T13-R05",
+            "rule_version": "1.0.0",
+            "matched": false,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "absence_rate",
+                  "operator": "gte",
+                  "matched": false,
+                  "evidence_item_ids": [],
+                  "blocked_by_unavailable_evidence": true,
+                  "missing_evidence": [
+                    "absence_rate"
+                  ]
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [],
+            "missing_evidence": [
+              "absence_rate"
+            ],
+            "blocked_by_unavailable_evidence": true
+          },
+          {
+            "rule_id": "S-T13-R06",
+            "rule_version": "1.0.0",
+            "matched": true,
+            "condition_results": {
+              "all": [
+                {
+                  "evidence_id": "at_risk_score",
+                  "operator": "gte",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-at_risk_score"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                },
+                {
+                  "evidence_id": "at_risk_label",
+                  "operator": "eq",
+                  "matched": true,
+                  "evidence_item_ids": [
+                    "ev-synthesis_data-0-at_risk_label"
+                  ],
+                  "blocked_by_unavailable_evidence": false
+                }
+              ],
+              "any": []
+            },
+            "evidence_item_ids": [
+              "ev-synthesis_data-0-at_risk_score",
+              "ev-synthesis_data-0-at_risk_label"
+            ],
+            "missing_evidence": [],
+            "blocked_by_unavailable_evidence": false
+          }
+        ],
+        "summarization_warnings": [
+          "Conflicting evidence was detected and must remain visible in the generated explanation.",
+          "The LLM may paraphrase prioritized_actions but must not invent new actions or rules."
+        ]
+      },
+      "passed": true,
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,90 @@
+{
+  "smoke": "trend_series_multi_evidence_runtime_smoke",
+  "generated_at": "2026-06-18",
+  "backend_url": "http://localhost:4000",
+  "ai_service_url": "http://localhost:8000",
+  "flow": [
+    "POST /api/analytics/run",
+    "POST /api/ai/explain"
+  ],
+  "cases": [
+    {
+      "case_id": "A-S06_SAMPLE_OULAD_CCC_2014J",
+      "task_id": "A-S06",
+      "params": {
+        "batch_id": "SAMPLE_OULAD",
+        "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+        "student_id": "SAMPLE_OULAD_STU_100788"
+      },
+      "ai_explain": {
+        "status": 200,
+        "degraded": false,
+        "ai_summary_method": "task_aware_data_summarization",
+        "input_summary_type": "trend_series",
+        "meta_strategy": "behavioral",
+        "warning_count": 0,
+        "latency_ms": 9973
+      },
+      "note": "Initial smoke attempt timed out at backend AI proxy timeout; immediate retry passed.",
+      "passed": true
+    },
+    {
+      "case_id": "S-T08_SAMPLE_OULAD_CCC_2014J",
+      "task_id": "S-T08",
+      "params": {
+        "batch_id": "SAMPLE_OULAD",
+        "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+        "student_id": "SAMPLE_OULAD_STU_100788"
+      },
+      "ai_explain": {
+        "status": 200,
+        "degraded": false,
+        "ai_summary_method": "task_aware_data_summarization",
+        "input_summary_type": "trend_series",
+        "meta_strategy": "behavioral",
+        "warning_count": 0,
+        "latency_ms": 6770
+      },
+      "passed": true
+    },
+    {
+      "case_id": "S-T12_SAMPLE_OULAD_CCC_2014J",
+      "task_id": "S-T12",
+      "params": {
+        "batch_id": "SAMPLE_OULAD",
+        "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+        "student_id": "SAMPLE_OULAD_STU_100788"
+      },
+      "ai_explain": {
+        "status": 200,
+        "degraded": false,
+        "ai_summary_method": "task_aware_data_summarization",
+        "input_summary_type": "trend_series",
+        "meta_strategy": "behavioral",
+        "warning_count": 0,
+        "latency_ms": 6770
+      },
+      "passed": true
+    },
+    {
+      "case_id": "S-T07_SAMPLE_UCI_POR",
+      "task_id": "S-T07",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001"
+      },
+      "ai_explain": {
+        "status": 200,
+        "degraded": false,
+        "ai_summary_method": "task_aware_data_summarization",
+        "input_summary_type": "trend_series",
+        "meta_strategy": "correlation",
+        "warning_count": 0,
+        "latency_ms": 5082
+      },
+      "passed": true
+    }
+  ],
+  "passed": true
+}

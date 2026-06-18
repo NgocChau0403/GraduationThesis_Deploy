@@ -1,0 +1,424 @@
+{
+  "validator": "validate_correlation_evidence_selected_entity.py",
+  "generated_at": "2026-06-18T12:38:41.758941+00:00",
+  "backend_url": "http://localhost:4000",
+  "config_source": "canonical_pre_migration",
+  "parse_contract": {
+    "positive_config_passed": true,
+    "negative_case_count": 3,
+    "negative_cases_passed": 3,
+    "negative_results": [
+      {
+        "case": "missing_x_column",
+        "rejected": true,
+        "detail": "1 validation error for AISummaryConfig\n  Value error, correlation_evidence requires x_column [type=value_error, input_value={'summary_type': 'correla...'y_column': 'avg_score'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+      },
+      {
+        "case": "missing_y_column",
+        "rejected": true,
+        "detail": "1 validation error for AISummaryConfig\n  Value error, correlation_evidence requires y_column [type=value_error, input_value={'summary_type': 'correla...x_column': 'risk_score'}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+      },
+      {
+        "case": "sensitive_policy_required",
+        "rejected": true,
+        "detail": "1 validation error for AISummaryConfig\n  Value error, sensitive_context_policy is required when require_sensitive_context_policy is true [type=value_error, input_value={'summary_type': 'correla...e_context_policy': True}, input_type=dict]\n    For further information visit https://errors.pydantic.dev/2.13/v/value_error"
+      }
+    ],
+    "errors": [],
+    "passed": true
+  },
+  "case_count": 4,
+  "passed": 4,
+  "failed": 0,
+  "overall_pass": true,
+  "cases": [
+    {
+      "case_id": "S-T09_SAMPLE_UCI_POR",
+      "task_id": "S-T09",
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781786312588_f6c7b2c1",
+      "analytics_meta": {
+        "taskId": "S-T09",
+        "isMultiQuery": false,
+        "rowCount": 649,
+        "executionTimeMs": 49,
+        "queryHash": "55aab3c0",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "lifestyle_risk_scatter"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "summary": {
+        "summary_type": "correlation_evidence",
+        "dataset_name": "lifestyle_risk_scatter",
+        "row_count": 649,
+        "x_column": "lifestyle_risk_score",
+        "y_column": "avg_score",
+        "entity_column": "student_id",
+        "selected_entity_column": "is_current_student",
+        "metric_units": {},
+        "metric_directions": {},
+        "coefficient": -0.1041,
+        "coefficient_method": "pearson",
+        "coefficient_source": "derived_from_pairs",
+        "sample_size": 649,
+        "p_value": null,
+        "outliers": [],
+        "selected_entity_evidence": [
+          {
+            "row_index": 648,
+            "selected_column": "is_current_student",
+            "selected_value": true,
+            "is_valid_pair": true,
+            "raw_values": {
+              "lifestyle_risk_score": 0.375,
+              "avg_score": 36.67
+            },
+            "lifestyle_risk_score": 0.375,
+            "avg_score": 36.67,
+            "cohort_context": {
+              "coefficient": -0.1041,
+              "coefficient_method": "pearson",
+              "coefficient_source": "derived_from_pairs",
+              "sample_size": 649,
+              "direction": "negative",
+              "strength": "weak",
+              "strength_claim_allowed": true,
+              "significance_claim_allowed": false,
+              "causal_claim_allowed": false
+            },
+            "student_id": "SAMPLE_UCI_POR_STU_000001",
+            "point_role": "Selected student",
+            "label_context": {
+              "point_role": "Selected student"
+            },
+            "sensitive_context": {
+              "alcohol_weekday": 1,
+              "alcohol_weekend": 1,
+              "go_out_freq": 4,
+              "health_status": 3,
+              "family_relation": 4,
+              "free_time": 3
+            },
+            "sensitive_context_policy": "descriptive_only",
+            "claim_limit": "Sensitive/background context is descriptive only; do not infer causality or prescribe actions from it."
+          }
+        ],
+        "missing_selected_entity_evidence": [],
+        "selected_entity_count": 1,
+        "sensitive_context_policy": "descriptive_only",
+        "direction": "negative",
+        "strength": "weak",
+        "strength_claim_allowed": true,
+        "significance_claim_allowed": false,
+        "causal_claim_allowed": false,
+        "parse_warnings": [],
+        "statistical_warnings": [
+          "No p-value evidence is available; statistical significance claims are not allowed."
+        ],
+        "summarization_warnings": [
+          "No p-value evidence is available; statistical significance claims are not allowed."
+        ]
+      },
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "S-T11_SAMPLE_OULAD_CCC_2014J",
+      "task_id": "S-T11",
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781786312854_f7eecee8",
+      "analytics_meta": {
+        "taskId": "S-T11",
+        "isMultiQuery": false,
+        "rowCount": 1988,
+        "executionTimeMs": 117,
+        "queryHash": "aca2cd5f",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "registration_data"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "summary": {
+        "summary_type": "correlation_evidence",
+        "dataset_name": "registration_data",
+        "row_count": 1988,
+        "x_column": "registration_lead_time",
+        "y_column": "avg_score",
+        "entity_column": "student_id",
+        "selected_entity_column": "is_selected_student",
+        "metric_units": {},
+        "metric_directions": {},
+        "coefficient": 0.0017,
+        "coefficient_method": "pearson",
+        "coefficient_source": "derived_from_pairs",
+        "sample_size": 1988,
+        "p_value": null,
+        "outliers": [],
+        "selected_entity_evidence": [
+          {
+            "row_index": 0,
+            "selected_column": "is_selected_student",
+            "selected_value": true,
+            "is_valid_pair": true,
+            "raw_values": {
+              "registration_lead_time": 103,
+              "avg_score": 91.2
+            },
+            "registration_lead_time": 103.0,
+            "avg_score": 91.2,
+            "cohort_context": {
+              "coefficient": 0.0017,
+              "coefficient_method": "pearson",
+              "coefficient_source": "derived_from_pairs",
+              "sample_size": 1988,
+              "direction": "positive",
+              "strength": "weak",
+              "strength_claim_allowed": true,
+              "significance_claim_allowed": false,
+              "causal_claim_allowed": false
+            },
+            "student_id": "SAMPLE_OULAD_STU_100788",
+            "student_marker": "Selected student",
+            "label_context": {
+              "student_marker": "Selected student",
+              "cohort_avg_registration_lead_time": 63.92,
+              "cohort_avg_score": 70.24,
+              "registration_timing_percentile": 77,
+              "score_percentile": 83.4
+            },
+            "percentile_context": {
+              "cohort_avg_registration_lead_time": 63.92,
+              "cohort_avg_score": 70.24,
+              "registration_timing_percentile": 77,
+              "score_percentile": 83.4
+            }
+          }
+        ],
+        "missing_selected_entity_evidence": [],
+        "selected_entity_count": 1,
+        "sensitive_context_policy": null,
+        "direction": "positive",
+        "strength": "weak",
+        "strength_claim_allowed": true,
+        "significance_claim_allowed": false,
+        "causal_claim_allowed": false,
+        "parse_warnings": [],
+        "statistical_warnings": [
+          "No p-value evidence is available; statistical significance claims are not allowed."
+        ],
+        "summarization_warnings": [
+          "No p-value evidence is available; statistical significance claims are not allowed."
+        ]
+      },
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "S-T14_SAMPLE_UCI_POR",
+      "task_id": "S-T14",
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781786321620_8f71f284",
+      "analytics_meta": {
+        "taskId": "S-T14",
+        "isMultiQuery": false,
+        "rowCount": 649,
+        "executionTimeMs": 32,
+        "queryHash": "04b79025",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "social_balance_scatter"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "summary": {
+        "summary_type": "correlation_evidence",
+        "dataset_name": "social_balance_scatter",
+        "row_count": 649,
+        "x_column": "social_balance_score",
+        "y_column": "avg_score",
+        "entity_column": "student_id",
+        "selected_entity_column": "is_current_student",
+        "metric_units": {},
+        "metric_directions": {},
+        "coefficient": 0.0144,
+        "coefficient_method": "pearson",
+        "coefficient_source": "derived_from_pairs",
+        "sample_size": 649,
+        "p_value": null,
+        "outliers": [],
+        "selected_entity_evidence": [
+          {
+            "row_index": 648,
+            "selected_column": "is_current_student",
+            "selected_value": true,
+            "is_valid_pair": true,
+            "raw_values": {
+              "social_balance_score": 0.025,
+              "avg_score": 36.67
+            },
+            "social_balance_score": 0.025,
+            "avg_score": 36.67,
+            "cohort_context": {
+              "coefficient": 0.0144,
+              "coefficient_method": "pearson",
+              "coefficient_source": "derived_from_pairs",
+              "sample_size": 649,
+              "direction": "positive",
+              "strength": "weak",
+              "strength_claim_allowed": true,
+              "significance_claim_allowed": false,
+              "causal_claim_allowed": false
+            },
+            "student_id": "SAMPLE_UCI_POR_STU_000001",
+            "point_role": "Selected student",
+            "label_context": {
+              "point_role": "Selected student"
+            },
+            "sensitive_context": {
+              "free_time": 3,
+              "go_out_freq": 4,
+              "alcohol_weekday": 1,
+              "alcohol_weekend": 1
+            },
+            "sensitive_context_policy": "descriptive_only",
+            "claim_limit": "Sensitive/background context is descriptive only; do not infer causality or prescribe actions from it."
+          }
+        ],
+        "missing_selected_entity_evidence": [],
+        "selected_entity_count": 1,
+        "sensitive_context_policy": "descriptive_only",
+        "direction": "positive",
+        "strength": "weak",
+        "strength_claim_allowed": true,
+        "significance_claim_allowed": false,
+        "causal_claim_allowed": false,
+        "parse_warnings": [],
+        "statistical_warnings": [
+          "No p-value evidence is available; statistical significance claims are not allowed."
+        ],
+        "summarization_warnings": [
+          "No p-value evidence is available; statistical significance claims are not allowed."
+        ]
+      },
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "S-T15_SAMPLE_UCI_POR",
+      "task_id": "S-T15",
+      "analytics_status": 200,
+      "analytics_execution_id": "exec_1781786321692_4dec47dc",
+      "analytics_meta": {
+        "taskId": "S-T15",
+        "isMultiQuery": false,
+        "rowCount": 649,
+        "executionTimeMs": 41,
+        "queryHash": "b727519f",
+        "cacheHit": false,
+        "retryCount": 0,
+        "query_labels": [
+          "family_context_scatter"
+        ],
+        "dataQuality": {
+          "status": "executable",
+          "confidence": "HIGH",
+          "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+          "warnings": []
+        }
+      },
+      "summary": {
+        "summary_type": "correlation_evidence",
+        "dataset_name": "family_context_scatter",
+        "row_count": 649,
+        "x_column": "family_stability_score",
+        "y_column": "avg_score",
+        "entity_column": "student_id",
+        "selected_entity_column": "is_current_student",
+        "metric_units": {},
+        "metric_directions": {},
+        "coefficient": 0.1442,
+        "coefficient_method": "pearson",
+        "coefficient_source": "derived_from_pairs",
+        "sample_size": 649,
+        "p_value": null,
+        "outliers": [],
+        "selected_entity_evidence": [
+          {
+            "row_index": 648,
+            "selected_column": "is_current_student",
+            "selected_value": true,
+            "is_valid_pair": true,
+            "raw_values": {
+              "family_stability_score": 0.575,
+              "avg_score": 36.67
+            },
+            "family_stability_score": 0.575,
+            "avg_score": 36.67,
+            "cohort_context": {
+              "coefficient": 0.1442,
+              "coefficient_method": "pearson",
+              "coefficient_source": "derived_from_pairs",
+              "sample_size": 649,
+              "direction": "positive",
+              "strength": "weak",
+              "strength_claim_allowed": true,
+              "significance_claim_allowed": false,
+              "causal_claim_allowed": false
+            },
+            "student_id": "SAMPLE_UCI_POR_STU_000001",
+            "point_role": "Selected student",
+            "label_context": {
+              "point_role": "Selected student"
+            },
+            "sensitive_context": {
+              "family_relation": 4,
+              "parent_cohabitation_status": "A",
+              "mother_education_level": "4",
+              "father_education_level": "4"
+            },
+            "sensitive_context_policy": "descriptive_only",
+            "claim_limit": "Sensitive/background context is descriptive only; do not infer causality or prescribe actions from it."
+          }
+        ],
+        "missing_selected_entity_evidence": [],
+        "selected_entity_count": 1,
+        "sensitive_context_policy": "descriptive_only",
+        "direction": "positive",
+        "strength": "weak",
+        "strength_claim_allowed": true,
+        "significance_claim_allowed": false,
+        "causal_claim_allowed": false,
+        "parse_warnings": [],
+        "statistical_warnings": [
+          "No p-value evidence is available; statistical significance claims are not allowed."
+        ],
+        "summarization_warnings": [
+          "No p-value evidence is available; statistical significance claims are not allowed."
+        ]
+      },
+      "passed": true,
+      "errors": []
+    }
+  ]
+}

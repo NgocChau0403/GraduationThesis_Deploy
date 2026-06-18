@@ -1,0 +1,410 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "action_synthesis_rules.schema.json",
+  "title": "Action Synthesis Versioned Rule Catalog",
+  "type": "object",
+  "required": [
+    "catalog_id",
+    "catalog_version",
+    "summary_type",
+    "action_source",
+    "created_at",
+    "rule_sets"
+  ],
+  "properties": {
+    "catalog_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "catalog_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "summary_type": {
+      "const": "action_synthesis"
+    },
+    "action_source": {
+      "const": "versioned_registry_rules"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date"
+    },
+    "rule_sets": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/ruleSet"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "evidenceField": {
+      "type": "object",
+      "required": [
+        "column",
+        "role",
+        "unit",
+        "required",
+        "nullable",
+        "sensitive",
+        "allowed_as_trigger"
+      ],
+      "properties": {
+        "column": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "enum": [
+            "entity",
+            "metric",
+            "status",
+            "threshold",
+            "context"
+          ]
+        },
+        "unit": {
+          "type": "string",
+          "minLength": 1
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "availability_column": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sensitive": {
+          "type": "boolean"
+        },
+        "allowed_as_trigger": {
+          "type": "boolean"
+        },
+        "semantic_alias": {
+          "type": "string",
+          "minLength": 1
+        },
+        "semantic_note": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
+    "derivedEvidence": {
+      "type": "object",
+      "required": [
+        "evidence_id",
+        "operation",
+        "numerator_column",
+        "denominator_column",
+        "unit",
+        "zero_denominator_behavior"
+      ],
+      "properties": {
+        "evidence_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operation": {
+          "const": "safe_divide"
+        },
+        "numerator_column": {
+          "type": "string",
+          "minLength": 1
+        },
+        "denominator_column": {
+          "type": "string",
+          "minLength": 1
+        },
+        "unit": {
+          "const": "ratio_0_1"
+        },
+        "zero_denominator_behavior": {
+          "const": "missing"
+        }
+      },
+      "additionalProperties": false
+    },
+    "condition": {
+      "type": "object",
+      "required": [
+        "evidence_id",
+        "operator"
+      ],
+      "properties": {
+        "evidence_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "operator": {
+          "enum": [
+            "eq",
+            "neq",
+            "gt",
+            "gte",
+            "lt",
+            "lte",
+            "is_present",
+            "is_true"
+          ]
+        },
+        "value": {},
+        "compare_to_evidence_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "value"
+          ]
+        },
+        {
+          "required": [
+            "compare_to_evidence_id"
+          ]
+        },
+        {
+          "properties": {
+            "operator": {
+              "enum": [
+                "is_present",
+                "is_true"
+              ]
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "trigger": {
+      "type": "object",
+      "required": [
+        "all",
+        "any"
+      ],
+      "properties": {
+        "all": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        },
+        "any": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/condition"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "action": {
+      "type": "object",
+      "required": [
+        "action_id",
+        "action_text",
+        "priority",
+        "owner",
+        "time_horizon_days",
+        "support_category",
+        "claim_limits"
+      ],
+      "properties": {
+        "action_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "action_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "priority": {
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low"
+          ]
+        },
+        "owner": {
+          "type": "string",
+          "minLength": 1
+        },
+        "time_horizon_days": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "support_category": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_limits": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "rule": {
+      "type": "object",
+      "required": [
+        "rule_id",
+        "description",
+        "trigger",
+        "action",
+        "provenance_requirements"
+      ],
+      "properties": {
+        "rule_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "trigger": {
+          "$ref": "#/$defs/trigger"
+        },
+        "action": {
+          "$ref": "#/$defs/action"
+        },
+        "provenance_requirements": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "enum": [
+              "dataset_label",
+              "dataset_role",
+              "row_index",
+              "column",
+              "raw_value",
+              "parsed_value",
+              "unit",
+              "rule_id",
+              "rule_version",
+              "availability_state"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "conflictRule": {
+      "type": "object",
+      "required": [
+        "conflict_id",
+        "when",
+        "behavior"
+      ],
+      "properties": {
+        "conflict_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "when": {
+          "$ref": "#/$defs/trigger"
+        },
+        "behavior": {
+          "const": "preserve_and_warn"
+        }
+      },
+      "additionalProperties": false
+    },
+    "ruleSet": {
+      "type": "object",
+      "required": [
+        "rule_set_id",
+        "task_id",
+        "rule_version",
+        "audience",
+        "source_dataset_roles",
+        "evidence_contract",
+        "derived_evidence",
+        "conflict_rules",
+        "rules",
+        "max_actions",
+        "unsupported_action_behavior"
+      ],
+      "properties": {
+        "rule_set_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "task_id": {
+          "enum": [
+            "A-G16",
+            "A-S08",
+            "S-T13"
+          ]
+        },
+        "rule_version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "audience": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "source_dataset_roles": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "evidence_contract": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/evidenceField"
+          }
+        },
+        "derived_evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/derivedEvidence"
+          }
+        },
+        "conflict_rules": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/conflictRule"
+          }
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/rule"
+          }
+        },
+        "max_actions": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "unsupported_action_behavior": {
+          "const": "emit_unsupported_actions"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

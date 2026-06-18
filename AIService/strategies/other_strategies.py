@@ -95,6 +95,11 @@ Return ONLY a valid JSON object matching the ExplainResponse schema.{proxy_note}
         filtered_req.datasets = filtered_datasets
 
         data_summary = self.summarize_datasets(filtered_req)
+        filtered_summary_metadata = getattr(
+            filtered_req, "_ai_summary_metadata", None
+        )
+        if filtered_summary_metadata:
+            self._attach_summary_metadata(req, filtered_summary_metadata)
         ac = req.analysis_context
         sc = req.semantic_context
 

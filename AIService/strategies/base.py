@@ -111,6 +111,9 @@ class BaseExplanationStrategy(ABC):
         """
         if _client is None:
             raise RuntimeError("openai package is not installed; cannot call LLM.")
+
+        if self._is_task_aware_action_synthesis(req):
+            system_prompt, user_prompt = self._build_action_synthesis_llm_prompts(req)
         
         json_format_instruction = """
 OUTPUT FORMAT: You MUST return a valid JSON object with this exact structure:
@@ -183,6 +186,82 @@ CRITICAL RULES:
         parsed["_model"] = response.model
 
         return parsed
+
+    @staticmethod
+    def _is_task_aware_action_synthesis(req: ExplainRequest) -> bool:
+        cfg = req.ai_summary_config
+        if not cfg or cfg.summary_type != "action_synthesis":
+            return False
+        method, _warning = BaseExplanationStrategy._resolve_ai_summary_method()
+        return method == TASK_AWARE_SUMMARY_METHOD
+
+    @staticmethod
+    def _build_action_synthesis_llm_prompts(
+        req: ExplainRequest,
+    ) -> tuple[str, str]:
+        """
+        Build the action-synthesis prompt from the deterministic summary only.
+
+        This intentionally excludes aiPromptHint and task-specific hard-coded
+        step templates. The LLM may explain or paraphrase actions already
+        present in prioritized_actions, but it cannot source new actions from
+        prose outside the versioned rule output.
+        """
+        result = BaseExplanationStrategy.build_summary_result(
+            req,
+            method_override=TASK_AWARE_SUMMARY_METHOD,
+            include_debug_payload=True,
+        )
+        summary = result["metadata"].get("summary_debug_payload") or {}
+        BaseExplanationStrategy._attach_summary_metadata(req, result["metadata"])
+
+        allowed_payload = {
+            "summary_type": summary.get("summary_type"),
+            "action_rule_set_id": summary.get("action_rule_set_id"),
+            "action_rule_version": summary.get("action_rule_version"),
+            "prioritized_actions": summary.get("prioritized_actions", []),
+            "action_evidence_links": summary.get("action_evidence_links", []),
+            "evidence_items": summary.get("evidence_items", []),
+            "conflicting_evidence": summary.get("conflicting_evidence", []),
+            "missing_evidence": summary.get("missing_evidence", []),
+            "unsupported_actions": summary.get("unsupported_actions", []),
+            "summarization_warnings": summary.get("summarization_warnings", []),
+        }
+
+        tone = BaseExplanationStrategy.get_audience_tone(req.target_audience)
+        system_prompt = f"""You are a Learning Analytics expert explaining a deterministic, rule-generated action plan.
+{tone}
+The ACTION SYNTHESIS PAYLOAD is the only permitted source of actions and action claims.
+
+STRICT BOUNDARY:
+- Explain or concisely paraphrase only actions listed in prioritized_actions.
+- Never add, infer, recommend, imply, or reorder an action that is not listed.
+- Treat each action's claim_limits as binding. Do not turn usage, association, risk, or descriptive evidence into effectiveness, causality, engagement improvement, or outcome claims.
+- Cite only evidence_items linked through action_evidence_links or the action's evidence_item_ids.
+- Preserve conflicting_evidence, missing_evidence, unsupported_actions, and summarization_warnings as limitations when present.
+- Do not use task hints, background knowledge, demographic attributes, or sensitive evidence to generate actions.
+- explanation.recommendations MUST be [].
+- explanation.educational_implications MUST be [].
+- The summary and insights are rationale for the supplied actions, not a new action plan.
+Return ONLY a valid JSON object matching the ExplainResponse schema."""
+
+        user_prompt = f"""ACTION SYNTHESIS RATIONALE TASK: {req.task_name or req.task_id}
+
+ACTION SYNTHESIS PAYLOAD:
+{json.dumps(allowed_payload, indent=2, ensure_ascii=False, default=str)}
+
+Write a concise explanation of why the listed prioritized_actions were produced.
+For every action mentioned:
+- retain its meaning and priority;
+- ground the rationale in its linked evidence;
+- obey its claim_limits;
+- identify its rule_id/rule_version in the evidence context when useful.
+
+If prioritized_actions is empty, explain that no supported action was generated.
+Do not propose next steps beyond the payload.
+Set explanation.recommendations and explanation.educational_implications to [].
+Return the JSON explanation structure."""
+        return system_prompt, user_prompt
 
     #  Shared: Response Builder 
 
@@ -259,6 +338,12 @@ CRITICAL RULES:
         primary visualization. Keep the AI text explanatory so the UI does not
         show duplicated "Recommended action" and "Recommendations" sections.
         """
+        if (
+            req.ai_summary_config
+            and req.ai_summary_config.summary_type == "action_synthesis"
+        ):
+            return True
+
         if req.task_id == "A-G16":
             return True
 
@@ -275,6 +360,12 @@ CRITICAL RULES:
         Educational implications often become action wording, so keep the AI
         output to summary + evidence insights.
         """
+        if (
+            req.ai_summary_config
+            and req.ai_summary_config.summary_type == "action_synthesis"
+        ):
+            return True
+
         if req.task_id == "A-G16":
             return True
 
@@ -289,6 +380,16 @@ CRITICAL RULES:
         sometimes drift back to generic titles such as "Low Engagement Score";
         normalize those into the task-specific "Why ..." titles used by the UI.
         """
+        if (
+            req.ai_summary_config
+            and req.ai_summary_config.summary_type == "action_synthesis"
+        ):
+            # action_synthesis already owns a complete versioned action and
+            # provenance contract. Legacy task-specific normalizers may only
+            # operate on older summary types; otherwise they can manufacture a
+            # visible step that was not produced by prioritized_actions.
+            return
+
         method, _warning = BaseExplanationStrategy._resolve_ai_summary_method()
         if method != TASK_AWARE_SUMMARY_METHOD:
             return
@@ -581,6 +682,16 @@ CRITICAL RULES:
             "baseline_available": True,
             "input_summary_type": input_summary_type,
         }
+        if method == TASK_AWARE_SUMMARY_METHOD and isinstance(debug_payload, dict):
+            for key in (
+                "full_result_row_count",
+                "included_row_count",
+                "small_result_threshold",
+                "small_result_full_rows_applied",
+                "dataset_row_breakdown",
+            ):
+                if key in debug_payload:
+                    metadata[key] = debug_payload[key]
         if warning:
             metadata["ai_summary_method_warning"] = warning
         if include_debug_payload:
@@ -593,7 +704,15 @@ CRITICAL RULES:
 
     @staticmethod
     def summarize_task_aware_data_summarization(req: ExplainRequest) -> tuple[dict, str]:
-        summary = BaseExplanationStrategy._build_task_aware_summary(req)
+        if BaseExplanationStrategy._should_include_full_rows_for_small_result(req):
+            summary = BaseExplanationStrategy._summarize_full_rows_due_to_small_result(req)
+        else:
+            summary = BaseExplanationStrategy._build_task_aware_summary(req)
+            BaseExplanationStrategy._attach_small_result_metadata(
+                req,
+                summary,
+                applied=False,
+            )
         return summary, BaseExplanationStrategy._dump_summary(summary)
 
     @staticmethod
@@ -632,6 +751,70 @@ CRITICAL RULES:
         return "\n\n".join(parts), debug_payload
 
     @staticmethod
+    def _dataset_row_breakdown(req: ExplainRequest) -> list[dict]:
+        breakdown = []
+        for label, rows in (req.datasets or {}).items():
+            safe_rows = rows if isinstance(rows, list) else []
+            breakdown.append({
+                "dataset_name": label,
+                "row_count": len(safe_rows),
+                "included_row_count": len(safe_rows),
+            })
+        return breakdown
+
+    @staticmethod
+    def _full_result_row_count(req: ExplainRequest) -> int:
+        return sum(item["row_count"] for item in BaseExplanationStrategy._dataset_row_breakdown(req))
+
+    @staticmethod
+    def _should_include_full_rows_for_small_result(
+        req: ExplainRequest,
+        threshold: int = 20,
+    ) -> bool:
+        return BaseExplanationStrategy._full_result_row_count(req) <= threshold
+
+    @staticmethod
+    def _attach_small_result_metadata(
+        req: ExplainRequest,
+        summary: dict,
+        applied: bool,
+        threshold: int = 20,
+    ) -> None:
+        breakdown = BaseExplanationStrategy._dataset_row_breakdown(req)
+        full_result_row_count = sum(item["row_count"] for item in breakdown)
+        summary["full_result_row_count"] = full_result_row_count
+        summary["small_result_threshold"] = threshold
+        summary["small_result_full_rows_applied"] = applied
+        if "dataset_row_breakdown" not in summary:
+            summary["dataset_row_breakdown"] = breakdown
+
+    @staticmethod
+    def _summarize_full_rows_due_to_small_result(req: ExplainRequest) -> dict:
+        datasets = []
+        for label, rows in (req.datasets or {}).items():
+            safe_rows = rows if isinstance(rows, list) else []
+            datasets.append({
+                "dataset_name": label,
+                "row_count": len(safe_rows),
+                "included_row_count": len(safe_rows),
+                "rows": safe_rows,
+            })
+
+        summary = {
+            "summary_type": "full_rows_due_to_small_result",
+            "input_summary_type": "full_rows_due_to_small_result",
+            "datasets": datasets,
+            "summarization_warnings": [],
+        }
+        BaseExplanationStrategy._attach_small_result_metadata(
+            req,
+            summary,
+            applied=True,
+        )
+        summary["included_row_count"] = summary["full_result_row_count"]
+        return summary
+
+    @staticmethod
     def _build_task_aware_summary(req: ExplainRequest) -> dict:
         cfg = getattr(req, "ai_summary_config", None)
         if cfg and cfg.summary_type == "trend_comparison":
@@ -650,6 +833,12 @@ CRITICAL RULES:
             return BaseExplanationStrategy._summarize_group_comparison(req)
         elif cfg and cfg.summary_type == "correlation_evidence":
             return BaseExplanationStrategy._summarize_correlation_evidence(req)
+        elif cfg and cfg.summary_type == "multi_metric_comparison":
+            return BaseExplanationStrategy._summarize_multi_metric_comparison(req)
+        elif cfg and cfg.summary_type == "metric_snapshot":
+            return BaseExplanationStrategy._summarize_metric_snapshot(req)
+        elif cfg and cfg.summary_type == "action_synthesis":
+            return BaseExplanationStrategy._summarize_action_synthesis(req)
         return BaseExplanationStrategy._summarize_generic(req)
 
     @staticmethod
@@ -697,6 +886,9 @@ CRITICAL RULES:
 
     @staticmethod
     def _dump_summary(summary: dict, char_limit: int = 10000) -> str:
+        if summary.get("summary_type") == "full_rows_due_to_small_result":
+            return json.dumps(summary, indent=2, ensure_ascii=False, default=str)
+
         text = json.dumps(summary, indent=2, ensure_ascii=False, default=str)
         if len(text) <= char_limit:
             return text
@@ -724,6 +916,23 @@ CRITICAL RULES:
             "row_count",
             "target_group",
             "comparison_groups",
+            "dynamic_comparison_groups",
+            "group_column",
+            "group_key_columns",
+            "series_column",
+            "composite_group_keys",
+            "time_column",
+            "alignment_columns",
+            "divergence_threshold",
+            "metric_units",
+            "metric_directions",
+            "multi_dataset_evidence",
+            "secondary_metric_associations",
+            "small_sample_caveats",
+            "available_groups",
+            "group_trends",
+            "pairwise_comparison",
+            "missing_group_evidence",
             "entity_column",
             "metric_column",
             "sort_direction",
@@ -734,6 +943,8 @@ CRITICAL RULES:
             "tie_warnings",
             "flag_evidence",
             "group_metrics",
+            "group_series",
+            "focus_summary",
             "gaps",
             "dominant_group",
             "weakest_group",
@@ -746,6 +957,9 @@ CRITICAL RULES:
             "coefficient_source",
             "sample_size",
             "p_value",
+            "selected_entity_column",
+            "selected_entity_evidence",
+            "missing_selected_entity_evidence",
             "outliers",
             "direction",
             "strength",
@@ -754,6 +968,39 @@ CRITICAL RULES:
             "parse_warnings",
             "statistical_warnings",
             "causal_claim_allowed",
+            "entities",
+            "metrics",
+            "metric_keys",
+            "comparison_matrix",
+            "metric_extrema",
+            "pairwise_gaps",
+            "missing_metric_evidence",
+            "missing_entity_evidence",
+            "missing_expected_entities",
+            "selected_entity_evidence",
+            "validation_metadata",
+            "evidence_status",
+            "evidence_requirements",
+            "entity",
+            "metric_snapshot",
+            "status_evidence",
+            "threshold_evidence",
+            "benchmark_evidence",
+            "label_evidence",
+            "flag_evidence",
+            "action_evidence",
+            "missing_evidence",
+            "sensitive_context_present",
+            "sensitive_context",
+            "source_datasets",
+            "evidence_items",
+            "prioritized_actions",
+            "action_evidence_links",
+            "unsupported_actions",
+            "conflicting_evidence",
+            "missing_evidence",
+            "action_rule_set_id",
+            "action_rule_version",
         ):
             if key in summary:
                 minimal[key] = summary[key]
@@ -807,6 +1054,618 @@ CRITICAL RULES:
         return compact
 
     @staticmethod
+    def _summarize_action_synthesis(req: ExplainRequest) -> dict:
+        """
+        Deterministically map registry-provided rules to prioritized actions.
+
+        Parse-time config integrity is handled by AISummaryConfig. This method
+        owns runtime validation: dataset/column presence, raw-value parsing,
+        availability, derived evidence, rule evaluation, conflicts and
+        complete action provenance.
+        """
+        cfg = req.ai_summary_config
+        priority_rank = {"critical": 4, "high": 3, "medium": 2, "low": 1}
+        summary = {
+            "summary_type": "action_synthesis",
+            "action_rule_set_id": cfg.action_rule_set_id if cfg else None,
+            "action_rule_version": cfg.action_rule_version if cfg else None,
+            "source_datasets": [],
+            "evidence_items": [],
+            "prioritized_actions": [],
+            "action_evidence_links": [],
+            "unsupported_actions": [],
+            "conflicting_evidence": [],
+            "missing_evidence": [],
+            "rule_evaluations": [],
+            "summarization_warnings": [],
+        }
+
+        if not cfg:
+            summary["unsupported_actions"].append({
+                "reason": "missing_action_synthesis_config",
+                "detail": "No ai_summary_config was provided.",
+            })
+            return summary
+
+        dataset_roles = dict(cfg.evidence_dataset_roles or {})
+        if not dataset_roles:
+            for label in req.query_labels or []:
+                if label in (req.datasets or {}):
+                    dataset_roles[label] = "primary_evidence"
+            if not dataset_roles:
+                for label in (req.datasets or {}):
+                    dataset_roles[label] = "primary_evidence"
+
+        evidence_contract = list(cfg.action_evidence_contract or [])
+        evidence_by_column = {item.column: item for item in evidence_contract}
+        raw_evidence_ids = list(cfg.evidence_columns or [])
+        if not raw_evidence_ids:
+            raw_evidence_ids = [item.column for item in evidence_contract]
+        if cfg.action_source == "candidate_action_columns":
+            raw_evidence_ids = list(dict.fromkeys([
+                *raw_evidence_ids,
+                *(cfg.action_columns or []),
+            ]))
+
+        evidence_index: dict[str, list[dict]] = {
+            evidence_id: [] for evidence_id in raw_evidence_ids
+        }
+        missing_keys = set()
+
+        def register_missing(
+            evidence_id: str,
+            reason: str,
+            *,
+            dataset_label=None,
+            row_index=None,
+            raw_value=None,
+            availability_column=None,
+            availability_raw_value=None,
+        ) -> None:
+            key = (
+                evidence_id,
+                reason,
+                dataset_label,
+                row_index,
+                str(raw_value),
+                availability_column,
+                str(availability_raw_value),
+            )
+            if key in missing_keys:
+                return
+            missing_keys.add(key)
+            item = {
+                "evidence_id": evidence_id,
+                "reason": reason,
+            }
+            if dataset_label is not None:
+                item["dataset_label"] = dataset_label
+            if row_index is not None:
+                item["row_index"] = row_index
+            if raw_value is not None:
+                item["raw_value"] = raw_value
+            if availability_column is not None:
+                item["availability_column"] = availability_column
+                item["availability_raw_value"] = availability_raw_value
+            summary["missing_evidence"].append(item)
+
+        def parsed_value(raw_value):
+            if raw_value is None:
+                return None
+            if isinstance(raw_value, bool):
+                return raw_value
+            parsed_bool, recognized_bool = BaseExplanationStrategy._parse_triggered(
+                raw_value
+            )
+            if isinstance(raw_value, str) and raw_value.strip().lower() in {
+                "true", "false", "yes", "no",
+            }:
+                return parsed_bool if recognized_bool else raw_value
+            parsed_number = BaseExplanationStrategy._parse_number(raw_value)
+            if parsed_number is not None:
+                return round(parsed_number, 10)
+            return raw_value
+
+        for dataset_label, dataset_role in dataset_roles.items():
+            rows = (req.datasets or {}).get(dataset_label)
+            source = {
+                "dataset_label": dataset_label,
+                "dataset_role": dataset_role,
+                "row_count": len(rows) if isinstance(rows, list) else 0,
+                "available": isinstance(rows, list),
+            }
+            summary["source_datasets"].append(source)
+            if not isinstance(rows, list):
+                register_missing(
+                    dataset_label,
+                    "configured evidence dataset is absent",
+                    dataset_label=dataset_label,
+                )
+                continue
+            if not rows:
+                register_missing(
+                    dataset_label,
+                    "configured evidence dataset is empty",
+                    dataset_label=dataset_label,
+                )
+            for row_index, row in enumerate(rows):
+                if not isinstance(row, dict):
+                    register_missing(
+                        dataset_label,
+                        "runtime evidence row is not an object",
+                        dataset_label=dataset_label,
+                        row_index=row_index,
+                    )
+                    continue
+                for evidence_id in raw_evidence_ids:
+                    contract = evidence_by_column.get(evidence_id)
+                    if evidence_id not in row:
+                        if contract and contract.required:
+                            register_missing(
+                                evidence_id,
+                                "required evidence column is absent",
+                                dataset_label=dataset_label,
+                                row_index=row_index,
+                            )
+                        continue
+                    raw_value = row.get(evidence_id)
+                    available = True
+                    availability_column = (
+                        contract.availability_column if contract else None
+                    )
+                    availability_raw_value = None
+                    if availability_column:
+                        availability_raw_value = row.get(availability_column)
+                        available_value, recognized = (
+                            BaseExplanationStrategy._parse_triggered(
+                                availability_raw_value
+                            )
+                        )
+                        available = bool(available_value) if recognized else False
+                        if not recognized:
+                            register_missing(
+                                evidence_id,
+                                "availability evidence is not boolean-like",
+                                dataset_label=dataset_label,
+                                row_index=row_index,
+                                raw_value=raw_value,
+                                availability_column=availability_column,
+                                availability_raw_value=availability_raw_value,
+                            )
+                        elif not available:
+                            register_missing(
+                                evidence_id,
+                                "evidence is unavailable according to availability column",
+                                dataset_label=dataset_label,
+                                row_index=row_index,
+                                raw_value=raw_value,
+                                availability_column=availability_column,
+                                availability_raw_value=availability_raw_value,
+                            )
+
+                    normalized = parsed_value(raw_value)
+                    evidence_item_id = (
+                        f"ev-{dataset_label}-{row_index}-{evidence_id}"
+                    )
+                    item = {
+                        "evidence_item_id": evidence_item_id,
+                        "task_id": req.task_id,
+                        "dataset_label": dataset_label,
+                        "dataset_role": dataset_role,
+                        "row_index": row_index,
+                        "column": evidence_id,
+                        "raw_value": raw_value,
+                        "parsed_value": normalized,
+                        "unit": contract.unit if contract else None,
+                        "available": available and raw_value is not None,
+                        "sensitive": bool(contract.sensitive) if contract else False,
+                    }
+                    if availability_column:
+                        item["availability_column"] = availability_column
+                        item["availability_raw_value"] = availability_raw_value
+                    if contract and contract.semantic_alias:
+                        item["semantic_alias"] = contract.semantic_alias
+                    summary["evidence_items"].append(item)
+                    evidence_index.setdefault(evidence_id, []).append(item)
+
+                    if raw_value is None:
+                        register_missing(
+                            evidence_id,
+                            "evidence value is null",
+                            dataset_label=dataset_label,
+                            row_index=row_index,
+                        )
+
+        def first_available(evidence_id: str) -> dict | None:
+            return next(
+                (
+                    item for item in evidence_index.get(evidence_id, [])
+                    if item.get("available")
+                ),
+                None,
+            )
+
+        for derived in cfg.action_derived_evidence or []:
+            numerator = first_available(derived.numerator_column)
+            denominator = first_available(derived.denominator_column)
+            source_ids = [
+                item["evidence_item_id"]
+                for item in (numerator, denominator)
+                if item is not None
+            ]
+            value = None
+            reason = None
+            numerator_value = (
+                BaseExplanationStrategy._parse_number(
+                    numerator.get("parsed_value")
+                )
+                if numerator else None
+            )
+            denominator_value = (
+                BaseExplanationStrategy._parse_number(
+                    denominator.get("parsed_value")
+                )
+                if denominator else None
+            )
+            if numerator_value is None:
+                reason = f"derived numerator {derived.numerator_column} is missing"
+            elif denominator_value is None:
+                reason = (
+                    f"derived denominator {derived.denominator_column} is missing"
+                )
+            elif denominator_value == 0:
+                reason = "derived denominator is zero"
+            else:
+                value = round(numerator_value / denominator_value, 10)
+
+            derived_item = {
+                "evidence_item_id": f"ev-derived-{derived.evidence_id}",
+                "task_id": req.task_id,
+                "dataset_label": "derived",
+                "dataset_role": "derived_evidence",
+                "row_index": None,
+                "column": derived.evidence_id,
+                "raw_value": None,
+                "parsed_value": value,
+                "unit": derived.unit,
+                "available": value is not None,
+                "sensitive": False,
+                "operation": derived.operation,
+                "source_columns": [
+                    derived.numerator_column,
+                    derived.denominator_column,
+                ],
+                "source_evidence_item_ids": source_ids,
+            }
+            summary["evidence_items"].append(derived_item)
+            evidence_index.setdefault(derived.evidence_id, []).append(derived_item)
+            if reason:
+                register_missing(derived.evidence_id, reason)
+
+        def compare_values(left, operator: str, right=None) -> bool:
+            if operator == "is_present":
+                return left is not None and left != ""
+            if operator == "is_true":
+                parsed, recognized = BaseExplanationStrategy._parse_triggered(left)
+                return bool(parsed) if recognized else False
+            if left is None or right is None:
+                return False
+            try:
+                if operator == "eq":
+                    return left == right
+                if operator == "neq":
+                    return left != right
+                if operator == "gt":
+                    return left > right
+                if operator == "gte":
+                    return left >= right
+                if operator == "lt":
+                    return left < right
+                if operator == "lte":
+                    return left <= right
+            except TypeError:
+                return False
+            return False
+
+        def evaluate_condition(condition) -> dict:
+            candidate_items = evidence_index.get(condition.evidence_id, [])
+            available_items = [
+                item for item in candidate_items if item.get("available")
+            ]
+            blocked_by_unavailable = bool(candidate_items) and not available_items
+            result = {
+                "evidence_id": condition.evidence_id,
+                "operator": condition.operator,
+                "matched": False,
+                "evidence_item_ids": [],
+                "blocked_by_unavailable_evidence": blocked_by_unavailable,
+            }
+            if condition.compare_to_evidence_id:
+                result["compare_to_evidence_id"] = (
+                    condition.compare_to_evidence_id
+                )
+                right_item = first_available(condition.compare_to_evidence_id)
+                if right_item is None:
+                    register_missing(
+                        condition.compare_to_evidence_id,
+                        "rule comparison evidence is not available at runtime",
+                    )
+                    result["missing_evidence"] = [
+                        condition.compare_to_evidence_id
+                    ]
+                    return result
+                right_value = right_item.get("parsed_value")
+            else:
+                right_item = None
+                right_value = condition.value
+                if right_value is not None:
+                    right_value = parsed_value(right_value)
+
+            for item in available_items:
+                if compare_values(
+                    item.get("parsed_value"),
+                    condition.operator,
+                    right_value,
+                ):
+                    result["matched"] = True
+                    result["evidence_item_ids"].append(
+                        item["evidence_item_id"]
+                    )
+                    if right_item:
+                        result["evidence_item_ids"].append(
+                            right_item["evidence_item_id"]
+                        )
+                    break
+            if not available_items:
+                if not candidate_items:
+                    register_missing(
+                        condition.evidence_id,
+                        "rule evidence is not available at runtime",
+                    )
+                result["missing_evidence"] = [condition.evidence_id]
+            return result
+
+        def evaluate_trigger(trigger) -> dict:
+            all_results = [evaluate_condition(item) for item in trigger.all]
+            any_results = [evaluate_condition(item) for item in trigger.any]
+            all_match = all(item["matched"] for item in all_results)
+            any_match = (
+                True if not any_results
+                else any(item["matched"] for item in any_results)
+            )
+            relevant_any = (
+                [item for item in any_results if item["matched"]]
+                if any_match else any_results
+            )
+            relevant = [*all_results, *relevant_any]
+            evidence_ids = []
+            missing = []
+            for result in relevant:
+                evidence_ids.extend(result.get("evidence_item_ids", []))
+                missing.extend(result.get("missing_evidence", []))
+            return {
+                "matched": all_match and any_match,
+                "condition_results": {
+                    "all": all_results,
+                    "any": any_results,
+                },
+                "evidence_item_ids": list(dict.fromkeys(evidence_ids)),
+                "missing_evidence": list(dict.fromkeys(missing)),
+                "blocked_by_unavailable_evidence": any(
+                    item.get("blocked_by_unavailable_evidence")
+                    for item in [*all_results, *any_results]
+                ),
+            }
+
+        action_candidates = []
+        if cfg.action_source == "versioned_registry_rules":
+            for rule in cfg.action_rules or []:
+                evaluation = evaluate_trigger(rule.trigger)
+                rule_record = {
+                    "rule_id": rule.rule_id,
+                    "rule_version": cfg.action_rule_version,
+                    **evaluation,
+                }
+                summary["rule_evaluations"].append(rule_record)
+                if not evaluation["matched"]:
+                    continue
+                action = rule.action
+                provenance_complete = bool(
+                    evaluation["evidence_item_ids"]
+                    and set(cfg.provenance_required_fields or []).issubset(
+                        set(rule.provenance_requirements)
+                    )
+                )
+                if cfg.require_complete_action_provenance and not provenance_complete:
+                    summary["unsupported_actions"].append({
+                        "action_id": action.action_id,
+                        "rule_id": rule.rule_id,
+                        "reason": "incomplete_action_provenance",
+                    })
+                    continue
+                action_candidates.append({
+                    "action_id": action.action_id,
+                    "action_text": action.action_text,
+                    "priority": action.priority,
+                    "owner": action.owner,
+                    "time_horizon_days": action.time_horizon_days,
+                    "support_category": action.support_category,
+                    "claim_limits": list(action.claim_limits),
+                    "rule_id": rule.rule_id,
+                    "rule_ids": [rule.rule_id],
+                    "rule_version": cfg.action_rule_version,
+                    "evidence_item_ids": evaluation["evidence_item_ids"],
+                    "provenance_status": (
+                        "complete" if provenance_complete else "incomplete"
+                    ),
+                })
+        elif cfg.action_source == "candidate_action_columns":
+            for evidence_item in summary["evidence_items"]:
+                column = evidence_item["column"]
+                if (
+                    column not in (cfg.action_columns or [])
+                    or not evidence_item["available"]
+                ):
+                    continue
+                action_text = str(evidence_item["raw_value"]).strip()
+                if not action_text:
+                    continue
+                row = (
+                    (req.datasets or {})
+                    .get(evidence_item["dataset_label"], [])[evidence_item["row_index"]]
+                )
+                priority = (
+                    str(row.get(cfg.priority_column)).lower()
+                    if cfg.priority_column and row.get(cfg.priority_column) is not None
+                    else None
+                )
+                if priority not in priority_rank:
+                    priority = None
+                owner = (
+                    str(row.get(cfg.owner_column))
+                    if cfg.owner_column and row.get(cfg.owner_column) is not None
+                    else "unspecified"
+                )
+                horizon = (
+                    BaseExplanationStrategy._parse_number(
+                        row.get(cfg.time_horizon_column)
+                    )
+                    if cfg.time_horizon_column else None
+                )
+                action_candidates.append({
+                    "action_id": f"candidate-{column}-{evidence_item['row_index']}",
+                    "action_text": action_text,
+                    "priority": priority,
+                    "owner": owner,
+                    "time_horizon_days": int(horizon) if horizon is not None else None,
+                    "support_category": None,
+                    "claim_limits": [],
+                    "rule_id": None,
+                    "rule_ids": [],
+                    "rule_version": None,
+                    "evidence_item_ids": [evidence_item["evidence_item_id"]],
+                    "provenance_status": "complete",
+                })
+        else:
+            summary["unsupported_actions"].append({
+                "reason": "missing_action_source",
+                "detail": (
+                    "Input contains evidence signals but no candidate action "
+                    "columns or explicit versioned action rules."
+                ),
+            })
+
+        for conflict in cfg.action_conflict_rules or []:
+            evaluation = evaluate_trigger(conflict.when)
+            if evaluation["matched"]:
+                summary["conflicting_evidence"].append({
+                    "conflict_id": conflict.conflict_id,
+                    "behavior": conflict.behavior,
+                    "evidence_item_ids": evaluation["evidence_item_ids"],
+                    "warning": (
+                        "Conflicting evidence is preserved; actions must be "
+                        "phrased with uncertainty and must not hide this conflict."
+                    ),
+                })
+
+        deduplicated = {}
+        for candidate in action_candidates:
+            action_id = candidate["action_id"]
+            existing = deduplicated.get(action_id)
+            if existing is None:
+                deduplicated[action_id] = candidate
+                continue
+            if priority_rank[candidate["priority"]] > priority_rank[existing["priority"]]:
+                existing["priority"] = candidate["priority"]
+            if (
+                candidate["time_horizon_days"] is not None
+                and (
+                    existing["time_horizon_days"] is None
+                    or candidate["time_horizon_days"] < existing["time_horizon_days"]
+                )
+            ):
+                existing["time_horizon_days"] = candidate["time_horizon_days"]
+            existing["rule_ids"] = list(dict.fromkeys([
+                *existing["rule_ids"],
+                *candidate["rule_ids"],
+            ]))
+            existing["evidence_item_ids"] = list(dict.fromkeys([
+                *existing["evidence_item_ids"],
+                *candidate["evidence_item_ids"],
+            ]))
+            existing["claim_limits"] = list(dict.fromkeys([
+                *existing["claim_limits"],
+                *candidate["claim_limits"],
+            ]))
+
+        ordered_actions = sorted(
+            deduplicated.values(),
+            key=lambda item: (
+                -priority_rank.get(item["priority"], 0),
+                item["time_horizon_days"]
+                if item["time_horizon_days"] is not None else 10**9,
+                item["action_id"],
+            ),
+        )
+        max_actions = cfg.max_actions or len(ordered_actions)
+        summary["prioritized_actions"] = ordered_actions[:max_actions]
+        if len(ordered_actions) > max_actions:
+            summary["summarization_warnings"].append(
+                f"Prioritized actions capped at {max_actions} of "
+                f"{len(ordered_actions)} matched actions."
+            )
+
+        summary["action_evidence_links"] = [
+            {
+                "action_id": action["action_id"],
+                "rule_id": action["rule_id"],
+                "rule_ids": action["rule_ids"],
+                "rule_version": action["rule_version"],
+                "evidence_item_ids": action["evidence_item_ids"],
+                "provenance_status": action["provenance_status"],
+            }
+            for action in summary["prioritized_actions"]
+        ]
+
+        if not summary["prioritized_actions"] and not summary["unsupported_actions"]:
+            evaluations = summary["rule_evaluations"]
+            blocked = bool(evaluations) and all(
+                item.get("blocked_by_unavailable_evidence")
+                or item.get("missing_evidence")
+                for item in evaluations
+            )
+            summary["unsupported_actions"].append({
+                "reason": (
+                    "all_action_rules_blocked_by_missing_or_unavailable_evidence"
+                    if blocked else "no_action_rule_matched"
+                ),
+                "detail": (
+                    "No supported prioritized action could be produced from "
+                    "the available runtime evidence."
+                ),
+            })
+
+        sensitive_present = any(
+            item.get("sensitive") and item.get("raw_value") is not None
+            for item in summary["evidence_items"]
+        )
+        if sensitive_present:
+            summary["summarization_warnings"].append(
+                "Sensitive/background evidence is preserved for audit only "
+                "and was not used to trigger actions."
+            )
+        if summary["conflicting_evidence"]:
+            summary["summarization_warnings"].append(
+                "Conflicting evidence was detected and must remain visible in "
+                "the generated explanation."
+            )
+        summary["summarization_warnings"].append(
+            "The LLM may paraphrase prioritized_actions but must not invent "
+            "new actions or rules."
+        )
+        return summary
+
+    @staticmethod
     def _summarize_trend_comparison(req: ExplainRequest) -> dict:
         cfg = req.ai_summary_config
         dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
@@ -826,6 +1685,13 @@ CRITICAL RULES:
         if not rows:
             summary["summarization_warnings"].append("Primary dataset is empty.")
             return summary
+
+        if cfg and cfg.dynamic_comparison_groups:
+            return BaseExplanationStrategy._summarize_dynamic_trend_comparison(
+                cfg=cfg,
+                dataset_name=dataset_name,
+                rows=rows,
+            )
 
         required = [
             cfg.group_column if cfg else None,
@@ -927,6 +1793,293 @@ CRITICAL RULES:
             comparison.pop("reliability_warnings", None)
             summary["comparison_trends"][str(group)] = comparison
 
+        return summary
+
+    @staticmethod
+    def _summarize_dynamic_trend_comparison(
+        *,
+        cfg,
+        dataset_name: str | None,
+        rows: list[dict],
+    ) -> dict:
+        group_col = cfg.group_column
+        time_col = cfg.time_column
+        metric_col = cfg.metric_column
+        alignment_cols = list(cfg.comparison_alignment_columns or [])
+        threshold = float(cfg.divergence_threshold)
+        max_points = cfg.max_points or 50
+
+        summary = {
+            "summary_type": "trend_comparison",
+            "dataset_name": dataset_name,
+            "row_count": len(rows),
+            "dynamic_comparison_groups": True,
+            "group_column": group_col,
+            "time_column": time_col,
+            "metric_column": metric_col,
+            "alignment_columns": alignment_cols,
+            "divergence_threshold": threshold,
+            "available_groups": [],
+            "evidence_status": "sufficient_evidence",
+            "group_trends": {},
+            "pairwise_comparison": None,
+            "missing_group_evidence": [],
+            "summarization_warnings": [],
+        }
+
+        groups: dict[str, list[dict]] = {}
+        invalid_rows = 0
+        for row_index, row in enumerate(rows):
+            if not isinstance(row, dict):
+                invalid_rows += 1
+                continue
+            group_value = row.get(group_col)
+            time_value = BaseExplanationStrategy._parse_number(
+                row.get(time_col)
+            )
+            metric_value = BaseExplanationStrategy._parse_number(
+                row.get(metric_col)
+            )
+            if group_value is None or time_value is None or metric_value is None:
+                invalid_rows += 1
+                continue
+            normalized = dict(row)
+            normalized["_ai_row_index"] = row_index
+            normalized["_ai_time_value"] = time_value
+            normalized["_ai_metric_value"] = metric_value
+            groups.setdefault(str(group_value), []).append(normalized)
+
+        available_groups = sorted(groups)
+        summary["available_groups"] = available_groups
+        if invalid_rows:
+            summary["summarization_warnings"].append(
+                f"Skipped {invalid_rows} rows missing a valid group, "
+                f"{time_col}, or {metric_col} value."
+            )
+
+        minimum_groups = max(int(cfg.minimum_entity_count or 2), 2)
+        if len(available_groups) < minimum_groups:
+            summary["evidence_status"] = "insufficient_evidence"
+            summary["missing_group_evidence"].append({
+                "required_group_count": minimum_groups,
+                "observed_group_count": len(available_groups),
+                "observed_groups": available_groups,
+            })
+            summary["summarization_warnings"].append(
+                "Dynamic trend comparison requires at least two observed "
+                "groups; do not infer a pairwise trajectory difference."
+            )
+
+        def alignment_value(row: dict, column: str):
+            value = row.get(column)
+            numeric = BaseExplanationStrategy._parse_number(value)
+            return numeric if numeric is not None else value
+
+        def alignment_key(row: dict) -> tuple:
+            return tuple(
+                alignment_value(row, column) for column in alignment_cols
+            )
+
+        def alignment_sort_key(key: tuple) -> tuple:
+            result = []
+            for value in key:
+                if isinstance(value, (int, float)):
+                    result.append((0, float(value)))
+                elif value is None:
+                    result.append((2, ""))
+                else:
+                    result.append((1, str(value)))
+            return tuple(result)
+
+        def point(row: dict) -> dict:
+            item = {
+                column: BaseExplanationStrategy._clean_number(row.get(column))
+                for column in alignment_cols
+            }
+            item[metric_col] = round(row["_ai_metric_value"], 4)
+            item["source_row_index"] = row["_ai_row_index"]
+            return item
+
+        def change(previous: dict, current: dict) -> dict:
+            return {
+                "from": point(previous),
+                "to": point(current),
+                "delta": round(
+                    current["_ai_metric_value"]
+                    - previous["_ai_metric_value"],
+                    4,
+                ),
+            }
+
+        for group_name in available_groups:
+            group_rows = groups[group_name]
+            group_rows.sort(
+                key=lambda row: (
+                    alignment_sort_key(alignment_key(row)),
+                    row["_ai_row_index"],
+                )
+            )
+            changes = [
+                change(group_rows[index - 1], group_rows[index])
+                for index in range(1, len(group_rows))
+            ]
+            drops = [item for item in changes if item["delta"] < 0]
+            rises = [item for item in changes if item["delta"] > 0]
+            peak = max(group_rows, key=lambda row: row["_ai_metric_value"])
+            trough = min(group_rows, key=lambda row: row["_ai_metric_value"])
+            series_points = [point(row) for row in group_rows[:max_points]]
+            group_summary = {
+                "group": group_name,
+                "point_count": len(group_rows),
+                "series_points": series_points,
+                "first_point": point(group_rows[0]),
+                "last_point": point(group_rows[-1]),
+                "net_change": round(
+                    group_rows[-1]["_ai_metric_value"]
+                    - group_rows[0]["_ai_metric_value"],
+                    4,
+                ),
+                "peak": point(peak),
+                "trough": point(trough),
+                "largest_adjacent_drop": (
+                    min(drops, key=lambda item: item["delta"])
+                    if drops else None
+                ),
+                "largest_adjacent_rise": (
+                    max(rises, key=lambda item: item["delta"])
+                    if rises else None
+                ),
+            }
+            if len(group_rows) > max_points:
+                group_summary["series_truncated_count"] = (
+                    len(group_rows) - max_points
+                )
+                summary["summarization_warnings"].append(
+                    f"Group '{group_name}' series was capped at "
+                    f"{max_points} points."
+                )
+            summary["group_trends"][group_name] = group_summary
+
+        if len(available_groups) < 2:
+            return summary
+
+        compared_groups = available_groups[:2]
+        if len(available_groups) > 2:
+            summary["summarization_warnings"].append(
+                "More than two dynamic groups were observed; pairwise evidence "
+                f"uses the first two deterministic groups: {compared_groups}."
+            )
+
+        indexed: dict[str, dict[tuple, list[dict]]] = {}
+        for group_name in compared_groups:
+            by_key: dict[tuple, list[dict]] = {}
+            for row in groups[group_name]:
+                by_key.setdefault(alignment_key(row), []).append(row)
+            indexed[group_name] = by_key
+
+        left_group, right_group = compared_groups
+        left_keys = set(indexed[left_group])
+        right_keys = set(indexed[right_group])
+        shared_keys = sorted(
+            left_keys.intersection(right_keys),
+            key=alignment_sort_key,
+        )
+
+        def aggregate(group_name: str, key: tuple) -> dict:
+            source_rows = indexed[group_name][key]
+            values = [row["_ai_metric_value"] for row in source_rows]
+            return {
+                "value": round(sum(values) / len(values), 4),
+                "source_values": [round(value, 4) for value in values],
+                "source_row_indexes": [
+                    row["_ai_row_index"] for row in source_rows
+                ],
+                "duplicate_count": len(source_rows),
+            }
+
+        gap_series = []
+        for key in shared_keys:
+            left = aggregate(left_group, key)
+            right = aggregate(right_group, key)
+            gap = round(left["value"] - right["value"], 4)
+            gap_series.append({
+                "alignment": {
+                    column: BaseExplanationStrategy._clean_number(value)
+                    for column, value in zip(alignment_cols, key)
+                },
+                "group_values": {
+                    left_group: left,
+                    right_group: right,
+                },
+                "gap": gap,
+                "absolute_gap": round(abs(gap), 4),
+            })
+
+        first_divergence = next(
+            (
+                item for item in gap_series
+                if item["absolute_gap"] >= threshold
+            ),
+            None,
+        )
+        largest_gap = (
+            max(gap_series, key=lambda item: item["absolute_gap"])
+            if gap_series else None
+        )
+
+        net_change_by_group = {}
+        faster_group = None
+        comparison_warnings = []
+        if len(gap_series) >= 2:
+            for group_name in compared_groups:
+                first_value = gap_series[0]["group_values"][group_name]["value"]
+                last_value = gap_series[-1]["group_values"][group_name]["value"]
+                net_change_by_group[group_name] = round(
+                    last_value - first_value,
+                    4,
+                )
+            left_change = net_change_by_group[left_group]
+            right_change = net_change_by_group[right_group]
+            if left_change == right_change:
+                faster_group = "tie"
+            else:
+                faster_group = (
+                    left_group if left_change > right_change else right_group
+                )
+        else:
+            comparison_warnings.append(
+                "Fewer than two shared aligned points; faster improvement "
+                "cannot be determined."
+            )
+
+        if not gap_series:
+            summary["evidence_status"] = "insufficient_evidence"
+            comparison_warnings.append(
+                "The observed groups have no shared alignment keys."
+            )
+
+        summary["pairwise_comparison"] = {
+            "groups": compared_groups,
+            "shared_point_count": len(gap_series),
+            "unmatched_point_count_by_group": {
+                left_group: sum(
+                    len(indexed[left_group][key])
+                    for key in left_keys.difference(right_keys)
+                ),
+                right_group: sum(
+                    len(indexed[right_group][key])
+                    for key in right_keys.difference(left_keys)
+                ),
+            },
+            "gap_series": gap_series,
+            "first_shared_point": gap_series[0] if gap_series else None,
+            "last_shared_point": gap_series[-1] if gap_series else None,
+            "first_divergence": first_divergence,
+            "largest_absolute_gap": largest_gap,
+            "net_change_by_group": net_change_by_group,
+            "faster_improving_group": faster_group,
+            "comparison_warnings": comparison_warnings,
+        }
         return summary
 
     @staticmethod
@@ -1446,7 +2599,6 @@ CRITICAL RULES:
     @staticmethod
     def _summarize_trend_series(req: ExplainRequest) -> dict:
         cfg = req.ai_summary_config
-        dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
 
         time_col = cfg.time_column if cfg else None
         metric_col = cfg.metric_column if cfg else None
@@ -1454,8 +2606,33 @@ CRITICAL RULES:
         flag_cols = list(cfg.flag_columns or []) if cfg else []
         action_cols = list(cfg.action_columns or []) if cfg else []
         label_cols = list(cfg.label_columns or []) if cfg else []
+        dataset_roles = dict(cfg.evidence_dataset_roles or {}) if cfg else {}
+        primary_role_names = {
+            "primary_series",
+            "primary_trend",
+            "trend_series",
+            "primary_evidence",
+        }
+        dataset_name = None
+        rows = []
+        for label in req.query_labels or []:
+            if dataset_roles.get(label) in primary_role_names:
+                candidate = (req.datasets or {}).get(label)
+                if isinstance(candidate, list):
+                    dataset_name, rows = label, candidate
+                    break
+        if dataset_name is None:
+            for label, role in dataset_roles.items():
+                if role in primary_role_names:
+                    candidate = (req.datasets or {}).get(label)
+                    if isinstance(candidate, list):
+                        dataset_name, rows = label, candidate
+                        break
+        if dataset_name is None:
+            dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
         max_points = cfg.max_points if cfg and cfg.max_points else 30
         sort_desc = str(cfg.sort_direction or "asc").lower() == "desc" if cfg else False
+        minimum_sample_size = cfg.minimum_sample_size if cfg else None
 
         summary = {
             "summary_type": "trend_series",
@@ -1463,6 +2640,17 @@ CRITICAL RULES:
             "row_count": len(rows),
             "time_column": time_col,
             "metric_column": metric_col,
+            "metric_units": {
+                column: unit
+                for column, unit in (cfg.metric_units or {}).items()
+                if column in {metric_col, *secondary_cols}
+            } if cfg else {},
+            "metric_directions": {
+                column: direction
+                for column, direction in (cfg.metric_directions or {}).items()
+                if column in {metric_col, *secondary_cols}
+            } if cfg else {},
+            "dataset_roles": dataset_roles,
             "point_count": 0,
             "first_point": None,
             "last_point": None,
@@ -1473,9 +2661,45 @@ CRITICAL RULES:
             "largest_adjacent_rise": None,
             "flagged_points": [],
             "secondary_metric_evidence": {},
+            "secondary_metric_associations": {},
+            "multi_dataset_evidence": [],
+            "small_sample_caveats": [],
+            "causal_claim_allowed": False,
             "action_evidence": [],
             "summarization_warnings": [],
         }
+
+        for label, other_rows in (req.datasets or {}).items():
+            if label == dataset_name or not isinstance(other_rows, list):
+                continue
+            dict_other_rows = [row for row in other_rows if isinstance(row, dict)]
+            columns = []
+            for row in dict_other_rows:
+                for column in row:
+                    if column not in columns:
+                        columns.append(column)
+            numeric_stats = {}
+            for column in columns[:20]:
+                values = [
+                    BaseExplanationStrategy._parse_number(row.get(column))
+                    for row in dict_other_rows
+                ]
+                values = [value for value in values if value is not None]
+                if values:
+                    numeric_stats[column] = {
+                        "count": len(values),
+                        "min": round(min(values), 4),
+                        "max": round(max(values), 4),
+                        "avg": round(sum(values) / len(values), 4),
+                    }
+            summary["multi_dataset_evidence"].append({
+                "dataset_name": label,
+                "role": dataset_roles.get(label, "context_evidence"),
+                "row_count": len(other_rows),
+                "columns": columns[:30],
+                "first_row": dict_other_rows[0] if dict_other_rows else None,
+                "numeric_stats": numeric_stats,
+            })
 
         if not rows:
             summary["summarization_warnings"].append("Primary dataset is empty.")
@@ -1592,6 +2816,24 @@ CRITICAL RULES:
         points.sort(key=lambda point: point["_time_value"], reverse=sort_desc)
         summary["point_count"] = len(points)
 
+        min_sample_value = (
+            BaseExplanationStrategy._parse_number(minimum_sample_size)
+            if minimum_sample_size is not None
+            else None
+        )
+        if min_sample_value is not None and len(points) < min_sample_value:
+            caveat = {
+                "point_count": len(points),
+                "minimum_sample_size": round(min_sample_value, 4),
+                "warning": (
+                    f"Only {len(points)} trend points are available; treat "
+                    "secondary associations as descriptive, not causal or "
+                    "statistically reliable."
+                ),
+            }
+            summary["small_sample_caveats"].append(caveat)
+            summary["summarization_warnings"].append(caveat["warning"])
+
         def public_point(point: dict, include_flags: bool = False) -> dict:
             result = {
                 time_col: point[time_col],
@@ -1682,6 +2924,61 @@ CRITICAL RULES:
                     }
         summary["secondary_metric_evidence"] = secondary_evidence
 
+        associations = {}
+        for column in secondary_cols:
+            pairs = []
+            for point in points:
+                secondary_value = BaseExplanationStrategy._parse_number(
+                    point["secondary_metrics"].get(column)
+                )
+                if secondary_value is None:
+                    continue
+                pairs.append((point["_metric_value"], secondary_value))
+            if len(pairs) >= 2:
+                x_values = [item[0] for item in pairs]
+                y_values = [item[1] for item in pairs]
+                mean_x = sum(x_values) / len(x_values)
+                mean_y = sum(y_values) / len(y_values)
+                numerator = sum(
+                    (x - mean_x) * (y - mean_y)
+                    for x, y in zip(x_values, y_values)
+                )
+                denom_x = sum((x - mean_x) ** 2 for x in x_values)
+                denom_y = sum((y - mean_y) ** 2 for y in y_values)
+                correlation = None
+                if denom_x > 0 and denom_y > 0:
+                    correlation = numerator / ((denom_x * denom_y) ** 0.5)
+                associations[column] = {
+                    "paired_point_count": len(pairs),
+                    "method": "pearson_on_aligned_points",
+                    "correlation": (
+                        round(correlation, 4)
+                        if correlation is not None
+                        else None
+                    ),
+                    "claim_limit": (
+                        "descriptive_association_only; do not infer causality "
+                        "or statistical significance"
+                    ),
+                    "small_sample": (
+                        bool(min_sample_value is not None and len(points) < min_sample_value)
+                    ),
+                }
+            else:
+                categorical_pairs = [
+                    point["secondary_metrics"].get(column)
+                    for point in points
+                    if column in point["secondary_metrics"]
+                ]
+                if categorical_pairs:
+                    associations[column] = {
+                        "paired_point_count": len(categorical_pairs),
+                        "method": "non_numeric_values_preserved",
+                        "correlation": None,
+                        "claim_limit": "descriptive_context_only",
+                    }
+        summary["secondary_metric_associations"] = associations
+
         action_evidence = []
         seen_actions = set()
         for point in [
@@ -1734,6 +3031,12 @@ CRITICAL RULES:
         coefficient_method = str((cfg.coefficient_method if cfg else None) or "pearson").lower()
         sample_size_col = cfg.sample_size_column if cfg else None
         p_value_col = cfg.p_value_column if cfg else None
+        selected_col = cfg.selected_entity_column if cfg else None
+        label_cols = list(cfg.label_columns or []) if cfg else []
+        sensitive_cols = list(cfg.sensitive_columns or []) if cfg else []
+        metric_units = dict(cfg.metric_units or {}) if cfg else {}
+        metric_directions = dict(cfg.metric_directions or {}) if cfg else {}
+        sensitive_context_policy = cfg.sensitive_context_policy if cfg else None
         outlier_policy = str((cfg.outlier_policy if cfg else None) or "").lower()
         min_sample_value = BaseExplanationStrategy._parse_number(
             cfg.minimum_sample_size if cfg and cfg.minimum_sample_size is not None else 30
@@ -1750,12 +3053,27 @@ CRITICAL RULES:
             "x_column": x_col,
             "y_column": y_col,
             "entity_column": entity_col,
+            "selected_entity_column": selected_col,
+            "metric_units": {
+                column: unit
+                for column, unit in metric_units.items()
+                if column in {x_col, y_col}
+            },
+            "metric_directions": {
+                column: direction
+                for column, direction in metric_directions.items()
+                if column in {x_col, y_col}
+            },
             "coefficient": None,
             "coefficient_method": coefficient_method,
             "coefficient_source": "unavailable",
             "sample_size": 0,
             "p_value": None,
             "outliers": [],
+            "selected_entity_evidence": [],
+            "missing_selected_entity_evidence": [],
+            "selected_entity_count": 0,
+            "sensitive_context_policy": sensitive_context_policy,
             "direction": "unknown",
             "strength": None,
             "strength_claim_allowed": False,
@@ -1810,6 +3128,9 @@ CRITICAL RULES:
             (coefficient_col, "coefficient_column"),
             (sample_size_col, "sample_size_column"),
             (p_value_col, "p_value_column"),
+            (selected_col, "selected_entity_column"),
+            *[(column, "label_column") for column in label_cols],
+            *[(column, "sensitive_column") for column in sensitive_cols],
         ]:
             if column and column not in available_columns:
                 summary["summarization_warnings"].append(
@@ -2015,6 +3336,108 @@ CRITICAL RULES:
             else:
                 add_statistical_warning(f"Unknown outlier policy '{outlier_policy}'; no outliers emitted.")
 
+        if selected_col:
+            selected_rows = []
+            unrecognized_selected_values = 0
+            for index, row in enumerate(dict_rows):
+                if selected_col not in row:
+                    continue
+                selected_value, recognized = BaseExplanationStrategy._parse_triggered(
+                    row.get(selected_col)
+                )
+                if selected_value is True:
+                    selected_rows.append((index, row))
+                elif not recognized and row.get(selected_col) is not None:
+                    unrecognized_selected_values += 1
+
+            if unrecognized_selected_values:
+                add_parse_warning(
+                    f"Found {unrecognized_selected_values} unrecognized {selected_col} values; selected entity preservation only uses recognized true values."
+                )
+
+            summary["selected_entity_count"] = len(selected_rows)
+            coefficient_context = {
+                "coefficient": summary["coefficient"],
+                "coefficient_method": summary["coefficient_method"],
+                "coefficient_source": summary["coefficient_source"],
+                "sample_size": summary["sample_size"],
+                "direction": summary["direction"],
+                "strength": summary["strength"],
+                "strength_claim_allowed": summary["strength_claim_allowed"],
+                "significance_claim_allowed": summary["significance_claim_allowed"],
+                "causal_claim_allowed": summary["causal_claim_allowed"],
+            }
+
+            for index, row in selected_rows[:10]:
+                x_value = BaseExplanationStrategy._parse_number(row.get(x_col))
+                y_value = BaseExplanationStrategy._parse_number(row.get(y_col))
+                item = {
+                    "row_index": index,
+                    "selected_column": selected_col,
+                    "selected_value": row.get(selected_col),
+                    "is_valid_pair": x_value is not None and y_value is not None,
+                    "raw_values": {
+                        x_col: row.get(x_col),
+                        y_col: row.get(y_col),
+                    },
+                    x_col: round(x_value, 4) if x_value is not None else None,
+                    y_col: round(y_value, 4) if y_value is not None else None,
+                    "cohort_context": coefficient_context,
+                }
+                if entity_col and entity_col in row:
+                    item[entity_col] = row.get(entity_col)
+                if color_col and color_col in row:
+                    item[color_col] = row.get(color_col)
+
+                label_context = {
+                    column: row.get(column)
+                    for column in label_cols
+                    if column in row and row.get(column) is not None
+                }
+                percentile_context = {
+                    column: row.get(column)
+                    for column in row
+                    if (
+                        "percentile" in str(column).lower()
+                        or str(column).lower().startswith("cohort_avg")
+                    )
+                    and row.get(column) is not None
+                }
+                sensitive_context = {
+                    column: row.get(column)
+                    for column in sensitive_cols
+                    if column in row and row.get(column) is not None
+                }
+                if label_context:
+                    item["label_context"] = label_context
+                if percentile_context:
+                    item["percentile_context"] = percentile_context
+                if sensitive_context:
+                    item["sensitive_context"] = sensitive_context
+                    item["sensitive_context_policy"] = (
+                        sensitive_context_policy or "descriptive_only"
+                    )
+                    item["claim_limit"] = (
+                        "Sensitive/background context is descriptive only; "
+                        "do not infer causality or prescribe actions from it."
+                    )
+
+                summary["selected_entity_evidence"].append(item)
+
+            if len(selected_rows) > 10:
+                summary["summarization_warnings"].append(
+                    f"Selected entity evidence capped at 10 of {len(selected_rows)} rows."
+                )
+            if not selected_rows:
+                missing = {
+                    "selected_entity_column": selected_col,
+                    "reason": "no rows had a recognized true selected marker",
+                }
+                summary["missing_selected_entity_evidence"].append(missing)
+                summary["summarization_warnings"].append(
+                    "Selected entity evidence is missing: no rows had a recognized true selected marker."
+                )
+
         return summary
 
     @staticmethod
@@ -2023,6 +3446,8 @@ CRITICAL RULES:
         dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
 
         group_col = cfg.group_column if cfg else None
+        group_key_cols = list(cfg.group_key_columns or []) if cfg else []
+        series_col = cfg.series_column if cfg else None
         metric_col = cfg.metric_column if cfg else None
         count_col = cfg.count_column if cfg else None
         gap_col = cfg.gap_column if cfg else None
@@ -2044,10 +3469,15 @@ CRITICAL RULES:
             "dataset_name": dataset_name,
             "row_count": len(rows),
             "group_column": group_col,
+            "group_key_columns": group_key_cols,
+            "series_column": series_col,
+            "composite_group_keys": bool(group_key_cols),
             "metric_column": metric_col,
             "count_column": count_col,
             "gap_column": gap_col,
             "group_metrics": [],
+            "group_series": [],
+            "focus_summary": [],
             "gaps": [],
             "dominant_group": None,
             "weakest_group": None,
@@ -2074,13 +3504,13 @@ CRITICAL RULES:
             available_columns.update(row.keys())
 
         missing_required = []
-        if not group_col:
-            missing_required.append("group_column")
+        if not group_col and not group_key_cols:
+            missing_required.append("group_column or group_key_columns")
         if not metric_col:
             missing_required.append("metric_column")
         if not count_col:
             missing_required.append("count_column")
-        for column in (group_col, metric_col, count_col):
+        for column in (group_col, metric_col, count_col, series_col, *group_key_cols):
             if column and column not in available_columns:
                 missing_required.append(column)
 
@@ -2105,8 +3535,23 @@ CRITICAL RULES:
         entries = []
 
         for index, row in enumerate(dict_rows):
-            group_value = row.get(group_col)
-            group_key = str(group_value)
+            group_value = row.get(group_col) if group_col else None
+            group_key_values = {}
+            for column in group_key_cols:
+                group_key_values[column] = row.get(column)
+            if group_key_cols:
+                group_key_parts = [
+                    f"{column}={group_key_values.get(column)}"
+                    for column in group_key_cols
+                ]
+                group_key = " | ".join(group_key_parts)
+                composite_group_label = group_key
+                if group_value is None:
+                    group_value = composite_group_label
+            else:
+                group_key = str(group_value)
+                composite_group_label = None
+            series_value = row.get(series_col) if series_col else None
             count_value = BaseExplanationStrategy._parse_number(row.get(count_col))
             metric_value = BaseExplanationStrategy._parse_number(row.get(metric_col))
             if count_value is None:
@@ -2136,6 +3581,9 @@ CRITICAL RULES:
             entries.append({
                 "group": group_value,
                 "group_key": group_key,
+                "group_key_values": group_key_values,
+                "composite_group_label": composite_group_label,
+                "series_value": series_value,
                 "count": round(count_value, 4),
                 "metric": round(metric_value, 4),
                 "secondary_metrics": secondary_metrics,
@@ -2225,6 +3673,12 @@ CRITICAL RULES:
                 count_col: entry["count"],
                 metric_col: entry["metric"],
             }
+            if entry["group_key_values"]:
+                item["group_key_values"] = entry["group_key_values"]
+            if entry["composite_group_label"] is not None:
+                item["composite_group_label"] = entry["composite_group_label"]
+            if series_col and entry["series_value"] is not None:
+                item["series_value"] = entry["series_value"]
             if entry["gap"] is not None:
                 item["gap"] = entry["gap"]
                 item["gap_basis"] = entry["gap_basis"]
@@ -2240,6 +3694,100 @@ CRITICAL RULES:
             summary["summarization_warnings"].append(
                 f"Group metrics capped at 40 of {len(group_metrics)} groups."
             )
+
+        if group_key_cols and group_col:
+            series_by_group = {}
+            for entry in entries:
+                base_key = str(entry["group"])
+                record = series_by_group.setdefault(
+                    base_key,
+                    {
+                        "group": entry["group"],
+                        "total_count": 0.0,
+                        "_weighted_metric_sum": 0.0,
+                        "_row_indexes": [],
+                        "series": [],
+                    },
+                )
+                record["total_count"] += entry["_count_value"]
+                record["_weighted_metric_sum"] += (
+                    entry["_metric_value"] * entry["_count_value"]
+                )
+                record["_row_indexes"].append(entry["_row_index"])
+                record["series"].append(public_group_metric(entry))
+
+            group_series = []
+            for record in series_by_group.values():
+                total_count = record["total_count"]
+                average_metric = (
+                    record["_weighted_metric_sum"] / total_count
+                    if total_count > 0
+                    else None
+                )
+                public_record = {
+                    "group": record["group"],
+                    "series_count": len(record["series"]),
+                    "total_count": round(total_count, 4),
+                    "weighted_average_metric": (
+                        round(average_metric, 4)
+                        if average_metric is not None
+                        else None
+                    ),
+                    "series": sorted(
+                        record["series"],
+                        key=lambda item: str(item.get("series_value", item.get("composite_group_label", ""))),
+                    ),
+                    "_first_row_index": min(record["_row_indexes"]),
+                }
+                group_series.append(public_record)
+            group_series.sort(
+                key=lambda item: (-item["total_count"], item["_first_row_index"])
+            )
+            for item in group_series:
+                item.pop("_first_row_index", None)
+            summary["group_series"] = group_series[:40]
+            if len(group_series) > 40:
+                summary["summarization_warnings"].append(
+                    f"Group series capped at 40 of {len(group_series)} groups."
+                )
+
+            focus_categories = {str(item) for item in (cfg.focus_categories or [])}
+            if series_col and focus_categories:
+                focus_summary = []
+                for record in group_series:
+                    focus_items = [
+                        item for item in record["series"]
+                        if str(item.get("series_value")) in focus_categories
+                    ]
+                    focus_metric_total = 0.0
+                    focus_count_total = 0.0
+                    for item in focus_items:
+                        parsed_metric = BaseExplanationStrategy._parse_number(
+                            item.get(metric_col)
+                        )
+                        parsed_count = BaseExplanationStrategy._parse_number(
+                            item.get(count_col)
+                        )
+                        if parsed_metric is not None:
+                            focus_metric_total += parsed_metric
+                        if parsed_count is not None:
+                            focus_count_total += parsed_count
+                    focus_summary.append({
+                        "group": record["group"],
+                        "focus_categories": sorted(focus_categories),
+                        "focus_metric_total": round(focus_metric_total, 4),
+                        "focus_count_total": round(focus_count_total, 4),
+                        "metric_column": metric_col,
+                        "count_column": count_col,
+                    })
+                focus_summary.sort(
+                    key=lambda item: (
+                        -item["focus_metric_total"],
+                        -item["focus_count_total"],
+                        str(item["group"]),
+                    )
+                )
+                summary["focus_summary"] = focus_summary[:40]
 
         dominant = max(entries, key=lambda entry: (entry["_count_value"], -entry["_row_index"]))
         summary["dominant_group"] = {
@@ -2308,6 +3856,896 @@ CRITICAL RULES:
 
         if summary["fairness_warnings"]:
             summary["summarization_warnings"].append(summary["fairness_warnings"][0])
+
+        return summary
+
+    @staticmethod
+    def _summarize_metric_snapshot(req: ExplainRequest) -> dict:
+        cfg = req.ai_summary_config
+        dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
+
+        metric_cols = list(cfg.metric_columns or []) if cfg else []
+        status_cols = list(cfg.status_columns or []) if cfg else []
+        threshold_cols = list(cfg.threshold_columns or []) if cfg else []
+        benchmark_cols = list(cfg.benchmark_columns or []) if cfg else []
+        sensitive_cols = list(cfg.sensitive_columns or []) if cfg else []
+        label_cols = list(cfg.label_columns or []) if cfg else []
+        flag_cols = list(cfg.flag_columns or []) if cfg else []
+        action_cols = list(cfg.action_columns or []) if cfg else []
+        entity_col = cfg.entity_column if cfg else None
+        metric_units = dict(cfg.metric_units or {}) if cfg else {}
+        metric_availability_cols = (
+            dict(cfg.metric_availability_columns or {}) if cfg else {}
+        )
+        threshold_sources = dict(cfg.threshold_sources or {}) if cfg else {}
+        benchmark_sources = dict(cfg.benchmark_sources or {}) if cfg else {}
+        sensitive_policy = cfg.sensitive_context_policy if cfg else None
+
+        summary = {
+            "summary_type": "metric_snapshot",
+            "dataset_name": dataset_name,
+            "row_count": len(rows),
+            "entity": None,
+            "metric_snapshot": {},
+            "status_evidence": {},
+            "threshold_evidence": {},
+            "benchmark_evidence": {},
+            "label_evidence": {},
+            "flag_evidence": {},
+            "action_evidence": {},
+            "missing_evidence": [],
+            "sensitive_context_present": False,
+            "sensitive_context": {},
+            "validation_metadata": {
+                "status": "pending",
+                "configured_metric_columns": metric_cols,
+                "configured_status_columns": status_cols,
+                "configured_threshold_columns": threshold_cols,
+                "configured_benchmark_columns": benchmark_cols,
+                "configured_sensitive_columns": sensitive_cols,
+                "metric_availability_columns": metric_availability_cols,
+                "metric_units": metric_units,
+                "threshold_sources": threshold_sources,
+                "benchmark_sources": benchmark_sources,
+                "sensitive_context_policy": sensitive_policy,
+                "missing_required_columns": [],
+                "missing_unit_metadata": [],
+                "missing_threshold_sources": [],
+                "missing_benchmark_sources": [],
+                "errors": [],
+            },
+            "evidence_status": "pending",
+            "causal_claim_allowed": False,
+            "summarization_warnings": [],
+        }
+
+        if not rows:
+            summary["validation_metadata"]["status"] = "not_evaluated"
+            summary["evidence_status"] = "insufficient_evidence"
+            summary["summarization_warnings"].append("Primary dataset is empty.")
+            return summary
+
+        if len(rows) != 1:
+            summary["validation_metadata"]["status"] = "failed"
+            summary["evidence_status"] = "not_evaluated"
+            error = (
+                "metric_snapshot requires exactly one primary dataset row; "
+                f"observed {len(rows)}."
+            )
+            summary["validation_metadata"]["errors"].append(error)
+            summary["summarization_warnings"].append(error)
+            return summary
+
+        row = rows[0]
+        if not isinstance(row, dict):
+            summary["validation_metadata"]["status"] = "failed"
+            summary["evidence_status"] = "not_evaluated"
+            error = "metric_snapshot requires the primary row to be an object."
+            summary["validation_metadata"]["errors"].append(error)
+            summary["summarization_warnings"].append(error)
+            return summary
+
+        available_columns = set(row.keys())
+        errors = summary["validation_metadata"]["errors"]
+
+        if not metric_cols:
+            errors.append("metric_columns must contain at least one column")
+
+        primary_roles = {
+            "metric": metric_cols,
+            "status": status_cols,
+            "threshold": threshold_cols,
+            "benchmark": benchmark_cols,
+            "label": label_cols,
+            "flag": flag_cols,
+            "action": action_cols,
+        }
+        role_by_column = {}
+        duplicate_roles = []
+        for role, columns in primary_roles.items():
+            for column in columns:
+                previous = role_by_column.get(column)
+                if previous and previous != role:
+                    duplicate_roles.append(f"{column} ({previous}, {role})")
+                else:
+                    role_by_column[column] = role
+        if duplicate_roles:
+            errors.append(
+                "columns configured with multiple primary roles: "
+                + ", ".join(duplicate_roles)
+            )
+
+        missing_required = []
+        if entity_col and entity_col not in available_columns:
+            missing_required.append(entity_col)
+        for column in metric_cols:
+            if column not in available_columns:
+                missing_required.append(column)
+        summary["validation_metadata"]["missing_required_columns"] = (
+            missing_required
+        )
+        if missing_required:
+            errors.append(
+                "required columns missing: " + ", ".join(missing_required)
+            )
+
+        unit_targets = [*metric_cols, *threshold_cols, *benchmark_cols]
+        if cfg and cfg.require_metric_units:
+            missing_units = [
+                column
+                for column in unit_targets
+                if not isinstance(metric_units.get(column), str)
+                or not metric_units.get(column).strip()
+            ]
+            summary["validation_metadata"]["missing_unit_metadata"] = missing_units
+            if missing_units:
+                errors.append("metric_units missing: " + ", ".join(missing_units))
+
+        missing_threshold_sources = [
+            column
+            for column in threshold_cols
+            if not isinstance(threshold_sources.get(column), str)
+            or not threshold_sources.get(column).strip()
+        ]
+        summary["validation_metadata"]["missing_threshold_sources"] = (
+            missing_threshold_sources
+        )
+        if missing_threshold_sources:
+            errors.append(
+                "threshold_sources missing: "
+                + ", ".join(missing_threshold_sources)
+            )
+
+        missing_benchmark_sources = [
+            column
+            for column in benchmark_cols
+            if not isinstance(benchmark_sources.get(column), str)
+            or not benchmark_sources.get(column).strip()
+        ]
+        summary["validation_metadata"]["missing_benchmark_sources"] = (
+            missing_benchmark_sources
+        )
+        if missing_benchmark_sources:
+            errors.append(
+                "benchmark_sources missing: "
+                + ", ".join(missing_benchmark_sources)
+            )
+
+        policy_required = bool(
+            sensitive_cols or (cfg and cfg.require_sensitive_context_policy)
+        )
+        if policy_required and (
+            not isinstance(sensitive_policy, str) or not sensitive_policy.strip()
+        ):
+            errors.append("sensitive_context_policy missing")
+
+        for metric, availability_column in metric_availability_cols.items():
+            if metric not in metric_cols:
+                errors.append(
+                    f"metric_availability_columns references unconfigured metric '{metric}'"
+                )
+            if (
+                not isinstance(availability_column, str)
+                or not availability_column.strip()
+            ):
+                errors.append(
+                    f"metric_availability_columns for '{metric}' is invalid"
+                )
+            elif availability_column not in available_columns:
+                errors.append(
+                    f"availability column '{availability_column}' is missing"
+                )
+
+        if errors:
+            summary["validation_metadata"]["status"] = "failed"
+            summary["evidence_status"] = "not_evaluated"
+            summary["summarization_warnings"].append(
+                "metric_snapshot validation failed: " + "; ".join(errors)
+            )
+            return summary
+
+        summary["validation_metadata"]["status"] = "passed"
+        if entity_col:
+            summary["entity"] = row.get(entity_col)
+            if row.get(entity_col) is None:
+                summary["missing_evidence"].append({
+                    "role": "entity",
+                    "column": entity_col,
+                    "reason": "configured entity value is null",
+                    "value": None,
+                })
+
+        def register_missing(role: str, column: str, reason: str, value=None) -> None:
+            summary["missing_evidence"].append({
+                "role": role,
+                "column": column,
+                "reason": reason,
+                "value": value,
+            })
+
+        observed_metric_count = 0
+        for column in metric_cols:
+            raw_value = row.get(column)
+            availability_column = metric_availability_cols.get(column)
+            available = True
+            availability_value = None
+            if availability_column:
+                availability_value = row.get(availability_column)
+                parsed_available, recognized = BaseExplanationStrategy._parse_triggered(
+                    availability_value
+                )
+                if not recognized:
+                    available = False
+                    register_missing(
+                        "metric",
+                        column,
+                        f"availability column '{availability_column}' is not boolean-like",
+                        raw_value,
+                    )
+                else:
+                    available = bool(parsed_available)
+
+            summary["metric_snapshot"][column] = {
+                "value": raw_value,
+                "unit": metric_units.get(column),
+                "available": available,
+            }
+            if availability_column:
+                summary["metric_snapshot"][column]["availability_column"] = (
+                    availability_column
+                )
+                summary["metric_snapshot"][column]["availability_value"] = (
+                    availability_value
+                )
+
+            if raw_value is None:
+                register_missing(
+                    "metric", column, "configured metric value is null", None
+                )
+            elif not available:
+                if not any(
+                    item["role"] == "metric"
+                    and item["column"] == column
+                    for item in summary["missing_evidence"]
+                ):
+                    register_missing(
+                        "metric",
+                        column,
+                        "metric is unavailable according to configured availability evidence",
+                        raw_value,
+                    )
+            else:
+                observed_metric_count += 1
+
+        def collect_plain_evidence(role: str, columns: list[str], target: dict) -> None:
+            for column in columns:
+                if column not in available_columns:
+                    register_missing(
+                        role, column, "configured optional column is absent"
+                    )
+                    continue
+                value = row.get(column)
+                target[column] = value
+                if value is None:
+                    register_missing(
+                        role, column, "configured evidence value is null", None
+                    )
+
+        collect_plain_evidence("status", status_cols, summary["status_evidence"])
+        collect_plain_evidence("label", label_cols, summary["label_evidence"])
+        collect_plain_evidence("flag", flag_cols, summary["flag_evidence"])
+        collect_plain_evidence("action", action_cols, summary["action_evidence"])
+
+        for column in threshold_cols:
+            if column not in available_columns:
+                register_missing(
+                    "threshold", column, "configured threshold column is absent"
+                )
+                continue
+            value = row.get(column)
+            summary["threshold_evidence"][column] = {
+                "value": value,
+                "unit": metric_units.get(column),
+                "source": threshold_sources.get(column),
+            }
+            if value is None:
+                register_missing(
+                    "threshold", column, "configured threshold value is null", None
+                )
+
+        for column in benchmark_cols:
+            if column not in available_columns:
+                register_missing(
+                    "benchmark", column, "configured benchmark column is absent"
+                )
+                continue
+            value = row.get(column)
+            summary["benchmark_evidence"][column] = {
+                "value": value,
+                "unit": metric_units.get(column),
+                "source": benchmark_sources.get(column),
+            }
+            if value is None:
+                register_missing(
+                    "benchmark", column, "configured benchmark value is null", None
+                )
+
+        for column in sensitive_cols:
+            if column not in available_columns:
+                register_missing(
+                    "sensitive_context",
+                    column,
+                    "configured sensitive column is absent",
+                )
+                continue
+            value = row.get(column)
+            summary["sensitive_context"][column] = value
+            if value is None:
+                register_missing(
+                    "sensitive_context",
+                    column,
+                    "configured sensitive context value is null",
+                    None,
+                )
+
+        summary["sensitive_context_present"] = any(
+            column in available_columns for column in sensitive_cols
+        )
+        if sensitive_cols:
+            summary["summarization_warnings"].append(
+                "Sensitive/background context is descriptive only under policy "
+                f"'{sensitive_policy}'; do not infer causality, risk cause, or "
+                "recommendations from it."
+            )
+
+        if observed_metric_count == 0:
+            summary["evidence_status"] = "insufficient_evidence"
+            summary["summarization_warnings"].append(
+                "All configured metrics are null or unavailable."
+            )
+        else:
+            summary["evidence_status"] = "sufficient"
+
+        return summary
+
+    @staticmethod
+    def _summarize_multi_metric_comparison(req: ExplainRequest) -> dict:
+        cfg = req.ai_summary_config
+        dataset_name, rows = BaseExplanationStrategy._select_primary_dataset(req)
+
+        entity_col = cfg.entity_column if cfg else None
+        group_col = cfg.group_column if cfg else None
+        identity_col = entity_col or group_col
+        metric_key_col = cfg.metric_key_column if cfg else None
+        metric_value_col = cfg.metric_value_column if cfg else None
+        metric_cols = list(cfg.metric_columns or []) if cfg else []
+        entity_order = [str(item) for item in (cfg.entity_order or [])] if cfg else []
+        label_cols = list(cfg.label_columns or []) if cfg else []
+        flag_cols = list(cfg.flag_columns or []) if cfg else []
+        action_cols = list(cfg.action_columns or []) if cfg else []
+        selected_col = cfg.selected_entity_column if cfg else None
+        entity_evidence_available_col = (
+            cfg.entity_evidence_available_column if cfg else None
+        )
+        metric_units = dict(cfg.metric_units or {}) if cfg else {}
+        metric_directions = dict(cfg.metric_directions or {}) if cfg else {}
+        metric_thresholds = dict(cfg.metric_thresholds or {}) if cfg else {}
+        sensitive_policy = cfg.sensitive_context_policy if cfg else None
+        minimum_entity_count = (
+            max(1, int(cfg.minimum_entity_count))
+            if cfg and cfg.minimum_entity_count is not None
+            else 2
+        )
+
+        summary = {
+            "summary_type": "multi_metric_comparison",
+            "dataset_name": dataset_name,
+            "row_count": len(rows),
+            "entity_column": identity_col,
+            "metric_key_column": metric_key_col,
+            "metric_value_column": metric_value_col,
+            "entities": [],
+            "metrics": [],
+            "metric_keys": [],
+            "comparison_matrix": [],
+            "metric_extrema": {},
+            "pairwise_gaps": [],
+            "missing_metric_evidence": [],
+            "missing_entity_evidence": [],
+            "missing_expected_entities": [],
+            "selected_entity_evidence": [],
+            "evidence_status": "pending",
+            "evidence_requirements": {
+                "minimum_entity_count": minimum_entity_count,
+                "expected_entities": entity_order,
+                "observed_entity_count": 0,
+                "missing_expected_entities": [],
+            },
+            "validation_metadata": {
+                "status": "pending",
+                "required": {
+                    "metric_units": bool(cfg and cfg.require_metric_units),
+                    "metric_directions": bool(cfg and cfg.require_metric_directions),
+                    "metric_thresholds": bool(cfg and cfg.require_metric_thresholds),
+                    "sensitive_context_policy": bool(
+                        cfg and cfg.require_sensitive_context_policy
+                    ),
+                },
+                "metric_units": metric_units,
+                "metric_directions": metric_directions,
+                "metric_thresholds": metric_thresholds,
+                "sensitive_context_policy": sensitive_policy,
+            },
+            "causal_claim_allowed": False,
+            "summarization_warnings": [],
+        }
+
+        if not rows:
+            summary["evidence_status"] = "insufficient_evidence"
+            summary["validation_metadata"]["status"] = "not_evaluated"
+            summary["summarization_warnings"].append("Primary dataset is empty.")
+            return summary
+
+        dict_rows = [row for row in rows if isinstance(row, dict)]
+        if not dict_rows:
+            summary["evidence_status"] = "insufficient_evidence"
+            summary["validation_metadata"]["status"] = "not_evaluated"
+            summary["summarization_warnings"].append("Primary dataset has no object rows.")
+            return summary
+
+        available_columns = set()
+        for row in dict_rows:
+            available_columns.update(row.keys())
+
+        missing_required = []
+        if not identity_col:
+            missing_required.append("entity_column or group_column")
+        elif identity_col not in available_columns:
+            missing_required.append(identity_col)
+        if entity_col and group_col:
+            summary["summarization_warnings"].append(
+                "Both entity_column and group_column are configured; entity_column is used."
+            )
+
+        if metric_value_col and not metric_key_col:
+            missing_required.append("metric_key_column required with metric_value_column")
+        if metric_value_col and metric_cols:
+            missing_required.append(
+                "metric_value_column and metric_columns cannot both define metric values"
+            )
+        if metric_key_col and metric_key_col not in available_columns:
+            missing_required.append(metric_key_col)
+        if metric_value_col and metric_value_col not in available_columns:
+            missing_required.append(metric_value_col)
+        if not metric_value_col and not metric_cols:
+            missing_required.append("metric_columns or metric_value_column")
+        for column in metric_cols:
+            if column not in available_columns:
+                missing_required.append(column)
+
+        if missing_required:
+            summary["evidence_status"] = "not_evaluated"
+            summary["validation_metadata"]["status"] = "failed"
+            summary["summarization_warnings"].append(
+                "multi_metric_comparison config is incomplete or required columns are missing: "
+                + ", ".join(missing_required)
+            )
+            summary["generic_diagnostic_sample"] = BaseExplanationStrategy._summarize_generic(
+                req, max_datasets=1
+            )
+            return summary
+
+        optional_columns = [
+            *label_cols,
+            *flag_cols,
+            *action_cols,
+            selected_col,
+            entity_evidence_available_col,
+        ]
+        for column in optional_columns:
+            if column and column not in available_columns:
+                summary["summarization_warnings"].append(
+                    f"Configured optional column '{column}' is missing from dataset."
+                )
+
+        observed_metric_keys = []
+        if metric_key_col:
+            seen_metric_keys = set()
+            for row in dict_rows:
+                raw_key = row.get(metric_key_col)
+                if raw_key is None:
+                    continue
+                key = str(raw_key)
+                if key not in seen_metric_keys:
+                    seen_metric_keys.add(key)
+                    observed_metric_keys.append(key)
+
+        metadata_targets = observed_metric_keys if metric_value_col else metric_cols
+        metadata_errors = []
+
+        def missing_metadata_keys(metadata: dict) -> list[str]:
+            return [
+                key for key in metadata_targets
+                if key not in metadata
+                or metadata.get(key) is None
+                or (isinstance(metadata.get(key), str) and not metadata.get(key).strip())
+            ]
+
+        if cfg and cfg.require_metric_units:
+            missing = missing_metadata_keys(metric_units)
+            if missing:
+                metadata_errors.append("metric_units missing: " + ", ".join(missing))
+        if cfg and cfg.require_metric_directions:
+            missing = missing_metadata_keys(metric_directions)
+            if missing:
+                metadata_errors.append("metric_directions missing: " + ", ".join(missing))
+        if cfg and cfg.require_metric_thresholds:
+            missing = missing_metadata_keys(metric_thresholds)
+            if missing:
+                metadata_errors.append("metric_thresholds missing: " + ", ".join(missing))
+        if (
+            cfg
+            and cfg.require_sensitive_context_policy
+            and (not isinstance(sensitive_policy, str) or not sensitive_policy.strip())
+        ):
+            metadata_errors.append("sensitive_context_policy missing")
+
+        if metadata_errors:
+            summary["evidence_status"] = "not_evaluated"
+            summary["validation_metadata"]["status"] = "failed"
+            summary["validation_metadata"]["errors"] = metadata_errors
+            summary["summarization_warnings"].append(
+                "multi_metric_comparison validation metadata is incomplete: "
+                + "; ".join(metadata_errors)
+            )
+            summary["generic_diagnostic_sample"] = BaseExplanationStrategy._summarize_generic(
+                req, max_datasets=1
+            )
+            return summary
+
+        summary["validation_metadata"]["status"] = "passed"
+        summary["metric_keys"] = observed_metric_keys
+        summary["metrics"] = [
+            {
+                "metric": metric,
+                "unit": metric_units.get(metric),
+                "direction": metric_directions.get(metric),
+                "threshold": metric_thresholds.get(metric),
+            }
+            for metric in metadata_targets
+        ]
+
+        records = {}
+        observed_entities = []
+        invalid_metric_values = 0
+        invalid_flag_values = 0
+        duplicate_metric_values = 0
+        missing_identity_rows = 0
+        missing_entity_keys = set()
+
+        def get_record(entity_value):
+            entity_key = str(entity_value)
+            if entity_key not in records:
+                observed_entities.append(entity_key)
+                records[entity_key] = {
+                    "entity": entity_value,
+                    "entity_key": entity_key,
+                    "values": {},
+                    "labels": {},
+                    "flags": {},
+                    "flag_raw_values": {},
+                    "actions": {},
+                    "selected": False,
+                    "evidence_available": None,
+                }
+            return records[entity_key]
+
+        def register_missing_entity_evidence(record: dict) -> None:
+            entity_key = record["entity_key"]
+            if entity_key in missing_entity_keys:
+                return
+            missing_entity_keys.add(entity_key)
+            item = {
+                "entity": record["entity"],
+                "reason": "entity has no recorded source evidence for metric comparison",
+            }
+            if entity_evidence_available_col:
+                item["evidence_column"] = entity_evidence_available_col
+                item["evidence_value"] = False
+            if record["labels"]:
+                item["labels"] = dict(record["labels"])
+            summary["missing_entity_evidence"].append(item)
+
+        for row in dict_rows:
+            entity_value = row.get(identity_col)
+            if entity_value is None:
+                missing_identity_rows += 1
+                continue
+            record = get_record(entity_value)
+
+            for column in label_cols:
+                if column in row and row.get(column) is not None:
+                    record["labels"][column] = row.get(column)
+            for column in action_cols:
+                if column in row and row.get(column) is not None:
+                    record["actions"][column] = row.get(column)
+            for column in flag_cols:
+                if column not in row:
+                    continue
+                parsed_flag, recognized = BaseExplanationStrategy._parse_triggered(row.get(column))
+                record["flag_raw_values"][column] = row.get(column)
+                if recognized:
+                    record["flags"][column] = parsed_flag
+                elif row.get(column) is not None:
+                    invalid_flag_values += 1
+                    record["flags"][column] = None
+            if selected_col and selected_col in row:
+                selected, recognized = BaseExplanationStrategy._parse_triggered(row.get(selected_col))
+                if recognized and selected:
+                    record["selected"] = True
+            if entity_evidence_available_col and entity_evidence_available_col in row:
+                available, recognized = BaseExplanationStrategy._parse_triggered(
+                    row.get(entity_evidence_available_col)
+                )
+                if recognized:
+                    if available is False:
+                        record["evidence_available"] = False
+                    elif record["evidence_available"] is None:
+                        record["evidence_available"] = True
+
+            if metric_value_col:
+                raw_metric_key = row.get(metric_key_col)
+                if raw_metric_key is None:
+                    if record["evidence_available"] is False:
+                        register_missing_entity_evidence(record)
+                        continue
+                    summary["missing_metric_evidence"].append({
+                        "entity": entity_value,
+                        "metric": None,
+                        "reason": f"{metric_key_col} is missing",
+                    })
+                    continue
+                metric_key = str(raw_metric_key)
+                parsed_value = BaseExplanationStrategy._parse_number(row.get(metric_value_col))
+                if metric_key in record["values"]:
+                    duplicate_metric_values += 1
+                if parsed_value is None:
+                    invalid_metric_values += 1
+                    record["values"][metric_key] = None
+                    summary["missing_metric_evidence"].append({
+                        "entity": entity_value,
+                        "metric": metric_key,
+                        "reason": f"{metric_value_col} is missing or non-numeric",
+                    })
+                else:
+                    record["values"][metric_key] = round(parsed_value, 4)
+            elif metric_key_col:
+                raw_metric_key = row.get(metric_key_col)
+                if raw_metric_key is None:
+                    if record["evidence_available"] is False:
+                        register_missing_entity_evidence(record)
+                        continue
+                    summary["missing_metric_evidence"].append({
+                        "entity": entity_value,
+                        "metric": None,
+                        "reason": f"{metric_key_col} is missing",
+                    })
+                    continue
+                metric_key = str(raw_metric_key)
+                metric_values = record["values"].setdefault(metric_key, {})
+                for column in metric_cols:
+                    parsed_value = BaseExplanationStrategy._parse_number(row.get(column))
+                    if column in metric_values:
+                        duplicate_metric_values += 1
+                    if parsed_value is None:
+                        invalid_metric_values += 1
+                        metric_values[column] = None
+                        summary["missing_metric_evidence"].append({
+                            "entity": entity_value,
+                            "metric": f"{metric_key}.{column}",
+                            "reason": f"{column} is missing or non-numeric",
+                        })
+                    else:
+                        metric_values[column] = round(parsed_value, 4)
+            else:
+                for column in metric_cols:
+                    parsed_value = BaseExplanationStrategy._parse_number(row.get(column))
+                    if column in record["values"]:
+                        duplicate_metric_values += 1
+                    if parsed_value is None:
+                        invalid_metric_values += 1
+                        record["values"][column] = None
+                        summary["missing_metric_evidence"].append({
+                            "entity": entity_value,
+                            "metric": column,
+                            "reason": f"{column} is missing or non-numeric",
+                        })
+                    else:
+                        record["values"][column] = round(parsed_value, 4)
+
+        if missing_identity_rows:
+            summary["summarization_warnings"].append(
+                f"Skipped {missing_identity_rows} rows with missing {identity_col}."
+            )
+        if invalid_metric_values:
+            summary["summarization_warnings"].append(
+                f"Found {invalid_metric_values} missing or non-numeric metric values; "
+                "they remain explicit missing evidence and were not replaced with zero."
+            )
+        if invalid_flag_values:
+            summary["summarization_warnings"].append(
+                f"Found {invalid_flag_values} unrecognized configured flag values."
+            )
+        if duplicate_metric_values:
+            summary["summarization_warnings"].append(
+                f"Found {duplicate_metric_values} duplicate entity/metric values; "
+                "the last observed value is retained."
+            )
+
+        ordered_keys = []
+        seen_entities = set()
+        for configured in entity_order:
+            if configured in records and configured not in seen_entities:
+                ordered_keys.append(configured)
+                seen_entities.add(configured)
+        for observed in observed_entities:
+            if observed not in seen_entities:
+                ordered_keys.append(observed)
+                seen_entities.add(observed)
+
+        summary["entities"] = [records[key]["entity"] for key in ordered_keys]
+        summary["evidence_requirements"]["observed_entity_count"] = len(ordered_keys)
+        missing_expected_entities = [
+            configured for configured in entity_order if configured not in records
+        ]
+        summary["missing_expected_entities"] = missing_expected_entities
+        summary["evidence_requirements"]["missing_expected_entities"] = (
+            missing_expected_entities
+        )
+        if missing_expected_entities:
+            summary["summarization_warnings"].append(
+                "Configured expected entities/groups are missing from dataset: "
+                + ", ".join(missing_expected_entities)
+            )
+
+        def public_record(record: dict) -> dict:
+            item = {
+                identity_col: record["entity"],
+                "metrics": record["values"],
+            }
+            if record["labels"]:
+                item["labels"] = record["labels"]
+            if record["flags"]:
+                item["flags"] = record["flags"]
+                item["flag_raw_values"] = record["flag_raw_values"]
+            if record["actions"]:
+                item["actions"] = record["actions"]
+            if selected_col:
+                item["selected"] = record["selected"]
+            return item
+
+        matrix = [public_record(records[key]) for key in ordered_keys]
+        summary["comparison_matrix"] = matrix[:40]
+        if len(matrix) > 40:
+            summary["summarization_warnings"].append(
+                f"Comparison matrix capped at 40 of {len(matrix)} entities."
+            )
+        summary["selected_entity_evidence"] = [
+            public_record(records[key])
+            for key in ordered_keys
+            if records[key]["selected"]
+        ]
+
+        if len(ordered_keys) < minimum_entity_count:
+            summary["evidence_status"] = "insufficient_evidence"
+            summary["summarization_warnings"].append(
+                "multi_metric_comparison has insufficient evidence: "
+                f"observed {len(ordered_keys)} entities, requires at least "
+                f"{minimum_entity_count}."
+            )
+            return summary
+
+        summary["evidence_status"] = "sufficient"
+
+        flat_values = {}
+        if metric_value_col:
+            flat_metric_ids = observed_metric_keys
+            for key in ordered_keys:
+                flat_values[key] = records[key]["values"]
+        elif metric_key_col:
+            flat_metric_ids = [
+                f"{metric_key}.{column}"
+                for metric_key in observed_metric_keys
+                for column in metric_cols
+            ]
+            for key in ordered_keys:
+                flattened = {}
+                for metric_key, values in records[key]["values"].items():
+                    for column, value in values.items():
+                        flattened[f"{metric_key}.{column}"] = value
+                flat_values[key] = flattened
+        else:
+            flat_metric_ids = metric_cols
+            for key in ordered_keys:
+                flat_values[key] = records[key]["values"]
+
+        for entity_key in ordered_keys:
+            if records[entity_key]["evidence_available"] is False:
+                register_missing_entity_evidence(records[entity_key])
+                continue
+            for metric_id in flat_metric_ids:
+                if metric_id not in flat_values[entity_key]:
+                    summary["missing_metric_evidence"].append({
+                        "entity": records[entity_key]["entity"],
+                        "metric": metric_id,
+                        "reason": "metric row or column is absent",
+                    })
+
+        extrema = {}
+        gaps = []
+        for metric_id in flat_metric_ids:
+            numeric = [
+                (entity_key, BaseExplanationStrategy._parse_number(flat_values[entity_key].get(metric_id)))
+                for entity_key in ordered_keys
+            ]
+            numeric = [(entity_key, value) for entity_key, value in numeric if value is not None]
+            if numeric:
+                minimum = min(numeric, key=lambda item: (item[1], ordered_keys.index(item[0])))
+                maximum = max(numeric, key=lambda item: (item[1], -ordered_keys.index(item[0])))
+                extrema[metric_id] = {
+                    "min": {
+                        identity_col: records[minimum[0]]["entity"],
+                        "value": round(minimum[1], 4),
+                    },
+                    "max": {
+                        identity_col: records[maximum[0]]["entity"],
+                        "value": round(maximum[1], 4),
+                    },
+                }
+            for left_index in range(len(numeric)):
+                for right_index in range(left_index + 1, len(numeric)):
+                    left_key, left_value = numeric[left_index]
+                    right_key, right_value = numeric[right_index]
+                    gaps.append({
+                        "metric": metric_id,
+                        "left_entity": records[left_key]["entity"],
+                        "right_entity": records[right_key]["entity"],
+                        "gap_right_minus_left": round(right_value - left_value, 4),
+                        "absolute_gap": round(abs(right_value - left_value), 4),
+                    })
+
+        summary["metric_extrema"] = extrema
+        summary["pairwise_gaps"] = gaps[:120]
+        if len(gaps) > 120:
+            summary["summarization_warnings"].append(
+                f"Pairwise gaps capped at 120 of {len(gaps)} comparisons."
+            )
+
+        if sensitive_policy:
+            summary["summarization_warnings"].append(
+                "Sensitive/background context is descriptive only under policy "
+                f"'{sensitive_policy}'; do not infer causality or prescribe action from it."
+            )
 
         return summary
 

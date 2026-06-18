@@ -89,6 +89,10 @@ function buildAISummaryConfig(task) {
     summary_type:           task.aiSummaryType,
     target_group:           task.aiTargetGroup ?? null,
     comparison_groups:      Array.isArray(task.aiComparisonGroups) ? task.aiComparisonGroups : [],
+    dynamic_comparison_groups: task.aiDynamicComparisonGroups === true,
+    comparison_alignment_columns: Array.isArray(task.aiComparisonAlignmentColumns)
+      ? task.aiComparisonAlignmentColumns : [],
+    divergence_threshold:   task.aiDivergenceThreshold ?? null,
     time_column:            task.aiTimeColumn ?? null,
     x_column:               task.aiXColumn ?? null,
     y_column:               task.aiYColumn ?? null,
@@ -101,6 +105,8 @@ function buildAISummaryConfig(task) {
     p_value_column:         task.aiPValueColumn ?? null,
     outlier_policy:         task.aiOutlierPolicy ?? null,
     group_column:           task.aiGroupColumn ?? null,
+    group_key_columns:      Array.isArray(task.aiGroupKeyColumns) ? task.aiGroupKeyColumns : [],
+    series_column:          task.aiSeriesColumn ?? null,
     gap_column:             task.aiGapColumn ?? null,
     reliability_column:     task.aiReliabilityColumn ?? null,
     minimum_reliable_count: task.aiMinimumReliableCount ?? null,
@@ -110,6 +116,35 @@ function buildAISummaryConfig(task) {
     count_column:           task.aiCountColumn ?? null,
     percent_column:         task.aiPercentColumn ?? null,
     metric_columns:         Array.isArray(task.aiMetricColumns) ? task.aiMetricColumns : [],
+    status_columns:         Array.isArray(task.aiStatusColumns) ? task.aiStatusColumns : [],
+    threshold_columns:      Array.isArray(task.aiThresholdColumns) ? task.aiThresholdColumns : [],
+    benchmark_columns:      Array.isArray(task.aiBenchmarkColumns) ? task.aiBenchmarkColumns : [],
+    sensitive_columns:      Array.isArray(task.aiSensitiveColumns) ? task.aiSensitiveColumns : [],
+    metric_availability_columns:
+      task.aiMetricAvailabilityColumns && typeof task.aiMetricAvailabilityColumns === "object"
+        ? task.aiMetricAvailabilityColumns : {},
+    threshold_sources:      task.aiThresholdSources && typeof task.aiThresholdSources === "object"
+      ? task.aiThresholdSources : {},
+    benchmark_sources:      task.aiBenchmarkSources && typeof task.aiBenchmarkSources === "object"
+      ? task.aiBenchmarkSources : {},
+    metric_key_column:      task.aiMetricKeyColumn ?? null,
+    metric_value_column:    task.aiMetricValueColumn ?? null,
+    entity_order:           Array.isArray(task.aiEntityOrder) ? task.aiEntityOrder : [],
+    metric_directions:      task.aiMetricDirections && typeof task.aiMetricDirections === "object"
+      ? task.aiMetricDirections : {},
+    metric_units:           task.aiMetricUnits && typeof task.aiMetricUnits === "object"
+      ? task.aiMetricUnits : {},
+    metric_thresholds:      task.aiMetricThresholds && typeof task.aiMetricThresholds === "object"
+      ? task.aiMetricThresholds : {},
+    minimum_entity_count:   Number.isInteger(task.aiMinimumEntityCount)
+      ? task.aiMinimumEntityCount : 2,
+    require_metric_directions: task.aiRequireMetricDirections === true,
+    require_metric_units:      task.aiRequireMetricUnits === true,
+    require_metric_thresholds: task.aiRequireMetricThresholds === true,
+    selected_entity_column:    task.aiSelectedEntityColumn ?? null,
+    entity_evidence_available_column: task.aiEntityEvidenceAvailableColumn ?? null,
+    sensitive_context_policy:  task.aiSensitiveContextPolicy ?? null,
+    require_sensitive_context_policy: task.aiRequireSensitiveContextPolicy === true,
     focus_categories:       Array.isArray(task.aiFocusCategories) ? task.aiFocusCategories : [],
     focus_bins:             Array.isArray(task.aiFocusBins) ? task.aiFocusBins : [],
     category_order:         Array.isArray(task.aiCategoryOrder) ? task.aiCategoryOrder : [],
@@ -136,6 +171,36 @@ function buildAISummaryConfig(task) {
     flag_columns:             Array.isArray(task.aiFlagColumns) ? task.aiFlagColumns : [],
     action_columns:           Array.isArray(task.aiActionColumns) ? task.aiActionColumns : [],
     label_columns:            Array.isArray(task.aiLabelColumns) ? task.aiLabelColumns : [],
+    evidence_columns:         Array.isArray(task.aiEvidenceColumns) ? task.aiEvidenceColumns : [],
+    evidence_dataset_roles:
+      task.aiEvidenceDatasetRoles
+      && typeof task.aiEvidenceDatasetRoles === "object"
+      && !Array.isArray(task.aiEvidenceDatasetRoles)
+        ? task.aiEvidenceDatasetRoles : {},
+    action_source:            task.aiActionSource ?? null,
+    action_rule_set_id:       task.aiActionRuleSetId ?? null,
+    action_rule_version:      task.aiActionRuleVersion ?? null,
+    action_evidence_contract: Array.isArray(task.aiActionEvidenceContract)
+      ? task.aiActionEvidenceContract : [],
+    action_derived_evidence:  Array.isArray(task.aiActionDerivedEvidence)
+      ? task.aiActionDerivedEvidence : [],
+    action_conflict_rules:    Array.isArray(task.aiActionConflictRules)
+      ? task.aiActionConflictRules : [],
+    action_rules:             Array.isArray(task.aiActionRules) ? task.aiActionRules : [],
+    priority_column:          task.aiPriorityColumn ?? null,
+    owner_column:             task.aiOwnerColumn ?? null,
+    time_horizon_column:      task.aiTimeHorizonColumn ?? null,
+    trigger_columns:          Array.isArray(task.aiTriggerColumns) ? task.aiTriggerColumns : [],
+    max_actions:              Number.isInteger(task.aiMaxActions) ? task.aiMaxActions : null,
+    provenance_required_fields: Array.isArray(task.aiProvenanceRequiredFields)
+      ? task.aiProvenanceRequiredFields : [],
+    require_complete_action_provenance:
+      task.aiRequireCompleteActionProvenance !== false,
+    unsupported_action_behavior:
+      task.aiUnsupportedActionBehavior ?? "emit_unsupported_actions",
+    sensitive_action_policy: task.aiSensitiveActionPolicy ?? null,
+    require_sensitive_action_policy:
+      task.aiRequireSensitiveActionPolicy === true,
     max_points:               task.aiMaxPoints ?? null,
     top_k:                    task.aiTopK ?? null,
     bottom_k:                 task.aiBottomK ?? null,

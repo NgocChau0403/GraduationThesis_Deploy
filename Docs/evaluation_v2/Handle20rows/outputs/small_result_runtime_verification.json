@@ -1,0 +1,168 @@
+{
+  "evaluation_version": "llm_judge_v2_phase4d_runtime_verification",
+  "generated_at": "2026-06-18T14:08:55.853Z",
+  "backend_url": "http://localhost:4000",
+  "ai_summary_method_required": "task_aware_data_summarization",
+  "total_cases": 4,
+  "passed_cases": 4,
+  "failed_cases": 0,
+  "passed": true,
+  "cases": [
+    {
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-B01",
+      "expected_bucket": "<=20",
+      "phase3_row_count": 10,
+      "runtime_row_count": 10,
+      "analytics_dataset_breakdown": [
+        {
+          "dataset_name": "score_distribution",
+          "row_count": 10
+        }
+      ],
+      "analytics_http_status": 200,
+      "analytics_latency_ms": 142,
+      "execution_id": "exec_1781791683763_c121d57c",
+      "verification_transport": "backend_proxy",
+      "proxy_ai_http_status": 200,
+      "proxy_ai_latency_ms": 11072,
+      "proxy_ai_degraded": false,
+      "ai_http_status": 200,
+      "ai_latency_ms": 11072,
+      "degraded": false,
+      "ai_summary_method": "task_aware_data_summarization",
+      "input_summary_type": "full_rows_due_to_small_result",
+      "full_result_row_count": 10,
+      "included_row_count": 10,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "score_distribution",
+          "row_count": 10,
+          "included_row_count": 10
+        }
+      ],
+      "model": "gpt-4o-mini-2024-07-18",
+      "errors": [],
+      "passed": true
+    },
+    {
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G02",
+      "expected_bucket": ">20",
+      "phase3_row_count": 649,
+      "runtime_row_count": 649,
+      "analytics_dataset_breakdown": [
+        {
+          "dataset_name": "engagement_performance_scatter",
+          "row_count": 649
+        }
+      ],
+      "analytics_http_status": 200,
+      "analytics_latency_ms": 223,
+      "execution_id": "exec_1781791694977_90f0e520",
+      "verification_transport": "backend_proxy",
+      "proxy_ai_http_status": 200,
+      "proxy_ai_latency_ms": 8716,
+      "proxy_ai_degraded": false,
+      "ai_http_status": 200,
+      "ai_latency_ms": 8716,
+      "degraded": false,
+      "ai_summary_method": "task_aware_data_summarization",
+      "input_summary_type": "correlation_evidence",
+      "full_result_row_count": 649,
+      "included_row_count": null,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": false,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "engagement_performance_scatter",
+          "row_count": 649,
+          "included_row_count": 649
+        }
+      ],
+      "model": "gpt-4o-mini-2024-07-18",
+      "errors": [],
+      "passed": true
+    },
+    {
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "A-B01",
+      "expected_bucket": "<=20",
+      "phase3_row_count": 11,
+      "runtime_row_count": 11,
+      "analytics_dataset_breakdown": [
+        {
+          "dataset_name": "score_distribution",
+          "row_count": 11
+        }
+      ],
+      "analytics_http_status": 200,
+      "analytics_latency_ms": 6917,
+      "execution_id": "exec_1781791704003_e762aeca",
+      "verification_transport": "backend_proxy",
+      "proxy_ai_http_status": 200,
+      "proxy_ai_latency_ms": 9197,
+      "proxy_ai_degraded": false,
+      "ai_http_status": 200,
+      "ai_latency_ms": 9197,
+      "degraded": false,
+      "ai_summary_method": "task_aware_data_summarization",
+      "input_summary_type": "full_rows_due_to_small_result",
+      "full_result_row_count": 11,
+      "included_row_count": 11,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "score_distribution",
+          "row_count": 11,
+          "included_row_count": 11
+        }
+      ],
+      "model": "gpt-4o-mini-2024-07-18",
+      "errors": [],
+      "passed": true
+    },
+    {
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "A-S03",
+      "expected_bucket": ">20",
+      "phase3_row_count": 32,
+      "runtime_row_count": 32,
+      "analytics_dataset_breakdown": [
+        {
+          "dataset_name": "engagement_trajectory",
+          "row_count": 32
+        }
+      ],
+      "analytics_http_status": 200,
+      "analytics_latency_ms": 4320,
+      "execution_id": "exec_1781791720118_1658f2e2",
+      "verification_transport": "backend_proxy",
+      "proxy_ai_http_status": 200,
+      "proxy_ai_latency_ms": 11417,
+      "proxy_ai_degraded": false,
+      "ai_http_status": 200,
+      "ai_latency_ms": 11417,
+      "degraded": false,
+      "ai_summary_method": "task_aware_data_summarization",
+      "input_summary_type": "trend_series",
+      "full_result_row_count": 32,
+      "included_row_count": null,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": false,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "engagement_trajectory",
+          "row_count": 32,
+          "included_row_count": 32
+        }
+      ],
+      "model": "gpt-4o-mini-2024-07-18",
+      "errors": [],
+      "passed": true
+    }
+  ]
+}

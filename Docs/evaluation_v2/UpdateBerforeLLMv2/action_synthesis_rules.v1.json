@@ -1,0 +1,918 @@
+{
+  "catalog_id": "action_synthesis_rules_v1",
+  "catalog_version": "1.0.0",
+  "summary_type": "action_synthesis",
+  "action_source": "versioned_registry_rules",
+  "created_at": "2026-06-18",
+  "rule_sets": [
+    {
+      "rule_set_id": "A-G16.action_synthesis",
+      "task_id": "A-G16",
+      "rule_version": "1.0.0",
+      "audience": [
+        "admin",
+        "academic_leadership"
+      ],
+      "source_dataset_roles": {
+        "synthesis_data": "primary_evidence"
+      },
+      "evidence_contract": [
+        {
+          "column": "class_id",
+          "role": "entity",
+          "unit": "identifier",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": false
+        },
+        {
+          "column": "low_engagement_count",
+          "role": "metric",
+          "unit": "student_count",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "high_risk_count",
+          "role": "metric",
+          "unit": "student_count",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "hardest_assessment",
+          "role": "context",
+          "unit": "assessment_identifier",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": true,
+          "semantic_note": "Assessment selected by highest observed fail-rate ordering; runtime row does not expose the rate."
+        },
+        {
+          "column": "best_resource_type",
+          "role": "context",
+          "unit": "resource_type",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": true,
+          "semantic_alias": "most_used_resource_type",
+          "semantic_note": "Selected by total engagement clicks, not by learning effectiveness."
+        },
+        {
+          "column": "total_students",
+          "role": "metric",
+          "unit": "student_count",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        }
+      ],
+      "derived_evidence": [
+        {
+          "evidence_id": "low_engagement_rate",
+          "operation": "safe_divide",
+          "numerator_column": "low_engagement_count",
+          "denominator_column": "total_students",
+          "unit": "ratio_0_1",
+          "zero_denominator_behavior": "missing"
+        },
+        {
+          "evidence_id": "high_risk_rate",
+          "operation": "safe_divide",
+          "numerator_column": "high_risk_count",
+          "denominator_column": "total_students",
+          "unit": "ratio_0_1",
+          "zero_denominator_behavior": "missing"
+        }
+      ],
+      "conflict_rules": [],
+      "rules": [
+        {
+          "rule_id": "A-G16-R01",
+          "description": "Escalate cohort risk review when at least 20 percent of students meet the backend high-risk definition.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "high_risk_rate",
+                "operator": "gte",
+                "value": 0.2
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "admin_review_high_risk_caseload",
+            "action_text": "Review the high-risk student caseload, assign named follow-up owners, and confirm which students need direct support.",
+            "priority": "high",
+            "owner": "academic_admin",
+            "time_horizon_days": 7,
+            "support_category": "risk_coordination",
+            "claim_limits": [
+              "Do not infer causes from the aggregate count.",
+              "Do not identify individual students unless a separate student-level evidence source is available."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "A-G16-R02",
+          "description": "Plan cohort engagement outreach when at least 25 percent of students meet the backend low-engagement definition.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "low_engagement_rate",
+                "operator": "gte",
+                "value": 0.25
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "admin_launch_engagement_outreach",
+            "action_text": "Coordinate a targeted engagement outreach and check whether access, scheduling, or course-navigation barriers need follow-up.",
+            "priority": "high",
+            "owner": "student_support_team",
+            "time_horizon_days": 7,
+            "support_category": "engagement_support",
+            "claim_limits": [
+              "Do not claim low engagement caused low performance.",
+              "Do not infer a specific barrier from the aggregate signal."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "A-G16-R03",
+          "description": "Request assessment support review when the highest-fail-rate assessment identifier is present.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "hardest_assessment",
+                "operator": "is_present"
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "admin_review_assessment_support",
+            "action_text": "Ask the module team to review learner support and preparation materials for the identified assessment.",
+            "priority": "medium",
+            "owner": "module_lead",
+            "time_horizon_days": 14,
+            "support_category": "assessment_support",
+            "claim_limits": [
+              "Do not state a fail-rate value because the runtime row does not expose it.",
+              "Do not claim the assessment itself caused failure."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "A-G16-R04",
+          "description": "Review the most-used resource format as a delivery option without treating usage as effectiveness.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "best_resource_type",
+                "operator": "is_present"
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "admin_review_most_used_resource_format",
+            "action_text": "Review whether the most-used resource format can support the planned outreach, while separately checking its learning suitability.",
+            "priority": "low",
+            "owner": "learning_design_team",
+            "time_horizon_days": 14,
+            "support_category": "resource_planning",
+            "claim_limits": [
+              "Refer to this field as most-used, not best-performing.",
+              "Do not claim engagement clicks demonstrate learning effectiveness."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        }
+      ],
+      "max_actions": 5,
+      "unsupported_action_behavior": "emit_unsupported_actions"
+    },
+    {
+      "rule_set_id": "A-S08.action_synthesis",
+      "task_id": "A-S08",
+      "rule_version": "1.0.0",
+      "audience": [
+        "academic_advisor",
+        "admin",
+        "tutor"
+      ],
+      "source_dataset_roles": {
+        "synthesis_data": "primary_evidence"
+      },
+      "evidence_contract": [
+        {
+          "column": "avg_score",
+          "role": "metric",
+          "unit": "score_runtime_scale",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": false
+        },
+        {
+          "column": "performance_trend",
+          "role": "metric",
+          "unit": "score_change_per_assessment_order",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "engagement_score",
+          "role": "metric",
+          "unit": "ratio_0_1",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "punctuality_rate",
+          "role": "metric",
+          "unit": "ratio_0_1",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "early_warning_week",
+          "role": "context",
+          "unit": "week_number",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": false,
+          "semantic_note": "Not used by v1 because the current runtime field lacks enough context for a standalone action."
+        },
+        {
+          "column": "support_score",
+          "role": "context",
+          "unit": "dataset_specific_score",
+          "required": false,
+          "nullable": true,
+          "sensitive": true,
+          "allowed_as_trigger": false,
+          "semantic_note": "Sensitive/background support context; preserve for audit only."
+        },
+        {
+          "column": "at_risk_score",
+          "role": "metric",
+          "unit": "flag_count",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "at_risk_label",
+          "role": "status",
+          "unit": "risk_band",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "final_outcome",
+          "role": "status",
+          "unit": "outcome_category",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": false
+        }
+      ],
+      "derived_evidence": [],
+      "conflict_rules": [
+        {
+          "conflict_id": "A-S08-C01",
+          "when": {
+            "all": [
+              {
+                "evidence_id": "final_outcome",
+                "operator": "eq",
+                "value": "Distinction"
+              }
+            ],
+            "any": [
+              {
+                "evidence_id": "at_risk_label",
+                "operator": "eq",
+                "value": "high"
+              },
+              {
+                "evidence_id": "performance_trend",
+                "operator": "lt",
+                "value": 0
+              }
+            ]
+          },
+          "behavior": "preserve_and_warn"
+        }
+      ],
+      "rules": [
+        {
+          "rule_id": "A-S08-R01",
+          "description": "Assign a rapid staff review when the backend composite risk score is high.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "at_risk_score",
+                "operator": "gte",
+                "value": 3
+              },
+              {
+                "evidence_id": "at_risk_label",
+                "operator": "eq",
+                "value": "high"
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "staff_review_student_risk_profile",
+            "action_text": "Assign an academic advisor to review the student's current risk profile and coordinate the next follow-up.",
+            "priority": "high",
+            "owner": "academic_advisor",
+            "time_horizon_days": 2,
+            "support_category": "case_coordination",
+            "claim_limits": [
+              "Treat the composite risk score as a screening signal, not a diagnosis.",
+              "Do not use support_score to justify the action."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "A-S08-R02",
+          "description": "Create a submission support plan when punctuality is below 70 percent.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "punctuality_rate",
+                "operator": "lt",
+                "value": 0.7
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "staff_create_submission_support_plan",
+            "action_text": "Ask the tutor to agree a short submission plan with clear upcoming deadlines and one follow-up check.",
+            "priority": "high",
+            "owner": "tutor",
+            "time_horizon_days": 7,
+            "support_category": "submission_support",
+            "claim_limits": [
+              "Do not infer why submissions were late.",
+              "Preserve the raw punctuality value, including numeric strings."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "A-S08-R03",
+          "description": "Review recent assessment changes when the observed performance trend is negative.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "performance_trend",
+                "operator": "lt",
+                "value": 0
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "staff_review_recent_assessment_pattern",
+            "action_text": "Review the student's recent assessment sequence and identify one concrete academic follow-up.",
+            "priority": "medium",
+            "owner": "tutor",
+            "time_horizon_days": 7,
+            "support_category": "academic_support",
+            "claim_limits": [
+              "Do not claim the negative slope proves future decline.",
+              "Do not ignore conflicting positive outcome evidence."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "A-S08-R04",
+          "description": "Check engagement barriers when the normalized engagement score is below 0.15.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "engagement_score",
+                "operator": "lt",
+                "value": 0.15
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "staff_check_engagement_barriers",
+            "action_text": "Contact the student to check for practical engagement barriers and agree one reachable participation step.",
+            "priority": "medium",
+            "owner": "student_support_team",
+            "time_horizon_days": 7,
+            "support_category": "engagement_support",
+            "claim_limits": [
+              "Do not infer the cause of low engagement.",
+              "Do not claim engagement caused the student's performance."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        }
+      ],
+      "max_actions": 5,
+      "unsupported_action_behavior": "emit_unsupported_actions"
+    },
+    {
+      "rule_set_id": "S-T13.action_synthesis",
+      "task_id": "S-T13",
+      "rule_version": "1.0.0",
+      "audience": [
+        "student"
+      ],
+      "source_dataset_roles": {
+        "synthesis_data": "primary_evidence"
+      },
+      "evidence_contract": [
+        {
+          "column": "avg_score",
+          "role": "metric",
+          "unit": "score_runtime_scale",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "performance_trend",
+          "role": "metric",
+          "unit": "score_change_per_assessment_order",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "engagement_score",
+          "role": "metric",
+          "unit": "ratio_0_1",
+          "required": false,
+          "nullable": true,
+          "availability_column": "engagement_score_available",
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "engagement_score_available",
+          "role": "status",
+          "unit": "boolean",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": false
+        },
+        {
+          "column": "absence_rate",
+          "role": "metric",
+          "unit": "ratio_0_1",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "lifestyle_risk_score",
+          "role": "context",
+          "unit": "ratio_0_1",
+          "required": false,
+          "nullable": true,
+          "sensitive": true,
+          "allowed_as_trigger": false,
+          "semantic_note": "Sensitive lifestyle context; preserve for audit only and never use as an action trigger."
+        },
+        {
+          "column": "score_strategy",
+          "role": "context",
+          "unit": "strategy_identifier",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": false
+        },
+        {
+          "column": "score_scale",
+          "role": "context",
+          "unit": "score_scale",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": false
+        },
+        {
+          "column": "pass_threshold",
+          "role": "threshold",
+          "unit": "score_runtime_scale",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "target_threshold",
+          "role": "threshold",
+          "unit": "score_runtime_scale",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "at_risk_score",
+          "role": "metric",
+          "unit": "flag_count",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "at_risk_label",
+          "role": "status",
+          "unit": "risk_band",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        }
+      ],
+      "derived_evidence": [],
+      "conflict_rules": [
+        {
+          "conflict_id": "S-T13-C01",
+          "when": {
+            "all": [
+              {
+                "evidence_id": "avg_score",
+                "operator": "gte",
+                "compare_to_evidence_id": "target_threshold"
+              },
+              {
+                "evidence_id": "at_risk_label",
+                "operator": "eq",
+                "value": "high"
+              }
+            ],
+            "any": []
+          },
+          "behavior": "preserve_and_warn"
+        }
+      ],
+      "rules": [
+        {
+          "rule_id": "S-T13-R01",
+          "description": "Seek immediate academic help when average score is below the runtime pass threshold.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "avg_score",
+                "operator": "lt",
+                "compare_to_evidence_id": "pass_threshold"
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "student_request_academic_recovery_support",
+            "action_text": "Contact your tutor and make a short recovery plan for the next assessed topic.",
+            "priority": "high",
+            "owner": "student",
+            "time_horizon_days": 3,
+            "support_category": "academic_support",
+            "claim_limits": [
+              "Use the runtime pass threshold and score scale.",
+              "Do not diagnose the reason for the low score."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "S-T13-R02",
+          "description": "Set a concrete study target when score is at or above pass but below the runtime target threshold.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "avg_score",
+                "operator": "gte",
+                "compare_to_evidence_id": "pass_threshold"
+              },
+              {
+                "evidence_id": "avg_score",
+                "operator": "lt",
+                "compare_to_evidence_id": "target_threshold"
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "student_set_next_score_target",
+            "action_text": "Choose one upcoming assessment goal and schedule two focused study sessions toward the stated target threshold.",
+            "priority": "medium",
+            "owner": "student",
+            "time_horizon_days": 7,
+            "support_category": "study_planning",
+            "claim_limits": [
+              "Do not promise that the action will achieve the target.",
+              "Preserve the runtime threshold values and score scale."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "S-T13-R03",
+          "description": "Review recent work when the observed performance trend is negative.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "performance_trend",
+                "operator": "lt",
+                "value": 0
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "student_review_recent_assessment_feedback",
+            "action_text": "Review feedback from your most recent assessments and write down one change to apply next week.",
+            "priority": "medium",
+            "owner": "student",
+            "time_horizon_days": 7,
+            "support_category": "reflection",
+            "claim_limits": [
+              "Do not claim the slope proves future decline.",
+              "Do not infer a cause for the trend."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "S-T13-R04",
+          "description": "Rebuild participation routine only when engagement evidence is observed and below 0.15.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "engagement_score_available",
+                "operator": "is_true"
+              },
+              {
+                "evidence_id": "engagement_score",
+                "operator": "lt",
+                "value": 0.15
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "student_rebuild_engagement_routine",
+            "action_text": "Schedule three short course check-ins next week and complete one course activity during each check-in.",
+            "priority": "medium",
+            "owner": "student",
+            "time_horizon_days": 7,
+            "support_category": "engagement",
+            "claim_limits": [
+              "Do not trigger when engagement_score_available is false.",
+              "Do not claim engagement caused the student's score."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "availability_state",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "S-T13-R05",
+          "description": "Build an attendance routine when the observed absence rate is at least 25 percent.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "absence_rate",
+                "operator": "gte",
+                "value": 0.25
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "student_create_attendance_routine",
+            "action_text": "Plan next week's attendance in advance and set a reminder for each scheduled learning session.",
+            "priority": "medium",
+            "owner": "student",
+            "time_horizon_days": 7,
+            "support_category": "attendance",
+            "claim_limits": [
+              "Do not infer the reason for absence.",
+              "Do not trigger when absence_rate is null."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "S-T13-R06",
+          "description": "Ask for advisor support when the backend composite risk score and label are both high.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "at_risk_score",
+                "operator": "gte",
+                "value": 3
+              },
+              {
+                "evidence_id": "at_risk_label",
+                "operator": "eq",
+                "value": "high"
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "student_request_advisor_check_in",
+            "action_text": "Request a short advisor check-in to review the combined signals and choose the first support step.",
+            "priority": "high",
+            "owner": "student",
+            "time_horizon_days": 3,
+            "support_category": "support_coordination",
+            "claim_limits": [
+              "Treat the composite score as a screening signal, not a diagnosis.",
+              "Do not use lifestyle_risk_score as action evidence."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        }
+      ],
+      "max_actions": 5,
+      "unsupported_action_behavior": "emit_unsupported_actions"
+    }
+  ]
+}

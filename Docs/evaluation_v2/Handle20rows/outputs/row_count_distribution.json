@@ -1,0 +1,64 @@
+{
+  "artifact_type": "llm_judge_v2_phase3_row_count_distribution",
+  "generated_at": "2026-06-18T13:11:58.111Z",
+  "backend_url": "http://localhost:4000",
+  "record_grain": "dataset_id + task_id + mode",
+  "row_count_definition": "If /api/analytics/run returns one dataset array, use that array length. If it returns multiple dataset arrays, use the sum of their row counts and preserve per-dataset breakdown in dataset_breakdown.",
+  "datasets": [
+    "SAMPLE_UCI_POR",
+    "SAMPLE_OULAD"
+  ],
+  "modes": [
+    "baseline_first_20_rows",
+    "task_aware_data_summarization"
+  ],
+  "task_count": 52,
+  "expected_records": 208,
+  "actual_records": 208,
+  "by_dataset": [
+    {
+      "dataset_id": "SAMPLE_UCI_POR",
+      "total_records": 104,
+      "scoreable_records": 104,
+      "not_scoreable_records": 0,
+      "failed_records": 0,
+      "row_count_lte_20": 92,
+      "row_count_gt_20": 12,
+      "unknown": 0,
+      "unique_tasks_total": 52,
+      "unique_tasks_scoreable": 52,
+      "unique_tasks_lte_20": 46,
+      "unique_tasks_gt_20": 6,
+      "unique_tasks_not_scoreable": 0
+    },
+    {
+      "dataset_id": "SAMPLE_OULAD",
+      "total_records": 104,
+      "scoreable_records": 104,
+      "not_scoreable_records": 0,
+      "failed_records": 0,
+      "row_count_lte_20": 78,
+      "row_count_gt_20": 26,
+      "unknown": 0,
+      "unique_tasks_total": 52,
+      "unique_tasks_scoreable": 52,
+      "unique_tasks_lte_20": 39,
+      "unique_tasks_gt_20": 13,
+      "unique_tasks_not_scoreable": 0
+    }
+  ],
+  "totals": {
+    "total_records": 208,
+    "scoreable_records": 208,
+    "not_scoreable_records": 0,
+    "failed_records": 0,
+    "row_count_lte_20": 170,
+    "row_count_gt_20": 38,
+    "unknown": 0,
+    "unique_tasks_total": 104,
+    "unique_tasks_scoreable": 104,
+    "unique_tasks_lte_20": 85,
+    "unique_tasks_gt_20": 19,
+    "unique_tasks_not_scoreable": 0
+  }
+}
