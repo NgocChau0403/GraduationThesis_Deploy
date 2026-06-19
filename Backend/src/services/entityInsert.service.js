@@ -4,7 +4,7 @@ import crypto from "crypto";
 // ==========================================
 // CONSTANTS
 // ==========================================
-const DEFAULT_CHUNK_SIZE = 1000;
+const DEFAULT_CHUNK_SIZE = 5000;
 
 // ==========================================
 // HELPERS

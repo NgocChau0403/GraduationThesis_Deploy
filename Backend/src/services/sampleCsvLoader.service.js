@@ -156,7 +156,12 @@ async function detectDelimitersForBatch(files) {
 }
 
 export async function loadSampleBatchFromCsv(batchId, options = {}) {
-  const { mode = "dry-run", onOuladEngagementChunk = null } = options;
+  const {
+    mode = "dry-run",
+    onOuladEngagementChunk = null,
+    scanOuladEngagementRows = true,
+    ouladEngagementChunkSize = 10000,
+  } = options;
   const inspection = await inspectSampleBatchFiles(batchId);
   if (!inspection.ok) {
     return {
@@ -193,7 +198,9 @@ export async function loadSampleBatchFromCsv(batchId, options = {}) {
       sourceDataset: "OULAD",
       iterateFileRows,
       mode,
+      engagementChunkSize: ouladEngagementChunkSize,
       onEngagementChunk: onOuladEngagementChunk,
+      scanEngagementRows: scanOuladEngagementRows,
     });
     dataset = built.dataset;
     streamedEngagementCount = built.engagementCount || 0;

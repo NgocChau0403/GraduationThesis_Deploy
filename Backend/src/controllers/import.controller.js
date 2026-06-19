@@ -177,6 +177,10 @@ function buildImportBatchName({ session, runTargets, bundleMode }) {
   return bundleMode ? "Imported Bundle Dataset" : "Imported Dataset";
 }
 
+function isPerformanceBenchmarkRequest(req) {
+  return req.get("x-performance-benchmark") === "true";
+}
+
 function countImportedRows({ runTargets, bundleMode, result }) {
   if (bundleMode) {
     const summaryRowCount = Number(result?.summary?.total_input_rows);
@@ -424,20 +428,22 @@ export async function profileImportController(req, res) {
 
     let evaluationLog = null;
 
-    try {
-      evaluationLog = await writeProfilingMappingLog({
-        sessionId,
-        requestedDatasetName: datasetNameInput,
-        requestedSourceDataset: sourceDatasetInput,
-        resolvedDatasetName,
-        resolvedSourceDataset,
-        uploadedFiles: normalizedUploadedFiles,
-        bundleSchema,
-        bundleProfilingResult,
-        bundleMappingSuggestion
-      });
-    } catch (logError) {
-      console.warn("[EvaluationLog] Failed to write profiling mapping log:", logError);
+    if (!isPerformanceBenchmarkRequest(req)) {
+      try {
+        evaluationLog = await writeProfilingMappingLog({
+          sessionId,
+          requestedDatasetName: datasetNameInput,
+          requestedSourceDataset: sourceDatasetInput,
+          resolvedDatasetName,
+          resolvedSourceDataset,
+          uploadedFiles: normalizedUploadedFiles,
+          bundleSchema,
+          bundleProfilingResult,
+          bundleMappingSuggestion
+        });
+      } catch (logError) {
+        console.warn("[EvaluationLog] Failed to write profiling mapping log:", logError);
+      }
     }
 
     return res.json({
@@ -804,7 +810,7 @@ export async function runImportController(req, res) {
               saveToDb: true,
               replaceIfExists: options.replaceIfExists ?? true,
               importBatchId,
-              chunkSize: options.chunkSize || 500,
+              chunkSize: options.chunkSize || 5000,
               allowAutoConfirmMapping: false
             }
           });
@@ -845,21 +851,23 @@ export async function runImportController(req, res) {
       const importCompletedAt = new Date();
       let importConversionLog = null;
 
-      try {
-        importConversionLog = await writeImportConversionLog({
-          session: {
-            ...session,
-            sessionId
-          },
-          runTargets,
-          results,
-          success: allSuccess,
-          importBatchId,
-          importStartedAt,
-          importCompletedAt
-        });
-      } catch (logError) {
-        console.warn("[EvaluationLog] Failed to write import conversion log:", logError);
+      if (!isPerformanceBenchmarkRequest(req)) {
+        try {
+          importConversionLog = await writeImportConversionLog({
+            session: {
+              ...session,
+              sessionId
+            },
+            runTargets,
+            results,
+            success: allSuccess,
+            importBatchId,
+            importStartedAt,
+            importCompletedAt
+          });
+        } catch (logError) {
+          console.warn("[EvaluationLog] Failed to write import conversion log:", logError);
+        }
       }
 
       return res.json({

@@ -67,6 +67,7 @@ export async function buildOuladSampleFromStreams({
   mode = "dry-run",
   engagementChunkSize = 10000,
   onEngagementChunk = null,
+  scanEngagementRows = true,
 }) {
   const warnings = [];
   const errors = [];
@@ -386,60 +387,65 @@ export async function buildOuladSampleFromStreams({
     engagementBuffer = [];
   };
 
-  await iterateFileRows("studentVle.csv", async (row) => {
-    const moduleCode = norm(row.code_module);
-    const presentation = norm(row.code_presentation);
-    const rawStudent = norm(row.id_student);
-    const siteId = norm(row.id_site);
-    if (!moduleCode || !presentation || !rawStudent || !siteId) return;
+  if (scanEngagementRows) {
+    await iterateFileRows("studentVle.csv", async (row) => {
+      const moduleCode = norm(row.code_module);
+      const presentation = norm(row.code_presentation);
+      const rawStudent = norm(row.id_student);
+      const siteId = norm(row.id_site);
+      if (!moduleCode || !presentation || !rawStudent || !siteId) return;
 
-    const classKey = buildClassKey(moduleCode, presentation);
-    const classEntry = classesByKey.get(classKey);
-    if (!classEntry) return;
+      const classKey = buildClassKey(moduleCode, presentation);
+      const classEntry = classesByKey.get(classKey);
+      if (!classEntry) return;
 
-    const studentId = toStudentId(batchId, rawStudent);
-    const enrollmentKey = `${classEntry.class_id}::${studentId}`;
-    const enrollment = enrollmentsByKey.get(enrollmentKey);
-    if (!enrollment || !enrollmentIdSet.has(enrollment.enrollment_id)) return;
+      const studentId = toStudentId(batchId, rawStudent);
+      const enrollmentKey = `${classEntry.class_id}::${studentId}`;
+      const enrollment = enrollmentsByKey.get(enrollmentKey);
+      if (!enrollment || !enrollmentIdSet.has(enrollment.enrollment_id)) return;
 
-    const eventId = eventIdBySite.get(siteId);
-    if (!eventId) {
-      if (missingEventWarningCount < maxMissingEventWarnings) {
-        warnings.push(
-          `Missing event for studentVle row: id_site=${siteId}, code_module=${moduleCode}, code_presentation=${presentation}, student_id=${rawStudent}.`
-        );
+      const eventId = eventIdBySite.get(siteId);
+      if (!eventId) {
+        if (missingEventWarningCount < maxMissingEventWarnings) {
+          warnings.push(
+            `Missing event for studentVle row: id_site=${siteId}, code_module=${moduleCode}, code_presentation=${presentation}, student_id=${rawStudent}.`
+          );
+        }
+        missingEventWarningCount += 1;
+        return;
       }
-      missingEventWarningCount += 1;
-      return;
-    }
 
-    const eventDay = toInt(row.date);
-    if (eventDay === null) return;
+      const eventDay = toInt(row.date);
+      if (eventDay === null) return;
 
-    const clicks = toInt(row.sum_click) ?? 0;
-    const engagementRow = {
-      engagement_id: toEngagementId(batchId, studentId, eventId, eventDay),
-      batch_id: batchId,
-      event_id: eventId,
-      student_id: studentId,
-      enrollment_id: enrollment.enrollment_id,
-      source_dataset: sourceDataset,
-      event_day: eventDay,
-      week_number: Math.floor(eventDay / 7) + 1,
-      engagement_count: clicks,
-      log_click_score: Math.log(clicks + 1),
-    };
+      const clicks = toInt(row.sum_click) ?? 0;
+      const engagementRow = {
+        engagement_id: toEngagementId(batchId, studentId, eventId, eventDay),
+        batch_id: batchId,
+        event_id: eventId,
+        student_id: studentId,
+        enrollment_id: enrollment.enrollment_id,
+        source_dataset: sourceDataset,
+        event_day: eventDay,
+        week_number: Math.floor(eventDay / 7) + 1,
+        engagement_count: clicks,
+        log_click_score: Math.log(clicks + 1),
+      };
 
-    engagementCount += 1;
-    if (mode === "apply") {
-      engagementBuffer.push(engagementRow);
-      if (engagementBuffer.length >= engagementChunkSize) {
-        await flushEngagementBuffer();
+      engagementCount += 1;
+      if (mode === "apply") {
+        engagementBuffer.push(engagementRow);
+        if (engagementBuffer.length >= engagementChunkSize) {
+          await flushEngagementBuffer();
+        }
       }
-    }
-  }, rawRowCounts);
+    }, rawRowCounts);
 
-  await flushEngagementBuffer();
+    await flushEngagementBuffer();
+  } else {
+    rawRowCounts["studentVle.csv"] = null;
+    warnings.push("studentVle.csv scan skipped for fast OULAD preflight.");
+  }
   if (missingEventWarningCount > maxMissingEventWarnings) {
     warnings.push(
       `Missing event warnings truncated: ${missingEventWarningCount - maxMissingEventWarnings} additional rows omitted.`

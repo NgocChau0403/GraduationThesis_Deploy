@@ -13,7 +13,8 @@
     "registry:validate": "node scripts/validateRegistry.js",
     "registry:stats": "node scripts/registryStats.js",
     "registry:runtime": "node scripts/validateTasksAgainstDataset.js",
-    "registry:freeze": "node scripts/freezeRegistry.js"
+    "registry:freeze": "node scripts/freezeRegistry.js",
+    "performance:benchmark": "node scripts/systemPerformanceBenchmark.mjs"
   },
   "prisma": {
     "schema": "prisma/schema.prisma"
@@ -31,7 +32,8 @@
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "multer": "^2.1.1",
-    "pg": "^8.20.0"
+    "pg": "^8.20.0",
+    "pg-copy-streams": "^7.0.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14",

@@ -3,10 +3,15 @@ import { SAMPLE_BATCHES } from "../config/sampleBatches.js";
 import { activateDatasetByBatchId } from "./activeDataset.service.js";
 import {
   SAMPLE_BATCH_WHITELIST,
+  SAMPLE_FILE_LAYOUT,
   inspectSampleBatchFiles,
   loadAllSampleBatchesFromCsv,
   loadSampleBatchFromCsv,
 } from "./sampleCsvLoader.service.js";
+import {
+  clearEngagementForBatch,
+  rebuildOuladEngagementFromCsv,
+} from "./postgresCopy.service.js";
 
 const SAMPLE_BATCH_META = Object.values(SAMPLE_BATCHES).filter((meta) =>
   SAMPLE_BATCH_WHITELIST.includes(meta.batch_id)
@@ -32,10 +37,13 @@ function getLearningModeByBatchId(batchId) {
   return "offline";
 }
 
-function validateLoadedSampleBatch(loaded) {
+function validateLoadedSampleBatch(loaded, options = {}) {
+  const { requireEngagement = true } = options;
   const errors = [...(loaded.errors || [])];
   const counts = loaded.canonicalCounts || {};
-  const required = requiredEntitiesForBatch(loaded.batchId);
+  const required = requiredEntitiesForBatch(loaded.batchId).filter(
+    (key) => requireEngagement || key !== "engagement"
+  );
 
   for (const key of required) {
     if ((counts[key] || 0) <= 0) {
@@ -88,8 +96,35 @@ function printOuladFkDiagnostics({
   );
 }
 
-async function clearSampleBatchData(db, batchId) {
-  await db.engagement.deleteMany({ where: { batch_id: batchId } });
+function chunkRows(rows, chunkSize = 5000) {
+  const chunks = [];
+  for (let index = 0; index < rows.length; index += chunkSize) {
+    chunks.push(rows.slice(index, index + chunkSize));
+  }
+  return chunks;
+}
+
+async function createManyInChunks(delegate, rows, options = {}) {
+  const { chunkSize = 5000 } = options;
+  if (!Array.isArray(rows) || rows.length === 0) return 0;
+
+  let insertedCount = 0;
+  for (const chunk of chunkRows(rows, chunkSize)) {
+    // eslint-disable-next-line no-await-in-loop
+    const result = await delegate.createMany({
+      data: chunk,
+      skipDuplicates: true,
+    });
+    insertedCount += result?.count || 0;
+  }
+  return insertedCount;
+}
+
+async function clearSampleBatchData(db, batchId, options = {}) {
+  const { skipEngagement = false } = options;
+  if (!skipEngagement) {
+    await db.engagement.deleteMany({ where: { batch_id: batchId } });
+  }
   await db.assessmentResult.deleteMany({ where: { batch_id: batchId } });
   await db.event.deleteMany({ where: { batch_id: batchId } });
   await db.assessment.deleteMany({ where: { batch_id: batchId } });
@@ -101,31 +136,28 @@ async function clearSampleBatchData(db, batchId) {
 
 async function insertCanonicalRows(db, dataset) {
   if (dataset.students.length > 0) {
-    await db.student.createMany({ data: dataset.students, skipDuplicates: true });
+    await createManyInChunks(db.student, dataset.students);
   }
   if (dataset.courses.length > 0) {
-    await db.course.createMany({ data: dataset.courses, skipDuplicates: true });
+    await createManyInChunks(db.course, dataset.courses);
   }
   if (dataset.classes.length > 0) {
-    await db.class.createMany({ data: dataset.classes, skipDuplicates: true });
+    await createManyInChunks(db.class, dataset.classes);
   }
   if (dataset.enrollments.length > 0) {
-    await db.enrollment.createMany({ data: dataset.enrollments, skipDuplicates: true });
+    await createManyInChunks(db.enrollment, dataset.enrollments);
   }
   if (dataset.assessments.length > 0) {
-    await db.assessment.createMany({ data: dataset.assessments, skipDuplicates: true });
+    await createManyInChunks(db.assessment, dataset.assessments);
   }
   if (dataset.assessment_results.length > 0) {
-    await db.assessmentResult.createMany({
-      data: dataset.assessment_results,
-      skipDuplicates: true,
-    });
+    await createManyInChunks(db.assessmentResult, dataset.assessment_results);
   }
   if (dataset.events.length > 0) {
-    await db.event.createMany({ data: dataset.events, skipDuplicates: true });
+    await createManyInChunks(db.event, dataset.events);
   }
   if (dataset.engagements.length > 0) {
-    await db.engagement.createMany({ data: dataset.engagements, skipDuplicates: true });
+    await createManyInChunks(db.engagement, dataset.engagements);
   }
 }
 
@@ -291,12 +323,24 @@ async function batchNeedsSeed(batchId, forceReseed) {
 }
 
 export async function previewSampleReseed(options = {}) {
-  const { batchIds = SAMPLE_BATCH_WHITELIST, forceReseed = true } = options;
+  const {
+    batchIds = SAMPLE_BATCH_WHITELIST,
+    forceReseed = true,
+    fastOuladPreflight = false,
+  } = options;
 
   const activeStateBefore = await getCurrentActiveState();
   const activeImpact = computeActiveDatasetImpact(activeStateBefore);
-  const loaded = await loadAllSampleBatchesFromCsv(batchIds, { mode: "dry-run" });
-  const validated = loaded.map(validateLoadedSampleBatch);
+  const loaded = await loadAllSampleBatchesFromCsv(batchIds, {
+    mode: "dry-run",
+    scanOuladEngagementRows: !fastOuladPreflight,
+  });
+  const validated = loaded.map((item) =>
+    validateLoadedSampleBatch(item, {
+      requireEngagement:
+        !(fastOuladPreflight && item.batchId === SAMPLE_BATCHES.OULAD.batch_id),
+    })
+  );
 
   const shouldSeedMatrix = [];
   for (const batchId of batchIds) {
@@ -329,7 +373,11 @@ export async function reseedSampleDatasets(options = {}) {
     forceReseed = true,
   } = options;
 
-  const preview = await previewSampleReseed({ batchIds, forceReseed });
+  const preview = await previewSampleReseed({
+    batchIds,
+    forceReseed,
+    fastOuladPreflight: apply,
+  });
   if (!apply) return preview;
 
   if (preview.validationFailed) {
@@ -342,6 +390,7 @@ export async function reseedSampleDatasets(options = {}) {
   const perBatchResults = [];
   for (const batch of preview.batches) {
     const shouldSeed = preview.shouldSeedMatrix.find((item) => item.batchId === batch.batchId);
+    let appliedCanonicalRowCount = batch.canonicalRowCount;
     if (!shouldSeed?.wouldSeed) {
       perBatchResults.push({
         batchId: batch.batchId,
@@ -355,56 +404,14 @@ export async function reseedSampleDatasets(options = {}) {
     if (batch.batchId === SAMPLE_BATCHES.OULAD.batch_id) {
       try {
         await upsertSampleBatchMeta(prisma, batch.batchId, 0, "processing");
-        await clearSampleBatchData(prisma, batch.batchId);
-
-        const preflight = await loadSampleBatchFromCsv(batch.batchId, {
-          mode: "dry-run",
+        await clearEngagementForBatch(batch.batchId);
+        await clearSampleBatchData(prisma, batch.batchId, {
+          skipEngagement: true,
         });
-        const validatedPreflight = validateLoadedSampleBatch(preflight);
+
+        const validatedPreflight = batch;
         if (!validatedPreflight.ok) {
           throw new Error(`Preflight validation failed for ${batch.batchId}.`);
-        }
-
-        const eventIds = (validatedPreflight.dataset?.events || []).map((item) => item.event_id);
-        const eventIdSet = new Set(eventIds);
-        let totalEngagementRowsScanned = 0;
-        const engagementEventIdsSample = [];
-        const missingEventIdSet = new Set();
-
-        const probe = await loadSampleBatchFromCsv(batch.batchId, {
-          mode: "apply",
-          onOuladEngagementChunk: async (rows) => {
-            for (const row of rows) {
-              totalEngagementRowsScanned += 1;
-              if (engagementEventIdsSample.length < 20) {
-                engagementEventIdsSample.push(row.event_id);
-              }
-              if (!eventIdSet.has(row.event_id)) {
-                missingEventIdSet.add(row.event_id);
-              }
-            }
-          },
-        });
-        const validatedProbe = validateLoadedSampleBatch(probe);
-        if (!validatedProbe.ok) {
-          throw new Error(`Probe validation failed for ${batch.batchId}.`);
-        }
-
-        const missingEventIds = Array.from(missingEventIdSet);
-        printOuladFkDiagnostics({
-          eventIds,
-          engagementEventIdsSample,
-          totalEngagementRowsScanned,
-          missingEventIds,
-        });
-
-        if (missingEventIds.length > 0) {
-          const error = new Error(
-            `OULAD reseed aborted before engagement insert: ${missingEventIds.length} engagement.event_id values do not exist in event.event_id`
-          );
-          error.code = "OULAD_ENGAGEMENT_EVENT_FK_DIAGNOSTIC_FAILED";
-          error.missingEventIds = toFirstN(missingEventIds, 20);
-          throw error;
         }
 
         await insertCanonicalRows(prisma, {
@@ -430,41 +437,25 @@ export async function reseedSampleDatasets(options = {}) {
           )}`
         );
 
-        const engagementInsertStartedAt = Date.now();
-        let engagementChunkCount = 0;
-        let engagementRowsScanned = 0;
-        let engagementRowsInserted = 0;
-        const withStreamingInsert = await loadSampleBatchFromCsv(batch.batchId, {
-          mode: "apply",
-          onOuladEngagementChunk: async (rows) => {
-            engagementChunkCount += 1;
-            engagementRowsScanned += rows.length;
-            const inserted = await prisma.engagement.createMany({
-              data: rows,
-              skipDuplicates: true,
-            });
-            engagementRowsInserted += inserted?.count || 0;
-            if (engagementChunkCount % 20 === 0) {
-              const elapsedMs = Date.now() - engagementInsertStartedAt;
-              console.log(
-                `[OULAD Engagement Insert] chunks=${engagementChunkCount}, rows_scanned=${engagementRowsScanned}, rows_inserted=${engagementRowsInserted}, elapsed_ms=${elapsedMs}`
-              );
-            }
-          },
+        const engagementImport = await rebuildOuladEngagementFromCsv({
+          sourceFile: SAMPLE_FILE_LAYOUT.SAMPLE_OULAD
+            ? `${SAMPLE_FILE_LAYOUT.SAMPLE_OULAD.baseDir}/studentVle.csv`
+            : null,
+          batchId: batch.batchId,
         });
-        const validatedStreaming = validateLoadedSampleBatch(withStreamingInsert);
-        if (!validatedStreaming.ok) {
-          throw new Error(`Streaming apply validation failed for ${batch.batchId}.`);
-        }
         console.log(
-          `[OULAD Engagement Insert] completed chunks=${engagementChunkCount}, rows_scanned=${engagementRowsScanned}, rows_inserted=${engagementRowsInserted}, elapsed_ms=${Date.now() - engagementInsertStartedAt}`
+          `[OULAD Engagement Bulk Import] raw_rows=${engagementImport.raw_row_count}, rows_inserted=${engagementImport.inserted_row_count}, total_ms=${engagementImport.total_ms}`
         );
+        const canonicalRowCount =
+          validatedPreflight.canonicalRowCount +
+          engagementImport.inserted_row_count;
         await upsertSampleBatchMeta(
           prisma,
-          validatedStreaming.batchId,
-          validatedStreaming.canonicalRowCount,
+          batch.batchId,
+          canonicalRowCount,
           "completed"
         );
+        appliedCanonicalRowCount = canonicalRowCount;
       } catch (error) {
         await upsertSampleBatchMeta(prisma, batch.batchId, 0, "failed").catch(() => {});
         throw error;
@@ -497,7 +488,7 @@ export async function reseedSampleDatasets(options = {}) {
     perBatchResults.push({
       batchId: batch.batchId,
       skipped: false,
-      canonicalRowCount: batch.canonicalRowCount,
+      canonicalRowCount: appliedCanonicalRowCount,
     });
   }
 

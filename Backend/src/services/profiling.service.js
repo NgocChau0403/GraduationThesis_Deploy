@@ -2,6 +2,7 @@ import fs from "fs";
 import csv from "csv-parser";
 
 const SAMPLE_LIMIT = 100;
+const DISTINCT_TRACK_LIMIT = 5000;
 
 function detectType(values) {
   const cleaned = values.filter((v) => v !== null && v !== "");
@@ -44,14 +45,19 @@ export function profileCSV(filePath, options = {}) {
             columnStats[key] = {
               values: [],
               nullCount: 0,
-              distinctValues: new Set()
+              distinctValues: new Set(),
+              distinctOverflow: false
             };
           }
 
           if (value === "" || value === null || value === undefined) {
             columnStats[key].nullCount++;
           } else {
-            columnStats[key].distinctValues.add(value);
+            if (columnStats[key].distinctValues.size < DISTINCT_TRACK_LIMIT) {
+              columnStats[key].distinctValues.add(value);
+            } else if (!columnStats[key].distinctValues.has(value)) {
+              columnStats[key].distinctOverflow = true;
+            }
           }
 
           if (columnStats[key].values.length < SAMPLE_LIMIT) {
@@ -65,7 +71,11 @@ export function profileCSV(filePath, options = {}) {
           detected_type: detectType(stats.values),
           sample_values: stats.values.slice(0, 5),
           null_ratio: totalRows === 0 ? 0 : stats.nullCount / totalRows,
-          distinct_count: stats.distinctValues.size
+          distinct_count: stats.distinctValues.size,
+          distinct_count_capped: stats.distinctOverflow,
+          distinct_count_note: stats.distinctOverflow
+            ? `Distinct count capped at ${DISTINCT_TRACK_LIMIT} values for memory safety.`
+            : null
         }));
 
         resolve({

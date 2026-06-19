@@ -158,22 +158,24 @@ export async function validateAllTasksController(req, res) {
 
     let taskAvailabilityLog = null;
 
-    try {
-      taskAvailabilityLog = await writeTaskAvailabilityLog({
-        datasetId,
-        batchId,
-        sourceDataset,
-        classId: classId || null,
-        results,
-        requestContext: {
-          sourceEndpoint: "/api/tasks/validate/:datasetId",
-          mode: "validation_report",
-          uiRole: null,
-          includeExperimental: true
-        }
-      });
-    } catch (logError) {
-      console.warn("[EvaluationLog] Failed to write task availability log:", logError);
+    if (req.get("x-performance-benchmark") !== "true") {
+      try {
+        taskAvailabilityLog = await writeTaskAvailabilityLog({
+          datasetId,
+          batchId,
+          sourceDataset,
+          classId: classId || null,
+          results,
+          requestContext: {
+            sourceEndpoint: "/api/tasks/validate/:datasetId",
+            mode: "validation_report",
+            uiRole: null,
+            includeExperimental: true
+          }
+        });
+      } catch (logError) {
+        console.warn("[EvaluationLog] Failed to write task availability log:", logError);
+      }
     }
 
     return res.status(200).json({
@@ -255,22 +257,24 @@ export async function getAvailableTasksController(req, res) {
 
     let taskAvailabilityLog = null;
 
-    try {
-      taskAvailabilityLog = await writeTaskAvailabilityLog({
-        datasetId,
-        batchId,
-        sourceDataset,
-        classId: classId || null,
-        results: exposedResults,
-        requestContext: {
-          sourceEndpoint: "/api/tasks/available",
-          mode: "available_tasks",
-          uiRole: role || uiRole || null,
-          includeExperimental: includeExperimental === "true"
-        }
-      });
-    } catch (logError) {
-      console.warn("[EvaluationLog] Failed to write task availability log:", logError);
+    if (req.get("x-performance-benchmark") !== "true") {
+      try {
+        taskAvailabilityLog = await writeTaskAvailabilityLog({
+          datasetId,
+          batchId,
+          sourceDataset,
+          classId: classId || null,
+          results: exposedResults,
+          requestContext: {
+            sourceEndpoint: "/api/tasks/available",
+            mode: "available_tasks",
+            uiRole: role || uiRole || null,
+            includeExperimental: includeExperimental === "true"
+          }
+        });
+      } catch (logError) {
+        console.warn("[EvaluationLog] Failed to write task availability log:", logError);
+      }
     }
 
     return res.status(200).json({
