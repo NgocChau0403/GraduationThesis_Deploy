@@ -9,13 +9,13 @@ const MANIFEST_PATH = path.join(
 );
 const PHASE3_RECORDS_PATH = path.join(
   PROJECT_ROOT,
-  "Docs/evaluation_v2/LLMJudgeV2/outputs/row_count_records.jsonl"
+  "Docs/evaluation_v2/Handle20rows/outputs/row_count_records.jsonl"
 );
 const TASK_REGISTRY_PATH = path.join(
   PROJECT_ROOT,
   "backend/src/config/taskRegistry.json"
 );
-const OUTPUT_DIR = path.join(PROJECT_ROOT, "Docs/evaluation_v2/LLMJudgeV2/outputs");
+const OUTPUT_DIR = path.join(PROJECT_ROOT, "Docs/evaluation_v2/Handle20rows/outputs");
 const OUTPUT_JSON_PATH = path.join(OUTPUT_DIR, "small_result_runtime_verification.json");
 const OUTPUT_MD_PATH = path.join(OUTPUT_DIR, "small_result_runtime_verification.md");
 

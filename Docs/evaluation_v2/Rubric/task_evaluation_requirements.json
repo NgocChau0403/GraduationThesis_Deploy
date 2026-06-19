@@ -1,0 +1,2378 @@
+{
+  "schema_version": "task_evaluation_requirements_v1",
+  "status": "APPROVED_FOR_PILOT",
+  "scope_source": "Backend/src/config/taskRegistry.json",
+  "scope_source_sha256": "dbe92c76bb84c63b6a07cab3339f999ab231120c191d105d93cf8fab34958fca",
+  "materialization_policy": {
+    "core": "Non-conditional task deliverables from aiPromptHint; actionableQuestion is fallback only.",
+    "supporting": "Conditional deliverables such as when available or if a stated condition applies.",
+    "constraints": "Causal, scope, missing-data, audience, and non-invention restrictions are recorded separately.",
+    "review_overrides": "Task-specific education-dashboard review overrides may refine core/supporting/constraint classification without deleting source provenance.",
+    "safety_fairness": "Conservative default applicable; human review is required before any not_applicable exception.",
+    "freeze_rule": "Runner must copy the reviewed requirements into each frozen judge input."
+  },
+  "excluded_task_ids": [
+    "S-T00",
+    "S-T16",
+    "S-T17",
+    "A-G18",
+    "A-G19"
+  ],
+  "task_count": 52,
+  "tasks": [
+    {
+      "task_id": "S-B01",
+      "task_name": "Performance overview",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "How am I performing overall?",
+        "ai_prompt_hint": "Summarise overall score, pass/fail status, class benchmark, percentile, and the most useful next action based only on returned fields.",
+        "ai_summary_type": "metric_snapshot",
+        "required_columns": [
+          "avg_score",
+          "pass_rate",
+          "performance_trend",
+          "final_outcome"
+        ],
+        "optional_columns": [
+          "class_avg_score",
+          "class_median_score",
+          "score_percentile",
+          "unweighted_avg_score",
+          "weighted_avg_score",
+          "score_strategy",
+          "assessment_count",
+          "score_vs_class_avg",
+          "cohort_size",
+          "score_scale",
+          "pass_threshold",
+          "target_threshold",
+          "performance_band"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-B01-CORE-01",
+          "description": "State the overall score and pass/fail status.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [
+        {
+          "requirement_id": "S-B01-SUPPORT-01",
+          "description": "Compare against the class benchmark when class benchmark fields are present.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "S-B01-SUPPORT-02",
+          "description": "Report percentile standing when score_percentile is present.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "S-B01-SUPPORT-03",
+          "description": "Suggest the most useful next action supported by returned fields.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-B01-CONSTRAINT-01",
+          "description": "Use only returned fields; do not fill missing benchmark or percentile values with invented estimates.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "S-B01-CONSTRAINT-02",
+          "description": "If percentile data is absent, omit percentile comparison and state that it is unavailable when relevant.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-B02",
+      "task_name": "Risk status card",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "Am I at risk of failing?",
+        "ai_prompt_hint": "State the risk badge (low/medium/high) and at_risk_score out of 5. Use avg_score, pass_threshold, engagement_score, and punctuality_rate when available. If risk is high, name the top 2 likely triggered factors from returned metrics only.",
+        "ai_summary_type": "metric_snapshot",
+        "required_columns": [
+          "avg_score",
+          "at_risk_score",
+          "at_risk_label"
+        ],
+        "optional_columns": [
+          "engagement_score",
+          "engagement_score_available",
+          "punctuality_rate",
+          "previous_attempt_count",
+          "score_strategy",
+          "score_scale",
+          "pass_threshold",
+          "target_threshold"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-B02-CORE-01",
+          "description": "State the risk badge (low/medium/high) and at_risk_score out of 5.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [
+        {
+          "requirement_id": "S-B02-SUPPORT-01",
+          "description": "Use avg_score, pass_threshold, engagement_score, and punctuality_rate when available.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "S-B02-SUPPORT-02",
+          "description": "If risk is high, name the top 2 likely triggered factors from returned metrics only.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-B03",
+      "task_name": "Engagement summary",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "How active am I compared to classmates?",
+        "ai_prompt_hint": "Describe effort level in plain language using study_effort_level, total_engagement_count, active_days, engagement_score, and class_avg_engagement_score. Compare to class averages only from returned fields, and avoid calling missing engagement data low effort.",
+        "ai_summary_type": "metric_snapshot",
+        "required_columns": [
+          "total_engagement_count",
+          "active_days",
+          "engagement_score",
+          "class_avg_engagement_score",
+          "study_effort_level"
+        ],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-B03-CORE-01",
+          "description": "Characterise the student's effort level relative to the available class benchmark in plain language.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-B03-CONSTRAINT-01",
+          "description": "Ground the characterisation in study_effort_level, total_engagement_count, active_days, engagement_score, and class_avg_engagement_score when those fields are returned.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "S-B03-CONSTRAINT-02",
+          "description": "Do not label missing engagement data as low effort.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T01",
+      "task_name": "Score trend analysis",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "Am I getting better or worse over time?",
+        "ai_prompt_hint": "Identify trend direction, assessments below pass/target thresholds, and the concrete recommended_action for the weakest recent assessment.",
+        "ai_summary_type": "trend_series",
+        "required_columns": [
+          "assessment_order",
+          "score_normalized",
+          "pass_flag"
+        ],
+        "optional_columns": [
+          "week_of_class",
+          "assessment_type",
+          "assessment_name",
+          "class_avg_score",
+          "score_vs_class_avg",
+          "score_scale",
+          "pass_threshold",
+          "target_threshold",
+          "below_pass_threshold",
+          "below_target_threshold",
+          "performance_trend",
+          "support_level",
+          "recommended_action"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T01-CORE-01",
+          "description": "Identify the observed score trend direction.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "S-T01-CORE-02",
+          "description": "Identify assessments below returned pass or target thresholds.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [
+        {
+          "requirement_id": "S-T01-SUPPORT-01",
+          "description": "Provide recommended_action for the weakest recent assessment only when that field is present.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-T01-CONSTRAINT-01",
+          "description": "If fewer than 3 assessment data points are available, state that evidence is insufficient for a reliable trend rather than asserting a stable direction.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T02",
+      "task_name": "Competency gap analysis",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "Which skill area should I prioritise for improvement?",
+        "ai_prompt_hint": "Highlight which competency tags have lowest avg scores. Suggest focus areas.",
+        "ai_summary_type": "ranking",
+        "required_columns": [
+          "competency_tag",
+          "avg_score"
+        ],
+        "optional_columns": [
+          "competency_source",
+          "assessment_type",
+          "pass_rate",
+          "assessment_count"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T02-CORE-01",
+          "description": "Identify the competency tags with the lowest average scores.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [
+        {
+          "requirement_id": "S-T02-SUPPORT-01",
+          "description": "Suggest focus areas grounded in the identified competency gaps.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T03",
+      "task_name": "Peer comparison",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "Where do I stand compared to my class?",
+        "ai_prompt_hint": "Show student's standing (top X%). Explain which metrics are above/below average.",
+        "ai_summary_type": "multi_metric_comparison",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T03-CORE-01",
+          "description": "Show student's standing (top X%).",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "S-T03-CORE-02",
+          "description": "Explain which metrics are above/below average.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T04",
+      "task_name": "At-risk self-check",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "What specific risk signals are active for me right now?",
+        "ai_prompt_hint": "Treat this as a checklist: list triggered flags first, then explain each using flag_value vs threshold, severity, flag_description, and recommended_action. Keep non-triggered flags brief.",
+        "ai_summary_type": "risk_flags",
+        "required_columns": [
+          "flag_name",
+          "flag_value",
+          "threshold",
+          "triggered"
+        ],
+        "optional_columns": [
+          "severity",
+          "flag_description",
+          "recommended_action",
+          "support_category"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T04-CORE-01",
+          "description": "List triggered risk flags first.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "S-T04-CORE-02",
+          "description": "Explain each triggered flag using its value, threshold, severity, description, and recommended action when available.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-T04-CONSTRAINT-01",
+          "description": "If no flags are triggered, state that explicitly.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "S-T04-CONSTRAINT-02",
+          "description": "Keep non-triggered flags brief.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "S-T04-CONSTRAINT-03",
+          "description": "Do not invent risk signals that are not present in returned flags.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T05",
+      "task_name": "Weekly engagement trend",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "Which weeks did I disengage and why might that be?",
+        "ai_prompt_hint": "Describe engagement pattern. Flag weeks with sharp drops. Note if drop precedes assessment.",
+        "ai_summary_type": "trend_series",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T05-CORE-01",
+          "description": "Describe engagement pattern.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "S-T05-CORE-02",
+          "description": "Flag weeks with sharp drops.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "S-T05-CORE-03",
+          "description": "Note if drop precedes assessment.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-T05-CONSTRAINT-01",
+          "description": "Treat temporal proximity between engagement drops and assessments as an association, not proof that the assessment caused the drop.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T06",
+      "task_name": "Study consistency check",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "Am I studying steadily or only before exams?",
+        "ai_prompt_hint": "Distinguish 'steady learner' from 'pre-exam crammer'. Recommend a consistent weekly routine.",
+        "ai_summary_type": "trend_series",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T06-CORE-01",
+          "description": "Characterise the observed study pattern as steady or concentrated before assessments when evidence supports that distinction.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [
+        {
+          "requirement_id": "S-T06-SUPPORT-01",
+          "description": "Recommend a consistent weekly routine grounded in the observed study pattern.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T07",
+      "task_name": "Absence / inactivity impact",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "How much are my absences hurting my grades?",
+        "ai_prompt_hint": "Use absence_rate [FE] to show proportion of missed sessions. Correlate with avg_score [FE].",
+        "ai_summary_type": "trend_series",
+        "required_columns": [
+          "assessment_order",
+          "score_normalized"
+        ],
+        "optional_columns": [
+          "week_of_class",
+          "pass_flag",
+          "absences",
+          "absence_rate"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T07-CORE-01",
+          "description": "State the proportion of missed sessions.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "S-T07-CORE-02",
+          "description": "Describe the observed association between absence rate and average score.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-T07-CONSTRAINT-01",
+          "description": "Use absence_rate as the primary absence metric.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "S-T07-CONSTRAINT-02",
+          "description": "Frame the absence-score relationship as correlational, not causal.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T08",
+      "task_name": "Assessment lateness impact",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "Does submitting late actually lower my score?",
+        "ai_prompt_hint": "Use submission_delay_avg [FE] and punctuality_rate [FE]. Explain how delay magnitude correlates with score drop.",
+        "ai_summary_type": "trend_series",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T08-CORE-01",
+          "description": "State average submission delay and punctuality rate.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "S-T08-CORE-02",
+          "description": "Describe the observed relationship between delay magnitude and score.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-T08-CONSTRAINT-01",
+          "description": "Use submission_delay_avg and punctuality_rate when returned.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "S-T08-CONSTRAINT-02",
+          "description": "Frame the delay-score relationship as correlational, not causal.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T09",
+      "task_name": "Lifestyle risk vs performance",
+      "scope": "1 student + cohort context",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "Could my lifestyle habits be affecting my academic results?",
+        "ai_prompt_hint": "Compare the selected student against the class lifestyle-risk scatter. Highlight the student's position and any cohort-level association between lifestyle_risk_score and avg_score. Frame as correlation, not causation.",
+        "ai_summary_type": "correlation_evidence",
+        "required_columns": [
+          "student_id",
+          "point_role",
+          "lifestyle_risk_score",
+          "avg_score"
+        ],
+        "optional_columns": [
+          "is_current_student",
+          "alcohol_weekday",
+          "alcohol_weekend",
+          "go_out_freq",
+          "health_status",
+          "family_relation",
+          "free_time"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T09-CORE-01",
+          "description": "Compare the selected student against the class lifestyle-risk scatter.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "S-T09-CORE-02",
+          "description": "Highlight the student's position and any cohort-level association between lifestyle_risk_score and avg_score.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-T09-CONSTRAINT-01",
+          "description": "Frame as correlation, not causation.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T10",
+      "task_name": "Resource engagement breakdown",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "Am I using the full range of learning resources available?",
+        "ai_prompt_hint": "Use vle_diversity_score [FE] to show breadth. Highlight under-used types (e.g. forum rarely used).",
+        "ai_summary_type": "categorical_distribution",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T10-CORE-01",
+          "description": "State the student's resource usage breadth across available VLE types.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "S-T10-CORE-02",
+          "description": "Identify under-used resource types when a comparison baseline is available.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-T10-CONSTRAINT-01",
+          "description": "Use vle_diversity_score as the primary resource-breadth metric when returned.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "S-T10-CONSTRAINT-02",
+          "description": "Do not label low usage of a resource type as disengagement when no comparison baseline is provided.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T11",
+      "task_name": "Registration timing vs performance",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "Did enrolling late put me at a disadvantage?",
+        "ai_prompt_hint": "Explain whether early enrollment correlates with better outcome. Frame as associative, not causal.",
+        "ai_summary_type": "correlation_evidence",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T11-CORE-01",
+          "description": "Explain whether early enrollment correlates with better outcome.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-T11-CONSTRAINT-01",
+          "description": "Frame as associative, not causal.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T12",
+      "task_name": "Procrastination analysis",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "Am I a procrastinator and is it costing me marks?",
+        "ai_prompt_hint": "Use submission_delay_avg [FE]. Identify if late submission is systematic. Link to score.",
+        "ai_summary_type": "trend_series",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T12-CORE-01",
+          "description": "Identify whether late submission is systematic.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "S-T12-CORE-02",
+          "description": "Describe the observed relationship between submission delay and score.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-T12-CONSTRAINT-01",
+          "description": "Use submission_delay_avg as the primary delay metric; do not infer procrastination from score alone.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "S-T12-CONSTRAINT-02",
+          "description": "Frame the delay-score relationship as correlational, not causal.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T13",
+      "task_name": "Action plan generation",
+      "scope": "1 student",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "What should I do differently starting next week?",
+        "ai_prompt_hint": "Synthesise all [FE] risk signals into 3–5 prioritised actions. Reference which FE feature triggered each item.",
+        "ai_summary_type": "action_synthesis",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T13-CORE-01",
+          "description": "Synthesise all [FE] risk signals into 3–5 prioritised actions.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "S-T13-CORE-02",
+          "description": "Reference which FE feature triggered each item.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-T13-CONSTRAINT-01",
+          "description": "Do not include actions that reference signals not present in returned data.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "S-T13-CONSTRAINT-02",
+          "description": "Do not invent risk context, urgency, or priority unsupported by returned feature-engineered signals.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T14",
+      "task_name": "Social balance vs performance",
+      "scope": "1 student + cohort context",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "Is my social life balanced with my academic commitments?",
+        "ai_prompt_hint": "Compare the selected student against the class social-balance scatter. Highlight the student's position and any cohort-level association between social_balance_score and avg_score. Frame as correlation, not causation.",
+        "ai_summary_type": "correlation_evidence",
+        "required_columns": [
+          "student_id",
+          "point_role",
+          "social_balance_score",
+          "avg_score"
+        ],
+        "optional_columns": [
+          "is_current_student",
+          "free_time",
+          "go_out_freq",
+          "alcohol_weekday",
+          "alcohol_weekend"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T14-CORE-01",
+          "description": "Compare the selected student against the class social-balance scatter.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "S-T14-CORE-02",
+          "description": "Highlight the student's position and any cohort-level association between social_balance_score and avg_score.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-T14-CONSTRAINT-01",
+          "description": "Frame as correlation, not causation.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "S-T15",
+      "task_name": "Family context vs performance",
+      "scope": "1 student + cohort context",
+      "target_audience": [
+        "student"
+      ],
+      "source": {
+        "actionable_question": "How might my family background be reflected in my academic patterns?",
+        "ai_prompt_hint": "Compare the selected student against the class family-context scatter. Highlight the student's position and any cohort-level association between family_stability_score and avg_score. Frame findings as associative, not causal, and avoid prescriptive suggestions.",
+        "ai_summary_type": "correlation_evidence",
+        "required_columns": [
+          "student_id",
+          "point_role",
+          "family_stability_score",
+          "avg_score"
+        ],
+        "optional_columns": [
+          "is_current_student",
+          "family_relation",
+          "parent_cohabitation_status",
+          "mother_education_level",
+          "father_education_level"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "S-T15-CORE-01",
+          "description": "Compare the selected student against the class family-context scatter.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "S-T15-CORE-02",
+          "description": "Highlight the student's position and any cohort-level association between family_stability_score and avg_score.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "S-T15-CONSTRAINT-01",
+          "description": "Frame findings as associative, not causal, and avoid prescriptive suggestions.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-B01",
+      "task_name": "Overall performance distribution",
+      "scope": "Cohort",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "How is the class performing overall?",
+        "ai_prompt_hint": "Describe score spread. Flag if large proportion below pass threshold.",
+        "ai_summary_type": "numeric_distribution",
+        "required_columns": [
+          "score_bucket",
+          "student_count"
+        ],
+        "optional_columns": [
+          "pct_of_class",
+          "dataset_source",
+          "avg_score_in_bucket"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-B01-CORE-01",
+          "description": "Describe score spread.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-B01-CORE-02",
+          "description": "Flag if large proportion below pass threshold.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-B02",
+      "task_name": "Completion / outcome summary",
+      "scope": "Cohort",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "How many students passed, failed, or withdrew?",
+        "ai_prompt_hint": "State pass/fail/withdrawal counts. Highlight proportion at-risk.",
+        "ai_summary_type": "categorical_distribution",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-B02-CORE-01",
+          "description": "State pass/fail/withdrawal counts.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-B02-CORE-02",
+          "description": "Highlight proportion at-risk.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-B03",
+      "task_name": "Engagement distribution",
+      "scope": "Cohort",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "What proportion of the class is disengaged?",
+        "ai_prompt_hint": "Describe proportion of low/medium/high effort students. Flag the low tail.",
+        "ai_summary_type": "categorical_distribution",
+        "required_columns": [
+          "study_effort_level",
+          "student_count"
+        ],
+        "optional_columns": [
+          "pct_of_class",
+          "avg_engagement_score"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-B03-CORE-01",
+          "description": "Describe proportion of low/medium/high effort students.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-B03-CORE-02",
+          "description": "Flag the low tail.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-B04",
+      "task_name": "At-risk overview",
+      "scope": "Cohort",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "How many students need urgent intervention?",
+        "ai_prompt_hint": "State number of high/medium/low risk students. Recommend immediate review of high group.",
+        "ai_summary_type": "categorical_distribution",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-B04-CORE-01",
+          "description": "State number of high/medium/low risk students.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-B04-CORE-02",
+          "description": "Recommend immediate review of high group.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-S01",
+      "task_name": "Student full profile snapshot",
+      "scope": "1 student",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "source": {
+        "actionable_question": "Who is this student and what is their current overall situation?",
+        "ai_prompt_hint": "Summarise who this student is and where they stand across all dimensions (score, engagement, risk) in plain language.",
+        "ai_summary_type": "metric_snapshot",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-S01-CORE-01",
+          "description": "Summarise who this student is and where they stand across all dimensions (score, engagement, risk) in plain language.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-S01-CONSTRAINT-01",
+          "description": "Do not extrapolate beyond returned score, engagement, and risk dimensions.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-S01-CONSTRAINT-02",
+          "description": "Avoid holistic judgements about the student when supporting data is absent.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-S02",
+      "task_name": "Student score trend",
+      "scope": "1 student",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "source": {
+        "actionable_question": "Is this student getting better or worse — and how fast?",
+        "ai_prompt_hint": "Identify whether student is improving or declining. Reference performance_trend [FE] slope direction and magnitude.",
+        "ai_summary_type": "trend_series",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-S02-CORE-01",
+          "description": "Identify whether student is improving or declining.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-S02-CORE-02",
+          "description": "Reference performance_trend [FE] slope direction and magnitude.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-S03",
+      "task_name": "Student engagement trajectory",
+      "scope": "1 student",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "source": {
+        "actionable_question": "When exactly did this student start disengaging?",
+        "ai_prompt_hint": "Flag the exact week engagement dropped. Compare to pre-drop average. Recommend admin outreach timing.",
+        "ai_summary_type": "trend_series",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-S03-CORE-01",
+          "description": "Identify the specific week in which engagement dropped when the data supports one.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "A-S03-CORE-02",
+          "description": "Compare engagement after the drop with the pre-drop average.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [
+        {
+          "requirement_id": "A-S03-SUPPORT-01",
+          "description": "When a specific drop week is identified, recommend outreach timing relative to that week.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-S04",
+      "task_name": "Student risk flag breakdown",
+      "scope": "1 student",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "source": {
+        "actionable_question": "Which specific risk factors should admin address for this student?",
+        "ai_prompt_hint": "For each triggered flag, state the exact value and why it crosses the threshold. Prioritise the top 2 for immediate action.",
+        "ai_summary_type": "risk_flags",
+        "required_columns": [
+          "flag_name",
+          "flag_value",
+          "threshold",
+          "triggered"
+        ],
+        "optional_columns": [
+          "severity",
+          "flag_description",
+          "recommended_action",
+          "support_category"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-S04-CORE-01",
+          "description": "For each triggered flag, state the exact value and why it crosses the threshold.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-S04-CORE-02",
+          "description": "Prioritise the top 2 for immediate action.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-S05",
+      "task_name": "Student competency gap",
+      "scope": "1 student",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "source": {
+        "actionable_question": "Where should we focus academic support for this student?",
+        "ai_prompt_hint": "Highlight competency tags with lowest avg scores. Recommend specific support type (knowledge_recall → flashcards, applied → practice problems).",
+        "ai_summary_type": "ranking",
+        "required_columns": [
+          "competency_tag",
+          "avg_score"
+        ],
+        "optional_columns": [
+          "competency_source",
+          "assessment_type",
+          "assessment_order",
+          "pass_rate",
+          "assessment_count"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-S05-CORE-01",
+          "description": "Highlight competency tags with lowest avg scores.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-S05-CORE-02",
+          "description": "Recommend specific support type (knowledge_recall → flashcards, applied → practice problems).",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-S06",
+      "task_name": "Student submission & punctuality",
+      "scope": "1 student",
+      "target_audience": [
+        "instructor"
+      ],
+      "source": {
+        "actionable_question": "Is this student consistently submitting late and does it affect their score?",
+        "ai_prompt_hint": "State average delay and punctuality rate. Identify if late submission is systematic. Suggest deadline reminder or check-in.",
+        "ai_summary_type": "trend_series",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-S06-CORE-01",
+          "description": "State average delay and punctuality rate.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-S06-CORE-02",
+          "description": "Identify if late submission is systematic.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-S06-CORE-03",
+          "description": "Suggest deadline reminder or check-in.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-S06-CONSTRAINT-01",
+          "description": "Do not characterise late submission as low motivation or a personal failing.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-S07",
+      "task_name": "Student background context",
+      "scope": "1 student",
+      "target_audience": [
+        "academic_advisor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "What background factors should admin consider when deciding how to support this student?",
+        "ai_prompt_hint": "Frame background factors as context, not judgement. Note which disadvantage dimensions are present and what support is already in place.",
+        "ai_summary_type": "metric_snapshot",
+        "required_columns": [
+          "school",
+          "family_size",
+          "gender",
+          "age_years",
+          "school_support_flag",
+          "family_support_flag",
+          "has_paid_class",
+          "internet_access_flag",
+          "support_score",
+          "lifestyle_risk_score",
+          "social_balance_score",
+          "family_stability_score"
+        ],
+        "optional_columns": [
+          "highest_education",
+          "mother_education_level",
+          "father_education_level",
+          "age_group",
+          "previous_attempt_count",
+          "studytime",
+          "absences"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-S07-CORE-01",
+          "description": "Note which disadvantage dimensions are present and what support is already in place.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-S07-CONSTRAINT-01",
+          "description": "Frame background factors as context, not judgement.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-S07-CONSTRAINT-02",
+          "description": "Treat the output as professional advisor/admin context; do not expose raw disadvantage scores in student-facing wording.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-S08",
+      "task_name": "Student intervention recommendation",
+      "scope": "1 student",
+      "target_audience": [
+        "academic_advisor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "What should admin do for this student in the next 7 days?",
+        "ai_prompt_hint": "Synthesise all [FE] signals into 3–5 admin actions ranked by urgency. Specify who should act (tutor / admin / counsellor) and by when.",
+        "ai_summary_type": "action_synthesis",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-S08-CORE-01",
+          "description": "Synthesise all [FE] signals into 3–5 admin actions ranked by urgency.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-S08-CORE-02",
+          "description": "Specify who should act (tutor / admin / counsellor) and by when.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-S08-CONSTRAINT-01",
+          "description": "Every proposed action and urgency level must reference returned feature-engineered signals.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-S08-CONSTRAINT-02",
+          "description": "Do not invent urgency that is not supported by returned signals.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-C01",
+      "task_name": "Compare performance trajectories",
+      "scope": "2 students",
+      "target_audience": [
+        "instructor"
+      ],
+      "source": {
+        "actionable_question": "Which student is improving faster and when did their paths diverge?",
+        "ai_prompt_hint": "Explain divergence points. Identify when one student fell behind relative to the other.",
+        "ai_summary_type": "trend_comparison",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-C01-CORE-01",
+          "description": "Explain divergence points.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-C01-CORE-02",
+          "description": "Identify when one student fell behind relative to the other.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-C01-CONSTRAINT-01",
+          "description": "If either student's data is absent or insufficient for trajectory comparison, state that explicitly rather than inferring from the other student's data.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-C02",
+      "task_name": "Compare engagement patterns",
+      "scope": "2 students",
+      "target_audience": [
+        "instructor"
+      ],
+      "source": {
+        "actionable_question": "Which student is more engaged across total clicks, active days, and combined engagement score?",
+        "ai_prompt_hint": "Compare the two students using metric, engagement_score, total_clicks, and active_days. Explain which engagement dimension creates the largest gap. Do not infer academic risk unless risk fields are present.",
+        "ai_summary_type": "multi_metric_comparison",
+        "required_columns": [
+          "student_id",
+          "metric",
+          "engagement_score"
+        ],
+        "optional_columns": [
+          "total_clicks",
+          "active_days",
+          "study_effort_level"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-C02-CORE-01",
+          "description": "Compare the two students using metric, engagement_score, total_clicks, and active_days.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-C02-CORE-02",
+          "description": "Explain which engagement dimension creates the largest gap.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-C02-CONSTRAINT-01",
+          "description": "Do not infer academic risk unless risk fields are present.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-C03",
+      "task_name": "Compare risk profile",
+      "scope": "2 students",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "source": {
+        "actionable_question": "Who is at higher risk and what are the key differences?",
+        "ai_prompt_hint": "Compare the two returned student rows. Use at_risk_score, at_risk_label, and explicit flag_* columns to explain who needs more urgent intervention. If avg_score is null, state that score evidence is missing rather than guessing.",
+        "ai_summary_type": "multi_metric_comparison",
+        "required_columns": [
+          "student_id",
+          "at_risk_score",
+          "at_risk_label"
+        ],
+        "optional_columns": [
+          "avg_score",
+          "performance_trend",
+          "punctuality_rate",
+          "engagement_score",
+          "previous_attempt_count",
+          "flag_low_score",
+          "flag_repeated",
+          "flag_low_engagement",
+          "flag_low_punctuality",
+          "flag_neg_trend",
+          "final_outcome"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-C03-CORE-01",
+          "description": "Compare the two returned student rows.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-C03-CORE-02",
+          "description": "Use at_risk_score, at_risk_label, and explicit flag_* columns to explain who needs more urgent intervention.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [
+        {
+          "requirement_id": "A-C03-SUPPORT-01",
+          "description": "If avg_score is null, state that score evidence is missing rather than guessing.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-C04",
+      "task_name": "Compare lifestyle context",
+      "scope": "2 students",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "source": {
+        "actionable_question": "Which lifestyle context dimensions differ most between these two students?",
+        "ai_prompt_hint": "Compare lifestyle_dimension rows for the two students. Highlight the largest dimension gaps. Use composite_lifestyle_risk_score and social_balance_score only as supporting context. Frame lifestyle differences as context only, not causal judgement.",
+        "ai_summary_type": "multi_metric_comparison",
+        "required_columns": [
+          "student_id",
+          "lifestyle_dimension",
+          "lifestyle_risk_score"
+        ],
+        "optional_columns": [
+          "alcohol_weekday",
+          "alcohol_weekend",
+          "go_out_freq",
+          "health_status",
+          "free_time",
+          "composite_lifestyle_risk_score",
+          "social_balance_score"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-C04-CORE-01",
+          "description": "Compare lifestyle_dimension rows for the two students.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "A-C04-CORE-02",
+          "description": "Highlight the largest dimension gaps.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [
+        {
+          "requirement_id": "A-C04-SUPPORT-01",
+          "description": "Use composite_lifestyle_risk_score and social_balance_score only as supporting context.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-C04-CONSTRAINT-01",
+          "description": "Frame lifestyle differences as context only, not causal judgement.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Applicable because this is an individual-level comparison involving lifestyle context.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-C05",
+      "task_name": "Compare academic background",
+      "scope": "2 students",
+      "target_audience": [
+        "academic_advisor"
+      ],
+      "source": {
+        "actionable_question": "Does one student face more structural disadvantage than the other?",
+        "ai_prompt_hint": "Identify background-driven performance differences. Avoid causal claims.",
+        "ai_summary_type": "multi_metric_comparison",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-C05-CORE-01",
+          "description": "Identify background-driven performance differences.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-C05-CONSTRAINT-01",
+          "description": "Avoid causal claims.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-C06",
+      "task_name": "Compare resource usage",
+      "scope": "2 students",
+      "target_audience": [
+        "instructor"
+      ],
+      "source": {
+        "actionable_question": "Is one student using resources more strategically than the other?",
+        "ai_prompt_hint": "Highlight who is more diversified in resource use. Note if one avoids forums/quizzes.",
+        "ai_summary_type": "multi_metric_comparison",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-C06-CORE-01",
+          "description": "Highlight who is more diversified in resource use.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-C06-CORE-02",
+          "description": "Note if one avoids forums/quizzes.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Retained as applicable because it compares two identifiable students; risk is lower than lifestyle/background tasks but not absent.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G01",
+      "task_name": "Identify low-engagement group",
+      "scope": "Many students",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "Which students are dangerously disengaged and need outreach?",
+        "ai_prompt_hint": "Define 'low engagement' threshold. List students below it. Recommend admin action (email/contact).",
+        "ai_summary_type": "ranking",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G01-CORE-01",
+          "description": "Define 'low engagement' threshold.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G01-CORE-02",
+          "description": "List students below it.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G01-CORE-03",
+          "description": "Recommend admin action (email/contact).",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G01-CONSTRAINT-01",
+          "description": "Do not name individual students beyond identifiers already present in returned data.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-G01-CONSTRAINT-02",
+          "description": "Treat the output as internal admin use when individual identifiers are listed.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G02",
+      "task_name": "Engagement–performance relationship",
+      "scope": "Many students",
+      "target_audience": [
+        "instructor"
+      ],
+      "source": {
+        "actionable_question": "Does engaging more in this class actually lead to better grades?",
+        "ai_prompt_hint": "Describe correlation direction and strength. Flag outliers (high engagement, low score) as a special case.",
+        "ai_summary_type": "correlation_evidence",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G02-CORE-01",
+          "description": "Describe correlation direction and strength.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G02-CORE-02",
+          "description": "Flag outliers (high engagement, low score) as a special case.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G02-CONSTRAINT-01",
+          "description": "Describe the engagement-score relationship as correlational; do not infer that engagement causes score outcomes.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G03",
+      "task_name": "Identify at-risk cohort",
+      "scope": "Many students",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "Who should the admin contact first this week?",
+        "ai_prompt_hint": "Rank at-risk students by at_risk_score. For each high-risk student, explain triggered_flags_summary and recommend the recommended_admin_action. Do not invent reasons outside triggered_flags.",
+        "ai_summary_type": "ranking",
+        "required_columns": [
+          "student_id",
+          "avg_score",
+          "at_risk_score",
+          "at_risk_label",
+          "triggered_flags"
+        ],
+        "optional_columns": [
+          "enrollment_id",
+          "score_strategy",
+          "score_scale",
+          "pass_threshold",
+          "target_threshold",
+          "engagement_score",
+          "engagement_score_available",
+          "punctuality_rate",
+          "previous_attempt_count",
+          "triggered_flags_summary",
+          "primary_support_category",
+          "recommended_admin_action",
+          "flag_low_score",
+          "flag_repeated",
+          "flag_low_engagement",
+          "flag_low_punctuality",
+          "flag_neg_trend",
+          "final_outcome"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G03-CORE-01",
+          "description": "Rank at-risk students by at_risk_score.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G03-CORE-02",
+          "description": "For each high-risk student, explain triggered_flags_summary and recommend the recommended_admin_action.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G03-CONSTRAINT-01",
+          "description": "Do not invent reasons outside triggered_flags.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G04",
+      "task_name": "Assessment difficulty analysis",
+      "scope": "Many students",
+      "target_audience": [
+        "instructor"
+      ],
+      "source": {
+        "actionable_question": "Which assessment is causing the most students to fail?",
+        "ai_prompt_hint": "Flag assessments with pass_flag=False rate above threshold. Suggest curriculum review.",
+        "ai_summary_type": "ranking",
+        "required_columns": [
+          "assessment_name",
+          "fail_rate_pct"
+        ],
+        "optional_columns": [
+          "assessment_id",
+          "assessment_order",
+          "assessment_type",
+          "week_of_class",
+          "competency_tag",
+          "competency_source",
+          "total_submissions",
+          "fail_count",
+          "avg_score"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G04-CORE-01",
+          "description": "Flag assessments with pass_flag=False rate above threshold.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G04-CORE-02",
+          "description": "Suggest curriculum review.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G04-CONSTRAINT-01",
+          "description": "Frame a high fail rate as a signal for assessment or curriculum review, not as evidence of student deficiency.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-G04-CONSTRAINT-02",
+          "description": "Avoid causal claims about student quality.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Retained as applicable because curriculum recommendations can affect learners; candidate for human review rather than automatic exclusion.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G05",
+      "task_name": "Submission behaviour analysis",
+      "scope": "Many students",
+      "target_audience": [
+        "instructor"
+      ],
+      "source": {
+        "actionable_question": "Are late submissions a systemic problem in this class?",
+        "ai_prompt_hint": "Use final_outcome, assessment_type, submission_delay_avg, late_submission_rate, and punctuality_rate to decide whether late submission is systemic. Prioritize groups with high late_submission_rate and high student_count. Do not discuss individual students.",
+        "ai_summary_type": "group_comparison",
+        "required_columns": [
+          "final_outcome",
+          "assessment_type",
+          "submission_delay_avg",
+          "late_submission_rate"
+        ],
+        "optional_columns": [
+          "submission_count",
+          "student_count",
+          "net_submission_delay_avg",
+          "punctuality_rate",
+          "avg_score",
+          "submission_risk_level"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G05-CORE-01",
+          "description": "Use final_outcome, assessment_type, submission_delay_avg, late_submission_rate, and punctuality_rate to decide whether late submission is systemic.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G05-CORE-02",
+          "description": "Prioritize groups with high late_submission_rate and high student_count.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G05-CONSTRAINT-01",
+          "description": "Do not discuss individual students.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G06",
+      "task_name": "Activity type effectiveness",
+      "scope": "Many students",
+      "target_audience": [
+        "instructor"
+      ],
+      "source": {
+        "actionable_question": "Which learning activities should the admin encourage students to use more?",
+        "ai_prompt_hint": "Highlight which resource types are most associated with higher scores. Recommend admin to promote those.",
+        "ai_summary_type": "ranking",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G06-CORE-01",
+          "description": "Highlight which resource types are most associated with higher scores.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G06-CORE-02",
+          "description": "Recommend admin to promote those.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G06-CONSTRAINT-01",
+          "description": "Frame resource-score relationships as correlational; do not claim that a resource type causes score improvement.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G07",
+      "task_name": "Factor correlation analysis",
+      "scope": "Many students",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "source": {
+        "actionable_question": "What are the strongest predictors of student success in this dataset?",
+        "ai_prompt_hint": "Rank top 5 features by correlation with avg_score [FE]. Note dataset-specific features.",
+        "ai_summary_type": "ranking",
+        "required_columns": [
+          "feature_name",
+          "correlation_with_avg_score"
+        ],
+        "optional_columns": [
+          "n_samples",
+          "abs_correlation_rank"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G07-CORE-01",
+          "description": "Rank top 5 features by correlation with avg_score [FE].",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G07-CORE-02",
+          "description": "Note dataset-specific features.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G07-CONSTRAINT-01",
+          "description": "When ranked features include sensitive demographic, lifestyle, or socioeconomic attributes, identify their sensitivity and avoid framing correlation as prescriptive guidance.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-G07-CONSTRAINT-02",
+          "description": "Do not interpret feature correlation as causal importance.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Retained as applicable pending review because ranked factors may include sensitive attributes and may influence intervention policy.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G08",
+      "task_name": "Background group performance & engagement profile",
+      "scope": "Many students",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "source": {
+        "actionable_question": "Which demographic groups are scoring or engaging below the class average?",
+        "ai_prompt_hint": "For each demographic group, compare mean avg_score [FE] and engagement_score [FE] to cohort average. Use colour intensity to show deviation. Avoid causal claims. Note: output is continuous score — distinct from A-G12 which uses categorical final_outcome.",
+        "ai_summary_type": "group_comparison",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G08-CORE-01",
+          "description": "For each demographic group, compare mean average score and engagement score with the cohort average.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G08-CONSTRAINT-01",
+          "description": "Quantify the magnitude of group deviation rather than relying on visual colour encoding alone.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-G08-CONSTRAINT-02",
+          "description": "Avoid causal claims.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-G08-CONSTRAINT-03",
+          "description": "Treat this as an equity-sensitive demographic group analysis.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Applicable because the task compares demographic groups and requires equity framing.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G09",
+      "task_name": "Socioeconomic disadvantage impact",
+      "scope": "Many students",
+      "target_audience": [
+        "academic_advisor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "Are disadvantaged students receiving adequate support?",
+        "ai_prompt_hint": "Describe trend. Highlight which imd_band groups have most at-risk students. Recommend equity-aware support.",
+        "ai_summary_type": "correlation_evidence",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G09-CORE-01",
+          "description": "Describe trend.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G09-CORE-02",
+          "description": "Highlight which imd_band groups have most at-risk students.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G09-CORE-03",
+          "description": "Recommend equity-aware support.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G09-CONSTRAINT-01",
+          "description": "Describe group-level patterns only; do not name individual students in equity analysis.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-G09-CONSTRAINT-02",
+          "description": "Frame socioeconomic factors as context and association, not individual blame or deterministic cause.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Applicable because the task analyses socioeconomic disadvantage and recommends equity-aware support.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G10",
+      "task_name": "Consistency analysis across cohort",
+      "scope": "Many students",
+      "target_audience": [
+        "instructor"
+      ],
+      "source": {
+        "actionable_question": "How many students are cramming instead of studying consistently?",
+        "ai_prompt_hint": "Describe the distribution of students across high, medium, and low consistency using student_count and pct_students. Use avg_weekly_stddev and avg_active_weeks to explain what low consistency means, then recommend study-routine interventions for the low group.",
+        "ai_summary_type": "categorical_distribution",
+        "required_columns": [
+          "consistency_level",
+          "student_count"
+        ],
+        "optional_columns": [
+          "pct_students",
+          "avg_weekly_stddev",
+          "avg_weekly_clicks",
+          "avg_active_weeks"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G10-CORE-01",
+          "description": "Describe the distribution of students across high, medium, and low consistency using returned cohort counts or percentages.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "A-G10-CORE-02",
+          "description": "Explain what low consistency means by reference to returned spread and active-week metrics.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "A-G10-CORE-03",
+          "description": "Recommend study-routine interventions targeted at the low-consistency group.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G10-CONSTRAINT-01",
+          "description": "Do not conflate low consistency with low effort.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-G10-CONSTRAINT-02",
+          "description": "Acknowledge that observed study patterns may reflect employment, health, accessibility, or family obligations when making recommendations.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G11",
+      "task_name": "Weekly engagement drop detection",
+      "scope": "Many students",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "Which weeks should the admin schedule check-ins or motivational nudges?",
+        "ai_prompt_hint": "Use early_warning_week [FE] to pinpoint critical weeks. Recommend admin action timing (e.g. week 5 intervention).",
+        "ai_summary_type": "trend_series",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G11-CORE-01",
+          "description": "Identify the critical weeks in which cohort-level engagement declined.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "A-G11-CORE-02",
+          "description": "Recommend admin action timing relative to the identified critical weeks.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G11-CONSTRAINT-01",
+          "description": "Use early_warning_week as the primary timing field when returned.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G12",
+      "task_name": "Background group pass/fail/withdrawal rate",
+      "scope": "Many students",
+      "target_audience": [
+        "academic_advisor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "Which demographic groups have the highest failure or dropout rate?",
+        "ai_prompt_hint": "For each demographic group, state fail rate and withdrawal rate as percentages. Flag groups where fail+withdrawn > cohort threshold. Note: output is categorical final_outcome — distinct from A-G08 which uses continuous avg_score.",
+        "ai_summary_type": "group_comparison",
+        "required_columns": [
+          "group_value",
+          "final_outcome",
+          "pct_within_group"
+        ],
+        "optional_columns": [
+          "student_count"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G12-CORE-01",
+          "description": "For each demographic group, state fail rate and withdrawal rate as percentages.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G12-CORE-02",
+          "description": "Flag groups where fail+withdrawn > cohort threshold.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G12-CONSTRAINT-01",
+          "description": "Do not conflate categorical pass, fail, or withdrawal outcomes with continuous score metrics when interpreting group results.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Applicable because the task compares failure and withdrawal rates across demographic groups.",
+      "review_status": "approved_for_pilot",
+      "review_note": "A-G12 evaluates categorical final outcomes; A-G08 evaluates continuous score and engagement metrics."
+    },
+    {
+      "task_id": "A-G13",
+      "task_name": "Lifestyle risk across cohort",
+      "scope": "Many students",
+      "target_audience": [
+        "academic_advisor"
+      ],
+      "source": {
+        "actionable_question": "Which lifestyle patterns are most common among low-performing students?",
+        "ai_prompt_hint": "Rank students by lifestyle_risk_score. Correlate with avg_score. Frame as correlational, not prescriptive.",
+        "ai_summary_type": "correlation_evidence",
+        "required_columns": [
+          "student_id",
+          "lifestyle_risk_score",
+          "avg_score"
+        ],
+        "optional_columns": [
+          "alcohol_weekday",
+          "alcohol_weekend",
+          "go_out_freq",
+          "health_status"
+        ]
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G13-CORE-01",
+          "description": "Rank students by lifestyle_risk_score.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G13-CORE-02",
+          "description": "Correlate with avg_score.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G13-CONSTRAINT-01",
+          "description": "Frame lifestyle-risk ranking as descriptive and correlational, not causal or deterministic.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-G13-CONSTRAINT-02",
+          "description": "When listing students by lifestyle-risk rank, avoid language that implies individual blame.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Applicable because the task ranks identifiable students using lifestyle context.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G14",
+      "task_name": "Early withdrawal signal analysis",
+      "scope": "Many students",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "How early can admin detect a student about to drop out?",
+        "ai_prompt_hint": "Use early_warning_week [FE] to show when engagement collapsed for withdrawn students. Compare to passing students.",
+        "ai_summary_type": "trend_comparison",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G14-CORE-01",
+          "description": "Identify when engagement collapsed for withdrawn students.",
+          "source_field": "human_review_override"
+        },
+        {
+          "requirement_id": "A-G14-CORE-02",
+          "description": "Compare the timing or trajectory with passing students.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G14-CONSTRAINT-01",
+          "description": "Use early_warning_week as the primary collapse-timing field when returned.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-G14-CONSTRAINT-02",
+          "description": "Frame the comparison as an observed pattern, not proof of withdrawal causation.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G15",
+      "task_name": "Intervention priority ranking",
+      "scope": "Many students",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "Who are the top 10 students most in need of intervention right now?",
+        "ai_prompt_hint": "Rank by at_risk_score [FE] descending. List triggered flags per student. Provide action per priority group.",
+        "ai_summary_type": "ranking",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G15-CORE-01",
+          "description": "Rank by at_risk_score [FE] descending.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G15-CORE-02",
+          "description": "List triggered flags per student.",
+          "source_field": "aiPromptHint"
+        },
+        {
+          "requirement_id": "A-G15-CORE-03",
+          "description": "Provide action per priority group.",
+          "source_field": "aiPromptHint"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G15-CONSTRAINT-01",
+          "description": "Treat the output as internal admin use only.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-G15-CONSTRAINT-02",
+          "description": "Do not include personally identifying information beyond identifiers already present in returned data.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot"
+    },
+    {
+      "task_id": "A-G16",
+      "task_name": "Admin action recommendation",
+      "scope": "Many students",
+      "target_audience": [
+        "admin"
+      ],
+      "source": {
+        "actionable_question": "What concrete actions should the admin take in the next 2 weeks?",
+        "ai_prompt_hint": "Synthesise all cohort [FE] signals into 3–5 admin actions. This is the most critical AI synthesis task for admin role.",
+        "ai_summary_type": "action_synthesis",
+        "required_columns": [],
+        "optional_columns": []
+      },
+      "required_core_outputs": [
+        {
+          "requirement_id": "A-G16-CORE-01",
+          "description": "Synthesise cohort feature-engineered signals into 3–5 admin actions.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "required_supporting_outputs": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-G16-CONSTRAINT-01",
+          "description": "Every recommended action must be grounded in returned cohort feature-engineered signals.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-G16-CONSTRAINT-02",
+          "description": "Do not invent urgency or priority without supporting returned data.",
+          "source_field": "human_review_override"
+        }
+      ],
+      "safety_fairness_applicability": "applicable",
+      "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
+      "review_status": "approved_for_pilot",
+      "review_note": "Removed descriptive task-importance metadata from core deliverables during human review."
+    }
+  ]
+}

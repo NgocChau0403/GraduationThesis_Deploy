@@ -2,7 +2,7 @@
 
 - Ngày validation: 2026-06-18
 - Registry: `Backend/src/config/taskRegistry.json`
-- Validator: `Docs/evaluation_v2/ai_explanation_judge_v2/validate_migrated_task_summaries.py`
+- Validator: `Docs/evaluation_v2/UpdateBerforeLLMv2/validate_migrated_task_summaries.py`
 - Nguồn dữ liệu: full `analytics_request_response_if_called.response.datasets` trong runtime artifacts V1
 - Phạm vi: kiểm tra data summarization; không gọi LLM và không chạy lại LLM-as-a-judge
 
@@ -133,7 +133,7 @@ Các task sau không được gắn `aiSummaryType` trong lần migration này.
 
 ```powershell
 & 'C:\Users\USER\.cache\codex-runtimes\codex-primary-runtime\dependencies\python\python.exe' `
-  'C:\[Graduation_Thesis]Prototype\Docs\evaluation_v2\ai_explanation_judge_v2\validate_migrated_task_summaries.py'
+  'C:\[Graduation_Thesis]Prototype\Docs\evaluation_v2\UpdateBerforeLLMv2\validate_migrated_task_summaries.py'
 ```
 
 Exit code `0` nghĩa là không có registry error và mọi applicable case đều pass.

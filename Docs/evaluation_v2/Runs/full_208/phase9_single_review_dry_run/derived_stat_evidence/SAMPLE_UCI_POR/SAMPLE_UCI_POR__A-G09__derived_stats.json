@@ -1,0 +1,34 @@
+{
+  "artifact_type": "llm_judge_v3_deterministic_derived_stat_evidence_v1",
+  "generated_at": "2026-06-19T10:02:51.086Z",
+  "dry_run_mode": "single_review",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G09",
+  "task_name": "Socioeconomic disadvantage impact",
+  "ai_summary_type": "correlation_evidence",
+  "stat_family": "correlation",
+  "coefficient_method": "pearson",
+  "x_column": "disadvantage_score",
+  "y_column": "avg_score",
+  "entity_column": "student_id",
+  "source_full_query_artifact": {
+    "path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G09.json",
+    "sha256": "445982af9f84730af9a456522b5e80733c6d2c4e54f7d32482c593604b370843",
+    "evidence_id": "SAMPLE_UCI_POR__A-G09"
+  },
+  "source_judge_input_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_inputs/SAMPLE_UCI_POR__A-G09__baseline_first_20_rows.json",
+  "derived_stats": [
+    {
+      "dataset_label": "disadvantage_impact",
+      "status": "skipped",
+      "reason": "no_valid_numeric_pairs",
+      "row_count": 0,
+      "valid_pair_count": 0,
+      "invalid_x_count": 0,
+      "invalid_y_count": 0,
+      "warnings": []
+    }
+  ],
+  "judge_usage_note": "Use this artifact as deterministic support for correlation coefficient claims. It proves derived Pearson r from all valid x/y pairs in the full query result; it does not prove causality or statistical significance.",
+  "artifact_sha256": "eaccb46ebbba23df28a2dc69c94a4ee1482e490c87f1dcc49ad32df8225fec34"
+}

@@ -1,0 +1,133 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:33:52.445Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__A-G04",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": null,
+  "role": "admin",
+  "task_id": "A-G04",
+  "task_name": "Assessment difficulty analysis",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "A-G04",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 28,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 3,
+    "row_count_observed": 3,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "assessment_difficulty",
+        "row_count": 3,
+        "sample_fields": [
+          "assessment_id",
+          "assessment_name",
+          "assessment_type",
+          "assessment_order",
+          "week_of_class",
+          "competency_tag",
+          "competency_source",
+          "total_submissions",
+          "fail_count",
+          "fail_rate_pct",
+          "avg_score"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "6e5eaf43883c0c84bb0b0b6e402b9402216dce6c94d4cd46221f0f53a303f3f3"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "executable",
+    "backend_confidence": "HIGH",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847232418_20c741c0",
+    "taskId": "A-G04",
+    "datasets": {
+      "assessment_difficulty": [
+        {
+          "assessment_id": "SAMPLE_UCI_POR_ASM_G1",
+          "assessment_name": "G1",
+          "assessment_type": "quiz",
+          "assessment_order": 1,
+          "week_of_class": 3,
+          "competency_tag": "G1",
+          "competency_source": "proxy",
+          "total_submissions": 649,
+          "fail_count": 50,
+          "fail_rate_pct": 7.7,
+          "avg_score": 57
+        },
+        {
+          "assessment_id": "SAMPLE_UCI_POR_ASM_G2",
+          "assessment_name": "G2",
+          "assessment_type": "quiz",
+          "assessment_order": 2,
+          "week_of_class": 8,
+          "competency_tag": "G2",
+          "competency_source": "proxy",
+          "total_submissions": 649,
+          "fail_count": 33,
+          "fail_rate_pct": 5.1,
+          "avg_score": 57.85
+        },
+        {
+          "assessment_id": "SAMPLE_UCI_POR_ASM_G3",
+          "assessment_name": "G3",
+          "assessment_type": "exam",
+          "assessment_order": 3,
+          "week_of_class": 14,
+          "competency_tag": "G3",
+          "competency_source": "proxy",
+          "total_submissions": 649,
+          "fail_count": 30,
+          "fail_rate_pct": 4.6,
+          "avg_score": 59.53
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "A-G04",
+      "isMultiQuery": false,
+      "rowCount": 3,
+      "executionTimeMs": 14,
+      "queryHash": "5fbe1637",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "assessment_difficulty"
+      ],
+      "dataQuality": {
+        "status": "executable",
+        "confidence": "HIGH",
+        "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+        "warnings": []
+      }
+    }
+  }
+}

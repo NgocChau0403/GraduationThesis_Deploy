@@ -1,0 +1,217 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_UCI_POR__A-C05__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v3_uci_rerun",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-C05",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v3_uci_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_uci_rerun_candidate",
+  "task_context": {
+    "task_name": "Compare academic background",
+    "scope": "2 students",
+    "actionable_question": "Does one student face more structural disadvantage than the other?",
+    "target_audience": "academic_advisor",
+    "ai_summary_type": "multi_metric_comparison",
+    "ai_prompt_hint": "Identify background-driven performance differences. Avoid causal claims.",
+    "query_labels": [
+      "background_comparison"
+    ],
+    "explanation_strategy": "comparison"
+  },
+  "schema_context": {
+    "source_tables": [
+      "student",
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "highest_education",
+      "previous_attempt_count",
+      "imd_score_numeric",
+      "socioeconomic_band",
+      "disability_flag",
+      "disadvantage_score [FE single]",
+      "support_score [FE single]",
+      "family_stability_score [FE single]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "background_comparison"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The comparison of two students reveals significant differences in their parental education levels and associated disadvantage scores. The student with higher parental education appears to have a lower structural disadvantage compared to the other student.\n\nInsights: Parental Education Level Impact: The first student has a higher parental education level (4/4) compared to the second student (1/4), indicating a potential advantage in academic support and resources. | Disadvantage Score Comparison: The first student has a disadvantage score of 0.2, while the second student has a score of 0.4, indicating that the second student faces more structural disadvantages.\n\nEducational implications: Students with lower parental education levels may require additional support to overcome structural disadvantages.\n\nRecommendations: high - Implement targeted support programs for students with lower parental education backgrounds. - To help mitigate the impact of structural disadvantages on academic performance.",
+    "structured_payload": {
+      "task_id": "A-C05",
+      "execution_id": "exec_1781847232057_25cc847c",
+      "explanation": {
+        "summary": "The comparison of two students reveals significant differences in their parental education levels and associated disadvantage scores. The student with higher parental education appears to have a lower structural disadvantage compared to the other student.",
+        "insights": [
+          {
+            "title": "Parental Education Level Impact",
+            "description": "The first student has a higher parental education level (4/4) compared to the second student (1/4), indicating a potential advantage in academic support and resources.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "mother_education_level",
+                "value": "4",
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Student 1"
+              },
+              {
+                "metric": "mother_education_level",
+                "value": "1",
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Student 2"
+              }
+            ]
+          },
+          {
+            "title": "Disadvantage Score Comparison",
+            "description": "The first student has a disadvantage score of 0.2, while the second student has a score of 0.4, indicating that the second student faces more structural disadvantages.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "disadvantage_score",
+                "value": 0.2,
+                "comparison": "down_from_previous",
+                "delta": -0.2,
+                "context": "Student 1"
+              },
+              {
+                "metric": "disadvantage_score",
+                "value": 0.4,
+                "comparison": "up_from_previous",
+                "delta": 0.2,
+                "context": "Student 2"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Students with lower parental education levels may require additional support to overcome structural disadvantages."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted support programs for students with lower parental education backgrounds.",
+            "rationale": "To help mitigate the impact of structural disadvantages on academic performance."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data is complete and directly compares relevant metrics.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "comparison",
+      "explanation_type": "comparison",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "full_rows_due_to_small_result",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 2,
+      "included_row_count": 2,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "background_comparison",
+          "row_count": 2,
+          "included_row_count": 2
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 9129,
+        "token_usage": {
+          "prompt_tokens": 914,
+          "completion_tokens": 501,
+          "total_tokens": 1415
+        },
+        "strategy": "comparison",
+        "granularity": "semester",
+        "cost_usd": 0.000438
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-C05__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "feb2498ea9341ad7bb42e136c63ae269e03fe627b9992b644b54dd103fbd95bb",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 914,
+        "completion_tokens": 501,
+        "total_tokens": 1415
+      },
+      "latency_ms": 9143,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 2,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "background_comparison",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C05.json",
+        "artifact_sha256": "255d44b8db1c6f7c9f3050f88ca33b6dbf8e435493d83a871ffaf61513400e7c",
+        "row_count": 2,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 2,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "background_comparison": 2
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-C05-CORE-01",
+        "description": "Identify background-driven performance differences."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-C05-CONSTRAINT-01",
+        "description": "Avoid causal claims."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  },
+  "derived_stat_evidence": []
+}

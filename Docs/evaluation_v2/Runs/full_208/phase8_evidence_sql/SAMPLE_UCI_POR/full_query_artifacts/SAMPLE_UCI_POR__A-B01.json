@@ -1,0 +1,147 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:33:51.736Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__A-B01",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": null,
+  "role": "admin",
+  "task_id": "A-B01",
+  "task_name": "Overall performance distribution",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "A-B01",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 85,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 10,
+    "row_count_observed": 10,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "score_distribution",
+        "row_count": 10,
+        "sample_fields": [
+          "score_bucket",
+          "student_count",
+          "pct_of_class",
+          "avg_score_in_bucket"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "df628c9e756173fa56c95830ad55dd6d85e32e50a5c96d7ad99985910fb17ab9"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "executable",
+    "backend_confidence": "HIGH",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847231655_3078f027",
+    "taskId": "A-B01",
+    "datasets": {
+      "score_distribution": [
+        {
+          "score_bucket": "0-10",
+          "student_count": 3,
+          "pct_of_class": 0.5,
+          "avg_score_in_bucket": 7.78
+        },
+        {
+          "score_bucket": "10-20",
+          "student_count": 4,
+          "pct_of_class": 0.6,
+          "avg_score_in_bucket": 12.92
+        },
+        {
+          "score_bucket": "20-30",
+          "student_count": 9,
+          "pct_of_class": 1.4,
+          "avg_score_in_bucket": 24.44
+        },
+        {
+          "score_bucket": "30-40",
+          "student_count": 33,
+          "pct_of_class": 5.1,
+          "avg_score_in_bucket": 36.01
+        },
+        {
+          "score_bucket": "40-50",
+          "student_count": 108,
+          "pct_of_class": 16.6,
+          "avg_score_in_bucket": 45.03
+        },
+        {
+          "score_bucket": "50-60",
+          "student_count": 187,
+          "pct_of_class": 28.8,
+          "avg_score_in_bucket": 53.66
+        },
+        {
+          "score_bucket": "60-70",
+          "student_count": 168,
+          "pct_of_class": 25.9,
+          "avg_score_in_bucket": 63.78
+        },
+        {
+          "score_bucket": "70-80",
+          "student_count": 90,
+          "pct_of_class": 13.9,
+          "avg_score_in_bucket": 73.91
+        },
+        {
+          "score_bucket": "80-90",
+          "student_count": 40,
+          "pct_of_class": 6.2,
+          "avg_score_in_bucket": 83.54
+        },
+        {
+          "score_bucket": "90-100",
+          "student_count": 7,
+          "pct_of_class": 1.1,
+          "avg_score_in_bucket": 90.48
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "A-B01",
+      "isMultiQuery": false,
+      "rowCount": 10,
+      "executionTimeMs": 10,
+      "queryHash": "589df2e2",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "score_distribution"
+      ],
+      "dataQuality": {
+        "status": "executable",
+        "confidence": "HIGH",
+        "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+        "warnings": []
+      }
+    }
+  }
+}

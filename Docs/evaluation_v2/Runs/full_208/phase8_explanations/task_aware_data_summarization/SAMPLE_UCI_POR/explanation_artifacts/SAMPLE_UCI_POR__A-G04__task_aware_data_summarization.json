@@ -1,0 +1,309 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T07:17:59.384Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-G04__task_aware_data_summarization",
+    "case_id": "SAMPLE_UCI_POR__A-G04",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G04",
+    "task_name": "Assessment difficulty analysis",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G04.json",
+    "full_query_artifact_sha256": "31b78680122105a0667522bd84cdde13044290f025837c6e6dd6d8c4fea8da0f"
+  },
+  "request_payload": {
+    "task_id": "A-G04",
+    "execution_id": "exec_1781847232418_20c741c0",
+    "task_name": "Assessment difficulty analysis",
+    "analysis_type": "distribution",
+    "explanation_strategy": "distribution",
+    "explanation_type": "observation, interpretation, recommendation",
+    "ai_prompt_hint": "Flag assessments with pass_flag=False rate above threshold. Suggest curriculum review.",
+    "actionable_question": "Which assessment is causing the most students to fail?",
+    "target_audience": [
+      "instructor"
+    ],
+    "visualization_config": {
+      "x_field": "assessment_name",
+      "y_field": "fail_rate_pct",
+      "series_field": null,
+      "color_field": "assessment_type",
+      "orientation": "horizontal",
+      "variant": "ranked",
+      "x_label": "Assessment",
+      "y_label": "Fail Rate (%)",
+      "semantic_roles": {
+        "x": "category",
+        "y": "performance_metric",
+        "color": "category"
+      }
+    },
+    "analysis_context": {
+      "granularity": "per_assessment",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "assessment_difficulty": [
+        {
+          "assessment_id": "SAMPLE_UCI_POR_ASM_G1",
+          "assessment_name": "G1",
+          "assessment_type": "quiz",
+          "assessment_order": 1,
+          "week_of_class": 3,
+          "competency_tag": "G1",
+          "competency_source": "proxy",
+          "total_submissions": 649,
+          "fail_count": 50,
+          "fail_rate_pct": 7.7,
+          "avg_score": 57
+        },
+        {
+          "assessment_id": "SAMPLE_UCI_POR_ASM_G2",
+          "assessment_name": "G2",
+          "assessment_type": "quiz",
+          "assessment_order": 2,
+          "week_of_class": 8,
+          "competency_tag": "G2",
+          "competency_source": "proxy",
+          "total_submissions": 649,
+          "fail_count": 33,
+          "fail_rate_pct": 5.1,
+          "avg_score": 57.85
+        },
+        {
+          "assessment_id": "SAMPLE_UCI_POR_ASM_G3",
+          "assessment_name": "G3",
+          "assessment_type": "exam",
+          "assessment_order": 3,
+          "week_of_class": 14,
+          "competency_tag": "G3",
+          "competency_source": "proxy",
+          "total_submissions": 649,
+          "fail_count": 30,
+          "fail_rate_pct": 4.6,
+          "avg_score": 59.53
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "assessment_difficulty"
+    ],
+    "semantic_context": {
+      "competency_mode": "proxy",
+      "competency_proxy_note": "competency_tag uses a 3-tier COALESCE fallback: (1) native competency_tag if dataset has competency ontology, (2) assessment_name as proxy (UCI: G1/G2/G3, OULAD: TMA01/CMA01), (3) 'Unknown' as final safety net."
+    },
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [
+        "total_submissions",
+        "fail_count",
+        "avg_score"
+      ],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [
+        "assessment_id",
+        "assessment_type",
+        "week_of_class",
+        "competency_tag",
+        "competency_source"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "ranking",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "fail_rate_pct",
+      "entity_column": "assessment_name",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": "desc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": 10,
+      "bottom_k": 5
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 4997,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1061,
+      "completion_tokens": 334,
+      "total_tokens": 1395
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-G04",
+    "execution_id": "exec_1781847232418_20c741c0",
+    "explanation": {
+      "summary": "The analysis of assessment difficulty reveals that the G1 assessment has the highest fail rate among the three assessments, indicating it may be the most challenging for students. G2 and G3 show lower fail rates, suggesting better student performance in these areas.",
+      "insights": [
+        {
+          "title": "High Fail Rate in G1",
+          "description": "G1 has a fail rate of 7.7%, which is significantly higher than G2 and G3, indicating that it poses the most difficulty for students.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "fail_rate_pct",
+              "value": 7.7,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "G1 has the highest fail rate compared to G2 and G3."
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "The high fail rate in G1 suggests that students may require additional support or resources to improve their understanding of the material."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Review the curriculum and instructional strategies for G1.",
+          "rationale": "To address the high fail rate and improve student outcomes, it is essential to identify potential gaps in teaching methods or content delivery."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The dataset is complete and provides a clear view of assessment performance.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "distribution",
+    "explanation_type": "distribution",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "full_rows_due_to_small_result",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 3,
+    "included_row_count": 3,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "assessment_difficulty",
+        "row_count": 3,
+        "included_row_count": 3
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 4993,
+      "token_usage": {
+        "prompt_tokens": 1061,
+        "completion_tokens": 334,
+        "total_tokens": 1395
+      },
+      "strategy": "distribution",
+      "granularity": "per_assessment",
+      "cost_usd": 0.00036
+    }
+  },
+  "raw_text": "Summary: The analysis of assessment difficulty reveals that the G1 assessment has the highest fail rate among the three assessments, indicating it may be the most challenging for students. G2 and G3 show lower fail rates, suggesting better student performance in these areas.\n\nInsights: High Fail Rate in G1: G1 has a fail rate of 7.7%, which is significantly higher than G2 and G3, indicating that it poses the most difficulty for students.\n\nEducational implications: The high fail rate in G1 suggests that students may require additional support or resources to improve their understanding of the material.\n\nRecommendations: high - Review the curriculum and instructional strategies for G1. - To address the high fail rate and improve student outcomes, it is essential to identify potential gaps in teaching methods or content delivery."
+}

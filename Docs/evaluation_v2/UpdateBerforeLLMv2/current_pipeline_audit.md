@@ -4,7 +4,7 @@
 - Giai đoạn: Phase 1 - Kiểm tra pipeline hiện tại
 - Phạm vi: chỉ đọc source code và artifacts của pipeline V1, không chạy lại LLM judge
 - Thư mục artifacts V1 đã kiểm tra: `Docs/evaluation_v1/ai_explanation_full_matrix/scored_reports/`
-- File báo cáo hiện tại: `Docs/evaluation_v2/ai_explanation_judge_v2/current_pipeline_audit.md`
+- File báo cáo hiện tại: `Docs/evaluation_v2/UpdateBerforeLLMv2/current_pipeline_audit.md`
 
 ## 1. Tóm tắt kết quả
 
@@ -214,16 +214,37 @@ V2 cần bổ sung:
 judge_prompt_path
 judge_input_schema_version
 full_query_result_row_count
-judge_visible_row_count
+full_query_artifacts
+evidence_access_mode
+small_result_row_threshold
+prompt_embedded_row_count
+retrieved_row_count
+retrieved_row_count_by_dataset
+retrieved_row_ranges
+retrieved_chunk_ids
+retrieval_log_path
+retrieval_request_complete
+retrieval_coverage_status
+full_access_available
+deterministic_scan_scope
+deterministic_scan_row_count_by_dataset
+full_result_sent_to_llm
 baseline_visible_row_count
 task_aware_evidence_row_count
 is_full_result_within_20_rows
-full_query_results_path hoặc embedded full_query_results
+deterministic_checks
+checked_claim_types
+unchecked_claim_types
 schema_context_path hoặc embedded schema_context
 paired_comparison_record_id
 comparative_scores
 comparative_rationale
 ```
+
+Theo Decision D2 đã chốt, artifact path đơn lẻ không chứng minh judge có quyền
+truy cập. V2 phải tách evidence availability, retrieval/delivery và
+deterministic verification; retrieval log là bắt buộc cho result không được
+embed toàn bộ trực tiếp.
 
 ## 8. Cách hai AI summary method hiện đang hoạt động
 
@@ -390,4 +411,3 @@ V2 cần bổ sung chính xác:
 - Paired baseline/task-aware judge input.
 - Comparative scores, rationale và verdict.
 - Quy trình chạy lại bằng Codex project/chat session mới.
-

@@ -1,0 +1,115 @@
+{
+  "schema_version": "pairwise_judge_v3_dry_run_schema_v1",
+  "pairwise_record_id": "SAMPLE_UCI_POR__A-G02__pairwise_AB",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G02",
+  "order_variant": "AB",
+  "scoring_status": "judged",
+  "winner": "B",
+  "winner_confidence": "medium",
+  "difference_magnitude": "moderate",
+  "dimension_winners": {
+    "faithfulness": "B",
+    "numerical_correctness": "B",
+    "completeness": "B",
+    "task_relevance": "B",
+    "actionability": "tie",
+    "clarity": "tie",
+    "safety_fairness": "B"
+  },
+  "metric_comparison": {
+    "faithfulness": {
+      "winner": "B",
+      "reason": "Candidate B is closer to the supplied evidence because it does not assert a Pearson coefficient in the explanation, while candidate A invents a weak negative correlation despite zero variance in engagement_score.",
+      "evidence_refs": [
+        "deterministic_derived_stat_evidence:A-G02:zero_variance",
+        "candidate_explanations:A-G02"
+      ]
+    },
+    "numerical_correctness": {
+      "winner": "B",
+      "reason": "Candidate B is less numerically wrong: the derived evidence says Pearson is unavailable because x_variance is 0, so candidate A's weak-negative-correlation claim is unsupported.",
+      "evidence_refs": [
+        "deterministic_derived_stat_evidence:A-G02:zero_variance",
+        "candidate_A:weak_negative_correlation_claim"
+      ]
+    },
+    "completeness": {
+      "winner": "B",
+      "reason": "Candidate B at least discusses low-score outlier-like cases, while candidate A spends substantial space on an unsupported correlation and the wrong outlier pattern.",
+      "evidence_refs": [
+        "prompt_packet:A-G02:task_context",
+        "prompt_packet:A-G02:candidate_explanations"
+      ]
+    },
+    "task_relevance": {
+      "winner": "B",
+      "reason": "Candidate B is more focused on the requested engagement/performance gap, even though it still mislabels engagement_score 0.0 as high engagement.",
+      "evidence_refs": [
+        "prompt_packet:A-G02:task_context",
+        "prompt_packet:A-G02:candidate_explanations"
+      ]
+    },
+    "actionability": {
+      "winner": "tie",
+      "reason": "Both candidates recommend support for students with engagement-performance mismatch, but neither recommendation is fully grounded because the engagement field has zero variance.",
+      "evidence_refs": [
+        "prompt_packet:A-G02:task_context",
+        "prompt_packet:A-G02:candidate_explanations"
+      ]
+    },
+    "clarity": {
+      "winner": "tie",
+      "reason": "Both explanations are readable and similarly structured.",
+      "evidence_refs": [
+        "prompt_packet:A-G02:task_context",
+        "prompt_packet:A-G02:candidate_explanations"
+      ]
+    },
+    "safety_fairness": {
+      "winner": "B",
+      "reason": "Candidate B is safer because its structured confidence acknowledges the missing Pearson coefficient; candidate A presents an unsupported directional correlation with high confidence.",
+      "evidence_refs": [
+        "deterministic_derived_stat_evidence:A-G02:zero_variance"
+      ]
+    }
+  },
+  "coverage_comparison": {
+    "winner": "B",
+    "reason": "Candidate B uses more of the full-result context and acknowledges coefficient limits, while candidate A appears driven by an unsupported first-row pattern."
+  },
+  "specificity_comparison": {
+    "winner": "B",
+    "reason": "Candidate B gives concrete low-score ranges, while candidate A's most specific correlation claim is contradicted by deterministic evidence."
+  },
+  "decisive_evidence": [
+    {
+      "evidence_ref": "deterministic_derived_stat_evidence:A-G02:status=skipped,reason=zero_variance,valid_pair_count=649",
+      "supports_candidate": "B",
+      "reason": "This makes candidate A's weak negative Pearson-style interpretation unsupported and makes candidate B comparatively safer."
+    }
+  ],
+  "tie_justification": null,
+  "absolute_rerun_flags": [
+    {
+      "candidate": "A",
+      "suspected_error_type": "unsupported_correlation_claim",
+      "severity_hint": "major",
+      "reason": "Candidate A states a weak negative correlation even though deterministic evidence says Pearson cannot be derived because engagement_score has zero variance.",
+      "evidence_refs": [
+        "deterministic_derived_stat_evidence:A-G02:zero_variance"
+      ]
+    },
+    {
+      "candidate": "B",
+      "suspected_error_type": "mislabelled_outlier_context",
+      "severity_hint": "minor",
+      "reason": "Candidate B describes engagement_score 0.0 examples as high engagement, which is internally inconsistent with the supplied field.",
+      "evidence_refs": [
+        "candidate_B:engagement_score_0_as_high_engagement"
+      ]
+    }
+  ],
+  "requires_absolute_rerun": true,
+  "reviewer_notes": "Winner B; both need review, but candidate B is less contradicted by the deterministic zero-variance evidence."
+}

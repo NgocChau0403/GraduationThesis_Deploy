@@ -1,0 +1,162 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G06__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G06",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Activity type effectiveness",
+    "scope": "Many students",
+    "actionable_question": "Which learning activities should the admin encourage students to use more?",
+    "target_audience": "instructor",
+    "ai_summary_type": "ranking",
+    "ai_prompt_hint": "Highlight which resource types are most associated with higher scores. Recommend admin to promote those.",
+    "query_labels": [
+      "activity_effectiveness"
+    ],
+    "explanation_strategy": "correlation"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "engagement",
+      "event",
+      "assessment_result",
+      "assessment [OULAD only]"
+    ],
+    "key_db_fields": [
+      "resource_type",
+      "engagement_count; avg_score [FE cross] by resource_type"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "activity_effectiveness"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis of the relationship between Resource Type and Avg Score of Users cannot be conducted due to the absence of data in the dataset. Without any records, no correlation patterns can be identified.\n\nWarnings: No data available for analysis, making it impossible to draw any conclusions or recommendations.",
+    "structured_payload": {
+      "task_id": "A-G06",
+      "execution_id": "exec_1781847232487_b81f3d9d",
+      "explanation": {
+        "summary": "The analysis of the relationship between Resource Type and Avg Score of Users cannot be conducted due to the absence of data in the dataset. Without any records, no correlation patterns can be identified.",
+        "insights": [],
+        "educational_implications": [],
+        "recommendations": [],
+        "warnings": [
+          "No data available for analysis, making it impossible to draw any conclusions or recommendations."
+        ]
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset is empty, leading to a definitive conclusion that no analysis can be performed.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "correlation",
+      "explanation_type": "correlation",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 2766,
+        "token_usage": {
+          "prompt_tokens": 519,
+          "completion_tokens": 133,
+          "total_tokens": 652
+        },
+        "strategy": "correlation",
+        "granularity": "semester",
+        "cost_usd": 0.000158
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G06__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "cbfedad649be808d4fe45d9f0cb3442f66891598349226ce3c58ba9bb20646e3",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 519,
+        "completion_tokens": 133,
+        "total_tokens": 652
+      },
+      "latency_ms": 2770,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 0,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "activity_effectiveness",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G06.json",
+        "artifact_sha256": "9f3a43bc72634dba922d4eea50c7f25612d93c55c8fa774695a1c6922809332b",
+        "row_count": 0,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "activity_effectiveness": 0
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G06-CORE-01",
+        "description": "Highlight which resource types are most associated with higher scores."
+      },
+      {
+        "requirement_id": "A-G06-CORE-02",
+        "description": "Recommend admin to promote those."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G06-CONSTRAINT-01",
+        "description": "Frame resource-score relationships as correlational; do not claim that a resource type causes score improvement."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

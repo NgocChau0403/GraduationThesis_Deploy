@@ -1,0 +1,191 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-B04__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-B04",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "At-risk overview",
+    "scope": "Cohort",
+    "actionable_question": "How many students need urgent intervention?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "categorical_distribution",
+    "ai_prompt_hint": "State number of high/medium/low risk students. Recommend immediate review of high group.",
+    "query_labels": [
+      "risk_overview"
+    ],
+    "explanation_strategy": "risk"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "at_risk_label [FE]",
+      "at_risk_score [FE]; enrollment_id and avg_score from enrollment + score_agg JOIN (not from risk_flags directly)"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "risk_overview"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: A significant number of students are identified as at risk, with 915 categorized as high risk and 927 as medium risk. This indicates a pressing need for targeted interventions, particularly for the high-risk group.\n\nInsights: High-Risk Student Count: There are 915 students classified as high risk, indicating a critical need for immediate intervention strategies to support their academic success. | Medium-Risk Student Count: Additionally, 927 students are categorized as medium risk, suggesting that while they may not require urgent intervention, they still need monitoring and support.\n\nEducational implications: High-risk students may face significant barriers to academic success and require immediate support.\n\nRecommendations: high - Conduct an immediate review of high-risk students to identify specific needs and tailor interventions. - Addressing the needs of high-risk students promptly can help mitigate potential academic failure and improve overall outcomes.",
+    "structured_payload": {
+      "task_id": "A-B04",
+      "execution_id": "exec_1781847633767_8b68b090",
+      "explanation": {
+        "summary": "A significant number of students are identified as at risk, with 915 categorized as high risk and 927 as medium risk. This indicates a pressing need for targeted interventions, particularly for the high-risk group.",
+        "insights": [
+          {
+            "title": "High-Risk Student Count",
+            "description": "There are 915 students classified as high risk, indicating a critical need for immediate intervention strategies to support their academic success.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "student_count",
+                "value": 915,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "High-risk students identified"
+              }
+            ]
+          },
+          {
+            "title": "Medium-Risk Student Count",
+            "description": "Additionally, 927 students are categorized as medium risk, suggesting that while they may not require urgent intervention, they still need monitoring and support.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "student_count",
+                "value": 927,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Medium-risk students identified"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "High-risk students may face significant barriers to academic success and require immediate support."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Conduct an immediate review of high-risk students to identify specific needs and tailor interventions.",
+            "rationale": "Addressing the needs of high-risk students promptly can help mitigate potential academic failure and improve overall outcomes."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "Data is complete and accurately reflects the current risk status of students.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "risk",
+      "explanation_type": "risk",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 6065,
+        "token_usage": {
+          "prompt_tokens": 581,
+          "completion_tokens": 397,
+          "total_tokens": 978
+        },
+        "strategy": "risk",
+        "granularity": "semester",
+        "cost_usd": 0.000325
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-B04__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "76a7e5af798bd554fced0687cddbc8644da0e9667f78b95c201e8a8f947422d6",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 581,
+        "completion_tokens": 397,
+        "total_tokens": 978
+      },
+      "latency_ms": 6069,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 3,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "risk_overview",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-B04.json",
+        "artifact_sha256": "a3fcf2cc3bbb1ab6b63b48c93418cc4e12737bdcd2e1a60a02737a2a437aef77",
+        "row_count": 3,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 3,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "risk_overview": 3
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-B04-CORE-01",
+        "description": "State number of high/medium/low risk students."
+      },
+      {
+        "requirement_id": "A-B04-CORE-02",
+        "description": "Recommend immediate review of high group."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

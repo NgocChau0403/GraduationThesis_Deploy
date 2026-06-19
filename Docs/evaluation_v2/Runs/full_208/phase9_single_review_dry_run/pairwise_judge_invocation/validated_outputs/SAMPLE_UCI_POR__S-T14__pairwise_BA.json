@@ -1,0 +1,106 @@
+{
+  "schema_version": "pairwise_judge_v3_dry_run_schema_v1",
+  "pairwise_record_id": "SAMPLE_UCI_POR__S-T14__pairwise_BA",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-T14",
+  "order_variant": "BA",
+  "scoring_status": "judged",
+  "winner": "A",
+  "winner_confidence": "high",
+  "difference_magnitude": "moderate",
+  "dimension_winners": {
+    "faithfulness": "A",
+    "numerical_correctness": "A",
+    "completeness": "A",
+    "task_relevance": "A",
+    "actionability": "A",
+    "clarity": "A",
+    "safety_fairness": "A"
+  },
+  "metric_comparison": {
+    "faithfulness": {
+      "winner": "A",
+      "reason": "Candidate A correctly frames the association as very weak; candidate B overstates it as meaningful academic support.",
+      "evidence_refs": [
+        "prompt_packet:S-T14:task_context",
+        "prompt_packet:S-T14:candidate_explanations"
+      ]
+    },
+    "numerical_correctness": {
+      "winner": "A",
+      "reason": "Candidate A reports r = 0.0144, matching the derived statistic; candidate B omits the near-zero coefficient.",
+      "evidence_refs": [
+        "deterministic_derived_stat_evidence:S-T14:pearson_r_rounded_4=0.0144"
+      ]
+    },
+    "completeness": {
+      "winner": "A",
+      "reason": "Candidate A covers direction and strength better, though neither gives much selected-student positioning.",
+      "evidence_refs": [
+        "prompt_packet:S-T14:task_context",
+        "prompt_packet:S-T14:candidate_explanations"
+      ]
+    },
+    "task_relevance": {
+      "winner": "A",
+      "reason": "Candidate A is more relevant because the task asks for cohort association, not a broad claim that social balance supports success.",
+      "evidence_refs": [
+        "prompt_packet:S-T14:task_context",
+        "prompt_packet:S-T14:candidate_explanations"
+      ]
+    },
+    "actionability": {
+      "winner": "A",
+      "reason": "Candidate A's medium-priority action is more proportionate to the near-zero association.",
+      "evidence_refs": [
+        "prompt_packet:S-T14:task_context",
+        "prompt_packet:S-T14:candidate_explanations"
+      ]
+    },
+    "clarity": {
+      "winner": "A",
+      "reason": "Candidate A clearly explains that the connection is not strong enough to rely on.",
+      "evidence_refs": [
+        "prompt_packet:S-T14:task_context",
+        "prompt_packet:S-T14:candidate_explanations"
+      ]
+    },
+    "safety_fairness": {
+      "winner": "A",
+      "reason": "Candidate A avoids implying that social balance materially improves performance.",
+      "evidence_refs": [
+        "prompt_packet:S-T14:task_context",
+        "prompt_packet:S-T14:candidate_explanations"
+      ]
+    }
+  },
+  "coverage_comparison": {
+    "winner": "A",
+    "reason": "Candidate A uses the derived Pearson coefficient and weak-strength context."
+  },
+  "specificity_comparison": {
+    "winner": "A",
+    "reason": "Candidate A provides the exact coefficient and a correctly cautious interpretation."
+  },
+  "decisive_evidence": [
+    {
+      "evidence_ref": "deterministic_derived_stat_evidence:S-T14:pearson_r_rounded_4=0.0144",
+      "supports_candidate": "A",
+      "reason": "The near-zero coefficient supports candidate A's weak-positive interpretation over candidate B's stronger wording."
+    }
+  ],
+  "tie_justification": null,
+  "absolute_rerun_flags": [
+    {
+      "candidate": "B",
+      "suspected_error_type": "overstated_association",
+      "severity_hint": "major",
+      "reason": "Candidate B describes social balance as supporting academic success even though r = 0.0144 is nearly zero.",
+      "evidence_refs": [
+        "deterministic_derived_stat_evidence:S-T14:pearson_r_rounded_4=0.0144"
+      ]
+    }
+  ],
+  "requires_absolute_rerun": true,
+  "reviewer_notes": "Candidate A is materially better because the coefficient is near zero and requires cautious wording."
+}

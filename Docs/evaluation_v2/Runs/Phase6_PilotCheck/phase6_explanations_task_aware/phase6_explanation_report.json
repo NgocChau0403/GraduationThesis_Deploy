@@ -1,0 +1,55 @@
+{
+  "report_version": "llm_judge_v2_phase6_3b_explanation_builder_report_v1",
+  "generated_at": "2026-06-18T22:32:25.464Z",
+  "status": "PASS",
+  "phase_scope": [
+    "6.3b explanation builder"
+  ],
+  "mode_endpoints": {
+    "baseline_first_20_rows": "http://localhost:8001",
+    "task_aware_data_summarization": "http://localhost:8000"
+  },
+  "inputs": {
+    "evidence_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_evidence/evidence_manifest.jsonl",
+    "task_registry_path": "Backend/src/config/taskRegistry.json"
+  },
+  "counts": {
+    "evidence_ready_records": 12,
+    "explanation_ready_records": 12,
+    "failed_records": 0,
+    "errors": 0,
+    "warnings": 0
+  },
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 6,
+      "SAMPLE_OULAD": 6
+    },
+    "roles": {
+      "student": 4,
+      "admin": 8
+    },
+    "explanation_modes": {
+      "task_aware_data_summarization": 12
+    },
+    "observed_ai_summary_methods": {
+      "task_aware_data_summarization": 12
+    },
+    "statuses": {
+      "explanation_ready": 12
+    }
+  },
+  "outputs": {
+    "explanation_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_explanations_task_aware/explanation_manifest.jsonl",
+    "explanation_artifacts_dir": "Docs/evaluation_v2/Runs/phase6_explanations_task_aware/explanation_artifacts",
+    "report_json": "Docs/evaluation_v2/Runs/phase6_explanations_task_aware/phase6_explanation_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/phase6_explanations_task_aware/phase6_explanation_report.md"
+  },
+  "gate_decision": {
+    "phase6_4_judge_input_materializer_allowed": true,
+    "judge_invocation_allowed": false,
+    "official_full_evaluation_allowed": false,
+    "reason": "All evidence-ready records have valid AI explanations with expected summary mode. Judge input materialization may run next."
+  },
+  "issues": []
+}

@@ -282,8 +282,13 @@ Return the JSON explanation structure."""
         token_usage = raw.pop("_token_usage", None)
         model       = raw.pop("_model", MODEL)
 
-        # Validate LLM-generated explanation body
-        explanation = ExplanationBody.model_validate(raw.get("explanation", raw))
+        # Validate LLM-generated explanation body. The model occasionally uses
+        # domain-state labels (for example "triggered" for risk flags) in the
+        # schema-controlled comparison slot. Normalize only that enum field
+        # before validation, and preserve the original label in context.
+        explanation_payload = raw.get("explanation", raw)
+        self._normalize_evidence_comparison_literals(explanation_payload)
+        explanation = ExplanationBody.model_validate(explanation_payload)
         if self._should_suppress_recommendations(request):
             explanation.recommendations = []
         if self._should_suppress_educational_implications(request):
@@ -330,6 +335,79 @@ Return the JSON explanation structure."""
         )
 
     #  Shared: Confidence Source Derivation 
+
+    @staticmethod
+    def _normalize_evidence_comparison_literals(explanation_payload: object) -> None:
+        """
+        Coerce LLM evidence.comparison values into the response-schema enum.
+
+        Risk/status tasks sometimes naturally describe a boolean condition as
+        "triggered" or "not_triggered". That state belongs in value/context;
+        comparison remains a schema-level descriptor. We keep the raw label in
+        context so evaluation artifacts do not silently lose provenance.
+        """
+        if not isinstance(explanation_payload, dict):
+            return
+
+        allowed = {
+            "baseline",
+            "up_from_previous",
+            "down_from_previous",
+            "peak",
+            "trough",
+            "stable",
+        }
+        aliases = {
+            "triggered": "baseline",
+            "not_triggered": "baseline",
+            "met": "baseline",
+            "not_met": "baseline",
+            "flagged": "baseline",
+            "not_flagged": "baseline",
+            "true": "baseline",
+            "false": "baseline",
+            "yes": "baseline",
+            "no": "baseline",
+            "increased": "up_from_previous",
+            "increase": "up_from_previous",
+            "higher": "up_from_previous",
+            "decreased": "down_from_previous",
+            "decrease": "down_from_previous",
+            "lower": "down_from_previous",
+            "unchanged": "stable",
+            "same": "stable",
+        }
+
+        insights = explanation_payload.get("insights")
+        if not isinstance(insights, list):
+            return
+
+        for insight in insights:
+            if not isinstance(insight, dict):
+                continue
+            evidence_items = insight.get("evidence")
+            if not isinstance(evidence_items, list):
+                continue
+            for evidence in evidence_items:
+                if not isinstance(evidence, dict):
+                    continue
+                raw_comparison = evidence.get("comparison")
+                if not isinstance(raw_comparison, str):
+                    continue
+                normalized_key = raw_comparison.strip().lower()
+                if normalized_key in allowed:
+                    if normalized_key != raw_comparison:
+                        evidence["comparison"] = normalized_key
+                    continue
+                mapped = aliases.get(normalized_key, "baseline")
+                evidence["comparison"] = mapped
+                original_context = evidence.get("context")
+                original_note = f"original_comparison={raw_comparison}"
+                if isinstance(original_context, str) and original_context.strip():
+                    if original_note not in original_context:
+                        evidence["context"] = f"{original_context}; {original_note}"
+                else:
+                    evidence["context"] = original_note
 
     @staticmethod
     def _should_suppress_recommendations(req: ExplainRequest) -> bool:

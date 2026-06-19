@@ -1,0 +1,330 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T06:00:44.839Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__S-B01__baseline_first_20_rows",
+    "case_id": "SAMPLE_UCI_POR__S-B01",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": "SAMPLE_UCI_POR_STU_000001",
+    "role": "student",
+    "task_id": "S-B01",
+    "task_name": "Performance overview",
+    "explanation_mode": "baseline_first_20_rows"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-B01.json",
+    "full_query_artifact_sha256": "40030f7a95a933eeade0de28b1cce0845f09b1c4c1d936069e73e709031c2617"
+  },
+  "request_payload": {
+    "task_id": "S-B01",
+    "execution_id": "exec_1781847241501_c0ea232d",
+    "task_name": "Performance overview",
+    "analysis_type": "aggregation",
+    "explanation_strategy": "distribution",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Summarise overall score, pass/fail status, class benchmark, percentile, and the most useful next action based only on returned fields.",
+    "actionable_question": "How am I performing overall?",
+    "target_audience": [
+      "student"
+    ],
+    "visualization_config": {
+      "x_field": "final_outcome",
+      "y_field": "avg_score",
+      "series_field": null,
+      "color_field": "final_outcome",
+      "orientation": "vertical",
+      "variant": "categorical",
+      "x_label": "Outcome",
+      "y_label": "Average Score",
+      "semantic_roles": {
+        "x": "category",
+        "y": "performance_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "student"
+    },
+    "datasets": {
+      "performance_summary": [
+        {
+          "avg_score": 41.25,
+          "pass_rate": 0.6667,
+          "performance_trend": 27.5,
+          "final_outcome": "Pass",
+          "class_avg_score": 58.31,
+          "class_median_score": 58.25,
+          "score_vs_class_avg": -17.06,
+          "score_percentile": 8.8,
+          "cohort_size": 649,
+          "unweighted_avg_score": 36.67,
+          "weighted_avg_score": 41.25,
+          "score_strategy": "weighted_by_assessment_weight",
+          "assessment_count": 3,
+          "score_scale": 100,
+          "pass_threshold": 40,
+          "target_threshold": 70,
+          "performance_band": "passing_but_below_target"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis."
+    },
+    "student_context": {
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "dataset_id": "SAMPLE_UCI_POR"
+    },
+    "query_labels": [
+      "performance_summary"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [
+        "avg_score",
+        "pass_rate",
+        "performance_trend",
+        "score_vs_class_avg",
+        "score_percentile",
+        "unweighted_avg_score",
+        "weighted_avg_score",
+        "assessment_count",
+        "cohort_size"
+      ],
+      "status_columns": [
+        "final_outcome",
+        "score_strategy",
+        "performance_band"
+      ],
+      "threshold_columns": [
+        "pass_threshold",
+        "target_threshold"
+      ],
+      "benchmark_columns": [
+        "class_avg_score",
+        "class_median_score"
+      ],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {
+        "pass_threshold": "runtime_score_context",
+        "target_threshold": "runtime_score_context"
+      },
+      "benchmark_sources": {
+        "class_avg_score": "class_cohort",
+        "class_median_score": "class_cohort"
+      },
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {
+        "avg_score": "score_on_runtime_scale",
+        "pass_rate": "ratio_0_1",
+        "performance_trend": "score_change_per_assessment_order",
+        "score_vs_class_avg": "score_point_difference",
+        "score_percentile": "percentile_0_100",
+        "unweighted_avg_score": "score_on_runtime_scale",
+        "weighted_avg_score": "score_on_runtime_scale",
+        "assessment_count": "count",
+        "cohort_size": "count",
+        "pass_threshold": "score_on_runtime_scale",
+        "target_threshold": "score_on_runtime_scale",
+        "class_avg_score": "score_on_runtime_scale",
+        "class_median_score": "score_on_runtime_scale"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": true,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [
+        "score_scale"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "metric_snapshot",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 7854,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "baseline_first_20_rows",
+    "observed_ai_summary_method": "baseline_first_20_rows",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 691,
+      "completion_tokens": 420,
+      "total_tokens": 1111
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "S-B01",
+    "execution_id": "exec_1781847241501_c0ea232d",
+    "explanation": {
+      "summary": "You have an average score of 41.25, which is just above the passing threshold of 40, but significantly below the class average of 58.31. Your performance places you in the 8.8 percentile, indicating that most students are performing better than you.",
+      "insights": [
+        {
+          "title": "Below Class Average",
+          "description": "Your average score is 17.06 points lower than the class average, suggesting that there is a significant gap in performance compared to your peers.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "score_vs_class_avg",
+              "value": -17.06,
+              "comparison": "down_from_previous",
+              "delta": null,
+              "context": "Class average is 58.31"
+            }
+          ]
+        },
+        {
+          "title": "Low Percentile Rank",
+          "description": "With a score percentile of 8.8, you are in the lower range of your cohort, indicating that many students are achieving higher scores.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "score_percentile",
+              "value": 8.8,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Cohort size is 649"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Focus on improving your understanding of the material to raise your scores."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Seek additional help or tutoring in areas where you struggle.",
+          "rationale": "This will help you improve your understanding and performance, moving you closer to the class average."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data provided is clear and directly reflects your performance metrics.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "distribution",
+    "explanation_type": "distribution",
+    "ai_summary_method": "baseline_first_20_rows",
+    "ai_summary_version": "baseline",
+    "baseline_available": true,
+    "input_summary_type": "raw_first_20_rows",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": null,
+    "included_row_count": null,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 7849,
+      "token_usage": {
+        "prompt_tokens": 691,
+        "completion_tokens": 420,
+        "total_tokens": 1111
+      },
+      "strategy": "distribution",
+      "granularity": "semester",
+      "cost_usd": 0.000356
+    }
+  },
+  "raw_text": "Summary: You have an average score of 41.25, which is just above the passing threshold of 40, but significantly below the class average of 58.31. Your performance places you in the 8.8 percentile, indicating that most students are performing better than you.\n\nInsights: Below Class Average: Your average score is 17.06 points lower than the class average, suggesting that there is a significant gap in performance compared to your peers. | Low Percentile Rank: With a score percentile of 8.8, you are in the lower range of your cohort, indicating that many students are achieving higher scores.\n\nEducational implications: Focus on improving your understanding of the material to raise your scores.\n\nRecommendations: high - Seek additional help or tutoring in areas where you struggle. - This will help you improve your understanding and performance, moving you closer to the class average."
+}

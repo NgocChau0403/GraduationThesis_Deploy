@@ -1,0 +1,62 @@
+{
+  "report_version": "llm_judge_v2_phase6_3_evidence_builder_report_v1",
+  "generated_at": "2026-06-18T22:06:47.670Z",
+  "status": "PASS",
+  "phase_scope": [
+    "6.3 evidence builder"
+  ],
+  "backend": {
+    "base_url": "http://localhost:4000",
+    "health_endpoint": "/api/health",
+    "health_http_status": 200,
+    "health_latency_ms": 80
+  },
+  "inputs": {
+    "planned_records_jsonl": "Docs/evaluation_v2/Runs/phase6_preflight/planned_records.jsonl"
+  },
+  "counts": {
+    "planned_records": 24,
+    "evidence_ready_records": 24,
+    "failed_records": 0,
+    "errors": 0,
+    "warnings": 0
+  },
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 12,
+      "SAMPLE_OULAD": 12
+    },
+    "row_count_buckets": {
+      "<=20": 12,
+      ">20": 12
+    },
+    "evidence_access_paths": {
+      "direct_embedding": 12,
+      "deterministic_artifact_retrieval": 12
+    },
+    "roles": {
+      "student": 8,
+      "admin": 16
+    },
+    "explanation_modes": {
+      "baseline_first_20_rows": 12,
+      "task_aware_data_summarization": 12
+    },
+    "statuses": {
+      "evidence_ready": 24
+    }
+  },
+  "outputs": {
+    "evidence_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_evidence/evidence_manifest.jsonl",
+    "full_query_artifacts_dir": "Docs/evaluation_v2/Runs/phase6_evidence/full_query_artifacts",
+    "report_json": "Docs/evaluation_v2/Runs/phase6_evidence/phase6_evidence_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/phase6_evidence/phase6_evidence_report.md"
+  },
+  "gate_decision": {
+    "phase6_4_judge_input_materializer_allowed": true,
+    "judge_invocation_allowed": false,
+    "official_full_evaluation_allowed": false,
+    "reason": "All planned records have full-query evidence artifacts. Judge input materialization may run next, but judge invocation remains disabled."
+  },
+  "issues": []
+}

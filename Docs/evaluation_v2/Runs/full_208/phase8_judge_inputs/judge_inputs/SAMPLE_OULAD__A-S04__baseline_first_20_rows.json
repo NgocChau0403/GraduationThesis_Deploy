@@ -1,0 +1,214 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-S04__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-S04",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Student risk flag breakdown",
+    "scope": "1 student",
+    "actionable_question": "Which specific risk factors should admin address for this student?",
+    "target_audience": "instructor, academic_advisor",
+    "ai_summary_type": "risk_flags",
+    "ai_prompt_hint": "For each triggered flag, state the exact value and why it crosses the threshold. Prioritise the top 2 for immediate action.",
+    "query_labels": [
+      "risk_flags"
+    ],
+    "explanation_strategy": "risk"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "at_risk_score [FE cross]",
+      "at_risk_label [FE cross]",
+      "avg_score [FE cross]",
+      "engagement_score [FE cross]",
+      "punctuality_rate [FE cross]",
+      "performance_trend [FE cross]",
+      "previous_attempt_count"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "flag_name",
+        "flag_value",
+        "threshold",
+        "triggered"
+      ],
+      "optional_columns": [
+        "severity",
+        "flag_description",
+        "recommended_action",
+        "support_category"
+      ]
+    },
+    "query_labels": [
+      "risk_flags"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis indicates that the student is at risk due to low punctuality and a negative trend in assessment scores. These factors suggest a need for immediate intervention to support the student's academic performance.\n\nInsights: Low Punctuality: The student's submission punctuality is at 0, which is significantly below the expected threshold of 0.7, indicating a consistent pattern of late submissions. | Negative Trend in Scores: The student's scores are trending downward with a value of -0.71875, indicating a significant decline in performance across assessments.\n\nEducational implications: The student may struggle to meet academic expectations without timely support.\n\nRecommendations: high - Implement deadline reminders and encourage early draft submissions. - This will help improve punctuality and reduce the risk of late submissions. | high - Review recent feedback with the student to identify areas for improvement. - Addressing the negative trend in scores can help the student regain confidence and improve performance.",
+    "structured_payload": {
+      "task_id": "A-S04",
+      "execution_id": "exec_1781847835477_0935da99",
+      "explanation": {
+        "summary": "The analysis indicates that the student is at risk due to low punctuality and a negative trend in assessment scores. These factors suggest a need for immediate intervention to support the student's academic performance.",
+        "insights": [
+          {
+            "title": "Low Punctuality",
+            "description": "The student's submission punctuality is at 0, which is significantly below the expected threshold of 0.7, indicating a consistent pattern of late submissions.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "flag_low_punctuality",
+                "value": 0,
+                "comparison": "down_from_previous",
+                "delta": null,
+                "context": "Submission punctuality is critically low."
+              }
+            ]
+          },
+          {
+            "title": "Negative Trend in Scores",
+            "description": "The student's scores are trending downward with a value of -0.71875, indicating a significant decline in performance across assessments.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "flag_neg_trend",
+                "value": -0.7187500000000001,
+                "comparison": "down_from_previous",
+                "delta": null,
+                "context": "Scores are consistently decreasing."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The student may struggle to meet academic expectations without timely support."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement deadline reminders and encourage early draft submissions.",
+            "rationale": "This will help improve punctuality and reduce the risk of late submissions."
+          },
+          {
+            "priority": "high",
+            "action": "Review recent feedback with the student to identify areas for improvement.",
+            "rationale": "Addressing the negative trend in scores can help the student regain confidence and improve performance."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data clearly indicates triggered risk flags with actionable insights.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "risk",
+      "explanation_type": "risk",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 7954,
+        "token_usage": {
+          "prompt_tokens": 893,
+          "completion_tokens": 448,
+          "total_tokens": 1341
+        },
+        "strategy": "risk",
+        "granularity": "semester",
+        "cost_usd": 0.000403
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-S04__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "5d1deeb46a53994e50cc7c75cc393cc3e42755be93f2666f324bd1849c8b8465",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 893,
+        "completion_tokens": 448,
+        "total_tokens": 1341
+      },
+      "latency_ms": 7958,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 4,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "risk_flags",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S04.json",
+        "artifact_sha256": "56234f92505f3fe716ac63c7a562bcc89cd336c17f088068ec2071db7d685538",
+        "row_count": 4,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 4,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "risk_flags": 4
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-S04-CORE-01",
+        "description": "For each triggered flag, state the exact value and why it crosses the threshold."
+      },
+      {
+        "requirement_id": "A-S04-CORE-02",
+        "description": "Prioritise the top 2 for immediate action."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

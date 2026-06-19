@@ -1,0 +1,678 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T06:03:01.612Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__S-T13__baseline_first_20_rows",
+    "case_id": "SAMPLE_UCI_POR__S-T13",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": "SAMPLE_UCI_POR_STU_000001",
+    "role": "student",
+    "task_id": "S-T13",
+    "task_name": "Action plan generation",
+    "explanation_mode": "baseline_first_20_rows"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T13.json",
+    "full_query_artifact_sha256": "2a08d11768009472115b7a9a214f6b1876c84e1de53b92b868f70b36c8338d67"
+  },
+  "request_payload": {
+    "task_id": "S-T13",
+    "execution_id": "exec_1781847244412_fccd48cb",
+    "task_name": "Action plan generation",
+    "analysis_type": "synthesis",
+    "explanation_strategy": "risk",
+    "explanation_type": "recommendation",
+    "ai_prompt_hint": "Synthesise all [FE] risk signals into 3–5 prioritised actions. Reference which FE feature triggered each item.",
+    "actionable_question": "What should I do differently starting next week?",
+    "target_audience": [
+      "student"
+    ],
+    "visualization_config": {
+      "x_field": null,
+      "y_field": null,
+      "series_field": null,
+      "color_field": "at_risk_label",
+      "orientation": null,
+      "variant": "action_plan",
+      "x_label": null,
+      "y_label": null,
+      "semantic_roles": {
+        "x": null,
+        "y": null,
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "student"
+    },
+    "datasets": {
+      "synthesis_data": [
+        {
+          "avg_score": 41.25,
+          "performance_trend": 27.5,
+          "engagement_score": 0,
+          "engagement_score_available": false,
+          "absence_rate": 1,
+          "lifestyle_risk_score": 0.375,
+          "score_strategy": "weighted_by_assessment_weight",
+          "score_scale": 100,
+          "pass_threshold": 40,
+          "target_threshold": 70,
+          "at_risk_score": 1,
+          "at_risk_label": "low"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis."
+    },
+    "student_context": {
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "dataset_id": "SAMPLE_UCI_POR"
+    },
+    "query_labels": [
+      "synthesis_data"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [
+        "avg_score",
+        "performance_trend",
+        "engagement_score",
+        "engagement_score_available",
+        "absence_rate",
+        "lifestyle_risk_score",
+        "score_strategy",
+        "score_scale",
+        "pass_threshold",
+        "target_threshold",
+        "at_risk_score",
+        "at_risk_label"
+      ],
+      "evidence_dataset_roles": {
+        "synthesis_data": "primary_evidence"
+      },
+      "action_evidence_contract": [
+        {
+          "column": "avg_score",
+          "role": "metric",
+          "unit": "score_runtime_scale",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "performance_trend",
+          "role": "metric",
+          "unit": "score_change_per_assessment_order",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "engagement_score",
+          "role": "metric",
+          "unit": "ratio_0_1",
+          "required": false,
+          "nullable": true,
+          "availability_column": "engagement_score_available",
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "engagement_score_available",
+          "role": "status",
+          "unit": "boolean",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": false
+        },
+        {
+          "column": "absence_rate",
+          "role": "metric",
+          "unit": "ratio_0_1",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "lifestyle_risk_score",
+          "role": "context",
+          "unit": "ratio_0_1",
+          "required": false,
+          "nullable": true,
+          "sensitive": true,
+          "allowed_as_trigger": false,
+          "semantic_note": "Sensitive lifestyle context; preserve for audit only and never use as an action trigger."
+        },
+        {
+          "column": "score_strategy",
+          "role": "context",
+          "unit": "strategy_identifier",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": false
+        },
+        {
+          "column": "score_scale",
+          "role": "context",
+          "unit": "score_scale",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": false
+        },
+        {
+          "column": "pass_threshold",
+          "role": "threshold",
+          "unit": "score_runtime_scale",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "target_threshold",
+          "role": "threshold",
+          "unit": "score_runtime_scale",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "at_risk_score",
+          "role": "metric",
+          "unit": "flag_count",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "at_risk_label",
+          "role": "status",
+          "unit": "risk_band",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        }
+      ],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [
+        {
+          "conflict_id": "S-T13-C01",
+          "when": {
+            "all": [
+              {
+                "evidence_id": "avg_score",
+                "operator": "gte",
+                "compare_to_evidence_id": "target_threshold"
+              },
+              {
+                "evidence_id": "at_risk_label",
+                "operator": "eq",
+                "value": "high"
+              }
+            ],
+            "any": []
+          },
+          "behavior": "preserve_and_warn"
+        }
+      ],
+      "action_rules": [
+        {
+          "rule_id": "S-T13-R01",
+          "description": "Seek immediate academic help when average score is below the runtime pass threshold.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "avg_score",
+                "operator": "lt",
+                "compare_to_evidence_id": "pass_threshold"
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "student_request_academic_recovery_support",
+            "action_text": "Contact your tutor and make a short recovery plan for the next assessed topic.",
+            "priority": "high",
+            "owner": "student",
+            "time_horizon_days": 3,
+            "support_category": "academic_support",
+            "claim_limits": [
+              "Use the runtime pass threshold and score scale.",
+              "Do not diagnose the reason for the low score."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "S-T13-R02",
+          "description": "Set a concrete study target when score is at or above pass but below the runtime target threshold.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "avg_score",
+                "operator": "gte",
+                "compare_to_evidence_id": "pass_threshold"
+              },
+              {
+                "evidence_id": "avg_score",
+                "operator": "lt",
+                "compare_to_evidence_id": "target_threshold"
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "student_set_next_score_target",
+            "action_text": "Choose one upcoming assessment goal and schedule two focused study sessions toward the stated target threshold.",
+            "priority": "medium",
+            "owner": "student",
+            "time_horizon_days": 7,
+            "support_category": "study_planning",
+            "claim_limits": [
+              "Do not promise that the action will achieve the target.",
+              "Preserve the runtime threshold values and score scale."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "S-T13-R03",
+          "description": "Review recent work when the observed performance trend is negative.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "performance_trend",
+                "operator": "lt",
+                "value": 0
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "student_review_recent_assessment_feedback",
+            "action_text": "Review feedback from your most recent assessments and write down one change to apply next week.",
+            "priority": "medium",
+            "owner": "student",
+            "time_horizon_days": 7,
+            "support_category": "reflection",
+            "claim_limits": [
+              "Do not claim the slope proves future decline.",
+              "Do not infer a cause for the trend."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "S-T13-R04",
+          "description": "Rebuild participation routine only when engagement evidence is observed and below 0.15.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "engagement_score_available",
+                "operator": "is_true"
+              },
+              {
+                "evidence_id": "engagement_score",
+                "operator": "lt",
+                "value": 0.15
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "student_rebuild_engagement_routine",
+            "action_text": "Schedule three short course check-ins next week and complete one course activity during each check-in.",
+            "priority": "medium",
+            "owner": "student",
+            "time_horizon_days": 7,
+            "support_category": "engagement",
+            "claim_limits": [
+              "Do not trigger when engagement_score_available is false.",
+              "Do not claim engagement caused the student's score."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "availability_state",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "S-T13-R05",
+          "description": "Build an attendance routine when the observed absence rate is at least 25 percent.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "absence_rate",
+                "operator": "gte",
+                "value": 0.25
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "student_create_attendance_routine",
+            "action_text": "Plan next week's attendance in advance and set a reminder for each scheduled learning session.",
+            "priority": "medium",
+            "owner": "student",
+            "time_horizon_days": 7,
+            "support_category": "attendance",
+            "claim_limits": [
+              "Do not infer the reason for absence.",
+              "Do not trigger when absence_rate is null."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "S-T13-R06",
+          "description": "Ask for advisor support when the backend composite risk score and label are both high.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "at_risk_score",
+                "operator": "gte",
+                "value": 3
+              },
+              {
+                "evidence_id": "at_risk_label",
+                "operator": "eq",
+                "value": "high"
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "student_request_advisor_check_in",
+            "action_text": "Request a short advisor check-in to review the combined signals and choose the first support step.",
+            "priority": "high",
+            "owner": "student",
+            "time_horizon_days": 3,
+            "support_category": "support_coordination",
+            "claim_limits": [
+              "Treat the composite score as a screening signal, not a diagnosis.",
+              "Do not use lifestyle_risk_score as action evidence."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        }
+      ],
+      "trigger_columns": [
+        "absence_rate",
+        "at_risk_label",
+        "at_risk_score",
+        "avg_score",
+        "engagement_score",
+        "engagement_score_available",
+        "performance_trend"
+      ],
+      "provenance_required_fields": [
+        "dataset_label",
+        "dataset_role",
+        "row_index",
+        "column",
+        "raw_value",
+        "parsed_value",
+        "unit",
+        "rule_id",
+        "rule_version"
+      ],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": true,
+      "summary_type": "action_synthesis",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": "versioned_registry_rules",
+      "action_rule_set_id": "S-T13.action_synthesis",
+      "action_rule_version": "1.0.0",
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": 5,
+      "sensitive_action_policy": "exclude_sensitive_triggers",
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 10134,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "baseline_first_20_rows",
+    "observed_ai_summary_method": "baseline_first_20_rows",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 650,
+      "completion_tokens": 463,
+      "total_tokens": 1113
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "S-T13",
+    "execution_id": "exec_1781847244412_fccd48cb",
+    "explanation": {
+      "summary": "You are currently showing some signs that may indicate a need for additional support. Your average score is just above the passing threshold, and your engagement score is low, which suggests there are areas to focus on for improvement.",
+      "insights": [
+        {
+          "title": "Average Score Concern",
+          "description": "Your average score is 41.25, which is only slightly above the passing threshold of 40. This indicates that you are close to falling below the passing mark, and it may be beneficial to focus on improving your understanding of the material.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "avg_score",
+              "value": 41.25,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Just above the passing threshold"
+            }
+          ]
+        },
+        {
+          "title": "Engagement Score",
+          "description": "Your engagement score is currently at 0, which suggests that you may not be participating as much as you could be. Increasing your engagement in class activities could help boost your performance.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "engagement_score",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Indicates low participation"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [],
+      "recommendations": [],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data provided is clear and indicates specific areas for improvement.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "risk",
+    "explanation_type": "risk",
+    "ai_summary_method": "baseline_first_20_rows",
+    "ai_summary_version": "baseline",
+    "baseline_available": true,
+    "input_summary_type": "raw_first_20_rows",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": null,
+    "included_row_count": null,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 10113,
+      "token_usage": {
+        "prompt_tokens": 650,
+        "completion_tokens": 463,
+        "total_tokens": 1113
+      },
+      "strategy": "risk",
+      "granularity": "semester",
+      "cost_usd": 0.000375
+    }
+  },
+  "raw_text": "Summary: You are currently showing some signs that may indicate a need for additional support. Your average score is just above the passing threshold, and your engagement score is low, which suggests there are areas to focus on for improvement.\n\nInsights: Average Score Concern: Your average score is 41.25, which is only slightly above the passing threshold of 40. This indicates that you are close to falling below the passing mark, and it may be beneficial to focus on improving your understanding of the material. | Engagement Score: Your engagement score is currently at 0, which suggests that you may not be participating as much as you could be. Increasing your engagement in class activities could help boost your performance."
+}

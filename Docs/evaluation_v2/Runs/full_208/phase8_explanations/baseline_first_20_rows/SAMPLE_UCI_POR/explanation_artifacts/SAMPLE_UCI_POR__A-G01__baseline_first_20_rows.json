@@ -1,0 +1,241 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T05:57:41.252Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-G01__baseline_first_20_rows",
+    "case_id": "SAMPLE_UCI_POR__A-G01",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G01",
+    "task_name": "Identify low-engagement group",
+    "explanation_mode": "baseline_first_20_rows"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G01.json",
+    "full_query_artifact_sha256": "9396310cce21d99088b49c8825e1a787d7c8abe077b3c399fb9fde71fa14e8d8"
+  },
+  "request_payload": {
+    "task_id": "A-G01",
+    "execution_id": "exec_1781847232095_a0ebb62f",
+    "task_name": "Identify low-engagement group",
+    "analysis_type": "segmentation",
+    "explanation_strategy": "behavioral",
+    "explanation_type": "observation, interpretation, recommendation",
+    "ai_prompt_hint": "Define 'low engagement' threshold. List students below it. Recommend admin action (email/contact).",
+    "actionable_question": "Which students are dangerously disengaged and need outreach?",
+    "target_audience": [
+      "instructor",
+      "admin"
+    ],
+    "visualization_config": {
+      "x_field": "active_days",
+      "y_field": "engagement_score",
+      "series_field": null,
+      "color_field": "study_effort_level",
+      "orientation": null,
+      "variant": "colored",
+      "x_label": "Active Days",
+      "y_label": "Engagement Score",
+      "semantic_roles": {
+        "x": "category",
+        "y": "engagement_metric",
+        "color": "category"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "low_engagement_group": []
+    },
+    "confidence": {
+      "level": "LOW",
+      "reason": "No positive engagement activity found (0 engagement rows)."
+    },
+    "student_context": null,
+    "query_labels": [
+      "low_engagement_group"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [
+        "total_clicks",
+        "active_days"
+      ],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [
+        "study_effort_level"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "ranking",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "engagement_score",
+      "entity_column": "student_id",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": "asc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": 10,
+      "bottom_k": 5
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 2821,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "baseline_first_20_rows",
+    "observed_ai_summary_method": "baseline_first_20_rows",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 498,
+      "completion_tokens": 187,
+      "total_tokens": 685
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-G01",
+    "execution_id": "exec_1781847232095_a0ebb62f",
+    "explanation": {
+      "summary": "The analysis indicates that there are currently no students classified within the low engagement group, suggesting that all students are meeting the engagement threshold. However, the absence of data may imply a lack of monitoring or reporting on student engagement levels.",
+      "insights": [],
+      "educational_implications": [
+        "Continuous monitoring of student engagement is essential to identify at-risk students early."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement regular engagement assessments",
+          "rationale": "To ensure that any potential disengagement is identified promptly, allowing for timely intervention."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The dataset is empty, indicating no recorded low engagement instances, but this may also reflect a lack of data collection.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "behavioral",
+    "explanation_type": "behavioral",
+    "ai_summary_method": "baseline_first_20_rows",
+    "ai_summary_version": "baseline",
+    "baseline_available": true,
+    "input_summary_type": "raw_first_20_rows",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": null,
+    "included_row_count": null,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 2809,
+      "token_usage": {
+        "prompt_tokens": 498,
+        "completion_tokens": 187,
+        "total_tokens": 685
+      },
+      "strategy": "behavioral",
+      "granularity": "semester",
+      "cost_usd": 0.000187
+    }
+  },
+  "raw_text": "Summary: The analysis indicates that there are currently no students classified within the low engagement group, suggesting that all students are meeting the engagement threshold. However, the absence of data may imply a lack of monitoring or reporting on student engagement levels.\n\nEducational implications: Continuous monitoring of student engagement is essential to identify at-risk students early.\n\nRecommendations: high - Implement regular engagement assessments - To ensure that any potential disengagement is identified promptly, allowing for timely intervention."
+}

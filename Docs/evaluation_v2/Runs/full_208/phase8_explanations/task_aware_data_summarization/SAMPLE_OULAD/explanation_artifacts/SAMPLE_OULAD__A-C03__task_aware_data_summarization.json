@@ -1,0 +1,368 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T07:25:36.428Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-C03__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__A-C03",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-C03",
+    "task_name": "Compare risk profile",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-C03.json",
+    "full_query_artifact_sha256": "2886031e4c40c8c932fa9581baab3d88ed9987ec9c8c020a8012156ac728c097"
+  },
+  "request_payload": {
+    "task_id": "A-C03",
+    "execution_id": "exec_1781847654667_8969677c",
+    "task_name": "Compare risk profile",
+    "analysis_type": "comparison",
+    "explanation_strategy": "comparison",
+    "explanation_type": "observation, interpretation, recommendation",
+    "ai_prompt_hint": "Compare the two returned student rows. Use at_risk_score, at_risk_label, and explicit flag_* columns to explain who needs more urgent intervention. If avg_score is null, state that score evidence is missing rather than guessing.",
+    "actionable_question": "Who is at higher risk and what are the key differences?",
+    "target_audience": [
+      "instructor",
+      "academic_advisor"
+    ],
+    "visualization_config": {
+      "x_field": "student_id",
+      "y_field": "at_risk_score",
+      "series_field": null,
+      "color_field": "at_risk_label",
+      "orientation": null,
+      "variant": "default",
+      "x_label": "Student",
+      "y_label": "Risk Score",
+      "semantic_roles": {
+        "x": "student",
+        "y": "risk_metric",
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "comparison"
+    },
+    "datasets": {
+      "risk_comparison": [
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "avg_score": 91.2,
+          "performance_trend": -0.7187500000000001,
+          "punctuality_rate": 0,
+          "engagement_score": 0.20237855036820618,
+          "previous_attempt_count": 1,
+          "flag_low_score": 0,
+          "flag_repeated": 1,
+          "flag_low_engagement": 0,
+          "flag_low_punctuality": 1,
+          "flag_neg_trend": 1,
+          "at_risk_score": 3,
+          "at_risk_label": "high",
+          "final_outcome": "Distinction"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_101700",
+          "avg_score": null,
+          "performance_trend": null,
+          "punctuality_rate": 1,
+          "engagement_score": 0,
+          "previous_attempt_count": 0,
+          "flag_low_score": 0,
+          "flag_repeated": 0,
+          "flag_low_engagement": 1,
+          "flag_low_punctuality": 0,
+          "flag_neg_trend": 0,
+          "at_risk_score": 1,
+          "at_risk_label": "low",
+          "final_outcome": "Withdrawn"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "risk_comparison"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [
+        "avg_score",
+        "performance_trend",
+        "punctuality_rate",
+        "engagement_score",
+        "previous_attempt_count",
+        "at_risk_score"
+      ],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {
+        "avg_score": "higher_is_better",
+        "performance_trend": "higher_is_better",
+        "punctuality_rate": "higher_is_better",
+        "engagement_score": "higher_is_better",
+        "previous_attempt_count": "higher_is_risk",
+        "at_risk_score": "higher_is_risk"
+      },
+      "metric_units": {
+        "avg_score": "score_0_100",
+        "performance_trend": "score_change_per_assessment",
+        "punctuality_rate": "ratio_0_1",
+        "engagement_score": "ratio_0_1",
+        "previous_attempt_count": "count",
+        "at_risk_score": "flag_count_0_5"
+      },
+      "metric_thresholds": {
+        "avg_score": {
+          "low_score_below": 40
+        },
+        "performance_trend": {
+          "negative_trend_below": 0
+        },
+        "punctuality_rate": {
+          "low_punctuality_below": 0.7
+        },
+        "engagement_score": {
+          "low_engagement_below": 0.15
+        },
+        "previous_attempt_count": {
+          "repeated_attempt_above": 0
+        },
+        "at_risk_score": {
+          "medium_at": 2,
+          "high_at_or_above": 3
+        }
+      },
+      "minimum_entity_count": 2,
+      "require_metric_directions": true,
+      "require_metric_units": true,
+      "require_metric_thresholds": true,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [
+        "flag_low_score",
+        "flag_repeated",
+        "flag_low_engagement",
+        "flag_low_punctuality",
+        "flag_neg_trend"
+      ],
+      "action_columns": [],
+      "label_columns": [
+        "at_risk_label",
+        "final_outcome"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "multi_metric_comparison",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": "student_id",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 7047,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1009,
+      "completion_tokens": 605,
+      "total_tokens": 1614
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-C03",
+    "execution_id": "exec_1781847654667_8969677c",
+    "explanation": {
+      "summary": "The analysis reveals that SAMPLE_OULAD_STU_100788 is at a higher risk compared to SAMPLE_OULAD_STU_101700, despite having a higher average score. The flags indicate significant concerns regarding engagement and punctuality for both students.",
+      "insights": [
+        {
+          "title": "High Risk Identification",
+          "description": "SAMPLE_OULAD_STU_100788 has an at risk score of 3, categorized as high risk, while SAMPLE_OULAD_STU_101700 has an at risk score of 1, categorized as low risk. This indicates a significant difference in their risk profiles.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "at_risk_score",
+              "value": 3,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "SAMPLE_OULAD_STU_100788"
+            },
+            {
+              "metric": "at_risk_score",
+              "value": 1,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "SAMPLE_OULAD_STU_101700"
+            }
+          ]
+        },
+        {
+          "title": "Engagement and Punctuality Flags",
+          "description": "SAMPLE_OULAD_STU_100788 has flags indicating low punctuality and a negative performance trend, while SAMPLE_OULAD_STU_101700 shows low engagement but has a perfect punctuality rate. This suggests that while both students face challenges, the first student has more critical issues.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "flag_low_punctuality",
+              "value": 1,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "SAMPLE_OULAD_STU_100788"
+            },
+            {
+              "metric": "flag_low_engagement",
+              "value": 1,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "SAMPLE_OULAD_STU_101700"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Students with higher at risk scores require immediate intervention to address their academic and engagement challenges."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement targeted support strategies for SAMPLE_OULAD_STU_100788 to improve engagement and punctuality.",
+          "rationale": "Given the high at risk score and multiple flags, immediate action is necessary to prevent further decline in performance."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data provided is complete and allows for a clear comparison of risk profiles.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "comparison",
+    "explanation_type": "comparison",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "full_rows_due_to_small_result",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 2,
+    "included_row_count": 2,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "risk_comparison",
+        "row_count": 2,
+        "included_row_count": 2
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 7038,
+      "token_usage": {
+        "prompt_tokens": 1009,
+        "completion_tokens": 605,
+        "total_tokens": 1614
+      },
+      "strategy": "comparison",
+      "granularity": "semester",
+      "cost_usd": 0.000514
+    }
+  },
+  "raw_text": "Summary: The analysis reveals that SAMPLE_OULAD_STU_100788 is at a higher risk compared to SAMPLE_OULAD_STU_101700, despite having a higher average score. The flags indicate significant concerns regarding engagement and punctuality for both students.\n\nInsights: High Risk Identification: SAMPLE_OULAD_STU_100788 has an at risk score of 3, categorized as high risk, while SAMPLE_OULAD_STU_101700 has an at risk score of 1, categorized as low risk. This indicates a significant difference in their risk profiles. | Engagement and Punctuality Flags: SAMPLE_OULAD_STU_100788 has flags indicating low punctuality and a negative performance trend, while SAMPLE_OULAD_STU_101700 shows low engagement but has a perfect punctuality rate. This suggests that while both students face challenges, the first student has more critical issues.\n\nEducational implications: Students with higher at risk scores require immediate intervention to address their academic and engagement challenges.\n\nRecommendations: high - Implement targeted support strategies for SAMPLE_OULAD_STU_100788 to improve engagement and punctuality. - Given the high at risk score and multiple flags, immediate action is necessary to prevent further decline in performance."
+}

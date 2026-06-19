@@ -1,0 +1,105 @@
+{
+  "schema_version": "pairwise_judge_v3_dry_run_schema_v1",
+  "pairwise_record_id": "SAMPLE_UCI_POR__S-T15__pairwise_AB",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-T15",
+  "order_variant": "AB",
+  "scoring_status": "judged",
+  "winner": "B",
+  "winner_confidence": "high",
+  "difference_magnitude": "large",
+  "dimension_winners": {
+    "faithfulness": "B",
+    "numerical_correctness": "B",
+    "completeness": "B",
+    "task_relevance": "B",
+    "actionability": "B",
+    "clarity": "B",
+    "safety_fairness": "B"
+  },
+  "metric_comparison": {
+    "faithfulness": {
+      "winner": "B",
+      "reason": "Candidate B matches the weak positive association; candidate A states the wrong direction.",
+      "evidence_refs": [
+        "prompt_packet:S-T15:task_context",
+        "prompt_packet:S-T15:candidate_explanations"
+      ]
+    },
+    "numerical_correctness": {
+      "winner": "B",
+      "reason": "Candidate B reports r = 0.1442, while candidate A claims a weak negative correlation.",
+      "evidence_refs": [
+        "deterministic_derived_stat_evidence:S-T15:pearson_r_rounded_4=0.1442"
+      ]
+    },
+    "completeness": {
+      "winner": "B",
+      "reason": "Candidate B gives direction, strength, and coefficient; candidate A misses the core association.",
+      "evidence_refs": [
+        "prompt_packet:S-T15:task_context",
+        "prompt_packet:S-T15:candidate_explanations"
+      ]
+    },
+    "task_relevance": {
+      "winner": "B",
+      "reason": "Candidate B better addresses the family-context scatter requirement.",
+      "evidence_refs": [
+        "prompt_packet:S-T15:task_context",
+        "prompt_packet:S-T15:candidate_explanations"
+      ]
+    },
+    "actionability": {
+      "winner": "B",
+      "reason": "Candidate B's support-system suggestion is more aligned with the observed positive association, though the prompt asks to avoid prescriptive suggestions.",
+      "evidence_refs": [
+        "prompt_packet:S-T15:task_context",
+        "prompt_packet:S-T15:candidate_explanations"
+      ]
+    },
+    "clarity": {
+      "winner": "B",
+      "reason": "Candidate B is clearer because it states the coefficient and weak magnitude.",
+      "evidence_refs": [
+        "prompt_packet:S-T15:task_context",
+        "prompt_packet:S-T15:candidate_explanations"
+      ]
+    },
+    "safety_fairness": {
+      "winner": "B",
+      "reason": "Candidate B is safer than the wrong-direction answer, but both should keep recommendations non-prescriptive.",
+      "evidence_refs": [
+        "evaluation_constraints:S-T15:associative_not_causal_avoid_prescriptive"
+      ]
+    }
+  },
+  "coverage_comparison": {
+    "winner": "B",
+    "reason": "Candidate B uses the deterministic full-result coefficient; candidate A contradicts it."
+  },
+  "specificity_comparison": {
+    "winner": "B",
+    "reason": "Candidate B gives the exact r value and correct weak-positive direction."
+  },
+  "decisive_evidence": [
+    {
+      "evidence_ref": "deterministic_derived_stat_evidence:S-T15:pearson_r_rounded_4=0.1442",
+      "supports_candidate": "B",
+      "reason": "This directly refutes candidate A's negative-correlation claim."
+    }
+  ],
+  "tie_justification": null,
+  "absolute_rerun_flags": [
+    {
+      "candidate": "A",
+      "suspected_error_type": "wrong_correlation_direction",
+      "severity_hint": "critical",
+      "reason": "Candidate A says the relationship is negative, but deterministic Pearson evidence is positive at 0.1442.",
+      "evidence_refs": [
+        "deterministic_derived_stat_evidence:S-T15:pearson_r_rounded_4=0.1442"
+      ]
+    }
+  ],
+  "requires_absolute_rerun": true,
+  "reviewer_notes": "Candidate B wins decisively because the other candidate reverses the correlation direction."
+}

@@ -1,0 +1,116 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:34:02.213Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__S-T05",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": "SAMPLE_UCI_POR_STU_000001",
+  "role": "student",
+  "task_id": "S-T05",
+  "task_name": "Weekly engagement trend",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "S-T05",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 24,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 0,
+    "row_count_observed": 0,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "weekly_engagement",
+        "row_count": 0,
+        "sample_fields": []
+      }
+    ],
+    "full_query_datasets_sha256": "79e7e28f2d9412ca28740680b9ebcc28b18a6e1fb4c17e9463dc3b3fcbd24f6c"
+  },
+  "execution_outcome": {
+    "status": "terminal_invalid_empty_result",
+    "reason": "No positive engagement activity found (0 engagement rows).",
+    "backend_data_quality_status": "insufficient_data",
+    "backend_confidence": "LOW",
+    "error_codes": [
+      "REQUIRED_CAPABILITY_MISSING",
+      "REQUIRED_CAPABILITY_MISSING",
+      "ENGAGEMENT_BELOW_MINIMUM"
+    ]
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847242190_05e087d3",
+    "taskId": "S-T05",
+    "datasets": {
+      "weekly_engagement": []
+    },
+    "meta": {
+      "taskId": "S-T05",
+      "isMultiQuery": false,
+      "rowCount": 0,
+      "executionTimeMs": 3,
+      "queryHash": "60667161",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "weekly_engagement"
+      ],
+      "dataQuality": {
+        "status": "insufficient_data",
+        "confidence": "LOW",
+        "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+        "warnings": [
+          {
+            "code": "REQUIRED_CAPABILITY_MISSING",
+            "severity": "error",
+            "message": "Required capability missing: engagement_tracking",
+            "context": {
+              "task_id": "S-T05",
+              "capability": "engagement_tracking",
+              "batch_id": "SAMPLE_UCI_POR"
+            }
+          },
+          {
+            "code": "REQUIRED_CAPABILITY_MISSING",
+            "severity": "error",
+            "message": "Required capability missing: temporal_activity",
+            "context": {
+              "task_id": "S-T05",
+              "capability": "temporal_activity",
+              "batch_id": "SAMPLE_UCI_POR"
+            }
+          },
+          {
+            "code": "ENGAGEMENT_BELOW_MINIMUM",
+            "severity": "error",
+            "message": "No positive engagement activity found (0 engagement rows).",
+            "context": {
+              "found": 0,
+              "required": 1,
+              "rowCount": 0
+            }
+          }
+        ]
+      }
+    }
+  }
+}

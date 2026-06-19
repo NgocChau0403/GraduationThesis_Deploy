@@ -1,0 +1,167 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_UCI_POR__A-S03__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v3_uci_rerun",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-S03",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v3_uci_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_uci_rerun_candidate",
+  "task_context": {
+    "task_name": "Student engagement trajectory",
+    "scope": "1 student",
+    "actionable_question": "When exactly did this student start disengaging?",
+    "target_audience": "instructor, academic_advisor",
+    "ai_summary_type": "trend_series",
+    "ai_prompt_hint": "Flag the exact week engagement dropped. Compare to pre-drop average. Recommend admin outreach timing.",
+    "query_labels": [
+      "engagement_trajectory"
+    ],
+    "explanation_strategy": "behavioral"
+  },
+  "schema_context": {
+    "source_tables": [
+      "engagement [OULAD only]"
+    ],
+    "key_db_fields": [
+      "week_number",
+      "engagement_count; early_warning_week [FE cross]",
+      "weekly_engagement_drop [FE cross]",
+      "consistency_level [FE cross]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "engagement_trajectory"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis reveals a complete absence of engagement data, indicating that no student activity has been recorded. This lack of data suggests a significant disengagement from the course.\n\nEducational implications: The absence of engagement data may indicate a need for immediate intervention to re-engage the student.\n\nRecommendations: high - Initiate outreach to the student to assess barriers to engagement. - Direct communication may uncover underlying issues affecting the student's participation and help facilitate re-engagement.",
+    "structured_payload": {
+      "task_id": "A-S03",
+      "execution_id": "exec_1781847238030_de934be8",
+      "explanation": {
+        "summary": "The analysis reveals a complete absence of engagement data, indicating that no student activity has been recorded. This lack of data suggests a significant disengagement from the course.",
+        "insights": [],
+        "educational_implications": [
+          "The absence of engagement data may indicate a need for immediate intervention to re-engage the student."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Initiate outreach to the student to assess barriers to engagement.",
+            "rationale": "Direct communication may uncover underlying issues affecting the student's participation and help facilitate re-engagement."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset contains no rows, confirming a lack of recorded engagement.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "behavioral",
+      "explanation_type": "behavioral",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 4685,
+        "token_usage": {
+          "prompt_tokens": 505,
+          "completion_tokens": 177,
+          "total_tokens": 682
+        },
+        "strategy": "behavioral",
+        "granularity": "weekly",
+        "cost_usd": 0.000182
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-S03__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "6cd9a9cfb315d3dd427a4b178456bad2062777501454eee0654e42f97d452b95",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 505,
+        "completion_tokens": 177,
+        "total_tokens": 682
+      },
+      "latency_ms": 4688,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 0,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "engagement_trajectory",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S03.json",
+        "artifact_sha256": "15d31797020d70ac8ef35fab6d1b49e370292fb9da87f4e22b331c20ea59c5c2",
+        "row_count": 0,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "engagement_trajectory": 0
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-S03-CORE-01",
+        "description": "Identify the specific week in which engagement dropped when the data supports one."
+      },
+      {
+        "requirement_id": "A-S03-CORE-02",
+        "description": "Compare engagement after the drop with the pre-drop average."
+      }
+    ],
+    "required_supporting_outputs": [
+      {
+        "requirement_id": "A-S03-SUPPORT-01",
+        "description": "When a specific drop week is identified, recommend outreach timing relative to that week."
+      }
+    ],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  },
+  "derived_stat_evidence": []
+}

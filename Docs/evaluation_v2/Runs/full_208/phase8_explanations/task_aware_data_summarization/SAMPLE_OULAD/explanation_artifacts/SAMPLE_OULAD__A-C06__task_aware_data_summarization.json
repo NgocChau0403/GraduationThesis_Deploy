@@ -1,0 +1,405 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T07:25:54.580Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-C06__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__A-C06",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-C06",
+    "task_name": "Compare resource usage",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-C06.json",
+    "full_query_artifact_sha256": "4e437a4bf0a93b5080d2cf66ff3b46aa17062f7dbcfe5ea43f8c67fcee3d6a6c"
+  },
+  "request_payload": {
+    "task_id": "A-C06",
+    "execution_id": "exec_1781847669794_e794bcab",
+    "task_name": "Compare resource usage",
+    "analysis_type": "comparison",
+    "explanation_strategy": "comparison",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Highlight who is more diversified in resource use. Note if one avoids forums/quizzes.",
+    "actionable_question": "Is one student using resources more strategically than the other?",
+    "target_audience": [
+      "instructor"
+    ],
+    "visualization_config": {
+      "x_field": "resource_type",
+      "y_field": "pct_of_total",
+      "series_field": "student_id",
+      "color_field": "student_id",
+      "orientation": "vertical",
+      "variant": "grouped",
+      "x_label": "Resource Type",
+      "y_label": "% of Total Clicks",
+      "semantic_roles": {
+        "x": "category",
+        "y": "engagement_metric",
+        "series": "student_id"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "comparison"
+    },
+    "datasets": {
+      "resource_comparison": [
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "resource_type": "quiz",
+          "clicks": 623,
+          "pct_of_total": 0.4940523394131642,
+          "vle_diversity_score": 1,
+          "has_engagement_data": true,
+          "total_clicks": 1261,
+          "used_resource_types": 9,
+          "evidence_row_type": "resource_usage"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "resource_type": "homepage",
+          "clicks": 264,
+          "pct_of_total": 0.20935765265662173,
+          "vle_diversity_score": 1,
+          "has_engagement_data": true,
+          "total_clicks": 1261,
+          "used_resource_types": 9,
+          "evidence_row_type": "resource_usage"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "resource_type": "forumng",
+          "clicks": 140,
+          "pct_of_total": 0.11102299762093576,
+          "vle_diversity_score": 1,
+          "has_engagement_data": true,
+          "total_clicks": 1261,
+          "used_resource_types": 9,
+          "evidence_row_type": "resource_usage"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "resource_type": "subpage",
+          "clicks": 94,
+          "pct_of_total": 0.07454401268834258,
+          "vle_diversity_score": 1,
+          "has_engagement_data": true,
+          "total_clicks": 1261,
+          "used_resource_types": 9,
+          "evidence_row_type": "resource_usage"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "resource_type": "resource",
+          "clicks": 71,
+          "pct_of_total": 0.056304520222045996,
+          "vle_diversity_score": 1,
+          "has_engagement_data": true,
+          "total_clicks": 1261,
+          "used_resource_types": 9,
+          "evidence_row_type": "resource_usage"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "resource_type": "oucontent",
+          "clicks": 40,
+          "pct_of_total": 0.0317208564631245,
+          "vle_diversity_score": 1,
+          "has_engagement_data": true,
+          "total_clicks": 1261,
+          "used_resource_types": 9,
+          "evidence_row_type": "resource_usage"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "resource_type": "url",
+          "clicks": 27,
+          "pct_of_total": 0.02141157811260904,
+          "vle_diversity_score": 1,
+          "has_engagement_data": true,
+          "total_clicks": 1261,
+          "used_resource_types": 9,
+          "evidence_row_type": "resource_usage"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "resource_type": "oucollaborate",
+          "clicks": 1,
+          "pct_of_total": 0.0007930214115781126,
+          "vle_diversity_score": 1,
+          "has_engagement_data": true,
+          "total_clicks": 1261,
+          "used_resource_types": 9,
+          "evidence_row_type": "resource_usage"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "resource_type": "page",
+          "clicks": 1,
+          "pct_of_total": 0.0007930214115781126,
+          "vle_diversity_score": 1,
+          "has_engagement_data": true,
+          "total_clicks": 1261,
+          "used_resource_types": 9,
+          "evidence_row_type": "resource_usage"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_101700",
+          "resource_type": null,
+          "clicks": 0,
+          "pct_of_total": null,
+          "vle_diversity_score": 0,
+          "has_engagement_data": false,
+          "total_clicks": 0,
+          "used_resource_types": 0,
+          "evidence_row_type": "no_recorded_resource_usage"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "resource_comparison"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [
+        "clicks",
+        "pct_of_total",
+        "vle_diversity_score"
+      ],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {
+        "clicks": "context_only",
+        "pct_of_total": "context_only",
+        "vle_diversity_score": "higher_is_more_diverse"
+      },
+      "metric_units": {
+        "clicks": "count",
+        "pct_of_total": "ratio_0_1",
+        "vle_diversity_score": "ratio_0_1"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": true,
+      "require_metric_units": true,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [
+        "has_engagement_data",
+        "total_clicks",
+        "used_resource_types",
+        "evidence_row_type"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "multi_metric_comparison",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": "student_id",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": "resource_type",
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": "has_engagement_data",
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 6685,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1711,
+      "completion_tokens": 517,
+      "total_tokens": 2228
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-C06",
+    "execution_id": "exec_1781847669794_e794bcab",
+    "explanation": {
+      "summary": "The analysis of resource usage reveals a significant disparity between two students, with one demonstrating a more strategic and diversified approach to resource engagement. The first student utilized a variety of resources, while the second student showed no recorded resource usage.",
+      "insights": [
+        {
+          "title": "Diverse Resource Engagement",
+          "description": "Student SAMPLE_OULAD_STU_100788 engaged with multiple resource types, indicating a strategic approach to learning, while SAMPLE_OULAD_STU_101700 did not engage with any resources.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "used_resource_types",
+              "value": 9,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "SAMPLE_OULAD_STU_100788 utilized 9 different resource types."
+            },
+            {
+              "metric": "used_resource_types",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "SAMPLE_OULAD_STU_101700 did not utilize any resources."
+            }
+          ]
+        },
+        {
+          "title": "High Clicks on Quizzes",
+          "description": "SAMPLE_OULAD_STU_100788's engagement with quizzes (623 clicks) constitutes a significant portion of their total resource usage, suggesting a focused strategy on assessment preparation.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "clicks",
+              "value": 623,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Quizzes accounted for 49.4% of total clicks for SAMPLE_OULAD_STU_100788."
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Students who engage with a variety of resources may have a better understanding of the material and improved learning outcomes."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Encourage SAMPLE_OULAD_STU_101700 to explore and utilize available resources.",
+          "rationale": "Increased resource engagement may enhance their learning experience and performance."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data is complete and provides a clear comparison of resource usage between the two students.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "comparison",
+    "explanation_type": "comparison",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "full_rows_due_to_small_result",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 10,
+    "included_row_count": 10,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "resource_comparison",
+        "row_count": 10,
+        "included_row_count": 10
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 6681,
+      "token_usage": {
+        "prompt_tokens": 1711,
+        "completion_tokens": 517,
+        "total_tokens": 2228
+      },
+      "strategy": "comparison",
+      "granularity": "semester",
+      "cost_usd": 0.000567
+    }
+  },
+  "raw_text": "Summary: The analysis of resource usage reveals a significant disparity between two students, with one demonstrating a more strategic and diversified approach to resource engagement. The first student utilized a variety of resources, while the second student showed no recorded resource usage.\n\nInsights: Diverse Resource Engagement: Student SAMPLE_OULAD_STU_100788 engaged with multiple resource types, indicating a strategic approach to learning, while SAMPLE_OULAD_STU_101700 did not engage with any resources. | High Clicks on Quizzes: SAMPLE_OULAD_STU_100788's engagement with quizzes (623 clicks) constitutes a significant portion of their total resource usage, suggesting a focused strategy on assessment preparation.\n\nEducational implications: Students who engage with a variety of resources may have a better understanding of the material and improved learning outcomes.\n\nRecommendations: high - Encourage SAMPLE_OULAD_STU_101700 to explore and utilize available resources. - Increased resource engagement may enhance their learning experience and performance."
+}

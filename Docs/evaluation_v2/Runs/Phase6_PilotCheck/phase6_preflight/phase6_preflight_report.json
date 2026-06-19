@@ -1,0 +1,224 @@
+{
+  "report_version": "llm_judge_v2_phase6_1_6_2_preflight_report_v1",
+  "generated_at": "2026-06-18T22:06:38.730Z",
+  "status": "PASS",
+  "phase_scope": [
+    "6.1 contract preflight",
+    "6.2 pilot case expansion"
+  ],
+  "inputs": {
+    "case_manifest_path": "Docs/evaluation_v2/Runs/pilot_case_run_manifest_v1.json",
+    "linked_contract_manifest_path": "Docs/evaluation_v2/Runs/pilot_contract_manifest_v1.json",
+    "task_registry_path": "Backend/src/config/taskRegistry.json",
+    "task_requirements_path": "Docs/evaluation_v2/Rubric/task_evaluation_requirements.json",
+    "row_count_records_path": "Docs/evaluation_v2/Handle20rows/outputs/row_count_records.jsonl"
+  },
+  "contract_summary": {
+    "manifest": {
+      "manifest_version": "llm_judge_v2_pilot_contract_manifest_v1",
+      "status": "FROZEN_FOR_PILOT",
+      "frozen_at_local_date": "2026-06-19",
+      "timezone": "Asia/Saigon",
+      "scope": {
+        "evaluation_method": "AI Explanation Evaluation V2: Full-Evidence LLM-as-a-Judge Evaluation",
+        "pilot_only": true,
+        "official_full_run_allowed": false,
+        "datasets": [
+          "SAMPLE_UCI_POR",
+          "SAMPLE_OULAD"
+        ],
+        "task_scope_count": 52,
+        "explanation_modes": [
+          "baseline_first_20_rows",
+          "task_aware_data_summarization"
+        ],
+        "expected_full_evaluation_record_count": 208
+      },
+      "freeze_policy": {
+        "purpose": "Pin the exact pilot contract artifacts used to build and validate LLM Judge V2 pilot inputs and outputs.",
+        "hash_algorithm": "SHA-256",
+        "runner_requirement": "Before pilot execution, recompute SHA-256 for each listed artifact and fail closed if any hash differs.",
+        "mutation_policy": "If any listed artifact changes after this freeze, create a new manifest version instead of silently reusing this one."
+      },
+      "contract_artifacts": [
+        {
+          "artifact_id": "judge_prompt_v2",
+          "path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md",
+          "sha256": "fe8096972e6c3c78192a36e98774fa584b24d08670835171a1d818895e27125e"
+        },
+        {
+          "artifact_id": "judge_rubric_1_to_10",
+          "path": "Docs/evaluation_v2/Rubric/JUDGE_RUBRIC_1_TO_10.md",
+          "sha256": "5b759df2cb1cbf0c53514d51a3b3ccbd8b4755d27f09fc620745c60295ef380d"
+        },
+        {
+          "artifact_id": "metric_anchor_spec",
+          "path": "Docs/evaluation_v2/Rubric/LLM_JUDGE_V2_METRIC_ANCHOR_SPEC.md",
+          "sha256": "7dcd44fbac3a62ff4710cb2217aecc266cb1f8b9cd3c268f7f22a192ea39f4d7"
+        },
+        {
+          "artifact_id": "task_evaluation_requirements",
+          "path": "Docs/evaluation_v2/Rubric/task_evaluation_requirements.json",
+          "sha256": "5e2ae65297a28758b36a081df4df785a28f881870cd1e2eb4e2a5e209480e36a"
+        },
+        {
+          "artifact_id": "judge_input_schema_json",
+          "path": "Docs/evaluation_v2/Input_AI/judge_input_schema.json",
+          "sha256": "463e909b3bfe303741e513161776d484b9194714ea212b4f7ff953d260ca72d5"
+        },
+        {
+          "artifact_id": "judge_input_schema_docs",
+          "path": "Docs/evaluation_v2/Input_AI/judge_input_schema.md",
+          "sha256": "9b1884a8636dbf05b9e320ba5dd950c311f4fc29bf89e2eb4312310c6d234404"
+        },
+        {
+          "artifact_id": "judge_input_example",
+          "path": "Docs/evaluation_v2/Input_AI/judge_input_example.json",
+          "sha256": "de7ab6b1d8f0458bf56295e886ba6410a1af645006df3497336e889c841a8aeb"
+        },
+        {
+          "artifact_id": "judge_response_schema",
+          "path": "Docs/evaluation_v2/LLM_JUDGE_V2_JUDGE_RESPONSE_SCHEMA_V1.json",
+          "sha256": "b41dcfec162c965b2de222d82294a1cc1dcce367a6d529f99170572e4120d57c"
+        },
+        {
+          "artifact_id": "execution_attempt_wrapper_schema",
+          "path": "Docs/evaluation_v2/LLM_JUDGE_V2_EXECUTION_ATTEMPT_WRAPPER_SCHEMA_V1.json",
+          "sha256": "ecc3bc8115a81a859d2fd346928b49c2eca46030f0c0317d2cfad1f247756ab7"
+        },
+        {
+          "artifact_id": "record_execution_status_schema",
+          "path": "Docs/evaluation_v2/LLM_JUDGE_V2_RECORD_EXECUTION_STATUS_SCHEMA_V1.json",
+          "sha256": "fbb1f41922b16ef7121518c73b9b724454e3e82b86818b3588913284ef9af552"
+        },
+        {
+          "artifact_id": "final_scoring_record_schema",
+          "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D3_OUTPUT_SCHEMA_V1.json",
+          "sha256": "3be08fba9693f4a663fc10e2a20d3a82efb843e53087706b4f1a8ba4764847c1"
+        },
+        {
+          "artifact_id": "pre_phase5_decisions",
+          "path": "Docs/evaluation_v2/LLM_JUDGE_V2_PRE_PHASE5_DECISIONS.md",
+          "sha256": "496e9ba512c48c4bb2481242dd9db2074b7d8d8d0ece152c149fa9ed3bc25a6f"
+        },
+        {
+          "artifact_id": "d1_dataset_separated_evaluation_decision",
+          "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D1_DATASET_SEPARATED_EVALUATION_DECISION.md",
+          "sha256": "8e344839c364ba9264f94ba31c3c7dac7a82463bb5df216d3e0e31927533c074"
+        },
+        {
+          "artifact_id": "d2_full_evidence_access_decision",
+          "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D2_FULL_EVIDENCE_ACCESS_DECISION.md",
+          "sha256": "88e29b41bd9b82c62945cdc924713c2c78249fefa8cd5ff95c1ea58680c5a9d1"
+        },
+        {
+          "artifact_id": "d4_reproducibility_execution_decision",
+          "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D4_REPRODUCIBILITY_EXECUTION_DECISIONS.md",
+          "sha256": "e5e1c243708bd40a34a02076f30e2d992aff1e53ccc9202aa6d6913b468b4256"
+        }
+      ],
+      "provenance_artifacts": [
+        {
+          "artifact_id": "task_registry_source",
+          "path": "Backend/src/config/taskRegistry.json",
+          "sha256": "dbe92c76bb84c63b6a07cab3339f999ab231120c191d105d93cf8fab34958fca",
+          "reason": "Source registry used to derive task-level evaluation requirements."
+        },
+        {
+          "artifact_id": "task_requirements_materializer",
+          "path": "Docs/evaluation_v2/Rubric/scripts/materializeTaskEvaluationRequirements.mjs",
+          "sha256": "c5c65d97a984b73a73c0c12abb4cc21d20515b3000e6507a9bbfe409b135abb9",
+          "reason": "Generator script used to materialize task_evaluation_requirements.json."
+        }
+      ],
+      "counts": {
+        "contract_artifact_count": 15,
+        "provenance_artifact_count": 2,
+        "total_hashed_artifact_count": 17
+      },
+      "notes": [
+        "This manifest freezes the pilot contract package only; it does not authorize Phase 8 official full evaluation.",
+        "Pilot case selection and runtime outputs should be recorded in a separate pilot run manifest.",
+        "Repository commit SHA is intentionally not populated here until the contract package is staged and committed."
+      ]
+    },
+    "path": "Docs/evaluation_v2/Runs/pilot_contract_manifest_v1.json",
+    "sha256": "958720f5cc5a63a66b639b0e1d6fbff56f7a386c0b740844307bb4df81f8e9ef",
+    "artifact_count": 17
+  },
+  "counts": {
+    "primary_cases": 12,
+    "expanded_planned_records": 24,
+    "expected_judge_records": 24,
+    "errors": 0,
+    "warnings": 0
+  },
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 6,
+      "SAMPLE_OULAD": 6
+    },
+    "row_count_buckets": {
+      "<=20": 6,
+      ">20": 6
+    },
+    "expected_evidence_access_paths": {
+      "direct_embedding": 6,
+      "deterministic_artifact_retrieval": 6
+    },
+    "roles": {
+      "student": 4,
+      "admin": 8
+    },
+    "explanation_modes": {
+      "baseline_first_20_rows": 12,
+      "task_aware_data_summarization": 12
+    },
+    "coverage_tags": [
+      "action_timing",
+      "admin",
+      "causal_framing",
+      "cohort",
+      "constraint_handling",
+      "correlation",
+      "direct_embedding",
+      "early_warning_week",
+      "feature_ranking",
+      "grounding",
+      "large_result",
+      "lifestyle_context",
+      "lifestyle_risk",
+      "oulad",
+      "outlier_detection",
+      "priority_list",
+      "ranking",
+      "recommendation",
+      "retrieval_required",
+      "risk",
+      "safety_fairness_applicable",
+      "single_student",
+      "small_result",
+      "student",
+      "synthesis",
+      "temporal_reasoning",
+      "threshold_check",
+      "trend",
+      "two_student_comparison",
+      "uci",
+      "weekly_drop",
+      "weekly_engagement"
+    ]
+  },
+  "outputs": {
+    "planned_records_jsonl": "Docs/evaluation_v2/Runs/phase6_preflight/planned_records.jsonl",
+    "report_json": "Docs/evaluation_v2/Runs/phase6_preflight/phase6_preflight_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/phase6_preflight/phase6_preflight_report.md"
+  },
+  "gate_decision": {
+    "phase6_3_evidence_builder_allowed": true,
+    "judge_invocation_allowed": false,
+    "official_full_evaluation_allowed": false,
+    "reason": "Preflight passed for contract verification and pilot case expansion. Evidence builder may run next, but judge invocation remains disabled."
+  },
+  "issues": []
+}

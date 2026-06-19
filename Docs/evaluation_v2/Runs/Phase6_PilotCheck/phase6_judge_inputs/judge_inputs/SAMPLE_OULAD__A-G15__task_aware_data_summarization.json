@@ -1,0 +1,227 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G15__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v2_pilot_phase6_4",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G15",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Intervention priority ranking",
+    "scope": "Many students",
+    "actionable_question": "Who are the top 10 students most in need of intervention right now?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "ranking",
+    "ai_prompt_hint": "Rank by at_risk_score [FE] descending. List triggered flags per student. Provide action per priority group.",
+    "query_labels": [
+      "intervention_priority_list"
+    ],
+    "explanation_strategy": "ranking"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement",
+      "student"
+    ],
+    "key_db_fields": [
+      "student_id",
+      "gender",
+      "age_group",
+      "region; at_risk_score [FE cross]",
+      "at_risk_label [FE cross]",
+      "avg_score [FE cross]",
+      "all 5 flags",
+      "final_outcome"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "intervention_priority_list"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis reveals that the top-ranked students, all with an at-risk score of 5.0, exhibit significant challenges, including low average scores and multiple flags indicating poor engagement and negative trends. Conversely, the bottom-ranked students, with an at-risk score of 4.0, show slightly better average scores but still face similar engagement issues.\n\nInsights: High Risk Indicators: The top 10 students all have an at-risk score of 5.0, indicating a critical need for intervention. They share common flags such as low scores, low engagement, and negative trends, which suggest systemic issues affecting their performance. | Engagement and Performance Decline: Students in the top ranks have low average scores, with the highest being 39.6667, indicating a significant gap in performance. This is compounded by flags for low engagement and punctuality, suggesting that these students are not only struggling academically but also with their commitment to the course.\n\nEducational implications: Immediate intervention strategies are necessary to address the academic and engagement issues faced by the top-ranked students.\n\nRecommendations: high - Implement targeted support programs for the top 10 students, focusing on academic tutoring and engagement strategies. - Given their high at-risk scores and multiple flags, these students require urgent and tailored interventions to improve their academic outcomes.",
+    "structured_payload": {
+      "task_id": "A-G15",
+      "execution_id": "exec_1781820444834_36e3296e",
+      "explanation": {
+        "summary": "The analysis reveals that the top-ranked students, all with an at-risk score of 5.0, exhibit significant challenges, including low average scores and multiple flags indicating poor engagement and negative trends. Conversely, the bottom-ranked students, with an at-risk score of 4.0, show slightly better average scores but still face similar engagement issues.",
+        "insights": [
+          {
+            "title": "High Risk Indicators",
+            "description": "The top 10 students all have an at-risk score of 5.0, indicating a critical need for intervention. They share common flags such as low scores, low engagement, and negative trends, which suggest systemic issues affecting their performance.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "at_risk_score",
+                "value": 5,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Top 10 students"
+              }
+            ]
+          },
+          {
+            "title": "Engagement and Performance Decline",
+            "description": "Students in the top ranks have low average scores, with the highest being 39.6667, indicating a significant gap in performance. This is compounded by flags for low engagement and punctuality, suggesting that these students are not only struggling academically but also with their commitment to the course.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "avg_score",
+                "value": 39.6667,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Top 10 students"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Immediate intervention strategies are necessary to address the academic and engagement issues faced by the top-ranked students."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted support programs for the top 10 students, focusing on academic tutoring and engagement strategies.",
+            "rationale": "Given their high at-risk scores and multiple flags, these students require urgent and tailored interventions to improve their academic outcomes."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data is comprehensive and reflects consistent patterns across multiple metrics.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "ranking",
+      "explanation_type": "ranking",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "ranking",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 50,
+      "included_row_count": null,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": false,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "intervention_priority_list",
+          "row_count": 50,
+          "included_row_count": 50
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 6297,
+        "token_usage": {
+          "prompt_tokens": 6436,
+          "completion_tokens": 496,
+          "total_tokens": 6932
+        },
+        "strategy": "ranking",
+        "granularity": "semester",
+        "cost_usd": 0.001263
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/phase6_explanations_task_aware/explanation_artifacts/SAMPLE_OULAD__A-G15__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "2b098a56448a60d80291e9152bab22da89fd6a2849907e920a4d878d80f3c936",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 6436,
+        "completion_tokens": 496,
+        "total_tokens": 6932
+      },
+      "latency_ms": 6303,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 50,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "intervention_priority_list",
+        "artifact_path": "Docs/evaluation_v2/Runs/phase6_evidence/full_query_artifacts/SAMPLE_OULAD__A-G15__task_aware_data_summarization.json",
+        "artifact_sha256": "426570ec1d0dbdfdfce0d915e744cf4a9874e3215d0dcf54c9505a10a8bb122d",
+        "row_count": 50,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 50,
+    "retrieved_row_count_by_dataset": {
+      "intervention_priority_list": 50
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "intervention_priority_list",
+        "start": 0,
+        "end": 49
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_OULAD__A-G15__task_aware_data_summarization__intervention_priority_list__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/phase6_judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G15__task_aware_data_summarization.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "intervention_priority_list": 50
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G15-CORE-01",
+        "description": "Rank by at_risk_score [FE] descending."
+      },
+      {
+        "requirement_id": "A-G15-CORE-02",
+        "description": "List triggered flags per student."
+      },
+      {
+        "requirement_id": "A-G15-CORE-03",
+        "description": "Provide action per priority group."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G15-CONSTRAINT-01",
+        "description": "Treat the output as internal admin use only."
+      },
+      {
+        "constraint_id": "A-G15-CONSTRAINT-02",
+        "description": "Do not include personally identifying information beyond identifiers already present in returned data."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

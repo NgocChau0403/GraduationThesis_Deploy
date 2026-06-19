@@ -1,0 +1,101 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Claims were judged against the permitted evidence; penalties reflect unsupported, contradicted, or overstrong interpretations when detected."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Numerical values, percentages, rankings, and thresholds were checked against the supplied rows and task context where present."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation was checked against the supplied core and supporting requirements, with omissions penalized only for required outputs."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The response addresses the stated task, dataset, audience, and scope unless missing core outputs or unsupported claims weaken the target answer."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Recommendations or decision support were assessed for whether they follow from the record evidence and match the requested decision level."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally readable and organized; clarity score reflects precision and concision rather than factual correctness."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Safety and fairness were treated as applicable per the conservative pilot default and checked for stigmatizing or deterministic framing."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a weak negative correlation between Engagement Score and Average Score, indicating that higher engagement does not necessarily lead to better academic performance in this dataset.",
+      "claim_type": "semantic_interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "full_query_artifacts:engagement_performance_scatter"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The evidence can support association language, but the causal phrasing is stronger than the permitted evidence proves.",
+      "impact_type": "changes_interpretation"
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "| Outlier Identification: Several students exhibit high average scores despite having an engagement score of 0, indicating potential outliers.",
+      "claim_type": "numeric_or_semantic_interpretation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts:engagement_performance_scatter"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The numerical values in this sentence match supplied evidence or task context."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The weak correlation suggests that increasing engagement alone may not be sufficient to improve academic performance, indicating a need for a more holistic approach to student support.",
+      "claim_type": "recommendation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts:engagement_performance_scatter"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The qualitative interpretation is consistent with the supplied task evidence and does not introduce a detected contradiction."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "unsupported_or_contradicted_claim",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "major",
+      "primary_metric": "faithfulness",
+      "secondary_metrics": [],
+      "cap_candidate": 6,
+      "rationale": "A stated claim is not fully supported by the permitted evidence for this record.",
+      "evidence_refs": [
+        "full_query_artifacts:engagement_performance_scatter"
+      ]
+    }
+  ],
+  "holistic_rationale": "The explanation was scoreable for this SAMPLE_UCI_POR record. It generally addresses the central task using the supplied evidence; the most consequential limitations are reflected by the listed unsupported claims or missing required outputs.",
+  "evidence_usage_notes": "Evidence access mode was deterministic_artifact_retrieval. Judgment used manifest-referenced artifacts for engagement_performance_scatter; retrieval_log_path was Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G02__baseline_first_20_rows.json. Direct rows, artifact row counts, and any backend data-quality warnings materially informed claim and requirement checks.",
+  "invalid_reason": null
+}

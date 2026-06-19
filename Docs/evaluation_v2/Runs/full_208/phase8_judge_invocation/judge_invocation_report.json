@@ -1,0 +1,76 @@
+{
+  "report_version": "llm_judge_v2_full_208_judge_invocation_report_v1",
+  "generated_at": "2026-06-19T08:57:09.048Z",
+  "mode": "import",
+  "status": "PASS",
+  "phase_scope": [
+    "Phase 7 official judge invocation/import",
+    "full_208 dataset-scoped run"
+  ],
+  "dataset_scope": "SAMPLE_UCI_POR",
+  "evaluation_run_id": "llm_judge_v2_full_208__SAMPLE_UCI_POR",
+  "session_segment_id": "full_208__SAMPLE_UCI_POR__segment_001",
+  "inputs": {
+    "prompt_queue_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase8_judge_queue/judge_prompt_queue_manifest.jsonl",
+    "prompt_path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md",
+    "prompt_sha256": "e35e0b9d459cc13cd908acc693510832ccf611a61922bcd6bdb3f4e93f569517",
+    "official_contract_manifest_path": "Docs/evaluation_v2/Runs/full_208/official_contract_manifest_v1.json",
+    "official_contract_manifest_sha256": "eb78be59016700cd9b5ec7f2e4886ecc67d8de06094439738af99f40e385e296",
+    "judge_response_schema_path": "Docs/evaluation_v2/LLM_JUDGE_V2_JUDGE_RESPONSE_SCHEMA_V1.json",
+    "attempt_wrapper_schema_path": "Docs/evaluation_v2/LLM_JUDGE_V2_EXECUTION_ATTEMPT_WRAPPER_SCHEMA_V1.json",
+    "record_status_schema_path": "Docs/evaluation_v2/LLM_JUDGE_V2_RECORD_EXECUTION_STATUS_SCHEMA_V1.json"
+  },
+  "counts": {
+    "expected_records": 104,
+    "invocation_manifest_records": 104,
+    "prompt_queue_records": 104,
+    "raw_received_records": 104,
+    "valid_records": 104,
+    "retryable_invalid_records": 0,
+    "missing_records": 0,
+    "errors": 0,
+    "warnings": 0
+  },
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 104
+    },
+    "explanation_modes": {
+      "baseline_first_20_rows": 52,
+      "task_aware_data_summarization": 52
+    },
+    "evidence_access_modes": {
+      "direct_embedding": 92,
+      "deterministic_artifact_retrieval": 12
+    },
+    "queue_strategies": {
+      "full_context": 94,
+      "compact_retrieval_context": 10
+    },
+    "record_statuses": {
+      "valid": 104
+    }
+  },
+  "outputs": {
+    "prompt_queue_dir": "Docs/evaluation_v2/Runs/full_208/phase8_judge_invocation/prompt_queue",
+    "raw_outputs_dir": "Docs/evaluation_v2/Runs/full_208/phase8_judge_invocation/raw_outputs",
+    "extracted_outputs_dir": "Docs/evaluation_v2/Runs/full_208/phase8_judge_invocation/extracted_outputs",
+    "validated_outputs_dir": "Docs/evaluation_v2/Runs/full_208/phase8_judge_invocation/validated_outputs",
+    "attempt_wrappers_dir": "Docs/evaluation_v2/Runs/full_208/phase8_judge_invocation/attempt_wrappers",
+    "record_status_dir": "Docs/evaluation_v2/Runs/full_208/phase8_judge_invocation/record_status",
+    "invocation_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase8_judge_invocation/judge_invocation_manifest.jsonl",
+    "attempt_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase8_judge_invocation/judge_attempt_manifest.jsonl",
+    "status_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase8_judge_invocation/record_execution_status_manifest.jsonl",
+    "report_json": "Docs/evaluation_v2/Runs/full_208/phase8_judge_invocation/judge_invocation_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/full_208/phase8_judge_invocation/judge_invocation_report.md"
+  },
+  "gate_decision": {
+    "prompt_queue_ready": true,
+    "actual_judge_invocation_completed": true,
+    "judge_output_validation_passed": true,
+    "phase8_scoring_allowed_for_dataset": true,
+    "full_208_finalization_allowed": false,
+    "reason": "All dataset-scoped raw judge outputs imported and schema-validated."
+  },
+  "issues": []
+}

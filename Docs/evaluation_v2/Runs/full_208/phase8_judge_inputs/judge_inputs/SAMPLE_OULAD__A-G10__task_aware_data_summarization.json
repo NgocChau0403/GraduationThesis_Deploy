@@ -1,0 +1,223 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G10__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G10",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Consistency analysis across cohort",
+    "scope": "Many students",
+    "actionable_question": "How many students are cramming instead of studying consistently?",
+    "target_audience": "instructor",
+    "ai_summary_type": "categorical_distribution",
+    "ai_prompt_hint": "Describe the distribution of students across high, medium, and low consistency using student_count and pct_students. Use avg_weekly_stddev and avg_active_weeks to explain what low consistency means, then recommend study-routine interventions for the low group.",
+    "query_labels": [
+      "consistency_distribution"
+    ],
+    "explanation_strategy": "distribution"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "engagement [OULAD only]"
+    ],
+    "key_db_fields": [
+      "consistency_level [FE cross]",
+      "student_count [FE cross]",
+      "pct_students [FE cross]",
+      "avg_weekly_stddev",
+      "avg_weekly_clicks",
+      "avg_active_weeks"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "consistency_level",
+        "student_count"
+      ],
+      "optional_columns": [
+        "pct_students",
+        "avg_weekly_stddev",
+        "avg_weekly_clicks",
+        "avg_active_weeks"
+      ]
+    },
+    "query_labels": [
+      "consistency_distribution"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The distribution of students across consistency levels reveals a significant majority in the low consistency category, indicating a potential issue with study habits. The high and medium consistency groups are nearly equal in size but represent a smaller portion of the overall cohort.\n\nInsights: Prevalence of Low Consistency: A substantial 39.19% of students fall into the low consistency category, with an average weekly standard deviation of 88.2, suggesting erratic study patterns. This contrasts sharply with the high consistency group, which comprises only 30.42% of students and has a much lower average weekly standard deviation of 18.59. | Active Weeks and Engagement: Students in the low consistency group average 21.8 active weeks, indicating that while they are engaged for a significant duration, their study habits are inconsistent, as evidenced by their high average weekly standard deviation.\n\nEducational implications: The high percentage of students in the low consistency category suggests a need for targeted interventions to promote consistent study habits.\n\nRecommendations: high - Implement structured study schedules and regular check-ins for students in the low consistency group. - Providing a framework for consistent study can help reduce variability in engagement and improve overall academic performance.",
+    "structured_payload": {
+      "task_id": "A-G10",
+      "execution_id": "exec_1781847762536_110a89af",
+      "explanation": {
+        "summary": "The distribution of students across consistency levels reveals a significant majority in the low consistency category, indicating a potential issue with study habits. The high and medium consistency groups are nearly equal in size but represent a smaller portion of the overall cohort.",
+        "insights": [
+          {
+            "title": "Prevalence of Low Consistency",
+            "description": "A substantial 39.19% of students fall into the low consistency category, with an average weekly standard deviation of 88.2, suggesting erratic study patterns. This contrasts sharply with the high consistency group, which comprises only 30.42% of students and has a much lower average weekly standard deviation of 18.59.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "pct_students",
+                "value": 0.3919,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Low consistency group percentage"
+              }
+            ]
+          },
+          {
+            "title": "Active Weeks and Engagement",
+            "description": "Students in the low consistency group average 21.8 active weeks, indicating that while they are engaged for a significant duration, their study habits are inconsistent, as evidenced by their high average weekly standard deviation.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "avg_active_weeks",
+                "value": 21.8,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Average active weeks for low consistency group"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The high percentage of students in the low consistency category suggests a need for targeted interventions to promote consistent study habits."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement structured study schedules and regular check-ins for students in the low consistency group.",
+            "rationale": "Providing a framework for consistent study can help reduce variability in engagement and improve overall academic performance."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset is complete and provides a clear breakdown of student consistency levels.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "distribution",
+      "explanation_type": "distribution",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "full_rows_due_to_small_result",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 3,
+      "included_row_count": 3,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "consistency_distribution",
+          "row_count": 3,
+          "included_row_count": 3
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 8475,
+        "token_usage": {
+          "prompt_tokens": 897,
+          "completion_tokens": 479,
+          "total_tokens": 1376
+        },
+        "strategy": "distribution",
+        "granularity": "weekly",
+        "cost_usd": 0.000422
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-G10__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "e3fd36da627a53464af02b5b6a99fea349f5311b6cec010cb9ffb5c6a3aa95a9",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 897,
+        "completion_tokens": 479,
+        "total_tokens": 1376
+      },
+      "latency_ms": 8516,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 3,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "consistency_distribution",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G10.json",
+        "artifact_sha256": "b1ae43be27511d13b998754ae5363baea6e1ec9aec7d0011932b6180dec172cf",
+        "row_count": 3,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 3,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "consistency_distribution": 3
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G10-CORE-01",
+        "description": "Describe the distribution of students across high, medium, and low consistency using returned cohort counts or percentages."
+      },
+      {
+        "requirement_id": "A-G10-CORE-02",
+        "description": "Explain what low consistency means by reference to returned spread and active-week metrics."
+      },
+      {
+        "requirement_id": "A-G10-CORE-03",
+        "description": "Recommend study-routine interventions targeted at the low-consistency group."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G10-CONSTRAINT-01",
+        "description": "Do not conflate low consistency with low effort."
+      },
+      {
+        "constraint_id": "A-G10-CONSTRAINT-02",
+        "description": "Acknowledge that observed study patterns may reflect employment, health, accessibility, or family obligations when making recommendations."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

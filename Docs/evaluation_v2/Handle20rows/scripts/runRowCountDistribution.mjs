@@ -7,7 +7,7 @@ const MANIFEST_PATH = path.join(
   PROJECT_ROOT,
   "Docs/evaluation_v1/ai_explanation_full_matrix/manifest.expected.json"
 );
-const OUTPUT_DIR = path.join(PROJECT_ROOT, "Docs/evaluation_v2/LLMJudgeV2/outputs");
+const OUTPUT_DIR = path.join(PROJECT_ROOT, "Docs/evaluation_v2/Handle20rows/outputs");
 const RECORDS_PATH = path.join(OUTPUT_DIR, "row_count_records.jsonl");
 const DISTRIBUTION_JSON_PATH = path.join(OUTPUT_DIR, "row_count_distribution.json");
 const DISTRIBUTION_MD_PATH = path.join(OUTPUT_DIR, "row_count_distribution.md");

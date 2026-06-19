@@ -1,0 +1,401 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T06:08:02.499Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-C01__baseline_first_20_rows",
+    "case_id": "SAMPLE_OULAD__A-C01",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-C01",
+    "task_name": "Compare performance trajectories",
+    "explanation_mode": "baseline_first_20_rows"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-C01.json",
+    "full_query_artifact_sha256": "692c12fd575f64312163abb3e9a2aa01f9aae8cdde11ff1c9576015aacb284fa"
+  },
+  "request_payload": {
+    "task_id": "A-C01",
+    "execution_id": "exec_1781847642333_fd75515e",
+    "task_name": "Compare performance trajectories",
+    "analysis_type": "trend",
+    "explanation_strategy": "comparison",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Explain divergence points. Identify when one student fell behind relative to the other.",
+    "actionable_question": "Which student is improving faster and when did their paths diverge?",
+    "target_audience": [
+      "instructor"
+    ],
+    "visualization_config": {
+      "x_field": "assessment_order",
+      "y_field": "score_normalized",
+      "series_field": "student_id",
+      "color_field": "student_id",
+      "orientation": "horizontal",
+      "variant": "multi_series",
+      "x_label": "Assessment Order",
+      "y_label": "Normalized Score",
+      "semantic_roles": {
+        "x": "time",
+        "y": "performance_metric",
+        "series": "student_id"
+      }
+    },
+    "analysis_context": {
+      "granularity": "per_assessment",
+      "aggregation_level": "comparison"
+    },
+    "datasets": {
+      "trajectory_comparison": [
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 1,
+          "week_of_class": 3,
+          "assessment_type": "TMA",
+          "score_normalized": 92
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 1,
+          "week_of_class": 3,
+          "assessment_type": "CMA",
+          "score_normalized": 100
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 2,
+          "week_of_class": 7,
+          "assessment_type": "TMA",
+          "score_normalized": 90
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 3,
+          "week_of_class": 10,
+          "assessment_type": "CMA",
+          "score_normalized": 87
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 3,
+          "week_of_class": 14,
+          "assessment_type": "TMA",
+          "score_normalized": 89
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 4,
+          "week_of_class": 19,
+          "assessment_type": "TMA",
+          "score_normalized": 61
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 5,
+          "week_of_class": 21,
+          "assessment_type": "CMA",
+          "score_normalized": 90
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 5,
+          "week_of_class": 25,
+          "assessment_type": "TMA",
+          "score_normalized": 87
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 6,
+          "week_of_class": 34,
+          "assessment_type": "CMA",
+          "score_normalized": 90
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 7,
+          "week_of_class": 34,
+          "assessment_type": "CMA",
+          "score_normalized": 92
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 8,
+          "week_of_class": 34,
+          "assessment_type": "CMA",
+          "score_normalized": 97
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 8,
+          "week_of_class": 31,
+          "assessment_type": "CMA",
+          "score_normalized": 83
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 9,
+          "week_of_class": null,
+          "assessment_type": "Exam",
+          "score_normalized": 96
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 9,
+          "week_of_class": 34,
+          "assessment_type": "CMA",
+          "score_normalized": 85
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 10,
+          "week_of_class": 34,
+          "assessment_type": "CMA",
+          "score_normalized": 88
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 11,
+          "week_of_class": 34,
+          "assessment_type": "CMA",
+          "score_normalized": 93
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "assessment_order": 12,
+          "week_of_class": 34,
+          "assessment_type": "CMA",
+          "score_normalized": 99
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "trajectory_comparison"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": true,
+      "comparison_alignment_columns": [
+        "assessment_order",
+        "assessment_type"
+      ],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "trend_comparison",
+      "target_group": null,
+      "divergence_threshold": 5,
+      "time_column": "assessment_order",
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "score_normalized",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": "student_id",
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": 50,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 6916,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "baseline_first_20_rows",
+    "observed_ai_summary_method": "baseline_first_20_rows",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1470,
+      "completion_tokens": 522,
+      "total_tokens": 1992
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-C01",
+    "execution_id": "exec_1781847642333_fd75515e",
+    "explanation": {
+      "summary": "The analysis of the performance trajectories of the student reveals significant fluctuations in scores across different assessments. Notably, the student exhibited a decline in performance during the fourth assessment, which marks a divergence point in their trajectory.",
+      "insights": [
+        {
+          "title": "Divergence in Performance",
+          "description": "The student's performance peaked at a normalized score of 100 during the first CMA assessment but experienced a notable decline to 61 in the fourth TMA assessment. This represents a critical divergence point where the student's trajectory shifted downward.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "score_normalized",
+              "value": 100,
+              "comparison": "peak",
+              "delta": null,
+              "context": "First CMA assessment"
+            },
+            {
+              "metric": "score_normalized",
+              "value": 61,
+              "comparison": "down_from_previous",
+              "delta": -29,
+              "context": "Fourth TMA assessment"
+            }
+          ]
+        },
+        {
+          "title": "Inconsistent Performance Across Assessments",
+          "description": "The student's scores varied significantly across assessments, with a high of 100 and a low of 61, indicating inconsistency in performance. This inconsistency may hinder overall learning outcomes.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "score_normalized",
+              "value": 100,
+              "comparison": "peak",
+              "delta": null,
+              "context": "First CMA assessment"
+            },
+            {
+              "metric": "score_normalized",
+              "value": 61,
+              "comparison": "trough",
+              "delta": -39,
+              "context": "Fourth TMA assessment"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "The significant drop in performance suggests a need for targeted interventions to address the factors contributing to the decline."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement regular check-ins and support for the student following the fourth assessment.",
+          "rationale": "To identify and address any underlying issues affecting performance and to provide necessary academic support."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The dataset provides clear performance metrics across multiple assessments, allowing for reliable analysis.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "comparison",
+    "explanation_type": "comparison",
+    "ai_summary_method": "baseline_first_20_rows",
+    "ai_summary_version": "baseline",
+    "baseline_available": true,
+    "input_summary_type": "raw_first_20_rows",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": null,
+    "included_row_count": null,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 6911,
+      "token_usage": {
+        "prompt_tokens": 1470,
+        "completion_tokens": 522,
+        "total_tokens": 1992
+      },
+      "strategy": "comparison",
+      "granularity": "per_assessment",
+      "cost_usd": 0.000534
+    }
+  },
+  "raw_text": "Summary: The analysis of the performance trajectories of the student reveals significant fluctuations in scores across different assessments. Notably, the student exhibited a decline in performance during the fourth assessment, which marks a divergence point in their trajectory.\n\nInsights: Divergence in Performance: The student's performance peaked at a normalized score of 100 during the first CMA assessment but experienced a notable decline to 61 in the fourth TMA assessment. This represents a critical divergence point where the student's trajectory shifted downward. | Inconsistent Performance Across Assessments: The student's scores varied significantly across assessments, with a high of 100 and a low of 61, indicating inconsistency in performance. This inconsistency may hinder overall learning outcomes.\n\nEducational implications: The significant drop in performance suggests a need for targeted interventions to address the factors contributing to the decline.\n\nRecommendations: high - Implement regular check-ins and support for the student following the fourth assessment. - To identify and address any underlying issues affecting performance and to provide necessary academic support."
+}

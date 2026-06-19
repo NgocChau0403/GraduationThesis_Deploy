@@ -1,0 +1,34 @@
+{
+  "artifact_type": "llm_judge_v3_deterministic_derived_stat_evidence_v1",
+  "generated_at": "2026-06-19T10:02:51.096Z",
+  "dry_run_mode": "single_review",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-T11",
+  "task_name": "Registration timing vs performance",
+  "ai_summary_type": "correlation_evidence",
+  "stat_family": "correlation",
+  "coefficient_method": "pearson",
+  "x_column": "registration_lead_time",
+  "y_column": "avg_score",
+  "entity_column": "student_id",
+  "source_full_query_artifact": {
+    "path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T11.json",
+    "sha256": "c2987ad38e1c1028ef05384a462822c1c29753790ed30b82ed13784f65cdd962",
+    "evidence_id": "SAMPLE_UCI_POR__S-T11"
+  },
+  "source_judge_input_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_inputs/SAMPLE_UCI_POR__S-T11__baseline_first_20_rows.json",
+  "derived_stats": [
+    {
+      "dataset_label": "registration_data",
+      "status": "skipped",
+      "reason": "no_valid_numeric_pairs",
+      "row_count": 0,
+      "valid_pair_count": 0,
+      "invalid_x_count": 0,
+      "invalid_y_count": 0,
+      "warnings": []
+    }
+  ],
+  "judge_usage_note": "Use this artifact as deterministic support for correlation coefficient claims. It proves derived Pearson r from all valid x/y pairs in the full query result; it does not prove causality or statistical significance.",
+  "artifact_sha256": "72c32547b5a5b627144350a938c6201abf3f325189dfbf60142344d30fe8dbbb"
+}

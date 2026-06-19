@@ -1,0 +1,340 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T05:57:12.223Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-C02__baseline_first_20_rows",
+    "case_id": "SAMPLE_UCI_POR__A-C02",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-C02",
+    "task_name": "Compare engagement patterns",
+    "explanation_mode": "baseline_first_20_rows"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C02.json",
+    "full_query_artifact_sha256": "50dbf2b26533fa4ebe56b58d2944964f77899add440cad68e7439c28620de178"
+  },
+  "request_payload": {
+    "task_id": "A-C02",
+    "execution_id": "exec_1781847231965_643f380f",
+    "task_name": "Compare engagement patterns",
+    "analysis_type": "comparison",
+    "explanation_strategy": "comparison",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Compare the two students using metric, engagement_score, total_clicks, and active_days. Explain which engagement dimension creates the largest gap. Do not infer academic risk unless risk fields are present.",
+    "actionable_question": "Which student is more engaged across total clicks, active days, and combined engagement score?",
+    "target_audience": [
+      "instructor"
+    ],
+    "visualization_config": {
+      "x_field": "student_id",
+      "y_field": "engagement_score",
+      "series_field": "metric",
+      "color_field": "student_id",
+      "orientation": "vertical",
+      "variant": "grouped",
+      "x_label": "Student",
+      "y_label": "Score (0–1)",
+      "semantic_roles": {
+        "x": "student",
+        "y": "engagement_metric",
+        "series": "metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "comparison"
+    },
+    "datasets": {
+      "engagement_comparison": [
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "metric": "active_days_norm",
+          "engagement_score": 0,
+          "total_clicks": 0,
+          "active_days": 0,
+          "study_effort_level": "very_low"
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "metric": "engagement_score",
+          "engagement_score": 0,
+          "total_clicks": 0,
+          "active_days": 0,
+          "study_effort_level": "very_low"
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "metric": "total_clicks_norm",
+          "engagement_score": 0,
+          "total_clicks": 0,
+          "active_days": 0,
+          "study_effort_level": "very_low"
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "metric": "active_days_norm",
+          "engagement_score": 0,
+          "total_clicks": 0,
+          "active_days": 0,
+          "study_effort_level": "very_low"
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "metric": "engagement_score",
+          "engagement_score": 0,
+          "total_clicks": 0,
+          "active_days": 0,
+          "study_effort_level": "very_low"
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "metric": "total_clicks_norm",
+          "engagement_score": 0,
+          "total_clicks": 0,
+          "active_days": 0,
+          "study_effort_level": "very_low"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "LOW",
+      "reason": "No positive engagement activity found (0 engagement rows)."
+    },
+    "student_context": null,
+    "query_labels": [
+      "engagement_comparison"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {
+        "total_clicks_norm": "higher_is_better",
+        "active_days_norm": "higher_is_better",
+        "engagement_score": "higher_is_better"
+      },
+      "metric_units": {
+        "total_clicks_norm": "ratio_0_1",
+        "active_days_norm": "ratio_0_1",
+        "engagement_score": "ratio_0_1"
+      },
+      "metric_thresholds": {
+        "total_clicks_norm": {
+          "status": "not_applicable",
+          "reason": "descriptive component metric"
+        },
+        "active_days_norm": {
+          "status": "not_applicable",
+          "reason": "descriptive component metric"
+        },
+        "engagement_score": {
+          "very_low_below": 0.25,
+          "low_below": 0.5,
+          "medium_below": 0.75,
+          "high_at_or_above": 0.75
+        }
+      },
+      "minimum_entity_count": 2,
+      "require_metric_directions": true,
+      "require_metric_units": true,
+      "require_metric_thresholds": true,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [
+        "study_effort_level",
+        "total_clicks",
+        "active_days"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "multi_metric_comparison",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": "student_id",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": "metric",
+      "metric_value_column": "engagement_score",
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 6688,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "baseline_first_20_rows",
+    "observed_ai_summary_method": "baseline_first_20_rows",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 955,
+      "completion_tokens": 391,
+      "total_tokens": 1346
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-C02",
+    "execution_id": "exec_1781847231965_643f380f",
+    "explanation": {
+      "summary": "Both students exhibit identical engagement patterns, with no recorded activity across all metrics. This indicates a lack of engagement for both students during the observed period.",
+      "insights": [
+        {
+          "title": "Identical Engagement Levels",
+          "description": "Both students, SAMPLE_UCI_POR_STU_000001 and SAMPLE_UCI_POR_STU_000002, show no engagement across all metrics, including active days, total clicks, and engagement score.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "active_days",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": 0,
+              "context": "Both students have not engaged on any active days."
+            },
+            {
+              "metric": "total_clicks",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": 0,
+              "context": "Both students have not made any clicks."
+            },
+            {
+              "metric": "engagement_score",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": 0,
+              "context": "Both students have an engagement score of zero."
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "The lack of engagement from both students suggests a need for intervention to stimulate participation and interaction with course materials."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement targeted engagement strategies such as personalized communication or interactive assignments.",
+          "rationale": "To increase student participation and improve overall engagement metrics."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data is consistent and clearly indicates no engagement from either student.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "comparison",
+    "explanation_type": "comparison",
+    "ai_summary_method": "baseline_first_20_rows",
+    "ai_summary_version": "baseline",
+    "baseline_available": true,
+    "input_summary_type": "raw_first_20_rows",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": null,
+    "included_row_count": null,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 6679,
+      "token_usage": {
+        "prompt_tokens": 955,
+        "completion_tokens": 391,
+        "total_tokens": 1346
+      },
+      "strategy": "comparison",
+      "granularity": "semester",
+      "cost_usd": 0.000378
+    }
+  },
+  "raw_text": "Summary: Both students exhibit identical engagement patterns, with no recorded activity across all metrics. This indicates a lack of engagement for both students during the observed period.\n\nInsights: Identical Engagement Levels: Both students, SAMPLE_UCI_POR_STU_000001 and SAMPLE_UCI_POR_STU_000002, show no engagement across all metrics, including active days, total clicks, and engagement score.\n\nEducational implications: The lack of engagement from both students suggests a need for intervention to stimulate participation and interaction with course materials.\n\nRecommendations: high - Implement targeted engagement strategies such as personalized communication or interactive assignments. - To increase student participation and improve overall engagement metrics."
+}

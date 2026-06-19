@@ -1,0 +1,188 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G13__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G13",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Lifestyle risk across cohort",
+    "scope": "Many students",
+    "actionable_question": "Which lifestyle patterns are most common among low-performing students?",
+    "target_audience": "academic_advisor",
+    "ai_summary_type": "correlation_evidence",
+    "ai_prompt_hint": "Rank students by lifestyle_risk_score. Correlate with avg_score. Frame as correlational, not prescriptive.",
+    "query_labels": [
+      "lifestyle_risk_scatter"
+    ],
+    "explanation_strategy": "correlation"
+  },
+  "schema_context": {
+    "source_tables": [
+      "student",
+      "enrollment",
+      "assessment_result",
+      "assessment [UCI only]"
+    ],
+    "key_db_fields": [
+      "alcohol_weekday",
+      "alcohol_weekend",
+      "go_out_freq",
+      "health_status",
+      "lifestyle_risk_score [FE single]; avg_score [FE cross]"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "student_id",
+        "lifestyle_risk_score",
+        "avg_score"
+      ],
+      "optional_columns": [
+        "alcohol_weekday",
+        "alcohol_weekend",
+        "go_out_freq",
+        "health_status"
+      ]
+    },
+    "query_labels": [
+      "lifestyle_risk_scatter"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis of the relationship between Lifestyle Risk Score and Average Score is not possible due to the absence of data. No rows were included in the dataset, which limits any correlation assessment.\n\nEducational implications: Without data, it is challenging to identify lifestyle patterns among students and their impact on academic performance.\n\nWarnings: The dataset contains no entries, which prevents any correlation analysis or insights from being generated.",
+    "structured_payload": {
+      "task_id": "A-G13",
+      "execution_id": "exec_1781847774924_7f1afcf2",
+      "explanation": {
+        "summary": "The analysis of the relationship between Lifestyle Risk Score and Average Score is not possible due to the absence of data. No rows were included in the dataset, which limits any correlation assessment.",
+        "insights": [],
+        "educational_implications": [
+          "Without data, it is challenging to identify lifestyle patterns among students and their impact on academic performance."
+        ],
+        "recommendations": [],
+        "warnings": [
+          "The dataset contains no entries, which prevents any correlation analysis or insights from being generated."
+        ]
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset is confirmed to have zero rows, indicating a complete lack of data for analysis.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "correlation",
+      "explanation_type": "correlation",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "full_rows_due_to_small_result",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 0,
+      "included_row_count": 0,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "lifestyle_risk_scatter",
+          "row_count": 0,
+          "included_row_count": 0
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 2424,
+        "token_usage": {
+          "prompt_tokens": 679,
+          "completion_tokens": 150,
+          "total_tokens": 829
+        },
+        "strategy": "correlation",
+        "granularity": "semester",
+        "cost_usd": 0.000192
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-G13__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "2df6e065008d645cd9d2fc797452e741325f257ffa2b042e73ae12c6eea12f3f",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 679,
+        "completion_tokens": 150,
+        "total_tokens": 829
+      },
+      "latency_ms": 2429,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 0,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "lifestyle_risk_scatter",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G13.json",
+        "artifact_sha256": "e0ee8da1d6bfd365d397d9a9c42e053675469fc232419c46182f9ac001d08d66",
+        "row_count": 0,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "lifestyle_risk_scatter": 0
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G13-CORE-01",
+        "description": "Rank students by lifestyle_risk_score."
+      },
+      {
+        "requirement_id": "A-G13-CORE-02",
+        "description": "Correlate with avg_score."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G13-CONSTRAINT-01",
+        "description": "Frame lifestyle-risk ranking as descriptive and correlational, not causal or deterministic."
+      },
+      {
+        "constraint_id": "A-G13-CONSTRAINT-02",
+        "description": "When listing students by lifestyle-risk rank, avoid language that implies individual blame."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Applicable because the task ranks identifiable students using lifestyle context."
+  }
+}

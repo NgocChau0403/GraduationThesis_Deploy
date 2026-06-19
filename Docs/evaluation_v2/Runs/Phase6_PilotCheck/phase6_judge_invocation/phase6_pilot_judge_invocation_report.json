@@ -1,0 +1,200 @@
+{
+  "report_version": "llm_judge_v2_phase6_5_pilot_judge_invocation_report_v1",
+  "generated_at": "2026-06-19T04:44:13.051Z",
+  "mode": "import",
+  "status": "WAITING_FOR_RAW_OUTPUTS",
+  "phase_scope": [
+    "6.5 pilot judge invocation/output validation"
+  ],
+  "inputs": {
+    "judge_context_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_judge_contexts/judge_context_manifest.jsonl",
+    "prompt_path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md",
+    "prompt_sha256": "fe8096972e6c3c78192a36e98774fa584b24d08670835171a1d818895e27125e",
+    "judge_response_schema_path": "Docs/evaluation_v2/LLM_JUDGE_V2_JUDGE_RESPONSE_SCHEMA_V1.json",
+    "attempt_wrapper_schema_path": "Docs/evaluation_v2/LLM_JUDGE_V2_EXECUTION_ATTEMPT_WRAPPER_SCHEMA_V1.json",
+    "record_status_schema_path": "Docs/evaluation_v2/LLM_JUDGE_V2_RECORD_EXECUTION_STATUS_SCHEMA_V1.json"
+  },
+  "counts": {
+    "expected_records": 24,
+    "prompt_queue_records": 24,
+    "raw_received_records": 2,
+    "valid_records": 2,
+    "retryable_invalid_records": 0,
+    "missing_records": 22,
+    "errors": 0,
+    "warnings": 22
+  },
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 12,
+      "SAMPLE_OULAD": 12
+    },
+    "explanation_modes": {
+      "baseline_first_20_rows": 12,
+      "task_aware_data_summarization": 12
+    },
+    "evidence_access_modes": {
+      "direct_embedding": 12,
+      "deterministic_artifact_retrieval": 12
+    },
+    "record_statuses": {
+      "valid": 2,
+      "missing": 22
+    }
+  },
+  "outputs": {
+    "prompt_queue_dir": "Docs/evaluation_v2/Runs/phase6_judge_invocation/prompt_queue",
+    "raw_outputs_dir": "Docs/evaluation_v2/Runs/phase6_judge_invocation/raw_outputs",
+    "extracted_outputs_dir": "Docs/evaluation_v2/Runs/phase6_judge_invocation/extracted_outputs",
+    "validated_outputs_dir": "Docs/evaluation_v2/Runs/phase6_judge_invocation/validated_outputs",
+    "attempt_wrappers_dir": "Docs/evaluation_v2/Runs/phase6_judge_invocation/attempt_wrappers",
+    "record_statuses_dir": "Docs/evaluation_v2/Runs/phase6_judge_invocation/record_statuses",
+    "invocation_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_judge_invocation/pilot_judge_invocation_manifest.jsonl",
+    "attempt_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_judge_invocation/pilot_judge_attempt_manifest.jsonl",
+    "status_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_judge_invocation/pilot_judge_record_status_manifest.jsonl",
+    "report_json": "Docs/evaluation_v2/Runs/phase6_judge_invocation/phase6_pilot_judge_invocation_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/phase6_judge_invocation/phase6_pilot_judge_invocation_report.md"
+  },
+  "gate_decision": {
+    "prompt_queue_ready": true,
+    "actual_judge_invocation_completed": false,
+    "pilot_output_validation_passed": false,
+    "phase6_6_scoring_allowed": false,
+    "official_full_evaluation_allowed": false,
+    "reason": "Raw judge outputs are missing or invalid. Complete invocation/import before Phase 6.6."
+  },
+  "issues": [
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_UCI_POR__S-T01__task_aware_data_summarization",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_UCI_POR__S-T04__baseline_first_20_rows",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_UCI_POR__S-T04__task_aware_data_summarization",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_UCI_POR__S-T09__task_aware_data_summarization",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_UCI_POR__A-C04__baseline_first_20_rows",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_UCI_POR__A-C04__task_aware_data_summarization",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_UCI_POR__A-G02__baseline_first_20_rows",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_UCI_POR__A-G02__task_aware_data_summarization",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_UCI_POR__A-G13__baseline_first_20_rows",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_UCI_POR__A-G13__task_aware_data_summarization",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_OULAD__S-T05__baseline_first_20_rows",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_OULAD__S-T05__task_aware_data_summarization",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_OULAD__A-G07__baseline_first_20_rows",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_OULAD__A-G07__task_aware_data_summarization",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_OULAD__A-G11__baseline_first_20_rows",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_OULAD__A-G11__task_aware_data_summarization",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_OULAD__A-G15__baseline_first_20_rows",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_OULAD__A-G15__task_aware_data_summarization",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_OULAD__A-G16__baseline_first_20_rows",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_OULAD__A-G16__task_aware_data_summarization",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_OULAD__A-S08__baseline_first_20_rows",
+      "message": "No raw judge output found for this record."
+    },
+    {
+      "severity": "warning",
+      "code": "raw_output_missing",
+      "record_id": "SAMPLE_OULAD__A-S08__task_aware_data_summarization",
+      "message": "No raw judge output found for this record."
+    }
+  ]
+}

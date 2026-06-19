@@ -1,0 +1,120 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:33:52.072Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__A-C05",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": null,
+  "role": "admin",
+  "task_id": "A-C05",
+  "task_name": "Compare academic background",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "A-C05",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 16,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 2,
+    "row_count_observed": 2,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "background_comparison",
+        "row_count": 2,
+        "sample_fields": [
+          "student_id",
+          "highest_education",
+          "previous_attempt_count",
+          "imd_score_numeric",
+          "socioeconomic_band",
+          "disability_flag",
+          "disadvantage_score",
+          "support_score",
+          "family_stability_score",
+          "mother_education_level",
+          "father_education_level"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "ea264e7bf6e16912946cd57c73676e94fe583b4905823c82b6d6e8c24ead5d6f"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "executable",
+    "backend_confidence": "HIGH",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847232057_25cc847c",
+    "taskId": "A-C05",
+    "datasets": {
+      "background_comparison": [
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "highest_education": "Parent education 4/4",
+          "previous_attempt_count": 0,
+          "imd_score_numeric": null,
+          "socioeconomic_band": null,
+          "disability_flag": null,
+          "disadvantage_score": 0.2,
+          "support_score": 0.25,
+          "family_stability_score": 0.575,
+          "mother_education_level": "4",
+          "father_education_level": "4"
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "highest_education": "Parent education 1/4",
+          "previous_attempt_count": 0,
+          "imd_score_numeric": null,
+          "socioeconomic_band": null,
+          "disability_flag": null,
+          "disadvantage_score": 0.4,
+          "support_score": 0.5,
+          "family_stability_score": 0.8500000000000001,
+          "mother_education_level": "1",
+          "father_education_level": "1"
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "A-C05",
+      "isMultiQuery": false,
+      "rowCount": 2,
+      "executionTimeMs": 3,
+      "queryHash": "41833821",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "background_comparison"
+      ],
+      "dataQuality": {
+        "status": "executable",
+        "confidence": "HIGH",
+        "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+        "warnings": []
+      }
+    }
+  }
+}

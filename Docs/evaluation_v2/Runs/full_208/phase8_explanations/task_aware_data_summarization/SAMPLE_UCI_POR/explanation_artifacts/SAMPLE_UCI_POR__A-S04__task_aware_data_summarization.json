@@ -1,0 +1,314 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T07:19:17.074Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-S04__task_aware_data_summarization",
+    "case_id": "SAMPLE_UCI_POR__A-S04",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-S04",
+    "task_name": "Student risk flag breakdown",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S04.json",
+    "full_query_artifact_sha256": "c06bd7d82ba2e9b844a13c63392929a9759f108eb64ee2d323f7be509a59ee53"
+  },
+  "request_payload": {
+    "task_id": "A-S04",
+    "execution_id": "exec_1781847238058_6684c265",
+    "task_name": "Student risk flag breakdown",
+    "analysis_type": "ranking",
+    "explanation_strategy": "risk",
+    "explanation_type": "observation, interpretation, recommendation",
+    "ai_prompt_hint": "For each triggered flag, state the exact value and why it crosses the threshold. Prioritise the top 2 for immediate action.",
+    "actionable_question": "Which specific risk factors should admin address for this student?",
+    "target_audience": [
+      "instructor",
+      "academic_advisor"
+    ],
+    "visualization_config": {
+      "x_field": "flag_name",
+      "y_field": "flag_value",
+      "series_field": null,
+      "color_field": "triggered",
+      "orientation": null,
+      "variant": "default",
+      "x_label": "Risk Flag",
+      "y_label": "Current Value",
+      "semantic_roles": {
+        "x": "category",
+        "y": "risk_metric",
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "instructor"
+    },
+    "datasets": {
+      "risk_flags": [
+        {
+          "flag_name": "flag_low_score",
+          "flag_value": 36.666666666666664,
+          "threshold": "40",
+          "triggered": true,
+          "severity": "high",
+          "flag_description": "Average score is below the pass threshold for this dataset scale.",
+          "recommended_action": "Review the weakest assessment topics and schedule tutor support before the next assessment.",
+          "support_category": "academic_performance"
+        },
+        {
+          "flag_name": "flag_high_absence",
+          "flag_value": 4,
+          "threshold": "10",
+          "triggered": false,
+          "severity": "info",
+          "flag_description": "Absences are within the high-absence risk limit.",
+          "recommended_action": "Keep monitoring attendance and confirm there are no new absence spikes.",
+          "support_category": "attendance"
+        },
+        {
+          "flag_name": "flag_low_punctuality",
+          "flag_value": 0,
+          "threshold": "0.7",
+          "triggered": true,
+          "severity": "medium",
+          "flag_description": "Submission punctuality is below the expected threshold.",
+          "recommended_action": "Use deadline reminders and submit drafts earlier to reduce late-submission risk.",
+          "support_category": "time_management"
+        },
+        {
+          "flag_name": "flag_neg_trend",
+          "flag_value": 27.5,
+          "threshold": "0",
+          "triggered": false,
+          "severity": "info",
+          "flag_description": "Scores are maintaining an upward or stable trend across assessments.",
+          "recommended_action": "Continue monitoring assessment feedback over time.",
+          "support_category": "trend_monitoring"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "risk_flags"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [
+        "high",
+        "medium",
+        "low",
+        "info"
+      ],
+      "flag_order": [
+        "flag_low_score",
+        "flag_high_absence",
+        "flag_low_punctuality",
+        "flag_neg_trend"
+      ],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "risk_flags",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": "flag_name",
+      "flag_value_column": "flag_value",
+      "threshold_column": "threshold",
+      "triggered_column": "triggered",
+      "severity_column": null,
+      "description_column": "flag_description",
+      "recommended_action_column": "recommended_action",
+      "support_category_column": "support_category",
+      "max_flags": 10,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 5441,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1417,
+      "completion_tokens": 354,
+      "total_tokens": 1771
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-S04",
+    "execution_id": "exec_1781847238058_6684c265",
+    "explanation": {
+      "summary": "The checklist prioritizes Low Score and Low Punctuality because their current values cross the respective risk thresholds; highest severity is high for Low Score because the average score is significantly below the pass threshold.",
+      "insights": [
+        {
+          "title": "Why Low Score is High",
+          "description": "The average score is 36.67, which is below the pass threshold of 40. This triggered the flag as the performance is critically low, indicating a significant risk to academic success. This explains why that visible checklist flag is surfaced in the card.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "flag_value",
+              "value": 36.666666666666664,
+              "comparison": "down_from_previous",
+              "delta": null,
+              "context": "Average score below passing"
+            }
+          ]
+        },
+        {
+          "title": "Why Low Punctuality is Active",
+          "description": "The submission punctuality is at 0, which is below the expected threshold of 0.7. This triggered the flag, indicating a medium severity risk related to timely submissions. This explains why that visible checklist flag is surfaced in the card.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "flag_value",
+              "value": 0,
+              "comparison": "down_from_previous",
+              "delta": null,
+              "context": "Punctuality below expected"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [],
+      "recommendations": [],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "Data quality is consistent and reliable.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "risk",
+    "explanation_type": "risk",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "full_rows_due_to_small_result",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 4,
+    "included_row_count": 4,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "risk_flags",
+        "row_count": 4,
+        "included_row_count": 4
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 5416,
+      "token_usage": {
+        "prompt_tokens": 1417,
+        "completion_tokens": 354,
+        "total_tokens": 1771
+      },
+      "strategy": "risk",
+      "granularity": "semester",
+      "cost_usd": 0.000425
+    }
+  },
+  "raw_text": "Summary: The checklist prioritizes Low Score and Low Punctuality because their current values cross the respective risk thresholds; highest severity is high for Low Score because the average score is significantly below the pass threshold.\n\nInsights: Why Low Score is High: The average score is 36.67, which is below the pass threshold of 40. This triggered the flag as the performance is critically low, indicating a significant risk to academic success. This explains why that visible checklist flag is surfaced in the card. | Why Low Punctuality is Active: The submission punctuality is at 0, which is below the expected threshold of 0.7. This triggered the flag, indicating a medium severity risk related to timely submissions. This explains why that visible checklist flag is surfaced in the card."
+}

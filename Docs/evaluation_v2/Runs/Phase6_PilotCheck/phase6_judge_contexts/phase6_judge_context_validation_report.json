@@ -1,0 +1,56 @@
+{
+  "report_version": "llm_judge_v2_phase6_4b_judge_context_validation_report_v1",
+  "generated_at": "2026-06-19T03:46:08.646Z",
+  "status": "PASS",
+  "phase_scope": [
+    "6.4b judge context validation"
+  ],
+  "inputs": {
+    "judge_input_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_judge_inputs/judge_input_manifest.jsonl",
+    "prompt_path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md",
+    "prompt_sha256": "fe8096972e6c3c78192a36e98774fa584b24d08670835171a1d818895e27125e"
+  },
+  "counts": {
+    "judge_context_ready_records": 24,
+    "failed_records": 0,
+    "total_records": 24,
+    "errors": 0,
+    "warnings": 0
+  },
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 12,
+      "SAMPLE_OULAD": 12
+    },
+    "explanation_modes": {
+      "baseline_first_20_rows": 12,
+      "task_aware_data_summarization": 12
+    },
+    "evidence_access_modes": {
+      "direct_embedding": 12,
+      "deterministic_artifact_retrieval": 12
+    },
+    "statuses": {
+      "judge_context_ready": 24
+    }
+  },
+  "token_accounting_summary": {
+    "tokenizer_method": "heuristic_chars_div_4_ceiling",
+    "min_context_token_count": 6205,
+    "max_context_token_count": 68012,
+    "average_context_token_count": 19327
+  },
+  "outputs": {
+    "final_contexts_dir": "Docs/evaluation_v2/Runs/phase6_judge_contexts/final_contexts",
+    "judge_context_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_judge_contexts/judge_context_manifest.jsonl",
+    "report_json": "Docs/evaluation_v2/Runs/phase6_judge_contexts/phase6_judge_context_validation_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/phase6_judge_contexts/phase6_judge_context_validation_report.md"
+  },
+  "gate_decision": {
+    "judge_context_validation_status": "PASS",
+    "pilot_judge_invocation_allowed": true,
+    "official_full_evaluation_allowed": false,
+    "reason": "Final judge contexts prove direct-embedded or retrieved evidence is materialized before Phase 6.5 pilot judge invocation."
+  },
+  "issues": []
+}

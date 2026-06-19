@@ -1,0 +1,45 @@
+{
+  "artifact_type": "llm_judge_v3_deterministic_derived_stat_evidence_v1",
+  "generated_at": "2026-06-19T10:02:51.091Z",
+  "dry_run_mode": "single_review",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G13",
+  "task_name": "Lifestyle risk across cohort",
+  "ai_summary_type": "correlation_evidence",
+  "stat_family": "correlation",
+  "coefficient_method": "pearson",
+  "x_column": "lifestyle_risk_score",
+  "y_column": "avg_score",
+  "entity_column": "student_id",
+  "source_full_query_artifact": {
+    "path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G13.json",
+    "sha256": "397dfe683a1408e0b120cba9a71cfce6162d98f0fa9fbfdf6779ba6d21741dc1",
+    "evidence_id": "SAMPLE_UCI_POR__A-G13"
+  },
+  "source_judge_input_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_inputs/SAMPLE_UCI_POR__A-G13__baseline_first_20_rows.json",
+  "derived_stats": [
+    {
+      "dataset_label": "lifestyle_risk_scatter",
+      "status": "pass",
+      "reason": null,
+      "row_count": 649,
+      "valid_pair_count": 649,
+      "invalid_x_count": 0,
+      "invalid_y_count": 0,
+      "x_mean": 0.362789,
+      "y_mean": 58.12527,
+      "x_variance": 22.0151020801,
+      "y_variance": 130053.4535778121,
+      "covariance": -176.2102380586,
+      "pearson_r": -0.10413814597596738,
+      "pearson_r_rounded_4": -0.1041,
+      "direction": "negative",
+      "strength": "weak",
+      "coefficient_source": "deterministic_recompute_from_full_query_rows",
+      "formula": "sum((x - mean_x) * (y - mean_y)) / sqrt(sum((x - mean_x)^2) * sum((y - mean_y)^2))",
+      "warnings": []
+    }
+  ],
+  "judge_usage_note": "Use this artifact as deterministic support for correlation coefficient claims. It proves derived Pearson r from all valid x/y pairs in the full query result; it does not prove causality or statistical significance.",
+  "artifact_sha256": "9d7bb09ccc48124e2503973530630956d5ded928bdd4e9cc43a0d4243c2a4583"
+}

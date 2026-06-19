@@ -1,0 +1,607 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "LLM_JUDGE_V2_D3_OUTPUT_SCHEMA_V1.json",
+  "title": "LLM Judge V2 D3 Final Scoring Record",
+  "description": "Schema-frozen final scoring record for d3_schema_v1. Score caps and verdict thresholds remain versioned pre-pilot policy.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evaluation_run_id",
+    "record_id",
+    "scoring_status",
+    "scoring_formula_version",
+    "subscores",
+    "claim_checks",
+    "errors",
+    "error_summary",
+    "raw_weighted_score",
+    "caps_applied",
+    "effective_cap",
+    "final_score_after_caps",
+    "verdict"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "d3_schema_v1"
+    },
+    "evaluation_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scoring_status": {
+      "description": "scored means evaluation completed, invalid means scoring was attempted but no valid evaluation could be produced, and not_scored means intentional exclusion according to evaluation design.",
+      "enum": [
+        "scored",
+        "invalid",
+        "not_scored"
+      ]
+    },
+    "scoring_formula_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subscores": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/subscores"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "claim_checks": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/claim_check"
+      }
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/error_record"
+      }
+    },
+    "error_summary": {
+      "$ref": "#/$defs/error_summary"
+    },
+    "raw_weighted_score": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 10
+    },
+    "caps_applied": {
+      "description": "Runner-generated validated caps. Must be empty when no cap applies or when scoring_status is invalid/not_scored.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/applied_cap"
+      }
+    },
+    "effective_cap": {
+      "description": "Minimum cap in caps_applied, or null when caps_applied is empty.",
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 10
+    },
+    "final_score_after_caps": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 10
+    },
+    "verdict": {
+      "enum": [
+        "poor",
+        "acceptable",
+        "good",
+        "excellent",
+        "invalid",
+        "not_scored"
+      ]
+    },
+    "invalid_reason": {
+      "description": "Required only for scoring_status=invalid. Must not be used as the reason for not_scored.",
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scoring_status": {
+            "const": "scored"
+          }
+        },
+        "required": [
+          "scoring_status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "raw_weighted_score": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "subscores": {
+            "$ref": "#/$defs/subscores"
+          },
+          "final_score_after_caps": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 10
+          },
+          "verdict": {
+            "enum": [
+              "poor",
+              "acceptable",
+              "good",
+              "excellent"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "scoring_status": {
+            "const": "invalid"
+          }
+        },
+        "required": [
+          "scoring_status"
+        ]
+      },
+      "then": {
+        "required": [
+          "invalid_reason"
+        ],
+        "properties": {
+          "raw_weighted_score": {
+            "const": null
+          },
+          "subscores": {
+            "const": null
+          },
+          "effective_cap": {
+            "const": null
+          },
+          "caps_applied": {
+            "maxItems": 0
+          },
+          "final_score_after_caps": {
+            "const": null
+          },
+          "verdict": {
+            "const": "invalid"
+          },
+          "invalid_reason": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "scoring_status": {
+            "const": "not_scored"
+          }
+        },
+        "required": [
+          "scoring_status"
+        ]
+      },
+      "then": {
+        "properties": {
+          "raw_weighted_score": {
+            "const": null
+          },
+          "subscores": {
+            "const": null
+          },
+          "effective_cap": {
+            "const": null
+          },
+          "caps_applied": {
+            "maxItems": 0
+          },
+          "final_score_after_caps": {
+            "const": null
+          },
+          "verdict": {
+            "const": "not_scored"
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "_semantic_invariants": {
+      "$comment": "Runner must enforce: error_summary counts match errors; effective_cap is null for no caps or min(caps_applied.cap); final score equals min(raw score, effective cap) or raw score with no cap; references resolve; one failed claim belongs to at most one primary error."
+    },
+    "metric_name": {
+      "enum": [
+        "faithfulness",
+        "numerical_correctness",
+        "completeness",
+        "task_relevance",
+        "actionability",
+        "clarity",
+        "safety_fairness"
+      ]
+    },
+    "severity": {
+      "enum": [
+        "minor",
+        "major",
+        "critical"
+      ]
+    },
+    "subscores": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "faithfulness",
+        "numerical_correctness",
+        "completeness",
+        "task_relevance",
+        "actionability",
+        "clarity",
+        "safety_fairness"
+      ],
+      "properties": {
+        "faithfulness": {
+          "$ref": "#/$defs/metric_score"
+        },
+        "numerical_correctness": {
+          "$ref": "#/$defs/metric_score"
+        },
+        "completeness": {
+          "$ref": "#/$defs/metric_score"
+        },
+        "task_relevance": {
+          "$ref": "#/$defs/metric_score"
+        },
+        "actionability": {
+          "$ref": "#/$defs/metric_score"
+        },
+        "clarity": {
+          "$ref": "#/$defs/metric_score"
+        },
+        "safety_fairness": {
+          "$ref": "#/$defs/metric_score"
+        }
+      }
+    },
+    "metric_score": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "applicability",
+        "score",
+        "rationale"
+      ],
+      "properties": {
+        "applicability": {
+          "enum": [
+            "applicable",
+            "not_applicable"
+          ]
+        },
+        "score": {
+          "type": [
+            "integer",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 10
+        },
+        "rationale": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "applicability": {
+                "const": "applicable"
+              }
+            },
+            "required": [
+              "applicability"
+            ]
+          },
+          "then": {
+            "properties": {
+              "score": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 10
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "score": {
+                "const": null
+              }
+            }
+          }
+        }
+      ]
+    },
+    "claim_check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "claim_id",
+        "claim_text",
+        "claim_type",
+        "claim_scope",
+        "support_status",
+        "evidence_refs",
+        "checker_source",
+        "rationale"
+      ],
+      "properties": {
+        "claim_id": {
+          "type": "string",
+          "pattern": "^C[0-9]+$"
+        },
+        "claim_text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_scope": {
+          "enum": [
+            "core",
+            "supporting",
+            "incidental"
+          ]
+        },
+        "support_status": {
+          "enum": [
+            "supported",
+            "partially_supported",
+            "unsupported",
+            "contradicted",
+            "not_verifiable"
+          ]
+        },
+        "impact_type": {
+          "enum": [
+            "local_detail",
+            "weakens_support",
+            "changes_interpretation",
+            "reverses_main_finding",
+            "wrong_evaluation_target"
+          ]
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/string_array"
+        },
+        "expected_value": {},
+        "observed_value": {},
+        "checker_source": {
+          "enum": [
+            "deterministic_checker",
+            "llm_judge",
+            "hybrid"
+          ]
+        },
+        "checker_details": {
+          "type": "object",
+          "additionalProperties": true
+        },
+        "rationale": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "support_status": {
+                "const": "supported"
+              }
+            },
+            "required": [
+              "support_status"
+            ]
+          },
+          "else": {
+            "required": [
+              "impact_type"
+            ]
+          }
+        }
+      ]
+    },
+    "error_record": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "error_id",
+        "error_type",
+        "claim_ids",
+        "severity",
+        "primary_metric",
+        "secondary_metrics",
+        "cap_candidate",
+        "rationale",
+        "evidence_refs"
+      ],
+      "properties": {
+        "error_id": {
+          "type": "string",
+          "pattern": "^E[0-9]+$"
+        },
+        "error_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "claim_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^C[0-9]+$"
+          },
+          "uniqueItems": true
+        },
+        "requirement_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "$ref": "#/$defs/severity"
+        },
+        "primary_metric": {
+          "$ref": "#/$defs/metric_name"
+        },
+        "secondary_metrics": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/metric_name"
+          },
+          "uniqueItems": true
+        },
+        "cap_candidate": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 1,
+          "maximum": 10
+        },
+        "rationale": {
+          "type": "string",
+          "minLength": 1
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/string_array"
+        }
+      }
+    },
+    "error_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "highest_error_severity",
+        "error_count",
+        "count_by_severity"
+      ],
+      "properties": {
+        "highest_error_severity": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/severity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "error_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "count_by_severity": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "minor",
+            "major",
+            "critical"
+          ],
+          "properties": {
+            "minor": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "major": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "critical": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "applied_cap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type",
+        "severity",
+        "cap",
+        "error_id",
+        "claim_ids",
+        "evidence_refs"
+      ],
+      "properties": {
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "severity": {
+          "$ref": "#/$defs/severity"
+        },
+        "cap": {
+          "type": "number",
+          "minimum": 1,
+          "maximum": 10
+        },
+        "error_id": {
+          "type": "string",
+          "pattern": "^E[0-9]+$"
+        },
+        "claim_ids": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^C[0-9]+$"
+          },
+          "uniqueItems": true
+        },
+        "evidence_refs": {
+          "$ref": "#/$defs/string_array"
+        }
+      }
+    },
+    "string_array": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    }
+  }
+}

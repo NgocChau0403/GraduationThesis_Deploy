@@ -1,0 +1,123 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:34:01.876Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__S-T03",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": "SAMPLE_UCI_POR_STU_000001",
+  "role": "student",
+  "task_id": "S-T03",
+  "task_name": "Peer comparison",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "S-T03",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 44,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 6,
+    "row_count_observed": 6,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "peer_comparison",
+        "row_count": 6,
+        "sample_fields": [
+          "metric_name",
+          "comparison_group",
+          "metric_value",
+          "sort_order"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "d83549c8ba7dec7dcddade118ebe67097062e29bb8f2cf92fc642086de6a3831"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "executable",
+    "backend_confidence": "HIGH",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847241833_47e30f50",
+    "taskId": "S-T03",
+    "datasets": {
+      "peer_comparison": [
+        {
+          "metric_name": "Average score",
+          "comparison_group": "You",
+          "metric_value": 41.25,
+          "sort_order": 1
+        },
+        {
+          "metric_name": "Average score",
+          "comparison_group": "Cohort benchmark",
+          "metric_value": 58.31,
+          "sort_order": 1
+        },
+        {
+          "metric_name": "Score percentile",
+          "comparison_group": "You",
+          "metric_value": 8.8,
+          "sort_order": 2
+        },
+        {
+          "metric_name": "Score percentile",
+          "comparison_group": "Cohort benchmark",
+          "metric_value": 50,
+          "sort_order": 2
+        },
+        {
+          "metric_name": "Engagement percentile",
+          "comparison_group": "You",
+          "metric_value": 0,
+          "sort_order": 3
+        },
+        {
+          "metric_name": "Engagement percentile",
+          "comparison_group": "Cohort benchmark",
+          "metric_value": 50,
+          "sort_order": 3
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "S-T03",
+      "isMultiQuery": false,
+      "rowCount": 6,
+      "executionTimeMs": 24,
+      "queryHash": "e504ba86",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "peer_comparison"
+      ],
+      "dataQuality": {
+        "status": "executable",
+        "confidence": "HIGH",
+        "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+        "warnings": []
+      }
+    }
+  }
+}

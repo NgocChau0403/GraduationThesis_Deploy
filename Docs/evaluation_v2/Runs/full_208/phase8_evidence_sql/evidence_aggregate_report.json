@@ -1,0 +1,32 @@
+{
+  "report_version": "llm_judge_v2_phase_f2_evidence_aggregate_v1",
+  "generated_at": "2026-06-19T05:50:26.311Z",
+  "status": "PASS",
+  "counts": {
+    "task_level_evidence": 104,
+    "unique_task_level_evidence_ids": 104,
+    "mode_level_evidence": 208,
+    "unique_mode_level_record_ids": 208,
+    "evidence_ready_task_level": 104,
+    "evidence_ready_mode_level": 208,
+    "artifact_hash_matches": 104,
+    "task_level_records_linked_to_exactly_two_modes": 104,
+    "terminal_invalid_task_level": 18,
+    "terminal_invalid_mode_level": 36
+  },
+  "by_dataset": {
+    "SAMPLE_UCI_POR": {
+      "task_level": 52,
+      "mode_level": 104
+    },
+    "SAMPLE_OULAD": {
+      "task_level": 52,
+      "mode_level": 104
+    }
+  },
+  "gate_decision": {
+    "phase_f3_allowed": true,
+    "full_judge_invocation_allowed": false,
+    "official_full_evaluation_allowed": false
+  }
+}

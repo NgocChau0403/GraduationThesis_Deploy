@@ -1,0 +1,200 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-B01__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-B01",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Overall performance distribution",
+    "scope": "Cohort",
+    "actionable_question": "How is the class performing overall?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "numeric_distribution",
+    "ai_prompt_hint": "Describe score spread. Flag if large proportion below pass threshold.",
+    "query_labels": [
+      "score_distribution"
+    ],
+    "explanation_strategy": "distribution"
+  },
+  "schema_context": {
+    "source_tables": [
+      "assessment_result",
+      "assessment",
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "score_normalized",
+      "assessment_type"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "score_bucket",
+        "student_count"
+      ],
+      "optional_columns": [
+        "pct_of_class",
+        "dataset_source",
+        "avg_score_in_bucket"
+      ]
+    },
+    "query_labels": [
+      "score_distribution"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The overall performance distribution indicates that a significant majority of students are clustered in the lower to mid-range score buckets, with a notable drop-off in higher score ranges. The largest group of students, comprising 28.8% of the class, falls within the 50-60 score bucket, suggesting a need for targeted interventions to elevate overall performance.\n\nInsights: Concentration in Lower Score Buckets: A substantial 28.8% of students scored between 50-60, while 16.6% scored between 40-50, indicating a concentration of students in the lower performance tiers. | Limited High-Scoring Students: Only 1.1% of students scored in the 90-100 range, highlighting a significant gap in high achievers and suggesting that few students are reaching advanced competency levels.\n\nEducational implications: The distribution suggests a need for differentiated instruction to support students struggling in lower score buckets.\n\nRecommendations: high - Implement targeted interventions for students in the 40-60 score range. - This group represents a significant portion of the class and requires support to improve their understanding and performance.",
+    "structured_payload": {
+      "task_id": "A-B01",
+      "execution_id": "exec_1781847231655_3078f027",
+      "explanation": {
+        "summary": "The overall performance distribution indicates that a significant majority of students are clustered in the lower to mid-range score buckets, with a notable drop-off in higher score ranges. The largest group of students, comprising 28.8% of the class, falls within the 50-60 score bucket, suggesting a need for targeted interventions to elevate overall performance.",
+        "insights": [
+          {
+            "title": "Concentration in Lower Score Buckets",
+            "description": "A substantial 28.8% of students scored between 50-60, while 16.6% scored between 40-50, indicating a concentration of students in the lower performance tiers.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "pct_of_class",
+                "value": 28.8,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Percentage of students in the 50-60 score bucket"
+              }
+            ]
+          },
+          {
+            "title": "Limited High-Scoring Students",
+            "description": "Only 1.1% of students scored in the 90-100 range, highlighting a significant gap in high achievers and suggesting that few students are reaching advanced competency levels.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "pct_of_class",
+                "value": 1.1,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Percentage of students in the 90-100 score bucket"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The distribution suggests a need for differentiated instruction to support students struggling in lower score buckets."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted interventions for students in the 40-60 score range.",
+            "rationale": "This group represents a significant portion of the class and requires support to improve their understanding and performance."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset is complete and provides a clear overview of student performance distribution.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "distribution",
+      "explanation_type": "distribution",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 7006,
+        "token_usage": {
+          "prompt_tokens": 941,
+          "completion_tokens": 475,
+          "total_tokens": 1416
+        },
+        "strategy": "distribution",
+        "granularity": "per_assessment",
+        "cost_usd": 0.000426
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-B01__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "44313c325c4189fbe67f965571fac3bb0771a710c4157426689b0d5059128b42",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 941,
+        "completion_tokens": 475,
+        "total_tokens": 1416
+      },
+      "latency_ms": 7013,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 10,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "score_distribution",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-B01.json",
+        "artifact_sha256": "c6f52e5d026054892d52e98d1e9d748ac2e6f00ffff32d6820c814970c855f80",
+        "row_count": 10,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 10,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "score_distribution": 10
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-B01-CORE-01",
+        "description": "Describe score spread."
+      },
+      {
+        "requirement_id": "A-B01-CORE-02",
+        "description": "Flag if large proportion below pass threshold."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

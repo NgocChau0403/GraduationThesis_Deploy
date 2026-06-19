@@ -1,0 +1,611 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T07:28:16.667Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-G12__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__A-G12",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G12",
+    "task_name": "Background group pass/fail/withdrawal rate",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G12.json",
+    "full_query_artifact_sha256": "022ac5d6f8ee49bbb7f8b5111c9ff8448f009b6b065a6d2cbdbd6638afe1f72e"
+  },
+  "request_payload": {
+    "task_id": "A-G12",
+    "execution_id": "exec_1781847774827_593443bc",
+    "task_name": "Background group pass/fail/withdrawal rate",
+    "analysis_type": "segmentation",
+    "explanation_strategy": "comparison",
+    "explanation_type": "observation, interpretation, caution",
+    "ai_prompt_hint": "For each demographic group, state fail rate and withdrawal rate as percentages. Flag groups where fail+withdrawn > cohort threshold. Note: output is categorical final_outcome — distinct from A-G08 which uses continuous avg_score.",
+    "actionable_question": "Which demographic groups have the highest failure or dropout rate?",
+    "target_audience": [
+      "academic_advisor",
+      "admin"
+    ],
+    "visualization_config": {
+      "x_field": "group_value",
+      "y_field": "pct_within_group",
+      "series_field": "final_outcome",
+      "color_field": "final_outcome",
+      "orientation": "vertical",
+      "variant": "stacked",
+      "x_label": "Demographic Group",
+      "y_label": "% of Students",
+      "semantic_roles": {
+        "x": "category",
+        "y": "ratio_metric",
+        "series": "outcome_category"
+      }
+    },
+    "analysis_context": {
+      "granularity": "cohort_aggregate",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "outcome_by_group": [
+        {
+          "group_value": "0-10%",
+          "final_outcome": "Distinction",
+          "student_count": 16,
+          "pct_within_group": "7.6"
+        },
+        {
+          "group_value": "0-10%",
+          "final_outcome": "Fail",
+          "student_count": 29,
+          "pct_within_group": "13.8"
+        },
+        {
+          "group_value": "0-10%",
+          "final_outcome": "Pass",
+          "student_count": 52,
+          "pct_within_group": "24.8"
+        },
+        {
+          "group_value": "0-10%",
+          "final_outcome": "Withdrawn",
+          "student_count": 113,
+          "pct_within_group": "53.8"
+        },
+        {
+          "group_value": "10-20",
+          "final_outcome": "Distinction",
+          "student_count": 18,
+          "pct_within_group": "8.1"
+        },
+        {
+          "group_value": "10-20",
+          "final_outcome": "Fail",
+          "student_count": 44,
+          "pct_within_group": "19.9"
+        },
+        {
+          "group_value": "10-20",
+          "final_outcome": "Pass",
+          "student_count": 51,
+          "pct_within_group": "23.1"
+        },
+        {
+          "group_value": "10-20",
+          "final_outcome": "Withdrawn",
+          "student_count": 108,
+          "pct_within_group": "48.9"
+        },
+        {
+          "group_value": "20-30%",
+          "final_outcome": "Distinction",
+          "student_count": 26,
+          "pct_within_group": "10"
+        },
+        {
+          "group_value": "20-30%",
+          "final_outcome": "Fail",
+          "student_count": 43,
+          "pct_within_group": "16.5"
+        },
+        {
+          "group_value": "20-30%",
+          "final_outcome": "Pass",
+          "student_count": 53,
+          "pct_within_group": "20.4"
+        },
+        {
+          "group_value": "20-30%",
+          "final_outcome": "Withdrawn",
+          "student_count": 138,
+          "pct_within_group": "53.1"
+        },
+        {
+          "group_value": "30-40%",
+          "final_outcome": "Distinction",
+          "student_count": 23,
+          "pct_within_group": "8.8"
+        },
+        {
+          "group_value": "30-40%",
+          "final_outcome": "Fail",
+          "student_count": 45,
+          "pct_within_group": "17.3"
+        },
+        {
+          "group_value": "30-40%",
+          "final_outcome": "Pass",
+          "student_count": 78,
+          "pct_within_group": "30"
+        },
+        {
+          "group_value": "30-40%",
+          "final_outcome": "Withdrawn",
+          "student_count": 114,
+          "pct_within_group": "43.8"
+        },
+        {
+          "group_value": "40-50%",
+          "final_outcome": "Distinction",
+          "student_count": 23,
+          "pct_within_group": "9.5"
+        },
+        {
+          "group_value": "40-50%",
+          "final_outcome": "Fail",
+          "student_count": 34,
+          "pct_within_group": "14.1"
+        },
+        {
+          "group_value": "40-50%",
+          "final_outcome": "Pass",
+          "student_count": 70,
+          "pct_within_group": "29"
+        },
+        {
+          "group_value": "40-50%",
+          "final_outcome": "Withdrawn",
+          "student_count": 114,
+          "pct_within_group": "47.3"
+        },
+        {
+          "group_value": "50-60%",
+          "final_outcome": "Distinction",
+          "student_count": 26,
+          "pct_within_group": "10.8"
+        },
+        {
+          "group_value": "50-60%",
+          "final_outcome": "Fail",
+          "student_count": 38,
+          "pct_within_group": "15.8"
+        },
+        {
+          "group_value": "50-60%",
+          "final_outcome": "Pass",
+          "student_count": 76,
+          "pct_within_group": "31.5"
+        },
+        {
+          "group_value": "50-60%",
+          "final_outcome": "Withdrawn",
+          "student_count": 101,
+          "pct_within_group": "41.9"
+        },
+        {
+          "group_value": "60-70%",
+          "final_outcome": "Distinction",
+          "student_count": 29,
+          "pct_within_group": "12.6"
+        },
+        {
+          "group_value": "60-70%",
+          "final_outcome": "Fail",
+          "student_count": 37,
+          "pct_within_group": "16.1"
+        },
+        {
+          "group_value": "60-70%",
+          "final_outcome": "Pass",
+          "student_count": 71,
+          "pct_within_group": "30.9"
+        },
+        {
+          "group_value": "60-70%",
+          "final_outcome": "Withdrawn",
+          "student_count": 93,
+          "pct_within_group": "40.4"
+        },
+        {
+          "group_value": "70-80%",
+          "final_outcome": "Distinction",
+          "student_count": 34,
+          "pct_within_group": "14.7"
+        },
+        {
+          "group_value": "70-80%",
+          "final_outcome": "Fail",
+          "student_count": 43,
+          "pct_within_group": "18.6"
+        },
+        {
+          "group_value": "70-80%",
+          "final_outcome": "Pass",
+          "student_count": 62,
+          "pct_within_group": "26.8"
+        },
+        {
+          "group_value": "70-80%",
+          "final_outcome": "Withdrawn",
+          "student_count": 92,
+          "pct_within_group": "39.8"
+        },
+        {
+          "group_value": "80-90%",
+          "final_outcome": "Distinction",
+          "student_count": 37,
+          "pct_within_group": "15"
+        },
+        {
+          "group_value": "80-90%",
+          "final_outcome": "Fail",
+          "student_count": 41,
+          "pct_within_group": "16.7"
+        },
+        {
+          "group_value": "80-90%",
+          "final_outcome": "Pass",
+          "student_count": 80,
+          "pct_within_group": "32.5"
+        },
+        {
+          "group_value": "80-90%",
+          "final_outcome": "Withdrawn",
+          "student_count": 88,
+          "pct_within_group": "35.8"
+        },
+        {
+          "group_value": "90-100%",
+          "final_outcome": "Distinction",
+          "student_count": 36,
+          "pct_within_group": "17"
+        },
+        {
+          "group_value": "90-100%",
+          "final_outcome": "Fail",
+          "student_count": 36,
+          "pct_within_group": "17"
+        },
+        {
+          "group_value": "90-100%",
+          "final_outcome": "Pass",
+          "student_count": 65,
+          "pct_within_group": "30.7"
+        },
+        {
+          "group_value": "90-100%",
+          "final_outcome": "Withdrawn",
+          "student_count": 75,
+          "pct_within_group": "35.4"
+        },
+        {
+          "group_value": "Ireland",
+          "final_outcome": "Distinction",
+          "student_count": 9,
+          "pct_within_group": "21.4"
+        },
+        {
+          "group_value": "Ireland",
+          "final_outcome": "Fail",
+          "student_count": 2,
+          "pct_within_group": "4.8"
+        },
+        {
+          "group_value": "Ireland",
+          "final_outcome": "Pass",
+          "student_count": 22,
+          "pct_within_group": "52.4"
+        },
+        {
+          "group_value": "Ireland",
+          "final_outcome": "Withdrawn",
+          "student_count": 9,
+          "pct_within_group": "21.4"
+        },
+        {
+          "group_value": "North Region",
+          "final_outcome": "Distinction",
+          "student_count": 28,
+          "pct_within_group": "28.6"
+        },
+        {
+          "group_value": "North Region",
+          "final_outcome": "Fail",
+          "student_count": 13,
+          "pct_within_group": "13.3"
+        },
+        {
+          "group_value": "North Region",
+          "final_outcome": "Pass",
+          "student_count": 27,
+          "pct_within_group": "27.6"
+        },
+        {
+          "group_value": "North Region",
+          "final_outcome": "Withdrawn",
+          "student_count": 30,
+          "pct_within_group": "30.6"
+        },
+        {
+          "group_value": "Scotland",
+          "final_outcome": "Fail",
+          "student_count": 1,
+          "pct_within_group": "100"
+        },
+        {
+          "group_value": "South Region",
+          "final_outcome": "Distinction",
+          "student_count": 1,
+          "pct_within_group": "25"
+        },
+        {
+          "group_value": "South Region",
+          "final_outcome": "Pass",
+          "student_count": 1,
+          "pct_within_group": "25"
+        },
+        {
+          "group_value": "South Region",
+          "final_outcome": "Withdrawn",
+          "student_count": 2,
+          "pct_within_group": "50"
+        },
+        {
+          "group_value": "West Midlands Region",
+          "final_outcome": "Pass",
+          "student_count": 1,
+          "pct_within_group": "100"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "outcome_by_group"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [
+        "group_value",
+        "final_outcome"
+      ],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {
+        "pct_within_group": "context_dependent",
+        "student_count": "context_only"
+      },
+      "metric_units": {
+        "pct_within_group": "percent_within_group",
+        "student_count": "students"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [
+        "Fail",
+        "Withdrawn"
+      ],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "group_comparison",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "pct_within_group",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": "group_value",
+      "series_column": "final_outcome",
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": 10,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": "student_count",
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": "pct_within_group",
+      "sort_direction": "desc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": 12,
+      "bottom_k": 4
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 29497,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 15136,
+      "completion_tokens": 592,
+      "total_tokens": 15728
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-G12",
+    "execution_id": "exec_1781847774827_593443bc",
+    "explanation": {
+      "summary": "The analysis of student outcomes across various demographic groups reveals significant disparities in failure and withdrawal rates. Notably, groups with lower performance metrics exhibit higher rates of failure and withdrawal, indicating potential areas for intervention.",
+      "insights": [
+        {
+          "title": "High Failure and Withdrawal Rates in Low-Performing Groups",
+          "description": "The '0-10%' group has a failure rate of 13.8% and a withdrawal rate of 53.8%, resulting in a combined rate of 67.6%, which exceeds the cohort threshold. Similarly, the '10-20' group shows a failure rate of 19.9% and a withdrawal rate of 48.9%, totaling 68.8%. These groups are at a critical risk of academic failure.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "pct_within_group",
+              "value": 67.6,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "0-10% group combined fail and withdrawal rate"
+            },
+            {
+              "metric": "pct_within_group",
+              "value": 68.8,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "10-20 group combined fail and withdrawal rate"
+            }
+          ]
+        },
+        {
+          "title": "Significant Gaps in Performance",
+          "description": "The 'Ireland' group has a notably low performance with a fail rate of 4.8% and a withdrawal rate of 21.4%, leading to a combined rate of 26.2%. This group is flagged for its low student count, which may affect the reliability of these metrics.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "pct_within_group",
+              "value": 26.2,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Ireland group combined fail and withdrawal rate"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Targeted interventions are necessary for groups with high failure and withdrawal rates to improve retention and success."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement support programs for low-performing groups.",
+          "rationale": "To address the high failure and withdrawal rates, tailored support can help improve student outcomes."
+        }
+      ],
+      "warnings": [
+        "The low student count in certain groups may lead to unreliable metrics; caution is advised in interpreting these results."
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "Data quality is robust, but low counts in some groups may affect reliability.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "comparison",
+    "explanation_type": "comparison",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "group_comparison",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 53,
+    "included_row_count": null,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": false,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "outcome_by_group",
+        "row_count": 53,
+        "included_row_count": 53
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 29491,
+      "token_usage": {
+        "prompt_tokens": 15136,
+        "completion_tokens": 592,
+        "total_tokens": 15728
+      },
+      "strategy": "comparison",
+      "granularity": "cohort_aggregate",
+      "cost_usd": 0.002626
+    }
+  },
+  "raw_text": "Summary: The analysis of student outcomes across various demographic groups reveals significant disparities in failure and withdrawal rates. Notably, groups with lower performance metrics exhibit higher rates of failure and withdrawal, indicating potential areas for intervention.\n\nInsights: High Failure and Withdrawal Rates in Low-Performing Groups: The '0-10%' group has a failure rate of 13.8% and a withdrawal rate of 53.8%, resulting in a combined rate of 67.6%, which exceeds the cohort threshold. Similarly, the '10-20' group shows a failure rate of 19.9% and a withdrawal rate of 48.9%, totaling 68.8%. These groups are at a critical risk of academic failure. | Significant Gaps in Performance: The 'Ireland' group has a notably low performance with a fail rate of 4.8% and a withdrawal rate of 21.4%, leading to a combined rate of 26.2%. This group is flagged for its low student count, which may affect the reliability of these metrics.\n\nEducational implications: Targeted interventions are necessary for groups with high failure and withdrawal rates to improve retention and success.\n\nRecommendations: high - Implement support programs for low-performing groups. - To address the high failure and withdrawal rates, tailored support can help improve student outcomes.\n\nWarnings: The low student count in certain groups may lead to unreliable metrics; caution is advised in interpreting these results."
+}

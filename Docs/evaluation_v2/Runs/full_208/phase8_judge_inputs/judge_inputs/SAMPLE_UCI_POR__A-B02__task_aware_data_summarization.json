@@ -1,0 +1,194 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-B02__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-B02",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Completion / outcome summary",
+    "scope": "Cohort",
+    "actionable_question": "How many students passed, failed, or withdrew?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "categorical_distribution",
+    "ai_prompt_hint": "State pass/fail/withdrawal counts. Highlight proportion at-risk.",
+    "query_labels": [
+      "outcome_counts"
+    ],
+    "explanation_strategy": "distribution"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "final_outcome",
+      "class_id"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "outcome_counts"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The distribution of final outcomes reveals that a significant majority of students passed, while a smaller proportion failed. This indicates a generally positive performance within the cohort, though the failure rate suggests areas for potential improvement.\n\nInsights: High Pass Rate: A total of 549 students passed, representing 84.6% of the class, indicating a strong overall performance. | Notable Failure Rate: With 100 students failing, accounting for 15.4% of the class, this group represents a significant area of concern that warrants targeted interventions.\n\nEducational implications: The failure rate indicates that a portion of the cohort may require additional support and resources to improve their outcomes.\n\nRecommendations: high - Implement targeted support programs for students at risk of failing. - Addressing the needs of the 100 students who failed can help improve overall class performance and reduce the failure rate.",
+    "structured_payload": {
+      "task_id": "A-B02",
+      "execution_id": "exec_1781847231749_26fbcb91",
+      "explanation": {
+        "summary": "The distribution of final outcomes reveals that a significant majority of students passed, while a smaller proportion failed. This indicates a generally positive performance within the cohort, though the failure rate suggests areas for potential improvement.",
+        "insights": [
+          {
+            "title": "High Pass Rate",
+            "description": "A total of 549 students passed, representing 84.6% of the class, indicating a strong overall performance.",
+            "severity": "low",
+            "evidence": [
+              {
+                "metric": "student_count",
+                "value": 549,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Total number of students who passed"
+              }
+            ]
+          },
+          {
+            "title": "Notable Failure Rate",
+            "description": "With 100 students failing, accounting for 15.4% of the class, this group represents a significant area of concern that warrants targeted interventions.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "student_count",
+                "value": 100,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Total number of students who failed"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The failure rate indicates that a portion of the cohort may require additional support and resources to improve their outcomes."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted support programs for students at risk of failing.",
+            "rationale": "Addressing the needs of the 100 students who failed can help improve overall class performance and reduce the failure rate."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset is complete and accurately reflects the final outcomes of the cohort.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "distribution",
+      "explanation_type": "distribution",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "full_rows_due_to_small_result",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 2,
+      "included_row_count": 2,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "outcome_counts",
+          "row_count": 2,
+          "included_row_count": 2
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 8008,
+        "token_usage": {
+          "prompt_tokens": 714,
+          "completion_tokens": 404,
+          "total_tokens": 1118
+        },
+        "strategy": "distribution",
+        "granularity": "semester",
+        "cost_usd": 0.000349
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-B02__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "f46c4dfaa738dddff4c26b705d282cd5510a86f24c738490de59c27c5d8c785e",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 714,
+        "completion_tokens": 404,
+        "total_tokens": 1118
+      },
+      "latency_ms": 8013,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 2,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "outcome_counts",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-B02.json",
+        "artifact_sha256": "5923dd0df5a7aea2d0616762d54d5f5d6dca4afb887f23993711e741c24d2331",
+        "row_count": 2,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 2,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "outcome_counts": 2
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-B02-CORE-01",
+        "description": "State pass/fail/withdrawal counts."
+      },
+      {
+        "requirement_id": "A-B02-CORE-02",
+        "description": "Highlight proportion at-risk."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

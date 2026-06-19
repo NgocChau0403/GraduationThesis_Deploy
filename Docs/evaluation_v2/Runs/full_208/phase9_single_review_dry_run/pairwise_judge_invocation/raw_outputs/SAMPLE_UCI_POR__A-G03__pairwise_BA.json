@@ -1,0 +1,107 @@
+{
+  "schema_version": "pairwise_judge_v3_dry_run_schema_v1",
+  "pairwise_record_id": "SAMPLE_UCI_POR__A-G03__pairwise_BA",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G03",
+  "order_variant": "BA",
+  "scoring_status": "judged",
+  "winner": "B",
+  "winner_confidence": "medium",
+  "difference_magnitude": "small",
+  "dimension_winners": {
+    "faithfulness": "B",
+    "numerical_correctness": "B",
+    "completeness": "B",
+    "task_relevance": "B",
+    "actionability": "tie",
+    "clarity": "tie",
+    "safety_fairness": "tie"
+  },
+  "metric_comparison": {
+    "faithfulness": {
+      "winner": "B",
+      "reason": "Candidate B grounds the cohort risk explanation in more visible student IDs, scores, repeated attempts, engagement, and trends.",
+      "evidence_refs": [
+        "prompt_packet:A-G03:task_context",
+        "prompt_packet:A-G03:candidate_explanations"
+      ]
+    },
+    "numerical_correctness": {
+      "winner": "B",
+      "reason": "Candidate B supplies concrete average-score values for several high-risk students; candidate A is more generic.",
+      "evidence_refs": [
+        "prompt_packet:A-G03:task_context",
+        "prompt_packet:A-G03:candidate_explanations"
+      ]
+    },
+    "completeness": {
+      "winner": "B",
+      "reason": "Candidate B covers more high-risk examples and separates low scores, engagement, repeated attempts, and negative trends.",
+      "evidence_refs": [
+        "prompt_packet:A-G03:task_context",
+        "prompt_packet:A-G03:candidate_explanations"
+      ]
+    },
+    "task_relevance": {
+      "winner": "B",
+      "reason": "Candidate B better addresses the ranking and triggered-flag explanation expected for an at-risk cohort.",
+      "evidence_refs": [
+        "prompt_packet:A-G03:task_context",
+        "prompt_packet:A-G03:candidate_explanations"
+      ]
+    },
+    "actionability": {
+      "winner": "tie",
+      "reason": "Both candidates recommend academic support but do not enumerate a per-student recommended action for each ranked student.",
+      "evidence_refs": [
+        "prompt_packet:A-G03:task_context",
+        "prompt_packet:A-G03:candidate_explanations"
+      ]
+    },
+    "clarity": {
+      "winner": "tie",
+      "reason": "Both are understandable and similarly organized.",
+      "evidence_refs": [
+        "prompt_packet:A-G03:task_context",
+        "prompt_packet:A-G03:candidate_explanations"
+      ]
+    },
+    "safety_fairness": {
+      "winner": "tie",
+      "reason": "Both use risk language in a generally appropriate academic-support framing.",
+      "evidence_refs": [
+        "prompt_packet:A-G03:task_context",
+        "prompt_packet:A-G03:candidate_explanations"
+      ]
+    }
+  },
+  "coverage_comparison": {
+    "winner": "B",
+    "reason": "Candidate B uses more of the visible top-risk rows and values."
+  },
+  "specificity_comparison": {
+    "winner": "B",
+    "reason": "Candidate B names more students and exact scores."
+  },
+  "decisive_evidence": [
+    {
+      "evidence_ref": "candidate_A:A-G03:student_ids_scores_and_flags",
+      "supports_candidate": "B",
+      "reason": "Candidate B's concrete IDs and scores make the risk ranking more evidence-grounded."
+    }
+  ],
+  "tie_justification": null,
+  "absolute_rerun_flags": [
+    {
+      "candidate": "both",
+      "suspected_error_type": "incomplete_per_student_actions",
+      "severity_hint": "minor",
+      "reason": "Neither candidate fully explains triggered_flags_summary and recommended_admin_action for each high-risk student.",
+      "evidence_refs": [
+        "requirements:A-G03:per_student_flags_and_action"
+      ]
+    }
+  ],
+  "requires_absolute_rerun": true,
+  "reviewer_notes": "Candidate B wins for greater evidence specificity, but both are incomplete on per-student action mapping."
+}

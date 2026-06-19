@@ -1,0 +1,324 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T05:57:05.532Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-C01__baseline_first_20_rows",
+    "case_id": "SAMPLE_UCI_POR__A-C01",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-C01",
+    "task_name": "Compare performance trajectories",
+    "explanation_mode": "baseline_first_20_rows"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C01.json",
+    "full_query_artifact_sha256": "e4b071b75d83d7b7d78548f8105459f537483cb5175fb593e574ca8e92e3085f"
+  },
+  "request_payload": {
+    "task_id": "A-C01",
+    "execution_id": "exec_1781847231947_8d61eafc",
+    "task_name": "Compare performance trajectories",
+    "analysis_type": "trend",
+    "explanation_strategy": "comparison",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Explain divergence points. Identify when one student fell behind relative to the other.",
+    "actionable_question": "Which student is improving faster and when did their paths diverge?",
+    "target_audience": [
+      "instructor"
+    ],
+    "visualization_config": {
+      "x_field": "assessment_order",
+      "y_field": "score_normalized",
+      "series_field": "student_id",
+      "color_field": "student_id",
+      "orientation": "horizontal",
+      "variant": "multi_series",
+      "x_label": "Assessment Order",
+      "y_label": "Normalized Score",
+      "semantic_roles": {
+        "x": "time",
+        "y": "performance_metric",
+        "series": "student_id"
+      }
+    },
+    "analysis_context": {
+      "granularity": "per_assessment",
+      "aggregation_level": "comparison"
+    },
+    "datasets": {
+      "trajectory_comparison": [
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "assessment_order": 1,
+          "week_of_class": 3,
+          "assessment_type": "quiz",
+          "score_normalized": 0
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "assessment_order": 2,
+          "week_of_class": 8,
+          "assessment_type": "quiz",
+          "score_normalized": 55
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "assessment_order": 3,
+          "week_of_class": 14,
+          "assessment_type": "exam",
+          "score_normalized": 55
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "assessment_order": 1,
+          "week_of_class": 3,
+          "assessment_type": "quiz",
+          "score_normalized": 45
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "assessment_order": 2,
+          "week_of_class": 8,
+          "assessment_type": "quiz",
+          "score_normalized": 55
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "assessment_order": 3,
+          "week_of_class": 14,
+          "assessment_type": "exam",
+          "score_normalized": 55
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "trajectory_comparison"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": true,
+      "comparison_alignment_columns": [
+        "assessment_order",
+        "assessment_type"
+      ],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "trend_comparison",
+      "target_group": null,
+      "divergence_threshold": 5,
+      "time_column": "assessment_order",
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "score_normalized",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": "student_id",
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": 50,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 7729,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "baseline_first_20_rows",
+    "observed_ai_summary_method": "baseline_first_20_rows",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 856,
+      "completion_tokens": 578,
+      "total_tokens": 1434
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-C01",
+    "execution_id": "exec_1781847231947_8d61eafc",
+    "explanation": {
+      "summary": "The performance trajectories of two students reveal distinct patterns of improvement over the course of the assessments. While both students achieved the same score on the final exam, their paths diverged significantly during the initial quiz assessment.",
+      "insights": [
+        {
+          "title": "Initial Performance Divergence",
+          "description": "Student SAMPLE_UCI_POR_STU_000001 started with a score of 0 on the first quiz, while SAMPLE_UCI_POR_STU_000002 began with a score of 45. This initial gap indicates a significant difference in foundational knowledge.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "score_normalized",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "SAMPLE_UCI_POR_STU_000001's first quiz score"
+            },
+            {
+              "metric": "score_normalized",
+              "value": 45,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "SAMPLE_UCI_POR_STU_000002's first quiz score"
+            }
+          ]
+        },
+        {
+          "title": "Equal Performance in Later Assessments",
+          "description": "By the second quiz and the final exam, both students scored 55, indicating that SAMPLE_UCI_POR_STU_000001 made significant progress, but the initial gap in performance may have impacted their confidence and learning trajectory.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "score_normalized",
+              "value": 55,
+              "comparison": "up_from_previous",
+              "delta": 55,
+              "context": "SAMPLE_UCI_POR_STU_000001's second quiz score from 0"
+            },
+            {
+              "metric": "score_normalized",
+              "value": 55,
+              "comparison": "stable",
+              "delta": 0,
+              "context": "SAMPLE_UCI_POR_STU_000002's second quiz score"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "The initial performance gap may have long-term effects on student confidence and engagement."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement targeted interventions for students with low initial scores.",
+          "rationale": "Addressing foundational knowledge gaps early can help prevent long-term performance issues."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data is complete and directly compares the performance of the two students across multiple assessments.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "comparison",
+    "explanation_type": "comparison",
+    "ai_summary_method": "baseline_first_20_rows",
+    "ai_summary_version": "baseline",
+    "baseline_available": true,
+    "input_summary_type": "raw_first_20_rows",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": null,
+    "included_row_count": null,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 7724,
+      "token_usage": {
+        "prompt_tokens": 856,
+        "completion_tokens": 578,
+        "total_tokens": 1434
+      },
+      "strategy": "comparison",
+      "granularity": "per_assessment",
+      "cost_usd": 0.000475
+    }
+  },
+  "raw_text": "Summary: The performance trajectories of two students reveal distinct patterns of improvement over the course of the assessments. While both students achieved the same score on the final exam, their paths diverged significantly during the initial quiz assessment.\n\nInsights: Initial Performance Divergence: Student SAMPLE_UCI_POR_STU_000001 started with a score of 0 on the first quiz, while SAMPLE_UCI_POR_STU_000002 began with a score of 45. This initial gap indicates a significant difference in foundational knowledge. | Equal Performance in Later Assessments: By the second quiz and the final exam, both students scored 55, indicating that SAMPLE_UCI_POR_STU_000001 made significant progress, but the initial gap in performance may have impacted their confidence and learning trajectory.\n\nEducational implications: The initial performance gap may have long-term effects on student confidence and engagement.\n\nRecommendations: high - Implement targeted interventions for students with low initial scores. - Addressing foundational knowledge gaps early can help prevent long-term performance issues."
+}

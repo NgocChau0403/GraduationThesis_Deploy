@@ -1,0 +1,206 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G02__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G02",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Engagement–performance relationship",
+    "scope": "Many students",
+    "actionable_question": "Does engaging more in this class actually lead to better grades?",
+    "target_audience": "instructor",
+    "ai_summary_type": "correlation_evidence",
+    "ai_prompt_hint": "Describe correlation direction and strength. Flag outliers (high engagement, low score) as a special case.",
+    "query_labels": [
+      "engagement_performance_scatter"
+    ],
+    "explanation_strategy": "correlation"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "engagement_score [FE cross]",
+      "avg_score [FE cross]",
+      "final_outcome"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "engagement_performance_scatter"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis of the relationship between Engagement Score and Average Score reveals a concerning pattern where several students exhibit high engagement but low average scores. This suggests that while engagement may be present, it does not necessarily translate into improved academic performance for all students.\n\nInsights: Outliers with High Engagement and Low Scores: A notable number of students (e.g., those with engagement scores of 0.0) have average scores ranging from 6.6667 to 23.3333, indicating a significant disconnect between engagement and performance. This pattern highlights potential issues in the effectiveness of engagement strategies for these students.\n\nEducational implications: The presence of students who are engaged yet underperforming suggests that engagement alone is insufficient for academic success. It may indicate a need for targeted support or intervention strategies.\n\nRecommendations: high - Implement targeted support for students with high engagement but low performance. - Providing additional resources or personalized assistance may help bridge the gap between engagement and academic achievement.",
+    "structured_payload": {
+      "task_id": "A-G02",
+      "execution_id": "exec_1781847232116_05e73795",
+      "explanation": {
+        "summary": "The analysis of the relationship between Engagement Score and Average Score reveals a concerning pattern where several students exhibit high engagement but low average scores. This suggests that while engagement may be present, it does not necessarily translate into improved academic performance for all students.",
+        "insights": [
+          {
+            "title": "Outliers with High Engagement and Low Scores",
+            "description": "A notable number of students (e.g., those with engagement scores of 0.0) have average scores ranging from 6.6667 to 23.3333, indicating a significant disconnect between engagement and performance. This pattern highlights potential issues in the effectiveness of engagement strategies for these students.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "engagement_score",
+                "value": 0,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Students with high engagement but low average scores"
+              },
+              {
+                "metric": "avg_score",
+                "value": 15,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Average score of outlier students"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The presence of students who are engaged yet underperforming suggests that engagement alone is insufficient for academic success. It may indicate a need for targeted support or intervention strategies."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted support for students with high engagement but low performance.",
+            "rationale": "Providing additional resources or personalized assistance may help bridge the gap between engagement and academic achievement."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "LOW",
+        "reason": "The inability to derive a Pearson coefficient and the presence of outliers limit the reliability of the correlation analysis.",
+        "based_on": [
+          "sparse_data"
+        ]
+      },
+      "explanation_strategy": "correlation",
+      "explanation_type": "correlation",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "correlation_evidence",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 649,
+      "included_row_count": null,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": false,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "engagement_performance_scatter",
+          "row_count": 649,
+          "included_row_count": 649
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 6551,
+        "token_usage": {
+          "prompt_tokens": 1537,
+          "completion_tokens": 413,
+          "total_tokens": 1950
+        },
+        "strategy": "correlation",
+        "granularity": "semester",
+        "cost_usd": 0.000478
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G02__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "9b6b32bf97a66aa02b84ea121ffd951de0bcd080ca791093df7182a9e83ed994",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1537,
+        "completion_tokens": 413,
+        "total_tokens": 1950
+      },
+      "latency_ms": 6562,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 649,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "engagement_performance_scatter",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G02.json",
+        "artifact_sha256": "ec1f523b113edf667ebc50cd23a781f0582552aee4eb0ead13dd52d986b33157",
+        "row_count": 649,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 649,
+    "retrieved_row_count_by_dataset": {
+      "engagement_performance_scatter": 649
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "engagement_performance_scatter",
+        "start": 0,
+        "end": 648
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_UCI_POR__A-G02__task_aware_data_summarization__engagement_performance_scatter__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G02__task_aware_data_summarization.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "engagement_performance_scatter": 649
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G02-CORE-01",
+        "description": "Describe correlation direction and strength."
+      },
+      {
+        "requirement_id": "A-G02-CORE-02",
+        "description": "Flag outliers (high engagement, low score) as a special case."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G02-CONSTRAINT-01",
+        "description": "Describe the engagement-score relationship as correlational; do not infer that engagement causes score outcomes."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

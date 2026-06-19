@@ -1,0 +1,18 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_4_deterministic_retrieval_log",
+  "generated_at": "2026-06-19T07:41:45.740Z",
+  "record_id": "SAMPLE_OULAD__S-T11__task_aware_data_summarization",
+  "retrieval_request_complete": true,
+  "retrieval_coverage_status": "full",
+  "chunks": [
+    {
+      "chunk_id": "SAMPLE_OULAD__S-T11__task_aware_data_summarization__registration_data__chunk_1",
+      "dataset_label": "registration_data",
+      "row_start_inclusive": 0,
+      "row_end_inclusive": 1987,
+      "row_count": 1988,
+      "source_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T11.json",
+      "source_artifact_sha256": "63b52ce70e07f0bb1e81b23286d411d5839a80889145007e9d05f643b4222053"
+    }
+  ]
+}

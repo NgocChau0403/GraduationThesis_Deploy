@@ -1,0 +1,249 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G03__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G03",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Identify at-risk cohort",
+    "scope": "Many students",
+    "actionable_question": "Who should the admin contact first this week?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "ranking",
+    "ai_prompt_hint": "Rank at-risk students by at_risk_score. For each high-risk student, explain triggered_flags_summary and recommend the recommended_admin_action. Do not invent reasons outside triggered_flags.",
+    "query_labels": [
+      "at_risk_cohort"
+    ],
+    "explanation_strategy": "risk"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "at_risk_score [FE cross]",
+      "at_risk_label [FE cross]",
+      "avg_score [FE cross]",
+      "final_outcome"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "student_id",
+        "avg_score",
+        "at_risk_score",
+        "at_risk_label",
+        "triggered_flags"
+      ],
+      "optional_columns": [
+        "enrollment_id",
+        "score_strategy",
+        "score_scale",
+        "pass_threshold",
+        "target_threshold",
+        "engagement_score",
+        "engagement_score_available",
+        "punctuality_rate",
+        "previous_attempt_count",
+        "triggered_flags_summary",
+        "primary_support_category",
+        "recommended_admin_action",
+        "flag_low_score",
+        "flag_repeated",
+        "flag_low_engagement",
+        "flag_low_punctuality",
+        "flag_neg_trend",
+        "final_outcome"
+      ]
+    },
+    "query_labels": [
+      "at_risk_cohort"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: A cohort of students has been identified as high-risk due to multiple simultaneous risk signals, including low average scores, repeated attempts, low engagement, and negative performance trends. These indicators suggest a pressing need for academic support to improve their outcomes.\n\nInsights: High-Risk Students with Multiple Flags: Students such as SAMPLE_UCI_POR_STU_000568, SAMPLE_UCI_POR_STU_000606, and SAMPLE_UCI_POR_STU_000611 exhibit critical risk signals, including low average scores below the passing threshold, repeated attempts, and a significant decline in engagement. These patterns indicate a severe need for immediate intervention.\n\nEducational implications: Students with low engagement and performance trends are at risk of failing, necessitating immediate academic support.\n\nRecommendations: high - Prioritise academic support for low average score. - This action addresses the immediate academic needs of students who are struggling significantly, as indicated by their low scores and engagement.",
+    "structured_payload": {
+      "task_id": "A-G03",
+      "execution_id": "exec_1781847232196_a9b57bec",
+      "explanation": {
+        "summary": "A cohort of students has been identified as high-risk due to multiple simultaneous risk signals, including low average scores, repeated attempts, low engagement, and negative performance trends. These indicators suggest a pressing need for academic support to improve their outcomes.",
+        "insights": [
+          {
+            "title": "High-Risk Students with Multiple Flags",
+            "description": "Students such as SAMPLE_UCI_POR_STU_000568, SAMPLE_UCI_POR_STU_000606, and SAMPLE_UCI_POR_STU_000611 exhibit critical risk signals, including low average scores below the passing threshold, repeated attempts, and a significant decline in engagement. These patterns indicate a severe need for immediate intervention.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "avg_score",
+                "value": 5,
+                "comparison": "baseline",
+                "delta": -35,
+                "context": "Pass threshold is 40"
+              },
+              {
+                "metric": "previous_attempt_count",
+                "value": 1,
+                "comparison": "baseline",
+                "delta": 0,
+                "context": "Indicates repeated attempts"
+              },
+              {
+                "metric": "engagement_score",
+                "value": 0,
+                "comparison": "baseline",
+                "delta": -0.15,
+                "context": "Engagement score is significantly low"
+              },
+              {
+                "metric": "performance trend",
+                "value": "declining",
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Negative trend observed"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Students with low engagement and performance trends are at risk of failing, necessitating immediate academic support."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Prioritise academic support for low average score.",
+            "rationale": "This action addresses the immediate academic needs of students who are struggling significantly, as indicated by their low scores and engagement."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "Data quality is robust, with clear indicators of risk across multiple metrics.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "risk",
+      "explanation_type": "risk",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "ranking",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 50,
+      "included_row_count": null,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": false,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "at_risk_cohort",
+          "row_count": 50,
+          "included_row_count": 50
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 7979,
+        "token_usage": {
+          "prompt_tokens": 8996,
+          "completion_tokens": 493,
+          "total_tokens": 9489
+        },
+        "strategy": "risk",
+        "granularity": "semester",
+        "cost_usd": 0.001645
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G03__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "74dcb16fb3193261bceae75fd17b6cdabcfd34698f1de5c7853c4c7292e2e0e6",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 8996,
+        "completion_tokens": 493,
+        "total_tokens": 9489
+      },
+      "latency_ms": 7984,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 50,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "at_risk_cohort",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G03.json",
+        "artifact_sha256": "5ffbfda51d48e1b2ced0234d1b63c1abc449384091a7498a5237ed9522ad74ac",
+        "row_count": 50,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 50,
+    "retrieved_row_count_by_dataset": {
+      "at_risk_cohort": 50
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "at_risk_cohort",
+        "start": 0,
+        "end": 49
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_UCI_POR__A-G03__task_aware_data_summarization__at_risk_cohort__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G03__task_aware_data_summarization.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "at_risk_cohort": 50
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G03-CORE-01",
+        "description": "Rank at-risk students by at_risk_score."
+      },
+      {
+        "requirement_id": "A-G03-CORE-02",
+        "description": "For each high-risk student, explain triggered_flags_summary and recommend the recommended_admin_action."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G03-CONSTRAINT-01",
+        "description": "Do not invent reasons outside triggered_flags."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

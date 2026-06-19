@@ -1,0 +1,246 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T05:58:54.654Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-G11__baseline_first_20_rows",
+    "case_id": "SAMPLE_UCI_POR__A-G11",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G11",
+    "task_name": "Weekly engagement drop detection",
+    "explanation_mode": "baseline_first_20_rows"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G11.json",
+    "full_query_artifact_sha256": "dda6e11844c576d91408710088b1e4432f43929b55eb37429094366f4fc957d0"
+  },
+  "request_payload": {
+    "task_id": "A-G11",
+    "execution_id": "exec_1781847232720_7a6e525d",
+    "task_name": "Weekly engagement drop detection",
+    "analysis_type": "trend",
+    "explanation_strategy": "trend",
+    "explanation_type": "observation, interpretation, recommendation",
+    "ai_prompt_hint": "Use early_warning_week [FE] to pinpoint critical weeks. Recommend admin action timing (e.g. week 5 intervention).",
+    "actionable_question": "Which weeks should the admin schedule check-ins or motivational nudges?",
+    "target_audience": [
+      "instructor",
+      "admin"
+    ],
+    "visualization_config": {
+      "x_field": "week_number",
+      "y_field": "week_total_clicks",
+      "series_field": "rolling_3wk_avg",
+      "color_field": "is_drop_week",
+      "orientation": "horizontal",
+      "variant": "multi_series",
+      "x_label": "Week",
+      "y_label": "Total Clicks",
+      "semantic_roles": {
+        "x": "time",
+        "y": "engagement_metric",
+        "series": "rolling_average",
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "weekly",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "weekly_drop_detection": []
+    },
+    "confidence": {
+      "level": "LOW",
+      "reason": "No positive engagement activity found (0 engagement rows)."
+    },
+    "student_context": null,
+    "query_labels": [
+      "weekly_drop_detection"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [
+        "cohort_avg_clicks",
+        "rolling_3wk_avg",
+        "drop_pct"
+      ],
+      "flag_columns": [
+        "is_drop_week"
+      ],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "trend_series",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": "week_number",
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "week_total_clicks",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": "asc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": 40,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 3640,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "baseline_first_20_rows",
+    "observed_ai_summary_method": "baseline_first_20_rows",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 840,
+      "completion_tokens": 197,
+      "total_tokens": 1037
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-G11",
+    "execution_id": "exec_1781847232720_7a6e525d",
+    "explanation": {
+      "summary": "The analysis indicates a lack of engagement data, resulting in no discernible trends or patterns. Consequently, no specific weeks can be identified for intervention.",
+      "insights": [],
+      "educational_implications": [
+        "The absence of engagement data suggests a need for improved data collection methods to monitor student activity effectively."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement a system to track engagement metrics regularly.",
+          "rationale": "Establishing a reliable data collection process is essential for identifying trends and scheduling timely interventions."
+        }
+      ],
+      "warnings": [
+        "Data quality signal is LOW; no positive engagement activity found (0 engagement rows)."
+      ]
+    },
+    "confidence": {
+      "level": "LOW",
+      "reason": "The analysis is based on an empty dataset, limiting the ability to draw meaningful conclusions.",
+      "based_on": [
+        "sparse_data",
+        "limited_temporal_range"
+      ]
+    },
+    "explanation_strategy": "trend",
+    "explanation_type": "trend",
+    "ai_summary_method": "baseline_first_20_rows",
+    "ai_summary_version": "baseline",
+    "baseline_available": true,
+    "input_summary_type": "raw_first_20_rows",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": null,
+    "included_row_count": null,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 3636,
+      "token_usage": {
+        "prompt_tokens": 840,
+        "completion_tokens": 197,
+        "total_tokens": 1037
+      },
+      "strategy": "trend",
+      "granularity": "weekly",
+      "cost_usd": 0.000244
+    }
+  },
+  "raw_text": "Summary: The analysis indicates a lack of engagement data, resulting in no discernible trends or patterns. Consequently, no specific weeks can be identified for intervention.\n\nEducational implications: The absence of engagement data suggests a need for improved data collection methods to monitor student activity effectively.\n\nRecommendations: high - Implement a system to track engagement metrics regularly. - Establishing a reliable data collection process is essential for identifying trends and scheduling timely interventions.\n\nWarnings: Data quality signal is LOW; no positive engagement activity found (0 engagement rows)."
+}

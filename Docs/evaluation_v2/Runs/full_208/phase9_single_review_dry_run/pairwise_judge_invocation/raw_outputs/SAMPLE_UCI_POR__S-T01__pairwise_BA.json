@@ -1,0 +1,97 @@
+{
+  "schema_version": "pairwise_judge_v3_dry_run_schema_v1",
+  "pairwise_record_id": "SAMPLE_UCI_POR__S-T01__pairwise_BA",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-T01",
+  "order_variant": "BA",
+  "scoring_status": "judged",
+  "winner": "A",
+  "winner_confidence": "medium",
+  "difference_magnitude": "small",
+  "dimension_winners": {
+    "faithfulness": "A",
+    "numerical_correctness": "A",
+    "completeness": "A",
+    "task_relevance": "A",
+    "actionability": "B",
+    "clarity": "tie",
+    "safety_fairness": "tie"
+  },
+  "metric_comparison": {
+    "faithfulness": {
+      "winner": "A",
+      "reason": "Candidate A more accurately states improvement from assessment 1 to 2 followed by plateau.",
+      "evidence_refs": [
+        "prompt_packet:S-T01:task_context",
+        "prompt_packet:S-T01:candidate_explanations"
+      ]
+    },
+    "numerical_correctness": {
+      "winner": "A",
+      "reason": "Candidate A includes the +55 change and notes all assessments are below the target threshold of 70.",
+      "evidence_refs": [
+        "prompt_packet:S-T01:task_context",
+        "prompt_packet:S-T01:candidate_explanations"
+      ]
+    },
+    "completeness": {
+      "winner": "A",
+      "reason": "Candidate A covers both observed trend and threshold status across all assessments.",
+      "evidence_refs": [
+        "prompt_packet:S-T01:task_context",
+        "prompt_packet:S-T01:candidate_explanations"
+      ]
+    },
+    "task_relevance": {
+      "winner": "A",
+      "reason": "Candidate A is slightly more directly tied to the trend-analysis requirement.",
+      "evidence_refs": [
+        "prompt_packet:S-T01:task_context",
+        "prompt_packet:S-T01:candidate_explanations"
+      ]
+    },
+    "actionability": {
+      "winner": "B",
+      "reason": "Candidate B gives two concrete actions, while candidate A gives one broader tutor-support action.",
+      "evidence_refs": [
+        "prompt_packet:S-T01:task_context",
+        "prompt_packet:S-T01:candidate_explanations"
+      ]
+    },
+    "clarity": {
+      "winner": "tie",
+      "reason": "Both are clear and student-facing.",
+      "evidence_refs": [
+        "prompt_packet:S-T01:task_context",
+        "prompt_packet:S-T01:candidate_explanations"
+      ]
+    },
+    "safety_fairness": {
+      "winner": "tie",
+      "reason": "Both remain within the returned three assessment points and do not overgeneralize a long-term trend.",
+      "evidence_refs": [
+        "prompt_packet:S-T01:task_context",
+        "prompt_packet:S-T01:candidate_explanations"
+      ]
+    }
+  },
+  "coverage_comparison": {
+    "winner": "A",
+    "reason": "Candidate A covers improvement, plateau, pass threshold, and target threshold more completely."
+  },
+  "specificity_comparison": {
+    "winner": "A",
+    "reason": "Candidate A includes the explicit +55 point change and all-below-target observation."
+  },
+  "decisive_evidence": [
+    {
+      "evidence_ref": "candidate_B:S-T01:+55_change_and_all_assessments_below_target",
+      "supports_candidate": "A",
+      "reason": "These details make candidate A's trend and threshold interpretation more complete."
+    }
+  ],
+  "tie_justification": null,
+  "absolute_rerun_flags": [],
+  "requires_absolute_rerun": false,
+  "reviewer_notes": "Candidate A wins on trend and threshold coverage, although the other candidate has somewhat stronger action detail."
+}

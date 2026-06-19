@@ -1,0 +1,124 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-B01__baseline_first_20_rows",
+  "evaluation_run_id": "pilot_uci_example",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-B01",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Performance overview",
+    "scope": "1 student",
+    "actionable_question": "Summarise the student's overall performance and next action.",
+    "target_audience": "student",
+    "ai_summary_type": "metric_snapshot"
+  },
+  "schema_context": {
+    "source_tables": [
+      "assessment_result",
+      "assessment",
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "avg_score",
+      "pass_rate",
+      "class_avg_score",
+      "score_percentile"
+    ],
+    "output_schema": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "explanation": {
+    "raw_text": "Example explanation text.",
+    "structured_payload": {
+      "summary": "Example explanation text."
+    },
+    "generation_metadata": {
+      "method": "baseline_first_20_rows"
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 1,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "result",
+        "artifact_path": "full_query_results/example/result.full_query_result.json",
+        "artifact_sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+        "row_count": 1,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 12000,
+    "prompt_embedded_row_count": 1,
+    "retrieved_row_count": 1,
+    "retrieved_row_count_by_dataset": {
+      "result": 1
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "result",
+        "start": 1,
+        "end": 1
+      }
+    ],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_result",
+    "deterministic_scan_row_count_by_dataset": {
+      "result": 1
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation"
+    ],
+    "judge_evidence_citations": [
+      "result.rows[0]"
+    ]
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "S-B01-CORE-01",
+        "description": "State the overall score and pass/fail status."
+      }
+    ],
+    "required_supporting_outputs": [
+      {
+        "requirement_id": "S-B01-SUPPORT-01",
+        "description": "Compare against the class benchmark when class benchmark fields are present."
+      },
+      {
+        "requirement_id": "S-B01-SUPPORT-02",
+        "description": "Report percentile standing when score_percentile is present."
+      },
+      {
+        "requirement_id": "S-B01-SUPPORT-03",
+        "description": "Suggest the most useful next action supported by returned fields."
+      }
+    ],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "S-B01-CONSTRAINT-01",
+        "description": "Use only returned fields; do not fill missing benchmark or percentile values with invented estimates."
+      },
+      {
+        "constraint_id": "S-B01-CONSTRAINT-02",
+        "description": "If percentile data is absent, omit percentile comparison and state that it is unavailable when relevant."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review approved applicability for this task."
+  }
+}

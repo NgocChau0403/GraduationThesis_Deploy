@@ -1,0 +1,303 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T07:28:44.333Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-S01__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__A-S01",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-S01",
+    "task_name": "Student full profile snapshot",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S01.json",
+    "full_query_artifact_sha256": "571fbfd5a5f4b6aadbd2ae06eb63417d65d32d6ecc3ca2592d316fa372796d12"
+  },
+  "request_payload": {
+    "task_id": "A-S01",
+    "execution_id": "exec_1781847821333_85e5e848",
+    "task_name": "Student full profile snapshot",
+    "analysis_type": "aggregation",
+    "explanation_strategy": "distribution",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Summarise who this student is and where they stand across all dimensions (score, engagement, risk) in plain language.",
+    "actionable_question": "Who is this student and what is their current overall situation?",
+    "target_audience": [
+      "instructor",
+      "academic_advisor"
+    ],
+    "visualization_config": {
+      "x_field": null,
+      "y_field": null,
+      "series_field": null,
+      "color_field": "at_risk_label",
+      "orientation": null,
+      "variant": "student_profile",
+      "x_label": null,
+      "y_label": null,
+      "semantic_roles": {
+        "x": null,
+        "y": null,
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "instructor"
+    },
+    "datasets": {
+      "student_profile": [
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "gender": "M",
+          "age_group": "0-35",
+          "region": "Scotland",
+          "previous_attempt_count": 1,
+          "final_outcome": "Distinction",
+          "avg_score": 91.2,
+          "at_risk_score": 3,
+          "at_risk_label": "high",
+          "engagement_score": 0.2024,
+          "study_effort_level": "medium"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "student_profile"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [
+        "avg_score",
+        "at_risk_score",
+        "engagement_score",
+        "previous_attempt_count"
+      ],
+      "status_columns": [
+        "final_outcome",
+        "at_risk_label",
+        "study_effort_level"
+      ],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [
+        "gender",
+        "age_group",
+        "region"
+      ],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {
+        "avg_score": "score_0_100",
+        "at_risk_score": "triggered_flag_count_0_5",
+        "engagement_score": "ratio_0_1",
+        "previous_attempt_count": "count"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": true,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": true,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "metric_snapshot",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": "student_id",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": "descriptive_context_only_no_causal_or_prescriptive_inference",
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 9090,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 778,
+      "completion_tokens": 445,
+      "total_tokens": 1223
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-S01",
+    "execution_id": "exec_1781847821333_85e5e848",
+    "explanation": {
+      "summary": "The student, identified as SAMPLE_OULAD_STU_100788, is a male aged between 0-35 years from Scotland. He has achieved a final outcome of Distinction with an average score of 91.2, indicating strong academic performance, but also has a high at-risk score of 3, suggesting potential concerns regarding engagement.",
+      "insights": [
+        {
+          "title": "High Academic Achievement",
+          "description": "The student has an average score of 91.2, which is significantly above typical passing thresholds, indicating strong academic performance.",
+          "severity": "low",
+          "evidence": [
+            {
+              "metric": "avg_score",
+              "value": 91.2,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "This score reflects a high level of understanding of the course material."
+            }
+          ]
+        },
+        {
+          "title": "High At-Risk Score",
+          "description": "Despite the high average score, the student has an at-risk score of 3, categorized as high, which may indicate issues with engagement or study habits.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "at_risk_score",
+              "value": 3,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "This score suggests the student may need additional support to maintain performance."
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "The high at-risk score indicates a need for targeted interventions to improve engagement and study habits."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement engagement strategies tailored to the student's needs.",
+          "rationale": "Addressing the high at-risk score can help sustain the student's academic success and prevent potential decline."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data provided is complete and specific to the student profile.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "distribution",
+    "explanation_type": "distribution",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "full_rows_due_to_small_result",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 1,
+    "included_row_count": 1,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "student_profile",
+        "row_count": 1,
+        "included_row_count": 1
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 9087,
+      "token_usage": {
+        "prompt_tokens": 778,
+        "completion_tokens": 445,
+        "total_tokens": 1223
+      },
+      "strategy": "distribution",
+      "granularity": "semester",
+      "cost_usd": 0.000384
+    }
+  },
+  "raw_text": "Summary: The student, identified as SAMPLE_OULAD_STU_100788, is a male aged between 0-35 years from Scotland. He has achieved a final outcome of Distinction with an average score of 91.2, indicating strong academic performance, but also has a high at-risk score of 3, suggesting potential concerns regarding engagement.\n\nInsights: High Academic Achievement: The student has an average score of 91.2, which is significantly above typical passing thresholds, indicating strong academic performance. | High At-Risk Score: Despite the high average score, the student has an at-risk score of 3, categorized as high, which may indicate issues with engagement or study habits.\n\nEducational implications: The high at-risk score indicates a need for targeted interventions to improve engagement and study habits.\n\nRecommendations: high - Implement engagement strategies tailored to the student's needs. - Addressing the high at-risk score can help sustain the student's academic success and prevent potential decline."
+}

@@ -184,7 +184,7 @@ baseline isolation smoke test.
 Validator:
 
 ```text
-Docs/evaluation_v2/ai_explanation_judge_v2/validate_metric_snapshot.py
+Docs/evaluation_v2/UpdateBerforeLLMv2/validate_metric_snapshot.py
 ```
 
 Kết quả pre-migration và post-migration:

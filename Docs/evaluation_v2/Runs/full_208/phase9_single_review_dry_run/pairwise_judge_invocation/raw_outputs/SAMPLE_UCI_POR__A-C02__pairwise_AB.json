@@ -1,0 +1,107 @@
+{
+  "schema_version": "pairwise_judge_v3_dry_run_schema_v1",
+  "pairwise_record_id": "SAMPLE_UCI_POR__A-C02__pairwise_AB",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-C02",
+  "order_variant": "AB",
+  "scoring_status": "judged",
+  "winner": "A",
+  "winner_confidence": "medium",
+  "difference_magnitude": "small",
+  "dimension_winners": {
+    "faithfulness": "tie",
+    "numerical_correctness": "tie",
+    "completeness": "A",
+    "task_relevance": "A",
+    "actionability": "tie",
+    "clarity": "tie",
+    "safety_fairness": "tie"
+  },
+  "metric_comparison": {
+    "faithfulness": {
+      "winner": "tie",
+      "reason": "Both candidates correctly report no engagement across the compared metrics.",
+      "evidence_refs": [
+        "prompt_packet:A-C02:task_context",
+        "prompt_packet:A-C02:candidate_explanations"
+      ]
+    },
+    "numerical_correctness": {
+      "winner": "tie",
+      "reason": "Both candidates describe active days, total clicks, and engagement scores as zero rather than inventing a gap.",
+      "evidence_refs": [
+        "prompt_packet:A-C02:task_context",
+        "prompt_packet:A-C02:candidate_explanations"
+      ]
+    },
+    "completeness": {
+      "winner": "A",
+      "reason": "Candidate A is slightly more complete because it names the two students and lists the requested metrics explicitly.",
+      "evidence_refs": [
+        "prompt_packet:A-C02:task_context",
+        "prompt_packet:A-C02:candidate_explanations"
+      ]
+    },
+    "task_relevance": {
+      "winner": "A",
+      "reason": "Candidate A maps more directly to the compare-two-students requirement.",
+      "evidence_refs": [
+        "prompt_packet:A-C02:task_context",
+        "prompt_packet:A-C02:candidate_explanations"
+      ]
+    },
+    "actionability": {
+      "winner": "tie",
+      "reason": "Both provide broad engagement outreach suggestions rather than a metric-specific largest-gap action.",
+      "evidence_refs": [
+        "prompt_packet:A-C02:task_context",
+        "prompt_packet:A-C02:candidate_explanations"
+      ]
+    },
+    "clarity": {
+      "winner": "tie",
+      "reason": "Both are clear and concise.",
+      "evidence_refs": [
+        "prompt_packet:A-C02:task_context",
+        "prompt_packet:A-C02:candidate_explanations"
+      ]
+    },
+    "safety_fairness": {
+      "winner": "tie",
+      "reason": "Neither candidate infers academic risk beyond the engagement fields.",
+      "evidence_refs": [
+        "prompt_packet:A-C02:task_context",
+        "prompt_packet:A-C02:candidate_explanations"
+      ]
+    }
+  },
+  "coverage_comparison": {
+    "winner": "A",
+    "reason": "Candidate A uses the named-student comparison and all three engagement metrics."
+  },
+  "specificity_comparison": {
+    "winner": "A",
+    "reason": "Candidate A is more specific by naming both student IDs."
+  },
+  "decisive_evidence": [
+    {
+      "evidence_ref": "candidate_A:A-C02:student_ids_and_zero_metrics",
+      "supports_candidate": "A",
+      "reason": "The explicit named comparison gives candidate A a small specificity advantage."
+    }
+  ],
+  "tie_justification": null,
+  "absolute_rerun_flags": [
+    {
+      "candidate": "both",
+      "suspected_error_type": "missing_largest_gap_statement",
+      "severity_hint": "minor",
+      "reason": "Both candidates should explicitly state that no engagement dimension creates a gap when all compared metrics are identical.",
+      "evidence_refs": [
+        "requirements:A-C02:largest_gap"
+      ]
+    }
+  ],
+  "requires_absolute_rerun": true,
+  "reviewer_notes": "Candidate A wins narrowly on specificity; both identify the same zero-engagement pattern."
+}

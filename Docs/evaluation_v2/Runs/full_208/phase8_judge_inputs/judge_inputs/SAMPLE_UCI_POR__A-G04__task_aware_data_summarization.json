@@ -1,0 +1,211 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G04__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G04",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Assessment difficulty analysis",
+    "scope": "Many students",
+    "actionable_question": "Which assessment is causing the most students to fail?",
+    "target_audience": "instructor",
+    "ai_summary_type": "ranking",
+    "ai_prompt_hint": "Flag assessments with pass_flag=False rate above threshold. Suggest curriculum review.",
+    "query_labels": [
+      "assessment_difficulty"
+    ],
+    "explanation_strategy": "distribution"
+  },
+  "schema_context": {
+    "source_tables": [
+      "assessment_result",
+      "assessment",
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "assessment_name",
+      "assessment_type",
+      "week_of_class",
+      "competency_tag",
+      "score_normalized",
+      "pass_flag"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "assessment_name",
+        "fail_rate_pct"
+      ],
+      "optional_columns": [
+        "assessment_id",
+        "assessment_order",
+        "assessment_type",
+        "week_of_class",
+        "competency_tag",
+        "competency_source",
+        "total_submissions",
+        "fail_count",
+        "avg_score"
+      ]
+    },
+    "query_labels": [
+      "assessment_difficulty"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis of assessment difficulty reveals that the G1 assessment has the highest fail rate among the three assessments, indicating it may be the most challenging for students. G2 and G3 show lower fail rates, suggesting better student performance in these areas.\n\nInsights: High Fail Rate in G1: G1 has a fail rate of 7.7%, which is significantly higher than G2 and G3, indicating that it poses the most difficulty for students.\n\nEducational implications: The high fail rate in G1 suggests that students may require additional support or resources to improve their understanding of the material.\n\nRecommendations: high - Review the curriculum and instructional strategies for G1. - To address the high fail rate and improve student outcomes, it is essential to identify potential gaps in teaching methods or content delivery.",
+    "structured_payload": {
+      "task_id": "A-G04",
+      "execution_id": "exec_1781847232418_20c741c0",
+      "explanation": {
+        "summary": "The analysis of assessment difficulty reveals that the G1 assessment has the highest fail rate among the three assessments, indicating it may be the most challenging for students. G2 and G3 show lower fail rates, suggesting better student performance in these areas.",
+        "insights": [
+          {
+            "title": "High Fail Rate in G1",
+            "description": "G1 has a fail rate of 7.7%, which is significantly higher than G2 and G3, indicating that it poses the most difficulty for students.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "fail_rate_pct",
+                "value": 7.7,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "G1 has the highest fail rate compared to G2 and G3."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The high fail rate in G1 suggests that students may require additional support or resources to improve their understanding of the material."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Review the curriculum and instructional strategies for G1.",
+            "rationale": "To address the high fail rate and improve student outcomes, it is essential to identify potential gaps in teaching methods or content delivery."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset is complete and provides a clear view of assessment performance.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "distribution",
+      "explanation_type": "distribution",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "full_rows_due_to_small_result",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 3,
+      "included_row_count": 3,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "assessment_difficulty",
+          "row_count": 3,
+          "included_row_count": 3
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 4993,
+        "token_usage": {
+          "prompt_tokens": 1061,
+          "completion_tokens": 334,
+          "total_tokens": 1395
+        },
+        "strategy": "distribution",
+        "granularity": "per_assessment",
+        "cost_usd": 0.00036
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G04__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "290772675969b80b6d8378bcc44120c4bca2f84a6fb85e99aa1a831395d4cf2c",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1061,
+        "completion_tokens": 334,
+        "total_tokens": 1395
+      },
+      "latency_ms": 4997,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 3,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "assessment_difficulty",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G04.json",
+        "artifact_sha256": "31b78680122105a0667522bd84cdde13044290f025837c6e6dd6d8c4fea8da0f",
+        "row_count": 3,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 3,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "assessment_difficulty": 3
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G04-CORE-01",
+        "description": "Flag assessments with pass_flag=False rate above threshold."
+      },
+      {
+        "requirement_id": "A-G04-CORE-02",
+        "description": "Suggest curriculum review."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G04-CONSTRAINT-01",
+        "description": "Frame a high fail rate as a signal for assessment or curriculum review, not as evidence of student deficiency."
+      },
+      {
+        "constraint_id": "A-G04-CONSTRAINT-02",
+        "description": "Avoid causal claims about student quality."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Retained as applicable because curriculum recommendations can affect learners; candidate for human review rather than automatic exclusion."
+  }
+}

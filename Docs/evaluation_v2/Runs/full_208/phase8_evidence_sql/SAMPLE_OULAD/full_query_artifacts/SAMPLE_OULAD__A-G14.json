@@ -1,0 +1,1071 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:43:03.921Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_OULAD__A-G14",
+  "dataset_id": "SAMPLE_OULAD",
+  "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+  "student_id": null,
+  "role": "admin",
+  "task_id": "A-G14",
+  "task_name": "Early withdrawal signal analysis",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "A-G14",
+      "params": {
+        "batch_id": "SAMPLE_OULAD",
+        "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+        "student_id": "SAMPLE_OULAD_STU_100788",
+        "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788",
+        "s1": "SAMPLE_OULAD_STU_100788",
+        "s2": "SAMPLE_OULAD_STU_101700"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 8837,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 164,
+    "row_count_observed": 164,
+    "row_count_bucket_phase3": ">20",
+    "row_count_bucket_observed": ">20",
+    "dataset_breakdown": [
+      {
+        "label": "withdrawal_signal_trend",
+        "row_count": 164,
+        "sample_fields": [
+          "week_number",
+          "final_outcome",
+          "avg_clicks",
+          "student_count"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "4364e835b8582e11d11d490373138a0b17d222dfbca1533b41a9bf39123cfd2c"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "executable",
+    "backend_confidence": "HIGH",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847775085_95441256",
+    "taskId": "A-G14",
+    "datasets": {
+      "withdrawal_signal_trend": [
+        {
+          "week_number": -2,
+          "final_outcome": "Distinction",
+          "avg_clicks": "48.4",
+          "student_count": 214
+        },
+        {
+          "week_number": -1,
+          "final_outcome": "Distinction",
+          "avg_clicks": "51.02",
+          "student_count": 227
+        },
+        {
+          "week_number": 0,
+          "final_outcome": "Distinction",
+          "avg_clicks": "69.38",
+          "student_count": 262
+        },
+        {
+          "week_number": 1,
+          "final_outcome": "Distinction",
+          "avg_clicks": "138.61",
+          "student_count": 282
+        },
+        {
+          "week_number": 2,
+          "final_outcome": "Distinction",
+          "avg_clicks": "125.77",
+          "student_count": 290
+        },
+        {
+          "week_number": 3,
+          "final_outcome": "Distinction",
+          "avg_clicks": "120.21",
+          "student_count": 290
+        },
+        {
+          "week_number": 4,
+          "final_outcome": "Distinction",
+          "avg_clicks": "92.58",
+          "student_count": 287
+        },
+        {
+          "week_number": 5,
+          "final_outcome": "Distinction",
+          "avg_clicks": "86.04",
+          "student_count": 298
+        },
+        {
+          "week_number": 6,
+          "final_outcome": "Distinction",
+          "avg_clicks": "73.13",
+          "student_count": 272
+        },
+        {
+          "week_number": 7,
+          "final_outcome": "Distinction",
+          "avg_clicks": "78.52",
+          "student_count": 260
+        },
+        {
+          "week_number": 8,
+          "final_outcome": "Distinction",
+          "avg_clicks": "75.69",
+          "student_count": 266
+        },
+        {
+          "week_number": 9,
+          "final_outcome": "Distinction",
+          "avg_clicks": "81",
+          "student_count": 274
+        },
+        {
+          "week_number": 10,
+          "final_outcome": "Distinction",
+          "avg_clicks": "112.63",
+          "student_count": 292
+        },
+        {
+          "week_number": 11,
+          "final_outcome": "Distinction",
+          "avg_clicks": "41.17",
+          "student_count": 239
+        },
+        {
+          "week_number": 12,
+          "final_outcome": "Distinction",
+          "avg_clicks": "38.45",
+          "student_count": 185
+        },
+        {
+          "week_number": 13,
+          "final_outcome": "Distinction",
+          "avg_clicks": "40.36",
+          "student_count": 219
+        },
+        {
+          "week_number": 14,
+          "final_outcome": "Distinction",
+          "avg_clicks": "58.68",
+          "student_count": 266
+        },
+        {
+          "week_number": 15,
+          "final_outcome": "Distinction",
+          "avg_clicks": "57.35",
+          "student_count": 266
+        },
+        {
+          "week_number": 16,
+          "final_outcome": "Distinction",
+          "avg_clicks": "77.58",
+          "student_count": 288
+        },
+        {
+          "week_number": 17,
+          "final_outcome": "Distinction",
+          "avg_clicks": "70.65",
+          "student_count": 264
+        },
+        {
+          "week_number": 18,
+          "final_outcome": "Distinction",
+          "avg_clicks": "63.26",
+          "student_count": 266
+        },
+        {
+          "week_number": 19,
+          "final_outcome": "Distinction",
+          "avg_clicks": "50.31",
+          "student_count": 250
+        },
+        {
+          "week_number": 20,
+          "final_outcome": "Distinction",
+          "avg_clicks": "72.17",
+          "student_count": 266
+        },
+        {
+          "week_number": 21,
+          "final_outcome": "Distinction",
+          "avg_clicks": "124.55",
+          "student_count": 292
+        },
+        {
+          "week_number": 22,
+          "final_outcome": "Distinction",
+          "avg_clicks": "56.53",
+          "student_count": 280
+        },
+        {
+          "week_number": 23,
+          "final_outcome": "Distinction",
+          "avg_clicks": "51.33",
+          "student_count": 284
+        },
+        {
+          "week_number": 24,
+          "final_outcome": "Distinction",
+          "avg_clicks": "38.11",
+          "student_count": 267
+        },
+        {
+          "week_number": 25,
+          "final_outcome": "Distinction",
+          "avg_clicks": "38.96",
+          "student_count": 253
+        },
+        {
+          "week_number": 26,
+          "final_outcome": "Distinction",
+          "avg_clicks": "46.6",
+          "student_count": 239
+        },
+        {
+          "week_number": 27,
+          "final_outcome": "Distinction",
+          "avg_clicks": "44.2",
+          "student_count": 220
+        },
+        {
+          "week_number": 28,
+          "final_outcome": "Distinction",
+          "avg_clicks": "49.65",
+          "student_count": 237
+        },
+        {
+          "week_number": 29,
+          "final_outcome": "Distinction",
+          "avg_clicks": "58.83",
+          "student_count": 267
+        },
+        {
+          "week_number": 30,
+          "final_outcome": "Distinction",
+          "avg_clicks": "77.34",
+          "student_count": 291
+        },
+        {
+          "week_number": 31,
+          "final_outcome": "Distinction",
+          "avg_clicks": "113.04",
+          "student_count": 286
+        },
+        {
+          "week_number": 32,
+          "final_outcome": "Distinction",
+          "avg_clicks": "74.52",
+          "student_count": 256
+        },
+        {
+          "week_number": 33,
+          "final_outcome": "Distinction",
+          "avg_clicks": "100.8",
+          "student_count": 245
+        },
+        {
+          "week_number": 34,
+          "final_outcome": "Distinction",
+          "avg_clicks": "137.18",
+          "student_count": 261
+        },
+        {
+          "week_number": 35,
+          "final_outcome": "Distinction",
+          "avg_clicks": "142.03",
+          "student_count": 292
+        },
+        {
+          "week_number": 36,
+          "final_outcome": "Distinction",
+          "avg_clicks": "21.39",
+          "student_count": 188
+        },
+        {
+          "week_number": 37,
+          "final_outcome": "Distinction",
+          "avg_clicks": "11.59",
+          "student_count": 162
+        },
+        {
+          "week_number": 38,
+          "final_outcome": "Distinction",
+          "avg_clicks": "11.8",
+          "student_count": 142
+        },
+        {
+          "week_number": 39,
+          "final_outcome": "Distinction",
+          "avg_clicks": "7.12",
+          "student_count": 104
+        },
+        {
+          "week_number": -2,
+          "final_outcome": "Fail",
+          "avg_clicks": "26.65",
+          "student_count": 180
+        },
+        {
+          "week_number": -1,
+          "final_outcome": "Fail",
+          "avg_clicks": "23.17",
+          "student_count": 198
+        },
+        {
+          "week_number": 0,
+          "final_outcome": "Fail",
+          "avg_clicks": "27.08",
+          "student_count": 226
+        },
+        {
+          "week_number": 1,
+          "final_outcome": "Fail",
+          "avg_clicks": "46.53",
+          "student_count": 298
+        },
+        {
+          "week_number": 2,
+          "final_outcome": "Fail",
+          "avg_clicks": "70.59",
+          "student_count": 298
+        },
+        {
+          "week_number": 3,
+          "final_outcome": "Fail",
+          "avg_clicks": "112.02",
+          "student_count": 356
+        },
+        {
+          "week_number": 4,
+          "final_outcome": "Fail",
+          "avg_clicks": "36.97",
+          "student_count": 279
+        },
+        {
+          "week_number": 5,
+          "final_outcome": "Fail",
+          "avg_clicks": "43.74",
+          "student_count": 350
+        },
+        {
+          "week_number": 6,
+          "final_outcome": "Fail",
+          "avg_clicks": "29.64",
+          "student_count": 253
+        },
+        {
+          "week_number": 7,
+          "final_outcome": "Fail",
+          "avg_clicks": "33.23",
+          "student_count": 215
+        },
+        {
+          "week_number": 8,
+          "final_outcome": "Fail",
+          "avg_clicks": "28.09",
+          "student_count": 197
+        },
+        {
+          "week_number": 9,
+          "final_outcome": "Fail",
+          "avg_clicks": "48.45",
+          "student_count": 216
+        },
+        {
+          "week_number": 10,
+          "final_outcome": "Fail",
+          "avg_clicks": "96.89",
+          "student_count": 292
+        },
+        {
+          "week_number": 11,
+          "final_outcome": "Fail",
+          "avg_clicks": "17.89",
+          "student_count": 141
+        },
+        {
+          "week_number": 12,
+          "final_outcome": "Fail",
+          "avg_clicks": "15.2",
+          "student_count": 84
+        },
+        {
+          "week_number": 13,
+          "final_outcome": "Fail",
+          "avg_clicks": "21.18",
+          "student_count": 131
+        },
+        {
+          "week_number": 14,
+          "final_outcome": "Fail",
+          "avg_clicks": "19.28",
+          "student_count": 207
+        },
+        {
+          "week_number": 15,
+          "final_outcome": "Fail",
+          "avg_clicks": "29.04",
+          "student_count": 206
+        },
+        {
+          "week_number": 16,
+          "final_outcome": "Fail",
+          "avg_clicks": "42.5",
+          "student_count": 248
+        },
+        {
+          "week_number": 17,
+          "final_outcome": "Fail",
+          "avg_clicks": "30.92",
+          "student_count": 185
+        },
+        {
+          "week_number": 18,
+          "final_outcome": "Fail",
+          "avg_clicks": "34.29",
+          "student_count": 161
+        },
+        {
+          "week_number": 19,
+          "final_outcome": "Fail",
+          "avg_clicks": "31.57",
+          "student_count": 157
+        },
+        {
+          "week_number": 20,
+          "final_outcome": "Fail",
+          "avg_clicks": "55.36",
+          "student_count": 169
+        },
+        {
+          "week_number": 21,
+          "final_outcome": "Fail",
+          "avg_clicks": "123.24",
+          "student_count": 233
+        },
+        {
+          "week_number": 22,
+          "final_outcome": "Fail",
+          "avg_clicks": "33.99",
+          "student_count": 181
+        },
+        {
+          "week_number": 23,
+          "final_outcome": "Fail",
+          "avg_clicks": "42.89",
+          "student_count": 196
+        },
+        {
+          "week_number": 24,
+          "final_outcome": "Fail",
+          "avg_clicks": "26.42",
+          "student_count": 159
+        },
+        {
+          "week_number": 25,
+          "final_outcome": "Fail",
+          "avg_clicks": "23.74",
+          "student_count": 130
+        },
+        {
+          "week_number": 26,
+          "final_outcome": "Fail",
+          "avg_clicks": "25.93",
+          "student_count": 114
+        },
+        {
+          "week_number": 27,
+          "final_outcome": "Fail",
+          "avg_clicks": "27.41",
+          "student_count": 104
+        },
+        {
+          "week_number": 28,
+          "final_outcome": "Fail",
+          "avg_clicks": "25.06",
+          "student_count": 110
+        },
+        {
+          "week_number": 29,
+          "final_outcome": "Fail",
+          "avg_clicks": "29.76",
+          "student_count": 140
+        },
+        {
+          "week_number": 30,
+          "final_outcome": "Fail",
+          "avg_clicks": "49.22",
+          "student_count": 169
+        },
+        {
+          "week_number": 31,
+          "final_outcome": "Fail",
+          "avg_clicks": "123.24",
+          "student_count": 169
+        },
+        {
+          "week_number": 32,
+          "final_outcome": "Fail",
+          "avg_clicks": "20.74",
+          "student_count": 114
+        },
+        {
+          "week_number": 33,
+          "final_outcome": "Fail",
+          "avg_clicks": "24.1",
+          "student_count": 89
+        },
+        {
+          "week_number": 34,
+          "final_outcome": "Fail",
+          "avg_clicks": "46.08",
+          "student_count": 96
+        },
+        {
+          "week_number": 35,
+          "final_outcome": "Fail",
+          "avg_clicks": "61.47",
+          "student_count": 154
+        },
+        {
+          "week_number": 36,
+          "final_outcome": "Fail",
+          "avg_clicks": "11.93",
+          "student_count": 59
+        },
+        {
+          "week_number": 37,
+          "final_outcome": "Fail",
+          "avg_clicks": "5.56",
+          "student_count": 54
+        },
+        {
+          "week_number": 38,
+          "final_outcome": "Fail",
+          "avg_clicks": "9.24",
+          "student_count": 51
+        },
+        {
+          "week_number": 39,
+          "final_outcome": "Fail",
+          "avg_clicks": "5.21",
+          "student_count": 34
+        },
+        {
+          "week_number": -2,
+          "final_outcome": "Pass",
+          "avg_clicks": "32.05",
+          "student_count": 413
+        },
+        {
+          "week_number": -1,
+          "final_outcome": "Pass",
+          "avg_clicks": "32.84",
+          "student_count": 446
+        },
+        {
+          "week_number": 0,
+          "final_outcome": "Pass",
+          "avg_clicks": "37.5",
+          "student_count": 512
+        },
+        {
+          "week_number": 1,
+          "final_outcome": "Pass",
+          "avg_clicks": "85.19",
+          "student_count": 607
+        },
+        {
+          "week_number": 2,
+          "final_outcome": "Pass",
+          "avg_clicks": "96.91",
+          "student_count": 615
+        },
+        {
+          "week_number": 3,
+          "final_outcome": "Pass",
+          "avg_clicks": "122.59",
+          "student_count": 681
+        },
+        {
+          "week_number": 4,
+          "final_outcome": "Pass",
+          "avg_clicks": "59.03",
+          "student_count": 616
+        },
+        {
+          "week_number": 5,
+          "final_outcome": "Pass",
+          "avg_clicks": "58.93",
+          "student_count": 672
+        },
+        {
+          "week_number": 6,
+          "final_outcome": "Pass",
+          "avg_clicks": "44.7",
+          "student_count": 582
+        },
+        {
+          "week_number": 7,
+          "final_outcome": "Pass",
+          "avg_clicks": "48.96",
+          "student_count": 556
+        },
+        {
+          "week_number": 8,
+          "final_outcome": "Pass",
+          "avg_clicks": "50.9",
+          "student_count": 539
+        },
+        {
+          "week_number": 9,
+          "final_outcome": "Pass",
+          "avg_clicks": "61.35",
+          "student_count": 592
+        },
+        {
+          "week_number": 10,
+          "final_outcome": "Pass",
+          "avg_clicks": "107.33",
+          "student_count": 679
+        },
+        {
+          "week_number": 11,
+          "final_outcome": "Pass",
+          "avg_clicks": "27.85",
+          "student_count": 433
+        },
+        {
+          "week_number": 12,
+          "final_outcome": "Pass",
+          "avg_clicks": "24.53",
+          "student_count": 285
+        },
+        {
+          "week_number": 13,
+          "final_outcome": "Pass",
+          "avg_clicks": "28.93",
+          "student_count": 384
+        },
+        {
+          "week_number": 14,
+          "final_outcome": "Pass",
+          "avg_clicks": "35.32",
+          "student_count": 547
+        },
+        {
+          "week_number": 15,
+          "final_outcome": "Pass",
+          "avg_clicks": "43.56",
+          "student_count": 577
+        },
+        {
+          "week_number": 16,
+          "final_outcome": "Pass",
+          "avg_clicks": "59.72",
+          "student_count": 658
+        },
+        {
+          "week_number": 17,
+          "final_outcome": "Pass",
+          "avg_clicks": "48.89",
+          "student_count": 550
+        },
+        {
+          "week_number": 18,
+          "final_outcome": "Pass",
+          "avg_clicks": "45.63",
+          "student_count": 527
+        },
+        {
+          "week_number": 19,
+          "final_outcome": "Pass",
+          "avg_clicks": "47.98",
+          "student_count": 520
+        },
+        {
+          "week_number": 20,
+          "final_outcome": "Pass",
+          "avg_clicks": "67.31",
+          "student_count": 572
+        },
+        {
+          "week_number": 21,
+          "final_outcome": "Pass",
+          "avg_clicks": "127.97",
+          "student_count": 676
+        },
+        {
+          "week_number": 22,
+          "final_outcome": "Pass",
+          "avg_clicks": "38.66",
+          "student_count": 603
+        },
+        {
+          "week_number": 23,
+          "final_outcome": "Pass",
+          "avg_clicks": "48.41",
+          "student_count": 645
+        },
+        {
+          "week_number": 24,
+          "final_outcome": "Pass",
+          "avg_clicks": "33.22",
+          "student_count": 561
+        },
+        {
+          "week_number": 25,
+          "final_outcome": "Pass",
+          "avg_clicks": "30.42",
+          "student_count": 516
+        },
+        {
+          "week_number": 26,
+          "final_outcome": "Pass",
+          "avg_clicks": "30.82",
+          "student_count": 479
+        },
+        {
+          "week_number": 27,
+          "final_outcome": "Pass",
+          "avg_clicks": "42.66",
+          "student_count": 437
+        },
+        {
+          "week_number": 28,
+          "final_outcome": "Pass",
+          "avg_clicks": "46.78",
+          "student_count": 469
+        },
+        {
+          "week_number": 29,
+          "final_outcome": "Pass",
+          "avg_clicks": "44.88",
+          "student_count": 566
+        },
+        {
+          "week_number": 30,
+          "final_outcome": "Pass",
+          "avg_clicks": "69.17",
+          "student_count": 643
+        },
+        {
+          "week_number": 31,
+          "final_outcome": "Pass",
+          "avg_clicks": "127.69",
+          "student_count": 645
+        },
+        {
+          "week_number": 32,
+          "final_outcome": "Pass",
+          "avg_clicks": "61.25",
+          "student_count": 528
+        },
+        {
+          "week_number": 33,
+          "final_outcome": "Pass",
+          "avg_clicks": "91.51",
+          "student_count": 474
+        },
+        {
+          "week_number": 34,
+          "final_outcome": "Pass",
+          "avg_clicks": "117.82",
+          "student_count": 497
+        },
+        {
+          "week_number": 35,
+          "final_outcome": "Pass",
+          "avg_clicks": "114.58",
+          "student_count": 647
+        },
+        {
+          "week_number": 36,
+          "final_outcome": "Pass",
+          "avg_clicks": "19.87",
+          "student_count": 327
+        },
+        {
+          "week_number": 37,
+          "final_outcome": "Pass",
+          "avg_clicks": "8.67",
+          "student_count": 300
+        },
+        {
+          "week_number": 38,
+          "final_outcome": "Pass",
+          "avg_clicks": "9.94",
+          "student_count": 254
+        },
+        {
+          "week_number": 39,
+          "final_outcome": "Pass",
+          "avg_clicks": "6.9",
+          "student_count": 174
+        },
+        {
+          "week_number": -2,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "22.63",
+          "student_count": 441
+        },
+        {
+          "week_number": -1,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "24.84",
+          "student_count": 467
+        },
+        {
+          "week_number": 0,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "26.92",
+          "student_count": 519
+        },
+        {
+          "week_number": 1,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "53.08",
+          "student_count": 614
+        },
+        {
+          "week_number": 2,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "66.13",
+          "student_count": 603
+        },
+        {
+          "week_number": 3,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "106.91",
+          "student_count": 656
+        },
+        {
+          "week_number": 4,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "35.7",
+          "student_count": 491
+        },
+        {
+          "week_number": 5,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "41.37",
+          "student_count": 509
+        },
+        {
+          "week_number": 6,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "24.41",
+          "student_count": 377
+        },
+        {
+          "week_number": 7,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "22.29",
+          "student_count": 261
+        },
+        {
+          "week_number": 8,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "30.15",
+          "student_count": 265
+        },
+        {
+          "week_number": 9,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "35.42",
+          "student_count": 250
+        },
+        {
+          "week_number": 10,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "83.72",
+          "student_count": 312
+        },
+        {
+          "week_number": 11,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "15.38",
+          "student_count": 152
+        },
+        {
+          "week_number": 12,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "11.58",
+          "student_count": 90
+        },
+        {
+          "week_number": 13,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "14.52",
+          "student_count": 114
+        },
+        {
+          "week_number": 14,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "15.64",
+          "student_count": 171
+        },
+        {
+          "week_number": 15,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "21.14",
+          "student_count": 177
+        },
+        {
+          "week_number": 16,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "30.92",
+          "student_count": 181
+        },
+        {
+          "week_number": 17,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "27.64",
+          "student_count": 117
+        },
+        {
+          "week_number": 18,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "22.41",
+          "student_count": 106
+        },
+        {
+          "week_number": 19,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "34.12",
+          "student_count": 84
+        },
+        {
+          "week_number": 20,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "28.59",
+          "student_count": 103
+        },
+        {
+          "week_number": 21,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "100.69",
+          "student_count": 130
+        },
+        {
+          "week_number": 22,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "26.55",
+          "student_count": 77
+        },
+        {
+          "week_number": 23,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "33.71",
+          "student_count": 83
+        },
+        {
+          "week_number": 24,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "16.72",
+          "student_count": 53
+        },
+        {
+          "week_number": 25,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "10.92",
+          "student_count": 38
+        },
+        {
+          "week_number": 26,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "19.27",
+          "student_count": 26
+        },
+        {
+          "week_number": 27,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "33.38",
+          "student_count": 16
+        },
+        {
+          "week_number": 28,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "26.68",
+          "student_count": 19
+        },
+        {
+          "week_number": 29,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "24.17",
+          "student_count": 18
+        },
+        {
+          "week_number": 30,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "67.76",
+          "student_count": 17
+        },
+        {
+          "week_number": 31,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "116.63",
+          "student_count": 16
+        },
+        {
+          "week_number": 32,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "4.57",
+          "student_count": 7
+        },
+        {
+          "week_number": 33,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "17.2",
+          "student_count": 5
+        },
+        {
+          "week_number": 34,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "9.43",
+          "student_count": 14
+        },
+        {
+          "week_number": 35,
+          "final_outcome": "Withdrawn",
+          "avg_clicks": "323.75",
+          "student_count": 4
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "A-G14",
+      "isMultiQuery": false,
+      "rowCount": 164,
+      "executionTimeMs": 6510,
+      "queryHash": "bb2ecb62",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "withdrawal_signal_trend"
+      ],
+      "dataQuality": {
+        "status": "executable",
+        "confidence": "HIGH",
+        "confidence_reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+        "warnings": []
+      }
+    }
+  }
+}

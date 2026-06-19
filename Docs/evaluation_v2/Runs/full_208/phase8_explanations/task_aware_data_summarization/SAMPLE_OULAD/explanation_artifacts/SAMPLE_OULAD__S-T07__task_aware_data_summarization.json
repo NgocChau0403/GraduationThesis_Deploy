@@ -1,0 +1,320 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T07:30:32.122Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__S-T07__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__S-T07",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": "SAMPLE_OULAD_STU_100788",
+    "role": "student",
+    "task_id": "S-T07",
+    "task_name": "Absence / inactivity impact",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T07.json",
+    "full_query_artifact_sha256": "8a9b790ebabcf6df78c0ad0b904e88b3dff30f500b488e34a43e484e1b0036b7"
+  },
+  "request_payload": {
+    "task_id": "S-T07",
+    "execution_id": "exec_1781847912280_3609b4b3",
+    "task_name": "Absence / inactivity impact",
+    "analysis_type": "correlation",
+    "explanation_strategy": "correlation",
+    "explanation_type": "observation, interpretation, caution, recommendation",
+    "ai_prompt_hint": "Use absence_rate [FE] to show proportion of missed sessions. Correlate with avg_score [FE].",
+    "actionable_question": "How much are my absences hurting my grades?",
+    "target_audience": [
+      "student"
+    ],
+    "visualization_config": {
+      "x_field": "assessment_order",
+      "y_field": "score_normalized",
+      "series_field": null,
+      "color_field": null,
+      "orientation": "vertical",
+      "variant": "categorical",
+      "x_label": "Assessment Order",
+      "y_label": "Normalized Score (0-100)",
+      "semantic_roles": {
+        "x": "time",
+        "y": "performance_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "per_assessment",
+      "aggregation_level": "student"
+    },
+    "datasets": {
+      "absence_data": [
+        {
+          "absences": null,
+          "absence_rate": null
+        }
+      ],
+      "score_series": [
+        {
+          "assessment_order": 1,
+          "week_of_class": 3,
+          "score_normalized": 100,
+          "pass_flag": true
+        },
+        {
+          "assessment_order": 3,
+          "week_of_class": 10,
+          "score_normalized": 87,
+          "pass_flag": true
+        },
+        {
+          "assessment_order": 5,
+          "week_of_class": 21,
+          "score_normalized": 90,
+          "pass_flag": true
+        },
+        {
+          "assessment_order": 8,
+          "week_of_class": 31,
+          "score_normalized": 83,
+          "pass_flag": true
+        },
+        {
+          "assessment_order": 9,
+          "week_of_class": null,
+          "score_normalized": 96,
+          "pass_flag": true
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": {
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "dataset_id": "SAMPLE_OULAD"
+    },
+    "query_labels": [
+      "absence_data",
+      "score_series"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {
+        "score_normalized": "higher_is_better",
+        "week_of_class": "time_index",
+        "absences": "higher_is_worse",
+        "absence_rate": "higher_is_worse"
+      },
+      "metric_units": {
+        "score_normalized": "score_on_runtime_scale",
+        "week_of_class": "course_week",
+        "absences": "absence_count",
+        "absence_rate": "ratio_0_1_relative_to_class_max"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [
+        "week_of_class"
+      ],
+      "flag_columns": [
+        "pass_flag"
+      ],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {
+        "absence_data": "context_snapshot",
+        "score_series": "primary_series"
+      },
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "trend_series",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": "assessment_order",
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "score_normalized",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": 6,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": 30,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 6709,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 956,
+      "completion_tokens": 337,
+      "total_tokens": 1293
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "S-T07",
+    "execution_id": "exec_1781847912280_3609b4b3",
+    "explanation": {
+      "summary": "The analysis of Assessment Order and Normalized Score shows a moderate negative correlation. As the assessment order increases, the normalized scores tend to decrease, indicating that later assessments may be more challenging or that students are struggling to maintain their performance over time.",
+      "insights": [
+        {
+          "title": "Score Trends Over Assessments",
+          "description": "The normalized scores show a downward trend as the assessment order increases, with the highest score of 100 at assessment order 1 and a lower score of 83 at assessment order 8. This suggests that students may find later assessments more difficult or may be experiencing fatigue.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "score_normalized",
+              "value": 100,
+              "comparison": "peak",
+              "delta": -17,
+              "context": "from assessment order 1 to 8"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Students may need additional support or resources as they progress through assessments to maintain their performance."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement regular check-ins or support sessions for students before major assessments.",
+          "rationale": "This can help address any difficulties students may face as they progress through the course and improve their overall scores."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "MEDIUM",
+      "reason": "The dataset is limited, with only a few assessments available for analysis.",
+      "based_on": [
+        "single_student"
+      ]
+    },
+    "explanation_strategy": "correlation",
+    "explanation_type": "correlation",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "full_rows_due_to_small_result",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 6,
+    "included_row_count": 6,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "absence_data",
+        "row_count": 1,
+        "included_row_count": 1
+      },
+      {
+        "dataset_name": "score_series",
+        "row_count": 5,
+        "included_row_count": 5
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 6702,
+      "token_usage": {
+        "prompt_tokens": 956,
+        "completion_tokens": 337,
+        "total_tokens": 1293
+      },
+      "strategy": "correlation",
+      "granularity": "per_assessment",
+      "cost_usd": 0.000346
+    }
+  },
+  "raw_text": "Summary: The analysis of Assessment Order and Normalized Score shows a moderate negative correlation. As the assessment order increases, the normalized scores tend to decrease, indicating that later assessments may be more challenging or that students are struggling to maintain their performance over time.\n\nInsights: Score Trends Over Assessments: The normalized scores show a downward trend as the assessment order increases, with the highest score of 100 at assessment order 1 and a lower score of 83 at assessment order 8. This suggests that students may find later assessments more difficult or may be experiencing fatigue.\n\nEducational implications: Students may need additional support or resources as they progress through assessments to maintain their performance.\n\nRecommendations: high - Implement regular check-ins or support sessions for students before major assessments. - This can help address any difficulties students may face as they progress through the course and improve their overall scores."
+}

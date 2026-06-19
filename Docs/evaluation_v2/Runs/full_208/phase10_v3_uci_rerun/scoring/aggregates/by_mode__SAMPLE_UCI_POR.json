@@ -1,0 +1,35 @@
+{
+  "baseline_first_20_rows": {
+    "records": 52,
+    "scored_records": 52,
+    "invalid_records": 0,
+    "average_raw_weighted_score": 7.6,
+    "average_final_score_after_caps": 7.53,
+    "verdict_counts": {
+      "good": 48,
+      "acceptable": 3,
+      "poor": 1
+    },
+    "highest_error_severity_counts": {
+      "none": 48,
+      "major": 3,
+      "critical": 1
+    }
+  },
+  "task_aware_data_summarization": {
+    "records": 52,
+    "scored_records": 52,
+    "invalid_records": 0,
+    "average_raw_weighted_score": 7.7,
+    "average_final_score_after_caps": 7.7,
+    "verdict_counts": {
+      "good": 50,
+      "acceptable": 2
+    },
+    "highest_error_severity_counts": {
+      "none": 49,
+      "major": 2,
+      "minor": 1
+    }
+  }
+}

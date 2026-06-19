@@ -1,0 +1,107 @@
+{
+  "schema_version": "pairwise_judge_v3_dry_run_schema_v1",
+  "pairwise_record_id": "SAMPLE_UCI_POR__A-S08__pairwise_BA",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-S08",
+  "order_variant": "BA",
+  "scoring_status": "judged",
+  "winner": "B",
+  "winner_confidence": "low",
+  "difference_magnitude": "small",
+  "dimension_winners": {
+    "faithfulness": "B",
+    "numerical_correctness": "tie",
+    "completeness": "B",
+    "task_relevance": "B",
+    "actionability": "tie",
+    "clarity": "tie",
+    "safety_fairness": "A"
+  },
+  "metric_comparison": {
+    "faithfulness": {
+      "winner": "B",
+      "reason": "Candidate B references returned FE signals such as low average score, engagement score 0, medium risk label, and support score; candidate A incorrectly says no supported actions were generated.",
+      "evidence_refs": [
+        "prompt_packet:A-S08:task_context",
+        "prompt_packet:A-S08:candidate_explanations"
+      ]
+    },
+    "numerical_correctness": {
+      "winner": "tie",
+      "reason": "Candidate B gives engagement score 0 and support score 0.25, while neither candidate supplies a full numeric action plan.",
+      "evidence_refs": [
+        "prompt_packet:A-S08:task_context",
+        "prompt_packet:A-S08:candidate_explanations"
+      ]
+    },
+    "completeness": {
+      "winner": "B",
+      "reason": "Candidate B at least synthesizes several risk signals; candidate A provides no signal synthesis.",
+      "evidence_refs": [
+        "prompt_packet:A-S08:task_context",
+        "prompt_packet:A-S08:candidate_explanations"
+      ]
+    },
+    "task_relevance": {
+      "winner": "B",
+      "reason": "Candidate B is closer to the intervention-recommendation task.",
+      "evidence_refs": [
+        "prompt_packet:A-S08:task_context",
+        "prompt_packet:A-S08:candidate_explanations"
+      ]
+    },
+    "actionability": {
+      "winner": "tie",
+      "reason": "Neither candidate satisfies the full 3-5 admin actions with actor and deadline requirement.",
+      "evidence_refs": [
+        "prompt_packet:A-S08:task_context",
+        "prompt_packet:A-S08:candidate_explanations"
+      ]
+    },
+    "clarity": {
+      "winner": "tie",
+      "reason": "Both are concise and understandable.",
+      "evidence_refs": [
+        "prompt_packet:A-S08:task_context",
+        "prompt_packet:A-S08:candidate_explanations"
+      ]
+    },
+    "safety_fairness": {
+      "winner": "A",
+      "reason": "Candidate A is safer because candidate B states immediate intervention without the requested actor/deadline support.",
+      "evidence_refs": [
+        "prompt_packet:A-S08:task_context",
+        "prompt_packet:A-S08:candidate_explanations"
+      ]
+    }
+  },
+  "coverage_comparison": {
+    "winner": "B",
+    "reason": "Candidate B uses more of the returned FE signal evidence."
+  },
+  "specificity_comparison": {
+    "winner": "B",
+    "reason": "Candidate B provides concrete signal names and values, unlike candidate A."
+  },
+  "decisive_evidence": [
+    {
+      "evidence_ref": "candidate_A:A-S08:avg_score_engagement_score_support_score",
+      "supports_candidate": "B",
+      "reason": "Candidate B is the only one that engages with the returned FE signals."
+    }
+  ],
+  "tie_justification": null,
+  "absolute_rerun_flags": [
+    {
+      "candidate": "both",
+      "suspected_error_type": "missing_actor_deadline_action_plan",
+      "severity_hint": "major",
+      "reason": "Neither candidate provides 3-5 ranked admin actions with responsible actor and timing.",
+      "evidence_refs": [
+        "requirements:A-S08:3_to_5_actions_actor_by_when"
+      ]
+    }
+  ],
+  "requires_absolute_rerun": true,
+  "reviewer_notes": "Low-confidence winner B: it is more evidence-aware, but both are materially incomplete for the action-plan contract."
+}

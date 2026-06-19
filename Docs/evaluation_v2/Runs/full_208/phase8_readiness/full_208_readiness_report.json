@@ -1,0 +1,237 @@
+{
+  "report_version": "llm_judge_v2_full_208_phase_f0_readiness_v1",
+  "generated_at": "2026-06-19T05:19:48.135Z",
+  "status": "PASS",
+  "inputs": {
+    "contractManifest": "Docs/evaluation_v2/Runs/pilot_contract_manifest_v1.json",
+    "taskRequirements": "Docs/evaluation_v2/Rubric/task_evaluation_requirements.json",
+    "judgeInputSchema": "Docs/evaluation_v2/Input_AI/judge_input_schema.json",
+    "judgePrompt": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md",
+    "rowCountRecords": "Docs/evaluation_v2/Handle20rows/outputs/row_count_records.jsonl",
+    "rowCountDistribution": "Docs/evaluation_v2/Handle20rows/outputs/row_count_distribution.json",
+    "pilotCaseManifest": "Docs/evaluation_v2/Runs/pilot_case_run_manifest_v1.json",
+    "invocationReport": "Docs/evaluation_v2/Runs/phase6_judge_invocation/phase6_pilot_judge_invocation_report.json",
+    "scoringSmokeReport": "Docs/evaluation_v2/Runs/phase6_scoring_smoke/phase6_scoring_smoke_report.json"
+  },
+  "checks": [
+    {
+      "check_id": "contract_manifest_hashes",
+      "status": "PASS",
+      "evidence": {
+        "summary": "17/17 frozen artifact hashes match",
+        "artifacts": [
+          {
+            "artifact_id": "judge_prompt_v2",
+            "path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md",
+            "expected": "fe8096972e6c3c78192a36e98774fa584b24d08670835171a1d818895e27125e",
+            "actual": "fe8096972e6c3c78192a36e98774fa584b24d08670835171a1d818895e27125e",
+            "matches": true
+          },
+          {
+            "artifact_id": "judge_rubric_1_to_10",
+            "path": "Docs/evaluation_v2/Rubric/JUDGE_RUBRIC_1_TO_10.md",
+            "expected": "5b759df2cb1cbf0c53514d51a3b3ccbd8b4755d27f09fc620745c60295ef380d",
+            "actual": "5b759df2cb1cbf0c53514d51a3b3ccbd8b4755d27f09fc620745c60295ef380d",
+            "matches": true
+          },
+          {
+            "artifact_id": "metric_anchor_spec",
+            "path": "Docs/evaluation_v2/Rubric/LLM_JUDGE_V2_METRIC_ANCHOR_SPEC.md",
+            "expected": "7dcd44fbac3a62ff4710cb2217aecc266cb1f8b9cd3c268f7f22a192ea39f4d7",
+            "actual": "7dcd44fbac3a62ff4710cb2217aecc266cb1f8b9cd3c268f7f22a192ea39f4d7",
+            "matches": true
+          },
+          {
+            "artifact_id": "task_evaluation_requirements",
+            "path": "Docs/evaluation_v2/Rubric/task_evaluation_requirements.json",
+            "expected": "5e2ae65297a28758b36a081df4df785a28f881870cd1e2eb4e2a5e209480e36a",
+            "actual": "5e2ae65297a28758b36a081df4df785a28f881870cd1e2eb4e2a5e209480e36a",
+            "matches": true
+          },
+          {
+            "artifact_id": "judge_input_schema_json",
+            "path": "Docs/evaluation_v2/Input_AI/judge_input_schema.json",
+            "expected": "463e909b3bfe303741e513161776d484b9194714ea212b4f7ff953d260ca72d5",
+            "actual": "463e909b3bfe303741e513161776d484b9194714ea212b4f7ff953d260ca72d5",
+            "matches": true
+          },
+          {
+            "artifact_id": "judge_input_schema_docs",
+            "path": "Docs/evaluation_v2/Input_AI/judge_input_schema.md",
+            "expected": "9b1884a8636dbf05b9e320ba5dd950c311f4fc29bf89e2eb4312310c6d234404",
+            "actual": "9b1884a8636dbf05b9e320ba5dd950c311f4fc29bf89e2eb4312310c6d234404",
+            "matches": true
+          },
+          {
+            "artifact_id": "judge_input_example",
+            "path": "Docs/evaluation_v2/Input_AI/judge_input_example.json",
+            "expected": "de7ab6b1d8f0458bf56295e886ba6410a1af645006df3497336e889c841a8aeb",
+            "actual": "de7ab6b1d8f0458bf56295e886ba6410a1af645006df3497336e889c841a8aeb",
+            "matches": true
+          },
+          {
+            "artifact_id": "judge_response_schema",
+            "path": "Docs/evaluation_v2/LLM_JUDGE_V2_JUDGE_RESPONSE_SCHEMA_V1.json",
+            "expected": "b41dcfec162c965b2de222d82294a1cc1dcce367a6d529f99170572e4120d57c",
+            "actual": "b41dcfec162c965b2de222d82294a1cc1dcce367a6d529f99170572e4120d57c",
+            "matches": true
+          },
+          {
+            "artifact_id": "execution_attempt_wrapper_schema",
+            "path": "Docs/evaluation_v2/LLM_JUDGE_V2_EXECUTION_ATTEMPT_WRAPPER_SCHEMA_V1.json",
+            "expected": "ecc3bc8115a81a859d2fd346928b49c2eca46030f0c0317d2cfad1f247756ab7",
+            "actual": "ecc3bc8115a81a859d2fd346928b49c2eca46030f0c0317d2cfad1f247756ab7",
+            "matches": true
+          },
+          {
+            "artifact_id": "record_execution_status_schema",
+            "path": "Docs/evaluation_v2/LLM_JUDGE_V2_RECORD_EXECUTION_STATUS_SCHEMA_V1.json",
+            "expected": "fbb1f41922b16ef7121518c73b9b724454e3e82b86818b3588913284ef9af552",
+            "actual": "fbb1f41922b16ef7121518c73b9b724454e3e82b86818b3588913284ef9af552",
+            "matches": true
+          },
+          {
+            "artifact_id": "final_scoring_record_schema",
+            "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D3_OUTPUT_SCHEMA_V1.json",
+            "expected": "3be08fba9693f4a663fc10e2a20d3a82efb843e53087706b4f1a8ba4764847c1",
+            "actual": "3be08fba9693f4a663fc10e2a20d3a82efb843e53087706b4f1a8ba4764847c1",
+            "matches": true
+          },
+          {
+            "artifact_id": "pre_phase5_decisions",
+            "path": "Docs/evaluation_v2/LLM_JUDGE_V2_PRE_PHASE5_DECISIONS.md",
+            "expected": "496e9ba512c48c4bb2481242dd9db2074b7d8d8d0ece152c149fa9ed3bc25a6f",
+            "actual": "496e9ba512c48c4bb2481242dd9db2074b7d8d8d0ece152c149fa9ed3bc25a6f",
+            "matches": true
+          },
+          {
+            "artifact_id": "d1_dataset_separated_evaluation_decision",
+            "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D1_DATASET_SEPARATED_EVALUATION_DECISION.md",
+            "expected": "8e344839c364ba9264f94ba31c3c7dac7a82463bb5df216d3e0e31927533c074",
+            "actual": "8e344839c364ba9264f94ba31c3c7dac7a82463bb5df216d3e0e31927533c074",
+            "matches": true
+          },
+          {
+            "artifact_id": "d2_full_evidence_access_decision",
+            "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D2_FULL_EVIDENCE_ACCESS_DECISION.md",
+            "expected": "88e29b41bd9b82c62945cdc924713c2c78249fefa8cd5ff95c1ea58680c5a9d1",
+            "actual": "88e29b41bd9b82c62945cdc924713c2c78249fefa8cd5ff95c1ea58680c5a9d1",
+            "matches": true
+          },
+          {
+            "artifact_id": "d4_reproducibility_execution_decision",
+            "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D4_REPRODUCIBILITY_EXECUTION_DECISIONS.md",
+            "expected": "e5e1c243708bd40a34a02076f30e2d992aff1e53ccc9202aa6d6913b468b4256",
+            "actual": "e5e1c243708bd40a34a02076f30e2d992aff1e53ccc9202aa6d6913b468b4256",
+            "matches": true
+          },
+          {
+            "artifact_id": "task_registry_source",
+            "path": "Backend/src/config/taskRegistry.json",
+            "expected": "dbe92c76bb84c63b6a07cab3339f999ab231120c191d105d93cf8fab34958fca",
+            "actual": "dbe92c76bb84c63b6a07cab3339f999ab231120c191d105d93cf8fab34958fca",
+            "matches": true
+          },
+          {
+            "artifact_id": "task_requirements_materializer",
+            "path": "Docs/evaluation_v2/Rubric/scripts/materializeTaskEvaluationRequirements.mjs",
+            "expected": "c5c65d97a984b73a73c0c12abb4cc21d20515b3000e6507a9bbfe409b135abb9",
+            "actual": "c5c65d97a984b73a73c0c12abb4cc21d20515b3000e6507a9bbfe409b135abb9",
+            "matches": true
+          }
+        ]
+      }
+    },
+    {
+      "check_id": "task_requirements_52_approved",
+      "status": "PASS",
+      "evidence": {
+        "summary": "52/52 tasks have review_status=approved_for_pilot",
+        "declared_task_count": 52,
+        "materialized_task_count": 52,
+        "unique_task_count": 52
+      }
+    },
+    {
+      "check_id": "schema_and_prompt_present",
+      "status": "PASS",
+      "evidence": {
+        "summary": "judge input schema parses with 13 top-level required fields; prompt is non-empty and hash-pinned",
+        "schema_id": "judge_input_schema_v1",
+        "prompt_sha256": "fe8096972e6c3c78192a36e98774fa584b24d08670835171a1d818895e27125e"
+      }
+    },
+    {
+      "check_id": "row_count_distribution_208",
+      "status": "PASS",
+      "evidence": {
+        "summary": "expected_records=208, actual_records=208, totals.total_records=208"
+      }
+    },
+    {
+      "check_id": "full_scope_52x2x2",
+      "status": "PASS",
+      "evidence": {
+        "summary": "UCI=52 tasks/104 records; OULAD=52 tasks/104 records; total=208 unique mode-level records",
+        "unique_record_keys": 208,
+        "unknown_datasets": [],
+        "unknown_modes": []
+      }
+    },
+    {
+      "check_id": "smoke_not_full_calibration_pilot",
+      "status": "PASS",
+      "evidence": {
+        "summary": "2/24 records scored; smoke pass only; full pilot/calibration incomplete",
+        "scoring_report_status": "SMOKE_PASS",
+        "invocation_report_status": "WAITING_FOR_RAW_OUTPUTS"
+      }
+    }
+  ],
+  "full_scope": {
+    "record_grain": "dataset_id + task_id + mode",
+    "by_dataset": [
+      {
+        "dataset_id": "SAMPLE_UCI_POR",
+        "unique_tasks": 52,
+        "mode_level_records": 104,
+        "by_mode": {
+          "baseline_first_20_rows": 52,
+          "task_aware_data_summarization": 52
+        }
+      },
+      {
+        "dataset_id": "SAMPLE_OULAD",
+        "unique_tasks": 52,
+        "mode_level_records": 104,
+        "by_mode": {
+          "baseline_first_20_rows": 52,
+          "task_aware_data_summarization": 52
+        }
+      }
+    ],
+    "by_mode": {
+      "baseline_first_20_rows": 104,
+      "task_aware_data_summarization": 104
+    },
+    "total_unique_dataset_tasks": 104,
+    "total_mode_level_records": 208
+  },
+  "smoke_classification": {
+    "classification": "scoring_smoke_only_not_full_calibration_pilot",
+    "scoring_smoke_status": "SMOKE_PASS",
+    "expected_pilot_records": 24,
+    "valid_scoring_records": 2,
+    "full_pilot_scoring_passed": false,
+    "actual_pilot_judge_invocation_completed": false,
+    "full_calibration_pilot_completed": false,
+    "official_full_evaluation_allowed": false,
+    "interpretation": "The existing two-record scoring result is pipeline smoke evidence only. It is not a completed 24-record pilot and does not determine calibration thresholds."
+  },
+  "gate_decision": {
+    "phase_f1_allowed": true,
+    "full_judge_invocation_allowed": false,
+    "official_full_evaluation_allowed": false,
+    "reason": "Phase F0 readiness passed; proceed only to Phase F1 manifest construction. Later execution gates remain separate."
+  }
+}

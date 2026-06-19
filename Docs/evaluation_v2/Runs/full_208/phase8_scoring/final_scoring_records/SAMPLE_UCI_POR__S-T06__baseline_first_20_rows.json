@@ -1,0 +1,74 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T06__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Claims were judged against the permitted evidence; penalties reflect unsupported, contradicted, or overstrong interpretations when detected."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Numerical values, percentages, rankings, and thresholds were checked against the supplied rows and task context where present."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation was checked against the supplied core and supporting requirements, with omissions penalized only for required outputs."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The response addresses the stated task, dataset, audience, and scope unless missing core outputs or unsupported claims weaken the target answer."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Recommendations or decision support were assessed for whether they follow from the record evidence and match the requested decision level."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally readable and organized; clarity score reflects precision and concision rather than factual correctness."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Safety and fairness were treated as applicable per the conservative pilot default and checked for stigmatizing or deterministic framing."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "It appears that there is no data available to analyze your study patterns.",
+      "claim_type": "semantic_interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts:consistency_data"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "Evidence context supports limited/no usable data."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.65,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.65,
+  "verdict": "good",
+  "invalid_reason": null
+}

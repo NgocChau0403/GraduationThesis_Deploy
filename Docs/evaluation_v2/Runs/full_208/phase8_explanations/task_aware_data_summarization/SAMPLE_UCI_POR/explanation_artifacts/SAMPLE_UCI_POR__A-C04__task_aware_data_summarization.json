@@ -1,0 +1,407 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T07:17:22.681Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-C04__task_aware_data_summarization",
+    "case_id": "SAMPLE_UCI_POR__A-C04",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-C04",
+    "task_name": "Compare lifestyle context",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C04.json",
+    "full_query_artifact_sha256": "36bf7dacdf6a84e23733c451474124f442bb062556d02787902e76ebc49a2bc2"
+  },
+  "request_payload": {
+    "task_id": "A-C04",
+    "execution_id": "exec_1781847232040_9237c26d",
+    "task_name": "Compare lifestyle context",
+    "analysis_type": "comparison",
+    "explanation_strategy": "comparison",
+    "explanation_type": "observation, interpretation, caution",
+    "ai_prompt_hint": "Compare lifestyle_dimension rows for the two students. Highlight the largest dimension gaps. Use composite_lifestyle_risk_score and social_balance_score only as supporting context. Frame lifestyle differences as context only, not causal judgement.",
+    "actionable_question": "Which lifestyle context dimensions differ most between these two students?",
+    "target_audience": [
+      "instructor",
+      "academic_advisor"
+    ],
+    "visualization_config": {
+      "x_field": "student_id",
+      "y_field": "lifestyle_risk_score",
+      "series_field": "lifestyle_dimension",
+      "color_field": "student_id",
+      "orientation": "vertical",
+      "variant": "grouped",
+      "x_label": "Student",
+      "y_label": "Lifestyle Score (1–5)",
+      "semantic_roles": {
+        "x": "student",
+        "y": "behavioral_metric",
+        "series": "lifestyle_dimension"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "comparison"
+    },
+    "datasets": {
+      "lifestyle_comparison": [
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "lifestyle_dimension": "weekday_alcohol",
+          "lifestyle_risk_score": 1,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 4,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.375,
+          "social_balance_score": 0.025000000000000022
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "lifestyle_dimension": "weekend_alcohol",
+          "lifestyle_risk_score": 1,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 4,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.375,
+          "social_balance_score": 0.025000000000000022
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "lifestyle_dimension": "go_out_frequency",
+          "lifestyle_risk_score": 4,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 4,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.375,
+          "social_balance_score": 0.025000000000000022
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "lifestyle_dimension": "health_status",
+          "lifestyle_risk_score": 3,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 4,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.375,
+          "social_balance_score": 0.025000000000000022
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "lifestyle_dimension": "free_time",
+          "lifestyle_risk_score": 3,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 4,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.375,
+          "social_balance_score": 0.025000000000000022
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "lifestyle_dimension": "weekday_alcohol",
+          "lifestyle_risk_score": 1,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 3,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.3,
+          "social_balance_score": 0.1
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "lifestyle_dimension": "weekend_alcohol",
+          "lifestyle_risk_score": 1,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 3,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.3,
+          "social_balance_score": 0.1
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "lifestyle_dimension": "go_out_frequency",
+          "lifestyle_risk_score": 3,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 3,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.3,
+          "social_balance_score": 0.1
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "lifestyle_dimension": "health_status",
+          "lifestyle_risk_score": 3,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 3,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.3,
+          "social_balance_score": 0.1
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "lifestyle_dimension": "free_time",
+          "lifestyle_risk_score": 3,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 3,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.3,
+          "social_balance_score": 0.1
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "lifestyle_comparison"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {
+        "weekday_alcohol": "context_only",
+        "weekend_alcohol": "context_only",
+        "go_out_frequency": "context_only",
+        "health_status": "context_only",
+        "free_time": "context_only"
+      },
+      "metric_units": {
+        "weekday_alcohol": "ordinal_1_5",
+        "weekend_alcohol": "ordinal_1_5",
+        "go_out_frequency": "ordinal_1_5",
+        "health_status": "ordinal_1_5",
+        "free_time": "ordinal_1_5"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": true,
+      "require_metric_units": true,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": true,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [
+        "composite_lifestyle_risk_score",
+        "social_balance_score"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "multi_metric_comparison",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": "student_id",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": "lifestyle_dimension",
+      "metric_value_column": "lifestyle_risk_score",
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": "descriptive_non_causal",
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 6840,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1870,
+      "completion_tokens": 442,
+      "total_tokens": 2312
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-C04",
+    "execution_id": "exec_1781847232040_9237c26d",
+    "explanation": {
+      "summary": "The comparison of lifestyle dimensions between the two students reveals notable differences in their go-out frequency and composite lifestyle risk scores. Student 1 exhibits a higher go-out frequency, which correlates with a higher composite lifestyle risk score compared to Student 2.",
+      "insights": [
+        {
+          "title": "Go-Out Frequency Difference",
+          "description": "Student 1 has a higher go-out frequency than Student 2, indicating a more active social lifestyle.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "go_out_freq",
+              "value": 4,
+              "comparison": "baseline",
+              "delta": 1,
+              "context": "Student 1's go-out frequency is 4 compared to Student 2's 3."
+            }
+          ]
+        },
+        {
+          "title": "Composite Lifestyle Risk Score Comparison",
+          "description": "Student 1's composite lifestyle risk score is higher than that of Student 2, suggesting a greater overall lifestyle risk.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "composite_lifestyle_risk_score",
+              "value": 0.375,
+              "comparison": "baseline",
+              "delta": 0.075,
+              "context": "Student 1's score is 0.375 compared to Student 2's 0.3."
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Understanding the differences in lifestyle dimensions can help tailor interventions to support students' health and social engagement."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement targeted workshops on social balance and health management for students with higher lifestyle risk scores.",
+          "rationale": "These workshops can provide strategies for managing social activities while maintaining a healthy lifestyle."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data is complete and provides a clear comparison of lifestyle dimensions.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "comparison",
+    "explanation_type": "comparison",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "full_rows_due_to_small_result",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 10,
+    "included_row_count": 10,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "lifestyle_comparison",
+        "row_count": 10,
+        "included_row_count": 10
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 6834,
+      "token_usage": {
+        "prompt_tokens": 1870,
+        "completion_tokens": 442,
+        "total_tokens": 2312
+      },
+      "strategy": "comparison",
+      "granularity": "semester",
+      "cost_usd": 0.000546
+    }
+  },
+  "raw_text": "Summary: The comparison of lifestyle dimensions between the two students reveals notable differences in their go-out frequency and composite lifestyle risk scores. Student 1 exhibits a higher go-out frequency, which correlates with a higher composite lifestyle risk score compared to Student 2.\n\nInsights: Go-Out Frequency Difference: Student 1 has a higher go-out frequency than Student 2, indicating a more active social lifestyle. | Composite Lifestyle Risk Score Comparison: Student 1's composite lifestyle risk score is higher than that of Student 2, suggesting a greater overall lifestyle risk.\n\nEducational implications: Understanding the differences in lifestyle dimensions can help tailor interventions to support students' health and social engagement.\n\nRecommendations: high - Implement targeted workshops on social balance and health management for students with higher lifestyle risk scores. - These workshops can provide strategies for managing social activities while maintaining a healthy lifestyle."
+}

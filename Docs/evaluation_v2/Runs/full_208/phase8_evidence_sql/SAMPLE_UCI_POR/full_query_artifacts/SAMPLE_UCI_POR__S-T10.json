@@ -1,0 +1,126 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:34:04.340Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__S-T10",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": "SAMPLE_UCI_POR_STU_000001",
+  "role": "student",
+  "task_id": "S-T10",
+  "task_name": "Resource engagement breakdown",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "S-T10",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 27,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 0,
+    "row_count_observed": 0,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "resource_usage",
+        "row_count": 0,
+        "sample_fields": []
+      }
+    ],
+    "full_query_datasets_sha256": "c4e51ed11cb33506e5c793b3d8676ffc547ef7ec723b9d5f0a62c6814eb8f44e"
+  },
+  "execution_outcome": {
+    "status": "terminal_invalid_empty_result",
+    "reason": "No positive engagement activity found (0 engagement rows).",
+    "backend_data_quality_status": "insufficient_data",
+    "backend_confidence": "LOW",
+    "error_codes": [
+      "REQUIRED_CAPABILITY_MISSING",
+      "REQUIRED_CAPABILITY_MISSING",
+      "ENGAGEMENT_BELOW_MINIMUM"
+    ]
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847244313_70d770a1",
+    "taskId": "S-T10",
+    "datasets": {
+      "resource_usage": []
+    },
+    "meta": {
+      "taskId": "S-T10",
+      "isMultiQuery": false,
+      "rowCount": 0,
+      "executionTimeMs": 4,
+      "queryHash": "769d4c88",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "resource_usage"
+      ],
+      "dataQuality": {
+        "status": "insufficient_data",
+        "confidence": "LOW",
+        "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+        "warnings": [
+          {
+            "code": "REQUIRED_CAPABILITY_MISSING",
+            "severity": "error",
+            "message": "Required capability missing: engagement_tracking",
+            "context": {
+              "task_id": "S-T10",
+              "capability": "engagement_tracking",
+              "batch_id": "SAMPLE_UCI_POR"
+            }
+          },
+          {
+            "code": "REQUIRED_CAPABILITY_MISSING",
+            "severity": "error",
+            "message": "Required capability missing: resource_clickstream",
+            "context": {
+              "task_id": "S-T10",
+              "capability": "resource_clickstream",
+              "batch_id": "SAMPLE_UCI_POR"
+            }
+          },
+          {
+            "code": "LEGACY_DATASET_COMPAT_HINT",
+            "severity": "warning",
+            "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+            "context": {
+              "datasetCompatibility": "OULAD_only",
+              "sourceDataset": "UCI",
+              "mode": "legacy_hint_only"
+            }
+          },
+          {
+            "code": "ENGAGEMENT_BELOW_MINIMUM",
+            "severity": "error",
+            "message": "No positive engagement activity found (0 engagement rows).",
+            "context": {
+              "found": 0,
+              "required": 1,
+              "rowCount": 0
+            }
+          }
+        ]
+      }
+    }
+  }
+}

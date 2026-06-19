@@ -1,0 +1,221 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G15__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v2_pilot_phase6_4",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G15",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Intervention priority ranking",
+    "scope": "Many students",
+    "actionable_question": "Who are the top 10 students most in need of intervention right now?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "ranking",
+    "ai_prompt_hint": "Rank by at_risk_score [FE] descending. List triggered flags per student. Provide action per priority group.",
+    "query_labels": [
+      "intervention_priority_list"
+    ],
+    "explanation_strategy": "ranking"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement",
+      "student"
+    ],
+    "key_db_fields": [
+      "student_id",
+      "gender",
+      "age_group",
+      "region; at_risk_score [FE cross]",
+      "at_risk_label [FE cross]",
+      "avg_score [FE cross]",
+      "all 5 flags",
+      "final_outcome"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "intervention_priority_list"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis of the intervention priority list reveals that the top students in need of immediate intervention are those with the highest at-risk scores and multiple flags indicating low performance and engagement. Conversely, the bottom-ranked students, while also at risk, show slightly better average scores but still require attention due to their engagement and punctuality issues.\n\nInsights: High At-Risk Scores and Multiple Flags: The top-ranked students all have an at-risk score of 5, indicating a critical need for intervention. They also exhibit multiple flags for low scores, low engagement, and low punctuality, which collectively suggest a pattern of disengagement and potential withdrawal from their studies.\n\nEducational implications: Students with high at-risk scores and multiple flags require immediate and targeted interventions to prevent further decline in performance.\n\nRecommendations: high - Implement personalized support plans for each student identified in the top ranks. - Tailored interventions can address specific issues related to low engagement and performance, potentially reversing negative trends.",
+    "structured_payload": {
+      "task_id": "A-G15",
+      "execution_id": "exec_1781820439985_73d1c418",
+      "explanation": {
+        "summary": "The analysis of the intervention priority list reveals that the top students in need of immediate intervention are those with the highest at-risk scores and multiple flags indicating low performance and engagement. Conversely, the bottom-ranked students, while also at risk, show slightly better average scores but still require attention due to their engagement and punctuality issues.",
+        "insights": [
+          {
+            "title": "High At-Risk Scores and Multiple Flags",
+            "description": "The top-ranked students all have an at-risk score of 5, indicating a critical need for intervention. They also exhibit multiple flags for low scores, low engagement, and low punctuality, which collectively suggest a pattern of disengagement and potential withdrawal from their studies.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "at_risk_score",
+                "value": 5,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "All top-ranked students share this maximum at-risk score."
+              },
+              {
+                "metric": "flag_low_score",
+                "value": 1,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Indicates all top students have low average scores."
+              },
+              {
+                "metric": "flag_low_engagement",
+                "value": 1,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "All top students show low engagement."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Students with high at-risk scores and multiple flags require immediate and targeted interventions to prevent further decline in performance."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement personalized support plans for each student identified in the top ranks.",
+            "rationale": "Tailored interventions can address specific issues related to low engagement and performance, potentially reversing negative trends."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data is consistent and clearly indicates at-risk students based on defined metrics.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "ranking",
+      "explanation_type": "ranking",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 6045,
+        "token_usage": {
+          "prompt_tokens": 4042,
+          "completion_tokens": 456,
+          "total_tokens": 4498
+        },
+        "strategy": "ranking",
+        "granularity": "semester",
+        "cost_usd": 0.00088
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/phase6_explanations_baseline/explanation_artifacts/SAMPLE_OULAD__A-G15__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "cdd120f6cdcd9f4d9c01ccf497f1a85e6950521a164f5945395a5671def56ad8",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 4042,
+        "completion_tokens": 456,
+        "total_tokens": 4498
+      },
+      "latency_ms": 6052,
+      "attempts_used": null
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 50,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "intervention_priority_list",
+        "artifact_path": "Docs/evaluation_v2/Runs/phase6_evidence/full_query_artifacts/SAMPLE_OULAD__A-G15__baseline_first_20_rows.json",
+        "artifact_sha256": "77f99455b9fabafba3613b0131b61e7ee4291eea54fd9a11a203e1cc0055b5de",
+        "row_count": 50,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 50,
+    "retrieved_row_count_by_dataset": {
+      "intervention_priority_list": 50
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "intervention_priority_list",
+        "start": 0,
+        "end": 49
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_OULAD__A-G15__baseline_first_20_rows__intervention_priority_list__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/phase6_judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G15__baseline_first_20_rows.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "intervention_priority_list": 50
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G15-CORE-01",
+        "description": "Rank by at_risk_score [FE] descending."
+      },
+      {
+        "requirement_id": "A-G15-CORE-02",
+        "description": "List triggered flags per student."
+      },
+      {
+        "requirement_id": "A-G15-CORE-03",
+        "description": "Provide action per priority group."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G15-CONSTRAINT-01",
+        "description": "Treat the output as internal admin use only."
+      },
+      {
+        "constraint_id": "A-G15-CONSTRAINT-02",
+        "description": "Do not include personally identifying information beyond identifiers already present in returned data."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

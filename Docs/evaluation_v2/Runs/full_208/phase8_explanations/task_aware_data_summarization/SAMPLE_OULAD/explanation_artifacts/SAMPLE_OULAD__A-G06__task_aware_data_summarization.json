@@ -1,0 +1,329 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T07:26:50.332Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-G06__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__A-G06",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G06",
+    "task_name": "Activity type effectiveness",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G06.json",
+    "full_query_artifact_sha256": "77b3d181b059748f1bb14da1c28ba0bcecdd4ca56c19c9a9a8ce9df4eb3c2d58"
+  },
+  "request_payload": {
+    "task_id": "A-G06",
+    "execution_id": "exec_1781847724775_88de8ddc",
+    "task_name": "Activity type effectiveness",
+    "analysis_type": "correlation",
+    "explanation_strategy": "correlation",
+    "explanation_type": "observation, interpretation, recommendation",
+    "ai_prompt_hint": "Highlight which resource types are most associated with higher scores. Recommend admin to promote those.",
+    "actionable_question": "Which learning activities should the admin encourage students to use more?",
+    "target_audience": [
+      "instructor"
+    ],
+    "visualization_config": {
+      "x_field": "resource_type",
+      "y_field": "avg_score_by_resource_type",
+      "series_field": null,
+      "color_field": "resource_type",
+      "orientation": "horizontal",
+      "variant": "ranked",
+      "x_label": "Resource Type",
+      "y_label": "Avg Score of Users",
+      "semantic_roles": {
+        "x": "category",
+        "y": "performance_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "activity_effectiveness": [
+        {
+          "resource_type": "page",
+          "avg_score_by_resource_type": "78.9",
+          "student_count": 832
+        },
+        {
+          "resource_type": "oucollaborate",
+          "avg_score_by_resource_type": "74.67",
+          "student_count": 733
+        },
+        {
+          "resource_type": "oucontent",
+          "avg_score_by_resource_type": "71.46",
+          "student_count": 1778
+        },
+        {
+          "resource_type": "url",
+          "avg_score_by_resource_type": "71.04",
+          "student_count": 1875
+        },
+        {
+          "resource_type": "forumng",
+          "avg_score_by_resource_type": "70.98",
+          "student_count": 1791
+        },
+        {
+          "resource_type": "resource",
+          "avg_score_by_resource_type": "70.3",
+          "student_count": 1983
+        },
+        {
+          "resource_type": "quiz",
+          "avg_score_by_resource_type": "70.28",
+          "student_count": 1982
+        },
+        {
+          "resource_type": "homepage",
+          "avg_score_by_resource_type": "70.22",
+          "student_count": 1995
+        },
+        {
+          "resource_type": "subpage",
+          "avg_score_by_resource_type": "70.22",
+          "student_count": 1989
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "activity_effectiveness"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [
+        "student_count"
+      ],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "ranking",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "avg_score_by_resource_type",
+      "entity_column": "resource_type",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": "desc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": 5,
+      "bottom_k": 3
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 10088,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 982,
+      "completion_tokens": 582,
+      "total_tokens": 1564
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-G06",
+    "execution_id": "exec_1781847724775_88de8ddc",
+    "explanation": {
+      "summary": "The analysis reveals a negative correlation between Resource Type and Avg Score of Users, indicating that as the resource type changes, the average scores tend to decrease. This suggests that certain resource types may be less effective in promoting student learning outcomes.",
+      "insights": [
+        {
+          "title": "Higher Scores Associated with Pages",
+          "description": "The resource type 'page' has the highest average score of 78.9, significantly outperforming other resource types. This indicates that students may find pages more engaging or effective for their learning.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "avg_score_by_resource_type",
+              "value": "78.9",
+              "comparison": "peak",
+              "delta": null,
+              "context": "Highest average score among resource types"
+            }
+          ]
+        },
+        {
+          "title": "Lower Scores for Collaborative and Content Resources",
+          "description": "Resource types such as 'oucollaborate' and 'oucontent' show lower average scores of 74.67 and 71.46 respectively, suggesting that these formats may not be as effective in enhancing student performance.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "avg_score_by_resource_type",
+              "value": "74.67",
+              "comparison": "down_from_previous",
+              "delta": -4.23,
+              "context": "Lower than the peak score of pages"
+            },
+            {
+              "metric": "avg_score_by_resource_type",
+              "value": "71.46",
+              "comparison": "down_from_previous",
+              "delta": -7.44,
+              "context": "Lower than the peak score of pages"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Encouraging the use of resource types that yield higher average scores may enhance overall student performance."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Promote the use of pages as a primary resource type for students.",
+          "rationale": "Given that pages have the highest average score, increasing their usage could lead to improved student learning outcomes."
+        },
+        {
+          "priority": "medium",
+          "action": "Evaluate and enhance the effectiveness of lower-scoring resource types like 'oucollaborate' and 'oucontent'.",
+          "rationale": "Understanding why these resources score lower can help in redesigning them to better support student learning."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The dataset is complete and includes a sufficient number of rows for reliable analysis.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "correlation",
+    "explanation_type": "correlation",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "full_rows_due_to_small_result",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 9,
+    "included_row_count": 9,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "activity_effectiveness",
+        "row_count": 9,
+        "included_row_count": 9
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 10083,
+      "token_usage": {
+        "prompt_tokens": 982,
+        "completion_tokens": 582,
+        "total_tokens": 1564
+      },
+      "strategy": "correlation",
+      "granularity": "semester",
+      "cost_usd": 0.000496
+    }
+  },
+  "raw_text": "Summary: The analysis reveals a negative correlation between Resource Type and Avg Score of Users, indicating that as the resource type changes, the average scores tend to decrease. This suggests that certain resource types may be less effective in promoting student learning outcomes.\n\nInsights: Higher Scores Associated with Pages: The resource type 'page' has the highest average score of 78.9, significantly outperforming other resource types. This indicates that students may find pages more engaging or effective for their learning. | Lower Scores for Collaborative and Content Resources: Resource types such as 'oucollaborate' and 'oucontent' show lower average scores of 74.67 and 71.46 respectively, suggesting that these formats may not be as effective in enhancing student performance.\n\nEducational implications: Encouraging the use of resource types that yield higher average scores may enhance overall student performance.\n\nRecommendations: high - Promote the use of pages as a primary resource type for students. - Given that pages have the highest average score, increasing their usage could lead to improved student learning outcomes. | medium - Evaluate and enhance the effectiveness of lower-scoring resource types like 'oucollaborate' and 'oucontent'. - Understanding why these resources score lower can help in redesigning them to better support student learning."
+}

@@ -1,0 +1,104 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:34:04.390Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__S-T11",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": "SAMPLE_UCI_POR_STU_000001",
+  "role": "student",
+  "task_id": "S-T11",
+  "task_name": "Registration timing vs performance",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "S-T11",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 48,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 0,
+    "row_count_observed": 0,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "registration_data",
+        "row_count": 0,
+        "sample_fields": []
+      }
+    ],
+    "full_query_datasets_sha256": "cf206855e7b3d1ad90eda659c7eed1ed65a0b3e6eed7fb1fc7cdc7a069e54b9e"
+  },
+  "execution_outcome": {
+    "status": "terminal_invalid_empty_result",
+    "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+    "backend_data_quality_status": "partial",
+    "backend_confidence": "HIGH",
+    "error_codes": [
+      "REQUIRED_CAPABILITY_MISSING"
+    ]
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847244342_19fa7837",
+    "taskId": "S-T11",
+    "datasets": {
+      "registration_data": []
+    },
+    "meta": {
+      "taskId": "S-T11",
+      "isMultiQuery": false,
+      "rowCount": 0,
+      "executionTimeMs": 29,
+      "queryHash": "21d29fe8",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "registration_data"
+      ],
+      "dataQuality": {
+        "status": "partial",
+        "confidence": "HIGH",
+        "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+        "warnings": [
+          {
+            "code": "REQUIRED_CAPABILITY_MISSING",
+            "severity": "error",
+            "message": "Required capability missing: registration_timing",
+            "context": {
+              "task_id": "S-T11",
+              "capability": "registration_timing",
+              "batch_id": "SAMPLE_UCI_POR"
+            }
+          },
+          {
+            "code": "OPTIONAL_ENRICHMENT_MISSING",
+            "severity": "warning",
+            "message": "Optional enrichment missing: submission_timestamps",
+            "context": {
+              "task_id": "S-T11",
+              "capability": "submission_timestamps",
+              "batch_id": "SAMPLE_UCI_POR"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

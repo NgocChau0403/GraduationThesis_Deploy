@@ -1,0 +1,226 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G08__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G08",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Background group performance & engagement profile",
+    "scope": "Many students",
+    "actionable_question": "Which demographic groups are scoring or engaging below the class average?",
+    "target_audience": "instructor, academic_advisor",
+    "ai_summary_type": "group_comparison",
+    "ai_prompt_hint": "For each demographic group, compare mean avg_score [FE] and engagement_score [FE] to cohort average. Use colour intensity to show deviation. Avoid causal claims. Note: output is continuous score — distinct from A-G12 which uses categorical final_outcome.",
+    "query_labels": [
+      "demographic_performance"
+    ],
+    "explanation_strategy": "comparison"
+  },
+  "schema_context": {
+    "source_tables": [
+      "student",
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "socioeconomic_band / gender / age_group / highest_education; avg_score [FE cross]",
+      "engagement_score [FE cross]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "demographic_performance"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis of demographic performance reveals significant disparities in average scores and engagement levels across different student groups. Notably, groups scoring below the cohort average exhibit lower engagement scores, indicating a potential area for targeted intervention.\n\nInsights: High-Performing Group: Unknown: The 'Unknown' group demonstrates the highest average score of 81.21, significantly above the cohort average, indicating strong performance relative to peers. | Lowest Performing Group: 10-20%: The '10-20%' group has the lowest average score of 62.96, which is 7.48 points below the cohort average, highlighting a critical need for support. | Engagement Disparity Across Groups: Engagement scores are notably lower in groups with lower average scores, particularly in the '10-20%' group with an engagement score of 0.1312, indicating a correlation between engagement and performance.\n\nEducational implications: Targeted interventions are necessary for lower-performing groups to enhance both scores and engagement.\n\nRecommendations: high - Implement targeted support programs for the '10-20%' group. - This group is significantly underperforming and may benefit from additional resources and engagement strategies. | medium - Increase engagement activities for all groups, particularly those with lower scores. - Enhancing engagement may lead to improved academic performance across the board.",
+    "structured_payload": {
+      "task_id": "A-G08",
+      "execution_id": "exec_1781847735724_ef073aa0",
+      "explanation": {
+        "summary": "The analysis of demographic performance reveals significant disparities in average scores and engagement levels across different student groups. Notably, groups scoring below the cohort average exhibit lower engagement scores, indicating a potential area for targeted intervention.",
+        "insights": [
+          {
+            "title": "High-Performing Group: Unknown",
+            "description": "The 'Unknown' group demonstrates the highest average score of 81.21, significantly above the cohort average, indicating strong performance relative to peers.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "avg_score",
+                "value": 81.21,
+                "comparison": "baseline",
+                "delta": 10.77,
+                "context": "Cohort average is lower than this group's score."
+              }
+            ]
+          },
+          {
+            "title": "Lowest Performing Group: 10-20%",
+            "description": "The '10-20%' group has the lowest average score of 62.96, which is 7.48 points below the cohort average, highlighting a critical need for support.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "avg_score",
+                "value": 62.96,
+                "comparison": "down_from_previous",
+                "delta": -7.48,
+                "context": "This group's score is significantly lower than the cohort average."
+              }
+            ]
+          },
+          {
+            "title": "Engagement Disparity Across Groups",
+            "description": "Engagement scores are notably lower in groups with lower average scores, particularly in the '10-20%' group with an engagement score of 0.1312, indicating a correlation between engagement and performance.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "avg_engagement_score",
+                "value": 0.1312,
+                "comparison": "down_from_previous",
+                "delta": null,
+                "context": "This group's engagement score is among the lowest."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Targeted interventions are necessary for lower-performing groups to enhance both scores and engagement."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted support programs for the '10-20%' group.",
+            "rationale": "This group is significantly underperforming and may benefit from additional resources and engagement strategies."
+          },
+          {
+            "priority": "medium",
+            "action": "Increase engagement activities for all groups, particularly those with lower scores.",
+            "rationale": "Enhancing engagement may lead to improved academic performance across the board."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset is complete and provides a clear view of performance metrics across demographic groups.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "comparison",
+      "explanation_type": "comparison",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "full_rows_due_to_small_result",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 11,
+      "included_row_count": 11,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "demographic_performance",
+          "row_count": 11,
+          "included_row_count": 11
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 9692,
+        "token_usage": {
+          "prompt_tokens": 1337,
+          "completion_tokens": 620,
+          "total_tokens": 1957
+        },
+        "strategy": "comparison",
+        "granularity": "cohort_aggregate",
+        "cost_usd": 0.000573
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-G08__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "e1d748a4ddbb660e0efa55dc0ae4c3f68e44991ef6235c739aa15dde221ab058",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1337,
+        "completion_tokens": 620,
+        "total_tokens": 1957
+      },
+      "latency_ms": 9695,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 11,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "demographic_performance",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G08.json",
+        "artifact_sha256": "8f4e41747ea3f615d793457834081d21309a8a5f5847129b33cf83033b87ad18",
+        "row_count": 11,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 11,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "demographic_performance": 11
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G08-CORE-01",
+        "description": "For each demographic group, compare mean average score and engagement score with the cohort average."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G08-CONSTRAINT-01",
+        "description": "Quantify the magnitude of group deviation rather than relying on visual colour encoding alone."
+      },
+      {
+        "constraint_id": "A-G08-CONSTRAINT-02",
+        "description": "Avoid causal claims."
+      },
+      {
+        "constraint_id": "A-G08-CONSTRAINT-03",
+        "description": "Treat this as an equity-sensitive demographic group analysis."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Applicable because the task compares demographic groups and requires equity framing."
+  }
+}

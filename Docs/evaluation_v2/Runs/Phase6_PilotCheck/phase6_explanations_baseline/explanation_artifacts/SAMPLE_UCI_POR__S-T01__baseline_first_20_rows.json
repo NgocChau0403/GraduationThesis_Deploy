@@ -1,0 +1,343 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-18T22:28:37.495Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__S-T01__baseline_first_20_rows",
+    "case_id": "pilot_001_uci_st01_student_score_trend_small",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": "SAMPLE_UCI_POR_STU_000001",
+    "role": "student",
+    "task_id": "S-T01",
+    "task_name": "Score trend analysis",
+    "explanation_mode": "baseline_first_20_rows"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/phase6_evidence/evidence_manifest.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/phase6_evidence/full_query_artifacts/SAMPLE_UCI_POR__S-T01__baseline_first_20_rows.json",
+    "full_query_artifact_sha256": "5f31ba88b0e250fef6e04af819ade13fbf950fcd935691f9f1c93b2a6580449c"
+  },
+  "request_payload": {
+    "task_id": "S-T01",
+    "execution_id": "exec_1781820407908_6116b7e6",
+    "task_name": "Score trend analysis",
+    "analysis_type": "trend",
+    "explanation_strategy": "trend",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Identify trend direction, assessments below pass/target thresholds, and the concrete recommended_action for the weakest recent assessment.",
+    "actionable_question": "Am I getting better or worse over time?",
+    "target_audience": [
+      "student"
+    ],
+    "visualization_config": {
+      "x_field": "assessment_order",
+      "y_field": "score_normalized",
+      "series_field": null,
+      "color_field": null,
+      "orientation": "horizontal",
+      "variant": "default",
+      "x_label": "Assessment Order",
+      "y_label": "Normalized Score",
+      "semantic_roles": {
+        "x": "time",
+        "y": "performance_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "per_assessment",
+      "aggregation_level": "student"
+    },
+    "datasets": {
+      "score_trend": [
+        {
+          "assessment_order": 1,
+          "week_of_class": 3,
+          "assessment_type": "quiz",
+          "assessment_name": "G1",
+          "score_normalized": 0,
+          "pass_flag": false,
+          "class_avg_score": 57,
+          "score_vs_class_avg": -57,
+          "score_scale": 100,
+          "pass_threshold": 40,
+          "target_threshold": 70,
+          "below_pass_threshold": true,
+          "below_target_threshold": true,
+          "performance_trend": 27.5,
+          "support_level": "urgent_support",
+          "recommended_action": "Review this assessment with tutor support; focus on missed core concepts before the next assessment."
+        },
+        {
+          "assessment_order": 2,
+          "week_of_class": 8,
+          "assessment_type": "quiz",
+          "assessment_name": "G2",
+          "score_normalized": 55,
+          "pass_flag": true,
+          "class_avg_score": 57.85,
+          "score_vs_class_avg": -2.85,
+          "score_scale": 100,
+          "pass_threshold": 40,
+          "target_threshold": 70,
+          "below_pass_threshold": false,
+          "below_target_threshold": true,
+          "performance_trend": 27.5,
+          "support_level": "targeted_practice",
+          "recommended_action": "Practice similar questions and review feedback to move from pass-level to target-level performance."
+        },
+        {
+          "assessment_order": 3,
+          "week_of_class": 14,
+          "assessment_type": "exam",
+          "assessment_name": "G3",
+          "score_normalized": 55,
+          "pass_flag": true,
+          "class_avg_score": 59.53,
+          "score_vs_class_avg": -4.53,
+          "score_scale": 100,
+          "pass_threshold": 40,
+          "target_threshold": 70,
+          "below_pass_threshold": false,
+          "below_target_threshold": true,
+          "performance_trend": 27.5,
+          "support_level": "targeted_practice",
+          "recommended_action": "Practice similar questions and review feedback to move from pass-level to target-level performance."
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis."
+    },
+    "student_context": {
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "dataset_id": "SAMPLE_UCI_POR"
+    },
+    "query_labels": [
+      "score_trend"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [
+        "class_avg_score",
+        "score_vs_class_avg",
+        "performance_trend",
+        "pass_flag"
+      ],
+      "flag_columns": [
+        "below_pass_threshold",
+        "below_target_threshold"
+      ],
+      "action_columns": [
+        "support_level",
+        "recommended_action"
+      ],
+      "label_columns": [
+        "assessment_name",
+        "assessment_type",
+        "week_of_class"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "trend_series",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": "assessment_order",
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "score_normalized",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": "asc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": 30,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 13562,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "baseline_first_20_rows",
+    "observed_ai_summary_method": "baseline_first_20_rows",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1324,
+      "completion_tokens": 476,
+      "total_tokens": 1800
+    }
+  },
+  "response_body": {
+    "task_id": "S-T01",
+    "execution_id": "exec_1781820407908_6116b7e6",
+    "explanation": {
+      "summary": "Your performance shows an initial struggle, but you've managed to pass the last two assessments. However, you're still below the target threshold, indicating room for improvement.",
+      "insights": [
+        {
+          "title": "Initial Struggle with Assessment 1",
+          "description": "In Assessment 1, you scored 0, which is significantly below the pass threshold of 40. This indicates a need for urgent support.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "score_normalized",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "First assessment"
+            }
+          ]
+        },
+        {
+          "title": "Improvement in Assessments 2 and 3",
+          "description": "You scored 55 in both Assessments 2 and 3, which is above the pass threshold but still below the target threshold of 70. This shows consistency but also highlights the need for further improvement.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "score_normalized",
+              "value": 55,
+              "comparison": "up_from_previous",
+              "delta": 55,
+              "context": "From Assessment 1 to Assessment 2"
+            },
+            {
+              "metric": "score_normalized",
+              "value": 55,
+              "comparison": "stable",
+              "delta": 0,
+              "context": "From Assessment 2 to Assessment 3"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "You have shown improvement, but you need to focus on reaching the target threshold to enhance your understanding and performance."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Review Assessment 1 with tutor support to address core concepts.",
+          "rationale": "This will help you understand the foundational material that is crucial for succeeding in future assessments."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data quality is strong with a large sample size, providing a reliable basis for analysis.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "trend",
+    "explanation_type": "trend",
+    "ai_summary_method": "baseline_first_20_rows",
+    "ai_summary_version": "baseline",
+    "baseline_available": true,
+    "input_summary_type": "raw_first_20_rows",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": null,
+    "included_row_count": null,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 13554,
+      "token_usage": {
+        "prompt_tokens": 1324,
+        "completion_tokens": 476,
+        "total_tokens": 1800
+      },
+      "strategy": "trend",
+      "granularity": "per_assessment",
+      "cost_usd": 0.000484
+    }
+  },
+  "raw_text": "Summary: Your performance shows an initial struggle, but you've managed to pass the last two assessments. However, you're still below the target threshold, indicating room for improvement.\n\nInsights: Initial Struggle with Assessment 1: In Assessment 1, you scored 0, which is significantly below the pass threshold of 40. This indicates a need for urgent support. | Improvement in Assessments 2 and 3: You scored 55 in both Assessments 2 and 3, which is above the pass threshold but still below the target threshold of 70. This shows consistency but also highlights the need for further improvement.\n\nEducational implications: You have shown improvement, but you need to focus on reaching the target threshold to enhance your understanding and performance.\n\nRecommendations: high - Review Assessment 1 with tutor support to address core concepts. - This will help you understand the foundational material that is crucial for succeeding in future assessments."
+}

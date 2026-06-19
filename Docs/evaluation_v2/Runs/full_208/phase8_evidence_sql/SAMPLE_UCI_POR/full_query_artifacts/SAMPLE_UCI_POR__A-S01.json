@@ -1,0 +1,128 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:33:57.995Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__A-S01",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": null,
+  "role": "admin",
+  "task_id": "A-S01",
+  "task_name": "Student full profile snapshot",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "A-S01",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 56,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 1,
+    "row_count_observed": 1,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "student_profile",
+        "row_count": 1,
+        "sample_fields": [
+          "student_id",
+          "gender",
+          "age_group",
+          "region",
+          "previous_attempt_count",
+          "final_outcome",
+          "avg_score",
+          "at_risk_score",
+          "at_risk_label",
+          "engagement_score",
+          "study_effort_level"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "0c10f4df138d1a4a879ee1ca0e9aa788f9246d0acb4a47b54e5818fcc8b508a8"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "insufficient_data",
+    "backend_confidence": "LOW",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847237940_4db41799",
+    "taskId": "A-S01",
+    "datasets": {
+      "student_profile": [
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "gender": "F",
+          "age_group": "18-20",
+          "region": null,
+          "previous_attempt_count": 0,
+          "final_outcome": "Pass",
+          "avg_score": 36.666666666666664,
+          "at_risk_score": 2,
+          "at_risk_label": "medium",
+          "engagement_score": 0,
+          "study_effort_level": "very_low"
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "A-S01",
+      "isMultiQuery": false,
+      "rowCount": 1,
+      "executionTimeMs": 35,
+      "queryHash": "1bde0bc9",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "student_profile"
+      ],
+      "dataQuality": {
+        "status": "insufficient_data",
+        "confidence": "LOW",
+        "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+        "warnings": [
+          {
+            "code": "REQUIRED_CAPABILITY_MISSING",
+            "severity": "error",
+            "message": "Required capability missing: engagement_tracking",
+            "context": {
+              "task_id": "A-S01",
+              "capability": "engagement_tracking",
+              "batch_id": "SAMPLE_UCI_POR"
+            }
+          },
+          {
+            "code": "ENGAGEMENT_BELOW_MINIMUM",
+            "severity": "error",
+            "message": "No positive engagement activity found (0 engagement rows).",
+            "context": {
+              "found": 0,
+              "required": 1,
+              "rowCount": 0
+            }
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,141 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:34:02.188Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__S-T04",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": "SAMPLE_UCI_POR_STU_000001",
+  "role": "student",
+  "task_id": "S-T04",
+  "task_name": "At-risk self-check",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "S-T04",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 310,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 5,
+    "row_count_observed": 5,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "risk_flags",
+        "row_count": 5,
+        "sample_fields": [
+          "flag_name",
+          "flag_value",
+          "threshold",
+          "triggered",
+          "severity",
+          "flag_description",
+          "recommended_action",
+          "support_category"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "8ebe49bdb3f8328da2f47bb0dc5f89a3143249464fb63ef24deb1a1137c01381"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "executable",
+    "backend_confidence": "HIGH",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847241879_c98da0e1",
+    "taskId": "S-T04",
+    "datasets": {
+      "risk_flags": [
+        {
+          "flag_name": "flag_low_score",
+          "flag_value": 41.25,
+          "threshold": 40,
+          "triggered": false,
+          "severity": "info",
+          "flag_description": "Average score is below the pass threshold for this dataset scale.",
+          "recommended_action": "Review the weakest assessment topics and schedule tutor support before the next assessment.",
+          "support_category": "academic_performance"
+        },
+        {
+          "flag_name": "flag_repeated",
+          "flag_value": 0,
+          "threshold": 0,
+          "triggered": false,
+          "severity": "info",
+          "flag_description": "This student has previous attempts, which can indicate accumulated difficulty or re-enrolment risk.",
+          "recommended_action": "Check prior attempt context and confirm whether the student needs a catch-up plan.",
+          "support_category": "academic_history"
+        },
+        {
+          "flag_name": "flag_low_engagement",
+          "flag_value": 0,
+          "threshold": 0.15,
+          "triggered": true,
+          "severity": "medium",
+          "flag_description": "Engagement score is below the low-engagement threshold.",
+          "recommended_action": "Set a weekly study routine and interact with course resources before assessment deadlines.",
+          "support_category": "engagement"
+        },
+        {
+          "flag_name": "flag_low_punctuality",
+          "flag_value": 1,
+          "threshold": 0.7,
+          "triggered": false,
+          "severity": "info",
+          "flag_description": "Submission punctuality is below the expected threshold.",
+          "recommended_action": "Use deadline reminders and submit drafts earlier to reduce late-submission risk.",
+          "support_category": "time_management"
+        },
+        {
+          "flag_name": "flag_neg_trend",
+          "flag_value": 27.5,
+          "threshold": 0,
+          "triggered": false,
+          "severity": "info",
+          "flag_description": "Scores are maintaining an upward or stable trend across assessments.",
+          "recommended_action": "Compare recent feedback with earlier stronger work and intervene before the next assessment.",
+          "support_category": "trend_monitoring"
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "S-T04",
+      "isMultiQuery": false,
+      "rowCount": 5,
+      "executionTimeMs": 286,
+      "queryHash": "ad5908cb",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "risk_flags"
+      ],
+      "dataQuality": {
+        "status": "executable",
+        "confidence": "HIGH",
+        "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+        "warnings": []
+      }
+    }
+  }
+}

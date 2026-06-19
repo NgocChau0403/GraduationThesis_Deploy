@@ -1,0 +1,253 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T07:18:51.938Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-G15__task_aware_data_summarization",
+    "case_id": "SAMPLE_UCI_POR__A-G15",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G15",
+    "task_name": "Intervention priority ranking",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G15.json",
+    "full_query_artifact_sha256": "c56af860460e9e47da7f7a28d754718d067c231a4ec88124a3e298d89f9caee7"
+  },
+  "request_payload": {
+    "task_id": "A-G15",
+    "execution_id": "exec_1781847232839_85d4fee6",
+    "task_name": "Intervention priority ranking",
+    "analysis_type": "ranking",
+    "explanation_strategy": "ranking",
+    "explanation_type": "observation, interpretation, recommendation",
+    "ai_prompt_hint": "Rank by at_risk_score [FE] descending. List triggered flags per student. Provide action per priority group.",
+    "actionable_question": "Who are the top 10 students most in need of intervention right now?",
+    "target_audience": [
+      "instructor",
+      "admin"
+    ],
+    "visualization_config": {
+      "x_field": "student_id",
+      "y_field": "at_risk_score",
+      "series_field": null,
+      "color_field": "at_risk_label",
+      "orientation": null,
+      "variant": "ranked",
+      "x_label": "Student",
+      "y_label": "Risk Score",
+      "semantic_roles": {
+        "x": "student",
+        "y": "risk_metric",
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "intervention_priority_list": []
+    },
+    "confidence": {
+      "level": "LOW",
+      "reason": "No positive engagement activity found (0 engagement rows)."
+    },
+    "student_context": null,
+    "query_labels": [
+      "intervention_priority_list"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [
+        "avg_score"
+      ],
+      "flag_columns": [
+        "flag_low_score",
+        "flag_repeated",
+        "flag_low_engagement",
+        "flag_low_punctuality",
+        "flag_neg_trend"
+      ],
+      "action_columns": [],
+      "label_columns": [
+        "at_risk_label",
+        "final_outcome"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "ranking",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "at_risk_score",
+      "entity_column": "student_id",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": "desc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": 10,
+      "bottom_k": 5
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 3667,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 661,
+      "completion_tokens": 183,
+      "total_tokens": 844
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-G15",
+    "execution_id": "exec_1781847232839_85d4fee6",
+    "explanation": {
+      "summary": "The analysis reveals that there are currently no students listed in the intervention priority ranking, indicating a lack of data to assess student performance or risk. Consequently, no actionable insights or recommendations can be derived from the existing dataset.",
+      "insights": [],
+      "educational_implications": [
+        "The absence of data may hinder the ability to identify students in need of support."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Collect and analyze student performance data.",
+          "rationale": "Gathering relevant data is essential to identify at-risk students and implement timely interventions."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The dataset is empty, leading to a definitive conclusion regarding the lack of available information.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "ranking",
+    "explanation_type": "ranking",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "full_rows_due_to_small_result",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 0,
+    "included_row_count": 0,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "intervention_priority_list",
+        "row_count": 0,
+        "included_row_count": 0
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 3644,
+      "token_usage": {
+        "prompt_tokens": 661,
+        "completion_tokens": 183,
+        "total_tokens": 844
+      },
+      "strategy": "ranking",
+      "granularity": "semester",
+      "cost_usd": 0.000209
+    }
+  },
+  "raw_text": "Summary: The analysis reveals that there are currently no students listed in the intervention priority ranking, indicating a lack of data to assess student performance or risk. Consequently, no actionable insights or recommendations can be derived from the existing dataset.\n\nEducational implications: The absence of data may hinder the ability to identify students in need of support.\n\nRecommendations: high - Collect and analyze student performance data. - Gathering relevant data is essential to identify at-risk students and implement timely interventions."
+}

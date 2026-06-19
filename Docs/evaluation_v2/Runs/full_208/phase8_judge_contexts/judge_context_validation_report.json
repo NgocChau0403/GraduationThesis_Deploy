@@ -1,0 +1,57 @@
+{
+  "report_version": "llm_judge_v2_phase_f6_judge_context_validation_report_v1",
+  "generated_at": "2026-06-19T07:47:45.644Z",
+  "status": "PASS",
+  "phase_scope": [
+    "F6 judge context validation"
+  ],
+  "inputs": {
+    "judge_input_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_input_manifest.jsonl",
+    "prompt_path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md",
+    "prompt_sha256": "fe8096972e6c3c78192a36e98774fa584b24d08670835171a1d818895e27125e"
+  },
+  "counts": {
+    "judge_context_ready_records": 208,
+    "failed_records": 0,
+    "total_records": 208,
+    "errors": 0,
+    "warnings": 0
+  },
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 104,
+      "SAMPLE_OULAD": 104
+    },
+    "explanation_modes": {
+      "baseline_first_20_rows": 104,
+      "task_aware_data_summarization": 104
+    },
+    "evidence_access_modes": {
+      "direct_embedding": 170,
+      "deterministic_artifact_retrieval": 38
+    },
+    "statuses": {
+      "judge_context_ready": 208
+    }
+  },
+  "token_accounting_summary": {
+    "tokenizer_method": "heuristic_chars_div_4_ceiling",
+    "min_context_token_count": 6188,
+    "max_context_token_count": 194178,
+    "average_context_token_count": 15433
+  },
+  "outputs": {
+    "final_contexts_dir": "Docs/evaluation_v2/Runs/full_208/phase8_judge_contexts/final_contexts",
+    "judge_context_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase8_judge_contexts/judge_context_manifest.jsonl",
+    "report_json": "Docs/evaluation_v2/Runs/full_208/phase8_judge_contexts/judge_context_validation_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/full_208/phase8_judge_contexts/judge_context_validation_report.md"
+  },
+  "gate_decision": {
+    "judge_context_validation_status": "PASS",
+    "judge_invocation_allowed": true,
+    "full_judge_invocation_allowed": true,
+    "official_full_evaluation_allowed": "pending_user_approval",
+    "reason": "Final judge contexts prove direct-embedded or retrieved evidence is materialized before judge invocation."
+  },
+  "issues": []
+}

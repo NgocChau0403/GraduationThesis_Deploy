@@ -271,15 +271,15 @@ row_count > 20:
 Phase 4c boundary verification writes:
 
 ```text
-Docs/evaluation_v2/LLMJudgeV2/outputs/small_result_rule_verification.json
-Docs/evaluation_v2/LLMJudgeV2/outputs/small_result_rule_verification.md
+Docs/evaluation_v2/Handle20rows/outputs/small_result_rule_verification.json
+Docs/evaluation_v2/Handle20rows/outputs/small_result_rule_verification.md
 ```
 
 Phase 4d real-task runtime verification writes:
 
 ```text
-Docs/evaluation_v2/LLMJudgeV2/outputs/small_result_runtime_verification.json
-Docs/evaluation_v2/LLMJudgeV2/outputs/small_result_runtime_verification.md
+Docs/evaluation_v2/Handle20rows/outputs/small_result_runtime_verification.json
+Docs/evaluation_v2/Handle20rows/outputs/small_result_runtime_verification.md
 ```
 
 The outputs are separate so rerunning Phase 4d does not overwrite the

@@ -1,0 +1,208 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3_full_query_evidence",
+  "generated_at": "2026-06-18T22:06:48.692Z",
+  "backend_url": "http://localhost:4000",
+  "endpoint": "/api/analytics/run",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-C04__baseline_first_20_rows",
+    "case_id": "pilot_004_uci_ac04_two_student_lifestyle_comparison_small",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-C04",
+    "task_name": "Compare lifestyle context",
+    "explanation_mode": "baseline_first_20_rows",
+    "row_count_bucket_planned": "<=20",
+    "expected_evidence_access_path": "direct_embedding"
+  },
+  "request": {
+    "taskId": "A-C04",
+    "params": {
+      "batch_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+      "s1": "SAMPLE_UCI_POR_STU_000001",
+      "s2": "SAMPLE_UCI_POR_STU_000002"
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 20,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_planned": 10,
+    "row_count_observed": 10,
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "lifestyle_comparison",
+        "row_count": 10,
+        "sample_fields": [
+          "student_id",
+          "lifestyle_dimension",
+          "lifestyle_risk_score",
+          "alcohol_weekday",
+          "alcohol_weekend",
+          "go_out_freq",
+          "health_status",
+          "free_time",
+          "composite_lifestyle_risk_score",
+          "social_balance_score"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "f6bdc74e071f83e533b355dd0e6d16bda43bcf1d3738f7abc46b320ca9d721ca"
+  },
+  "response_body": {
+    "success": true,
+    "executionId": "exec_1781820408674_a8f78015",
+    "taskId": "A-C04",
+    "datasets": {
+      "lifestyle_comparison": [
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "lifestyle_dimension": "weekday_alcohol",
+          "lifestyle_risk_score": 1,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 4,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.375,
+          "social_balance_score": 0.025000000000000022
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "lifestyle_dimension": "weekend_alcohol",
+          "lifestyle_risk_score": 1,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 4,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.375,
+          "social_balance_score": 0.025000000000000022
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "lifestyle_dimension": "go_out_frequency",
+          "lifestyle_risk_score": 4,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 4,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.375,
+          "social_balance_score": 0.025000000000000022
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "lifestyle_dimension": "health_status",
+          "lifestyle_risk_score": 3,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 4,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.375,
+          "social_balance_score": 0.025000000000000022
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "lifestyle_dimension": "free_time",
+          "lifestyle_risk_score": 3,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 4,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.375,
+          "social_balance_score": 0.025000000000000022
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "lifestyle_dimension": "weekday_alcohol",
+          "lifestyle_risk_score": 1,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 3,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.3,
+          "social_balance_score": 0.1
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "lifestyle_dimension": "weekend_alcohol",
+          "lifestyle_risk_score": 1,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 3,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.3,
+          "social_balance_score": 0.1
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "lifestyle_dimension": "go_out_frequency",
+          "lifestyle_risk_score": 3,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 3,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.3,
+          "social_balance_score": 0.1
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "lifestyle_dimension": "health_status",
+          "lifestyle_risk_score": 3,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 3,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.3,
+          "social_balance_score": 0.1
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "lifestyle_dimension": "free_time",
+          "lifestyle_risk_score": 3,
+          "alcohol_weekday": 1,
+          "alcohol_weekend": 1,
+          "go_out_freq": 3,
+          "health_status": 3,
+          "free_time": 3,
+          "composite_lifestyle_risk_score": 0.3,
+          "social_balance_score": 0.1
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "A-C04",
+      "isMultiQuery": false,
+      "rowCount": 10,
+      "executionTimeMs": 3,
+      "queryHash": "7e1eb2b1",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "lifestyle_comparison"
+      ],
+      "dataQuality": {
+        "status": "executable",
+        "confidence": "HIGH",
+        "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+        "warnings": []
+      }
+    }
+  }
+}

@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "llm_judge_v3_pairwise_response_schema_dry_run",
+  "title": "LLM Judge V3 Pairwise Response Schema - Dry Run",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "pairwise_record_id",
+    "dataset_id",
+    "task_id",
+    "order_variant",
+    "scoring_status",
+    "winner",
+    "winner_confidence",
+    "difference_magnitude",
+    "dimension_winners",
+    "metric_comparison",
+    "coverage_comparison",
+    "specificity_comparison",
+    "decisive_evidence",
+    "tie_justification",
+    "absolute_rerun_flags",
+    "requires_absolute_rerun",
+    "reviewer_notes"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "pairwise_judge_v3_dry_run_schema_v1"
+    },
+    "pairwise_record_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "dataset_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "task_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "order_variant": {
+      "enum": ["AB", "BA"]
+    },
+    "scoring_status": {
+      "enum": ["judged", "invalid"]
+    },
+    "winner": {
+      "enum": ["A", "B", "tie"]
+    },
+    "winner_confidence": {
+      "enum": ["low", "medium", "high"]
+    },
+    "difference_magnitude": {
+      "enum": ["none", "small", "moderate", "large"]
+    },
+    "dimension_winners": {
+      "$ref": "#/$defs/dimension_winners"
+    },
+    "metric_comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "faithfulness",
+        "numerical_correctness",
+        "completeness",
+        "task_relevance",
+        "actionability",
+        "clarity",
+        "safety_fairness"
+      ],
+      "properties": {
+        "faithfulness": { "$ref": "#/$defs/metric_comparison" },
+        "numerical_correctness": { "$ref": "#/$defs/metric_comparison" },
+        "completeness": { "$ref": "#/$defs/metric_comparison" },
+        "task_relevance": { "$ref": "#/$defs/metric_comparison" },
+        "actionability": { "$ref": "#/$defs/metric_comparison" },
+        "clarity": { "$ref": "#/$defs/metric_comparison" },
+        "safety_fairness": { "$ref": "#/$defs/metric_comparison" }
+      }
+    },
+    "coverage_comparison": {
+      "$ref": "#/$defs/comparison_note"
+    },
+    "specificity_comparison": {
+      "$ref": "#/$defs/comparison_note"
+    },
+    "decisive_evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["evidence_ref", "supports_candidate", "reason"],
+        "properties": {
+          "evidence_ref": { "type": "string" },
+          "supports_candidate": { "enum": ["A", "B", "tie"] },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "tie_justification": {
+      "type": ["string", "null"]
+    },
+    "absolute_rerun_flags": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "candidate",
+          "suspected_error_type",
+          "severity_hint",
+          "reason",
+          "evidence_refs"
+        ],
+        "properties": {
+          "candidate": { "enum": ["A", "B", "both"] },
+          "suspected_error_type": { "type": "string" },
+          "severity_hint": { "enum": ["minor", "major", "critical"] },
+          "reason": { "type": "string" },
+          "evidence_refs": {
+            "type": "array",
+            "items": { "type": "string" }
+          }
+        }
+      }
+    },
+    "requires_absolute_rerun": {
+      "type": "boolean"
+    },
+    "reviewer_notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "winner": {
+      "enum": ["A", "B", "tie", "not_applicable"]
+    },
+    "dimension_winners": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "faithfulness",
+        "numerical_correctness",
+        "completeness",
+        "task_relevance",
+        "actionability",
+        "clarity",
+        "safety_fairness"
+      ],
+      "properties": {
+        "faithfulness": { "$ref": "#/$defs/winner" },
+        "numerical_correctness": { "$ref": "#/$defs/winner" },
+        "completeness": { "$ref": "#/$defs/winner" },
+        "task_relevance": { "$ref": "#/$defs/winner" },
+        "actionability": { "$ref": "#/$defs/winner" },
+        "clarity": { "$ref": "#/$defs/winner" },
+        "safety_fairness": { "$ref": "#/$defs/winner" }
+      }
+    },
+    "metric_comparison": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["winner", "reason", "evidence_refs"],
+      "properties": {
+        "winner": { "$ref": "#/$defs/winner" },
+        "reason": { "type": "string" },
+        "evidence_refs": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "comparison_note": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["winner", "reason"],
+      "properties": {
+        "winner": { "$ref": "#/$defs/winner" },
+        "reason": { "type": "string" }
+      }
+    }
+  }
+}

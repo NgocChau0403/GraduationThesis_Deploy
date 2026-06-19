@@ -1,0 +1,330 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T06:12:17.134Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__S-B01__baseline_first_20_rows",
+    "case_id": "SAMPLE_OULAD__S-B01",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": "SAMPLE_OULAD_STU_100788",
+    "role": "student",
+    "task_id": "S-B01",
+    "task_name": "Performance overview",
+    "explanation_mode": "baseline_first_20_rows"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-B01.json",
+    "full_query_artifact_sha256": "0874cd8ae96d22ade2eaf25455434307b744aeb490d27c7ba35ae21e9dcb363c"
+  },
+  "request_payload": {
+    "task_id": "S-B01",
+    "execution_id": "exec_1781847848460_b5d1cbb0",
+    "task_name": "Performance overview",
+    "analysis_type": "aggregation",
+    "explanation_strategy": "distribution",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Summarise overall score, pass/fail status, class benchmark, percentile, and the most useful next action based only on returned fields.",
+    "actionable_question": "How am I performing overall?",
+    "target_audience": [
+      "student"
+    ],
+    "visualization_config": {
+      "x_field": "final_outcome",
+      "y_field": "avg_score",
+      "series_field": null,
+      "color_field": "final_outcome",
+      "orientation": "vertical",
+      "variant": "categorical",
+      "x_label": "Outcome",
+      "y_label": "Average Score",
+      "semantic_roles": {
+        "x": "category",
+        "y": "performance_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "student"
+    },
+    "datasets": {
+      "performance_summary": [
+        {
+          "avg_score": 94.34,
+          "pass_rate": 1,
+          "performance_trend": -0.7187500000000001,
+          "final_outcome": "Distinction",
+          "class_avg_score": 66.68,
+          "class_median_score": 68.59,
+          "score_vs_class_avg": 27.66,
+          "score_percentile": 89.8,
+          "cohort_size": 1998,
+          "unweighted_avg_score": 91.2,
+          "weighted_avg_score": 94.34,
+          "score_strategy": "weighted_by_assessment_weight",
+          "assessment_count": 5,
+          "score_scale": 100,
+          "pass_threshold": 40,
+          "target_threshold": 70,
+          "performance_band": "strong_relative_performance"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": {
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "dataset_id": "SAMPLE_OULAD"
+    },
+    "query_labels": [
+      "performance_summary"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [
+        "avg_score",
+        "pass_rate",
+        "performance_trend",
+        "score_vs_class_avg",
+        "score_percentile",
+        "unweighted_avg_score",
+        "weighted_avg_score",
+        "assessment_count",
+        "cohort_size"
+      ],
+      "status_columns": [
+        "final_outcome",
+        "score_strategy",
+        "performance_band"
+      ],
+      "threshold_columns": [
+        "pass_threshold",
+        "target_threshold"
+      ],
+      "benchmark_columns": [
+        "class_avg_score",
+        "class_median_score"
+      ],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {
+        "pass_threshold": "runtime_score_context",
+        "target_threshold": "runtime_score_context"
+      },
+      "benchmark_sources": {
+        "class_avg_score": "class_cohort",
+        "class_median_score": "class_cohort"
+      },
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {
+        "avg_score": "score_on_runtime_scale",
+        "pass_rate": "ratio_0_1",
+        "performance_trend": "score_change_per_assessment_order",
+        "score_vs_class_avg": "score_point_difference",
+        "score_percentile": "percentile_0_100",
+        "unweighted_avg_score": "score_on_runtime_scale",
+        "weighted_avg_score": "score_on_runtime_scale",
+        "assessment_count": "count",
+        "cohort_size": "count",
+        "pass_threshold": "score_on_runtime_scale",
+        "target_threshold": "score_on_runtime_scale",
+        "class_avg_score": "score_on_runtime_scale",
+        "class_median_score": "score_on_runtime_scale"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": true,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [
+        "score_scale"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "metric_snapshot",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 5893,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "baseline_first_20_rows",
+    "observed_ai_summary_method": "baseline_first_20_rows",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 693,
+      "completion_tokens": 404,
+      "total_tokens": 1097
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "S-B01",
+    "execution_id": "exec_1781847848460_b5d1cbb0",
+    "explanation": {
+      "summary": "You are performing exceptionally well with an average score of 94.34, which places you in the top percentile of your class. Your strong performance is reflected in your distinction outcome and a perfect pass rate.",
+      "insights": [
+        {
+          "title": "Outstanding Performance",
+          "description": "Your average score of 94.34 is significantly higher than the class average of 66.68, indicating that you are excelling compared to your peers.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "avg_score",
+              "value": 94.34,
+              "comparison": "up_from_previous",
+              "delta": null,
+              "context": "This score is well above the class average."
+            }
+          ]
+        },
+        {
+          "title": "High Percentile Ranking",
+          "description": "With a score percentile of 89.8, you are among the top performers in your cohort, showcasing your strong understanding of the material.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "score_percentile",
+              "value": 89.8,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "This percentile indicates your relative performance."
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Continue to build on your strengths to maintain this high level of performance."
+      ],
+      "recommendations": [
+        {
+          "priority": "medium",
+          "action": "Review areas of assessment where you can further enhance your skills.",
+          "rationale": "Even strong performers can benefit from identifying specific areas for improvement to ensure continued success."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data provided is clear and indicates a strong performance trend.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "distribution",
+    "explanation_type": "distribution",
+    "ai_summary_method": "baseline_first_20_rows",
+    "ai_summary_version": "baseline",
+    "baseline_available": true,
+    "input_summary_type": "raw_first_20_rows",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": null,
+    "included_row_count": null,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 5890,
+      "token_usage": {
+        "prompt_tokens": 693,
+        "completion_tokens": 404,
+        "total_tokens": 1097
+      },
+      "strategy": "distribution",
+      "granularity": "semester",
+      "cost_usd": 0.000346
+    }
+  },
+  "raw_text": "Summary: You are performing exceptionally well with an average score of 94.34, which places you in the top percentile of your class. Your strong performance is reflected in your distinction outcome and a perfect pass rate.\n\nInsights: Outstanding Performance: Your average score of 94.34 is significantly higher than the class average of 66.68, indicating that you are excelling compared to your peers. | High Percentile Ranking: With a score percentile of 89.8, you are among the top performers in your cohort, showcasing your strong understanding of the material.\n\nEducational implications: Continue to build on your strengths to maintain this high level of performance.\n\nRecommendations: medium - Review areas of assessment where you can further enhance your skills. - Even strong performers can benefit from identifying specific areas for improvement to ensure continued success."
+}

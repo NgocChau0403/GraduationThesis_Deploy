@@ -1,0 +1,162 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:43:55.571Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_OULAD__A-S04",
+  "dataset_id": "SAMPLE_OULAD",
+  "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+  "student_id": null,
+  "role": "admin",
+  "task_id": "A-S04",
+  "task_name": "Student risk flag breakdown",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "A-S04",
+      "params": {
+        "batch_id": "SAMPLE_OULAD",
+        "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+        "student_id": "SAMPLE_OULAD_STU_100788",
+        "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788",
+        "s1": "SAMPLE_OULAD_STU_100788",
+        "s2": "SAMPLE_OULAD_STU_101700"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 96,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 4,
+    "row_count_observed": 4,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "risk_flags",
+        "row_count": 4,
+        "sample_fields": [
+          "flag_name",
+          "flag_value",
+          "threshold",
+          "triggered",
+          "severity",
+          "flag_description",
+          "recommended_action",
+          "support_category"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "b7a8bc41b7dc4c1a013bfe496d4a33c629941aed5b288e87b85a621468c690fc"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "partial",
+    "backend_confidence": "HIGH",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847835477_0935da99",
+    "taskId": "A-S04",
+    "datasets": {
+      "risk_flags": [
+        {
+          "flag_name": "flag_low_score",
+          "flag_value": 91.2,
+          "threshold": "40",
+          "triggered": false,
+          "severity": "info",
+          "flag_description": "Average score is below the pass threshold for this dataset scale.",
+          "recommended_action": "Review the weakest assessment topics and schedule tutor support before the next assessment.",
+          "support_category": "academic_performance"
+        },
+        {
+          "flag_name": "flag_high_absence",
+          "flag_value": null,
+          "threshold": "10",
+          "triggered": null,
+          "severity": "info",
+          "flag_description": "Absences are within the high-absence risk limit.",
+          "recommended_action": "Keep monitoring attendance and confirm there are no new absence spikes.",
+          "support_category": "attendance"
+        },
+        {
+          "flag_name": "flag_low_punctuality",
+          "flag_value": 0,
+          "threshold": "0.7",
+          "triggered": true,
+          "severity": "medium",
+          "flag_description": "Submission punctuality is below the expected threshold.",
+          "recommended_action": "Use deadline reminders and submit drafts earlier to reduce late-submission risk.",
+          "support_category": "time_management"
+        },
+        {
+          "flag_name": "flag_neg_trend",
+          "flag_value": -0.7187500000000001,
+          "threshold": "0",
+          "triggered": true,
+          "severity": "medium",
+          "flag_description": "Scores are trending downward across assessments.",
+          "recommended_action": "Compare recent feedback with earlier stronger work and intervene before the next assessment.",
+          "support_category": "trend_monitoring"
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "A-S04",
+      "isMultiQuery": false,
+      "rowCount": 4,
+      "executionTimeMs": 45,
+      "queryHash": "e620d543",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "risk_flags"
+      ],
+      "dataQuality": {
+        "status": "partial",
+        "confidence": "HIGH",
+        "confidence_reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+        "warnings": [
+          {
+            "code": "DATASET_SPECIFIC_BY_DESIGN",
+            "severity": "error",
+            "message": "Task depends on UCI-specific lifestyle/family/absence fields.",
+            "context": {
+              "expected_source_dataset": "UCI",
+              "actual_source_dataset": "OULAD",
+              "task_id": "A-S04"
+            }
+          },
+          {
+            "code": "REQUIRED_CAPABILITY_MISSING",
+            "severity": "error",
+            "message": "Required capability missing: absence_tracking",
+            "context": {
+              "task_id": "A-S04",
+              "capability": "absence_tracking",
+              "batch_id": "SAMPLE_OULAD"
+            }
+          },
+          {
+            "code": "LEGACY_DATASET_COMPAT_HINT",
+            "severity": "warning",
+            "message": "Legacy datasetCompatibility=UCI_only does not match dataset=OULAD.",
+            "context": {
+              "datasetCompatibility": "UCI_only",
+              "sourceDataset": "OULAD",
+              "mode": "legacy_hint_only"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

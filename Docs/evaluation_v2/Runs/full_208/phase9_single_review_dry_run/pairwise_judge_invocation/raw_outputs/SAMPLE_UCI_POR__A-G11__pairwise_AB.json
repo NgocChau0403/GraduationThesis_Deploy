@@ -1,0 +1,107 @@
+{
+  "schema_version": "pairwise_judge_v3_dry_run_schema_v1",
+  "pairwise_record_id": "SAMPLE_UCI_POR__A-G11__pairwise_AB",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G11",
+  "order_variant": "AB",
+  "scoring_status": "judged",
+  "winner": "A",
+  "winner_confidence": "high",
+  "difference_magnitude": "moderate",
+  "dimension_winners": {
+    "faithfulness": "A",
+    "numerical_correctness": "tie",
+    "completeness": "A",
+    "task_relevance": "A",
+    "actionability": "A",
+    "clarity": "tie",
+    "safety_fairness": "A"
+  },
+  "metric_comparison": {
+    "faithfulness": {
+      "winner": "A",
+      "reason": "Candidate A correctly says no critical weeks can be identified from zero engagement rows; candidate B invents week-1 timing.",
+      "evidence_refs": [
+        "prompt_packet:A-G11:task_context",
+        "prompt_packet:A-G11:candidate_explanations"
+      ]
+    },
+    "numerical_correctness": {
+      "winner": "tie",
+      "reason": "Both reflect the zero-row data-quality condition rather than reporting numeric week drops.",
+      "evidence_refs": [
+        "prompt_packet:A-G11:task_context",
+        "prompt_packet:A-G11:candidate_explanations"
+      ]
+    },
+    "completeness": {
+      "winner": "A",
+      "reason": "Candidate A better handles the absent early-warning evidence by stating that no intervention week can be identified.",
+      "evidence_refs": [
+        "prompt_packet:A-G11:task_context",
+        "prompt_packet:A-G11:candidate_explanations"
+      ]
+    },
+    "task_relevance": {
+      "winner": "A",
+      "reason": "Candidate A stays closer to the critical-week detection task.",
+      "evidence_refs": [
+        "prompt_packet:A-G11:task_context",
+        "prompt_packet:A-G11:candidate_explanations"
+      ]
+    },
+    "actionability": {
+      "winner": "A",
+      "reason": "Candidate A's data-collection action is better grounded than candidate B's week-1 check-ins because no early_warning_week is returned.",
+      "evidence_refs": [
+        "prompt_packet:A-G11:task_context",
+        "prompt_packet:A-G11:candidate_explanations"
+      ]
+    },
+    "clarity": {
+      "winner": "tie",
+      "reason": "Both clearly communicate absent engagement data.",
+      "evidence_refs": [
+        "prompt_packet:A-G11:task_context",
+        "prompt_packet:A-G11:candidate_explanations"
+      ]
+    },
+    "safety_fairness": {
+      "winner": "A",
+      "reason": "Candidate A avoids unsupported timing claims.",
+      "evidence_refs": [
+        "prompt_packet:A-G11:task_context",
+        "prompt_packet:A-G11:candidate_explanations"
+      ]
+    }
+  },
+  "coverage_comparison": {
+    "winner": "A",
+    "reason": "Candidate A uses the zero-row evidence to avoid unsupported timing."
+  },
+  "specificity_comparison": {
+    "winner": "A",
+    "reason": "Candidate A specifically states that no intervention weeks can be identified."
+  },
+  "decisive_evidence": [
+    {
+      "evidence_ref": "prompt_packet:A-G11:row_count=0,data_quality_signal_low",
+      "supports_candidate": "A",
+      "reason": "With no rows, candidate B's week-1 timing is unsupported."
+    }
+  ],
+  "tie_justification": null,
+  "absolute_rerun_flags": [
+    {
+      "candidate": "B",
+      "suspected_error_type": "unsupported_timing_claim",
+      "severity_hint": "major",
+      "reason": "Candidate B recommends week-1 timing despite no critical-week or early_warning_week evidence.",
+      "evidence_refs": [
+        "prompt_packet:A-G11:row_count=0"
+      ]
+    }
+  ],
+  "requires_absolute_rerun": true,
+  "reviewer_notes": "Candidate A is safer and more faithful for a zero-row task."
+}

@@ -1,0 +1,18 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_4_deterministic_retrieval_log",
+  "generated_at": "2026-06-19T07:41:45.549Z",
+  "record_id": "SAMPLE_OULAD__A-G14__task_aware_data_summarization",
+  "retrieval_request_complete": true,
+  "retrieval_coverage_status": "full",
+  "chunks": [
+    {
+      "chunk_id": "SAMPLE_OULAD__A-G14__task_aware_data_summarization__withdrawal_signal_trend__chunk_1",
+      "dataset_label": "withdrawal_signal_trend",
+      "row_start_inclusive": 0,
+      "row_end_inclusive": 163,
+      "row_count": 164,
+      "source_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G14.json",
+      "source_artifact_sha256": "64c67afde434dcdc16e3b44225b1be83ff387bfc4ca03234bd334a5e7b8e5e9a"
+    }
+  ]
+}

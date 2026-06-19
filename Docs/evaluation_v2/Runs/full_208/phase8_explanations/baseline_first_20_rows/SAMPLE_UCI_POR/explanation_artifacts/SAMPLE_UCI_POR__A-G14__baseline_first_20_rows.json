@@ -1,0 +1,242 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T05:59:11.898Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-G14__baseline_first_20_rows",
+    "case_id": "SAMPLE_UCI_POR__A-G14",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G14",
+    "task_name": "Early withdrawal signal analysis",
+    "explanation_mode": "baseline_first_20_rows"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G14.json",
+    "full_query_artifact_sha256": "b1188e446b1e049911821e083dd6043b18f9c9fb38c6a193251269529f21fe3f"
+  },
+  "request_payload": {
+    "task_id": "A-G14",
+    "execution_id": "exec_1781847232818_178a9b0b",
+    "task_name": "Early withdrawal signal analysis",
+    "analysis_type": "trend",
+    "explanation_strategy": "trend",
+    "explanation_type": "observation, interpretation, recommendation",
+    "ai_prompt_hint": "Use early_warning_week [FE] to show when engagement collapsed for withdrawn students. Compare to passing students.",
+    "actionable_question": "How early can admin detect a student about to drop out?",
+    "target_audience": [
+      "instructor",
+      "admin"
+    ],
+    "visualization_config": {
+      "x_field": "week_number",
+      "y_field": "avg_clicks",
+      "series_field": "final_outcome",
+      "color_field": "final_outcome",
+      "orientation": "horizontal",
+      "variant": "multi_series",
+      "x_label": "Week",
+      "y_label": "Avg Clicks",
+      "semantic_roles": {
+        "x": "time",
+        "y": "engagement_metric",
+        "series": "outcome_category"
+      }
+    },
+    "analysis_context": {
+      "granularity": "weekly",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "withdrawal_signal_trend": []
+    },
+    "confidence": {
+      "level": "LOW",
+      "reason": "No positive engagement activity found (0 engagement rows)."
+    },
+    "student_context": null,
+    "query_labels": [
+      "withdrawal_signal_trend"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [
+        "Pass",
+        "Distinction"
+      ],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "trend_comparison",
+      "target_group": "Withdrawn",
+      "divergence_threshold": null,
+      "time_column": "week_number",
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "avg_clicks",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": "final_outcome",
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": "student_count",
+      "minimum_reliable_count": 10,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 3677,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "baseline_first_20_rows",
+    "observed_ai_summary_method": "baseline_first_20_rows",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 836,
+      "completion_tokens": 222,
+      "total_tokens": 1058
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-G14",
+    "execution_id": "exec_1781847232818_178a9b0b",
+    "explanation": {
+      "summary": "The analysis reveals a complete absence of engagement data, indicating a lack of measurable student activity. Consequently, no trends, turning points, or values can be identified, which limits the ability to detect early withdrawal signals.",
+      "insights": [],
+      "educational_implications": [
+        "The absence of engagement data suggests that monitoring systems may need to be enhanced to capture student activity more effectively."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement a more robust engagement tracking system.",
+          "rationale": "To identify early withdrawal signals, it is crucial to have reliable engagement metrics that can indicate when students are at risk of dropping out."
+        }
+      ],
+      "warnings": [
+        "Data quality signal is LOW; no positive engagement activity found (0 engagement rows)."
+      ]
+    },
+    "confidence": {
+      "level": "LOW",
+      "reason": "The analysis is based on an empty dataset, which does not provide any actionable insights.",
+      "based_on": [
+        "sparse_data",
+        "limited_temporal_range"
+      ]
+    },
+    "explanation_strategy": "trend",
+    "explanation_type": "trend",
+    "ai_summary_method": "baseline_first_20_rows",
+    "ai_summary_version": "baseline",
+    "baseline_available": true,
+    "input_summary_type": "raw_first_20_rows",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": null,
+    "included_row_count": null,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 3667,
+      "token_usage": {
+        "prompt_tokens": 836,
+        "completion_tokens": 222,
+        "total_tokens": 1058
+      },
+      "strategy": "trend",
+      "granularity": "weekly",
+      "cost_usd": 0.000259
+    }
+  },
+  "raw_text": "Summary: The analysis reveals a complete absence of engagement data, indicating a lack of measurable student activity. Consequently, no trends, turning points, or values can be identified, which limits the ability to detect early withdrawal signals.\n\nEducational implications: The absence of engagement data suggests that monitoring systems may need to be enhanced to capture student activity more effectively.\n\nRecommendations: high - Implement a more robust engagement tracking system. - To identify early withdrawal signals, it is crucial to have reliable engagement metrics that can indicate when students are at risk of dropping out.\n\nWarnings: Data quality signal is LOW; no positive engagement activity found (0 engagement rows)."
+}

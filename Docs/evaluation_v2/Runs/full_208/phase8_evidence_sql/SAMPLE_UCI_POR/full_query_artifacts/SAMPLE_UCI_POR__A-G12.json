@@ -1,0 +1,111 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:33:52.757Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__A-G12",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": null,
+  "role": "admin",
+  "task_id": "A-G12",
+  "task_name": "Background group pass/fail/withdrawal rate",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "A-G12",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 19,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 4,
+    "row_count_observed": 4,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "outcome_by_group",
+        "row_count": 4,
+        "sample_fields": [
+          "group_value",
+          "final_outcome",
+          "student_count",
+          "pct_within_group"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "c220f643bbbb6cafb698bfdf87f07663c0e05004aaf255bc69f054f840ff760f"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "executable",
+    "backend_confidence": "HIGH",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847232738_44f516ee",
+    "taskId": "A-G12",
+    "datasets": {
+      "outcome_by_group": [
+        {
+          "group_value": "GP",
+          "final_outcome": "Fail",
+          "student_count": 32,
+          "pct_within_group": "7.6"
+        },
+        {
+          "group_value": "GP",
+          "final_outcome": "Pass",
+          "student_count": 391,
+          "pct_within_group": "92.4"
+        },
+        {
+          "group_value": "MS",
+          "final_outcome": "Fail",
+          "student_count": 68,
+          "pct_within_group": "30.1"
+        },
+        {
+          "group_value": "MS",
+          "final_outcome": "Pass",
+          "student_count": 158,
+          "pct_within_group": "69.9"
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "A-G12",
+      "isMultiQuery": false,
+      "rowCount": 4,
+      "executionTimeMs": 6,
+      "queryHash": "a9f29e49",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "outcome_by_group"
+      ],
+      "dataQuality": {
+        "status": "executable",
+        "confidence": "HIGH",
+        "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+        "warnings": []
+      }
+    }
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": "pairwise_judge_v3_dry_run_schema_v1",
+  "pairwise_record_id": "SAMPLE_UCI_POR__A-G14__pairwise_BA",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G14",
+  "order_variant": "BA",
+  "scoring_status": "judged",
+  "winner": "tie",
+  "winner_confidence": "medium",
+  "difference_magnitude": "none",
+  "dimension_winners": {
+    "faithfulness": "tie",
+    "numerical_correctness": "tie",
+    "completeness": "tie",
+    "task_relevance": "tie",
+    "actionability": "tie",
+    "clarity": "tie",
+    "safety_fairness": "tie"
+  },
+  "metric_comparison": {
+    "faithfulness": {
+      "winner": "tie",
+      "reason": "Both candidates correctly identify that no engagement rows are available for withdrawal-signal analysis.",
+      "evidence_refs": [
+        "prompt_packet:A-G14:task_context",
+        "prompt_packet:A-G14:candidate_explanations"
+      ]
+    },
+    "numerical_correctness": {
+      "winner": "tie",
+      "reason": "Neither candidate invents collapse weeks, trajectories, or numeric comparisons.",
+      "evidence_refs": [
+        "prompt_packet:A-G14:task_context",
+        "prompt_packet:A-G14:candidate_explanations"
+      ]
+    },
+    "completeness": {
+      "winner": "tie",
+      "reason": "Both explain that the absence of data prevents identifying trends or timing, though neither can compare withdrawn and passing students.",
+      "evidence_refs": [
+        "prompt_packet:A-G14:task_context",
+        "prompt_packet:A-G14:candidate_explanations"
+      ]
+    },
+    "task_relevance": {
+      "winner": "tie",
+      "reason": "Both remain within the early-withdrawal signal topic under the zero-row condition.",
+      "evidence_refs": [
+        "prompt_packet:A-G14:task_context",
+        "prompt_packet:A-G14:candidate_explanations"
+      ]
+    },
+    "actionability": {
+      "winner": "tie",
+      "reason": "Both recommend improving tracking rather than acting on unsupported collapse timing.",
+      "evidence_refs": [
+        "prompt_packet:A-G14:task_context",
+        "prompt_packet:A-G14:candidate_explanations"
+      ]
+    },
+    "clarity": {
+      "winner": "tie",
+      "reason": "Both are clear and similar in structure.",
+      "evidence_refs": [
+        "prompt_packet:A-G14:task_context",
+        "prompt_packet:A-G14:candidate_explanations"
+      ]
+    },
+    "safety_fairness": {
+      "winner": "tie",
+      "reason": "Both avoid causal withdrawal claims and unsupported individual risk assignment.",
+      "evidence_refs": [
+        "prompt_packet:A-G14:task_context",
+        "prompt_packet:A-G14:candidate_explanations"
+      ]
+    }
+  },
+  "coverage_comparison": {
+    "winner": "tie",
+    "reason": "Both candidates use the same zero-row evidence and reach the same practical limitation."
+  },
+  "specificity_comparison": {
+    "winner": "tie",
+    "reason": "Both have similar specificity and neither has concrete timing evidence to report."
+  },
+  "decisive_evidence": [
+    {
+      "evidence_ref": "prompt_packet:A-G14:row_count=0,data_quality_signal_low",
+      "supports_candidate": "tie",
+      "reason": "The zero-row evidence makes both cautious no-trend answers similarly supported."
+    }
+  ],
+  "tie_justification": "All evaluated dimensions are ties because both candidates faithfully report the absence of engagement evidence and neither invents collapse timing or causal withdrawal claims.",
+  "absolute_rerun_flags": [],
+  "requires_absolute_rerun": false,
+  "reviewer_notes": "Tie: both are schema-shaped, cautious, and similarly limited by zero returned rows."
+}

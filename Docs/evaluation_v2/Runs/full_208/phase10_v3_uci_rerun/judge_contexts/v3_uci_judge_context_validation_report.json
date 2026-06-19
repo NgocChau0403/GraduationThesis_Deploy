@@ -1,0 +1,56 @@
+{
+  "report_version": "llm_judge_v2_phase_f6_judge_context_validation_report_v1",
+  "generated_at": "2026-06-19T10:54:48.653Z",
+  "status": "PASS",
+  "phase_scope": [
+    "F6 judge context validation"
+  ],
+  "inputs": {
+    "judge_input_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase10_v3_uci_rerun/judge_inputs/judge_input_manifest.jsonl",
+    "prompt_path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V3.md",
+    "prompt_sha256": "ce82959702c6d15d972b2d7610b202f2c4d95c77b1aba184930d0991895647f9"
+  },
+  "counts": {
+    "judge_context_ready_records": 104,
+    "failed_records": 0,
+    "total_records": 104,
+    "errors": 0,
+    "warnings": 0
+  },
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 104
+    },
+    "explanation_modes": {
+      "baseline_first_20_rows": 52,
+      "task_aware_data_summarization": 52
+    },
+    "evidence_access_modes": {
+      "direct_embedding": 92,
+      "deterministic_artifact_retrieval": 12
+    },
+    "statuses": {
+      "judge_context_ready": 104
+    }
+  },
+  "token_accounting_summary": {
+    "tokenizer_method": "heuristic_chars_div_4_ceiling",
+    "min_context_token_count": 6014,
+    "max_context_token_count": 68010,
+    "average_context_token_count": 11979
+  },
+  "outputs": {
+    "final_contexts_dir": "Docs/evaluation_v2/Runs/full_208/phase10_v3_uci_rerun/judge_contexts/final_contexts",
+    "judge_context_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase10_v3_uci_rerun/judge_contexts/judge_context_manifest.jsonl",
+    "report_json": "Docs/evaluation_v2/Runs/full_208/phase10_v3_uci_rerun/judge_contexts/v3_uci_judge_context_validation_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/full_208/phase10_v3_uci_rerun/judge_contexts/v3_uci_judge_context_validation_report.md"
+  },
+  "gate_decision": {
+    "judge_context_validation_status": "PASS",
+    "judge_invocation_allowed": true,
+    "full_judge_invocation_allowed": true,
+    "official_full_evaluation_allowed": "pending_user_approval",
+    "reason": "Final judge contexts prove direct-embedded or retrieved evidence is materialized before judge invocation."
+  },
+  "issues": []
+}

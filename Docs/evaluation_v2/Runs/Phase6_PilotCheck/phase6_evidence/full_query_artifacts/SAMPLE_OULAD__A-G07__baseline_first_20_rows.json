@@ -1,0 +1,106 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3_full_query_evidence",
+  "generated_at": "2026-06-18T22:07:07.326Z",
+  "backend_url": "http://localhost:4000",
+  "endpoint": "/api/analytics/run",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-G07__baseline_first_20_rows",
+    "case_id": "pilot_008_oulad_ag07_admin_factor_correlation_small",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G07",
+    "task_name": "Factor correlation analysis",
+    "explanation_mode": "baseline_first_20_rows",
+    "row_count_bucket_planned": "<=20",
+    "expected_evidence_access_path": "direct_embedding"
+  },
+  "request": {
+    "taskId": "A-G07",
+    "params": {
+      "batch_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788",
+      "s1": "SAMPLE_OULAD_STU_100788",
+      "s2": "SAMPLE_OULAD_STU_101700"
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 6279,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_planned": 4,
+    "row_count_observed": 4,
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "factor_correlation_matrix",
+        "row_count": 4,
+        "sample_fields": [
+          "feature_name",
+          "correlation_with_avg_score",
+          "n_samples",
+          "abs_correlation_rank"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "2d3a648518cb9b29e8d72c217afd44da96b100f0f5576ecd6f348a7c8419fe22"
+  },
+  "response_body": {
+    "success": true,
+    "executionId": "exec_1781820421049_aa6a95bd",
+    "taskId": "A-G07",
+    "datasets": {
+      "factor_correlation_matrix": [
+        {
+          "feature_name": "active_days",
+          "correlation_with_avg_score": 0.4181,
+          "n_samples": 1998,
+          "abs_correlation_rank": 1
+        },
+        {
+          "feature_name": "total_clicks",
+          "correlation_with_avg_score": 0.3237,
+          "n_samples": 1998,
+          "abs_correlation_rank": 2
+        },
+        {
+          "feature_name": "disadvantage_score",
+          "correlation_with_avg_score": -0.1353,
+          "n_samples": 1875,
+          "abs_correlation_rank": 3
+        },
+        {
+          "feature_name": "registration_lead_time",
+          "correlation_with_avg_score": 0.0017,
+          "n_samples": 1988,
+          "abs_correlation_rank": 4
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "A-G07",
+      "isMultiQuery": false,
+      "rowCount": 4,
+      "executionTimeMs": 3342,
+      "queryHash": "a90c6424",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "factor_correlation_matrix"
+      ],
+      "dataQuality": {
+        "status": "executable",
+        "confidence": "HIGH",
+        "confidence_reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+        "warnings": []
+      }
+    }
+  }
+}

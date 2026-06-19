@@ -1,0 +1,136 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:33:52.639Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__A-G08",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": null,
+  "role": "admin",
+  "task_id": "A-G08",
+  "task_name": "Background group performance & engagement profile",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "A-G08",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 74,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 1,
+    "row_count_observed": 1,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "demographic_performance",
+        "row_count": 1,
+        "sample_fields": [
+          "group_value",
+          "student_count",
+          "avg_score",
+          "avg_engagement_score",
+          "score_vs_cohort"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "58c821196d79a7b9704571024c7538b44ea81c5a099eaa8bdfdcd8b6e4415462"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "insufficient_data",
+    "backend_confidence": "LOW",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847232566_876282c5",
+    "taskId": "A-G08",
+    "datasets": {
+      "demographic_performance": [
+        {
+          "group_value": "Unknown",
+          "student_count": 649,
+          "avg_score": 58.13,
+          "avg_engagement_score": 0,
+          "score_vs_cohort": 0
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "A-G08",
+      "isMultiQuery": false,
+      "rowCount": 1,
+      "executionTimeMs": 57,
+      "queryHash": "60953a2d",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "demographic_performance"
+      ],
+      "dataQuality": {
+        "status": "insufficient_data",
+        "confidence": "LOW",
+        "confidence_reason": "No positive engagement activity found (0 engagement rows).",
+        "warnings": [
+          {
+            "code": "DATASET_SPECIFIC_BY_DESIGN",
+            "severity": "error",
+            "message": "Task depends on OULAD engagement/online activity signals.",
+            "context": {
+              "expected_source_dataset": "OULAD",
+              "actual_source_dataset": "UCI",
+              "task_id": "A-G08"
+            }
+          },
+          {
+            "code": "REQUIRED_CAPABILITY_MISSING",
+            "severity": "error",
+            "message": "Required capability missing: engagement_tracking",
+            "context": {
+              "task_id": "A-G08",
+              "capability": "engagement_tracking",
+              "batch_id": "SAMPLE_UCI_POR"
+            }
+          },
+          {
+            "code": "LEGACY_DATASET_COMPAT_HINT",
+            "severity": "warning",
+            "message": "Legacy datasetCompatibility=OULAD_only does not match dataset=UCI.",
+            "context": {
+              "datasetCompatibility": "OULAD_only",
+              "sourceDataset": "UCI",
+              "mode": "legacy_hint_only"
+            }
+          },
+          {
+            "code": "ENGAGEMENT_BELOW_MINIMUM",
+            "severity": "error",
+            "message": "No positive engagement activity found (0 engagement rows).",
+            "context": {
+              "found": 0,
+              "required": 1,
+              "rowCount": 0
+            }
+          }
+        ]
+      }
+    }
+  }
+}

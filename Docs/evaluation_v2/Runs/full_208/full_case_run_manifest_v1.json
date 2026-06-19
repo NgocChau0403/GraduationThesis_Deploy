@@ -1,0 +1,2280 @@
+{
+  "manifest_version": "llm_judge_v2_full_case_run_manifest_v1",
+  "status": "READY_FOR_FULL_PREFLIGHT",
+  "generated_at": "2026-06-19T05:25:13.723Z",
+  "timezone": "Asia/Saigon",
+  "purpose": "Freeze the complete 104 dataset-task case scope that expands to 208 mode-level LLM Judge V2 records.",
+  "linked_contract_manifest": {
+    "path": "Docs/evaluation_v2/Runs/pilot_contract_manifest_v1.json",
+    "sha256": "958720f5cc5a63a66b639b0e1d6fbff56f7a386c0b740844307bb4df81f8e9ef",
+    "status": "FROZEN_FOR_PILOT"
+  },
+  "linked_f0_readiness_report": {
+    "path": "Docs/evaluation_v2/Runs/full_208/phase8_readiness/full_208_readiness_report.json",
+    "sha256": "4614127e54818a19eea9303f2f82f788013accbe4357665272aa5091e33a0016",
+    "status": "PASS"
+  },
+  "sources": {
+    "task_requirements": {
+      "path": "Docs/evaluation_v2/Rubric/task_evaluation_requirements.json",
+      "sha256": "5e2ae65297a28758b36a081df4df785a28f881870cd1e2eb4e2a5e209480e36a"
+    },
+    "row_count_records": {
+      "path": "Docs/evaluation_v2/Handle20rows/outputs/row_count_records.jsonl",
+      "sha256": "71e85e7155881424dbc55979112869831762fa463962628da820a109ca8a8ef4"
+    },
+    "row_count_distribution": {
+      "path": "Docs/evaluation_v2/Handle20rows/outputs/row_count_distribution.json",
+      "sha256": "49fbf64da085f358b9e5f977ba3e75be849fb6d9f4d5b20c394fee86d23c8fc0"
+    }
+  },
+  "scope": {
+    "datasets": [
+      "SAMPLE_UCI_POR",
+      "SAMPLE_OULAD"
+    ],
+    "explanation_modes": [
+      "baseline_first_20_rows",
+      "task_aware_data_summarization"
+    ],
+    "primary_cases": 104,
+    "expected_judge_records": 208,
+    "record_id_format": "dataset_id__task_id__explanation_mode"
+  },
+  "primary_cases": [
+    {
+      "case_id": "SAMPLE_UCI_POR__A-B01",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-B01",
+      "task_name": "Overall performance distribution",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Cohort",
+      "row_count": 10,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-B02",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-B02",
+      "task_name": "Completion / outcome summary",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Cohort",
+      "row_count": 2,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-B03",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-B03",
+      "task_name": "Engagement distribution",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Cohort",
+      "row_count": 4,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-B04",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-B04",
+      "task_name": "At-risk overview",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Cohort",
+      "row_count": 3,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-C01",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C01",
+      "task_name": "Compare performance trajectories",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "2 students",
+      "row_count": 6,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-C02",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C02",
+      "task_name": "Compare engagement patterns",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "2 students",
+      "row_count": 6,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-C03",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C03",
+      "task_name": "Compare risk profile",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "2 students",
+      "row_count": 2,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-C04",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C04",
+      "task_name": "Compare lifestyle context",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "2 students",
+      "row_count": 10,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-C05",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C05",
+      "task_name": "Compare academic background",
+      "target_audience": [
+        "academic_advisor"
+      ],
+      "scope": "2 students",
+      "row_count": 2,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-C06",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C06",
+      "task_name": "Compare resource usage",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "2 students",
+      "row_count": 2,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G01",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G01",
+      "task_name": "Identify low-engagement group",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G02",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G02",
+      "task_name": "Engagement–performance relationship",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "Many students",
+      "row_count": 649,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G03",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G03",
+      "task_name": "Identify at-risk cohort",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 50,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G04",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G04",
+      "task_name": "Assessment difficulty analysis",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "Many students",
+      "row_count": 3,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G05",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G05",
+      "task_name": "Submission behaviour analysis",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "Many students",
+      "row_count": 4,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G06",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G06",
+      "task_name": "Activity type effectiveness",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "Many students",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G07",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G07",
+      "task_name": "Factor correlation analysis",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "Many students",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G08",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G08",
+      "task_name": "Background group performance & engagement profile",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "Many students",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G09",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G09",
+      "task_name": "Socioeconomic disadvantage impact",
+      "target_audience": [
+        "academic_advisor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G10",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G10",
+      "task_name": "Consistency analysis across cohort",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "Many students",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G11",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G11",
+      "task_name": "Weekly engagement drop detection",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G12",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G12",
+      "task_name": "Background group pass/fail/withdrawal rate",
+      "target_audience": [
+        "academic_advisor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 4,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G13",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G13",
+      "task_name": "Lifestyle risk across cohort",
+      "target_audience": [
+        "academic_advisor"
+      ],
+      "scope": "Many students",
+      "row_count": 649,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G14",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G14",
+      "task_name": "Early withdrawal signal analysis",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G15",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G15",
+      "task_name": "Intervention priority ranking",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-G16",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G16",
+      "task_name": "Admin action recommendation",
+      "target_audience": [
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-S01",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S01",
+      "task_name": "Student full profile snapshot",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-S02",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S02",
+      "task_name": "Student score trend",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "1 student",
+      "row_count": 3,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-S03",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S03",
+      "task_name": "Student engagement trajectory",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "1 student",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-S04",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S04",
+      "task_name": "Student risk flag breakdown",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "1 student",
+      "row_count": 4,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-S05",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S05",
+      "task_name": "Student competency gap",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "1 student",
+      "row_count": 3,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-S06",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S06",
+      "task_name": "Student submission & punctuality",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "1 student",
+      "row_count": 3,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-S07",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S07",
+      "task_name": "Student background context",
+      "target_audience": [
+        "academic_advisor",
+        "admin"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__A-S08",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S08",
+      "task_name": "Student intervention recommendation",
+      "target_audience": [
+        "academic_advisor",
+        "admin"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-B01",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-B01",
+      "task_name": "Performance overview",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-B02",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-B02",
+      "task_name": "Risk status card",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-B03",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-B03",
+      "task_name": "Engagement summary",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T01",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T01",
+      "task_name": "Score trend analysis",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 3,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T02",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T02",
+      "task_name": "Competency gap analysis",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 3,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T03",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T03",
+      "task_name": "Peer comparison",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 6,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T04",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T04",
+      "task_name": "At-risk self-check",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 5,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T05",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T05",
+      "task_name": "Weekly engagement trend",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T06",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T06",
+      "task_name": "Study consistency check",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T07",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T07",
+      "task_name": "Absence / inactivity impact",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 4,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T08",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T08",
+      "task_name": "Assessment lateness impact",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 3,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T09",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T09",
+      "task_name": "Lifestyle risk vs performance",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student + cohort context",
+      "row_count": 649,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T10",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T10",
+      "task_name": "Resource engagement breakdown",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T11",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T11",
+      "task_name": "Registration timing vs performance",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T12",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T12",
+      "task_name": "Procrastination analysis",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 4,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T13",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T13",
+      "task_name": "Action plan generation",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T14",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T14",
+      "task_name": "Social balance vs performance",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student + cohort context",
+      "row_count": 649,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_UCI_POR__S-T15",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T15",
+      "task_name": "Family context vs performance",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student + cohort context",
+      "row_count": 649,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-B01",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-B01",
+      "task_name": "Overall performance distribution",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Cohort",
+      "row_count": 11,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-B02",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-B02",
+      "task_name": "Completion / outcome summary",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Cohort",
+      "row_count": 4,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-B03",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-B03",
+      "task_name": "Engagement distribution",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Cohort",
+      "row_count": 4,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-B04",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-B04",
+      "task_name": "At-risk overview",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Cohort",
+      "row_count": 3,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-C01",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C01",
+      "task_name": "Compare performance trajectories",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "2 students",
+      "row_count": 17,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-C02",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C02",
+      "task_name": "Compare engagement patterns",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "2 students",
+      "row_count": 6,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-C03",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C03",
+      "task_name": "Compare risk profile",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "2 students",
+      "row_count": 2,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-C04",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C04",
+      "task_name": "Compare lifestyle context",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "2 students",
+      "row_count": 10,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-C05",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C05",
+      "task_name": "Compare academic background",
+      "target_audience": [
+        "academic_advisor"
+      ],
+      "scope": "2 students",
+      "row_count": 2,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-C06",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C06",
+      "task_name": "Compare resource usage",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "2 students",
+      "row_count": 10,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G01",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G01",
+      "task_name": "Identify low-engagement group",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 1544,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G02",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G02",
+      "task_name": "Engagement–performance relationship",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "Many students",
+      "row_count": 1998,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G03",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G03",
+      "task_name": "Identify at-risk cohort",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 50,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G04",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G04",
+      "task_name": "Assessment difficulty analysis",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "Many students",
+      "row_count": 112,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G05",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G05",
+      "task_name": "Submission behaviour analysis",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "Many students",
+      "row_count": 11,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G06",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G06",
+      "task_name": "Activity type effectiveness",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "Many students",
+      "row_count": 9,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G07",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G07",
+      "task_name": "Factor correlation analysis",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "Many students",
+      "row_count": 4,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G08",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G08",
+      "task_name": "Background group performance & engagement profile",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "Many students",
+      "row_count": 11,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G09",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G09",
+      "task_name": "Socioeconomic disadvantage impact",
+      "target_audience": [
+        "academic_advisor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 1998,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G10",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G10",
+      "task_name": "Consistency analysis across cohort",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "Many students",
+      "row_count": 3,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G11",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G11",
+      "task_name": "Weekly engagement drop detection",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 42,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G12",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G12",
+      "task_name": "Background group pass/fail/withdrawal rate",
+      "target_audience": [
+        "academic_advisor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 53,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G13",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G13",
+      "task_name": "Lifestyle risk across cohort",
+      "target_audience": [
+        "academic_advisor"
+      ],
+      "scope": "Many students",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G14",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G14",
+      "task_name": "Early withdrawal signal analysis",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 164,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G15",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G15",
+      "task_name": "Intervention priority ranking",
+      "target_audience": [
+        "instructor",
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 50,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-G16",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G16",
+      "task_name": "Admin action recommendation",
+      "target_audience": [
+        "admin"
+      ],
+      "scope": "Many students",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-S01",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S01",
+      "task_name": "Student full profile snapshot",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-S02",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S02",
+      "task_name": "Student score trend",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "1 student",
+      "row_count": 5,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-S03",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S03",
+      "task_name": "Student engagement trajectory",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "1 student",
+      "row_count": 32,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-S04",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S04",
+      "task_name": "Student risk flag breakdown",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "1 student",
+      "row_count": 4,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-S05",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S05",
+      "task_name": "Student competency gap",
+      "target_audience": [
+        "instructor",
+        "academic_advisor"
+      ],
+      "scope": "1 student",
+      "row_count": 5,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-S06",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S06",
+      "task_name": "Student submission & punctuality",
+      "target_audience": [
+        "instructor"
+      ],
+      "scope": "1 student",
+      "row_count": 5,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-S07",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S07",
+      "task_name": "Student background context",
+      "target_audience": [
+        "academic_advisor",
+        "admin"
+      ],
+      "scope": "1 student",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__A-S08",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-S08",
+      "task_name": "Student intervention recommendation",
+      "target_audience": [
+        "academic_advisor",
+        "admin"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-B01",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-B01",
+      "task_name": "Performance overview",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-B02",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-B02",
+      "task_name": "Risk status card",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-B03",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-B03",
+      "task_name": "Engagement summary",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T01",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T01",
+      "task_name": "Score trend analysis",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 5,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T02",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T02",
+      "task_name": "Competency gap analysis",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 5,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T03",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T03",
+      "task_name": "Peer comparison",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 6,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T04",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T04",
+      "task_name": "At-risk self-check",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 5,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T05",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T05",
+      "task_name": "Weekly engagement trend",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 32,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T06",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T06",
+      "task_name": "Study consistency check",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 32,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T07",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T07",
+      "task_name": "Absence / inactivity impact",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 6,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T08",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T08",
+      "task_name": "Assessment lateness impact",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 5,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T09",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T09",
+      "task_name": "Lifestyle risk vs performance",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student + cohort context",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T10",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T10",
+      "task_name": "Resource engagement breakdown",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 9,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T11",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T11",
+      "task_name": "Registration timing vs performance",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 1988,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T12",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T12",
+      "task_name": "Procrastination analysis",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 6,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T13",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T13",
+      "task_name": "Action plan generation",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T14",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T14",
+      "task_name": "Social balance vs performance",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student + cohort context",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    },
+    {
+      "case_id": "SAMPLE_OULAD__S-T15",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T15",
+      "task_name": "Family context vs performance",
+      "target_audience": [
+        "student"
+      ],
+      "scope": "1 student + cohort context",
+      "row_count": 0,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "expected_judge_records": 2
+    }
+  ],
+  "gate_decision": {
+    "planned_record_materialization_allowed": true,
+    "slice_generation_allowed": true,
+    "full_judge_invocation_allowed": false,
+    "official_full_evaluation_allowed": false
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C05__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-C05",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Compare academic background",
+    "scope": "2 students",
+    "actionable_question": "Does one student face more structural disadvantage than the other?",
+    "target_audience": "academic_advisor",
+    "ai_summary_type": "multi_metric_comparison",
+    "ai_prompt_hint": "Identify background-driven performance differences. Avoid causal claims.",
+    "query_labels": [
+      "background_comparison"
+    ],
+    "explanation_strategy": "comparison"
+  },
+  "schema_context": {
+    "source_tables": [
+      "student",
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "highest_education",
+      "previous_attempt_count",
+      "imd_score_numeric",
+      "socioeconomic_band",
+      "disability_flag",
+      "disadvantage_score [FE single]",
+      "support_score [FE single]",
+      "family_stability_score [FE single]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "background_comparison"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The comparison of academic backgrounds reveals significant differences in socioeconomic status and disadvantage scores between the two students. These factors may contribute to varying levels of structural disadvantage.\n\nInsights: Socioeconomic Band Disparity: Student SAMPLE_OULAD_STU_100788 belongs to a higher socioeconomic band compared to SAMPLE_OULAD_STU_101700, which may indicate better access to resources. | Disadvantage Score Comparison: The disadvantage score for SAMPLE_OULAD_STU_101700 is significantly higher than that of SAMPLE_OULAD_STU_100788, indicating a greater structural disadvantage.\n\nEducational implications: Students from lower socioeconomic backgrounds may require additional support to succeed academically.\n\nRecommendations: high - Implement targeted support programs for students with high disadvantage scores. - To address the structural barriers faced by students like SAMPLE_OULAD_STU_101700.",
+    "structured_payload": {
+      "task_id": "A-C05",
+      "execution_id": "exec_1781847669642_4a78c740",
+      "explanation": {
+        "summary": "The comparison of academic backgrounds reveals significant differences in socioeconomic status and disadvantage scores between the two students. These factors may contribute to varying levels of structural disadvantage.",
+        "insights": [
+          {
+            "title": "Socioeconomic Band Disparity",
+            "description": "Student SAMPLE_OULAD_STU_100788 belongs to a higher socioeconomic band compared to SAMPLE_OULAD_STU_101700, which may indicate better access to resources.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "socioeconomic_band",
+                "value": "80-90%",
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Higher socioeconomic band indicates better resources."
+              },
+              {
+                "metric": "socioeconomic_band",
+                "value": "10-20",
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Lower socioeconomic band indicates limited resources."
+              }
+            ]
+          },
+          {
+            "title": "Disadvantage Score Comparison",
+            "description": "The disadvantage score for SAMPLE_OULAD_STU_101700 is significantly higher than that of SAMPLE_OULAD_STU_100788, indicating a greater structural disadvantage.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "disadvantage_score",
+                "value": 0.075,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Lower disadvantage score suggests fewer barriers."
+              },
+              {
+                "metric": "disadvantage_score",
+                "value": 0.725,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Higher disadvantage score suggests more barriers."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Students from lower socioeconomic backgrounds may require additional support to succeed academically."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted support programs for students with high disadvantage scores.",
+            "rationale": "To address the structural barriers faced by students like SAMPLE_OULAD_STU_101700."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "Data is complete and directly relevant to the analysis.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "comparison",
+      "explanation_type": "comparison",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "full_rows_due_to_small_result",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 2,
+      "included_row_count": 2,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "background_comparison",
+          "row_count": 2,
+          "included_row_count": 2
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 8808,
+        "token_usage": {
+          "prompt_tokens": 895,
+          "completion_tokens": 507,
+          "total_tokens": 1402
+        },
+        "strategy": "comparison",
+        "granularity": "semester",
+        "cost_usd": 0.000438
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-C05__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "2248b54aa0a65e16688d28ae2332949e0d367768bcfc88945b2cb44e3238853a",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 895,
+        "completion_tokens": 507,
+        "total_tokens": 1402
+      },
+      "latency_ms": 8818,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 2,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "background_comparison",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-C05.json",
+        "artifact_sha256": "16a72c8aeb422fd6828703a33c5b3188d70812acd57a7a65c57dfdebfb8743fb",
+        "row_count": 2,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 2,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "background_comparison": 2
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-C05-CORE-01",
+        "description": "Identify background-driven performance differences."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-C05-CONSTRAINT-01",
+        "description": "Avoid causal claims."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

@@ -1,0 +1,234 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T05__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "S-T05",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Weekly engagement trend",
+    "scope": "1 student",
+    "actionable_question": "Which weeks did I disengage and why might that be?",
+    "target_audience": "student",
+    "ai_summary_type": "trend_series",
+    "ai_prompt_hint": "Describe engagement pattern. Flag weeks with sharp drops. Note if drop precedes assessment.",
+    "query_labels": [
+      "weekly_engagement"
+    ],
+    "explanation_strategy": "behavioral"
+  },
+  "schema_context": {
+    "source_tables": [
+      "engagement [OULAD only]"
+    ],
+    "key_db_fields": [
+      "week_number",
+      "engagement_count; early_warning_week [FE cross]",
+      "weekly_engagement_drop [FE cross]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "weekly_engagement"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: Your engagement has shown some fluctuations over the weeks, with notable drops in activity that may indicate periods of disengagement. Specifically, weeks 0, 2, 4, 8, 10, 11, 15, 16, and 18 experienced significant declines in your weekly clicks, which could suggest challenges in maintaining your focus or motivation during those times.\n\nInsights: Significant Engagement Drops: You experienced sharp drops in engagement during several weeks, particularly in week 0 (27 clicks), week 2 (4 clicks), and week 18 (1 click). These drops are concerning as they indicate a struggle to stay engaged with the course material. | Recovery Weeks: After some of the drops, you showed recovery in engagement, particularly in week 12 (56 clicks) and week 13 (53 clicks). This indicates that you can bounce back when you find the motivation.\n\nEducational implications: Identifying the reasons behind your disengagement during specific weeks can help you develop strategies to maintain consistent engagement.\n\nRecommendations: high - Reflect on the weeks with low engagement to identify any external factors or challenges you faced. - Understanding the reasons for your disengagement can help you address these issues and improve your focus moving forward. | medium - Set small, achievable goals for each week to help maintain your engagement. - Breaking down your tasks can make them feel more manageable and keep you motivated.",
+    "structured_payload": {
+      "task_id": "S-T05",
+      "execution_id": "exec_1781847902976_7737b45f",
+      "explanation": {
+        "summary": "Your engagement has shown some fluctuations over the weeks, with notable drops in activity that may indicate periods of disengagement. Specifically, weeks 0, 2, 4, 8, 10, 11, 15, 16, and 18 experienced significant declines in your weekly clicks, which could suggest challenges in maintaining your focus or motivation during those times.",
+        "insights": [
+          {
+            "title": "Significant Engagement Drops",
+            "description": "You experienced sharp drops in engagement during several weeks, particularly in week 0 (27 clicks), week 2 (4 clicks), and week 18 (1 click). These drops are concerning as they indicate a struggle to stay engaged with the course material.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "weekly_clicks",
+                "value": 27,
+                "comparison": "down_from_previous",
+                "delta": -67,
+                "context": "Week 0 compared to week -1"
+              },
+              {
+                "metric": "weekly_clicks",
+                "value": 4,
+                "comparison": "down_from_previous",
+                "delta": -24,
+                "context": "Week 2 compared to week 1"
+              },
+              {
+                "metric": "weekly_clicks",
+                "value": 1,
+                "comparison": "down_from_previous",
+                "delta": -23,
+                "context": "Week 18 compared to week 17"
+              }
+            ]
+          },
+          {
+            "title": "Recovery Weeks",
+            "description": "After some of the drops, you showed recovery in engagement, particularly in week 12 (56 clicks) and week 13 (53 clicks). This indicates that you can bounce back when you find the motivation.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "weekly_clicks",
+                "value": 56,
+                "comparison": "up_from_previous",
+                "delta": 53,
+                "context": "Week 12 compared to week 11"
+              },
+              {
+                "metric": "weekly_clicks",
+                "value": 53,
+                "comparison": "down_from_previous",
+                "delta": -3,
+                "context": "Week 13 compared to week 12"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Identifying the reasons behind your disengagement during specific weeks can help you develop strategies to maintain consistent engagement."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Reflect on the weeks with low engagement to identify any external factors or challenges you faced.",
+            "rationale": "Understanding the reasons for your disengagement can help you address these issues and improve your focus moving forward."
+          },
+          {
+            "priority": "medium",
+            "action": "Set small, achievable goals for each week to help maintain your engagement.",
+            "rationale": "Breaking down your tasks can make them feel more manageable and keep you motivated."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data shows clear patterns of engagement and disengagement over the weeks.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "behavioral",
+      "explanation_type": "behavioral",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 9578,
+        "token_usage": {
+          "prompt_tokens": 1584,
+          "completion_tokens": 696,
+          "total_tokens": 2280
+        },
+        "strategy": "behavioral",
+        "granularity": "weekly",
+        "cost_usd": 0.000655
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__S-T05__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "65b3d5b62aed49d965c1dd45da4e9d3edf84af35b092508328ed7c556d324f94",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1584,
+        "completion_tokens": 696,
+        "total_tokens": 2280
+      },
+      "latency_ms": 9583,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 32,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "weekly_engagement",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T05.json",
+        "artifact_sha256": "2e8eea276cfc460db42374b76912079690f44924314782df5b07b25be39f76ee",
+        "row_count": 32,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 32,
+    "retrieved_row_count_by_dataset": {
+      "weekly_engagement": 32
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "weekly_engagement",
+        "start": 0,
+        "end": 31
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_OULAD__S-T05__baseline_first_20_rows__weekly_engagement__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/retrieval_logs/SAMPLE_OULAD__S-T05__baseline_first_20_rows.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "weekly_engagement": 32
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "S-T05-CORE-01",
+        "description": "Describe engagement pattern."
+      },
+      {
+        "requirement_id": "S-T05-CORE-02",
+        "description": "Flag weeks with sharp drops."
+      },
+      {
+        "requirement_id": "S-T05-CORE-03",
+        "description": "Note if drop precedes assessment."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "S-T05-CONSTRAINT-01",
+        "description": "Treat temporal proximity between engagement drops and assessments as an association, not proof that the assessment caused the drop."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

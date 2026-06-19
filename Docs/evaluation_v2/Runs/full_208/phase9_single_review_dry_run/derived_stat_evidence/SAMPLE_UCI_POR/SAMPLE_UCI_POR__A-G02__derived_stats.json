@@ -1,0 +1,38 @@
+{
+  "artifact_type": "llm_judge_v3_deterministic_derived_stat_evidence_v1",
+  "generated_at": "2026-06-19T10:02:51.083Z",
+  "dry_run_mode": "single_review",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G02",
+  "task_name": "Engagement–performance relationship",
+  "ai_summary_type": "correlation_evidence",
+  "stat_family": "correlation",
+  "coefficient_method": "pearson",
+  "x_column": "engagement_score",
+  "y_column": "avg_score",
+  "entity_column": "student_id",
+  "source_full_query_artifact": {
+    "path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G02.json",
+    "sha256": "ec1f523b113edf667ebc50cd23a781f0582552aee4eb0ead13dd52d986b33157",
+    "evidence_id": "SAMPLE_UCI_POR__A-G02"
+  },
+  "source_judge_input_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_inputs/SAMPLE_UCI_POR__A-G02__baseline_first_20_rows.json",
+  "derived_stats": [
+    {
+      "dataset_label": "engagement_performance_scatter",
+      "status": "skipped",
+      "reason": "zero_variance",
+      "row_count": 649,
+      "valid_pair_count": 649,
+      "invalid_x_count": 0,
+      "invalid_y_count": 0,
+      "x_variance": 0,
+      "y_variance": 130052.47389145705,
+      "warnings": [
+        "Cannot derive Pearson coefficient because engagement_score or avg_score has zero variance."
+      ]
+    }
+  ],
+  "judge_usage_note": "Use this artifact as deterministic support for correlation coefficient claims. It proves derived Pearson r from all valid x/y pairs in the full query result; it does not prove causality or statistical significance.",
+  "artifact_sha256": "480511f6c79973d8883925d6c83ab4f066f3348b81884d27c8c38d2c9d43dd0f"
+}

@@ -52,7 +52,7 @@ Không có `resource_type` giả. Thay vì bung 28 `missing_metric_evidence`, su
 
 Validator:
 
-`Docs/evaluation_v2/ai_explanation_judge_v2/validate_multi_metric_comparison.py`
+`Docs/evaluation_v2/UpdateBerforeLLMv2/validate_multi_metric_comparison.py`
 
 Kết quả cuối cùng:
 

@@ -1,0 +1,432 @@
+{
+  "manifest_version": "llm_judge_v2_pilot_case_run_manifest_v1",
+  "status": "READY_FOR_PHASE6_PREFLIGHT",
+  "created_at_local_date": "2026-06-19",
+  "timezone": "Asia/Saigon",
+  "purpose": "Define the representative pilot case set used to validate LLM Judge V2 runner, input materialization, evidence access, output validation and scoring contracts before any full evaluation run.",
+  "linked_contract_manifest": {
+    "path": "Docs/evaluation_v2/Runs/pilot_contract_manifest_v1.json",
+    "sha256": "958720f5cc5a63a66b639b0e1d6fbff56f7a386c0b740844307bb4df81f8e9ef",
+    "required_status": "FROZEN_FOR_PILOT"
+  },
+  "selection_policy": {
+    "primary_case_count": 12,
+    "modes_per_case": [
+      "baseline_first_20_rows",
+      "task_aware_data_summarization"
+    ],
+    "expected_judge_records": 24,
+    "selection_grain": "dataset_id + task_id; runner expands each case to both explanation modes",
+    "coverage_requirements": [
+      "Include both SAMPLE_UCI_POR and SAMPLE_OULAD.",
+      "Include both row_count buckets: <=20 and >20.",
+      "Include student-facing and admin/instructor/advisor-facing tasks.",
+      "Include trend, risk, comparison, correlation, ranking and synthesis task families.",
+      "Include at least one safety/fairness applicable task.",
+      "Include large-result cases that require deterministic artifact retrieval or chunk/retrieval validation."
+    ],
+    "non_goals": [
+      "This pilot case manifest does not authorize Phase 8 full evaluation.",
+      "This manifest does not choose final calibration thresholds.",
+      "This manifest does not replace the frozen contract manifest."
+    ]
+  },
+  "primary_cases": [
+    {
+      "case_id": "pilot_001_uci_st01_student_score_trend_small",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T01",
+      "task_name": "Score trend analysis",
+      "row_count": 3,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "coverage_tags": [
+        "uci",
+        "student",
+        "trend",
+        "small_result",
+        "direct_embedding",
+        "threshold_check"
+      ],
+      "pilot_focus": "Verify small-result full evidence handling, trend interpretation and S-T01 three-point trend constraint behavior."
+    },
+    {
+      "case_id": "pilot_002_uci_st04_student_risk_checklist_small",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T04",
+      "task_name": "At-risk self-check",
+      "row_count": 5,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "coverage_tags": [
+        "uci",
+        "student",
+        "risk",
+        "small_result",
+        "direct_embedding",
+        "safety_fairness_applicable",
+        "constraint_handling"
+      ],
+      "pilot_focus": "Verify triggered vs non-triggered flag handling and safety/fairness applicability materialization."
+    },
+    {
+      "case_id": "pilot_003_uci_st09_student_lifestyle_risk_large",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "role": "student",
+      "task_id": "S-T09",
+      "task_name": "Lifestyle risk vs performance",
+      "row_count": 649,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "coverage_tags": [
+        "uci",
+        "student",
+        "risk",
+        "correlation",
+        "large_result",
+        "retrieval_required",
+        "safety_fairness_applicable",
+        "causal_framing"
+      ],
+      "pilot_focus": "Verify large-result evidence access, selected-student plus cohort context and correlation-not-causation framing."
+    },
+    {
+      "case_id": "pilot_004_uci_ac04_two_student_lifestyle_comparison_small",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-C04",
+      "task_name": "Compare lifestyle context",
+      "row_count": 10,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "coverage_tags": [
+        "uci",
+        "admin",
+        "two_student_comparison",
+        "lifestyle_context",
+        "small_result",
+        "direct_embedding",
+        "safety_fairness_applicable"
+      ],
+      "pilot_focus": "Verify A-C04 split between core output, supporting context and non-causal lifestyle constraint."
+    },
+    {
+      "case_id": "pilot_005_uci_ag02_admin_engagement_performance_large",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G02",
+      "task_name": "Engagement–performance relationship",
+      "row_count": 649,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "coverage_tags": [
+        "uci",
+        "admin",
+        "cohort",
+        "correlation",
+        "outlier_detection",
+        "large_result",
+        "retrieval_required",
+        "causal_framing"
+      ],
+      "pilot_focus": "Verify cohort-level correlation explanation, outlier handling and anti-causal constraint."
+    },
+    {
+      "case_id": "pilot_006_uci_ag13_admin_lifestyle_rank_large",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G13",
+      "task_name": "Lifestyle risk across cohort",
+      "row_count": 649,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "coverage_tags": [
+        "uci",
+        "admin",
+        "cohort",
+        "ranking",
+        "lifestyle_risk",
+        "large_result",
+        "retrieval_required",
+        "safety_fairness_applicable"
+      ],
+      "pilot_focus": "Verify cohort ranking with sensitive lifestyle-risk framing and no deterministic/blame language."
+    },
+    {
+      "case_id": "pilot_007_oulad_st05_student_weekly_engagement_large",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "student",
+      "task_id": "S-T05",
+      "task_name": "Weekly engagement trend",
+      "row_count": 32,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "coverage_tags": [
+        "oulad",
+        "student",
+        "trend",
+        "weekly_engagement",
+        "large_result",
+        "retrieval_required",
+        "temporal_reasoning"
+      ],
+      "pilot_focus": "Verify weekly trend/drop explanation when row count crosses the small-result boundary."
+    },
+    {
+      "case_id": "pilot_008_oulad_ag07_admin_factor_correlation_small",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G07",
+      "task_name": "Factor correlation analysis",
+      "row_count": 4,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "coverage_tags": [
+        "oulad",
+        "admin",
+        "cohort",
+        "feature_ranking",
+        "correlation",
+        "small_result",
+        "direct_embedding",
+        "safety_fairness_applicable"
+      ],
+      "pilot_focus": "Verify sensitive feature correlation constraints and factor ranking without prescriptive overclaiming."
+    },
+    {
+      "case_id": "pilot_009_oulad_ag11_admin_weekly_drop_large",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G11",
+      "task_name": "Weekly engagement drop detection",
+      "row_count": 42,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "coverage_tags": [
+        "oulad",
+        "admin",
+        "cohort",
+        "weekly_drop",
+        "early_warning_week",
+        "large_result",
+        "retrieval_required",
+        "action_timing"
+      ],
+      "pilot_focus": "Verify early-warning week materialization and admin action timing on large weekly data."
+    },
+    {
+      "case_id": "pilot_010_oulad_ag15_admin_priority_ranking_large",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G15",
+      "task_name": "Intervention priority ranking",
+      "row_count": 50,
+      "row_count_bucket": ">20",
+      "expected_evidence_access_path": "deterministic_artifact_retrieval",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "coverage_tags": [
+        "oulad",
+        "admin",
+        "cohort",
+        "risk",
+        "ranking",
+        "priority_list",
+        "large_result",
+        "retrieval_required",
+        "safety_fairness_applicable"
+      ],
+      "pilot_focus": "Verify intervention priority ranking, per-student triggered flags and action-per-priority-group requirements."
+    },
+    {
+      "case_id": "pilot_011_oulad_ag16_admin_synthesis_small",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": null,
+      "role": "admin",
+      "task_id": "A-G16",
+      "task_name": "Admin action recommendation",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "coverage_tags": [
+        "oulad",
+        "admin",
+        "cohort",
+        "synthesis",
+        "recommendation",
+        "small_result",
+        "direct_embedding",
+        "safety_fairness_applicable",
+        "grounding"
+      ],
+      "pilot_focus": "Verify highest-level admin synthesis constraints: every action grounded in returned cohort FE signals."
+    },
+    {
+      "case_id": "pilot_012_oulad_as08_single_student_admin_recommendation_small",
+      "dataset_id": "SAMPLE_OULAD",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "role": "admin",
+      "task_id": "A-S08",
+      "task_name": "Student intervention recommendation",
+      "row_count": 1,
+      "row_count_bucket": "<=20",
+      "expected_evidence_access_path": "direct_embedding",
+      "expected_modes": [
+        "baseline_first_20_rows",
+        "task_aware_data_summarization"
+      ],
+      "coverage_tags": [
+        "oulad",
+        "admin",
+        "single_student",
+        "synthesis",
+        "recommendation",
+        "small_result",
+        "direct_embedding",
+        "safety_fairness_applicable",
+        "grounding"
+      ],
+      "pilot_focus": "Verify single-student admin recommendation with urgency, actor and deadline requirements."
+    }
+  ],
+  "synthetic_validation_checks": [
+    {
+      "check_id": "pilot_validation_missing_retrieval_log",
+      "type": "negative_contract_check",
+      "applies_to_cases": [
+        "pilot_003_uci_st09_student_lifestyle_risk_large",
+        "pilot_005_uci_ag02_admin_engagement_performance_large",
+        "pilot_007_oulad_st05_student_weekly_engagement_large"
+      ],
+      "expected_behavior": "Runner must mark the record invalid or fail closed when deterministic_artifact_retrieval is selected but retrieval_log_path is absent or unreadable."
+    },
+    {
+      "check_id": "pilot_validation_contract_hash_mismatch",
+      "type": "negative_contract_check",
+      "applies_to_cases": [
+        "all"
+      ],
+      "expected_behavior": "Runner must stop before judge invocation if any artifact hash in the linked contract manifest differs from the current file hash."
+    }
+  ],
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 6,
+      "SAMPLE_OULAD": 6
+    },
+    "row_count_buckets": {
+      "<=20": 6,
+      ">20": 6
+    },
+    "expected_evidence_access_paths": {
+      "direct_embedding": 6,
+      "deterministic_artifact_retrieval": 6
+    },
+    "roles": {
+      "student": 4,
+      "admin": 8
+    },
+    "expected_mode_records": {
+      "baseline_first_20_rows": 12,
+      "task_aware_data_summarization": 12,
+      "total": 24
+    },
+    "coverage_tags_present": [
+      "trend",
+      "risk",
+      "comparison",
+      "correlation",
+      "ranking",
+      "synthesis",
+      "recommendation",
+      "safety_fairness_applicable",
+      "causal_framing",
+      "grounding",
+      "large_result",
+      "small_result"
+    ]
+  },
+  "phase6_preflight_requirements": [
+    "Verify linked contract manifest status and SHA-256 before expanding pilot cases.",
+    "Expand each primary case to both explanation modes.",
+    "Resolve task metadata from Backend/src/config/taskRegistry.json.",
+    "Resolve task evaluation requirements from Docs/evaluation_v2/Rubric/task_evaluation_requirements.json.",
+    "Materialize only judge-input schema fields; strip source_field, review_status and review_note.",
+    "Validate every judge input against Docs/evaluation_v2/Input_AI/judge_input_schema.json.",
+    "For <=20 cases, verify direct embedded rows match full artifact row count and hash.",
+    "For >20 cases, verify full artifact access, chunk manifest, deterministic scan scope and retrieval_log_path.",
+    "Do not call the judge if any preflight validation fails."
+  ],
+  "gate_decision": {
+    "phase6_preflight_allowed": true,
+    "pilot_judge_invocation_allowed": false,
+    "official_full_evaluation_allowed": false,
+    "note": "This manifest selects pilot cases. Pilot judge invocation should be enabled only after Phase 6 runner/importer/validator preflight passes."
+  }
+}

@@ -1,0 +1,97 @@
+{
+  "schema_version": "pairwise_judge_v3_dry_run_schema_v1",
+  "pairwise_record_id": "SAMPLE_UCI_POR__A-B01__pairwise_BA",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-B01",
+  "order_variant": "BA",
+  "scoring_status": "judged",
+  "winner": "A",
+  "winner_confidence": "medium",
+  "difference_magnitude": "small",
+  "dimension_winners": {
+    "faithfulness": "A",
+    "numerical_correctness": "A",
+    "completeness": "A",
+    "task_relevance": "A",
+    "actionability": "A",
+    "clarity": "tie",
+    "safety_fairness": "tie"
+  },
+  "metric_comparison": {
+    "faithfulness": {
+      "winner": "A",
+      "reason": "Candidate A more directly flags the below-pass concern requested by the task, while candidate B emphasizes the 50-60 bucket.",
+      "evidence_refs": [
+        "prompt_packet:A-B01:task_context",
+        "prompt_packet:A-B01:candidate_explanations"
+      ]
+    },
+    "numerical_correctness": {
+      "winner": "A",
+      "reason": "Candidate A gives exact count 108 and percentage 16.6% for the 40-50 bucket and 7 students at 90-100.",
+      "evidence_refs": [
+        "prompt_packet:A-B01:task_context",
+        "prompt_packet:A-B01:candidate_explanations"
+      ]
+    },
+    "completeness": {
+      "winner": "A",
+      "reason": "Candidate A covers score spread and below-threshold concern more completely.",
+      "evidence_refs": [
+        "prompt_packet:A-B01:task_context",
+        "prompt_packet:A-B01:candidate_explanations"
+      ]
+    },
+    "task_relevance": {
+      "winner": "A",
+      "reason": "Candidate A better addresses the pass-threshold part of the prompt.",
+      "evidence_refs": [
+        "prompt_packet:A-B01:task_context",
+        "prompt_packet:A-B01:candidate_explanations"
+      ]
+    },
+    "actionability": {
+      "winner": "A",
+      "reason": "Candidate A's intervention target is more aligned with below-threshold students.",
+      "evidence_refs": [
+        "prompt_packet:A-B01:task_context",
+        "prompt_packet:A-B01:candidate_explanations"
+      ]
+    },
+    "clarity": {
+      "winner": "tie",
+      "reason": "Both are clear and well organized.",
+      "evidence_refs": [
+        "prompt_packet:A-B01:task_context",
+        "prompt_packet:A-B01:candidate_explanations"
+      ]
+    },
+    "safety_fairness": {
+      "winner": "tie",
+      "reason": "Both remain at cohort level and avoid unfair individual claims.",
+      "evidence_refs": [
+        "prompt_packet:A-B01:task_context",
+        "prompt_packet:A-B01:candidate_explanations"
+      ]
+    }
+  },
+  "coverage_comparison": {
+    "winner": "A",
+    "reason": "Candidate A covers both distribution shape and the low-score threshold concern."
+  },
+  "specificity_comparison": {
+    "winner": "A",
+    "reason": "Candidate A provides exact counts as well as percentages."
+  },
+  "decisive_evidence": [
+    {
+      "evidence_ref": "candidate_B:A-B01:108_students_16.6_percent_40_50_and_7_students_90_100",
+      "supports_candidate": "A",
+      "reason": "Candidate A's concrete bucket counts make the threshold concern more reportable."
+    }
+  ],
+  "tie_justification": null,
+  "absolute_rerun_flags": [],
+  "requires_absolute_rerun": false,
+  "reviewer_notes": "Candidate A wins for better coverage of the below-threshold requirement."
+}

@@ -1,0 +1,186 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T08__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v2_full_208_phase_f5",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "S-T08",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v2_full_208_v1",
+  "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+  "task_context": {
+    "task_name": "Assessment lateness impact",
+    "scope": "1 student",
+    "actionable_question": "Does submitting late actually lower my score?",
+    "target_audience": "student",
+    "ai_summary_type": "trend_series",
+    "ai_prompt_hint": "Use submission_delay_avg [FE] and punctuality_rate [FE]. Explain how delay magnitude correlates with score drop.",
+    "query_labels": [
+      "submission_lateness"
+    ],
+    "explanation_strategy": "behavioral"
+  },
+  "schema_context": {
+    "source_tables": [
+      "assessment_result",
+      "assessment [OULAD only]"
+    ],
+    "key_db_fields": [
+      "submission_delay_days",
+      "score_normalized",
+      "assessment_type; submission_delay_avg [FE cross]",
+      "punctuality_rate [FE cross]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "submission_lateness"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: Your submission patterns show that while you have been submitting assessments late, you are still achieving passing scores. However, there is a noticeable trend where your scores tend to decrease as the submission delay increases.\n\nInsights: Impact of Submission Delay on Scores: As your submission delay increases, your scores show a slight decline. For instance, your highest score of 100 was achieved with a 3-day delay, while a 5-day delay resulted in a score of 83.\n\nEducational implications: Submitting late may not directly prevent you from passing, but it can impact your overall performance.\n\nRecommendations: high - Aim to submit assessments on or before the due date. - Improving your punctuality can help maintain or improve your scores, as evidenced by the correlation between timely submissions and higher scores.",
+    "structured_payload": {
+      "task_id": "S-T08",
+      "execution_id": "exec_1781847912365_48ce21c2",
+      "explanation": {
+        "summary": "Your submission patterns show that while you have been submitting assessments late, you are still achieving passing scores. However, there is a noticeable trend where your scores tend to decrease as the submission delay increases.",
+        "insights": [
+          {
+            "title": "Impact of Submission Delay on Scores",
+            "description": "As your submission delay increases, your scores show a slight decline. For instance, your highest score of 100 was achieved with a 3-day delay, while a 5-day delay resulted in a score of 83.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "submission_delay_days",
+                "value": 5,
+                "comparison": "up_from_previous",
+                "delta": -7,
+                "context": "Score dropped from 90 to 83 with a 5-day delay."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Submitting late may not directly prevent you from passing, but it can impact your overall performance."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Aim to submit assessments on or before the due date.",
+            "rationale": "Improving your punctuality can help maintain or improve your scores, as evidenced by the correlation between timely submissions and higher scores."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data clearly shows a pattern between submission delays and score outcomes.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "behavioral",
+      "explanation_type": "behavioral",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 5777,
+        "token_usage": {
+          "prompt_tokens": 970,
+          "completion_tokens": 329,
+          "total_tokens": 1299
+        },
+        "strategy": "behavioral",
+        "granularity": "per_assessment",
+        "cost_usd": 0.000343
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__S-T08__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "cf5e9817adf736fd79df00acd5a3aee4d6eb33fc58bf4c1ef8a46a64040146e1",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 970,
+        "completion_tokens": 329,
+        "total_tokens": 1299
+      },
+      "latency_ms": 5779,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 5,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "submission_lateness",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T08.json",
+        "artifact_sha256": "02a77476593087a352549dbdb2c5098286e2277063652aeec9fd94cb464a5018",
+        "row_count": 5,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 5,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "submission_lateness": 5
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "S-T08-CORE-01",
+        "description": "State average submission delay and punctuality rate."
+      },
+      {
+        "requirement_id": "S-T08-CORE-02",
+        "description": "Describe the observed relationship between delay magnitude and score."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "S-T08-CONSTRAINT-01",
+        "description": "Use submission_delay_avg and punctuality_rate when returned."
+      },
+      {
+        "constraint_id": "S-T08-CONSTRAINT-02",
+        "description": "Frame the delay-score relationship as correlational, not causal."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

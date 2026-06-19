@@ -1,0 +1,311 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T06:07:49.507Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-B03__baseline_first_20_rows",
+    "case_id": "SAMPLE_OULAD__A-B03",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-B03",
+    "task_name": "Engagement distribution",
+    "explanation_mode": "baseline_first_20_rows"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-B03.json",
+    "full_query_artifact_sha256": "c20cfd3d2f05f90d06deb04b341e58678453779d5d3f7533154cedcb111762cb"
+  },
+  "request_payload": {
+    "task_id": "A-B03",
+    "execution_id": "exec_1781847625023_5b8a2d71",
+    "task_name": "Engagement distribution",
+    "analysis_type": "distribution",
+    "explanation_strategy": "distribution",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Describe proportion of low/medium/high effort students. Flag the low tail.",
+    "actionable_question": "What proportion of the class is disengaged?",
+    "target_audience": [
+      "instructor",
+      "admin"
+    ],
+    "visualization_config": {
+      "x_field": "study_effort_level",
+      "y_field": "student_count",
+      "series_field": null,
+      "color_field": "study_effort_level",
+      "orientation": "vertical",
+      "variant": "categorical",
+      "x_label": "Effort Level",
+      "y_label": "Number of Students",
+      "semantic_roles": {
+        "x": "category",
+        "y": "count_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "engagement_distribution": [
+        {
+          "study_effort_level": "very_low",
+          "student_count": 1740,
+          "pct_of_class": 69.7,
+          "avg_engagement_score": 0.0516
+        },
+        {
+          "study_effort_level": "low",
+          "student_count": 618,
+          "pct_of_class": 24.7,
+          "avg_engagement_score": 0.2272
+        },
+        {
+          "study_effort_level": "medium",
+          "student_count": 127,
+          "pct_of_class": 5.1,
+          "avg_engagement_score": 0.4293
+        },
+        {
+          "study_effort_level": "high",
+          "student_count": 13,
+          "pct_of_class": 0.5,
+          "avg_engagement_score": 0.707
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "engagement_distribution"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [
+        "avg_engagement_score"
+      ],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [
+        "very_low",
+        "low"
+      ],
+      "focus_bins": [],
+      "category_order": [
+        "very_low",
+        "low",
+        "medium",
+        "high"
+      ],
+      "expected_categories": [
+        "very_low",
+        "low",
+        "medium",
+        "high"
+      ],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "categorical_distribution",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": "study_effort_level",
+      "bin_column": null,
+      "count_column": "student_count",
+      "percent_column": "pct_of_class",
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 12363,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "baseline_first_20_rows",
+    "observed_ai_summary_method": "baseline_first_20_rows",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 680,
+      "completion_tokens": 513,
+      "total_tokens": 1193
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-B03",
+    "execution_id": "exec_1781847625023_5b8a2d71",
+    "explanation": {
+      "summary": "The engagement distribution reveals that a significant majority of students, 69.7%, fall into the 'very low' study effort level, indicating a high proportion of disengaged learners. The distribution is heavily skewed towards lower engagement levels, with only a small fraction of students demonstrating medium or high engagement.",
+      "insights": [
+        {
+          "title": "High Disengagement Rate",
+          "description": "A substantial 69.7% of students are categorized as 'very low' in study effort, which highlights a critical area of concern for engagement strategies.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "pct_of_class",
+              "value": 69.7,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Percentage of students in the 'very low' engagement category"
+            }
+          ]
+        },
+        {
+          "title": "Low Representation of Engaged Students",
+          "description": "Only 5.1% of students are in the 'medium' effort category and a mere 0.5% in the 'high' category, indicating a significant gap in student engagement.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "pct_of_class",
+              "value": 5.1,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Percentage of students in the 'medium' engagement category"
+            },
+            {
+              "metric": "pct_of_class",
+              "value": 0.5,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Percentage of students in the 'high' engagement category"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "The high percentage of students in the 'very low' engagement category suggests a need for targeted interventions to increase overall student engagement."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement engagement-focused strategies such as interactive learning activities and personalized feedback.",
+          "rationale": "These strategies can help motivate students and potentially shift them from low to higher engagement levels."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The dataset is complete and provides clear engagement metrics across defined effort levels.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "distribution",
+    "explanation_type": "distribution",
+    "ai_summary_method": "baseline_first_20_rows",
+    "ai_summary_version": "baseline",
+    "baseline_available": true,
+    "input_summary_type": "raw_first_20_rows",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": null,
+    "included_row_count": null,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 12357,
+      "token_usage": {
+        "prompt_tokens": 680,
+        "completion_tokens": 513,
+        "total_tokens": 1193
+      },
+      "strategy": "distribution",
+      "granularity": "semester",
+      "cost_usd": 0.00041
+    }
+  },
+  "raw_text": "Summary: The engagement distribution reveals that a significant majority of students, 69.7%, fall into the 'very low' study effort level, indicating a high proportion of disengaged learners. The distribution is heavily skewed towards lower engagement levels, with only a small fraction of students demonstrating medium or high engagement.\n\nInsights: High Disengagement Rate: A substantial 69.7% of students are categorized as 'very low' in study effort, which highlights a critical area of concern for engagement strategies. | Low Representation of Engaged Students: Only 5.1% of students are in the 'medium' effort category and a mere 0.5% in the 'high' category, indicating a significant gap in student engagement.\n\nEducational implications: The high percentage of students in the 'very low' engagement category suggests a need for targeted interventions to increase overall student engagement.\n\nRecommendations: high - Implement engagement-focused strategies such as interactive learning activities and personalized feedback. - These strategies can help motivate students and potentially shift them from low to higher engagement levels."
+}

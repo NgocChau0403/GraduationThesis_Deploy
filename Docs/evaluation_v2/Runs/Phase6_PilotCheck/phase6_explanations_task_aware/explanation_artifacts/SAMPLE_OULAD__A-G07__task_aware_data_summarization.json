@@ -1,0 +1,318 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-18T22:33:18.759Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-G07__task_aware_data_summarization",
+    "case_id": "pilot_008_oulad_ag07_admin_factor_correlation_small",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G07",
+    "task_name": "Factor correlation analysis",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/phase6_evidence/evidence_manifest.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/phase6_evidence/full_query_artifacts/SAMPLE_OULAD__A-G07__task_aware_data_summarization.json",
+    "full_query_artifact_sha256": "d1c2a94331e51b1ae1c1efc53c33503b6a548f99d12e7217494a74c47e9a6008"
+  },
+  "request_payload": {
+    "task_id": "A-G07",
+    "execution_id": "exec_1781820427329_f8a24841",
+    "task_name": "Factor correlation analysis",
+    "analysis_type": "correlation",
+    "explanation_strategy": "correlation",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Rank top 5 features by correlation with avg_score [FE]. Note dataset-specific features.",
+    "actionable_question": "What are the strongest predictors of student success in this dataset?",
+    "target_audience": [
+      "instructor",
+      "academic_advisor"
+    ],
+    "visualization_config": {
+      "x_field": "feature_name",
+      "y_field": "correlation_with_avg_score",
+      "series_field": null,
+      "color_field": "correlation_with_avg_score",
+      "orientation": "horizontal",
+      "variant": "score_matrix",
+      "x_label": "Feature",
+      "y_label": "Correlation Coefficient",
+      "semantic_roles": {
+        "x": "category",
+        "y": "performance_metric",
+        "color": "performance_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "factor_correlation_matrix": [
+        {
+          "feature_name": "active_days",
+          "correlation_with_avg_score": 0.4181,
+          "n_samples": 1998,
+          "abs_correlation_rank": 1
+        },
+        {
+          "feature_name": "total_clicks",
+          "correlation_with_avg_score": 0.3237,
+          "n_samples": 1998,
+          "abs_correlation_rank": 2
+        },
+        {
+          "feature_name": "disadvantage_score",
+          "correlation_with_avg_score": -0.1353,
+          "n_samples": 1875,
+          "abs_correlation_rank": 3
+        },
+        {
+          "feature_name": "registration_lead_time",
+          "correlation_with_avg_score": 0.0017,
+          "n_samples": 1988,
+          "abs_correlation_rank": 4
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "factor_correlation_matrix"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [
+        "correlation_with_avg_score",
+        "n_samples"
+      ],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "ranking",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "abs_correlation_rank",
+      "entity_column": "feature_name",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": "asc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": 5,
+      "bottom_k": 3
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 10727,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 862,
+      "completion_tokens": 621,
+      "total_tokens": 1483
+    },
+    "attempts": 3,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-G07",
+    "execution_id": "exec_1781820427329_f8a24841",
+    "explanation": {
+      "summary": "The analysis reveals a moderate positive correlation between active days and average score, indicating that increased engagement may enhance student performance. Conversely, a weak negative correlation exists with disadvantage score, suggesting that higher disadvantage scores are associated with lower average scores.",
+      "insights": [
+        {
+          "title": "Active Days Correlation",
+          "description": "The feature 'active_days' shows a moderate positive correlation (0.4181) with average score, indicating that students who engage more frequently tend to achieve higher scores.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "correlation_with_avg_score",
+              "value": 0.4181,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "indicates a significant relationship between engagement and performance"
+            }
+          ]
+        },
+        {
+          "title": "Total Clicks Correlation",
+          "description": "The feature 'total_clicks' has a moderate positive correlation (0.3237) with average score, suggesting that increased interaction with course materials may also contribute to better academic outcomes.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "correlation_with_avg_score",
+              "value": 0.3237,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "highlights the importance of interaction in learning"
+            }
+          ]
+        },
+        {
+          "title": "Disadvantage Score Correlation",
+          "description": "The feature 'disadvantage_score' exhibits a weak negative correlation (-0.1353) with average score, indicating that higher disadvantage scores are linked to lower performance, which may require targeted interventions.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "correlation_with_avg_score",
+              "value": -0.1353,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "suggests a need for support for disadvantaged students"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Encouraging active participation and interaction with course materials may enhance student performance."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement strategies to increase student engagement, such as gamification or interactive assignments.",
+          "rationale": "Enhancing engagement is likely to improve average scores based on the positive correlation observed."
+        },
+        {
+          "priority": "medium",
+          "action": "Provide additional support and resources for students with high disadvantage scores.",
+          "rationale": "Addressing the needs of disadvantaged students may help mitigate the negative impact on their performance."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The dataset is robust with a sufficient sample size, ensuring reliable correlation analysis.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "correlation",
+    "explanation_type": "correlation",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "full_rows_due_to_small_result",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 4,
+    "included_row_count": 4,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "factor_correlation_matrix",
+        "row_count": 4,
+        "included_row_count": 4
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 10723,
+      "token_usage": {
+        "prompt_tokens": 862,
+        "completion_tokens": 621,
+        "total_tokens": 1483
+      },
+      "strategy": "correlation",
+      "granularity": "semester",
+      "cost_usd": 0.000502
+    }
+  },
+  "raw_text": "Summary: The analysis reveals a moderate positive correlation between active days and average score, indicating that increased engagement may enhance student performance. Conversely, a weak negative correlation exists with disadvantage score, suggesting that higher disadvantage scores are associated with lower average scores.\n\nInsights: Active Days Correlation: The feature 'active_days' shows a moderate positive correlation (0.4181) with average score, indicating that students who engage more frequently tend to achieve higher scores. | Total Clicks Correlation: The feature 'total_clicks' has a moderate positive correlation (0.3237) with average score, suggesting that increased interaction with course materials may also contribute to better academic outcomes. | Disadvantage Score Correlation: The feature 'disadvantage_score' exhibits a weak negative correlation (-0.1353) with average score, indicating that higher disadvantage scores are linked to lower performance, which may require targeted interventions.\n\nEducational implications: Encouraging active participation and interaction with course materials may enhance student performance.\n\nRecommendations: high - Implement strategies to increase student engagement, such as gamification or interactive assignments. - Enhancing engagement is likely to improve average scores based on the positive correlation observed. | medium - Provide additional support and resources for students with high disadvantage scores. - Addressing the needs of disadvantaged students may help mitigate the negative impact on their performance."
+}

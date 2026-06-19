@@ -1,0 +1,117 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:33:58.114Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__A-S05",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": null,
+  "role": "admin",
+  "task_id": "A-S05",
+  "task_name": "Student competency gap",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "A-S05",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 15,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 3,
+    "row_count_observed": 3,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "competency_scores",
+        "row_count": 3,
+        "sample_fields": [
+          "competency_tag",
+          "competency_source",
+          "assessment_type",
+          "assessment_order",
+          "avg_score",
+          "pass_rate",
+          "assessment_count"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "e88796ba4c40e4cf5adc854816ed25ecc8523aee6a1cf626f48f3545f2bb2ed3"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "executable",
+    "backend_confidence": "HIGH",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847238100_985413fe",
+    "taskId": "A-S05",
+    "datasets": {
+      "competency_scores": [
+        {
+          "competency_tag": "quiz 1",
+          "competency_source": "proxy",
+          "assessment_type": "quiz",
+          "assessment_order": 1,
+          "avg_score": 0,
+          "pass_rate": 0,
+          "assessment_count": 1
+        },
+        {
+          "competency_tag": "exam 3",
+          "competency_source": "proxy",
+          "assessment_type": "exam",
+          "assessment_order": 3,
+          "avg_score": 55,
+          "pass_rate": 1,
+          "assessment_count": 1
+        },
+        {
+          "competency_tag": "quiz 2",
+          "competency_source": "proxy",
+          "assessment_type": "quiz",
+          "assessment_order": 2,
+          "avg_score": 55,
+          "pass_rate": 1,
+          "assessment_count": 1
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "A-S05",
+      "isMultiQuery": false,
+      "rowCount": 3,
+      "executionTimeMs": 3,
+      "queryHash": "e7a092f9",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "competency_scores"
+      ],
+      "dataQuality": {
+        "status": "executable",
+        "confidence": "HIGH",
+        "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+        "warnings": []
+      }
+    }
+  }
+}

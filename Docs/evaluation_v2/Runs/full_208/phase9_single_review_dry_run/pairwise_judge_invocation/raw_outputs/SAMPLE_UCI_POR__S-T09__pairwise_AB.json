@@ -1,0 +1,105 @@
+{
+  "schema_version": "pairwise_judge_v3_dry_run_schema_v1",
+  "pairwise_record_id": "SAMPLE_UCI_POR__S-T09__pairwise_AB",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-T09",
+  "order_variant": "AB",
+  "scoring_status": "judged",
+  "winner": "B",
+  "winner_confidence": "medium",
+  "difference_magnitude": "small",
+  "dimension_winners": {
+    "faithfulness": "B",
+    "numerical_correctness": "B",
+    "completeness": "B",
+    "task_relevance": "B",
+    "actionability": "tie",
+    "clarity": "tie",
+    "safety_fairness": "B"
+  },
+  "metric_comparison": {
+    "faithfulness": {
+      "winner": "B",
+      "reason": "Candidate B reflects the weak negative association better; candidate A overstates the pattern as generally lower risk producing higher scores.",
+      "evidence_refs": [
+        "prompt_packet:S-T09:task_context",
+        "prompt_packet:S-T09:candidate_explanations"
+      ]
+    },
+    "numerical_correctness": {
+      "winner": "B",
+      "reason": "Candidate B gives the matching Pearson value -0.1041; candidate A provides no coefficient.",
+      "evidence_refs": [
+        "deterministic_derived_stat_evidence:S-T09:pearson_r_rounded_4=-0.1041"
+      ]
+    },
+    "completeness": {
+      "winner": "B",
+      "reason": "Candidate B covers direction and strength, though neither candidate highlights the selected student's exact position.",
+      "evidence_refs": [
+        "requirements:S-T09:selected_student_position_and_cohort_association"
+      ]
+    },
+    "task_relevance": {
+      "winner": "B",
+      "reason": "Candidate B is more aligned with the requested class scatter interpretation.",
+      "evidence_refs": [
+        "prompt_packet:S-T09:task_context",
+        "prompt_packet:S-T09:candidate_explanations"
+      ]
+    },
+    "actionability": {
+      "winner": "tie",
+      "reason": "Both candidates give broad lifestyle advice, and neither ties the action to the selected student's exact plotted position.",
+      "evidence_refs": [
+        "prompt_packet:S-T09:task_context",
+        "prompt_packet:S-T09:candidate_explanations"
+      ]
+    },
+    "clarity": {
+      "winner": "tie",
+      "reason": "Both are concise and readable.",
+      "evidence_refs": [
+        "prompt_packet:S-T09:task_context",
+        "prompt_packet:S-T09:candidate_explanations"
+      ]
+    },
+    "safety_fairness": {
+      "winner": "B",
+      "reason": "Candidate B is more cautious about the weak relationship; candidate A leans closer to unsupported causal improvement language.",
+      "evidence_refs": [
+        "prompt_packet:S-T09:task_context",
+        "prompt_packet:S-T09:candidate_explanations"
+      ]
+    }
+  },
+  "coverage_comparison": {
+    "winner": "B",
+    "reason": "Candidate B uses the coefficient and weak-strength evidence, but both miss the selected student's concrete position."
+  },
+  "specificity_comparison": {
+    "winner": "B",
+    "reason": "Candidate B is more specific because it reports r = -0.1041."
+  },
+  "decisive_evidence": [
+    {
+      "evidence_ref": "deterministic_derived_stat_evidence:S-T09:pearson_r_rounded_4=-0.1041",
+      "supports_candidate": "B",
+      "reason": "Candidate B directly uses the deterministic coefficient and strength."
+    }
+  ],
+  "tie_justification": null,
+  "absolute_rerun_flags": [
+    {
+      "candidate": "both",
+      "suspected_error_type": "missing_selected_student_position",
+      "severity_hint": "minor",
+      "reason": "Neither candidate compares the selected student's position against the class scatter concretely.",
+      "evidence_refs": [
+        "requirements:S-T09:selected_student_position"
+      ]
+    }
+  ],
+  "requires_absolute_rerun": true,
+  "reviewer_notes": "Candidate B wins mainly on numeric faithfulness; selected-student coverage remains weak in both."
+}

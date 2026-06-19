@@ -1,0 +1,57 @@
+{
+  "report_version": "llm_judge_v2_phase6_3b_explanation_builder_report_v1",
+  "generated_at": "2026-06-19T07:16:21.467Z",
+  "status": "PASS",
+  "phase_scope": [
+    "6.3b explanation builder"
+  ],
+  "mode_endpoints": {
+    "baseline_first_20_rows": "http://localhost:8001",
+    "task_aware_data_summarization": "http://localhost:8000"
+  },
+  "inputs": {
+    "evidence_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "task_registry_path": "Backend/src/config/taskRegistry.json"
+  },
+  "counts": {
+    "evidence_ready_records": 52,
+    "explanation_ready_records": 52,
+    "failed_records": 0,
+    "errors": 0,
+    "warnings": 0
+  },
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 52
+    },
+    "roles": {
+      "admin": 34,
+      "student": 18
+    },
+    "explanation_modes": {
+      "task_aware_data_summarization": 52
+    },
+    "observed_ai_summary_methods": {
+      "task_aware_data_summarization": 52
+    },
+    "statuses": {
+      "explanation_ready": 52
+    }
+  },
+  "outputs": {
+    "explanation_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_manifest.jsonl",
+    "explanation_artifacts_dir": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts",
+    "report_json": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_report.md"
+  },
+  "gate_decision": {
+    "current_dataset_slice_complete": true,
+    "next_dataset_baseline_allowed": true,
+    "aggregate_baseline_allowed": false,
+    "phase6_4_judge_input_materializer_allowed": false,
+    "judge_invocation_allowed": false,
+    "official_full_evaluation_allowed": false,
+    "reason": "Current dataset explanation slice is complete. Run the remaining dataset and build the 104-record baseline aggregate before judge input materialization."
+  },
+  "issues": []
+}

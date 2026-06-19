@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T15__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Claims were judged against the permitted evidence; penalties reflect unsupported, contradicted, or overstrong interpretations when detected."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Numerical values, percentages, rankings, and thresholds were checked against the supplied rows and task context where present."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation was checked against the supplied core and supporting requirements, with omissions penalized only for required outputs."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The response addresses the stated task, dataset, audience, and scope unless missing core outputs or unsupported claims weaken the target answer."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Recommendations or decision support were assessed for whether they follow from the record evidence and match the requested decision level."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally readable and organized; clarity score reflects precision and concision rather than factual correctness."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Safety and fairness were treated as applicable per the conservative pilot default and checked for stigmatizing or deterministic framing."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis shows a weak positive correlation between Family Stability Score and Average Score.",
+      "claim_type": "semantic_interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts:family_context_scatter"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The qualitative interpretation is consistent with the supplied task evidence and does not introduce a detected contradiction."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Weak Positive Correlation: The correlation coefficient of 0.1442 indicates a weak positive relationship between Family Stability Score and Average Score.",
+      "claim_type": "numeric_or_semantic_interpretation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts:family_context_scatter"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The numerical values in this sentence match supplied evidence or task context."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "medium - Explore support systems for students with lower family stability scores.",
+      "claim_type": "recommendation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts:family_context_scatter"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The qualitative interpretation is consistent with the supplied task evidence and does not introduce a detected contradiction."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation was scoreable for this SAMPLE_UCI_POR record. It generally addresses the central task using the supplied evidence; the most consequential limitations are reflected by the listed unsupported claims or missing required outputs.",
+  "evidence_usage_notes": "Evidence access mode was deterministic_artifact_retrieval. Judgment used manifest-referenced artifacts for family_context_scatter; retrieval_log_path was Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T15__task_aware_data_summarization.json. Direct rows, artifact row counts, and any backend data-quality warnings materially informed claim and requirement checks.",
+  "invalid_reason": null
+}

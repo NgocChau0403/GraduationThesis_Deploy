@@ -1,0 +1,274 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_pilot_phase6_6_smoke",
+  "record_id": "SAMPLE_UCI_POR__S-T01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is mostly grounded in the direct-embedded score_trend evidence: it correctly identifies the initial score of 0, later scores of 55, pass threshold 40, target threshold 70, and the general improvement followed by stability. It slightly overstates some educational implications and recommendation rationale beyond the returned evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The main numeric claims are correct: Assessment 1 score 0 is below pass threshold 40, Assessments 2 and 3 score 55 are above pass threshold 40 and below target threshold 70, and the movement from Assessment 1 to 2 is +55 while Assessment 2 to 3 is stable. No material numerical error was found."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The response covers both required core outputs: observed trend direction and assessments below pass/target thresholds. It also provides a recommendation for the weakest assessment. The recommendation is directionally aligned but does not preserve the full returned recommended_action text, especially the part about focusing on missed core concepts before the next assessment."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly answers the student-facing question about whether performance is getting better or worse over time for the correct record, task, and evidence. It remains focused on the student's score trend and threshold status."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The advice to review Assessment 1 with tutor support is useful and grounded in the weakest score. However, the returned recommended_action is more specific than the explanation's action, so the actionability is good but not maximally faithful to the available recommendation field."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is clear, concise, and student-readable. It separates summary, insights, implications, and recommendation in a way that is easy to follow."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The task is marked applicable. The explanation uses supportive, non-stigmatizing language and avoids blaming the student. It frames the low first score as a need for support rather than as a fixed trait."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student initially struggled in Assessment 1.",
+      "claim_type": "performance_status_interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "direct_embedding:score_trend rows 0-2",
+        "score_trend row assessment_order=1 score_normalized=0 pass_threshold=40 below_pass_threshold=true",
+        "deterministic_check:numeric_fields_score_trend",
+        "deterministic_check:threshold_flag_fields_score_trend"
+      ],
+      "expected_value": {
+        "assessment_order": 1,
+        "score_normalized": 0,
+        "pass_threshold": 40,
+        "below_pass_threshold": true
+      },
+      "observed_value": {
+        "explanation_claim": "Assessment 1 score was 0 and significantly below pass threshold 40"
+      },
+      "checker_source": "hybrid",
+      "checker_details": {
+        "relevant_rows": [
+          0
+        ],
+        "relevant_checks": [
+          "numeric_fields_score_trend",
+          "threshold_flag_fields_score_trend"
+        ]
+      },
+      "rationale": "The first assessment score is 0, which is below the returned pass threshold of 40 and below the target threshold of 70."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student passed the last two assessments.",
+      "claim_type": "threshold_status",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "direct_embedding:score_trend rows 1-2",
+        "score_trend row assessment_order=2 score_normalized=55 pass_flag=true pass_threshold=40",
+        "score_trend row assessment_order=3 score_normalized=55 pass_flag=true pass_threshold=40",
+        "deterministic_check:threshold_flag_fields_score_trend"
+      ],
+      "expected_value": {
+        "assessment_orders": [
+          2,
+          3
+        ],
+        "pass_flag": [
+          true,
+          true
+        ],
+        "score_normalized": [
+          55,
+          55
+        ],
+        "pass_threshold": 40
+      },
+      "observed_value": {
+        "explanation_claim": "managed to pass the last two assessments"
+      },
+      "checker_source": "deterministic_checker",
+      "checker_details": {
+        "relevant_rows": [
+          1,
+          2
+        ],
+        "relevant_checks": [
+          "threshold_flag_fields_score_trend"
+        ]
+      },
+      "rationale": "Rows for Assessment 2 and Assessment 3 both have pass_flag=true and scores 55 above pass threshold 40."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The student is still below the target threshold.",
+      "claim_type": "threshold_status",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "direct_embedding:score_trend rows 0-2",
+        "score_trend rows assessment_order=1,2,3 below_target_threshold=true",
+        "target_threshold=70 for all rows",
+        "deterministic_check:threshold_flag_fields_score_trend"
+      ],
+      "expected_value": {
+        "below_target_threshold": [
+          true,
+          true,
+          true
+        ],
+        "target_threshold": 70
+      },
+      "observed_value": {
+        "explanation_claim": "still below the target threshold"
+      },
+      "checker_source": "deterministic_checker",
+      "checker_details": {
+        "triggered_like_counts": {
+          "below_target_threshold": 3
+        }
+      },
+      "rationale": "All three returned assessment rows have below_target_threshold=true, including the last two scores of 55 below target threshold 70."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The trend shows improvement from Assessment 1 to Assessment 2 and stability from Assessment 2 to Assessment 3.",
+      "claim_type": "trend_direction",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "direct_embedding:score_trend rows 0-2",
+        "score_trend score_normalized sequence [0,55,55]",
+        "score_trend performance_trend=27.5",
+        "deterministic_check:numeric_fields_score_trend"
+      ],
+      "expected_value": {
+        "score_sequence": [
+          0,
+          55,
+          55
+        ],
+        "direction": "improves then stabilizes"
+      },
+      "observed_value": {
+        "explanation_claim": "shown improvement; scores 55 in both Assessments 2 and 3; consistency"
+      },
+      "checker_source": "hybrid",
+      "checker_details": {
+        "numeric_columns": [
+          "score_normalized",
+          "performance_trend",
+          "assessment_order"
+        ]
+      },
+      "rationale": "The sequence moves from 0 to 55 and then remains at 55, supporting the explanation's improvement and consistency framing."
+    },
+    {
+      "claim_id": "C05",
+      "claim_text": "The student should review Assessment 1 with tutor support to address core concepts.",
+      "claim_type": "recommended_action",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "local_detail",
+      "evidence_refs": [
+        "direct_embedding:score_trend row assessment_order=1 recommended_action",
+        "score_trend row assessment_order=1 support_level=urgent_support"
+      ],
+      "expected_value": "Review this assessment with tutor support; focus on missed core concepts before the next assessment.",
+      "observed_value": "Review Assessment 1 with tutor support to address core concepts.",
+      "checker_source": "llm_judge",
+      "checker_details": {
+        "requirement_id": "S-T01-SUPPORT-01"
+      },
+      "rationale": "The recommendation is aligned with the returned action for the weakest assessment, but it paraphrases and omits the specific instruction to focus on missed core concepts before the next assessment."
+    },
+    {
+      "claim_id": "C06",
+      "claim_text": "Reviewing foundational material is crucial for succeeding in future assessments.",
+      "claim_type": "action_rationale",
+      "claim_scope": "incidental",
+      "support_status": "partially_supported",
+      "impact_type": "local_detail",
+      "evidence_refs": [
+        "direct_embedding:score_trend row assessment_order=1 recommended_action",
+        "score_trend row assessment_order=1 score_normalized=0"
+      ],
+      "expected_value": "The evidence supports reviewing missed core concepts before the next assessment, but does not prove that the material is foundational or crucial for future success.",
+      "observed_value": "foundational material that is crucial for succeeding in future assessments",
+      "checker_source": "llm_judge",
+      "checker_details": {},
+      "rationale": "The returned recommendation supports reviewing missed concepts before the next assessment, but the stronger claim about foundational material being crucial for future success goes beyond the evidence."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "supporting_recommendation_paraphrase_omission",
+      "claim_ids": [
+        "C05"
+      ],
+      "requirement_id": "S-T01-SUPPORT-01",
+      "severity": "minor",
+      "primary_metric": "completeness",
+      "secondary_metrics": [
+        "actionability"
+      ],
+      "cap_candidate": null,
+      "rationale": "The explanation provides a relevant recommendation for the weakest assessment, but it does not preserve the full returned recommended_action, omitting the explicit focus on missed core concepts before the next assessment.",
+      "evidence_refs": [
+        "direct_embedding:score_trend row assessment_order=1 recommended_action"
+      ]
+    },
+    {
+      "error_id": "E02",
+      "error_type": "slightly_overstated_action_rationale",
+      "claim_ids": [
+        "C06"
+      ],
+      "severity": "minor",
+      "primary_metric": "faithfulness",
+      "secondary_metrics": [
+        "actionability"
+      ],
+      "cap_candidate": null,
+      "rationale": "The explanation's rationale that foundational material is crucial for future success is plausible educational advice, but the supplied evidence only supports reviewing missed core concepts before the next assessment.",
+      "evidence_refs": [
+        "direct_embedding:score_trend row assessment_order=1 recommended_action",
+        "direct_embedding:score_trend row assessment_order=1 score_normalized=0"
+      ]
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "minor",
+    "error_count": 2,
+    "count_by_severity": {
+      "minor": 2,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.5,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.5,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

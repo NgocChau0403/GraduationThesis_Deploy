@@ -1,0 +1,339 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T07:29:58.744Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__S-T03__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__S-T03",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": "SAMPLE_OULAD_STU_100788",
+    "role": "student",
+    "task_id": "S-T03",
+    "task_name": "Peer comparison",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T03.json",
+    "full_query_artifact_sha256": "fe610876e89ca66eba912e2edc06e235347cbdec54f8c8c0f344e278d45741b0"
+  },
+  "request_payload": {
+    "task_id": "S-T03",
+    "execution_id": "exec_1781847881232_997b11bc",
+    "task_name": "Peer comparison",
+    "analysis_type": "comparison",
+    "explanation_strategy": "comparison",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Show student's standing (top X%). Explain which metrics are above/below average.",
+    "actionable_question": "Where do I stand compared to my class?",
+    "target_audience": [
+      "student"
+    ],
+    "visualization_config": {
+      "x_field": "metric_name",
+      "y_field": "metric_value",
+      "series_field": "comparison_group",
+      "color_field": "comparison_group",
+      "orientation": "horizontal",
+      "variant": "grouped",
+      "x_label": "Metric",
+      "y_label": "Value (0-100)",
+      "semantic_roles": {
+        "x": "category",
+        "y": "performance_metric",
+        "series": "category"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "student"
+    },
+    "datasets": {
+      "peer_comparison": [
+        {
+          "metric_name": "Average score",
+          "comparison_group": "You",
+          "metric_value": 94.34,
+          "sort_order": 1
+        },
+        {
+          "metric_name": "Average score",
+          "comparison_group": "Cohort benchmark",
+          "metric_value": 66.68,
+          "sort_order": 1
+        },
+        {
+          "metric_name": "Score percentile",
+          "comparison_group": "You",
+          "metric_value": 89.8,
+          "sort_order": 2
+        },
+        {
+          "metric_name": "Score percentile",
+          "comparison_group": "Cohort benchmark",
+          "metric_value": 50,
+          "sort_order": 2
+        },
+        {
+          "metric_name": "Engagement percentile",
+          "comparison_group": "You",
+          "metric_value": 75,
+          "sort_order": 3
+        },
+        {
+          "metric_name": "Engagement percentile",
+          "comparison_group": "Cohort benchmark",
+          "metric_value": 50,
+          "sort_order": 3
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": {
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "dataset_id": "SAMPLE_OULAD"
+    },
+    "query_labels": [
+      "peer_comparison"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [
+        "You",
+        "Cohort benchmark"
+      ],
+      "metric_directions": {
+        "Average score": "higher_is_better",
+        "Score percentile": "higher_is_better",
+        "Engagement percentile": "higher_is_better"
+      },
+      "metric_units": {
+        "Average score": "score_0_100",
+        "Score percentile": "percent_0_100",
+        "Engagement percentile": "percent_0_100"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": true,
+      "require_metric_units": true,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [
+        "sort_order"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "multi_metric_comparison",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": "comparison_group",
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": "metric_name",
+      "metric_value_column": "metric_value",
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 6770,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 911,
+      "completion_tokens": 515,
+      "total_tokens": 1426
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "S-T03",
+    "execution_id": "exec_1781847881232_997b11bc",
+    "explanation": {
+      "summary": "You are performing exceptionally well compared to your cohort. Your average score, score percentile, and engagement percentile are all significantly higher than the cohort benchmark, indicating strong academic performance and engagement.",
+      "insights": [
+        {
+          "title": "Outstanding Average Score",
+          "description": "Your average score of 94.34 is well above the cohort benchmark of 66.68, showcasing your strong academic abilities.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "Average score",
+              "value": 94.34,
+              "comparison": "up_from_previous",
+              "delta": 27.66,
+              "context": "Cohort benchmark"
+            }
+          ]
+        },
+        {
+          "title": "High Score Percentile",
+          "description": "With a score percentile of 89.8, you are in the top 10% of your class, compared to the cohort's average of 50.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "Score percentile",
+              "value": 89.8,
+              "comparison": "up_from_previous",
+              "delta": 39.8,
+              "context": "Cohort benchmark"
+            }
+          ]
+        },
+        {
+          "title": "Strong Engagement",
+          "description": "Your engagement percentile of 75 indicates that you are more engaged than the average student in your cohort, who has a percentile of 50.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "Engagement percentile",
+              "value": 75,
+              "comparison": "up_from_previous",
+              "delta": 25,
+              "context": "Cohort benchmark"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Your high performance suggests effective study habits and a strong understanding of the material."
+      ],
+      "recommendations": [
+        {
+          "priority": "medium",
+          "action": "Continue to engage with your studies and seek challenges.",
+          "rationale": "Maintaining your current level of engagement and seeking out more challenging material can help you continue to excel."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data is clear and shows a strong comparison between your performance and the cohort.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "comparison",
+    "explanation_type": "comparison",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "full_rows_due_to_small_result",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 6,
+    "included_row_count": 6,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "peer_comparison",
+        "row_count": 6,
+        "included_row_count": 6
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 6736,
+      "token_usage": {
+        "prompt_tokens": 911,
+        "completion_tokens": 515,
+        "total_tokens": 1426
+      },
+      "strategy": "comparison",
+      "granularity": "semester",
+      "cost_usd": 0.000446
+    }
+  },
+  "raw_text": "Summary: You are performing exceptionally well compared to your cohort. Your average score, score percentile, and engagement percentile are all significantly higher than the cohort benchmark, indicating strong academic performance and engagement.\n\nInsights: Outstanding Average Score: Your average score of 94.34 is well above the cohort benchmark of 66.68, showcasing your strong academic abilities. | High Score Percentile: With a score percentile of 89.8, you are in the top 10% of your class, compared to the cohort's average of 50. | Strong Engagement: Your engagement percentile of 75 indicates that you are more engaged than the average student in your cohort, who has a percentile of 50.\n\nEducational implications: Your high performance suggests effective study habits and a strong understanding of the material.\n\nRecommendations: medium - Continue to engage with your studies and seek challenges. - Maintaining your current level of engagement and seeking out more challenging material can help you continue to excel."
+}

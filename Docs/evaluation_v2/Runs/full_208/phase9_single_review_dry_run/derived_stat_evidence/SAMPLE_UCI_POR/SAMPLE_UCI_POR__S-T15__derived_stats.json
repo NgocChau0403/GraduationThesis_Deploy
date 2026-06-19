@@ -1,0 +1,45 @@
+{
+  "artifact_type": "llm_judge_v3_deterministic_derived_stat_evidence_v1",
+  "generated_at": "2026-06-19T10:02:51.105Z",
+  "dry_run_mode": "single_review",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-T15",
+  "task_name": "Family context vs performance",
+  "ai_summary_type": "correlation_evidence",
+  "stat_family": "correlation",
+  "coefficient_method": "pearson",
+  "x_column": "family_stability_score",
+  "y_column": "avg_score",
+  "entity_column": "student_id",
+  "source_full_query_artifact": {
+    "path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T15.json",
+    "sha256": "9a45d1b72a483a01ab7c106e9b4421e7c4343e3515027c15b9328219dcd52fc0",
+    "evidence_id": "SAMPLE_UCI_POR__S-T15"
+  },
+  "source_judge_input_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_inputs/SAMPLE_UCI_POR__S-T15__baseline_first_20_rows.json",
+  "derived_stats": [
+    {
+      "dataset_label": "family_context_scatter",
+      "status": "pass",
+      "reason": null,
+      "row_count": 649,
+      "valid_pair_count": 649,
+      "invalid_x_count": 0,
+      "invalid_y_count": 0,
+      "x_mean": 0.7651,
+      "y_mean": 58.12527,
+      "x_variance": 17.87826849,
+      "y_variance": 130053.4535778122,
+      "covariance": 219.875357473,
+      "pearson_r": 0.14419589145683115,
+      "pearson_r_rounded_4": 0.1442,
+      "direction": "positive",
+      "strength": "weak",
+      "coefficient_source": "deterministic_recompute_from_full_query_rows",
+      "formula": "sum((x - mean_x) * (y - mean_y)) / sqrt(sum((x - mean_x)^2) * sum((y - mean_y)^2))",
+      "warnings": []
+    }
+  ],
+  "judge_usage_note": "Use this artifact as deterministic support for correlation coefficient claims. It proves derived Pearson r from all valid x/y pairs in the full query result; it does not prove causality or statistical significance.",
+  "artifact_sha256": "109d8f7e3f2ca4bd098d7ccfc926bc5d983666900bc7cd7c6113f21acee865f8"
+}

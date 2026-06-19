@@ -1,0 +1,53 @@
+{
+  "report_version": "llm_judge_v2_phase6_6_scoring_smoke_report_v1",
+  "generated_at": "2026-06-19T04:44:21.398Z",
+  "status": "SMOKE_PASS",
+  "phase_scope": [
+    "6.6 scoring finalizer/aggregate smoke"
+  ],
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "weights": {
+    "faithfulness": 25,
+    "numerical_correctness": 20,
+    "completeness": 15,
+    "task_relevance": 15,
+    "actionability": 10,
+    "clarity": 10,
+    "safety_fairness": 5
+  },
+  "inputs": {
+    "attempt_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_judge_invocation/pilot_judge_attempt_manifest.jsonl",
+    "status_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_judge_invocation/pilot_judge_record_status_manifest.jsonl",
+    "d3_schema_path": "Docs/evaluation_v2/LLM_JUDGE_V2_D3_OUTPUT_SCHEMA_V1.json"
+  },
+  "counts": {
+    "expected_records": 24,
+    "valid_source_records": 2,
+    "missing_source_records": 22,
+    "final_scoring_records": 2,
+    "scored_records": 2,
+    "errors": 0,
+    "warnings": 0
+  },
+  "aggregate_smoke": {
+    "average_raw_weighted_score": 6.43,
+    "average_final_score_after_caps": 6.25,
+    "verdict_counts": {
+      "excellent": 1,
+      "poor": 1
+    }
+  },
+  "outputs": {
+    "final_records_dir": "Docs/evaluation_v2/Runs/phase6_scoring_smoke/final_scoring_records",
+    "scoring_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_scoring_smoke/pilot_scoring_smoke_manifest.jsonl",
+    "report_json": "Docs/evaluation_v2/Runs/phase6_scoring_smoke/phase6_scoring_smoke_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/phase6_scoring_smoke/phase6_scoring_smoke_report.md"
+  },
+  "gate_decision": {
+    "smoke_scoring_passed": true,
+    "full_pilot_scoring_passed": false,
+    "official_full_evaluation_allowed": false,
+    "reason": "At least one valid judge output was finalized successfully; remaining pilot records are not scored yet."
+  },
+  "issues": []
+}

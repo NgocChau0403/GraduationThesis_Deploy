@@ -1,0 +1,109 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:34:04.448Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__S-T13",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": "SAMPLE_UCI_POR_STU_000001",
+  "role": "student",
+  "task_id": "S-T13",
+  "task_name": "Action plan generation",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "S-T13",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 36,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 1,
+    "row_count_observed": 1,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "synthesis_data",
+        "row_count": 1,
+        "sample_fields": [
+          "avg_score",
+          "performance_trend",
+          "engagement_score",
+          "engagement_score_available",
+          "absence_rate",
+          "lifestyle_risk_score",
+          "score_strategy",
+          "score_scale",
+          "pass_threshold",
+          "target_threshold",
+          "at_risk_score",
+          "at_risk_label"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "ad9e8b1963af4ebb73dc148ff4c5e52096f5867a0c4401f2eceaed9accbf2463"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "executable",
+    "backend_confidence": "HIGH",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847244412_fccd48cb",
+    "taskId": "S-T13",
+    "datasets": {
+      "synthesis_data": [
+        {
+          "avg_score": 41.25,
+          "performance_trend": 27.5,
+          "engagement_score": 0,
+          "engagement_score_available": false,
+          "absence_rate": 1,
+          "lifestyle_risk_score": 0.375,
+          "score_strategy": "weighted_by_assessment_weight",
+          "score_scale": 100,
+          "pass_threshold": 40,
+          "target_threshold": 70,
+          "at_risk_score": 1,
+          "at_risk_label": "low"
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "S-T13",
+      "isMultiQuery": false,
+      "rowCount": 1,
+      "executionTimeMs": 22,
+      "queryHash": "9f3fd7e7",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "synthesis_data"
+      ],
+      "dataQuality": {
+        "status": "executable",
+        "confidence": "HIGH",
+        "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+        "warnings": []
+      }
+    }
+  }
+}

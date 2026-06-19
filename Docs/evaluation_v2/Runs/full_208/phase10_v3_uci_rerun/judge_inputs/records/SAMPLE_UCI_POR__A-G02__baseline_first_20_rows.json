@@ -1,0 +1,224 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_UCI_POR__A-G02__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v3_uci_rerun",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G02",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v3_uci_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_uci_rerun_candidate",
+  "task_context": {
+    "task_name": "Engagement–performance relationship",
+    "scope": "Many students",
+    "actionable_question": "Does engaging more in this class actually lead to better grades?",
+    "target_audience": "instructor",
+    "ai_summary_type": "correlation_evidence",
+    "ai_prompt_hint": "Describe correlation direction and strength. Flag outliers (high engagement, low score) as a special case.",
+    "query_labels": [
+      "engagement_performance_scatter"
+    ],
+    "explanation_strategy": "correlation"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "engagement_score [FE cross]",
+      "avg_score [FE cross]",
+      "final_outcome"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "engagement_performance_scatter"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis reveals a weak negative correlation between Engagement Score and Average Score, indicating that higher engagement does not necessarily lead to better academic performance in this dataset. This suggests that other factors may be influencing student outcomes.\n\nInsights: Weak Negative Correlation: The correlation between engagement_score and avg_score is weakly negative, suggesting that as engagement increases, average scores do not show a corresponding increase. This may indicate that students with higher engagement are not necessarily achieving higher academic performance. | Outlier Identification: Several students exhibit high average scores despite having an engagement score of 0, indicating potential outliers. This pattern suggests that these students may be relying on prior knowledge or external factors to achieve their grades.\n\nEducational implications: The weak correlation suggests that increasing engagement alone may not be sufficient to improve academic performance, indicating a need for a more holistic approach to student support.\n\nRecommendations: high - Implement targeted interventions for students with high engagement but low scores. - These students may benefit from additional academic support or resources to translate their engagement into improved performance.",
+    "structured_payload": {
+      "task_id": "A-G02",
+      "execution_id": "exec_1781847232116_05e73795",
+      "explanation": {
+        "summary": "The analysis reveals a weak negative correlation between Engagement Score and Average Score, indicating that higher engagement does not necessarily lead to better academic performance in this dataset. This suggests that other factors may be influencing student outcomes.",
+        "insights": [
+          {
+            "title": "Weak Negative Correlation",
+            "description": "The correlation between engagement_score and avg_score is weakly negative, suggesting that as engagement increases, average scores do not show a corresponding increase. This may indicate that students with higher engagement are not necessarily achieving higher academic performance.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "engagement_score",
+                "value": 0,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "The majority of students have an engagement score of 0, with average scores varying significantly."
+              }
+            ]
+          },
+          {
+            "title": "Outlier Identification",
+            "description": "Several students exhibit high average scores despite having an engagement score of 0, indicating potential outliers. This pattern suggests that these students may be relying on prior knowledge or external factors to achieve their grades.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "avg_score",
+                "value": 85,
+                "comparison": "peak",
+                "delta": null,
+                "context": "Student with high average score but low engagement."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The weak correlation suggests that increasing engagement alone may not be sufficient to improve academic performance, indicating a need for a more holistic approach to student support."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted interventions for students with high engagement but low scores.",
+            "rationale": "These students may benefit from additional academic support or resources to translate their engagement into improved performance."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset is sufficiently large and varied, providing a reliable basis for correlation analysis.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "correlation",
+      "explanation_type": "correlation",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 7167,
+        "token_usage": {
+          "prompt_tokens": 1575,
+          "completion_tokens": 458,
+          "total_tokens": 2033
+        },
+        "strategy": "correlation",
+        "granularity": "semester",
+        "cost_usd": 0.000511
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G02__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "d7faee7d3e636a455f6ccda28bd4ed6172eba784afe260af714f4ebac71e607d",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1575,
+        "completion_tokens": 458,
+        "total_tokens": 2033
+      },
+      "latency_ms": 7179,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 649,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "engagement_performance_scatter",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G02.json",
+        "artifact_sha256": "ec1f523b113edf667ebc50cd23a781f0582552aee4eb0ead13dd52d986b33157",
+        "row_count": 649,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 649,
+    "retrieved_row_count_by_dataset": {
+      "engagement_performance_scatter": 649
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "engagement_performance_scatter",
+        "start": 0,
+        "end": 648
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_UCI_POR__A-G02__baseline_first_20_rows__engagement_performance_scatter__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G02__baseline_first_20_rows.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "engagement_performance_scatter": 649
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G02-CORE-01",
+        "description": "Describe correlation direction and strength."
+      },
+      {
+        "requirement_id": "A-G02-CORE-02",
+        "description": "Flag outliers (high engagement, low score) as a special case."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G02-CONSTRAINT-01",
+        "description": "Describe the engagement-score relationship as correlational; do not infer that engagement causes score outcomes."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  },
+  "derived_stat_evidence": [
+    {
+      "stat_id": "A-G02__pearson_r__1",
+      "stat_type": "pearson_r",
+      "dataset_label": "engagement_performance_scatter",
+      "x_column": "engagement_score",
+      "y_column": "avg_score",
+      "source_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G02.json",
+      "source_artifact_sha256": "ec1f523b113edf667ebc50cd23a781f0582552aee4eb0ead13dd52d986b33157",
+      "status": "skipped",
+      "pearson_r": null,
+      "n": 649,
+      "strength_label": null,
+      "direction": null,
+      "skip_reason": "zero_variance"
+    }
+  ]
+}

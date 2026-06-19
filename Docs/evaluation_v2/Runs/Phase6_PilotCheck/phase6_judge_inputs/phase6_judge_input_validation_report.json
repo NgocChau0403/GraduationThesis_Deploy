@@ -1,0 +1,61 @@
+{
+  "report_version": "llm_judge_v2_phase6_4_judge_input_validation_report_v1",
+  "generated_at": "2026-06-18T22:36:57.620Z",
+  "status": "PASS",
+  "phase_scope": [
+    "6.4 judge input materializer/schema validator"
+  ],
+  "versions": {
+    "prompt_version": "judge_prompt_v2_pilot_v1",
+    "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+    "evaluation_run_id": "llm_judge_v2_pilot_phase6_4"
+  },
+  "inputs": {
+    "evidence_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_evidence/evidence_manifest.jsonl",
+    "explanation_manifest_jsonl": [
+      "Docs/evaluation_v2/Runs/phase6_explanations_baseline/explanation_manifest.jsonl",
+      "Docs/evaluation_v2/Runs/phase6_explanations_task_aware/explanation_manifest.jsonl"
+    ],
+    "task_registry_path": "Backend/src/config/taskRegistry.json",
+    "task_requirements_path": "Docs/evaluation_v2/Rubric/task_evaluation_requirements.json",
+    "judge_input_schema_path": "Docs/evaluation_v2/Input_AI/judge_input_schema.json"
+  },
+  "counts": {
+    "judge_input_ready_records": 24,
+    "failed_records": 0,
+    "total_records": 24,
+    "errors": 0,
+    "warnings": 0
+  },
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 12,
+      "SAMPLE_OULAD": 12
+    },
+    "explanation_modes": {
+      "baseline_first_20_rows": 12,
+      "task_aware_data_summarization": 12
+    },
+    "evidence_access_modes": {
+      "direct_embedding": 12,
+      "deterministic_artifact_retrieval": 12
+    },
+    "statuses": {
+      "judge_input_ready": 24
+    }
+  },
+  "outputs": {
+    "judge_input_manifest_jsonl": "Docs/evaluation_v2/Runs/phase6_judge_inputs/judge_input_manifest.jsonl",
+    "judge_inputs_dir": "Docs/evaluation_v2/Runs/phase6_judge_inputs/judge_inputs",
+    "retrieval_logs_dir": "Docs/evaluation_v2/Runs/phase6_judge_inputs/retrieval_logs",
+    "report_json": "Docs/evaluation_v2/Runs/phase6_judge_inputs/phase6_judge_input_validation_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/phase6_judge_inputs/phase6_judge_input_validation_report.md"
+  },
+  "gate_decision": {
+    "judge_input_review_allowed": true,
+    "judge_invocation_allowed": false,
+    "official_full_evaluation_allowed": false,
+    "reason": "All judge inputs materialized and passed schema validation. Review sample judge inputs before Phase 6.5 judge invocation."
+  },
+  "issues": []
+}

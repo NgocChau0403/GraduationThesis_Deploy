@@ -1,0 +1,45 @@
+{
+  "artifact_type": "llm_judge_v3_deterministic_derived_stat_evidence_v1",
+  "generated_at": "2026-06-19T10:02:51.100Z",
+  "dry_run_mode": "single_review",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-T14",
+  "task_name": "Social balance vs performance",
+  "ai_summary_type": "correlation_evidence",
+  "stat_family": "correlation",
+  "coefficient_method": "pearson",
+  "x_column": "social_balance_score",
+  "y_column": "avg_score",
+  "entity_column": "student_id",
+  "source_full_query_artifact": {
+    "path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T14.json",
+    "sha256": "a8efc8a5a1bdaaba7b3e423a3a55186922980fc83b1f32258aef8c20d65aef28",
+    "evidence_id": "SAMPLE_UCI_POR__S-T14"
+  },
+  "source_judge_input_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_inputs/SAMPLE_UCI_POR__S-T14__baseline_first_20_rows.json",
+  "derived_stats": [
+    {
+      "dataset_label": "social_balance_scatter",
+      "status": "pass",
+      "reason": null,
+      "row_count": 649,
+      "valid_pair_count": 649,
+      "invalid_x_count": 0,
+      "invalid_y_count": 0,
+      "x_mean": 0.083552,
+      "y_mean": 58.12527,
+      "x_variance": 12.8400385208,
+      "y_variance": 130053.4535778121,
+      "covariance": 18.5655034669,
+      "pearson_r": 0.014366885251951421,
+      "pearson_r_rounded_4": 0.0144,
+      "direction": "positive",
+      "strength": "negligible",
+      "coefficient_source": "deterministic_recompute_from_full_query_rows",
+      "formula": "sum((x - mean_x) * (y - mean_y)) / sqrt(sum((x - mean_x)^2) * sum((y - mean_y)^2))",
+      "warnings": []
+    }
+  ],
+  "judge_usage_note": "Use this artifact as deterministic support for correlation coefficient claims. It proves derived Pearson r from all valid x/y pairs in the full query result; it does not prove causality or statistical significance.",
+  "artifact_sha256": "5481371a5cf2ffb862ae32cdcb741e0f644629c6e932a4fdad6cfffcbee792c4"
+}

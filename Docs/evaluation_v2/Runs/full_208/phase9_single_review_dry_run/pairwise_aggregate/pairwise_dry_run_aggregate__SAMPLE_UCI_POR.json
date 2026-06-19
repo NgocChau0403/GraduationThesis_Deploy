@@ -1,0 +1,1867 @@
+{
+  "artifact_type": "llm_judge_v3_pairwise_dry_run_aggregate_v1",
+  "generated_at": "2026-06-19T10:33:06.484Z",
+  "dry_run_mode": "single_review",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_count": 15,
+  "pairwise_record_count": 30,
+  "order_consistency": {
+    "consistent_task_count": 15,
+    "inconsistent_task_count": 0
+  },
+  "winner_counts_by_mode": {
+    "task_aware_data_summarization": 7,
+    "baseline_first_20_rows": 7,
+    "tie": 1
+  },
+  "winner_counts_by_row_bucket": {
+    "<=20:task_aware_data_summarization": 2,
+    "<=20:baseline_first_20_rows": 6,
+    ">20:task_aware_data_summarization": 5,
+    ">20:baseline_first_20_rows": 1,
+    "<=20:tie": 1
+  },
+  "requires_absolute_rerun_task_count": 12,
+  "prompt_policy_decisions": [
+    {
+      "decision_id": "P1_DERIVED_STAT_AVAILABLE_USE_AND_DO_NOT_CAP_SUPPORTED_COEFFICIENT",
+      "recommendation": "Adopt",
+      "reason": "When deterministic Pearson evidence exists, the judge must use it as primary provenance. A coefficient matching the recomputed value must not be penalized as unsupported. This changed A-G13 and S-T09 from unsupported-claim risk to evidence-supported task-aware wins, and exposed V2 ties on S-T14/S-T15 as insufficiently sensitive.",
+      "affected_tasks": [
+        "A-G13",
+        "S-T09",
+        "S-T14",
+        "S-T15"
+      ]
+    },
+    {
+      "decision_id": "P2_DERIVED_STAT_UNAVAILABLE_DO_NOT_INVENT_COEFFICIENT_OR_DIRECTION",
+      "recommendation": "Adopt",
+      "reason": "When deterministic evidence says zero variance, zero rows, or no valid numeric pairs, the judge must penalize coefficient/direction/strength claims that go beyond the evidence. A-G02 tests this branch: it is not the same as A-G13. A-G02 means no derived coefficient is available; A-G13 means a coefficient is available and should be trusted.",
+      "affected_tasks": [
+        "A-G02"
+      ]
+    },
+    {
+      "decision_id": "P3_PAIRWISE_TIE_MUST_BE_EXPLAINED_METRIC_BY_METRIC",
+      "recommendation": "Adopt",
+      "reason": "Only A-G14 remained tie in the dry run; the pairwise prompt reduced uninformative ties while remaining position-consistent.",
+      "affected_tasks": [
+        "A-G14"
+      ]
+    },
+    {
+      "decision_id": "P4_SMALL_RESULT_NO_AUTOMATIC_TASK_AWARE_ADVANTAGE",
+      "recommendation": "Adopt",
+      "reason": "Several <=20-row cases favored baseline; for small results both modes have full row coverage, so content quality and cap-worthy defects should decide.",
+      "affected_tasks": [
+        "A-B01",
+        "A-C02",
+        "A-G11",
+        "A-G14",
+        "A-S04",
+        "A-S08",
+        "S-T01",
+        "S-T12",
+        "S-T13"
+      ]
+    }
+  ],
+  "cap_policy_decisions": [
+    {
+      "decision_id": "C1_UNSUPPORTED_NUMERICAL_CLAIM_REQUIRES_DERIVED_STAT_CHECK",
+      "recommendation": "Change prompt/scoring guidance before rerun",
+      "reason": "Do not apply major unsupported-claim cap when deterministic derived stats support the claimed coefficient. Conversely, coefficient claims remain cap candidates when derived stats are unavailable or contradictory.",
+      "affected_tasks": [
+        "A-G02",
+        "A-G13",
+        "S-T09",
+        "S-T14",
+        "S-T15"
+      ]
+    },
+    {
+      "decision_id": "C2_MAJOR_FACTUAL_CAP_CANDIDATE_5",
+      "recommendation": "Use calibration candidate in V3 rerun",
+      "reason": "Use major factual / unsupported numerical claim cap = 5.0 for the V3 UCI rerun candidate set. Cap 4.0 is likely too severe for proportionality or overstatement cases that are not central numerical hallucinations. Critical contradictions such as wrong correlation direction can still receive a critical cap below this candidate.",
+      "affected_tasks": [
+        "A-C02",
+        "A-G02",
+        "A-G03",
+        "A-G11",
+        "A-G13",
+        "A-S04",
+        "A-S08",
+        "S-T09",
+        "S-T12",
+        "S-T13",
+        "S-T14",
+        "S-T15"
+      ]
+    },
+    {
+      "decision_id": "C3_CORE_OUTPUT_OMISSION_CAP_CANDIDATE_6_5",
+      "recommendation": "Use calibration candidate in V3 rerun",
+      "reason": "Use core-output omission cap = 6.5 for the V3 UCI rerun candidate set. Baseline wins on several small-result cases appear driven by task-aware omission or weaker task fit rather than row coverage, but cap 6.0 may be too harsh before two-reviewer calibration.",
+      "affected_tasks": [
+        "A-C02",
+        "A-G03",
+        "A-G11",
+        "A-S04",
+        "A-S08",
+        "S-T12",
+        "S-T13"
+      ]
+    }
+  ],
+  "v3_rerun_candidate_cap_set": {
+    "policy_status": "single_review_dry_run_candidate_not_final_human_calibrated",
+    "major_factual_or_unsupported_numerical_claim_cap": 5,
+    "core_output_omission_cap": 6.5,
+    "critical_factual_or_contradictory_core_numerical_claim_cap": 2,
+    "note": "These are calibration candidates for the UCI V3 rerun, not final thesis-wide calibrated caps."
+  },
+  "v3_acceptance_criterion": {
+    "pairwise_alignment_scope": "15 dry-run task pairs",
+    "minimum_alignment_required": 12,
+    "rule": "After the UCI V3 pointwise rerun, compare pointwise winner against pairwise dry-run winner on these 15 task pairs. V3 is acceptable for proceeding to OULAD only if pointwise winner aligns with pairwise winner on at least 12 of 15 tasks and no critical derived-stat contradiction remains unresolved."
+  },
+  "task_summaries": [
+    {
+      "task_id": "A-B01",
+      "task_name": "Overall performance distribution",
+      "ai_summary_type": "numeric_distribution",
+      "explanation_strategy": "distribution",
+      "full_result_row_count": 10,
+      "row_count_bucket": "<=20",
+      "v2_pointwise": {
+        "baseline_final_score": 8.15,
+        "task_aware_final_score": 8.15,
+        "baseline_verdict": "excellent",
+        "task_aware_verdict": "excellent",
+        "baseline_caps": [],
+        "task_aware_caps": []
+      },
+      "order_consistent": true,
+      "mode_winner": "task_aware_data_summarization",
+      "difference_magnitudes": [
+        "small"
+      ],
+      "winner_confidences": [
+        "medium"
+      ],
+      "requires_absolute_rerun": false,
+      "ab_winner": "task_aware_data_summarization",
+      "ba_winner": "task_aware_data_summarization",
+      "derived_stat_evidence": null,
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B more directly flags the below-pass concern requested by the task, while candidate A emphasizes the 50-60 bucket.",
+          "evidence_refs": [
+            "prompt_packet:A-B01:task_context",
+            "prompt_packet:A-B01:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B gives exact count 108 and percentage 16.6% for the 40-50 bucket and 7 students at 90-100.",
+          "evidence_refs": [
+            "prompt_packet:A-B01:task_context",
+            "prompt_packet:A-B01:candidate_explanations"
+          ]
+        },
+        "completeness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B covers score spread and below-threshold concern more completely.",
+          "evidence_refs": [
+            "prompt_packet:A-B01:task_context",
+            "prompt_packet:A-B01:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B better addresses the pass-threshold part of the prompt.",
+          "evidence_refs": [
+            "prompt_packet:A-B01:task_context",
+            "prompt_packet:A-B01:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B's intervention target is more aligned with below-threshold students.",
+          "evidence_refs": [
+            "prompt_packet:A-B01:task_context",
+            "prompt_packet:A-B01:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "tie",
+          "reason": "Both are clear and well organized.",
+          "evidence_refs": [
+            "prompt_packet:A-B01:task_context",
+            "prompt_packet:A-B01:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "tie",
+          "reason": "Both remain at cohort level and avoid unfair individual claims.",
+          "evidence_refs": [
+            "prompt_packet:A-B01:task_context",
+            "prompt_packet:A-B01:candidate_explanations"
+          ]
+        }
+      },
+      "decisive_reason": "Candidate B's concrete bucket counts make the threshold concern more reportable.",
+      "coverage_reason": "Candidate B covers both distribution shape and the low-score threshold concern.",
+      "specificity_reason": "Candidate B provides exact counts as well as percentages.",
+      "rerun_flags": [],
+      "policy_recommendation": "For small results, prompt/cap policy should not grant task-aware an automatic evidence advantage; decide on explanation quality, omissions, unsupported claims, and proportionality."
+    },
+    {
+      "task_id": "A-C02",
+      "task_name": "Compare engagement patterns",
+      "ai_summary_type": "multi_metric_comparison",
+      "explanation_strategy": "comparison",
+      "full_result_row_count": 6,
+      "row_count_bucket": "<=20",
+      "v2_pointwise": {
+        "baseline_final_score": 7.65,
+        "task_aware_final_score": 8.15,
+        "baseline_verdict": "good",
+        "task_aware_verdict": "excellent",
+        "baseline_caps": [],
+        "task_aware_caps": []
+      },
+      "order_consistent": true,
+      "mode_winner": "baseline_first_20_rows",
+      "difference_magnitudes": [
+        "small"
+      ],
+      "winner_confidences": [
+        "medium"
+      ],
+      "requires_absolute_rerun": true,
+      "ab_winner": "baseline_first_20_rows",
+      "ba_winner": "baseline_first_20_rows",
+      "derived_stat_evidence": null,
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "tie",
+          "reason": "Both candidates correctly report no engagement across the compared metrics.",
+          "evidence_refs": [
+            "prompt_packet:A-C02:task_context",
+            "prompt_packet:A-C02:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "tie",
+          "reason": "Both candidates describe active days, total clicks, and engagement scores as zero rather than inventing a gap.",
+          "evidence_refs": [
+            "prompt_packet:A-C02:task_context",
+            "prompt_packet:A-C02:candidate_explanations"
+          ]
+        },
+        "completeness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A is slightly more complete because it names the two students and lists the requested metrics explicitly.",
+          "evidence_refs": [
+            "prompt_packet:A-C02:task_context",
+            "prompt_packet:A-C02:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A maps more directly to the compare-two-students requirement.",
+          "evidence_refs": [
+            "prompt_packet:A-C02:task_context",
+            "prompt_packet:A-C02:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "tie",
+          "reason": "Both provide broad engagement outreach suggestions rather than a metric-specific largest-gap action.",
+          "evidence_refs": [
+            "prompt_packet:A-C02:task_context",
+            "prompt_packet:A-C02:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "tie",
+          "reason": "Both are clear and concise.",
+          "evidence_refs": [
+            "prompt_packet:A-C02:task_context",
+            "prompt_packet:A-C02:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "tie",
+          "reason": "Neither candidate infers academic risk beyond the engagement fields.",
+          "evidence_refs": [
+            "prompt_packet:A-C02:task_context",
+            "prompt_packet:A-C02:candidate_explanations"
+          ]
+        }
+      },
+      "decisive_reason": "The explicit named comparison gives candidate A a small specificity advantage.",
+      "coverage_reason": "Candidate A uses the named-student comparison and all three engagement metrics.",
+      "specificity_reason": "Candidate A is more specific by naming both student IDs.",
+      "rerun_flags": [
+        {
+          "order_variant": "AB",
+          "candidate": "both",
+          "candidate_mode": "both",
+          "suspected_error_type": "missing_largest_gap_statement",
+          "severity_hint": "minor",
+          "reason": "Both candidates should explicitly state that no engagement dimension creates a gap when all compared metrics are identical.",
+          "evidence_refs": [
+            "requirements:A-C02:largest_gap"
+          ]
+        }
+      ],
+      "policy_recommendation": "For small results, prompt/cap policy should not grant task-aware an automatic evidence advantage; decide on explanation quality, omissions, unsupported claims, and proportionality."
+    },
+    {
+      "task_id": "A-G02",
+      "task_name": "Engagement–performance relationship",
+      "ai_summary_type": "correlation_evidence",
+      "explanation_strategy": "correlation",
+      "full_result_row_count": 649,
+      "row_count_bucket": ">20",
+      "v2_pointwise": {
+        "baseline_final_score": 6,
+        "task_aware_final_score": 8.15,
+        "baseline_verdict": "acceptable",
+        "task_aware_verdict": "excellent",
+        "baseline_caps": [
+          {
+            "type": "unsupported_or_contradicted_claim",
+            "severity": "major",
+            "cap": 6,
+            "error_id": "E01",
+            "claim_ids": [
+              "C01"
+            ],
+            "evidence_refs": [
+              "full_query_artifacts:engagement_performance_scatter"
+            ]
+          }
+        ],
+        "task_aware_caps": []
+      },
+      "order_consistent": true,
+      "mode_winner": "task_aware_data_summarization",
+      "difference_magnitudes": [
+        "moderate"
+      ],
+      "winner_confidences": [
+        "medium"
+      ],
+      "requires_absolute_rerun": true,
+      "ab_winner": "task_aware_data_summarization",
+      "ba_winner": "task_aware_data_summarization",
+      "derived_stat_evidence": {
+        "status": "skipped",
+        "x_column": "engagement_score",
+        "y_column": "avg_score",
+        "dataset_results": [
+          {
+            "dataset_label": "engagement_performance_scatter",
+            "status": "skipped",
+            "row_count": 649,
+            "valid_pair_count": 649,
+            "pearson_r_rounded_4": null,
+            "direction": null,
+            "strength": null,
+            "reason": "zero_variance"
+          }
+        ],
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase9_single_review_dry_run/derived_stat_evidence/SAMPLE_UCI_POR/SAMPLE_UCI_POR__A-G02__derived_stats.json"
+      },
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B is closer to the supplied evidence because it does not assert a Pearson coefficient in the explanation, while candidate A invents a weak negative correlation despite zero variance in engagement_score.",
+          "evidence_refs": [
+            "deterministic_derived_stat_evidence:A-G02:zero_variance",
+            "candidate_explanations:A-G02"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B is less numerically wrong: the derived evidence says Pearson is unavailable because x_variance is 0, so candidate A's weak-negative-correlation claim is unsupported.",
+          "evidence_refs": [
+            "deterministic_derived_stat_evidence:A-G02:zero_variance",
+            "candidate_A:weak_negative_correlation_claim"
+          ]
+        },
+        "completeness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B at least discusses low-score outlier-like cases, while candidate A spends substantial space on an unsupported correlation and the wrong outlier pattern.",
+          "evidence_refs": [
+            "prompt_packet:A-G02:task_context",
+            "prompt_packet:A-G02:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B is more focused on the requested engagement/performance gap, even though it still mislabels engagement_score 0.0 as high engagement.",
+          "evidence_refs": [
+            "prompt_packet:A-G02:task_context",
+            "prompt_packet:A-G02:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "tie",
+          "reason": "Both candidates recommend support for students with engagement-performance mismatch, but neither recommendation is fully grounded because the engagement field has zero variance.",
+          "evidence_refs": [
+            "prompt_packet:A-G02:task_context",
+            "prompt_packet:A-G02:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "tie",
+          "reason": "Both explanations are readable and similarly structured.",
+          "evidence_refs": [
+            "prompt_packet:A-G02:task_context",
+            "prompt_packet:A-G02:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B is safer because its structured confidence acknowledges the missing Pearson coefficient; candidate A presents an unsupported directional correlation with high confidence.",
+          "evidence_refs": [
+            "deterministic_derived_stat_evidence:A-G02:zero_variance"
+          ]
+        }
+      },
+      "decisive_reason": "This makes candidate A's weak negative Pearson-style interpretation unsupported and makes candidate B comparatively safer.",
+      "coverage_reason": "Candidate B uses more of the full-result context and acknowledges coefficient limits, while candidate A appears driven by an unsupported first-row pattern.",
+      "specificity_reason": "Candidate B gives concrete low-score ranges, while candidate A's most specific correlation claim is contradicted by deterministic evidence.",
+      "rerun_flags": [
+        {
+          "order_variant": "AB",
+          "candidate": "A",
+          "candidate_mode": "baseline_first_20_rows",
+          "suspected_error_type": "unsupported_correlation_claim",
+          "severity_hint": "major",
+          "reason": "Candidate A states a weak negative correlation even though deterministic evidence says Pearson cannot be derived because engagement_score has zero variance.",
+          "evidence_refs": [
+            "deterministic_derived_stat_evidence:A-G02:zero_variance"
+          ]
+        },
+        {
+          "order_variant": "AB",
+          "candidate": "B",
+          "candidate_mode": "task_aware_data_summarization",
+          "suspected_error_type": "mislabelled_outlier_context",
+          "severity_hint": "minor",
+          "reason": "Candidate B describes engagement_score 0.0 examples as high engagement, which is internally inconsistent with the supplied field.",
+          "evidence_refs": [
+            "candidate_B:engagement_score_0_as_high_engagement"
+          ]
+        }
+      ],
+      "policy_recommendation": "Prompt V3 should require the judge to treat coefficient/direction/strength claims cautiously when derived-stat evidence is unavailable because of zero variance or zero rows."
+    },
+    {
+      "task_id": "A-G03",
+      "task_name": "Identify at-risk cohort",
+      "ai_summary_type": "ranking",
+      "explanation_strategy": "risk",
+      "full_result_row_count": 50,
+      "row_count_bucket": ">20",
+      "v2_pointwise": {
+        "baseline_final_score": 8.15,
+        "task_aware_final_score": 8.15,
+        "baseline_verdict": "excellent",
+        "task_aware_verdict": "excellent",
+        "baseline_caps": [],
+        "task_aware_caps": []
+      },
+      "order_consistent": true,
+      "mode_winner": "baseline_first_20_rows",
+      "difference_magnitudes": [
+        "small"
+      ],
+      "winner_confidences": [
+        "medium"
+      ],
+      "requires_absolute_rerun": true,
+      "ab_winner": "baseline_first_20_rows",
+      "ba_winner": "baseline_first_20_rows",
+      "derived_stat_evidence": null,
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A grounds the cohort risk explanation in more visible student IDs, scores, repeated attempts, engagement, and trends.",
+          "evidence_refs": [
+            "prompt_packet:A-G03:task_context",
+            "prompt_packet:A-G03:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A supplies concrete average-score values for several high-risk students; candidate B is more generic.",
+          "evidence_refs": [
+            "prompt_packet:A-G03:task_context",
+            "prompt_packet:A-G03:candidate_explanations"
+          ]
+        },
+        "completeness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A covers more high-risk examples and separates low scores, engagement, repeated attempts, and negative trends.",
+          "evidence_refs": [
+            "prompt_packet:A-G03:task_context",
+            "prompt_packet:A-G03:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A better addresses the ranking and triggered-flag explanation expected for an at-risk cohort.",
+          "evidence_refs": [
+            "prompt_packet:A-G03:task_context",
+            "prompt_packet:A-G03:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "tie",
+          "reason": "Both candidates recommend academic support but do not enumerate a per-student recommended action for each ranked student.",
+          "evidence_refs": [
+            "prompt_packet:A-G03:task_context",
+            "prompt_packet:A-G03:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "tie",
+          "reason": "Both are understandable and similarly organized.",
+          "evidence_refs": [
+            "prompt_packet:A-G03:task_context",
+            "prompt_packet:A-G03:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "tie",
+          "reason": "Both use risk language in a generally appropriate academic-support framing.",
+          "evidence_refs": [
+            "prompt_packet:A-G03:task_context",
+            "prompt_packet:A-G03:candidate_explanations"
+          ]
+        }
+      },
+      "decisive_reason": "Candidate A's concrete IDs and scores make the risk ranking more evidence-grounded.",
+      "coverage_reason": "Candidate A uses more of the visible top-risk rows and values.",
+      "specificity_reason": "Candidate A names more students and exact scores.",
+      "rerun_flags": [
+        {
+          "order_variant": "AB",
+          "candidate": "both",
+          "candidate_mode": "both",
+          "suspected_error_type": "incomplete_per_student_actions",
+          "severity_hint": "minor",
+          "reason": "Neither candidate fully explains triggered_flags_summary and recommended_admin_action for each high-risk student.",
+          "evidence_refs": [
+            "requirements:A-G03:per_student_flags_and_action"
+          ]
+        }
+      ],
+      "policy_recommendation": "Review whether task-aware summary lost because it omitted concrete task deliverables or became less faithful despite broader evidence access."
+    },
+    {
+      "task_id": "A-G11",
+      "task_name": "Weekly engagement drop detection",
+      "ai_summary_type": "trend_series",
+      "explanation_strategy": "trend",
+      "full_result_row_count": 0,
+      "row_count_bucket": "<=20",
+      "v2_pointwise": {
+        "baseline_final_score": 6,
+        "task_aware_final_score": 7.65,
+        "baseline_verdict": "acceptable",
+        "task_aware_verdict": "good",
+        "baseline_caps": [
+          {
+            "type": "missing_core_output",
+            "severity": "major",
+            "cap": 6,
+            "error_id": "E01",
+            "claim_ids": [],
+            "evidence_refs": [
+              "full_query_artifacts:weekly_drop_detection"
+            ]
+          },
+          {
+            "type": "missing_core_output",
+            "severity": "major",
+            "cap": 6,
+            "error_id": "E02",
+            "claim_ids": [],
+            "evidence_refs": [
+              "full_query_artifacts:weekly_drop_detection"
+            ]
+          }
+        ],
+        "task_aware_caps": []
+      },
+      "order_consistent": true,
+      "mode_winner": "baseline_first_20_rows",
+      "difference_magnitudes": [
+        "moderate"
+      ],
+      "winner_confidences": [
+        "high"
+      ],
+      "requires_absolute_rerun": true,
+      "ab_winner": "baseline_first_20_rows",
+      "ba_winner": "baseline_first_20_rows",
+      "derived_stat_evidence": null,
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A correctly says no critical weeks can be identified from zero engagement rows; candidate B invents week-1 timing.",
+          "evidence_refs": [
+            "prompt_packet:A-G11:task_context",
+            "prompt_packet:A-G11:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "tie",
+          "reason": "Both reflect the zero-row data-quality condition rather than reporting numeric week drops.",
+          "evidence_refs": [
+            "prompt_packet:A-G11:task_context",
+            "prompt_packet:A-G11:candidate_explanations"
+          ]
+        },
+        "completeness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A better handles the absent early-warning evidence by stating that no intervention week can be identified.",
+          "evidence_refs": [
+            "prompt_packet:A-G11:task_context",
+            "prompt_packet:A-G11:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A stays closer to the critical-week detection task.",
+          "evidence_refs": [
+            "prompt_packet:A-G11:task_context",
+            "prompt_packet:A-G11:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A's data-collection action is better grounded than candidate B's week-1 check-ins because no early_warning_week is returned.",
+          "evidence_refs": [
+            "prompt_packet:A-G11:task_context",
+            "prompt_packet:A-G11:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "tie",
+          "reason": "Both clearly communicate absent engagement data.",
+          "evidence_refs": [
+            "prompt_packet:A-G11:task_context",
+            "prompt_packet:A-G11:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A avoids unsupported timing claims.",
+          "evidence_refs": [
+            "prompt_packet:A-G11:task_context",
+            "prompt_packet:A-G11:candidate_explanations"
+          ]
+        }
+      },
+      "decisive_reason": "With no rows, candidate B's week-1 timing is unsupported.",
+      "coverage_reason": "Candidate A uses the zero-row evidence to avoid unsupported timing.",
+      "specificity_reason": "Candidate A specifically states that no intervention weeks can be identified.",
+      "rerun_flags": [
+        {
+          "order_variant": "AB",
+          "candidate": "B",
+          "candidate_mode": "task_aware_data_summarization",
+          "suspected_error_type": "unsupported_timing_claim",
+          "severity_hint": "major",
+          "reason": "Candidate B recommends week-1 timing despite no critical-week or early_warning_week evidence.",
+          "evidence_refs": [
+            "prompt_packet:A-G11:row_count=0"
+          ]
+        }
+      ],
+      "policy_recommendation": "For small results, prompt/cap policy should not grant task-aware an automatic evidence advantage; decide on explanation quality, omissions, unsupported claims, and proportionality."
+    },
+    {
+      "task_id": "A-G13",
+      "task_name": "Lifestyle risk across cohort",
+      "ai_summary_type": "correlation_evidence",
+      "explanation_strategy": "correlation",
+      "full_result_row_count": 649,
+      "row_count_bucket": ">20",
+      "v2_pointwise": {
+        "baseline_final_score": 8.15,
+        "task_aware_final_score": 6,
+        "baseline_verdict": "excellent",
+        "task_aware_verdict": "acceptable",
+        "baseline_caps": [],
+        "task_aware_caps": [
+          {
+            "type": "unsupported_or_contradicted_claim",
+            "severity": "major",
+            "cap": 6,
+            "error_id": "E01",
+            "claim_ids": [
+              "C01"
+            ],
+            "evidence_refs": [
+              "full_query_artifacts:lifestyle_risk_scatter"
+            ]
+          },
+          {
+            "type": "unsupported_or_contradicted_claim",
+            "severity": "major",
+            "cap": 6,
+            "error_id": "E02",
+            "claim_ids": [
+              "C02"
+            ],
+            "evidence_refs": [
+              "full_query_artifacts:lifestyle_risk_scatter"
+            ]
+          }
+        ]
+      },
+      "order_consistent": true,
+      "mode_winner": "task_aware_data_summarization",
+      "difference_magnitudes": [
+        "moderate"
+      ],
+      "winner_confidences": [
+        "high"
+      ],
+      "requires_absolute_rerun": true,
+      "ab_winner": "task_aware_data_summarization",
+      "ba_winner": "task_aware_data_summarization",
+      "derived_stat_evidence": {
+        "status": "pass",
+        "x_column": "lifestyle_risk_score",
+        "y_column": "avg_score",
+        "dataset_results": [
+          {
+            "dataset_label": "lifestyle_risk_scatter",
+            "status": "pass",
+            "row_count": 649,
+            "valid_pair_count": 649,
+            "pearson_r_rounded_4": -0.1041,
+            "direction": "negative",
+            "strength": "weak",
+            "reason": null
+          }
+        ],
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase9_single_review_dry_run/derived_stat_evidence/SAMPLE_UCI_POR/SAMPLE_UCI_POR__A-G13__derived_stats.json"
+      },
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B matches the deterministic weak negative Pearson value and avoids overstating the relationship; candidate A gives only a generic negative-correlation claim.",
+          "evidence_refs": [
+            "prompt_packet:A-G13:task_context",
+            "prompt_packet:A-G13:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B reports r = -0.1041, matching the derived statistic, while candidate A omits the coefficient and uses anecdotal examples.",
+          "evidence_refs": [
+            "deterministic_derived_stat_evidence:A-G13:pearson_r_rounded_4=-0.1041"
+          ]
+        },
+        "completeness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B covers direction, strength, coefficient, and significance limits more completely than candidate A.",
+          "evidence_refs": [
+            "prompt_packet:A-G13:task_context",
+            "prompt_packet:A-G13:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B is more directly aligned with the cohort correlation requirement.",
+          "evidence_refs": [
+            "prompt_packet:A-G13:task_context",
+            "prompt_packet:A-G13:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B's recommendation to investigate lifestyle habits is more proportionate to a weak association than candidate A's broad lifestyle program.",
+          "evidence_refs": [
+            "prompt_packet:A-G13:task_context",
+            "prompt_packet:A-G13:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B clearly labels the correlation as weak and explains what that means.",
+          "evidence_refs": [
+            "prompt_packet:A-G13:task_context",
+            "prompt_packet:A-G13:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B includes the no-p-value warning and avoids deterministic or blame-heavy language better than candidate A.",
+          "evidence_refs": [
+            "evaluation_constraints:A-G13:descriptive_correlational_no_blame"
+          ]
+        }
+      },
+      "decisive_reason": "Candidate B's coefficient and weak-strength interpretation directly match this evidence.",
+      "coverage_reason": "Candidate B uses the full derived-stat evidence, including coefficient and strength.",
+      "specificity_reason": "Candidate B is specific about r = -0.1041 and the weak magnitude.",
+      "rerun_flags": [
+        {
+          "order_variant": "AB",
+          "candidate": "A",
+          "candidate_mode": "baseline_first_20_rows",
+          "suspected_error_type": "overstated_association",
+          "severity_hint": "minor",
+          "reason": "Candidate A describes students with riskier lifestyle choices as tending to perform worse without conveying that the coefficient is weak.",
+          "evidence_refs": [
+            "deterministic_derived_stat_evidence:A-G13:pearson_r_rounded_4=-0.1041"
+          ]
+        }
+      ],
+      "policy_recommendation": "Prompt V3 should include deterministic derived-stat evidence and forbid unsupported_claim penalties when a stated coefficient matches the recomputed Pearson value."
+    },
+    {
+      "task_id": "A-G14",
+      "task_name": "Early withdrawal signal analysis",
+      "ai_summary_type": "trend_comparison",
+      "explanation_strategy": "trend",
+      "full_result_row_count": 0,
+      "row_count_bucket": "<=20",
+      "v2_pointwise": {
+        "baseline_final_score": 6,
+        "task_aware_final_score": 7.65,
+        "baseline_verdict": "acceptable",
+        "task_aware_verdict": "good",
+        "baseline_caps": [
+          {
+            "type": "missing_core_output",
+            "severity": "major",
+            "cap": 6,
+            "error_id": "E01",
+            "claim_ids": [],
+            "evidence_refs": [
+              "full_query_artifacts:withdrawal_signal_trend"
+            ]
+          },
+          {
+            "type": "missing_core_output",
+            "severity": "major",
+            "cap": 6,
+            "error_id": "E02",
+            "claim_ids": [],
+            "evidence_refs": [
+              "full_query_artifacts:withdrawal_signal_trend"
+            ]
+          }
+        ],
+        "task_aware_caps": []
+      },
+      "order_consistent": true,
+      "mode_winner": "tie",
+      "difference_magnitudes": [
+        "none"
+      ],
+      "winner_confidences": [
+        "medium"
+      ],
+      "requires_absolute_rerun": false,
+      "ab_winner": "tie",
+      "ba_winner": "tie",
+      "derived_stat_evidence": null,
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "tie",
+          "reason": "Both candidates correctly identify that no engagement rows are available for withdrawal-signal analysis.",
+          "evidence_refs": [
+            "prompt_packet:A-G14:task_context",
+            "prompt_packet:A-G14:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "tie",
+          "reason": "Neither candidate invents collapse weeks, trajectories, or numeric comparisons.",
+          "evidence_refs": [
+            "prompt_packet:A-G14:task_context",
+            "prompt_packet:A-G14:candidate_explanations"
+          ]
+        },
+        "completeness": {
+          "winner": "tie",
+          "reason": "Both explain that the absence of data prevents identifying trends or timing, though neither can compare withdrawn and passing students.",
+          "evidence_refs": [
+            "prompt_packet:A-G14:task_context",
+            "prompt_packet:A-G14:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "tie",
+          "reason": "Both remain within the early-withdrawal signal topic under the zero-row condition.",
+          "evidence_refs": [
+            "prompt_packet:A-G14:task_context",
+            "prompt_packet:A-G14:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "tie",
+          "reason": "Both recommend improving tracking rather than acting on unsupported collapse timing.",
+          "evidence_refs": [
+            "prompt_packet:A-G14:task_context",
+            "prompt_packet:A-G14:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "tie",
+          "reason": "Both are clear and similar in structure.",
+          "evidence_refs": [
+            "prompt_packet:A-G14:task_context",
+            "prompt_packet:A-G14:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "tie",
+          "reason": "Both avoid causal withdrawal claims and unsupported individual risk assignment.",
+          "evidence_refs": [
+            "prompt_packet:A-G14:task_context",
+            "prompt_packet:A-G14:candidate_explanations"
+          ]
+        }
+      },
+      "decisive_reason": "The zero-row evidence makes both cautious no-trend answers similarly supported.",
+      "coverage_reason": "Both candidates use the same zero-row evidence and reach the same practical limitation.",
+      "specificity_reason": "Both have similar specificity and neither has concrete timing evidence to report.",
+      "rerun_flags": [],
+      "policy_recommendation": "For small results, prompt/cap policy should not grant task-aware an automatic evidence advantage; decide on explanation quality, omissions, unsupported claims, and proportionality."
+    },
+    {
+      "task_id": "A-S04",
+      "task_name": "Student risk flag breakdown",
+      "ai_summary_type": "risk_flags",
+      "explanation_strategy": "risk",
+      "full_result_row_count": 4,
+      "row_count_bucket": "<=20",
+      "v2_pointwise": {
+        "baseline_final_score": 8.15,
+        "task_aware_final_score": 6,
+        "baseline_verdict": "excellent",
+        "task_aware_verdict": "acceptable",
+        "baseline_caps": [],
+        "task_aware_caps": [
+          {
+            "type": "missing_core_output",
+            "severity": "major",
+            "cap": 6,
+            "error_id": "E01",
+            "claim_ids": [],
+            "evidence_refs": [
+              "full_query_artifacts:risk_flags"
+            ]
+          }
+        ]
+      },
+      "order_consistent": true,
+      "mode_winner": "baseline_first_20_rows",
+      "difference_magnitudes": [
+        "small"
+      ],
+      "winner_confidences": [
+        "medium"
+      ],
+      "requires_absolute_rerun": true,
+      "ab_winner": "baseline_first_20_rows",
+      "ba_winner": "baseline_first_20_rows",
+      "derived_stat_evidence": null,
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "tie",
+          "reason": "Both candidates correctly cite low score 36.67 below 40 and punctuality 0 below 0.7.",
+          "evidence_refs": [
+            "prompt_packet:A-S04:task_context",
+            "prompt_packet:A-S04:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "tie",
+          "reason": "Both candidates use the same threshold-crossing values correctly.",
+          "evidence_refs": [
+            "prompt_packet:A-S04:task_context",
+            "prompt_packet:A-S04:candidate_explanations"
+          ]
+        },
+        "completeness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A includes both values and concrete follow-up actions, while candidate B mainly explains why flags surfaced.",
+          "evidence_refs": [
+            "prompt_packet:A-S04:task_context",
+            "prompt_packet:A-S04:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A better satisfies the requirement to prioritize top issues for immediate action.",
+          "evidence_refs": [
+            "prompt_packet:A-S04:task_context",
+            "prompt_packet:A-S04:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A gives two prioritized actions tied to score and punctuality.",
+          "evidence_refs": [
+            "prompt_packet:A-S04:task_context",
+            "prompt_packet:A-S04:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "tie",
+          "reason": "Both explanations are clear.",
+          "evidence_refs": [
+            "prompt_packet:A-S04:task_context",
+            "prompt_packet:A-S04:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "tie",
+          "reason": "Both keep the flag breakdown focused on returned risk signals.",
+          "evidence_refs": [
+            "prompt_packet:A-S04:task_context",
+            "prompt_packet:A-S04:candidate_explanations"
+          ]
+        }
+      },
+      "decisive_reason": "The required output includes prioritised immediate action, which candidate A provides more directly.",
+      "coverage_reason": "Candidate A covers the triggered values and adds the immediate action layer requested by the task.",
+      "specificity_reason": "Candidate A is more specific about what to do next for the top two flags.",
+      "rerun_flags": [
+        {
+          "order_variant": "AB",
+          "candidate": "B",
+          "candidate_mode": "task_aware_data_summarization",
+          "suspected_error_type": "missing_action_recommendations",
+          "severity_hint": "minor",
+          "reason": "Candidate B explains the flags but does not provide concrete immediate actions.",
+          "evidence_refs": [
+            "requirements:A-S04:prioritise_top_2_for_immediate_action"
+          ]
+        }
+      ],
+      "policy_recommendation": "For small results, prompt/cap policy should not grant task-aware an automatic evidence advantage; decide on explanation quality, omissions, unsupported claims, and proportionality."
+    },
+    {
+      "task_id": "A-S08",
+      "task_name": "Student intervention recommendation",
+      "ai_summary_type": "action_synthesis",
+      "explanation_strategy": "risk",
+      "full_result_row_count": 1,
+      "row_count_bucket": "<=20",
+      "v2_pointwise": {
+        "baseline_final_score": 6,
+        "task_aware_final_score": 7.65,
+        "baseline_verdict": "acceptable",
+        "task_aware_verdict": "good",
+        "baseline_caps": [
+          {
+            "type": "missing_core_output",
+            "severity": "major",
+            "cap": 6,
+            "error_id": "E01",
+            "claim_ids": [],
+            "evidence_refs": [
+              "full_query_artifacts:synthesis_data"
+            ]
+          }
+        ],
+        "task_aware_caps": []
+      },
+      "order_consistent": true,
+      "mode_winner": "baseline_first_20_rows",
+      "difference_magnitudes": [
+        "small"
+      ],
+      "winner_confidences": [
+        "low"
+      ],
+      "requires_absolute_rerun": true,
+      "ab_winner": "baseline_first_20_rows",
+      "ba_winner": "baseline_first_20_rows",
+      "derived_stat_evidence": null,
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A references returned FE signals such as low average score, engagement score 0, medium risk label, and support score; candidate B incorrectly says no supported actions were generated.",
+          "evidence_refs": [
+            "prompt_packet:A-S08:task_context",
+            "prompt_packet:A-S08:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "tie",
+          "reason": "Candidate A gives engagement score 0 and support score 0.25, while neither candidate supplies a full numeric action plan.",
+          "evidence_refs": [
+            "prompt_packet:A-S08:task_context",
+            "prompt_packet:A-S08:candidate_explanations"
+          ]
+        },
+        "completeness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A at least synthesizes several risk signals; candidate B provides no signal synthesis.",
+          "evidence_refs": [
+            "prompt_packet:A-S08:task_context",
+            "prompt_packet:A-S08:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A is closer to the intervention-recommendation task.",
+          "evidence_refs": [
+            "prompt_packet:A-S08:task_context",
+            "prompt_packet:A-S08:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "tie",
+          "reason": "Neither candidate satisfies the full 3-5 admin actions with actor and deadline requirement.",
+          "evidence_refs": [
+            "prompt_packet:A-S08:task_context",
+            "prompt_packet:A-S08:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "tie",
+          "reason": "Both are concise and understandable.",
+          "evidence_refs": [
+            "prompt_packet:A-S08:task_context",
+            "prompt_packet:A-S08:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B is safer because candidate A states immediate intervention without the requested actor/deadline support.",
+          "evidence_refs": [
+            "prompt_packet:A-S08:task_context",
+            "prompt_packet:A-S08:candidate_explanations"
+          ]
+        }
+      },
+      "decisive_reason": "Candidate A is the only one that engages with the returned FE signals.",
+      "coverage_reason": "Candidate A uses more of the returned FE signal evidence.",
+      "specificity_reason": "Candidate A provides concrete signal names and values, unlike candidate B.",
+      "rerun_flags": [
+        {
+          "order_variant": "AB",
+          "candidate": "both",
+          "candidate_mode": "both",
+          "suspected_error_type": "missing_actor_deadline_action_plan",
+          "severity_hint": "major",
+          "reason": "Neither candidate provides 3-5 ranked admin actions with responsible actor and timing.",
+          "evidence_refs": [
+            "requirements:A-S08:3_to_5_actions_actor_by_when"
+          ]
+        }
+      ],
+      "policy_recommendation": "For small results, prompt/cap policy should not grant task-aware an automatic evidence advantage; decide on explanation quality, omissions, unsupported claims, and proportionality."
+    },
+    {
+      "task_id": "S-T01",
+      "task_name": "Score trend analysis",
+      "ai_summary_type": "trend_series",
+      "explanation_strategy": "trend",
+      "full_result_row_count": 3,
+      "row_count_bucket": "<=20",
+      "v2_pointwise": {
+        "baseline_final_score": 8.15,
+        "task_aware_final_score": 8.15,
+        "baseline_verdict": "excellent",
+        "task_aware_verdict": "excellent",
+        "baseline_caps": [],
+        "task_aware_caps": []
+      },
+      "order_consistent": true,
+      "mode_winner": "task_aware_data_summarization",
+      "difference_magnitudes": [
+        "small"
+      ],
+      "winner_confidences": [
+        "medium"
+      ],
+      "requires_absolute_rerun": false,
+      "ab_winner": "task_aware_data_summarization",
+      "ba_winner": "task_aware_data_summarization",
+      "derived_stat_evidence": null,
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B more accurately states improvement from assessment 1 to 2 followed by plateau.",
+          "evidence_refs": [
+            "prompt_packet:S-T01:task_context",
+            "prompt_packet:S-T01:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B includes the +55 change and notes all assessments are below the target threshold of 70.",
+          "evidence_refs": [
+            "prompt_packet:S-T01:task_context",
+            "prompt_packet:S-T01:candidate_explanations"
+          ]
+        },
+        "completeness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B covers both observed trend and threshold status across all assessments.",
+          "evidence_refs": [
+            "prompt_packet:S-T01:task_context",
+            "prompt_packet:S-T01:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B is slightly more directly tied to the trend-analysis requirement.",
+          "evidence_refs": [
+            "prompt_packet:S-T01:task_context",
+            "prompt_packet:S-T01:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A gives two concrete actions, while candidate B gives one broader tutor-support action.",
+          "evidence_refs": [
+            "prompt_packet:S-T01:task_context",
+            "prompt_packet:S-T01:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "tie",
+          "reason": "Both are clear and student-facing.",
+          "evidence_refs": [
+            "prompt_packet:S-T01:task_context",
+            "prompt_packet:S-T01:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "tie",
+          "reason": "Both remain within the returned three assessment points and do not overgeneralize a long-term trend.",
+          "evidence_refs": [
+            "prompt_packet:S-T01:task_context",
+            "prompt_packet:S-T01:candidate_explanations"
+          ]
+        }
+      },
+      "decisive_reason": "These details make candidate B's trend and threshold interpretation more complete.",
+      "coverage_reason": "Candidate B covers improvement, plateau, pass threshold, and target threshold more completely.",
+      "specificity_reason": "Candidate B includes the explicit +55 point change and all-below-target observation.",
+      "rerun_flags": [],
+      "policy_recommendation": "For small results, prompt/cap policy should not grant task-aware an automatic evidence advantage; decide on explanation quality, omissions, unsupported claims, and proportionality."
+    },
+    {
+      "task_id": "S-T09",
+      "task_name": "Lifestyle risk vs performance",
+      "ai_summary_type": "correlation_evidence",
+      "explanation_strategy": "correlation",
+      "full_result_row_count": 649,
+      "row_count_bucket": ">20",
+      "v2_pointwise": {
+        "baseline_final_score": 8.15,
+        "task_aware_final_score": 6,
+        "baseline_verdict": "excellent",
+        "task_aware_verdict": "acceptable",
+        "baseline_caps": [],
+        "task_aware_caps": [
+          {
+            "type": "unsupported_or_contradicted_claim",
+            "severity": "major",
+            "cap": 6,
+            "error_id": "E01",
+            "claim_ids": [
+              "C02"
+            ],
+            "evidence_refs": [
+              "full_query_artifacts:lifestyle_risk_scatter"
+            ]
+          }
+        ]
+      },
+      "order_consistent": true,
+      "mode_winner": "task_aware_data_summarization",
+      "difference_magnitudes": [
+        "small"
+      ],
+      "winner_confidences": [
+        "medium"
+      ],
+      "requires_absolute_rerun": true,
+      "ab_winner": "task_aware_data_summarization",
+      "ba_winner": "task_aware_data_summarization",
+      "derived_stat_evidence": {
+        "status": "pass",
+        "x_column": "lifestyle_risk_score",
+        "y_column": "avg_score",
+        "dataset_results": [
+          {
+            "dataset_label": "lifestyle_risk_scatter",
+            "status": "pass",
+            "row_count": 649,
+            "valid_pair_count": 649,
+            "pearson_r_rounded_4": -0.1041,
+            "direction": "negative",
+            "strength": "weak",
+            "reason": null
+          }
+        ],
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase9_single_review_dry_run/derived_stat_evidence/SAMPLE_UCI_POR/SAMPLE_UCI_POR__S-T09__derived_stats.json"
+      },
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B reflects the weak negative association better; candidate A overstates the pattern as generally lower risk producing higher scores.",
+          "evidence_refs": [
+            "prompt_packet:S-T09:task_context",
+            "prompt_packet:S-T09:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B gives the matching Pearson value -0.1041; candidate A provides no coefficient.",
+          "evidence_refs": [
+            "deterministic_derived_stat_evidence:S-T09:pearson_r_rounded_4=-0.1041"
+          ]
+        },
+        "completeness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B covers direction and strength, though neither candidate highlights the selected student's exact position.",
+          "evidence_refs": [
+            "requirements:S-T09:selected_student_position_and_cohort_association"
+          ]
+        },
+        "task_relevance": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B is more aligned with the requested class scatter interpretation.",
+          "evidence_refs": [
+            "prompt_packet:S-T09:task_context",
+            "prompt_packet:S-T09:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "tie",
+          "reason": "Both candidates give broad lifestyle advice, and neither ties the action to the selected student's exact plotted position.",
+          "evidence_refs": [
+            "prompt_packet:S-T09:task_context",
+            "prompt_packet:S-T09:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "tie",
+          "reason": "Both are concise and readable.",
+          "evidence_refs": [
+            "prompt_packet:S-T09:task_context",
+            "prompt_packet:S-T09:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B is more cautious about the weak relationship; candidate A leans closer to unsupported causal improvement language.",
+          "evidence_refs": [
+            "prompt_packet:S-T09:task_context",
+            "prompt_packet:S-T09:candidate_explanations"
+          ]
+        }
+      },
+      "decisive_reason": "Candidate B directly uses the deterministic coefficient and strength.",
+      "coverage_reason": "Candidate B uses the coefficient and weak-strength evidence, but both miss the selected student's concrete position.",
+      "specificity_reason": "Candidate B is more specific because it reports r = -0.1041.",
+      "rerun_flags": [
+        {
+          "order_variant": "AB",
+          "candidate": "both",
+          "candidate_mode": "both",
+          "suspected_error_type": "missing_selected_student_position",
+          "severity_hint": "minor",
+          "reason": "Neither candidate compares the selected student's position against the class scatter concretely.",
+          "evidence_refs": [
+            "requirements:S-T09:selected_student_position"
+          ]
+        }
+      ],
+      "policy_recommendation": "Prompt V3 should include deterministic derived-stat evidence and forbid unsupported_claim penalties when a stated coefficient matches the recomputed Pearson value."
+    },
+    {
+      "task_id": "S-T12",
+      "task_name": "Procrastination analysis",
+      "ai_summary_type": "trend_series",
+      "explanation_strategy": "behavioral",
+      "full_result_row_count": 4,
+      "row_count_bucket": "<=20",
+      "v2_pointwise": {
+        "baseline_final_score": 7.9,
+        "task_aware_final_score": 8.15,
+        "baseline_verdict": "good",
+        "task_aware_verdict": "excellent",
+        "baseline_caps": [],
+        "task_aware_caps": []
+      },
+      "order_consistent": true,
+      "mode_winner": "baseline_first_20_rows",
+      "difference_magnitudes": [
+        "small"
+      ],
+      "winner_confidences": [
+        "low"
+      ],
+      "requires_absolute_rerun": true,
+      "ab_winner": "baseline_first_20_rows",
+      "ba_winner": "baseline_first_20_rows",
+      "derived_stat_evidence": null,
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "tie",
+          "reason": "Both candidates are weak because they infer no submissions from punctuality and do not use submission_delay_avg as the primary delay metric.",
+          "evidence_refs": [
+            "prompt_packet:S-T12:task_context",
+            "prompt_packet:S-T12:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A at least cites returned score values for G2 and G3, while candidate B is less numerically detailed.",
+          "evidence_refs": [
+            "prompt_packet:S-T12:task_context",
+            "prompt_packet:S-T12:candidate_explanations"
+          ]
+        },
+        "completeness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A attempts to describe the score relationship, whereas candidate B mainly repeats punctuality.",
+          "evidence_refs": [
+            "prompt_packet:S-T12:task_context",
+            "prompt_packet:S-T12:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A is somewhat closer to the delay-score relationship requirement.",
+          "evidence_refs": [
+            "prompt_packet:S-T12:task_context",
+            "prompt_packet:S-T12:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "tie",
+          "reason": "Both give plausible time-management actions, but neither grounds them in submission_delay_avg.",
+          "evidence_refs": [
+            "prompt_packet:S-T12:task_context",
+            "prompt_packet:S-T12:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "tie",
+          "reason": "Both are readable.",
+          "evidence_refs": [
+            "prompt_packet:S-T12:task_context",
+            "prompt_packet:S-T12:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "tie",
+          "reason": "Both overstate procrastination from limited delay evidence, so neither is safer.",
+          "evidence_refs": [
+            "prompt_packet:S-T12:task_context",
+            "prompt_packet:S-T12:candidate_explanations"
+          ]
+        }
+      },
+      "decisive_reason": "This requirement exposes a shared weakness, with candidate A only slightly ahead for score detail.",
+      "coverage_reason": "Candidate A covers more returned fields, but still misses the primary delay metric.",
+      "specificity_reason": "Candidate A is more specific about assessment scores.",
+      "rerun_flags": [
+        {
+          "order_variant": "AB",
+          "candidate": "both",
+          "candidate_mode": "both",
+          "suspected_error_type": "missing_primary_delay_metric",
+          "severity_hint": "major",
+          "reason": "Neither candidate uses submission_delay_avg as the primary delay metric.",
+          "evidence_refs": [
+            "requirements:S-T12:submission_delay_avg_primary_metric"
+          ]
+        }
+      ],
+      "policy_recommendation": "For small results, prompt/cap policy should not grant task-aware an automatic evidence advantage; decide on explanation quality, omissions, unsupported claims, and proportionality."
+    },
+    {
+      "task_id": "S-T13",
+      "task_name": "Action plan generation",
+      "ai_summary_type": "action_synthesis",
+      "explanation_strategy": "risk",
+      "full_result_row_count": 1,
+      "row_count_bucket": "<=20",
+      "v2_pointwise": {
+        "baseline_final_score": 8.15,
+        "task_aware_final_score": 4,
+        "baseline_verdict": "excellent",
+        "task_aware_verdict": "poor",
+        "baseline_caps": [],
+        "task_aware_caps": [
+          {
+            "type": "unsupported_or_contradicted_claim",
+            "severity": "critical",
+            "cap": 4,
+            "error_id": "E01",
+            "claim_ids": [
+              "C01"
+            ],
+            "evidence_refs": [
+              "full_query_artifacts:synthesis_data"
+            ]
+          }
+        ]
+      },
+      "order_consistent": true,
+      "mode_winner": "baseline_first_20_rows",
+      "difference_magnitudes": [
+        "moderate"
+      ],
+      "winner_confidences": [
+        "medium"
+      ],
+      "requires_absolute_rerun": true,
+      "ab_winner": "baseline_first_20_rows",
+      "ba_winner": "baseline_first_20_rows",
+      "derived_stat_evidence": null,
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A references returned FE signals; candidate B says there are no recommendations despite visible score and engagement concerns.",
+          "evidence_refs": [
+            "prompt_packet:S-T13:task_context",
+            "prompt_packet:S-T13:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A cites avg_score 41.25, pass threshold 40, and engagement score 0.",
+          "evidence_refs": [
+            "prompt_packet:S-T13:task_context",
+            "prompt_packet:S-T13:candidate_explanations"
+          ]
+        },
+        "completeness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A is incomplete as an action plan but still covers more required signal synthesis than candidate B.",
+          "evidence_refs": [
+            "prompt_packet:S-T13:task_context",
+            "prompt_packet:S-T13:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A is closer to the action-plan generation task because it identifies trigger signals.",
+          "evidence_refs": [
+            "prompt_packet:S-T13:task_context",
+            "prompt_packet:S-T13:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A implies focus areas for improvement, while candidate B provides none.",
+          "evidence_refs": [
+            "prompt_packet:S-T13:task_context",
+            "prompt_packet:S-T13:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "tie",
+          "reason": "Both are short and clear.",
+          "evidence_refs": [
+            "prompt_packet:S-T13:task_context",
+            "prompt_packet:S-T13:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "baseline_first_20_rows",
+          "reason": "Candidate A's risk context is tied to returned FE values; candidate B's no-data response is unsupported.",
+          "evidence_refs": [
+            "prompt_packet:S-T13:task_context",
+            "prompt_packet:S-T13:candidate_explanations"
+          ]
+        }
+      },
+      "decisive_reason": "Candidate A is the only candidate using these returned FE signals.",
+      "coverage_reason": "Candidate A uses the FE signals present in the record.",
+      "specificity_reason": "Candidate A gives exact score and engagement values.",
+      "rerun_flags": [
+        {
+          "order_variant": "AB",
+          "candidate": "A",
+          "candidate_mode": "baseline_first_20_rows",
+          "suspected_error_type": "incomplete_action_plan",
+          "severity_hint": "minor",
+          "reason": "Candidate A still does not produce 3-5 prioritized actions tied to FE triggers.",
+          "evidence_refs": [
+            "requirements:S-T13:3_to_5_prioritised_actions"
+          ]
+        },
+        {
+          "order_variant": "AB",
+          "candidate": "B",
+          "candidate_mode": "task_aware_data_summarization",
+          "suspected_error_type": "unsupported_no_recommendation_claim",
+          "severity_hint": "major",
+          "reason": "Candidate B says no specific recommendations are available despite returned FE risk signals.",
+          "evidence_refs": [
+            "candidate_A:S-T13:visible_fe_values"
+          ]
+        }
+      ],
+      "policy_recommendation": "For small results, prompt/cap policy should not grant task-aware an automatic evidence advantage; decide on explanation quality, omissions, unsupported claims, and proportionality."
+    },
+    {
+      "task_id": "S-T14",
+      "task_name": "Social balance vs performance",
+      "ai_summary_type": "correlation_evidence",
+      "explanation_strategy": "correlation",
+      "full_result_row_count": 649,
+      "row_count_bucket": ">20",
+      "v2_pointwise": {
+        "baseline_final_score": 8.15,
+        "task_aware_final_score": 8.15,
+        "baseline_verdict": "excellent",
+        "task_aware_verdict": "excellent",
+        "baseline_caps": [],
+        "task_aware_caps": []
+      },
+      "order_consistent": true,
+      "mode_winner": "task_aware_data_summarization",
+      "difference_magnitudes": [
+        "moderate"
+      ],
+      "winner_confidences": [
+        "high"
+      ],
+      "requires_absolute_rerun": true,
+      "ab_winner": "task_aware_data_summarization",
+      "ba_winner": "task_aware_data_summarization",
+      "derived_stat_evidence": {
+        "status": "pass",
+        "x_column": "social_balance_score",
+        "y_column": "avg_score",
+        "dataset_results": [
+          {
+            "dataset_label": "social_balance_scatter",
+            "status": "pass",
+            "row_count": 649,
+            "valid_pair_count": 649,
+            "pearson_r_rounded_4": 0.0144,
+            "direction": "positive",
+            "strength": "negligible",
+            "reason": null
+          }
+        ],
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase9_single_review_dry_run/derived_stat_evidence/SAMPLE_UCI_POR/SAMPLE_UCI_POR__S-T14__derived_stats.json"
+      },
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B correctly frames the association as very weak; candidate A overstates it as meaningful academic support.",
+          "evidence_refs": [
+            "prompt_packet:S-T14:task_context",
+            "prompt_packet:S-T14:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B reports r = 0.0144, matching the derived statistic; candidate A omits the near-zero coefficient.",
+          "evidence_refs": [
+            "deterministic_derived_stat_evidence:S-T14:pearson_r_rounded_4=0.0144"
+          ]
+        },
+        "completeness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B covers direction and strength better, though neither gives much selected-student positioning.",
+          "evidence_refs": [
+            "prompt_packet:S-T14:task_context",
+            "prompt_packet:S-T14:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B is more relevant because the task asks for cohort association, not a broad claim that social balance supports success.",
+          "evidence_refs": [
+            "prompt_packet:S-T14:task_context",
+            "prompt_packet:S-T14:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B's medium-priority action is more proportionate to the near-zero association.",
+          "evidence_refs": [
+            "prompt_packet:S-T14:task_context",
+            "prompt_packet:S-T14:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B clearly explains that the connection is not strong enough to rely on.",
+          "evidence_refs": [
+            "prompt_packet:S-T14:task_context",
+            "prompt_packet:S-T14:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B avoids implying that social balance materially improves performance.",
+          "evidence_refs": [
+            "prompt_packet:S-T14:task_context",
+            "prompt_packet:S-T14:candidate_explanations"
+          ]
+        }
+      },
+      "decisive_reason": "The near-zero coefficient supports candidate B's weak-positive interpretation over candidate A's stronger wording.",
+      "coverage_reason": "Candidate B uses the derived Pearson coefficient and weak-strength context.",
+      "specificity_reason": "Candidate B provides the exact coefficient and a correctly cautious interpretation.",
+      "rerun_flags": [
+        {
+          "order_variant": "AB",
+          "candidate": "A",
+          "candidate_mode": "baseline_first_20_rows",
+          "suspected_error_type": "overstated_association",
+          "severity_hint": "major",
+          "reason": "Candidate A describes social balance as supporting academic success even though r = 0.0144 is nearly zero.",
+          "evidence_refs": [
+            "deterministic_derived_stat_evidence:S-T14:pearson_r_rounded_4=0.0144"
+          ]
+        }
+      ],
+      "policy_recommendation": "Prompt V3 should include deterministic derived-stat evidence and forbid unsupported_claim penalties when a stated coefficient matches the recomputed Pearson value."
+    },
+    {
+      "task_id": "S-T15",
+      "task_name": "Family context vs performance",
+      "ai_summary_type": "correlation_evidence",
+      "explanation_strategy": "correlation",
+      "full_result_row_count": 649,
+      "row_count_bucket": ">20",
+      "v2_pointwise": {
+        "baseline_final_score": 8.15,
+        "task_aware_final_score": 8.15,
+        "baseline_verdict": "excellent",
+        "task_aware_verdict": "excellent",
+        "baseline_caps": [],
+        "task_aware_caps": []
+      },
+      "order_consistent": true,
+      "mode_winner": "task_aware_data_summarization",
+      "difference_magnitudes": [
+        "large"
+      ],
+      "winner_confidences": [
+        "high"
+      ],
+      "requires_absolute_rerun": true,
+      "ab_winner": "task_aware_data_summarization",
+      "ba_winner": "task_aware_data_summarization",
+      "derived_stat_evidence": {
+        "status": "pass",
+        "x_column": "family_stability_score",
+        "y_column": "avg_score",
+        "dataset_results": [
+          {
+            "dataset_label": "family_context_scatter",
+            "status": "pass",
+            "row_count": 649,
+            "valid_pair_count": 649,
+            "pearson_r_rounded_4": 0.1442,
+            "direction": "positive",
+            "strength": "weak",
+            "reason": null
+          }
+        ],
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase9_single_review_dry_run/derived_stat_evidence/SAMPLE_UCI_POR/SAMPLE_UCI_POR__S-T15__derived_stats.json"
+      },
+      "metric_comparison": {
+        "faithfulness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B matches the weak positive association; candidate A states the wrong direction.",
+          "evidence_refs": [
+            "prompt_packet:S-T15:task_context",
+            "prompt_packet:S-T15:candidate_explanations"
+          ]
+        },
+        "numerical_correctness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B reports r = 0.1442, while candidate A claims a weak negative correlation.",
+          "evidence_refs": [
+            "deterministic_derived_stat_evidence:S-T15:pearson_r_rounded_4=0.1442"
+          ]
+        },
+        "completeness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B gives direction, strength, and coefficient; candidate A misses the core association.",
+          "evidence_refs": [
+            "prompt_packet:S-T15:task_context",
+            "prompt_packet:S-T15:candidate_explanations"
+          ]
+        },
+        "task_relevance": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B better addresses the family-context scatter requirement.",
+          "evidence_refs": [
+            "prompt_packet:S-T15:task_context",
+            "prompt_packet:S-T15:candidate_explanations"
+          ]
+        },
+        "actionability": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B's support-system suggestion is more aligned with the observed positive association, though the prompt asks to avoid prescriptive suggestions.",
+          "evidence_refs": [
+            "prompt_packet:S-T15:task_context",
+            "prompt_packet:S-T15:candidate_explanations"
+          ]
+        },
+        "clarity": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B is clearer because it states the coefficient and weak magnitude.",
+          "evidence_refs": [
+            "prompt_packet:S-T15:task_context",
+            "prompt_packet:S-T15:candidate_explanations"
+          ]
+        },
+        "safety_fairness": {
+          "winner": "task_aware_data_summarization",
+          "reason": "Candidate B is safer than the wrong-direction answer, but both should keep recommendations non-prescriptive.",
+          "evidence_refs": [
+            "evaluation_constraints:S-T15:associative_not_causal_avoid_prescriptive"
+          ]
+        }
+      },
+      "decisive_reason": "This directly refutes candidate A's negative-correlation claim.",
+      "coverage_reason": "Candidate B uses the deterministic full-result coefficient; candidate A contradicts it.",
+      "specificity_reason": "Candidate B gives the exact r value and correct weak-positive direction.",
+      "rerun_flags": [
+        {
+          "order_variant": "AB",
+          "candidate": "A",
+          "candidate_mode": "baseline_first_20_rows",
+          "suspected_error_type": "wrong_correlation_direction",
+          "severity_hint": "critical",
+          "reason": "Candidate A says the relationship is negative, but deterministic Pearson evidence is positive at 0.1442.",
+          "evidence_refs": [
+            "deterministic_derived_stat_evidence:S-T15:pearson_r_rounded_4=0.1442"
+          ]
+        }
+      ],
+      "policy_recommendation": "Prompt V3 should include deterministic derived-stat evidence and forbid unsupported_claim penalties when a stated coefficient matches the recomputed Pearson value."
+    }
+  ]
+}

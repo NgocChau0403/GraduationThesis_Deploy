@@ -1,0 +1,36 @@
+{
+  "deterministic_artifact_retrieval": {
+    "records": 12,
+    "scored_records": 12,
+    "invalid_records": 0,
+    "average_raw_weighted_score": 7.87,
+    "average_final_score_after_caps": 7.61,
+    "verdict_counts": {
+      "acceptable": 3,
+      "excellent": 9
+    },
+    "highest_error_severity_counts": {
+      "major": 3,
+      "none": 9
+    }
+  },
+  "direct_embedding": {
+    "records": 92,
+    "scored_records": 92,
+    "invalid_records": 0,
+    "average_raw_weighted_score": 7.9,
+    "average_final_score_after_caps": 7.71,
+    "verdict_counts": {
+      "excellent": 51,
+      "acceptable": 10,
+      "good": 30,
+      "poor": 1
+    },
+    "highest_error_severity_counts": {
+      "none": 80,
+      "major": 10,
+      "minor": 1,
+      "critical": 1
+    }
+  }
+}

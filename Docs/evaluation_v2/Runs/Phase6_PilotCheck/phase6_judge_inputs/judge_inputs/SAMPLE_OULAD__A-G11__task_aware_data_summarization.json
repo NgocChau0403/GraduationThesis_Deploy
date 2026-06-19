@@ -1,0 +1,228 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G11__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v2_pilot_phase6_4",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G11",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Weekly engagement drop detection",
+    "scope": "Many students",
+    "actionable_question": "Which weeks should the admin schedule check-ins or motivational nudges?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "trend_series",
+    "ai_prompt_hint": "Use early_warning_week [FE] to pinpoint critical weeks. Recommend admin action timing (e.g. week 5 intervention).",
+    "query_labels": [
+      "weekly_drop_detection"
+    ],
+    "explanation_strategy": "trend"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "engagement [OULAD only]"
+    ],
+    "key_db_fields": [
+      "week_number",
+      "engagement_count; is_drop_week [FE cross]",
+      "rolling_3wk_avg",
+      "drop_pct"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "weekly_drop_detection"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The engagement trend exhibits a significant decline over the observed weeks, culminating in a sharp drop in week 39. This downward trajectory indicates a critical need for timely interventions to support student engagement.\n\nInsights: Overall Decline in Engagement: The total clicks decreased from 38,370 in week -2 to 2,117 in week 39, representing a drastic decline of 36,253 clicks, or approximately 94.48%. This indicates a severe drop in student engagement over the observed period. | Notable Turning Points: The largest adjacent drop occurred between week 3 (228,353 clicks) and week 4 (90,777 clicks), with a delta of -137,576 clicks. This sharp decline marks a critical turning point in engagement levels. | Lowest Engagement Recorded: Week 39 recorded the lowest engagement with only 2,117 clicks, indicating a trough in student interaction. This low point suggests a critical need for intervention to re-engage students.\n\nEducational implications: The significant decline in engagement suggests that students may be struggling with course material or losing motivation, necessitating timely support and intervention strategies.\n\nRecommendations: high - Schedule check-ins or motivational nudges during weeks 4, 11, and 39. - These weeks correspond to notable drops in engagement, indicating critical points where students may benefit from additional support.\n\nWarnings: Trend points capped at 40 of 42 rows.",
+    "structured_payload": {
+      "task_id": "A-G11",
+      "execution_id": "exec_1781820435467_a337bca1",
+      "explanation": {
+        "summary": "The engagement trend exhibits a significant decline over the observed weeks, culminating in a sharp drop in week 39. This downward trajectory indicates a critical need for timely interventions to support student engagement.",
+        "insights": [
+          {
+            "title": "Overall Decline in Engagement",
+            "description": "The total clicks decreased from 38,370 in week -2 to 2,117 in week 39, representing a drastic decline of 36,253 clicks, or approximately 94.48%. This indicates a severe drop in student engagement over the observed period.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "week_total_clicks",
+                "value": 2117,
+                "comparison": "down_from_previous",
+                "delta": -36253,
+                "context": "from week -2 to week 39"
+              }
+            ]
+          },
+          {
+            "title": "Notable Turning Points",
+            "description": "The largest adjacent drop occurred between week 3 (228,353 clicks) and week 4 (90,777 clicks), with a delta of -137,576 clicks. This sharp decline marks a critical turning point in engagement levels.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "week_total_clicks",
+                "value": 90777,
+                "comparison": "down_from_previous",
+                "delta": -137576,
+                "context": "from week 3 to week 4"
+              }
+            ]
+          },
+          {
+            "title": "Lowest Engagement Recorded",
+            "description": "Week 39 recorded the lowest engagement with only 2,117 clicks, indicating a trough in student interaction. This low point suggests a critical need for intervention to re-engage students.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "week_total_clicks",
+                "value": 2117,
+                "comparison": "trough",
+                "delta": null,
+                "context": "week 39"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The significant decline in engagement suggests that students may be struggling with course material or losing motivation, necessitating timely support and intervention strategies."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Schedule check-ins or motivational nudges during weeks 4, 11, and 39.",
+            "rationale": "These weeks correspond to notable drops in engagement, indicating critical points where students may benefit from additional support."
+          }
+        ],
+        "warnings": [
+          "Trend points capped at 40 of 42 rows."
+        ]
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset comprises a robust sample size of 1998 students across 9 assessments, providing a strong statistical basis for the analysis.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "trend",
+      "explanation_type": "trend",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "trend_series",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 42,
+      "included_row_count": null,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": false,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "weekly_drop_detection",
+          "row_count": 42,
+          "included_row_count": 42
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 10178,
+        "token_usage": {
+          "prompt_tokens": 3010,
+          "completion_tokens": 633,
+          "total_tokens": 3643
+        },
+        "strategy": "trend",
+        "granularity": "weekly",
+        "cost_usd": 0.000831
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/phase6_explanations_task_aware/explanation_artifacts/SAMPLE_OULAD__A-G11__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "750cedb53e3696c0a7371243cebcea9e67dd1fc2975e9667e0c038a68e183699",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 3010,
+        "completion_tokens": 633,
+        "total_tokens": 3643
+      },
+      "latency_ms": 10225,
+      "attempts_used": 2
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 42,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "weekly_drop_detection",
+        "artifact_path": "Docs/evaluation_v2/Runs/phase6_evidence/full_query_artifacts/SAMPLE_OULAD__A-G11__task_aware_data_summarization.json",
+        "artifact_sha256": "08d87fcea1eea2534a97c7d887b5d19cdfb2cbe269d24c8d17ee32a75c4af7ec",
+        "row_count": 42,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 42,
+    "retrieved_row_count_by_dataset": {
+      "weekly_drop_detection": 42
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "weekly_drop_detection",
+        "start": 0,
+        "end": 41
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_OULAD__A-G11__task_aware_data_summarization__weekly_drop_detection__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/phase6_judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G11__task_aware_data_summarization.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "weekly_drop_detection": 42
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G11-CORE-01",
+        "description": "Identify the critical weeks in which cohort-level engagement declined."
+      },
+      {
+        "requirement_id": "A-G11-CORE-02",
+        "description": "Recommend admin action timing relative to the identified critical weeks."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G11-CONSTRAINT-01",
+        "description": "Use early_warning_week as the primary timing field when returned."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

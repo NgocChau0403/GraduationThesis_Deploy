@@ -23,7 +23,7 @@ analytics execution.
 Completed in:
 
 ```text
-Docs/evaluation_v2/LLMJudgeV2/phase4_small_result_rule_plan.md
+Docs/evaluation_v2/Handle20rows/phase4_small_result_rule_plan.md
 ```
 
 The document fixes the threshold, multi-dataset row-count definition,
@@ -78,14 +78,14 @@ would otherwise remove the new Phase 4 metadata from the public response.
 Runner:
 
 ```text
-Docs/evaluation_v2/LLMJudgeV2/scripts/verifySmallResultRule.py
+Docs/evaluation_v2/Handle20rows/scripts/verifySmallResultRule.py
 ```
 
 Outputs:
 
 ```text
-Docs/evaluation_v2/LLMJudgeV2/outputs/small_result_rule_verification.json
-Docs/evaluation_v2/LLMJudgeV2/outputs/small_result_rule_verification.md
+Docs/evaluation_v2/Handle20rows/outputs/small_result_rule_verification.json
+Docs/evaluation_v2/Handle20rows/outputs/small_result_rule_verification.md
 ```
 
 Result:
@@ -107,7 +107,7 @@ This confirms the threshold boundary and the sum-across-datasets rule.
 Runner:
 
 ```text
-Docs/evaluation_v2/LLMJudgeV2/scripts/runSmallResultRuntimeVerification.mjs
+Docs/evaluation_v2/Handle20rows/scripts/runSmallResultRuntimeVerification.mjs
 ```
 
 The runner executes real analytics queries and then calls the real backend AI
@@ -118,8 +118,8 @@ of the task-specific summary type for large results.
 Outputs:
 
 ```text
-Docs/evaluation_v2/LLMJudgeV2/outputs/small_result_runtime_verification.json
-Docs/evaluation_v2/LLMJudgeV2/outputs/small_result_runtime_verification.md
+Docs/evaluation_v2/Handle20rows/outputs/small_result_runtime_verification.json
+Docs/evaluation_v2/Handle20rows/outputs/small_result_runtime_verification.md
 ```
 
 Canonical runtime result:

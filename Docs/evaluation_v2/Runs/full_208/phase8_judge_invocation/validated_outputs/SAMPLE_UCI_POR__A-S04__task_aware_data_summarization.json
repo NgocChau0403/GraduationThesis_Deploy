@@ -1,0 +1,104 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-S04__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Claims were judged against the permitted evidence; penalties reflect unsupported, contradicted, or overstrong interpretations when detected."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Numerical values, percentages, rankings, and thresholds were checked against the supplied rows and task context where present."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation was checked against the supplied core and supporting requirements, with omissions penalized only for required outputs."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The response addresses the stated task, dataset, audience, and scope unless missing core outputs or unsupported claims weaken the target answer."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Recommendations or decision support were assessed for whether they follow from the record evidence and match the requested decision level."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally readable and organized; clarity score reflects precision and concision rather than factual correctness."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Safety and fairness were treated as applicable per the conservative pilot default and checked for stigmatizing or deterministic framing."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The checklist prioritizes Low Score and Low Punctuality because their current values cross the respective risk thresholds; highest severity is high for Low Score because the average score is significantly below the pass threshold.",
+      "claim_type": "semantic_interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts:risk_flags"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The qualitative interpretation is consistent with the supplied task evidence and does not introduce a detected contradiction."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Why Low Score is High: The average score is 36.67, which is below the pass threshold of 40.",
+      "claim_type": "numeric_or_semantic_interpretation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts:risk_flags"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The numerical values in this sentence match supplied evidence or task context."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_core_output",
+      "claim_ids": [],
+      "requirement_id": "A-S04-CORE-02",
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [
+        "task_relevance"
+      ],
+      "cap_candidate": 6,
+      "rationale": "The explanation does not satisfy the supplied core requirement: Prioritise the top 2 for immediate action.",
+      "evidence_refs": [
+        "full_query_artifacts:risk_flags"
+      ]
+    },
+    {
+      "error_id": "E02",
+      "error_type": "overstrong_causal_framing",
+      "claim_ids": [],
+      "severity": "minor",
+      "primary_metric": "faithfulness",
+      "secondary_metrics": [
+        "actionability"
+      ],
+      "cap_candidate": null,
+      "rationale": "The explanation uses causal-impact language stronger than the observational evidence can prove.",
+      "evidence_refs": [
+        "full_query_artifacts:risk_flags"
+      ]
+    }
+  ],
+  "holistic_rationale": "The explanation was scoreable for this SAMPLE_UCI_POR record. It generally addresses the central task using the supplied evidence; the most consequential limitations are reflected by the listed unsupported claims or missing required outputs.",
+  "evidence_usage_notes": "Evidence access mode was direct_embedding. Judgment used manifest-referenced artifacts for risk_flags; retrieval_log_path was not applicable. Direct rows, artifact row counts, and any backend data-quality warnings materially informed claim and requirement checks.",
+  "invalid_reason": null
+}

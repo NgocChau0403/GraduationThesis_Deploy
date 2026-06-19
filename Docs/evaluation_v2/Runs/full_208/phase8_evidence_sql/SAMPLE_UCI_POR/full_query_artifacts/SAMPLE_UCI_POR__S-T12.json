@@ -1,0 +1,147 @@
+{
+  "artifact_type": "llm_judge_v2_full_query_task_level_evidence_v1",
+  "generated_at": "2026-06-19T05:34:04.410Z",
+  "evidence_grain": "dataset_id + task_id",
+  "evidence_id": "SAMPLE_UCI_POR__S-T12",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "class_id": "SAMPLE_UCI_POR_CLASS",
+  "student_id": "SAMPLE_UCI_POR_STU_000001",
+  "role": "student",
+  "task_id": "S-T12",
+  "task_name": "Procrastination analysis",
+  "request": {
+    "backend_url": "http://localhost:4000",
+    "endpoint": "/api/analytics/run",
+    "body": {
+      "taskId": "S-T12",
+      "params": {
+        "batch_id": "SAMPLE_UCI_POR",
+        "class_id": "SAMPLE_UCI_POR_CLASS",
+        "student_id": "SAMPLE_UCI_POR_STU_000001",
+        "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+        "s1": "SAMPLE_UCI_POR_STU_000001",
+        "s2": "SAMPLE_UCI_POR_STU_000002"
+      }
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 19,
+    "transport_error": null,
+    "analytics_success": true,
+    "analytics_error": null
+  },
+  "evidence_summary": {
+    "row_count_phase3": 4,
+    "row_count_observed": 4,
+    "row_count_bucket_phase3": "<=20",
+    "row_count_bucket_observed": "<=20",
+    "dataset_breakdown": [
+      {
+        "label": "submission_series",
+        "row_count": 3,
+        "sample_fields": [
+          "assessment_order",
+          "assessment_name",
+          "assessment_type",
+          "due_day",
+          "submission_day",
+          "submission_delay_days",
+          "score_normalized",
+          "pass_flag"
+        ]
+      },
+      {
+        "label": "punctuality_summary",
+        "row_count": 1,
+        "sample_fields": [
+          "submission_delay_avg",
+          "punctuality_rate"
+        ]
+      }
+    ],
+    "full_query_datasets_sha256": "3150fbd46fca5ca6357c28b1f0dfe5d037aeb0c4424989e255fe8f65e09691f5"
+  },
+  "execution_outcome": {
+    "status": "query_result",
+    "reason": null,
+    "backend_data_quality_status": "partial",
+    "backend_confidence": "HIGH",
+    "error_codes": []
+  },
+  "full_response_body": {
+    "success": true,
+    "executionId": "exec_1781847244391_4da9979a",
+    "taskId": "S-T12",
+    "datasets": {
+      "submission_series": [
+        {
+          "assessment_order": 1,
+          "assessment_name": "G1",
+          "assessment_type": "quiz",
+          "due_day": 21,
+          "submission_day": null,
+          "submission_delay_days": null,
+          "score_normalized": 0,
+          "pass_flag": false
+        },
+        {
+          "assessment_order": 2,
+          "assessment_name": "G2",
+          "assessment_type": "quiz",
+          "due_day": 56,
+          "submission_day": null,
+          "submission_delay_days": null,
+          "score_normalized": 55,
+          "pass_flag": true
+        },
+        {
+          "assessment_order": 3,
+          "assessment_name": "G3",
+          "assessment_type": "exam",
+          "due_day": 98,
+          "submission_day": null,
+          "submission_delay_days": null,
+          "score_normalized": 55,
+          "pass_flag": true
+        }
+      ],
+      "punctuality_summary": [
+        {
+          "submission_delay_avg": null,
+          "punctuality_rate": "0"
+        }
+      ]
+    },
+    "meta": {
+      "taskId": "S-T12",
+      "isMultiQuery": true,
+      "queryCount": 2,
+      "executionTimeMs": 5,
+      "queryHash": "12525788",
+      "cacheHit": false,
+      "retryCount": 0,
+      "query_labels": [
+        "submission_series",
+        "punctuality_summary"
+      ],
+      "dataQuality": {
+        "status": "partial",
+        "confidence": "HIGH",
+        "confidence_reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+        "warnings": [
+          {
+            "code": "REQUIRED_CAPABILITY_MISSING",
+            "severity": "error",
+            "message": "Required capability missing: submission_timestamps",
+            "context": {
+              "task_id": "S-T12",
+              "capability": "submission_timestamps",
+              "batch_id": "SAMPLE_UCI_POR"
+            }
+          }
+        ]
+      }
+    }
+  }
+}

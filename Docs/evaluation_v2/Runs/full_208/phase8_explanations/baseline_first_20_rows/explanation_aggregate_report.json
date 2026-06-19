@@ -1,0 +1,72 @@
+{
+  "report_version": "llm_judge_v2_phase_f3_baseline_explanation_aggregate_v1",
+  "generated_at": "2026-06-19T07:01:12.544Z",
+  "status": "PASS",
+  "phase_scope": [
+    "F3 baseline explanation aggregate"
+  ],
+  "inputs": {
+    "dataset_manifests": {
+      "SAMPLE_UCI_POR": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_manifest.jsonl",
+      "SAMPLE_OULAD": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_manifest.jsonl"
+    },
+    "dataset_reports": {
+      "SAMPLE_UCI_POR": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_report.json",
+      "SAMPLE_OULAD": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_report.json"
+    }
+  },
+  "counts": {
+    "expected_records": 104,
+    "aggregate_records": 104,
+    "unique_record_ids": 104,
+    "explanation_ready_records": 104,
+    "degraded_records": 0,
+    "mode_mismatch_records": 0,
+    "explanation_artifact_hash_matches": 104,
+    "source_evidence_hash_matches": 104,
+    "request_payload_present": 104,
+    "non_empty_raw_text": 104,
+    "errors": 0,
+    "warnings": 0
+  },
+  "by_dataset": {
+    "SAMPLE_UCI_POR": {
+      "records": 52,
+      "ready": 52,
+      "degraded": 0,
+      "observed_baseline": 52,
+      "artifact_hash_matches": 52,
+      "source_evidence_hash_matches": 52,
+      "request_payload_present": 52,
+      "non_empty_raw_text": 52,
+      "report_json": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_report.json",
+      "manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_manifest.jsonl"
+    },
+    "SAMPLE_OULAD": {
+      "records": 52,
+      "ready": 52,
+      "degraded": 0,
+      "observed_baseline": 52,
+      "artifact_hash_matches": 52,
+      "source_evidence_hash_matches": 52,
+      "request_payload_present": 52,
+      "non_empty_raw_text": 52,
+      "report_json": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_report.json",
+      "manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_manifest.jsonl"
+    }
+  },
+  "outputs": {
+    "explanation_manifest_baseline_104_jsonl": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/explanation_manifest_baseline_104.jsonl",
+    "explanation_aggregate_report_json": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/explanation_aggregate_report.json",
+    "explanation_aggregate_report_md": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/explanation_aggregate_report.md"
+  },
+  "gate_decision": {
+    "baseline_aggregate_complete": true,
+    "phase_f4_task_aware_explanations_allowed": true,
+    "phase6_4_judge_input_materializer_allowed": false,
+    "judge_invocation_allowed": false,
+    "official_full_evaluation_allowed": false,
+    "reason": "Baseline aggregate is complete. Switch AIService to task_aware_data_summarization and run Phase F4 next; judge input materialization remains disabled."
+  },
+  "issues": []
+}

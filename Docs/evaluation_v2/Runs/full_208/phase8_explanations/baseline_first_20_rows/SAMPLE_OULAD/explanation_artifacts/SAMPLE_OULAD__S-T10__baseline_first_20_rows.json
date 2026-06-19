@@ -1,0 +1,352 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T06:13:45.309Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__S-T10__baseline_first_20_rows",
+    "case_id": "SAMPLE_OULAD__S-T10",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": "SAMPLE_OULAD_STU_100788",
+    "role": "student",
+    "task_id": "S-T10",
+    "task_name": "Resource engagement breakdown",
+    "explanation_mode": "baseline_first_20_rows"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T10.json",
+    "full_query_artifact_sha256": "d104cedb86d92fea4d41cb5fde5c359875144a7bb6d35e70d303cd08cd0a444c"
+  },
+  "request_payload": {
+    "task_id": "S-T10",
+    "execution_id": "exec_1781847912597_3167c4a7",
+    "task_name": "Resource engagement breakdown",
+    "analysis_type": "distribution",
+    "explanation_strategy": "behavioral",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Use vle_diversity_score [FE] to show breadth. Highlight under-used types (e.g. forum rarely used).",
+    "actionable_question": "Am I using the full range of learning resources available?",
+    "target_audience": [
+      "student"
+    ],
+    "visualization_config": {
+      "x_field": "resource_type",
+      "y_field": "clicks",
+      "series_field": null,
+      "color_field": "resource_type",
+      "orientation": null,
+      "variant": "default",
+      "x_label": "Resource Type",
+      "y_label": "Click Count",
+      "semantic_roles": {
+        "x": "category",
+        "y": "engagement_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "student"
+    },
+    "datasets": {
+      "resource_usage": [
+        {
+          "resource_type": "quiz",
+          "clicks": 623,
+          "pct_of_total": "0.49405233941316415543",
+          "vle_diversity_score": "1",
+          "forum_engagement_rate": "0.11102299762093576527"
+        },
+        {
+          "resource_type": "homepage",
+          "clicks": 264,
+          "pct_of_total": "0.20935765265662172879",
+          "vle_diversity_score": "1",
+          "forum_engagement_rate": "0.11102299762093576527"
+        },
+        {
+          "resource_type": "forumng",
+          "clicks": 140,
+          "pct_of_total": "0.11102299762093576527",
+          "vle_diversity_score": "1",
+          "forum_engagement_rate": "0.11102299762093576527"
+        },
+        {
+          "resource_type": "subpage",
+          "clicks": 94,
+          "pct_of_total": "0.07454401268834258525",
+          "vle_diversity_score": "1",
+          "forum_engagement_rate": "0.11102299762093576527"
+        },
+        {
+          "resource_type": "resource",
+          "clicks": 71,
+          "pct_of_total": "0.05630452022204599524",
+          "vle_diversity_score": "1",
+          "forum_engagement_rate": "0.11102299762093576527"
+        },
+        {
+          "resource_type": "oucontent",
+          "clicks": 40,
+          "pct_of_total": "0.03172085646312450436",
+          "vle_diversity_score": "1",
+          "forum_engagement_rate": "0.11102299762093576527"
+        },
+        {
+          "resource_type": "url",
+          "clicks": 27,
+          "pct_of_total": "0.02141157811260904044",
+          "vle_diversity_score": "1",
+          "forum_engagement_rate": "0.11102299762093576527"
+        },
+        {
+          "resource_type": "page",
+          "clicks": 1,
+          "pct_of_total": "0.00079302141157811261",
+          "vle_diversity_score": "1",
+          "forum_engagement_rate": "0.11102299762093576527"
+        },
+        {
+          "resource_type": "oucollaborate",
+          "clicks": 1,
+          "pct_of_total": "0.00079302141157811261",
+          "vle_diversity_score": "1",
+          "forum_engagement_rate": "0.11102299762093576527"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": {
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "dataset_id": "SAMPLE_OULAD"
+    },
+    "query_labels": [
+      "resource_usage"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [
+        "pct_of_total",
+        "vle_diversity_score",
+        "forum_engagement_rate"
+      ],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [
+        "forumng"
+      ],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "categorical_distribution",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": "resource_type",
+      "bin_column": null,
+      "count_column": "clicks",
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": "clicks",
+      "sort_direction": "desc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 6905,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "baseline_first_20_rows",
+    "observed_ai_summary_method": "baseline_first_20_rows",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1117,
+      "completion_tokens": 520,
+      "total_tokens": 1637
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "S-T10",
+    "execution_id": "exec_1781847912597_3167c4a7",
+    "explanation": {
+      "summary": "Your engagement with various learning resources shows a strong preference for quizzes, while other resources like forums and pages are underutilized. This suggests that you might benefit from exploring a wider range of materials to enhance your learning experience.",
+      "insights": [
+        {
+          "title": "High Quiz Engagement",
+          "description": "You have clicked on quizzes 623 times, which accounts for nearly half of your total resource engagement. This indicates a strong preference for this type of resource.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "clicks",
+              "value": 623,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Quizzes are your most engaged resource."
+            }
+          ]
+        },
+        {
+          "title": "Low Forum Engagement",
+          "description": "Your engagement with forums is quite low, with only 140 clicks. This resource type has a diversity score of 1, indicating it could be beneficial for your learning.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "clicks",
+              "value": 140,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Forums are rarely used despite their potential."
+            }
+          ]
+        },
+        {
+          "title": "Underutilized Resources",
+          "description": "Other resources like pages and URLs have minimal engagement, with only 1 click each. This suggests you may not be fully exploring all available materials.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "clicks",
+              "value": 1,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Pages and URLs are significantly underused."
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Exploring a variety of resources can enhance your understanding and retention of course material."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Engage more with forums and other underused resources.",
+          "rationale": "This will help you gain different perspectives and deepen your understanding of the course content."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data on resource usage is clear and provides a solid basis for analysis.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "behavioral",
+    "explanation_type": "behavioral",
+    "ai_summary_method": "baseline_first_20_rows",
+    "ai_summary_version": "baseline",
+    "baseline_available": true,
+    "input_summary_type": "raw_first_20_rows",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": null,
+    "included_row_count": null,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 6902,
+      "token_usage": {
+        "prompt_tokens": 1117,
+        "completion_tokens": 520,
+        "total_tokens": 1637
+      },
+      "strategy": "behavioral",
+      "granularity": "semester",
+      "cost_usd": 0.00048
+    }
+  },
+  "raw_text": "Summary: Your engagement with various learning resources shows a strong preference for quizzes, while other resources like forums and pages are underutilized. This suggests that you might benefit from exploring a wider range of materials to enhance your learning experience.\n\nInsights: High Quiz Engagement: You have clicked on quizzes 623 times, which accounts for nearly half of your total resource engagement. This indicates a strong preference for this type of resource. | Low Forum Engagement: Your engagement with forums is quite low, with only 140 clicks. This resource type has a diversity score of 1, indicating it could be beneficial for your learning. | Underutilized Resources: Other resources like pages and URLs have minimal engagement, with only 1 click each. This suggests you may not be fully exploring all available materials.\n\nEducational implications: Exploring a variety of resources can enhance your understanding and retention of course material.\n\nRecommendations: high - Engage more with forums and other underused resources. - This will help you gain different perspectives and deepen your understanding of the course content."
+}

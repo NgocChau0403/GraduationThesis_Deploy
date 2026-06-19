@@ -1,0 +1,116 @@
+{
+  "schema_version": "pairwise_judge_v3_dry_run_schema_v1",
+  "pairwise_record_id": "SAMPLE_UCI_POR__S-T13__pairwise_AB",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-T13",
+  "order_variant": "AB",
+  "scoring_status": "judged",
+  "winner": "A",
+  "winner_confidence": "medium",
+  "difference_magnitude": "moderate",
+  "dimension_winners": {
+    "faithfulness": "A",
+    "numerical_correctness": "A",
+    "completeness": "A",
+    "task_relevance": "A",
+    "actionability": "A",
+    "clarity": "tie",
+    "safety_fairness": "A"
+  },
+  "metric_comparison": {
+    "faithfulness": {
+      "winner": "A",
+      "reason": "Candidate A references returned FE signals; candidate B says there are no recommendations despite visible score and engagement concerns.",
+      "evidence_refs": [
+        "prompt_packet:S-T13:task_context",
+        "prompt_packet:S-T13:candidate_explanations"
+      ]
+    },
+    "numerical_correctness": {
+      "winner": "A",
+      "reason": "Candidate A cites avg_score 41.25, pass threshold 40, and engagement score 0.",
+      "evidence_refs": [
+        "prompt_packet:S-T13:task_context",
+        "prompt_packet:S-T13:candidate_explanations"
+      ]
+    },
+    "completeness": {
+      "winner": "A",
+      "reason": "Candidate A is incomplete as an action plan but still covers more required signal synthesis than candidate B.",
+      "evidence_refs": [
+        "prompt_packet:S-T13:task_context",
+        "prompt_packet:S-T13:candidate_explanations"
+      ]
+    },
+    "task_relevance": {
+      "winner": "A",
+      "reason": "Candidate A is closer to the action-plan generation task because it identifies trigger signals.",
+      "evidence_refs": [
+        "prompt_packet:S-T13:task_context",
+        "prompt_packet:S-T13:candidate_explanations"
+      ]
+    },
+    "actionability": {
+      "winner": "A",
+      "reason": "Candidate A implies focus areas for improvement, while candidate B provides none.",
+      "evidence_refs": [
+        "prompt_packet:S-T13:task_context",
+        "prompt_packet:S-T13:candidate_explanations"
+      ]
+    },
+    "clarity": {
+      "winner": "tie",
+      "reason": "Both are short and clear.",
+      "evidence_refs": [
+        "prompt_packet:S-T13:task_context",
+        "prompt_packet:S-T13:candidate_explanations"
+      ]
+    },
+    "safety_fairness": {
+      "winner": "A",
+      "reason": "Candidate A's risk context is tied to returned FE values; candidate B's no-data response is unsupported.",
+      "evidence_refs": [
+        "prompt_packet:S-T13:task_context",
+        "prompt_packet:S-T13:candidate_explanations"
+      ]
+    }
+  },
+  "coverage_comparison": {
+    "winner": "A",
+    "reason": "Candidate A uses the FE signals present in the record."
+  },
+  "specificity_comparison": {
+    "winner": "A",
+    "reason": "Candidate A gives exact score and engagement values."
+  },
+  "decisive_evidence": [
+    {
+      "evidence_ref": "candidate_A:S-T13:avg_score=41.25,engagement_score=0",
+      "supports_candidate": "A",
+      "reason": "Candidate A is the only candidate using these returned FE signals."
+    }
+  ],
+  "tie_justification": null,
+  "absolute_rerun_flags": [
+    {
+      "candidate": "A",
+      "suspected_error_type": "incomplete_action_plan",
+      "severity_hint": "minor",
+      "reason": "Candidate A still does not produce 3-5 prioritized actions tied to FE triggers.",
+      "evidence_refs": [
+        "requirements:S-T13:3_to_5_prioritised_actions"
+      ]
+    },
+    {
+      "candidate": "B",
+      "suspected_error_type": "unsupported_no_recommendation_claim",
+      "severity_hint": "major",
+      "reason": "Candidate B says no specific recommendations are available despite returned FE risk signals.",
+      "evidence_refs": [
+        "candidate_A:S-T13:visible_fe_values"
+      ]
+    }
+  ],
+  "requires_absolute_rerun": true,
+  "reviewer_notes": "Candidate A is incomplete but clearly better than the unsupported no-action response."
+}

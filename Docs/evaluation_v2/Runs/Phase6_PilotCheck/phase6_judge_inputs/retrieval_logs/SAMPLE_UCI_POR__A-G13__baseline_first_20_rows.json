@@ -1,0 +1,18 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_4_deterministic_retrieval_log",
+  "generated_at": "2026-06-18T22:36:58.001Z",
+  "record_id": "SAMPLE_UCI_POR__A-G13__baseline_first_20_rows",
+  "retrieval_request_complete": true,
+  "retrieval_coverage_status": "full",
+  "chunks": [
+    {
+      "chunk_id": "SAMPLE_UCI_POR__A-G13__baseline_first_20_rows__lifestyle_risk_scatter__chunk_1",
+      "dataset_label": "lifestyle_risk_scatter",
+      "row_start_inclusive": 0,
+      "row_end_inclusive": 648,
+      "row_count": 649,
+      "source_artifact_path": "Docs/evaluation_v2/Runs/phase6_evidence/full_query_artifacts/SAMPLE_UCI_POR__A-G13__baseline_first_20_rows.json",
+      "source_artifact_sha256": "f942be4f1693aa63197fb2d786a2251ec276acbfbe57a04885c462cf1dce3484"
+    }
+  ]
+}

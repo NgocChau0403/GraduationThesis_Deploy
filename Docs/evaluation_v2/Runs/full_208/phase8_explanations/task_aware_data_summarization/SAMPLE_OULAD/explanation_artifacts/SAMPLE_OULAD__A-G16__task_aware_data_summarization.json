@@ -1,0 +1,485 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-19T07:28:35.240Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-G16__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__A-G16",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G16",
+    "task_name": "Admin action recommendation",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G16.json",
+    "full_query_artifact_sha256": "62afc68fdc8de4338f29b806b54823ad658a315f755f333e4608daa2bb08a224"
+  },
+  "request_payload": {
+    "task_id": "A-G16",
+    "execution_id": "exec_1781847803029_391203b0",
+    "task_name": "Admin action recommendation",
+    "analysis_type": "synthesis",
+    "explanation_strategy": "risk",
+    "explanation_type": "recommendation",
+    "ai_prompt_hint": "Synthesise all cohort [FE] signals into 3–5 admin actions. This is the most critical AI synthesis task for admin role.",
+    "actionable_question": "What concrete actions should the admin take in the next 2 weeks?",
+    "target_audience": [
+      "admin"
+    ],
+    "visualization_config": {
+      "x_field": null,
+      "y_field": null,
+      "series_field": null,
+      "color_field": null,
+      "orientation": null,
+      "variant": "default",
+      "x_label": null,
+      "y_label": null,
+      "semantic_roles": {
+        "x": null,
+        "y": null
+      }
+    },
+    "analysis_context": {
+      "granularity": "cohort_aggregate",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "synthesis_data": [
+        {
+          "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+          "low_engagement_count": 1240,
+          "high_risk_count": 906,
+          "hardest_assessment": "24299",
+          "best_resource_type": "quiz",
+          "total_students": 1998
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "synthesis_data"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [
+        "class_id",
+        "low_engagement_count",
+        "high_risk_count",
+        "hardest_assessment",
+        "best_resource_type",
+        "total_students"
+      ],
+      "evidence_dataset_roles": {
+        "synthesis_data": "primary_evidence"
+      },
+      "action_evidence_contract": [
+        {
+          "column": "class_id",
+          "role": "entity",
+          "unit": "identifier",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": false
+        },
+        {
+          "column": "low_engagement_count",
+          "role": "metric",
+          "unit": "student_count",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "high_risk_count",
+          "role": "metric",
+          "unit": "student_count",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "hardest_assessment",
+          "role": "context",
+          "unit": "assessment_identifier",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": true,
+          "semantic_note": "Assessment selected by highest observed fail-rate ordering; runtime row does not expose the rate."
+        },
+        {
+          "column": "best_resource_type",
+          "role": "context",
+          "unit": "resource_type",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": true,
+          "semantic_alias": "most_used_resource_type",
+          "semantic_note": "Selected by total engagement clicks, not by learning effectiveness."
+        },
+        {
+          "column": "total_students",
+          "role": "metric",
+          "unit": "student_count",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        }
+      ],
+      "action_derived_evidence": [
+        {
+          "evidence_id": "low_engagement_rate",
+          "operation": "safe_divide",
+          "numerator_column": "low_engagement_count",
+          "denominator_column": "total_students",
+          "unit": "ratio_0_1",
+          "zero_denominator_behavior": "missing"
+        },
+        {
+          "evidence_id": "high_risk_rate",
+          "operation": "safe_divide",
+          "numerator_column": "high_risk_count",
+          "denominator_column": "total_students",
+          "unit": "ratio_0_1",
+          "zero_denominator_behavior": "missing"
+        }
+      ],
+      "action_conflict_rules": [],
+      "action_rules": [
+        {
+          "rule_id": "A-G16-R01",
+          "description": "Escalate cohort risk review when at least 20 percent of students meet the backend high-risk definition.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "high_risk_rate",
+                "operator": "gte",
+                "value": 0.2
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "admin_review_high_risk_caseload",
+            "action_text": "Review the high-risk student caseload, assign named follow-up owners, and confirm which students need direct support.",
+            "priority": "high",
+            "owner": "academic_admin",
+            "time_horizon_days": 7,
+            "support_category": "risk_coordination",
+            "claim_limits": [
+              "Do not infer causes from the aggregate count.",
+              "Do not identify individual students unless a separate student-level evidence source is available."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "A-G16-R02",
+          "description": "Plan cohort engagement outreach when at least 25 percent of students meet the backend low-engagement definition.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "low_engagement_rate",
+                "operator": "gte",
+                "value": 0.25
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "admin_launch_engagement_outreach",
+            "action_text": "Coordinate a targeted engagement outreach and check whether access, scheduling, or course-navigation barriers need follow-up.",
+            "priority": "high",
+            "owner": "student_support_team",
+            "time_horizon_days": 7,
+            "support_category": "engagement_support",
+            "claim_limits": [
+              "Do not claim low engagement caused low performance.",
+              "Do not infer a specific barrier from the aggregate signal."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "A-G16-R03",
+          "description": "Request assessment support review when the highest-fail-rate assessment identifier is present.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "hardest_assessment",
+                "operator": "is_present"
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "admin_review_assessment_support",
+            "action_text": "Ask the module team to review learner support and preparation materials for the identified assessment.",
+            "priority": "medium",
+            "owner": "module_lead",
+            "time_horizon_days": 14,
+            "support_category": "assessment_support",
+            "claim_limits": [
+              "Do not state a fail-rate value because the runtime row does not expose it.",
+              "Do not claim the assessment itself caused failure."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "A-G16-R04",
+          "description": "Review the most-used resource format as a delivery option without treating usage as effectiveness.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "best_resource_type",
+                "operator": "is_present"
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "admin_review_most_used_resource_format",
+            "action_text": "Review whether the most-used resource format can support the planned outreach, while separately checking its learning suitability.",
+            "priority": "low",
+            "owner": "learning_design_team",
+            "time_horizon_days": 14,
+            "support_category": "resource_planning",
+            "claim_limits": [
+              "Refer to this field as most-used, not best-performing.",
+              "Do not claim engagement clicks demonstrate learning effectiveness."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        }
+      ],
+      "trigger_columns": [
+        "best_resource_type",
+        "hardest_assessment"
+      ],
+      "provenance_required_fields": [
+        "dataset_label",
+        "dataset_role",
+        "row_index",
+        "column",
+        "raw_value",
+        "parsed_value",
+        "unit",
+        "rule_id",
+        "rule_version"
+      ],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "action_synthesis",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": "versioned_registry_rules",
+      "action_rule_set_id": "A-G16.action_synthesis",
+      "action_rule_version": "1.0.0",
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": 5,
+      "sensitive_action_policy": "exclude_sensitive_triggers",
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 1483,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 748,
+      "completion_tokens": 86,
+      "total_tokens": 834
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-G16",
+    "execution_id": "exec_1781847803029_391203b0",
+    "explanation": {
+      "summary": "No supported actions were generated due to the absence of prioritized actions in the provided data.",
+      "insights": [],
+      "educational_implications": [],
+      "recommendations": [],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data provided contains no prioritized actions or evidence.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "risk",
+    "explanation_type": "risk",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "full_rows_due_to_small_result",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 1,
+    "included_row_count": 1,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "synthesis_data",
+        "row_count": 1,
+        "included_row_count": 1
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 1476,
+      "token_usage": {
+        "prompt_tokens": 748,
+        "completion_tokens": 86,
+        "total_tokens": 834
+      },
+      "strategy": "risk",
+      "granularity": "cohort_aggregate",
+      "cost_usd": 0.000164
+    }
+  },
+  "raw_text": "Summary: No supported actions were generated due to the absence of prioritized actions in the provided data."
+}

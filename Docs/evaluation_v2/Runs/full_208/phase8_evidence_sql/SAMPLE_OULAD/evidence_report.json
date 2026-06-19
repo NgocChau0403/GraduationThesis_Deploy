@@ -1,0 +1,163 @@
+{
+  "report_version": "llm_judge_v2_phase_f2_dataset_evidence_v1",
+  "generated_at": "2026-06-19T05:45:21.639Z",
+  "dataset_id": "SAMPLE_OULAD",
+  "status": "PASS",
+  "evidence_grain": "dataset_id + task_id",
+  "backend": {
+    "base_url": "http://localhost:4000",
+    "health_endpoint": "/api/health",
+    "health_http_status": 200,
+    "health_latency_ms": 95
+  },
+  "inputs": {
+    "full_case_manifest": "Docs/evaluation_v2/Runs/full_208/full_case_run_manifest_v1.json"
+  },
+  "counts": {
+    "planned_tasks": 52,
+    "evidence_ready": 52,
+    "failed": 0,
+    "runtime_row_count_matches": 52,
+    "artifacts_with_sha256": 52,
+    "large_result_tasks": 13,
+    "large_result_retrieval_plans": 13,
+    "terminal_invalid_empty_results": 5,
+    "empty_dataset_arrays": 5,
+    "explicit_terminal_invalid_empty_arrays": 5,
+    "unclassified_empty_dataset_arrays": 0,
+    "errors": 0,
+    "warnings": 5
+  },
+  "coverage": {
+    "direct_embedding": 39,
+    "deterministic_artifact_retrieval": 13
+  },
+  "outputs": {
+    "evidence_manifest": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/evidence_manifest.jsonl",
+    "full_query_artifacts_dir": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts",
+    "evidence_report_json": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/evidence_report.json",
+    "evidence_report_md": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/evidence_report.md"
+  },
+  "gate_decision": {
+    "current_dataset_evidence_complete": true,
+    "next_dataset_execution_allowed": false,
+    "aggregate_expansion_allowed": true,
+    "full_judge_invocation_allowed": false,
+    "reason": "Both dataset-level evidence reports pass. Aggregate 104 task-level records and expand to 208 mode-level records next."
+  },
+  "issues": [
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "lifestyle_risk_scatter"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "backend_data_quality_status": "partial",
+          "backend_confidence": "HIGH",
+          "error_codes": [
+            "REQUIRED_CAPABILITY_MISSING"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "A-G13",
+      "evidence_id": "SAMPLE_OULAD__A-G13"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "background_context"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "backend_data_quality_status": "partial",
+          "backend_confidence": "HIGH",
+          "error_codes": [
+            "REQUIRED_CAPABILITY_MISSING"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "A-S07",
+      "evidence_id": "SAMPLE_OULAD__A-S07"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "lifestyle_risk_scatter"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "backend_data_quality_status": "partial",
+          "backend_confidence": "HIGH",
+          "error_codes": [
+            "DATASET_SPECIFIC_BY_DESIGN",
+            "REQUIRED_CAPABILITY_MISSING"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "S-T09",
+      "evidence_id": "SAMPLE_OULAD__S-T09"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "social_balance_scatter"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "backend_data_quality_status": "partial",
+          "backend_confidence": "HIGH",
+          "error_codes": [
+            "DATASET_SPECIFIC_BY_DESIGN",
+            "REQUIRED_CAPABILITY_MISSING"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "S-T14",
+      "evidence_id": "SAMPLE_OULAD__S-T14"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "family_context_scatter"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis.",
+          "backend_data_quality_status": "partial",
+          "backend_confidence": "HIGH",
+          "error_codes": [
+            "DATASET_SPECIFIC_BY_DESIGN",
+            "REQUIRED_CAPABILITY_MISSING"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_OULAD",
+      "task_id": "S-T15",
+      "evidence_id": "SAMPLE_OULAD__S-T15"
+    }
+  ]
+}

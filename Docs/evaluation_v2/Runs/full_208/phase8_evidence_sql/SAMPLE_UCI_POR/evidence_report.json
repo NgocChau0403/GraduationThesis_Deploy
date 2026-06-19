@@ -1,0 +1,359 @@
+{
+  "report_version": "llm_judge_v2_phase_f2_dataset_evidence_v1",
+  "generated_at": "2026-06-19T05:34:04.557Z",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "status": "PASS",
+  "evidence_grain": "dataset_id + task_id",
+  "backend": {
+    "base_url": "http://localhost:4000",
+    "health_endpoint": "/api/health",
+    "health_http_status": 200,
+    "health_latency_ms": 148
+  },
+  "inputs": {
+    "full_case_manifest": "Docs/evaluation_v2/Runs/full_208/full_case_run_manifest_v1.json"
+  },
+  "counts": {
+    "planned_tasks": 52,
+    "evidence_ready": 52,
+    "failed": 0,
+    "runtime_row_count_matches": 52,
+    "artifacts_with_sha256": 52,
+    "large_result_tasks": 6,
+    "large_result_retrieval_plans": 6,
+    "terminal_invalid_empty_results": 13,
+    "empty_dataset_arrays": 13,
+    "explicit_terminal_invalid_empty_arrays": 13,
+    "unclassified_empty_dataset_arrays": 0,
+    "errors": 0,
+    "warnings": 13
+  },
+  "coverage": {
+    "direct_embedding": 46,
+    "deterministic_artifact_retrieval": 6
+  },
+  "outputs": {
+    "evidence_manifest": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/evidence_manifest.jsonl",
+    "full_query_artifacts_dir": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts",
+    "evidence_report_json": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/evidence_report.json",
+    "evidence_report_md": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/evidence_report.md"
+  },
+  "gate_decision": {
+    "current_dataset_evidence_complete": true,
+    "next_dataset_execution_allowed": true,
+    "aggregate_expansion_allowed": false,
+    "full_judge_invocation_allowed": false,
+    "reason": "Current dataset task-level evidence is complete, including explicit terminal-invalid empty results. Run the remaining dataset before aggregate expansion."
+  },
+  "issues": [
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "low_engagement_group"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "No positive engagement activity found (0 engagement rows).",
+          "backend_data_quality_status": "insufficient_data",
+          "backend_confidence": "LOW",
+          "error_codes": [
+            "REQUIRED_CAPABILITY_MISSING",
+            "ENGAGEMENT_BELOW_MINIMUM"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G01",
+      "evidence_id": "SAMPLE_UCI_POR__A-G01"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "activity_effectiveness"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "No positive engagement activity found (0 engagement rows).",
+          "backend_data_quality_status": "insufficient_data",
+          "backend_confidence": "LOW",
+          "error_codes": [
+            "REQUIRED_CAPABILITY_MISSING",
+            "REQUIRED_CAPABILITY_MISSING",
+            "ENGAGEMENT_BELOW_MINIMUM"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G06",
+      "evidence_id": "SAMPLE_UCI_POR__A-G06"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "factor_correlation_matrix"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "No positive engagement activity found (0 engagement rows).",
+          "backend_data_quality_status": "insufficient_data",
+          "backend_confidence": "LOW",
+          "error_codes": [
+            "REQUIRED_CAPABILITY_MISSING",
+            "ENGAGEMENT_BELOW_MINIMUM"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G07",
+      "evidence_id": "SAMPLE_UCI_POR__A-G07"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "disadvantage_impact"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+          "backend_data_quality_status": "partial",
+          "backend_confidence": "HIGH",
+          "error_codes": [
+            "DATASET_SPECIFIC_BY_DESIGN",
+            "REQUIRED_CAPABILITY_MISSING",
+            "REQUIRED_CAPABILITY_MISSING"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G09",
+      "evidence_id": "SAMPLE_UCI_POR__A-G09"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "consistency_distribution"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "No positive engagement activity found (0 engagement rows).",
+          "backend_data_quality_status": "insufficient_data",
+          "backend_confidence": "LOW",
+          "error_codes": [
+            "REQUIRED_CAPABILITY_MISSING",
+            "REQUIRED_CAPABILITY_MISSING",
+            "ENGAGEMENT_BELOW_MINIMUM"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G10",
+      "evidence_id": "SAMPLE_UCI_POR__A-G10"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "weekly_drop_detection"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "No positive engagement activity found (0 engagement rows).",
+          "backend_data_quality_status": "insufficient_data",
+          "backend_confidence": "LOW",
+          "error_codes": [
+            "REQUIRED_CAPABILITY_MISSING",
+            "REQUIRED_CAPABILITY_MISSING",
+            "ENGAGEMENT_BELOW_MINIMUM"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G11",
+      "evidence_id": "SAMPLE_UCI_POR__A-G11"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "withdrawal_signal_trend"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "No positive engagement activity found (0 engagement rows).",
+          "backend_data_quality_status": "insufficient_data",
+          "backend_confidence": "LOW",
+          "error_codes": [
+            "DATASET_SPECIFIC_BY_DESIGN",
+            "REQUIRED_CAPABILITY_MISSING",
+            "REQUIRED_CAPABILITY_MISSING",
+            "ENGAGEMENT_BELOW_MINIMUM"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G14",
+      "evidence_id": "SAMPLE_UCI_POR__A-G14"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "intervention_priority_list"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "No positive engagement activity found (0 engagement rows).",
+          "backend_data_quality_status": "insufficient_data",
+          "backend_confidence": "LOW",
+          "error_codes": [
+            "REQUIRED_CAPABILITY_MISSING",
+            "ENGAGEMENT_BELOW_MINIMUM"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G15",
+      "evidence_id": "SAMPLE_UCI_POR__A-G15"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "engagement_trajectory"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "No positive engagement activity found (0 engagement rows).",
+          "backend_data_quality_status": "insufficient_data",
+          "backend_confidence": "LOW",
+          "error_codes": [
+            "REQUIRED_CAPABILITY_MISSING",
+            "REQUIRED_CAPABILITY_MISSING",
+            "ENGAGEMENT_BELOW_MINIMUM"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-S03",
+      "evidence_id": "SAMPLE_UCI_POR__A-S03"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "weekly_engagement"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "No positive engagement activity found (0 engagement rows).",
+          "backend_data_quality_status": "insufficient_data",
+          "backend_confidence": "LOW",
+          "error_codes": [
+            "REQUIRED_CAPABILITY_MISSING",
+            "REQUIRED_CAPABILITY_MISSING",
+            "ENGAGEMENT_BELOW_MINIMUM"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T05",
+      "evidence_id": "SAMPLE_UCI_POR__S-T05"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "consistency_data"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "No positive engagement activity found (0 engagement rows).",
+          "backend_data_quality_status": "insufficient_data",
+          "backend_confidence": "LOW",
+          "error_codes": [
+            "DATASET_SPECIFIC_BY_DESIGN",
+            "REQUIRED_CAPABILITY_MISSING",
+            "REQUIRED_CAPABILITY_MISSING",
+            "ENGAGEMENT_BELOW_MINIMUM"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T06",
+      "evidence_id": "SAMPLE_UCI_POR__S-T06"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "resource_usage"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "No positive engagement activity found (0 engagement rows).",
+          "backend_data_quality_status": "insufficient_data",
+          "backend_confidence": "LOW",
+          "error_codes": [
+            "REQUIRED_CAPABILITY_MISSING",
+            "REQUIRED_CAPABILITY_MISSING",
+            "ENGAGEMENT_BELOW_MINIMUM"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T10",
+      "evidence_id": "SAMPLE_UCI_POR__S-T10"
+    },
+    {
+      "severity": "warning",
+      "code": "explicit_terminal_invalid_empty_result",
+      "message": "Empty full-query result is explicitly classified terminal invalid from backend data-quality errors.",
+      "details": {
+        "labels": [
+          "registration_data"
+        ],
+        "execution_outcome": {
+          "status": "terminal_invalid_empty_result",
+          "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis.",
+          "backend_data_quality_status": "partial",
+          "backend_confidence": "HIGH",
+          "error_codes": [
+            "REQUIRED_CAPABILITY_MISSING"
+          ]
+        }
+      },
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T11",
+      "evidence_id": "SAMPLE_UCI_POR__S-T11"
+    }
+  ]
+}
