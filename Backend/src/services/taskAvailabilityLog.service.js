@@ -98,7 +98,9 @@ function buildDisabledReason(result) {
 }
 
 function firstFailedLayer(layerResults = {}) {
-  const layerOrder = ["structural", "semantic", "analytical", "data_sufficiency"];
+  // Match the hard-failure precedence used by deriveStatus().
+  // Analytical warnings are advisory and come after all failing layers.
+  const layerOrder = ["structural", "data_sufficiency", "semantic", "analytical"];
   return layerOrder.find((layer) => ["fail", "warn"].includes(layerResults[layer])) || null;
 }
 
