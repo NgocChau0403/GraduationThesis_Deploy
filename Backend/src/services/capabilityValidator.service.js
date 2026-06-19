@@ -15,6 +15,8 @@ import {
 /** Whitelist of real DB table names — prevents SQL injection in dynamic queries */
 const ALLOWED_TABLES = new Set([
   "student",
+  "course",
+  "class",
   "enrollment",
   "assessment",
   "assessment_result",
@@ -269,11 +271,17 @@ class CapabilityValidatorService {
 
     if (analysisType.includes("trend")) {
       // Need ≥ 2 distinct temporal points
-      const result = await prisma.$queryRaw`
-        SELECT COUNT(DISTINCT week_of_class)::int AS cnt
-        FROM assessment
-        WHERE batch_id = ${batchId}
-      `;
+      const result = classId
+        ? await prisma.$queryRaw`
+            SELECT COUNT(DISTINCT week_of_class)::int AS cnt
+            FROM assessment
+            WHERE batch_id = ${batchId} AND class_id = ${classId}
+          `
+        : await prisma.$queryRaw`
+            SELECT COUNT(DISTINCT week_of_class)::int AS cnt
+            FROM assessment
+            WHERE batch_id = ${batchId}
+          `;
       const temporalPoints = result[0]?.cnt ?? 0;
       if (temporalPoints < 2) {
         warnings.push({
@@ -418,6 +426,15 @@ class CapabilityValidatorService {
       ...contract.required_any,
     ]);
 
+    // Engagement receives an additional runtime sufficiency check because an
+    // imported dataset may contain the canonical engagement table while all
+    // activity counts are zero. Layer B describes whether the capability is
+    // semantically present; Layer D prevents zero-activity data from being
+    // treated as sufficient evidence for engagement-based analyses.
+    //
+    // Other capabilities such as registration_timing or absence_tracking are
+    // currently presence-based and remain semantic checks until task-specific
+    // minimum sample requirements are defined for them.
     if (requiredCaps.has("engagement_tracking")) {
       const engagementResult = classId
         ? await prisma.$queryRaw`

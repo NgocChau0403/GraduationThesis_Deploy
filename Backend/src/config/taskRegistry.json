@@ -2944,19 +2944,13 @@
     },
     "availability_contract": {
       "required_all": [
-        "engagement_tracking",
-        "temporal_activity",
-        "final_outcome"
+        "assessment_scores",
+        "engagement_tracking"
       ],
       "chart_required_fields": [
-        "week_number",
-        "avg_clicks",
-        "final_outcome"
-      ],
-      "dataset_specific": {
-        "source_dataset": "OULAD",
-        "reason": "Task depends on OULAD week-level engagement patterns and outcome labels."
-      }
+        "at_risk_label",
+        "student_count"
+      ]
     }
   },
   {
@@ -3043,7 +3037,7 @@
     ],
     "optionalCapabilities": [],
     "fallbackStrategy": "hide_task",
-    "registry_status": "experimental",
+    "registry_status": "validated",
     "semanticReliability": {
       "pass_rate": null,
       "validation_status": "SKIPPED",
@@ -4071,7 +4065,7 @@
     ],
     "optionalCapabilities": [],
     "fallbackStrategy": "hide_task",
-    "registry_status": "experimental",
+    "registry_status": "validated",
     "semanticReliability": {
       "pass_rate": null,
       "validation_status": "SKIPPED",
@@ -6259,7 +6253,7 @@
     ],
     "optionalCapabilities": [],
     "fallbackStrategy": "show_partial_with_warnings",
-    "registry_status": "experimental",
+    "registry_status": "validated",
     "semanticReliability": {
       "pass_rate": null,
       "validation_status": "SKIPPED",
@@ -6605,7 +6599,7 @@
     ],
     "optionalCapabilities": [],
     "fallbackStrategy": "hide_task",
-    "registry_status": "experimental",
+    "registry_status": "validated",
     "semanticReliability": {
       "pass_rate": null,
       "validation_status": "SKIPPED",
