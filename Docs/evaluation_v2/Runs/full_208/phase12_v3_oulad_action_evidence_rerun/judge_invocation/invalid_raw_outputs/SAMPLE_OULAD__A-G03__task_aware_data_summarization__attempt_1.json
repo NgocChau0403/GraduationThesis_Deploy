@@ -1,0 +1,82 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G03__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the identified high-risk students and their corresponding risk factors."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values mentioned in the explanation, such as average scores and engagement scores, are consistent with the retrieved data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the identification of at-risk students and the recommendation for academic support, but could provide more detail on the ranking process."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of identifying at-risk students and providing actionable recommendations for the admin."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendation to prioritize academic support is actionable and directly addresses the needs of the identified students."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A cohort of students has been identified as high-risk due to multiple simultaneous risk signals.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_624354",
+        "SAMPLE_OULAD_STU_548926",
+        "SAMPLE_OULAD_STU_532565"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence of multiple risk signals for the identified students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students with low scores and engagement are at risk of failing or withdrawing from the course.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the general understanding of academic performance indicators."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Prioritize academic support for low average score.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation aligns with the identified needs of the students based on their performance metrics."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies at-risk students and provides actionable recommendations based on the evidence. It is clear, relevant, and adheres to safety and fairness guidelines, with strong numerical support.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full coverage of 50 rows from the at-risk cohort dataset. The retrieval log confirmed that all necessary data was accessible and correctly utilized in the explanation.",
+  "invalid_reason": null
+}

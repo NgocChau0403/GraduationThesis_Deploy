@@ -1,0 +1,80 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G07__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the absence of data points and correctly states that no analysis can be performed, aligning with the evidence provided."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical claims were made due to the lack of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the core outputs by stating that no features can be ranked due to the absence of data, but it could have included more detail on the implications of this absence."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of factor correlation analysis, directly addressing the actionable question regarding predictors of student success."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The recommendation to collect and analyze relevant data is actionable, but the lack of data limits the immediate applicability of the insights."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is clear and well-structured, effectively communicating the lack of data and its implications."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation acknowledges the potential sensitivity of demographic factors, aligning with the safety and fairness requirements."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There are currently no available data points to assess the relationship between features and their correlation coefficients.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "factor_correlation_matrix"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence indicating that the full query result row count is 0."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Without data, it is impossible to identify key factors influencing student success.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim logically follows from the absence of data, which is confirmed by the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Collect and analyze relevant data on student performance and features.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and aligns with the need to gather data for future analysis."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively communicates the lack of data and its implications for the analysis of student success predictors. It is clear, relevant, and actionable, although it could provide more detail on the implications of the absence of data. The scoring reflects a strong performance overall, with minor areas for improvement.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 0, confirming the absence of data points. The explanation appropriately reflects this lack of data in its claims and recommendations.",
+  "invalid_reason": null
+}

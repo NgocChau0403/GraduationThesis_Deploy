@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-B01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, highlighting the concentration of students in higher score buckets and the significant number of students with no scores."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Most numerical claims are correct, but the percentage of students in the upper score buckets is slightly miscalculated (42.7% should be 42.5%)."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs but lacks a clear flagging of the large proportion of students below the pass threshold."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of describing overall performance distribution and addresses the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to improving student engagement and assessment completion."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from better organization and structure to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language and appropriately addresses potential issues of student engagement."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A significant number of students are clustered in the higher score buckets, particularly between 70-100.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing a high number of students in the 70-100 score range."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "20% of students have no scores.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data indicating 500 students with no scores."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The majority of students are performing well, with 1,067 students scoring between 70 and 100.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is mostly accurate, the percentage calculation is slightly off, which weakens the overall support."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of summarizing the overall performance distribution, providing relevant insights and actionable recommendations. However, minor numerical inaccuracies and a lack of explicit flagging for students below the pass threshold slightly detract from its completeness.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 11. All relevant data was utilized to support the claims made in the explanation."
+}

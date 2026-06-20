@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G12__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data retrieved, highlighting significant disparities in withdrawal rates across demographic groups."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Most numerical claims are correct, but the explanation could clarify the cohort threshold for combined fail and withdrawal rates."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs but lacks specific details on all demographic groups analyzed."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of analyzing failure and withdrawal rates among demographic groups."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the identified issues in student retention."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from more structured presentation of insights."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is sensitive to the implications of demographic disparities and does not promote harmful stereotypes."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The 0-10% group has a withdrawal rate of 53.8%, which is the highest among all groups analyzed.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-G12__baseline_first_20_rows__outcome_by_group__chunk_1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The withdrawal rate of 53.8% for the 0-10% group is directly supported by the retrieved data."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "In the 0-10% group, the combined fail (13.8%) and withdrawal (53.8%) rates total 67.6%, significantly exceeding the cohort threshold.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "unsupported",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the individual rates are supported, the cohort threshold is not specified in the evidence, making this claim unsupported."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The withdrawal rates across the 10-20% and 20-30% groups are also notably high at 48.9% and 53.1%, respectively.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-G12__baseline_first_20_rows__outcome_by_group__chunk_1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The withdrawal rates for the 10-20% and 20-30% groups are confirmed by the retrieved data."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing demographic disparities in failure and withdrawal rates, providing actionable insights and recommendations. However, it lacks clarity on the cohort threshold for combined rates, which affects the completeness and numerical correctness scores.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 53 rows of data from the outcome_by_group dataset. The retrieval log confirmed that all relevant data was available and readable.",
+  "invalid_reason": null
+}

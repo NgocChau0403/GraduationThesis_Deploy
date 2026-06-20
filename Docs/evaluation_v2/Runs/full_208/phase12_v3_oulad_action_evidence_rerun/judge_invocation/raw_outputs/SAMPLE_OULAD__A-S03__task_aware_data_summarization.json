@@ -1,0 +1,94 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-S03__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data trends and insights derived from the engagement metrics, particularly highlighting the significant drop in engagement."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The numerical values presented in the explanation are mostly correct, but the summary could have more precise references to specific engagement metrics."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation identifies the week of disengagement and discusses the implications, but it lacks a direct comparison of post-drop engagement with the pre-drop average."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task, addressing the specific question of when the student started disengaging and providing actionable insights."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendation for outreach is clear and actionable, though it could benefit from more detail on how to implement it effectively."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a significant decline in student engagement, with weekly clicks dropping from 86 in week -2 to just 5 by week 35.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-S03__task_aware_data_summarization__engagement_trajectory__chunk_1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the retrieved data showing the drop in weekly clicks."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The largest adjacent drop in engagement occurred between week 1 and week 2, where weekly clicks fell from 98 to 4.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-S03__task_aware_data_summarization__engagement_trajectory__chunk_1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the data showing the specific drop in engagement between these weeks."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The drastic drop in engagement suggests that students may be struggling with course content or facing external challenges.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is plausible, it lacks direct evidence from the data to support the inference about students' struggles."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Initiate outreach to students around week 2 to assess barriers to engagement.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "unsupported",
+      "impact_type": "local_detail",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is not directly supported by the data, as it does not specify how to assess barriers effectively."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies the week of disengagement and provides relevant insights and recommendations. However, it could improve in completeness by directly comparing post-drop engagement with pre-drop averages and providing more actionable details in the recommendations.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 32 rows of engagement data. The retrieval log confirmed that all relevant data was available and readable, allowing for a comprehensive evaluation of the explanation.",
+  "invalid_reason": null
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G06__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the correlation between resource types and average scores without overstating claims."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented for average scores are correct and consistent with the evidence, particularly the highest score of 78.9 for pages."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, highlighting resource types associated with higher scores and providing recommendations, but could include more detail on lower-scoring resources."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of identifying effective learning activities and provides actionable recommendations for the target audience."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations are clear and actionable, suggesting specific resource types to promote, which aligns with the task's goals."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": null,
+      "rationale": "Safety and fairness considerations are not applicable in this context as the task does not involve sensitive content."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a negative correlation between Resource Type and Avg Score of Users.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence indicating that as resource types change, average scores tend to decrease."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The resource type 'page' has the highest average score of 78.9.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data showing that 'page' has the highest average score."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Resource types such as 'oucollaborate' and 'oucontent' show lower average scores of 74.67 and 71.46 respectively.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation accurately reflects the evidence regarding lower scores for these resource types."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of identifying effective learning activities by correlating resource types with average scores. It provides actionable recommendations based on the analysis, demonstrating a strong understanding of the data. The clarity and completeness are generally good, though there is room for improvement in conciseness.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 9. All rows were included in the analysis, and the explanation utilized the complete dataset effectively."
+}

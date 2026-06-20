@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G13__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of a negative correlation between lifestyle risk score and average score, supported by the provided statistical data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation correctly states the correlation coefficient and provides specific examples of lifestyle risk scores and their corresponding average scores, although it could clarify the range of scores more explicitly."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation includes all required core outputs, such as the correlation and insights derived from the data, but lacks a detailed breakdown of the ranking of students."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of identifying lifestyle patterns among low-performing students, directly addressing the actionable question."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were required in the task context, thus actionability is not applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from improved structure and conciseness to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and does not imply individual blame, adhering to the safety and fairness requirements."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a negative correlation between Lifestyle Risk Score and Average Score.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "A-G13__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim is supported by the Pearson correlation coefficient of -0.104, indicating a weak negative correlation."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students with a Lifestyle Risk Score of 1 have an Average Score of 33.33.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_UCI_POR_STU_000501"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the retrieved data showing the average score for the specified lifestyle risk score."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Students with a Lifestyle Risk Score of 0.725 have an Average Score of 71.67.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_UCI_POR_STU_000028"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is also supported by the retrieved data, confirming the average score for the specified lifestyle risk score."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task by providing a clear summary of the correlation between lifestyle risk and academic performance, supported by specific data points. While it is generally clear and relevant, there is room for improvement in structure and conciseness.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 649 rows of data. The retrieval log confirmed that all relevant data was available and correctly referenced in the explanation.",
+  "invalid_reason": null
+}

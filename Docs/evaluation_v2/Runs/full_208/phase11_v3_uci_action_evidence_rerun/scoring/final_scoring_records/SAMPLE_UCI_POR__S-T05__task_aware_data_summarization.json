@@ -1,0 +1,94 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T05__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation accurately reflects the lack of engagement data, which is the core issue. However, it does not sufficiently clarify the implications of this absence."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "There are no numerical claims made due to the absence of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation addresses the core outputs but lacks specific details on engagement patterns and weeks of disengagement due to the absence of data."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is relevant to the task of identifying engagement trends, but it could better address the actionable question regarding weeks of disengagement."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The recommendation to increase participation is actionable, but it lacks specificity on how to achieve this."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear but could be more concise and structured to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language or unfair recommendations, maintaining a supportive tone."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is no available data on your weekly engagement.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "0e89c2d313eab105f19afa03a99195aa5694fef582e72af05d58e0462c2fe2bb"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation correctly identifies the absence of engagement data, which is supported by the evidence."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Regular engagement is crucial for your success in the course.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is a widely accepted educational principle and does not require specific evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Engaging more consistently will help you stay on track and improve your understanding of the material.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This recommendation is logical and aligns with educational best practices."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 6.13,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 6.13,
+  "verdict": "acceptable",
+  "invalid_reason": null
+}

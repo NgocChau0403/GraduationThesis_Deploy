@@ -1,0 +1,98 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T01__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the observed data trends and insights, maintaining alignment with the evidence provided."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Numerical claims regarding scores and thresholds are correct and supported by the data, with clear comparisons made."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation identifies the score trend direction and assessments below thresholds, but it could have more explicitly stated the lack of sufficient data for a reliable trend."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of analyzing score trends and provides relevant insights for the target audience."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were triggered based on the deterministic action evidence, as it was marked not applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could benefit from more concise language."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Your performance shows an overall improvement from Assessment 1 to Assessment 2.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_UCI_POR__S-T01__task_aware_data_summarization"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the observed score increase from 0 to 55."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Your score remained at 55 in Assessment 3, indicating no further improvement.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_UCI_POR__S-T01__task_aware_data_summarization"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing a stable score of 55 in Assessment 3."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Your scores remain below the target threshold of 70.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_UCI_POR__S-T01__task_aware_data_summarization"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data indicating scores below the target threshold across assessments."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.33,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.33,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

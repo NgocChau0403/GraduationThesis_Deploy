@@ -1,0 +1,80 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G02__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately describes the correlation direction and strength based on the provided evidence, maintaining a clear distinction between correlation and causation."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The correlation coefficient of 0.4086 is correctly reported, and the explanation does not misrepresent any numerical values."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the core outputs required, including the correlation direction and the identification of outliers, but could provide more detail on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing the engagement-performance relationship and directly addresses the actionable question posed."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, suggesting targeted support for students with high engagement but low performance."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a moderate positive correlation (coefficient of 0.4086) between Engagement Score and Average Score.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "A-G02__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim is supported by the derived statistical evidence showing a Pearson correlation coefficient of 0.4086."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Several students exhibit high engagement scores yet have low average scores.",
+      "claim_type": "qualitative",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation identifies outliers, which is consistent with the task requirements to flag such cases."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Increased engagement is beneficial, but it is crucial to address the needs of students who engage but do not perform well academically.",
+      "claim_type": "qualitative",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim aligns with the educational implications discussed in the explanation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing the engagement-performance relationship, providing a clear summary of the correlation and identifying outliers. The claims made are well-supported by the evidence, and the recommendations are actionable and relevant. Overall, the explanation meets the requirements with minor areas for improvement in completeness and clarity.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 1998 rows from the engagement_performance_scatter dataset. The retrieval log confirmed that all relevant data was available and correctly referenced. The derived statistical evidence was used to validate the correlation claims made in the explanation.",
+  "invalid_reason": null
+}

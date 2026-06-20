@@ -1,0 +1,202 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_UCI_POR__A-G09__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G09",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v3_action_evidence_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_action_evidence_calibrated",
+  "task_context": {
+    "task_name": "Socioeconomic disadvantage impact",
+    "scope": "Many students",
+    "actionable_question": "Are disadvantaged students receiving adequate support?",
+    "target_audience": "academic_advisor, admin",
+    "ai_summary_type": "correlation_evidence",
+    "ai_prompt_hint": "Describe trend. Highlight which imd_band groups have most at-risk students. Recommend equity-aware support.",
+    "query_labels": [
+      "disadvantage_impact"
+    ],
+    "explanation_strategy": "correlation"
+  },
+  "schema_context": {
+    "source_tables": [
+      "student",
+      "enrollment",
+      "assessment_result",
+      "assessment [OULAD only]"
+    ],
+    "key_db_fields": [
+      "imd_score_numeric",
+      "disability_flag",
+      "highest_education",
+      "disadvantage_score [FE single]; avg_score [FE cross]",
+      "final_outcome"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "disadvantage_impact"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis of the relationship between Disadvantage Score and Average Score cannot be conducted due to the absence of data in the dataset. Without any data points, no correlation patterns can be identified.\n\nEducational implications: The lack of data prevents any conclusions about the impact of socioeconomic disadvantage on student learning outcomes.\n\nWarnings: No data available for analysis; further data collection is necessary to assess the relationship between Disadvantage Score and Average Score.",
+    "structured_payload": {
+      "task_id": "A-G09",
+      "execution_id": "exec_1781847232641_b19ca6ff",
+      "explanation": {
+        "summary": "The analysis of the relationship between Disadvantage Score and Average Score cannot be conducted due to the absence of data in the dataset. Without any data points, no correlation patterns can be identified.",
+        "insights": [],
+        "educational_implications": [
+          "The lack of data prevents any conclusions about the impact of socioeconomic disadvantage on student learning outcomes."
+        ],
+        "recommendations": [],
+        "warnings": [
+          "No data available for analysis; further data collection is necessary to assess the relationship between Disadvantage Score and Average Score."
+        ]
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset is empty, leading to a definitive conclusion that no analysis can be performed.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "correlation",
+      "explanation_type": "correlation",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 3900,
+        "token_usage": {
+          "prompt_tokens": 517,
+          "completion_tokens": 157,
+          "total_tokens": 674
+        },
+        "strategy": "correlation",
+        "granularity": "cohort_aggregate",
+        "cost_usd": 0.000172
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G09__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "fa75b66860f656c4632f3c1823c7ac8a47460bca6256d5c682cb2a10dc1f620f",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 517,
+        "completion_tokens": 157,
+        "total_tokens": 674
+      },
+      "latency_ms": 3903,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 0,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "disadvantage_impact",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G09.json",
+        "artifact_sha256": "445982af9f84730af9a456522b5e80733c6d2c4e54f7d32482c593604b370843",
+        "row_count": 0,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "disadvantage_impact": 0
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G09-CORE-01",
+        "description": "Describe trend."
+      },
+      {
+        "requirement_id": "A-G09-CORE-02",
+        "description": "Highlight which imd_band groups have most at-risk students."
+      },
+      {
+        "requirement_id": "A-G09-CORE-03",
+        "description": "Recommend equity-aware support."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G09-CONSTRAINT-01",
+        "description": "Describe group-level patterns only; do not name individual students in equity analysis."
+      },
+      {
+        "constraint_id": "A-G09-CONSTRAINT-02",
+        "description": "Frame socioeconomic factors as context and association, not individual blame or deterministic cause."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Applicable because the task analyses socioeconomic disadvantage and recommends equity-aware support."
+  },
+  "derived_stat_evidence": [
+    {
+      "stat_id": "A-G09__pearson_r__1",
+      "stat_type": "pearson_r",
+      "dataset_label": "disadvantage_impact",
+      "x_column": "disadvantage_score",
+      "y_column": "avg_score",
+      "source_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G09.json",
+      "source_artifact_sha256": "445982af9f84730af9a456522b5e80733c6d2c4e54f7d32482c593604b370843",
+      "status": "skipped",
+      "pearson_r": null,
+      "n": 0,
+      "strength_label": null,
+      "direction": null,
+      "skip_reason": "zero_rows"
+    }
+  ],
+  "action_evidence": {
+    "applicable": false,
+    "source_type": "not_applicable",
+    "rule_set_id": null,
+    "rule_version": null,
+    "evaluation_status": "not_applicable",
+    "supported_action_count": 0,
+    "supported_actions": [],
+    "rule_evaluations": [],
+    "conflict_evaluations": []
+  }
+}

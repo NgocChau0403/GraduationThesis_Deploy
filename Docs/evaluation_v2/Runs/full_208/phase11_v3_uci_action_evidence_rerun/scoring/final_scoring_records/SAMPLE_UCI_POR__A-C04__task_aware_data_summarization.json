@@ -1,0 +1,86 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-C04__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, highlighting the differences in go-out frequency and composite lifestyle risk scores between the two students."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented for go-out frequency and composite lifestyle risk scores are correct and consistent with the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, but could provide more detail on the lifestyle dimensions compared."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of comparing lifestyle dimensions, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the findings, suggesting targeted workshops for students."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and presents the information in a fair manner, focusing on educational implications."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Student 1 has a higher go-out frequency than Student 2.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "f6bdc74e071f83e533b355dd0e6d16bda43bcf1d3738f7abc46b320ca9d721ca"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing Student 1's go-out frequency is 4 compared to Student 2's 3."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Student 1's composite lifestyle risk score is higher than that of Student 2.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "f6bdc74e071f83e533b355dd0e6d16bda43bcf1d3738f7abc46b320ca9d721ca"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing Student 1's score is 0.375 compared to Student 2's 0.3."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.1,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.1,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

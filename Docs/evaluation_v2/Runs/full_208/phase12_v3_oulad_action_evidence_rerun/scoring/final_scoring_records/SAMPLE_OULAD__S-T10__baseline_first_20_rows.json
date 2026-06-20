@@ -1,0 +1,118 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__S-T10__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, highlighting the strong preference for quizzes and the underutilization of forums and other resources."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as the number of clicks for quizzes and forums, are correct and consistent with the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, but could provide more detail on the implications of low engagement with specific resources."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of resource engagement breakdown and is relevant to the target audience of students."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, encouraging the student to engage more with underutilized resources."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You have clicked on quizzes 623 times, which accounts for nearly half of your total resource engagement.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "resource_usage"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim is supported by the data showing 623 clicks on quizzes."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Your engagement with forums is quite low, with only 140 clicks.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "resource_usage"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim is supported by the data showing 140 clicks on forums."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Other resources like pages and URLs have minimal engagement, with only 1 click each.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "resource_usage"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim is supported by the data showing 1 click each for pages and URLs."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Exploring a variety of resources can enhance your understanding and retention of course material.",
+      "claim_type": "interpretative",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is a reasonable interpretation based on educational principles."
+    },
+    {
+      "claim_id": "C05",
+      "claim_text": "Engage more with forums and other underused resources.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and aligns with the insights provided."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.3,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.3,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

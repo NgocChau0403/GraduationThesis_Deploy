@@ -1,0 +1,45 @@
+{
+  "artifact_type": "llm_judge_v3_deterministic_derived_stat_evidence_v1",
+  "generated_at": "2026-06-20T03:05:28.986Z",
+  "dry_run_mode": "single_review",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "S-T11",
+  "task_name": "Registration timing vs performance",
+  "ai_summary_type": "correlation_evidence",
+  "stat_family": "correlation",
+  "coefficient_method": "pearson",
+  "x_column": "registration_lead_time",
+  "y_column": "avg_score",
+  "entity_column": "student_id",
+  "source_full_query_artifact": {
+    "path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T11.json",
+    "sha256": "f85cb88980451faee77b21e975cc36dfad03c6344f3a839e528adcb66b1e07ce",
+    "evidence_id": "SAMPLE_OULAD__S-T11"
+  },
+  "source_judge_input_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_inputs/SAMPLE_OULAD__S-T11__baseline_first_20_rows.json",
+  "derived_stats": [
+    {
+      "dataset_label": "registration_data",
+      "status": "pass",
+      "reason": null,
+      "row_count": 1988,
+      "valid_pair_count": 1988,
+      "invalid_x_count": 0,
+      "invalid_y_count": 0,
+      "x_mean": 63.917505,
+      "y_mean": 70.240714,
+      "x_variance": 3828356.4708249513,
+      "y_variance": 878937.0091857114,
+      "covariance": 3173.9771428572,
+      "pearson_r": 0.001730289348499322,
+      "pearson_r_rounded_4": 0.0017,
+      "direction": "positive",
+      "strength": "negligible",
+      "coefficient_source": "deterministic_recompute_from_full_query_rows",
+      "formula": "sum((x - mean_x) * (y - mean_y)) / sqrt(sum((x - mean_x)^2) * sum((y - mean_y)^2))",
+      "warnings": []
+    }
+  ],
+  "judge_usage_note": "Use this artifact as deterministic support for correlation coefficient claims. It proves derived Pearson r from all valid x/y pairs in the full query result; it does not prove causality or statistical significance.",
+  "artifact_sha256": "a7b77b7c332389200589d7b97a326dfddadc2375d2975f019d3a30eabf5b3786"
+}

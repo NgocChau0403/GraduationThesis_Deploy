@@ -1,0 +1,96 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-B01__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the provided data, including the average score, pass rate, and comparison to class performance."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "All numerical values presented in the explanation, such as the average score of 94.34 and pass rate of 100%, are correct and match the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation includes the overall score and pass/fail status, but it lacks a direct mention of percentile standing, which is relevant but not explicitly required."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation addresses the task of providing a performance overview and is relevant to the target audience of the student."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or required based on the deterministic action evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is mostly clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The average score is 94.34.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_summary.avg_score"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is directly supported by the evidence provided."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The pass rate is 100%.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_summary.pass_rate"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is directly supported by the evidence provided."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The average score is significantly higher than the class average of 66.68.",
+      "claim_type": "numerical",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_summary.class_avg_score",
+        "performance_summary.score_vs_class_avg"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the evidence showing the class average and the score difference."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The score percentile is 89.8.",
+      "claim_type": "numerical",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_summary.score_percentile"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is directly supported by the evidence provided."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student's performance, accurately reflecting the provided data and addressing the task requirements. While it could improve in clarity and completeness by explicitly stating the absence of percentile data, it remains a strong response overall.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 1. All relevant data was included in the explanation, and the retrieval log path was not applicable."
+}

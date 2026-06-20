@@ -1,0 +1,109 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-S06__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, including the average submission delay and punctuality rate, while maintaining a focus on the student's performance."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented, such as the average submission delay of 3.25 days and punctuality rate of 0, are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including average delay, punctuality rate, and systematic late submissions, but could provide more detail on the implications of these findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the actionable question regarding the student's submission patterns and their impact on scores, making it highly relevant to the task."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, suggesting practical steps to improve the student's time management."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and does not attribute the student's late submissions to personal failings, adhering to the evaluation constraints."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student exhibits a consistent pattern of late submissions across multiple assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_lateness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing consistent late submissions across assessments."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The average submission delay is 3.25 days.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_delay_avg"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average submission delay is accurately reported based on the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The punctuality rate is 0.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "punctuality_rate"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The punctuality rate of 0 is confirmed by the data, indicating no on-time submissions."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The student's late submissions may hinder their ability to engage fully with course material.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is plausible, it lacks direct evidence linking late submissions to engagement issues."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.1,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.1,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

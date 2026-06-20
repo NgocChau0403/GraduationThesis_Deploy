@@ -1,0 +1,97 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-G01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of low engagement levels among students, aligning well with the provided data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented, such as the engagement score of 0.0018, are consistent with the evidence and correctly interpreted."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including defining the low engagement threshold and recommending actions, but could provide more detail on the implications."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the task of identifying low-engagement students and recommending outreach actions."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendation to initiate outreach is actionable and based on the identified engagement issues, though it could specify methods of outreach."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from improved structure to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation maintains a focus on student support without stigmatizing language, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A total of 1544 students have been identified with an engagement score below 0.002.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G01.json"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is directly supported by the evidence showing 1544 students with low engagement scores."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Most students in this group have only one active day and a maximum of two clicks.",
+      "claim_type": "numerical",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G01.json"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "While the claim is generally accurate, the specific numbers regarding clicks and active days were not detailed in the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Direct communication can help identify barriers to engagement and provide necessary support to re-engage these students.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is logical based on the identified engagement issues and aligns with best practices for student support."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.3,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.3,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

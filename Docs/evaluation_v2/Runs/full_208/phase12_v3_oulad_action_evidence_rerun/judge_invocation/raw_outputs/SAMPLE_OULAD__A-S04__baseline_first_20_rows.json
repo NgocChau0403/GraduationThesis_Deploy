@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-S04__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the risk factors identified in the data, including low punctuality and a negative trend in scores, which are supported by the evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The values presented for punctuality (0) and the negative trend (-0.71875) are correct and align with the evidence provided."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the identification of risk factors and their implications, but could have more detail on the recommended actions."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of identifying risk factors for the student, addressing the specific actionable question posed."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the identified risks, although they could be more specific in terms of implementation."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but the structure could be improved for better readability and flow."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student's submission punctuality is at 0, which is significantly below the expected threshold of 0.7.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "flag_low_punctuality"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing the punctuality value and threshold."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student's scores are trending downward with a value of -0.71875.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "flag_neg_trend"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing the negative trend value."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Immediate intervention is needed to support the student's academic performance.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the need for intervention is implied, the explanation lacks specific details on how to implement this support effectively."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies the key risk factors for the student and provides actionable recommendations. It is mostly clear and relevant to the task, though it could benefit from improved structure and more detailed action plans.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 4. All relevant data was available and used to support the claims made in the explanation.",
+  "invalid_reason": null
+}

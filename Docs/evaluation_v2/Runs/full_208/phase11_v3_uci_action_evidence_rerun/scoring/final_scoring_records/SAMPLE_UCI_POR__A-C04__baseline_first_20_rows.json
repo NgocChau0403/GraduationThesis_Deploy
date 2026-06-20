@@ -1,0 +1,86 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-C04__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, particularly in highlighting the differences in go-out frequency between the two students."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation align with the data, specifically the go-out frequency scores of 4 and 3 for the respective students."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the comparison of lifestyle dimensions and highlighting the largest gaps, but could provide more detail on other dimensions."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of comparing lifestyle contexts, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, suggesting ways to enhance social engagement for the student with lower go-out frequency."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Student SAMPLE_UCI_POR_STU_000001 has a higher go-out frequency compared to SAMPLE_UCI_POR_STU_000002.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C04.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing go-out frequencies of 4 and 3 for the respective students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Both students exhibit similar lifestyle risk scores in alcohol consumption and health status.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C04.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing identical lifestyle risk scores for both students in alcohol consumption and health status."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.3,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.3,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

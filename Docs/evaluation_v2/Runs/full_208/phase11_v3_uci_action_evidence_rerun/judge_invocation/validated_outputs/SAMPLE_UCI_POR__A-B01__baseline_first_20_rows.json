@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-B01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the distribution of scores and the implications for student performance."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical claims regarding the percentage of students in specific score buckets are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the description of score spread and the identification of students below the pass threshold."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of assessing overall performance distribution, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were required as per the deterministic action evidence, which indicated that no actions were applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A significant majority of students are clustered in the lower to mid-range score buckets.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing the distribution of students across score buckets."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "28.8% of students fall within the 50-60 score bucket.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The percentage is accurately reflected in the evidence provided."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Only 1.1% of students scored in the 90-100 range.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing the low percentage of high-scoring students."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of summarizing the overall performance distribution of the class. It provides accurate numerical data and insights into the performance trends, while also suggesting the need for targeted interventions. The clarity and relevance of the explanation are strong, with minor areas for improvement in conciseness.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 10. All relevant data was available and utilized in the explanation, ensuring a comprehensive assessment of the performance distribution."
+}

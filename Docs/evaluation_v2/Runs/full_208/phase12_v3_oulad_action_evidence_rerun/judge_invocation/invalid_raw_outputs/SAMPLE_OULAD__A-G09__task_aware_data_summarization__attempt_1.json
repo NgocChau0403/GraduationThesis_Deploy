@@ -1,0 +1,79 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G09__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of a weak negative correlation between disadvantage scores and average scores, aligning with the derived statistical evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The correlation coefficient of -0.1353 is correctly reported, and the explanation does not misrepresent the statistical findings."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the trend, highlights at-risk groups, and provides recommendations, but could further elaborate on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of analyzing socioeconomic disadvantage and provides relevant insights for the target audience."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations for targeted support programs are actionable and relevant to the findings presented."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could benefit from more concise language."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation frames socioeconomic factors appropriately without assigning blame, adhering to the safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a weak negative correlation (coefficient of -0.1353) between Disadvantage Score and Average Score.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "A-G09__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim is supported by the derived statistical evidence showing a Pearson correlation coefficient of -0.1353."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students with higher disadvantage scores may be at risk of lower academic performance.",
+      "claim_type": "interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This interpretation logically follows from the reported correlation, indicating a relationship between disadvantage and academic performance."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Targeted support programs should be implemented for students with high disadvantage scores.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and aligns with the findings of the analysis."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing the impact of socioeconomic disadvantage on academic performance. It provides a clear summary of the correlation findings, relevant insights, and actionable recommendations. The scoring reflects strong alignment with the evidence and task requirements, with minor areas for improvement in completeness and clarity.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full retrieval coverage of 1998 rows from the disadvantage_impact dataset. The derived statistical evidence was utilized to support the claims made in the explanation. The retrieval log confirmed that all relevant data was accessible and correctly referenced."
+}

@@ -1,0 +1,81 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G12__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the data provided, comparing the failure and pass rates between the GP and MS groups without introducing unsupported claims."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "All numerical values presented in the explanation, such as failure rates of 30.1% for MS and 7.6% for GP, are correct and directly supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation covers the required core outputs, including the failure and withdrawal rates, but could have explicitly stated the withdrawal rates as percentages as per the task requirements."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is relevant to the task of comparing demographic groups' failure and dropout rates, addressing the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or required based on the deterministic action evidence provided."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation maintains a neutral tone and does not use stigmatizing language, appropriately addressing the demographic comparisons."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The MS group has a failure rate of 30.1%, which is significantly higher than the GP group's failure rate of 7.6%.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "outcome_by_group"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence showing the failure rates for both groups."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The GP group has a pass rate of 92.4%, while the MS group has a pass rate of 69.9%.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "outcome_by_group"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is also supported by the evidence, accurately reflecting the pass rates for both groups."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The high failure rate in the MS group suggests a need for targeted interventions to support these students.",
+      "claim_type": "interpretative",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This interpretative claim is reasonable based on the presented data and aligns with the educational implications discussed."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of comparing failure and withdrawal rates across demographic groups, providing accurate numerical data and relevant insights. While it meets most requirements, it could improve by explicitly stating withdrawal rates as percentages. Overall, the explanation is clear, actionable, and relevant to the target audience.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 4. All rows were included in the explanation, and the retrieval log was not applicable. The explanation utilized the complete dataset to support its claims."
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "execution_attempt_wrapper_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T14__baseline_first_20_rows",
+  "session_segment_id": "phase11_v3_uci_action_evidence_rerun__SAMPLE_UCI_POR__segment_001",
+  "session_sequence_number": 101,
+  "attempt_number": 1,
+  "attempt_reason": "initial",
+  "judge_status": "valid",
+  "judge_input_sha256": "77cec6e20cb9c780342e5a59cefcb0a1a7cbf8419ed25ab8de20a2a639a70164",
+  "source_response_id": "manual_raw_output__SAMPLE_UCI_POR__S-T14__baseline_first_20_rows",
+  "source_response_message_index": null,
+  "source_response_provider_id": null,
+  "raw_or_source_response_path": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/raw_outputs/SAMPLE_UCI_POR__S-T14__baseline_first_20_rows.json",
+  "raw_or_source_response_sha256": "77c46f605a3998e18700be851911d5564aaa8c3109e807edf29c3ff656abb600",
+  "extracted_output_path": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/extracted_outputs/SAMPLE_UCI_POR__S-T14__baseline_first_20_rows.json",
+  "validated_output_path": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/validated_outputs/SAMPLE_UCI_POR__S-T14__baseline_first_20_rows.json",
+  "validated_output_sha256": "77c46f605a3998e18700be851911d5564aaa8c3109e807edf29c3ff656abb600",
+  "validation_errors": [],
+  "retrieval_log_path_if_applicable": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T14__baseline_first_20_rows.json",
+  "judged_at": "2026-06-20T02:58:02.812Z",
+  "validated_at": "2026-06-20T02:58:02.812Z"
+}

@@ -1,0 +1,82 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-B04__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the data provided, stating the correct number of high and medium risk students."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "All numerical claims regarding student counts are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation includes the required core outputs but could provide more detail on the medium-risk group."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the actionable question regarding students needing urgent intervention."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The recommendation to review the high-risk group is clear and actionable, aligning with the task's goals."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is mostly clear, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "915 students are categorized as high risk.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "risk_overview"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is directly supported by the evidence showing 915 students in the high-risk category."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "927 students are categorized as medium risk.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "risk_overview"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is directly supported by the evidence showing 927 students in the medium-risk category."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Immediate attention is warranted for the high-risk group.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation aligns with the task's goal of addressing urgent intervention needs."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the risk status of students, providing accurate numerical data and actionable recommendations. It meets the task requirements and is grounded in the provided evidence.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with all 3 rows from the risk_overview dataset being utilized. The explanation was based on complete data, ensuring accuracy in the claims made.",
+  "invalid_reason": null
+}

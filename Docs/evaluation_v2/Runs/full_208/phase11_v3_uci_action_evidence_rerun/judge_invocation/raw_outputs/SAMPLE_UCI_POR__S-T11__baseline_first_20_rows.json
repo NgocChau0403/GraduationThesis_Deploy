@@ -1,0 +1,11 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T11__baseline_first_20_rows",
+  "scoring_status": "invalid",
+  "subscores": null,
+  "claim_checks": [],
+  "errors": [],
+  "holistic_rationale": "The explanation cannot be evaluated due to the absence of data in the dataset, which prevents any correlation analysis. The explanation correctly identifies the lack of data but does not fulfill the core requirement of explaining whether early enrollment correlates with better outcomes.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', but the full result row count was 0, indicating no data was available for analysis. The explanation acknowledges this limitation, but without data, it cannot provide a valid correlation assessment.",
+  "invalid_reason": "No data available to analyze the relationship between Registration Lead Time and Average Score."
+}

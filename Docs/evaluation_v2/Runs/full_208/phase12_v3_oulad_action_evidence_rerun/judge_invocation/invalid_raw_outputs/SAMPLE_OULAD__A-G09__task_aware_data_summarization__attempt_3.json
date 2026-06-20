@@ -1,0 +1,80 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G09__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of a weak negative correlation between disadvantage scores and average scores, aligning with the derived statistical evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The correlation coefficient of -0.1353 is correctly reported, and the explanation does not misrepresent any numerical values."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs, including the trend description and recommendations, but could provide more detail on the specific imd_band groups."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing socioeconomic disadvantage and providing actionable insights for academic advisors."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations for targeted support programs are actionable and relevant to the identified issues, though more specific implementation details could enhance this."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, but some sections could benefit from more concise language."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation appropriately frames socioeconomic factors without assigning blame, adhering to the safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a weak negative correlation (coefficient of -0.1353) between Disadvantage Score and Average Score.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "A-G09__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim is supported by the derived statistical evidence showing a Pearson correlation coefficient of -0.1353."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Disadvantaged students may require additional academic support to improve their performance.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is logically derived from the identified trend of lower average scores among disadvantaged students."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Targeted interventions could help improve academic outcomes for disadvantaged students.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the analysis of the correlation and the implications drawn from it."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing the impact of socioeconomic disadvantage on academic performance. It provides a clear summary of the correlation, insights into the implications for disadvantaged students, and actionable recommendations for support. The metrics reflect a strong performance overall, with minor areas for improvement in completeness and clarity.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full retrieval coverage of 1998 rows from the disadvantage_impact dataset. The retrieval log confirmed that all relevant data was accessible and utilized in the explanation. The derived statistical evidence was applied to validate the correlation claims made in the explanation.",
+  "invalid_reason": null
+}

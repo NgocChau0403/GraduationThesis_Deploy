@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C05__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the differences in academic backgrounds and disadvantage scores of the two students based on the provided evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for disadvantage scores and IMD scores are correctly stated and compared, with clear indications of which student has a more favorable position."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation identifies key differences in academic backgrounds but could provide more context on how these differences impact academic performance."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of comparing academic backgrounds and structural disadvantages, aligning well with the actionable question."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the identified disadvantages, suggesting targeted support programs."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation avoids stigmatizing language and presents the information in a fair manner, adhering to safety guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Student SAMPLE_OULAD_STU_100788 exhibits a higher level of education and a lower disadvantage score compared to SAMPLE_OULAD_STU_101700.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing the educational qualifications and disadvantage scores of both students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "SAMPLE_OULAD_STU_100788 has a significantly lower disadvantage score than SAMPLE_OULAD_STU_101700.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the numerical values provided in the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The IMD score for SAMPLE_OULAD_STU_100788 is significantly higher than that of SAMPLE_OULAD_STU_101700.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the IMD scores provided in the evidence."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively compares the academic backgrounds of the two students, highlighting significant differences in their disadvantage scores and educational qualifications. It provides actionable recommendations based on these differences, making it relevant and useful for the target audience of academic advisors.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 2. All relevant data was available and used to support the claims made in the explanation."
+}

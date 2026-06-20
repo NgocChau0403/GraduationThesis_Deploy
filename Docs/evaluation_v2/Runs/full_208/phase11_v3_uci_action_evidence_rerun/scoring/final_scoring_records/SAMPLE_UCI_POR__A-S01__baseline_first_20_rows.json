@@ -1,0 +1,98 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-S01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the student's profile based on the provided data, maintaining fidelity to the evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Numerical values such as the average score (36.67) and at-risk score (2) are correctly reported and aligned with the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, summarizing the student's situation effectively, but lacks some depth in supporting insights."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of summarizing the student's profile and current situation, making it relevant to the audience."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were required as per the task context, and the explanation does not propose unsupported actions."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation avoids stigmatizing language and presents the student's situation in a fair manner."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student is a female aged 18-20.",
+      "claim_type": "fact",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "0c10f4df138d1a4a879ee1ca0e9aa788f9246d0acb4a47b54e5818fcc8b508a8"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence showing the student's gender and age group."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student has an average score of 36.67.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "0c10f4df138d1a4a879ee1ca0e9aa788f9246d0acb4a47b54e5818fcc8b508a8"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The average score is accurately reported and matches the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The student has a medium at-risk label.",
+      "claim_type": "fact",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "0c10f4df138d1a4a879ee1ca0e9aa788f9246d0acb4a47b54e5818fcc8b508a8"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence indicating the at-risk label."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.33,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.33,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

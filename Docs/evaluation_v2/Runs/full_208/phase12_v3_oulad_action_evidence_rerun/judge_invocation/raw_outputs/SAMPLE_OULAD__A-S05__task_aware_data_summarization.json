@@ -1,0 +1,79 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-S05__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, highlighting the lowest average score and suggesting appropriate academic support."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented, such as the average score of 83 for 'CMA 8', are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including identifying the lowest average score and recommending support, but could provide more detail on the implications."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of identifying competency gaps and recommending support for the student."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendation for using flashcards is actionable and relevant to the identified competency gap."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The competency tag 'CMA 8' has the lowest average score of 83.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "competency_scores"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing 'CMA 8' with an average score of 83."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students may benefit from targeted interventions in the competency area represented by 'CMA 8'.",
+      "claim_type": "interpretation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation aligns with the identified gap in competency scores."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Implement knowledge recall support through flashcards for 'CMA 8'.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and relevant to the identified competency gap."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies the competency gap and provides actionable recommendations based on the data. It is well-supported by the evidence and relevant to the task at hand, with minor areas for improvement in clarity and completeness.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 5. All rows were included in the explanation, and the retrieval log was not applicable."
+}

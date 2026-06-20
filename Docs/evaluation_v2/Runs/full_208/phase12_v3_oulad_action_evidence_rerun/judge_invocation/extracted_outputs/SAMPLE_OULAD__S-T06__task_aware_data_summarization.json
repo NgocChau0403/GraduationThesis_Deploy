@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T06__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data trends observed in the engagement metrics, indicating a decline in study habits."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The numerical values presented in the explanation are mostly correct, but the claim about the drop from 86 to 5 could be misleading without context on the overall engagement pattern."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs but lacks a detailed recommendation for a consistent study routine, which is a required supporting output."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of assessing study consistency and provides insights into the student's engagement."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendation to establish a weekly study schedule is actionable, but it could be more specific in terms of how to implement it."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, but some phrases could be simplified for better understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Your engagement has seen a significant decline over the weeks, dropping from 86 clicks to just 5.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "weekly_clicks"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim about the drop in engagement is based on observed data, it lacks context regarding the overall engagement pattern, which could mislead the reader."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "This suggests that your study habits may not be consistent, and you might be relying on last-minute efforts rather than steady learning.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "weekly_clicks"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This interpretation aligns with the observed decline in engagement, supporting the claim about inconsistent study habits."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Establish a weekly study schedule.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "local_detail",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is relevant but lacks specificity on how to create a study schedule, which weakens its actionability."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation provides a solid overview of the student's engagement trends, highlighting a significant decline in study habits. While it addresses the core task effectively, it could improve in completeness and specificity of recommendations. The clarity is generally good, but some areas could be simplified for better understanding.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 32 rows of data from the consistency_data dataset. The retrieval log confirmed that all relevant data was available and correctly referenced in the explanation."
+}

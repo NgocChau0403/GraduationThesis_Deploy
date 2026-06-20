@@ -1,0 +1,216 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_OULAD__A-S02__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-S02",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v3_action_evidence_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_action_evidence_calibrated",
+  "task_context": {
+    "task_name": "Student score trend",
+    "scope": "1 student",
+    "actionable_question": "Is this student getting better or worse — and how fast?",
+    "target_audience": "instructor, academic_advisor",
+    "ai_summary_type": "trend_series",
+    "ai_prompt_hint": "Identify whether student is improving or declining. Reference performance_trend [FE] slope direction and magnitude.",
+    "query_labels": [
+      "score_trend"
+    ],
+    "explanation_strategy": "trend"
+  },
+  "schema_context": {
+    "source_tables": [
+      "assessment_result",
+      "assessment"
+    ],
+    "key_db_fields": [
+      "score_normalized",
+      "assessment_order",
+      "week_of_class",
+      "assessment_type; performance_trend [FE cross]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "score_trend"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The student's performance shows a generally stable trend with slight fluctuations across assessments, indicating a consistent level of achievement. The normalized scores range from a high of 100 in Assessment 1 to a low of 83 in Assessment 8, suggesting a minor decline in performance over time.\n\nInsights: Overall Performance Stability: The student's normalized scores have remained relatively stable, with scores ranging from 100 in Assessment 1 to 83 in Assessment 8, indicating a slight decline in performance over time. | Consistent Performance Trend: The performance trend across assessments is stable, with a consistent performance_trend value of -0.71875, indicating no significant improvement or decline in the overall performance trajectory.\n\nEducational implications: The student is maintaining a high level of performance, but the slight decline in scores suggests a need for continued engagement and support to prevent further drops.\n\nRecommendations: medium - Implement targeted feedback sessions focusing on areas of slight decline. - To maintain the student's high performance and address any emerging weaknesses.",
+    "structured_payload": {
+      "task_id": "A-S02",
+      "execution_id": "exec_1781847829256_78db031d",
+      "explanation": {
+        "summary": "The student's performance shows a generally stable trend with slight fluctuations across assessments, indicating a consistent level of achievement. The normalized scores range from a high of 100 in Assessment 1 to a low of 83 in Assessment 8, suggesting a minor decline in performance over time.",
+        "insights": [
+          {
+            "title": "Overall Performance Stability",
+            "description": "The student's normalized scores have remained relatively stable, with scores ranging from 100 in Assessment 1 to 83 in Assessment 8, indicating a slight decline in performance over time.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "score_normalized",
+                "value": 100,
+                "comparison": "peak",
+                "delta": null,
+                "context": "Assessment 1"
+              },
+              {
+                "metric": "score_normalized",
+                "value": 83,
+                "comparison": "trough",
+                "delta": -17,
+                "context": "Assessment 8"
+              }
+            ]
+          },
+          {
+            "title": "Consistent Performance Trend",
+            "description": "The performance trend across assessments is stable, with a consistent performance_trend value of -0.71875, indicating no significant improvement or decline in the overall performance trajectory.",
+            "severity": "low",
+            "evidence": [
+              {
+                "metric": "performance_trend",
+                "value": -0.71875,
+                "comparison": "stable",
+                "delta": null,
+                "context": "Across all assessments"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The student is maintaining a high level of performance, but the slight decline in scores suggests a need for continued engagement and support to prevent further drops."
+        ],
+        "recommendations": [
+          {
+            "priority": "medium",
+            "action": "Implement targeted feedback sessions focusing on areas of slight decline.",
+            "rationale": "To maintain the student's high performance and address any emerging weaknesses."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data quality is strong with a large sample size and no summarization warnings.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "trend",
+      "explanation_type": "trend",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "full_rows_due_to_small_result",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 5,
+      "included_row_count": 5,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "score_trend",
+          "row_count": 5,
+          "included_row_count": 5
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 6546,
+        "token_usage": {
+          "prompt_tokens": 1802,
+          "completion_tokens": 480,
+          "total_tokens": 2282
+        },
+        "strategy": "trend",
+        "granularity": "per_assessment",
+        "cost_usd": 0.000558
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-S02__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "64cd50b4e174a0f5eb92a8dff4b1f17eabd30cd2ef2aac61149a1d380e40663d",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1802,
+        "completion_tokens": 480,
+        "total_tokens": 2282
+      },
+      "latency_ms": 6557,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 5,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "score_trend",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S02.json",
+        "artifact_sha256": "dbf7108bb59f12a9a5326678e4dc96554310ebe85eb5a5afca61892942966973",
+        "row_count": 5,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 5,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "score_trend": 5
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-S02-CORE-01",
+        "description": "Identify whether student is improving or declining."
+      },
+      {
+        "requirement_id": "A-S02-CORE-02",
+        "description": "Reference performance_trend [FE] slope direction and magnitude."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  },
+  "derived_stat_evidence": [],
+  "action_evidence": {
+    "applicable": false,
+    "source_type": "not_applicable",
+    "rule_set_id": null,
+    "rule_version": null,
+    "evaluation_status": "not_applicable",
+    "supported_action_count": 0,
+    "supported_actions": [],
+    "rule_evaluations": [],
+    "conflict_evaluations": []
+  }
+}

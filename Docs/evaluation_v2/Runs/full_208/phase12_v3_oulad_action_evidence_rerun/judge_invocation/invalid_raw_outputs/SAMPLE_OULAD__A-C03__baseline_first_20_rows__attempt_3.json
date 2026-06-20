@@ -1,0 +1,86 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C03__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the risk profiles of the two students based on the provided data, correctly identifying the higher risk of SAMPLE_OULAD_STU_100788."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for at_risk_score and engagement scores are correctly reported and compared, with no discrepancies found."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs, but it could have explicitly stated that the avg_score for SAMPLE_OULAD_STU_101700 is null, which is a requirement."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of comparing the risk profiles of the two students, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the identified risks, suggesting specific interventions for the students."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "SAMPLE_OULAD_STU_100788 is at a higher risk compared to SAMPLE_OULAD_STU_101700.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_100788 at_risk_score: 3",
+        "SAMPLE_OULAD_STU_101700 at_risk_score: 1"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the at_risk_score values provided in the evidence."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The key differences lie in their engagement and punctuality metrics.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_100788 engagement_score: 0.202",
+        "SAMPLE_OULAD_STU_100788 punctuality_rate: 0",
+        "SAMPLE_OULAD_STU_101700 punctuality_rate: 1"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the engagement and punctuality metrics provided in the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "If avg_score is null, state that score evidence is missing rather than guessing.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "unsupported",
+      "impact_type": "local_detail",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation does not mention that the avg_score for SAMPLE_OULAD_STU_101700 is null, which is a requirement."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively compares the risk profiles of the two students, providing clear insights and actionable recommendations. However, it fails to address the requirement regarding the missing avg_score for one student, which slightly detracts from its completeness.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 2. The explanation utilized the complete dataset for the risk comparison, ensuring accurate claims based on the provided data.",
+  "invalid_reason": null
+}

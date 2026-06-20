@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C06__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, highlighting the disparity in resource usage between the two students."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as total clicks and resource types used, are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, but could provide more detail on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of comparing resource usage between the two students, making it highly relevant."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the context of improving student engagement."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation maintains a fair tone and does not stigmatize either student, addressing the safety and fairness considerations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "SAMPLE_OULAD_STU_100788 demonstrates a more strategic and diversified approach to resource engagement compared to SAMPLE_OULAD_STU_101700.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "total_clicks",
+        "used_resource_types"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing that SAMPLE_OULAD_STU_100788 has significantly more clicks and resource types used."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "SAMPLE_OULAD_STU_101700 shows no recorded resource usage.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "total_clicks"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence indicating that SAMPLE_OULAD_STU_101700 has zero clicks."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The lack of resource engagement by SAMPLE_OULAD_STU_101700 may hinder their learning outcomes.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is reasonable, it lacks direct evidence linking the lack of engagement to specific learning outcomes."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of comparing resource usage between two students, providing clear insights and actionable recommendations. The claims made are well-supported by the evidence, with minor issues in completeness and clarity.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 10. All relevant data was available and utilized in the explanation."
+}

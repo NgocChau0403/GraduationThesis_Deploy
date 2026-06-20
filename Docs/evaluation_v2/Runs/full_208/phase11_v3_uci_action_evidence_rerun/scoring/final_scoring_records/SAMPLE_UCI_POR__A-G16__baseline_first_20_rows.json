@@ -1,0 +1,110 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-G16__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, linking the low engagement and high-risk counts to the recommended actions."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation (e.g., total students, low engagement count, high-risk count) are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation synthesizes the required core outputs into a coherent action plan, but could include more detail on the specific actions."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of recommending actions for the admin based on the cohort's engagement and risk levels."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommended actions are concrete and actionable, grounded in the evidence provided, although they could be more explicitly stated."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language or unfair recommendations, maintaining a focus on support."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The total student count is 649.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.total_students"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence showing a total student count of 649."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The low engagement count is 649.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.low_engagement_count"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence indicating a low engagement count of 649."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The high-risk count is 49.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.high_risk_count"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing a high-risk count of 49."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "G1 is the hardest assessment.",
+      "claim_type": "categorical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.hardest_assessment"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence identifying G1 as the hardest assessment."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.1,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.1,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

@@ -1,0 +1,98 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-S03__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the absence of engagement data and its implications for student disengagement."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical data was available to assess correctness."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation identifies the lack of engagement data but does not specify a week of disengagement or compare post-drop engagement with pre-drop averages."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the task of identifying disengagement but lacks specific details on the timing of the drop."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were made due to the absence of data."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from more structured presentation and specific details."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain stigmatizing language or harmful recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a complete absence of engagement data.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_access_mode: direct_embedding"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation correctly states the absence of engagement data, which is supported by the query results."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "This lack of data suggests a significant disengagement from the course.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_access_mode: direct_embedding"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The conclusion about disengagement is logically derived from the absence of data."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The absence of engagement data may indicate a need for immediate intervention to re-engage the student.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_access_mode: direct_embedding"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation for intervention is appropriate given the context of disengagement."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.29,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.29,
+  "verdict": "good",
+  "invalid_reason": null
+}

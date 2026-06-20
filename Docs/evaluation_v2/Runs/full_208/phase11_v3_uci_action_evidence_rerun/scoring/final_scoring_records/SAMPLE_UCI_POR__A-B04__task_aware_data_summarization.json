@@ -1,0 +1,108 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-B04__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the data provided, stating the correct counts of high, medium, and low-risk students."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "All numerical claims regarding student counts are correct and directly supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation includes the required core outputs, but could provide more detail on the medium and low-risk groups."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the actionable question regarding the number of students needing urgent intervention."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actions were triggered or supported in the deterministic action evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is well-structured and clear, making it easy for the target audience to understand the risk levels."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There are 50 students categorized as high risk.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "risk_overview"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence showing 50 high-risk students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "There are 155 students categorized as medium risk.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "risk_overview"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence showing 155 medium-risk students."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "There are 444 students categorized as low risk.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "risk_overview"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence showing 444 low-risk students."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Immediate review of high-risk students is essential.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation aligns with the identified need for intervention for high-risk students."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 9.28,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 9.28,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

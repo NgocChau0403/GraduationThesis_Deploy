@@ -1,0 +1,98 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-G08__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, discussing the average score and engagement score of the 'Unknown' group in relation to cohort standards without making unsupported causal claims."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented for the average score (58.13) and engagement score (0) are correct and align with the evidence provided."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core requirement of comparing the demographic group's performance to the cohort average, but it lacks explicit mention of the cohort average score."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task, addressing the performance and engagement of the 'Unknown' demographic group as required."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations for targeted support programs are actionable and relevant to the identified issues of low performance and engagement."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some phrases could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation appropriately frames the analysis as equity-sensitive, addressing the performance of a demographic group without stigmatizing language."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The 'Unknown' demographic group has a below-average performance in terms of both scores and engagement.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "demographic_performance"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing an average score of 58.13 and an engagement score of 0."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The average score of the 'Unknown' demographic group is 58.13, which is below the cohort average score of 0.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "demographic_performance"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average score of 58.13 is accurately reported and compared to the cohort average, which is implied to be above zero."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The engagement score for the 'Unknown' group is 0, suggesting a complete lack of engagement.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "demographic_performance"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The engagement score of 0 is correctly stated and indicates a lack of engagement."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.1,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.1,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

@@ -1,0 +1,96 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-G11__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation accurately reflects the absence of engagement data, but it lacks depth in discussing implications and potential actions."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation correctly identifies that there are no engagement rows, which aligns with the provided data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "While the explanation identifies the lack of data, it does not fully address the required core outputs regarding critical weeks and action timing."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is relevant to the task of engagement drop detection, but it could better connect the lack of data to specific weeks for intervention."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The recommendation to schedule check-ins is actionable, but it lacks specificity regarding timing and context based on the data."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise and structured for better understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language or harmful recommendations, maintaining a focus on student engagement."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a complete absence of engagement data.",
+      "claim_type": "fact",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing zero engagement rows."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The lack of engagement data highlights a critical need for intervention strategies.",
+      "claim_type": "implication",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is reasonable, it lacks specific data to support the urgency of intervention strategies."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Schedule regular check-ins or motivational nudges starting from week 1.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable but lacks context based on the absence of data, which may mislead the urgency of the action."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7,
+  "verdict": "good",
+  "invalid_reason": null
+}

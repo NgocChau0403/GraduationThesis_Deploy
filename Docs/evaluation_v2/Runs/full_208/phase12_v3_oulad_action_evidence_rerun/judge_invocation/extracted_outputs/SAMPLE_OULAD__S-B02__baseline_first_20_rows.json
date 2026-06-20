@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-B02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the risk status based on the provided metrics, including the at-risk score and engagement score."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented, such as the at-risk score of 3 out of 5 and engagement score of 0.202, are correct and consistent with the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation includes the required core output of the risk badge and at-risk score, but it could have better addressed the supporting outputs regarding the factors contributing to the risk."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of assessing risk for the student, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to improving the student's situation, focusing on engagement and punctuality."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student is at high risk of failing with an at-risk score of 3 out of 5.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_rows_sha256"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the provided data indicating a high risk status and the specific at-risk score."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The low engagement score is a contributing factor to the risk.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_rows_sha256"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation correctly identifies the low engagement score as a significant factor impacting the student's risk."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The punctuality rate is at 0, indicating missed classes or deadlines.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_rows_sha256"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing a punctuality rate of 0, which is accurately reflected in the explanation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively communicates the student's risk status, supported by accurate metrics and actionable recommendations. While it could improve in completeness by better addressing supporting outputs, it remains relevant and clear.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 1. The explanation utilized the available metrics from the risk_summary dataset, confirming the accuracy of the claims made.",
+  "invalid_reason": null
+}

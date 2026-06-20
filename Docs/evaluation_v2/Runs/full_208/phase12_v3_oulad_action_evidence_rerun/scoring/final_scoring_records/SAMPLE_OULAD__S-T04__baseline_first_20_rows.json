@@ -1,0 +1,98 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__S-T04__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the risk signals derived from the evidence, maintaining alignment with the flagged risks."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation correspond correctly to the evidence, particularly the flag values and thresholds."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the triggered flags and provides insights for each, but could improve by explicitly stating the absence of non-triggered flags."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of identifying risk signals relevant to the student, aligning well with the actionable question."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the identified risks, offering clear steps for the student to take."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and presents the risks in a constructive manner, promoting a supportive approach."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student has previously attempted this course, indicating potential challenges.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "flag_repeated"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence indicating the flag for repeated attempts is triggered."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Submission punctuality is below the expected threshold.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "flag_low_punctuality"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing the low punctuality flag is triggered."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Scores are trending downward, indicating a need for intervention.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "flag_neg_trend"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence indicating the negative trend flag is triggered."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.1,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.1,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C01__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, discussing the decline in scores and identifying divergence points based on the performance trajectory."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation are correct, including the peak score of 100 and the decline to 61, which are supported by the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs, explaining divergence points and identifying when one student fell behind. However, it could provide more detail on the implications of the performance decline."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of comparing performance trajectories, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were required as per the deterministic action evidence, which indicated that no actions were applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student demonstrated a significant decline in scores during the later assessments, particularly in the TMA assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "trajectory_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing a drop from a score of 100 to 61."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student's performance peaked at a normalized score of 100 in the CMA assessment during week 3.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "trajectory_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the peak score in week 3."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The significant drop in performance suggests that the student may require additional support and intervention.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "trajectory_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is reasonable, it lacks specific evidence from the data to support the need for intervention."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of comparing performance trajectories, providing a clear analysis of the student's performance decline and identifying divergence points. The claims made are mostly supported by the evidence, with minor issues in the supporting claim regarding the need for intervention. Overall, the explanation is coherent and relevant to the instructor's needs.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 17. All rows were included in the analysis, and the explanation utilized the complete dataset effectively."
+}

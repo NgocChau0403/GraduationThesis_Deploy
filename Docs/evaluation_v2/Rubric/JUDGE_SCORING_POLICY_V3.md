@@ -85,6 +85,46 @@ complete query result. Do not give task-aware summarization an automatic
 evidence-coverage advantage. Compare actual correctness, completeness,
 specificity, actionability, clarity and safety.
 
+In the `<=20` bucket, baseline and task-aware records should normally be close
+when they make the same supported claims from the same full evidence. A large
+paired delta in either direction requires a concrete defect explanation. Do not
+reward baseline merely for being shorter, and do not penalize task-aware merely
+for using a more structured explanation format.
+
+When `evidence_access.full_result_row_count > 20`, baseline-first-20 should not
+receive full-result coverage credit for broad claims unless the claim is backed
+by deterministic checks or explicitly limited to the first 20 rows. Task-aware
+summarization should receive evidence-coverage credit only when it correctly
+uses broader task-relevant evidence and does not introduce unsupported claims.
+
+## Action-Synthesis Rule
+
+For tasks with `ai_summary_type = action_synthesis`, the evaluation target is
+the explanation of the backend/rule-supported action set. The judge must not
+require the explanation model to invent actions outside the supplied rule or
+action contract.
+
+Score these tasks by checking whether the explanation:
+
+- explains returned or triggered actions accurately;
+- cites the triggering feature-engineered signals, thresholds or rule IDs when
+  available;
+- preserves priority, owner, time horizon and claim limits when supplied;
+- avoids unsupported actions or sensitive-trigger misuse;
+- states that no supported action exists only when the action-rule evidence
+  confirms zero supported actions.
+
+If the judge input lacks explicit triggered-action evidence, treat unsupported
+or missing action judgments cautiously. Do not create a major
+`missing_action_plan` error solely from the natural-language prompt hint when
+the system architecture delegates action selection to a backend rule contract.
+
+When `action_evidence` is present, it is authoritative. A missing-action defect
+is valid only for actions listed in `supported_actions`. Rules marked
+`not_triggered` or `unknown` do not create required actions. For
+`returned_recommended_action_fields`, score how accurately the explanation
+interprets the returned actions; do not require newly invented recommendations.
+
 ## Scoring Formula
 
 The seven metrics and weights remain unchanged:

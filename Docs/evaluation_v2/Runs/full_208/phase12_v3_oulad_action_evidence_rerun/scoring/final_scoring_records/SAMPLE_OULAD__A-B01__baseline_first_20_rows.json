@@ -1,0 +1,99 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-B01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, highlighting the concentration of students in higher score buckets and the significant number of students with no scores."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Most numerical claims are correct, but the percentage of students in the upper score buckets is slightly miscalculated (42.7% should be 42.5%)."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs but lacks a clear flagging of the large proportion of students below the pass threshold."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of describing overall performance distribution and addresses the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to improving student engagement and assessment completion."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language and appropriately addresses potential disengagement without assigning blame."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A significant number of students are clustered in the higher score buckets, particularly between 70-100.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing a high concentration of students in the 70-100 score range."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "20% of students have no scores.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data indicating that 500 out of 2500 students have no scores, which is 20%."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The majority of students are performing well, with 1,067 students scoring between 70 and 100.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is mostly accurate, the percentage calculation is slightly off, as it should be approximately 42.5% instead of 42.7%."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.55,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.55,
+  "verdict": "good",
+  "invalid_reason": null
+}

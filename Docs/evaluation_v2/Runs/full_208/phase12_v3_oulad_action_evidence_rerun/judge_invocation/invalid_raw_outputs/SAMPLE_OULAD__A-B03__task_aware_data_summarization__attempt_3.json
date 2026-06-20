@@ -1,0 +1,95 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-B03__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the engagement distribution data, highlighting the significant concentration of students in the very low effort category."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented, such as 69.7% for very low effort students, are correct and supported by the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the proportions of low, medium, and high effort students, but could provide more detail on the implications of these findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of summarizing engagement distribution and is relevant to the target audience of instructors and admins."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, focusing on strategies to engage low effort students."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language or unfair recommendations, maintaining a focus on constructive interventions."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "69.7% of students fall into the very low study effort category.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data showing 69.7% in the very low effort category."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The average engagement score for very low effort students is 0.0516.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average engagement score is accurately reported based on the provided data."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The remaining students show a sharp drop in numbers, with only 24.7% in the low effort category.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data indicating 24.7% in the low effort category."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The remaining students show a mere 5.1% in the medium effort category.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing 5.1% in the medium effort category."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the engagement distribution, providing accurate numerical data and actionable recommendations. While it is generally clear, there is room for improvement in conciseness. Overall, it meets the task requirements well.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 4. All relevant data was included in the explanation, and the retrieval log was not applicable as the full dataset was provided."
+}

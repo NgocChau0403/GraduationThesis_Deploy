@@ -1,0 +1,109 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-G11__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the trends in engagement data, highlighting significant drops and identifying critical weeks for intervention."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Most numerical claims are correct, including the percentage drop in engagement. However, the explanation could clarify the context of the drop percentages more explicitly."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation identifies critical weeks and provides recommendations, but it lacks a detailed breakdown of all weeks and their engagement metrics."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of detecting engagement drops and recommending actions, addressing the target audience effectively."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations for scheduling check-ins during critical weeks are actionable and based on the identified trends."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise and structured for better readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The engagement trend shows a significant decline over the observed weeks, with a sharp drop in total clicks from a peak of 228,353 in week 3 to a trough of 2,117 in week 39.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G11.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the engagement data showing the peak and trough values."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "This represents a staggering decrease of 94.48% in engagement.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G11.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The percentage drop is calculated correctly based on the provided engagement figures."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Notable drop weeks include week 6 (62,604 clicks), week 11 (26,756 clicks), and week 12 (16,424 clicks).",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G11.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "These weeks are accurately identified based on the engagement data."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The significant decline in engagement suggests that students may be losing motivation or facing challenges.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is plausible, it lacks direct evidence from the data to support the assertion about student motivation."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.65,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.65,
+  "verdict": "good",
+  "invalid_reason": null
+}

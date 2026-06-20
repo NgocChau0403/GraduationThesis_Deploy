@@ -1,0 +1,98 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-G06__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the absence of data and correctly states that no correlation patterns can be identified, adhering to the requirement to frame relationships as correlational."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical claims were made due to the absence of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the core outputs by highlighting the lack of data and recommending data collection, but it could have provided more detail on the implications of this lack."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of identifying effective learning activities, as it directly addresses the actionable question posed."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendation to collect more data is actionable and relevant, though it could include specific steps for implementation."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but the structure could be improved for better readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis of the relationship between Resource Type and Avg Score of Users could not be conducted due to the absence of data.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G06__task_aware_data_summarization.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence of zero rows in the dataset."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The lack of data limits the ability to determine which resource types may enhance student learning outcomes.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G06__task_aware_data_summarization.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported as it logically follows from the absence of data."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Encourage the collection of more comprehensive data on resource usage and user scores.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G06__task_aware_data_summarization.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This recommendation is actionable and directly addresses the identified issue of data absence."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

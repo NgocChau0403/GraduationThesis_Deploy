@@ -1,0 +1,85 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G06__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the evidence provided, but the claim of a negative correlation is misleading as the evidence does not support a causal relationship."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The average scores for resource types are correctly reported, but the interpretation of these scores could be clearer regarding their implications."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs but lacks depth in discussing all resource types and their effectiveness."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of identifying effective resource types for student learning."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendations are actionable, but they could benefit from more specific strategies for implementation."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear but contains some ambiguous phrasing that may confuse the audience."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any harmful or unfair recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a negative correlation between Resource Type and Avg Score of Users.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "unsupported",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence does not support a claim of negative correlation as it does not establish causation."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The resource type 'page' has the highest average score of 78.9.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the evidence showing that 'page' has the highest average score."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Encouraging the use of resource types that yield higher average scores may enhance overall student performance.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the recommendation is logical, the evidence does not confirm that promoting higher-scoring resources will directly enhance performance."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation provides a reasonable overview of resource effectiveness based on average scores, but it misrepresents the correlation aspect and lacks depth in discussing all resource types. The actionable recommendations are relevant but could be more specific.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 9. All rows were included in the analysis, and the retrieval log was not applicable."
+}

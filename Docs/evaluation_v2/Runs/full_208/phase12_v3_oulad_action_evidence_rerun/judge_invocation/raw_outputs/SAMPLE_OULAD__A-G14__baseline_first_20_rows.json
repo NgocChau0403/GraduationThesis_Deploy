@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G14__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the trends in engagement metrics based on the provided evidence, particularly the significant drop in average clicks."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Numerical values presented in the explanation, such as the drop from 112.63 to 41.17, are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation identifies key trends and insights but could provide more detail on the implications of the trends for different student groups."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of analyzing withdrawal signals and provides relevant insights for the target audience."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations for early intervention strategies are actionable and based on the identified trends in engagement."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a significant drop in avg_clicks from week 10 to week 11, where avg_clicks fell from 112.63 to 41.17.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "withdrawal_signal_trend"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the evidence showing the average clicks for week 10 and week 11."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The lowest average clicks recorded was 38.45 in week 12.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "withdrawal_signal_trend"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the evidence showing the lowest average clicks in week 12."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The overall trend shows a decline in engagement from a peak of 138.61 in week 1 to 75.69 in week 8.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "withdrawal_signal_trend"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the evidence showing the average clicks for week 1 and week 8."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing withdrawal signals by providing a clear summary of trends in engagement metrics, supported by accurate numerical data. The recommendations for intervention are actionable and relevant to the target audience, with no significant clarity or safety issues.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 164 rows of data from the withdrawal_signal_trend dataset. The retrieval log confirmed that all relevant data was available and correctly referenced in the explanation.",
+  "invalid_reason": null
+}

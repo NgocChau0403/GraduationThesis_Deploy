@@ -252,7 +252,8 @@ ACTION SYNTHESIS PAYLOAD:
 
 Write a concise explanation of why the listed prioritized_actions were produced.
 For every action mentioned:
-- retain its meaning and priority;
+- retain its action meaning, priority, owner, and time_horizon_days;
+- state who owns the action and the deadline/time horizon when those fields are supplied;
 - ground the rationale in its linked evidence;
 - obey its claim_limits;
 - identify its rule_id/rule_version in the evidence context when useful.
@@ -782,7 +783,24 @@ Return the JSON explanation structure."""
 
     @staticmethod
     def summarize_task_aware_data_summarization(req: ExplainRequest) -> tuple[dict, str]:
-        if BaseExplanationStrategy._should_include_full_rows_for_small_result(req):
+        cfg = getattr(req, "ai_summary_config", None)
+        is_action_synthesis = bool(cfg and cfg.summary_type == "action_synthesis")
+        is_small_result = BaseExplanationStrategy._should_include_full_rows_for_small_result(req)
+
+        # Action synthesis must always pass through the deterministic rule
+        # engine. Returning raw rows here would bypass action-rule evaluation
+        # for the common <=20-row case and leave prioritized_actions empty.
+        # The rule engine still consumes every supplied row, so the small-result
+        # full-data guarantee remains intact.
+        if is_action_synthesis:
+            summary = BaseExplanationStrategy._build_task_aware_summary(req)
+            BaseExplanationStrategy._attach_small_result_metadata(
+                req,
+                summary,
+                applied=is_small_result,
+            )
+            summary["included_row_count"] = summary["full_result_row_count"]
+        elif is_small_result:
             summary = BaseExplanationStrategy._summarize_full_rows_due_to_small_result(req)
         else:
             summary = BaseExplanationStrategy._build_task_aware_summary(req)

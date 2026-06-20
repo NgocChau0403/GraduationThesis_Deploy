@@ -1,0 +1,111 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-S01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the student's profile based on the provided data, maintaining fidelity to the evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented, such as the average score of 91.2 and at-risk score of 3, are correct and consistent with the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core aspects of the student's profile but could include more detail on engagement strategies."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of summarizing the student's situation, focusing on relevant metrics."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were triggered as the action evidence was marked as not applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation avoids stigmatizing language and presents the student's situation fairly."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student is identified as SAMPLE_OULAD_STU_100788, a male aged between 0-35 years from Scotland.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "e09adf2281d52aea6e70987c40166e5b769dd26389368609bf2e012d25764562"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence provided in the dataset."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student has achieved a high average score of 91.2.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "e09adf2281d52aea6e70987c40166e5b769dd26389368609bf2e012d25764562"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average score of 91.2 is confirmed by the data."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The student is categorized as high risk due to an at-risk score of 3.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "e09adf2281d52aea6e70987c40166e5b769dd26389368609bf2e012d25764562"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The at-risk score of 3 is accurately reflected in the explanation."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The student demonstrates strong academic capabilities but may require interventions to enhance engagement.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "e09adf2281d52aea6e70987c40166e5b769dd26389368609bf2e012d25764562"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim about strong academic capabilities is supported, the need for interventions is speculative and not directly evidenced."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.33,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.33,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

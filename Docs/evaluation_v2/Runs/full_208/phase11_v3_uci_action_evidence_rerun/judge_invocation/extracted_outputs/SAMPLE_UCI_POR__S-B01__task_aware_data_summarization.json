@@ -1,0 +1,85 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-B01__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the provided data, including the average score, pass rate, and class average, without introducing any unsupported claims."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "All numerical values presented in the explanation, such as the average score of 41.25 and the class average of 58.31, are correct and consistent with the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation includes the overall score and pass/fail status, but it could have explicitly stated the performance trend and final outcome for full completeness."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the actionable question regarding overall performance, making it highly relevant to the task."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or supported by the evidence, as indicated by the deterministic action evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is mostly clear and well-structured, though some sentences could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You have an average score of 41.25, which is just above the passing threshold of 40.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_summary.avg_score",
+        "performance_summary.pass_threshold"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average score and passing threshold are accurately reported based on the provided data."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Your performance places you in the 8.8 percentile.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_summary.score_percentile"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The percentile ranking is correctly stated and supported by the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Your average score of 41.25 is 17.06 points lower than the class average of 58.31.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_summary.score_vs_class_avg",
+        "performance_summary.class_avg_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The comparison to the class average is accurate and well-supported by the data."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student's performance, accurately reflecting the provided data and addressing the task requirements. While it could improve in completeness by including additional context, it remains highly relevant and actionable based on the available evidence.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 1. The explanation utilized all available data from the performance summary dataset, confirming the accuracy of the claims made."
+}

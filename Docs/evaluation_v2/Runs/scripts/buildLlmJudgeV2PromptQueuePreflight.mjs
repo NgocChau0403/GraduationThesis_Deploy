@@ -56,7 +56,9 @@ function repoPathToAbsolute(repoPath) {
 }
 
 async function readText(filePath) {
-  return (await readFile(filePath, "utf8")).replace(/^\uFEFF/, "");
+  return (await readFile(filePath, "utf8"))
+    .replace(/^\uFEFF/, "")
+    .replace(/\r\n/g, "\n");
 }
 
 async function readJson(filePath) {

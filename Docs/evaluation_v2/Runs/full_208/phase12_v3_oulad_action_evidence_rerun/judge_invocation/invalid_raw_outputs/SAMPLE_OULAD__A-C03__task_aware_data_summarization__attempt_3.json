@@ -1,0 +1,110 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C03__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, correctly identifying the risk levels of both students based on their at-risk scores and flags."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for at-risk scores and flags are correctly reported and compared, with no discrepancies noted."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs, but it could have explicitly stated the missing avg_score evidence as required."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the task of comparing the risk profiles of the two students, providing relevant insights and recommendations."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations for targeted support strategies are actionable and relevant to the identified risks."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain stigmatizing language or unfair recommendations, maintaining a focus on support and intervention."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "SAMPLE_OULAD_STU_100788 is at a higher risk compared to SAMPLE_OULAD_STU_101700.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_100788",
+        "SAMPLE_OULAD_STU_101700"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the at-risk scores provided in the data."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "SAMPLE_OULAD_STU_100788 has an at risk score of 3, categorized as high risk.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_100788"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data showing the at-risk score."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "SAMPLE_OULAD_STU_101700 has an at risk score of 1, categorized as low risk.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_101700"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is also supported by the data showing the at-risk score."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "If avg_score is null, state that score evidence is missing rather than guessing.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "unsupported",
+      "impact_type": "local_detail",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation does not mention the missing avg_score evidence, which is a requirement."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing core output",
+      "claim_ids": [
+        "C04"
+      ],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 6.5,
+      "rationale": "The explanation fails to address the missing avg_score evidence, which is a core requirement.",
+      "evidence_refs": []
+    }
+  ],
+  "holistic_rationale": "The explanation effectively compares the risk profiles of the two students, providing clear insights and actionable recommendations. However, it lacks a mention of the missing avg_score evidence, which is a significant oversight. Overall, the explanation is strong in terms of faithfulness, numerical correctness, and task relevance, but the completeness is impacted by this omission.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 2. All relevant data was available and used to support the claims made in the explanation.",
+  "invalid_reason": null
+}

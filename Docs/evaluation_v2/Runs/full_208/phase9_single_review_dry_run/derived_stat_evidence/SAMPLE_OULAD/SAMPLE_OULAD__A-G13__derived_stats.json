@@ -1,0 +1,34 @@
+{
+  "artifact_type": "llm_judge_v3_deterministic_derived_stat_evidence_v1",
+  "generated_at": "2026-06-20T03:05:28.948Z",
+  "dry_run_mode": "single_review",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G13",
+  "task_name": "Lifestyle risk across cohort",
+  "ai_summary_type": "correlation_evidence",
+  "stat_family": "correlation",
+  "coefficient_method": "pearson",
+  "x_column": "lifestyle_risk_score",
+  "y_column": "avg_score",
+  "entity_column": "student_id",
+  "source_full_query_artifact": {
+    "path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G13.json",
+    "sha256": "b66b5222b546780af7339a1eff0b7bd49dda13b00f56ec004a08dc174ee693a6",
+    "evidence_id": "SAMPLE_OULAD__A-G13"
+  },
+  "source_judge_input_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_inputs/SAMPLE_OULAD__A-G13__baseline_first_20_rows.json",
+  "derived_stats": [
+    {
+      "dataset_label": "lifestyle_risk_scatter",
+      "status": "skipped",
+      "reason": "no_valid_numeric_pairs",
+      "row_count": 0,
+      "valid_pair_count": 0,
+      "invalid_x_count": 0,
+      "invalid_y_count": 0,
+      "warnings": []
+    }
+  ],
+  "judge_usage_note": "Use this artifact as deterministic support for correlation coefficient claims. It proves derived Pearson r from all valid x/y pairs in the full query result; it does not prove causality or statistical significance.",
+  "artifact_sha256": "c8e96988074791c4e5e7f7fab7a83860cf2a364a9dde7d16135062c84bebc547"
+}

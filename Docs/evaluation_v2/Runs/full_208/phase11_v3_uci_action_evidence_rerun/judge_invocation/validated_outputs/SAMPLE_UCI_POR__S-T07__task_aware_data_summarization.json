@@ -1,0 +1,71 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T07__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, discussing the correlation between absences and scores without overstating the relationship."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation are correct, including the absence rate and scores from assessments."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation meets the core requirements by stating the proportion of missed sessions and describing the association between absence rate and average score, but could provide more detail on the implications."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task, addressing the impact of absences on grades specifically for the target audience of students."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, encouraging the student to focus on attendance to improve scores."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and frames the relationship between absences and performance appropriately."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The absence rate is 0.125.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "absence_data"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing an absence rate of 0.125."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "There is a correlation between absence rate and average score.",
+      "claim_type": "correlation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_series"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation discusses the observed trend in scores relative to absences, supported by the data."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task requirements, providing a clear summary of the impact of absences on academic performance. It accurately reflects the data and offers actionable recommendations, though there is room for improvement in clarity and completeness.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 4. All relevant data was included in the explanation, and the retrieval log was not applicable."
+}

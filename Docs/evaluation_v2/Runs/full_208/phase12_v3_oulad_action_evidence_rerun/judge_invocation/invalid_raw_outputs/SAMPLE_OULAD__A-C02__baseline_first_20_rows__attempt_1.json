@@ -1,0 +1,94 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the engagement metrics provided in the evidence, maintaining a clear connection to the data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for engagement scores, active days, and total clicks are correctly reported and compared."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs, but could provide more detail on the implications of the engagement gap."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the task of comparing engagement patterns between the two students."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or applicable based on the evidence provided."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is mostly clear, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation avoids stigmatizing language and focuses on constructive recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Student SAMPLE_OULAD_STU_100788 has an engagement score of 0.202, while SAMPLE_OULAD_STU_101700 has an engagement score of 0.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_score"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The engagement scores are directly supported by the evidence."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "SAMPLE_OULAD_STU_100788 has 98 active days, while SAMPLE_OULAD_STU_101700 has 0 active days.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "active_days"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The active days are accurately reported and supported by the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "SAMPLE_OULAD_STU_100788 recorded 1261 total clicks, while SAMPLE_OULAD_STU_101700 recorded 0 clicks.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "total_clicks"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The total clicks are correctly stated and supported by the evidence."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The stark contrast in engagement metrics suggests that targeted interventions are necessary for the less engaged student.",
+      "claim_type": "interpretation",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the need for interventions is a reasonable interpretation, it lacks direct evidence from the data."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively compares the engagement metrics of the two students, providing clear insights and recommendations. It is well-supported by the evidence, though it could benefit from a more detailed discussion of the implications of the engagement gap.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 6. All relevant metrics were included in the explanation, and the retrieval log was not applicable."
+}

@@ -1,0 +1,112 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__S-B03__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the engagement data provided, maintaining fidelity to the metrics and comparisons outlined in the task context."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "All numerical values presented in the explanation are correct and align with the retrieved data, including engagement counts and averages."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core requirement of characterizing the student's effort level but could include more detail on implications or recommendations."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the actionable question regarding the student's engagement compared to classmates, using relevant metrics."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or required based on the deterministic action evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair implications, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The total engagement count of 1261 exceeds the class average of 1118.08.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "total_engagement_count",
+        "class_avg_total_engagement_count"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the retrieved data, which confirms the total engagement count and class average."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "With 98 active days, the student is significantly more active than the class average of 52.55 days.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "active_days",
+        "class_avg_active_days"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the retrieved data, confirming the active days and class average."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The engagement score of 0.2024 is higher than the class average of 0.1177.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_score",
+        "class_avg_engagement_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the retrieved data, confirming the engagement score and class average."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The student has shown a commendable level of engagement this semester.",
+      "claim_type": "qualitative",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the statement reflects the data, it lacks specific metrics to fully substantiate the commendation."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.33,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.33,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

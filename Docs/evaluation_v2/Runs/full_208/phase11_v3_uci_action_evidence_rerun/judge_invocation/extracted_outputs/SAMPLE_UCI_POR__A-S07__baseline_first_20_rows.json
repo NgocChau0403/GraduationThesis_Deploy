@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-S07__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the student's background factors based on the provided evidence, including family support and social balance."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Numerical values such as the social balance score and absence count are correctly reported and match the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation notes the presence of disadvantage dimensions and existing support, but could provide more detail on the implications of these factors."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of identifying background factors affecting the student's academic performance."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were required as per the task context."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation avoids stigmatizing language and frames the context appropriately for an academic audience."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student has limited family support.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_context"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The family support flag is set to false, indicating a lack of familial assistance."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student has a low social balance score of 0.03.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_context"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The social balance score is accurately reported from the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The student has recorded 4 absences.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_context"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The absence count is correctly stated and matches the evidence."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student's background factors relevant to academic support, accurately reflecting the evidence provided. While it could benefit from additional detail in some areas, it remains clear and relevant to the task.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with full access to the relevant dataset. The explanation utilized the complete row of data available, ensuring accurate representation of the student's background context.",
+  "invalid_reason": null
+}

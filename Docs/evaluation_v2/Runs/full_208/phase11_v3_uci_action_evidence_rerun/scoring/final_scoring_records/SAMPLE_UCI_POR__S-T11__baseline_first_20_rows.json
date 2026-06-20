@@ -1,0 +1,25 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T11__baseline_first_20_rows",
+  "scoring_status": "invalid",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": null,
+  "claim_checks": [],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": null,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": null,
+  "verdict": "invalid",
+  "invalid_reason": "No data available to analyze the relationship between Registration Lead Time and Average Score."
+}

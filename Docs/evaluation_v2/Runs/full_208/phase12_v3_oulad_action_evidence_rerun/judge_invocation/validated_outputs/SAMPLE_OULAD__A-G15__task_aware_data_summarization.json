@@ -1,0 +1,82 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G15__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data and insights derived from the at-risk scores and flags, maintaining a strong connection to the evidence provided."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation correctly identifies the at-risk scores of 5.0 for top students and 4.0 for bottom students, but the comparison could be clearer regarding the implications of these scores."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "While the explanation covers the core outputs, it lacks specific details on the actions per priority group, which is a requirement."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of ranking students by intervention priority, addressing the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and focus on critical areas such as engagement and punctuality, which are relevant to improving student outcomes."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could benefit from more concise language and better organization to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and presents the information in a way that is sensitive to the needs of at-risk students."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The top-ranked students exhibit a high at-risk score of 5.0.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "intervention_priority_list"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the retrieved data showing that the top students have an at-risk score of 5.0."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The bottom-ranked students have an at-risk score of 4.0.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "intervention_priority_list"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is also supported by the data, which indicates that the bottom-ranked students have an at-risk score of 4.0."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Immediate intervention strategies are necessary to address the high-risk factors affecting student performance.",
+      "claim_type": "action",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The claim aligns with the educational implications stated in the explanation, emphasizing the need for immediate action."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of ranking students by their intervention priority, providing relevant insights and actionable recommendations. While it meets most requirements, it could improve in completeness by detailing actions per priority group more explicitly. Overall, the explanation is well-grounded in the evidence provided.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 50 rows from the intervention_priority_list dataset. The retrieval log confirmed that all necessary data was available and correctly referenced in the explanation.",
+  "invalid_reason": null
+}

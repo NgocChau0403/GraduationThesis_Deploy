@@ -1,0 +1,111 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__S-T08__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the correlation between submission delays and scores without making unsupported causal claims."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation correctly references specific scores and delays, but the comparison of scores could be clearer in terms of the exact relationship."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation addresses both core outputs required, stating the average submission delay and describing the relationship between delay and score."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task, directly addressing the student's question about the impact of late submissions on scores."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, encouraging timely submissions to maintain scores."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sentences could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair implications, maintaining a supportive tone."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Your submission patterns show that while you have been submitting assessments late, you are still achieving passing scores.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_lateness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing passing scores despite late submissions."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "There is a noticeable trend where your scores tend to decrease as the submission delay increases.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_lateness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence shows a correlation between increased submission delays and lower scores."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "As your submission delay increases, your scores show a slight decline.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "submission_lateness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the trend is noted, the explanation could provide more specific statistical evidence to fully support this claim."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Submitting late may not directly prevent you from passing, but it can impact your overall performance.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_lateness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the overall trend observed in the data."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.95,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.95,
+  "verdict": "good",
+  "invalid_reason": null
+}

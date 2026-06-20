@@ -1,0 +1,97 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately describes the correlation direction and strength based on the evidence provided, but it slightly overstates the strength of the correlation as 'weak positive' instead of 'moderate' as indicated by the derived statistics."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation mentions a weak positive correlation, but the derived Pearson coefficient of 0.41 indicates a moderate correlation. This misrepresentation affects the overall accuracy of the numerical claims."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation covers the required core outputs, including the correlation direction and the identification of outliers, fulfilling the task requirements."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is relevant to the task of analyzing the engagement-performance relationship and addresses the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, particularly the suggestion to implement targeted support for students with high engagement but low average scores."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from more precise language regarding the correlation strength to avoid confusion."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language or harmful recommendations, but it does highlight the need for targeted interventions, which is a responsible approach."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a weak positive correlation between Engagement Score and Average Score.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [
+        "A-G02__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The derived Pearson coefficient indicates a moderate correlation (0.41), which contradicts the claim of a weak correlation."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Several students with high engagement scores have low average scores.",
+      "claim_type": "qualitative",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the explanation's mention of outliers, which aligns with the evidence of students exhibiting high engagement but low performance."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Engagement strategies should be tailored to ensure they effectively support learning outcomes.",
+      "claim_type": "recommendation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and aligns with the identified need for targeted interventions."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "unsupported numerical claim",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "major",
+      "primary_metric": "numerical_correctness",
+      "secondary_metrics": [],
+      "cap_candidate": 5,
+      "rationale": "The claim regarding the correlation strength is incorrect, as the derived statistic indicates a moderate correlation rather than a weak one.",
+      "evidence_refs": [
+        "A-G02__pearson_r__1"
+      ]
+    }
+  ],
+  "holistic_rationale": "The explanation successfully addresses the core task of analyzing the engagement-performance relationship, providing insights into correlation and identifying outliers. However, it misrepresents the strength of the correlation, which is a significant defect affecting the overall accuracy. The recommendations are actionable and relevant, contributing positively to the evaluation.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 1998 rows from the engagement_performance_scatter dataset. The retrieval log confirmed complete coverage of the dataset, and the derived statistics were used to evaluate the correlation claims. The retrieval log path was utilized to verify the completeness of the evidence accessed.",
+  "invalid_reason": null
+}

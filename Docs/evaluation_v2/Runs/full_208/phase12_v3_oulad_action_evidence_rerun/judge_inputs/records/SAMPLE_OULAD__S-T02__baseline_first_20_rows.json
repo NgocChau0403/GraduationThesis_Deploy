@@ -1,0 +1,208 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_OULAD__S-T02__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "S-T02",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v3_action_evidence_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_action_evidence_calibrated",
+  "task_context": {
+    "task_name": "Competency gap analysis",
+    "scope": "1 student",
+    "actionable_question": "Which skill area should I prioritise for improvement?",
+    "target_audience": "student",
+    "ai_summary_type": "ranking",
+    "ai_prompt_hint": "Highlight which competency tags have lowest avg scores. Suggest focus areas.",
+    "query_labels": [
+      "competency_scores"
+    ],
+    "explanation_strategy": "distribution"
+  },
+  "schema_context": {
+    "source_tables": [
+      "assessment_result",
+      "assessment"
+    ],
+    "key_db_fields": [
+      "competency_tag",
+      "score_normalized",
+      "pass_flag",
+      "assessment_type"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "competency_tag",
+        "avg_score"
+      ],
+      "optional_columns": [
+        "competency_source",
+        "assessment_type",
+        "pass_rate",
+        "assessment_count"
+      ]
+    },
+    "query_labels": [
+      "competency_scores"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The distribution of scores shows that most students are performing well, with average scores ranging from 83 to 100. However, there is a noticeable gap in the lower scores, particularly in the CMA 8 and CMA 3 areas, which could benefit from focused improvement efforts.\n\nInsights: Lower Average Scores in CMA Areas: CMA 8 and CMA 3 have the lowest average scores of 83 and 87, respectively, indicating these areas may need more attention for improvement.\n\nEducational implications: Focusing on CMA 8 and CMA 3 could enhance overall competency and confidence.\n\nRecommendations: high - Implement targeted practice sessions for CMA 8 and CMA 3. - This will help address the lower average scores and improve student understanding in these areas.",
+    "structured_payload": {
+      "task_id": "S-T02",
+      "execution_id": "exec_1781847881158_4c69c270",
+      "explanation": {
+        "summary": "The distribution of scores shows that most students are performing well, with average scores ranging from 83 to 100. However, there is a noticeable gap in the lower scores, particularly in the CMA 8 and CMA 3 areas, which could benefit from focused improvement efforts.",
+        "insights": [
+          {
+            "title": "Lower Average Scores in CMA Areas",
+            "description": "CMA 8 and CMA 3 have the lowest average scores of 83 and 87, respectively, indicating these areas may need more attention for improvement.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "avg_score",
+                "value": 83,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "CMA 8"
+              },
+              {
+                "metric": "avg_score",
+                "value": 87,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "CMA 3"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Focusing on CMA 8 and CMA 3 could enhance overall competency and confidence."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted practice sessions for CMA 8 and CMA 3.",
+            "rationale": "This will help address the lower average scores and improve student understanding in these areas."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset is complete and provides clear average scores for analysis.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "distribution",
+      "explanation_type": "distribution",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 6381,
+        "token_usage": {
+          "prompt_tokens": 850,
+          "completion_tokens": 351,
+          "total_tokens": 1201
+        },
+        "strategy": "distribution",
+        "granularity": "per_assessment",
+        "cost_usd": 0.000338
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__S-T02__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "18aa502be0e32249b217b6d0acc109a054190fe6c002ea63f7f781bd8e6378a8",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 850,
+        "completion_tokens": 351,
+        "total_tokens": 1201
+      },
+      "latency_ms": 6384,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 5,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "competency_scores",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T02.json",
+        "artifact_sha256": "a1848a3f995f7d5beb2bcfa2fc5eeeb8458cd9832da3ae69a4cc584d044ae3e8",
+        "row_count": 5,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 5,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "competency_scores": 5
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "S-T02-CORE-01",
+        "description": "Identify the competency tags with the lowest average scores."
+      }
+    ],
+    "required_supporting_outputs": [
+      {
+        "requirement_id": "S-T02-SUPPORT-01",
+        "description": "Suggest focus areas grounded in the identified competency gaps."
+      }
+    ],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  },
+  "derived_stat_evidence": [],
+  "action_evidence": {
+    "applicable": false,
+    "source_type": "not_applicable",
+    "rule_set_id": null,
+    "rule_version": null,
+    "evaluation_status": "not_applicable",
+    "supported_action_count": 0,
+    "supported_actions": [],
+    "rule_evaluations": [],
+    "conflict_evaluations": []
+  }
+}

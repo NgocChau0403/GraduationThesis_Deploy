@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G08__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, discussing disparities in average scores and engagement levels among demographic groups without making unsupported causal claims."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented for average scores and engagement scores are correct and align with the data retrieved from the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core requirement of comparing mean average scores and engagement scores with the cohort average, but could provide more detail on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing demographic performance and engagement, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and targeted towards the identified low-performing groups, suggesting specific interventions."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation appropriately frames the analysis as equity-sensitive, avoiding stigmatizing language and ensuring fairness in discussing demographic groups."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The 'Unknown' group demonstrates the highest average score of 81.21, significantly above the cohort average.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "demographic_performance"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average score of the 'Unknown' group is correctly stated and supported by the data."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The '10-20%' group has the lowest average score of 62.96, which is 7.48 points below the cohort average.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "demographic_performance"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average score of the '10-20%' group is accurately reported and supported by the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Engagement scores are notably lower in groups with lower average scores, particularly in the '10-20%' group with an engagement score of 0.1312.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "demographic_performance"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The engagement score for the '10-20%' group is correctly stated and aligns with the data."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing demographic performance and engagement, providing accurate numerical comparisons and actionable recommendations. The clarity and relevance of the content are strong, with minor areas for improvement in completeness and conciseness.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 11. All rows were included in the explanation, and the retrieval log was not applicable. The explanation utilized the complete dataset for demographic performance."
+}

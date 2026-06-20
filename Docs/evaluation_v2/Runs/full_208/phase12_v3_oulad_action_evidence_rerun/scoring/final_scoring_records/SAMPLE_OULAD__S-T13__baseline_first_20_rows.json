@@ -1,0 +1,99 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__S-T13__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the risk signals derived from the data, particularly the declining performance trend and low engagement score."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as the performance trend of -0.71875 and engagement score of 0.2024, are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation synthesizes the core risk signals into a coherent summary but lacks specific actionable recommendations."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of generating an action plan, addressing the student's risk factors directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "While the explanation identifies risks, it does not provide specific actions or recommendations, which limits its actionability."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sentences could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You are currently identified as at high risk due to a combination of low engagement and a declining performance trend.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_trend",
+        "engagement_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence indicating a high risk due to low engagement and a negative performance trend."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Your performance trend has decreased, suggesting that your scores may be slipping over time.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_trend"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The performance trend of -0.71875 supports the claim of declining scores."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Your engagement score is relatively low, which may affect your learning experience and outcomes.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The engagement score of 0.2024 is indeed low, supporting the claim about its potential impact on learning outcomes."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.1,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.1,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

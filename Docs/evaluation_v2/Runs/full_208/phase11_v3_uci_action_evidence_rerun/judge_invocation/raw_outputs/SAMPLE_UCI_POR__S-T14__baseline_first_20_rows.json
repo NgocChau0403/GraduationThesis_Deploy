@@ -1,0 +1,71 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T14__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the evidence of a positive correlation between social balance and academic performance, but it could clarify that the correlation is negligible."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation mentions a positive correlation but does not specify the exact Pearson correlation coefficient, which is 0.014, indicating a negligible relationship."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation covers the core outputs required, including the comparison of the student against the cohort and the implications of the correlation."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of assessing social balance against academic performance for the target audience of students."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendations provided are actionable, suggesting engagement in social activities that promote collaboration, but could be more specific."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear but could benefit from more precise language regarding the correlation strength and implications."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There appears to be a positive correlation between Social Balance Score and Average Score.",
+      "claim_type": "correlation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "S-T14__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim is supported by the Pearson correlation coefficient of 0.014, indicating a positive correlation."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students with a more balanced social life tend to perform better academically.",
+      "claim_type": "interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim suggests a relationship, the correlation is negligible, which weakens the support for this interpretation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of correlating social balance with academic performance, providing relevant insights and recommendations. However, it lacks specificity regarding the strength of the correlation, which affects the overall clarity and numerical correctness. The scores reflect a generally strong performance with some areas for improvement.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 649 rows of data. The retrieval log confirmed that all relevant data was available and readable. The Pearson correlation evidence was used to support the claims made in the explanation.",
+  "invalid_reason": null
+}

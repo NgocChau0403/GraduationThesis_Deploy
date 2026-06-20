@@ -1,0 +1,82 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G10__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, particularly in describing the distribution of students across consistency levels and the implications of low consistency."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as student counts and percentages, are consistent with the data retrieved from the query."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the distribution of students and recommendations, but could provide more detail on the implications of the average active weeks."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of analyzing student consistency and provides relevant insights and recommendations for the target audience."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the low consistency group, suggesting structured study schedules to improve habits."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation acknowledges potential external factors affecting study patterns, aligning with the safety and fairness requirements."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The low consistency group comprises 979 students, representing 39.19% of the cohort.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "consistency_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data retrieved, which shows the exact number and percentage of students in the low consistency group."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students in the low consistency category have an average of 21.8 active weeks.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "consistency_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average active weeks for the low consistency group is accurately reflected in the explanation and matches the retrieved data."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Implement structured study schedules for low consistency students.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and aligns with the identified issues in student study habits."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing student consistency, providing a clear distribution of students and actionable recommendations. The claims made are well-supported by the evidence, with only minor clarity issues noted.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 3. All relevant data was included in the explanation, and the retrieval log was not applicable as the full dataset was available.",
+  "invalid_reason": null
+}

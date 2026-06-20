@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T06__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the engagement data and provides a reasonable interpretation of the fluctuations in study patterns."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The numerical claims regarding weekly clicks are mostly accurate, but the explanation could have provided more context on the average engagement levels."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs but lacks a detailed recommendation for a consistent study routine, which is a required supporting output."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of assessing study consistency and provides insights that align with the actionable question."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendation to establish a consistent study schedule is actionable, but it could be more specific in terms of how to implement it."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could benefit from more concise language."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Your engagement with the course shows some fluctuations, indicating that you may not be studying steadily throughout the weeks.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "weekly_clicks"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the observed data showing fluctuations in weekly clicks."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "In week 2, your weekly clicks dropped to 4, which is a significant decrease compared to the previous week (94 clicks).",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "weekly_clicks"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the retrieved data showing the drop in clicks."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Establish a consistent weekly study schedule.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "local_detail",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the recommendation is actionable, it lacks specific details on how to implement a consistent study schedule."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of assessing study consistency, providing relevant insights and actionable recommendations. However, it could improve in completeness by offering more specific guidance on establishing a study routine.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 32 rows of consistency data. The retrieval log confirmed that all relevant data was available and readable, supporting the claims made in the explanation.",
+  "invalid_reason": null
+}

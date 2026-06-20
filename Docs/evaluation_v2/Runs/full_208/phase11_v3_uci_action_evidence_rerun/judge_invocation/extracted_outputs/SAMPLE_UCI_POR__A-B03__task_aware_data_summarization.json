@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-B03__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the data provided, indicating that 100% of students are categorized as 'very low' effort, which is supported by the evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "All numerical claims, including the student count of 649 and the average engagement score of 0, are correct and directly supported by the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation covers the required core outputs, describing the proportion of low/medium/high effort students and flagging the low tail, but could provide more detail on the implications of the data."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of assessing engagement distribution and addresses the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actions were triggered or supported based on the deterministic action evidence, which is marked as not applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from improved structure and conciseness to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "100% of students fall within the 'very low' study effort level.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data showing that all 649 students are categorized as 'very low'."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The average engagement score is 0.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average engagement score of 0 is confirmed by the dataset."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The entire cohort is disengaged, necessitating immediate intervention strategies.",
+      "claim_type": "interpretation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The interpretation of complete disengagement is valid based on the data showing no engagement in other categories."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the engagement distribution, accurately reflecting the data and addressing the task requirements. While it is mostly clear, there is room for improvement in structure. The absence of actionable recommendations is justified by the deterministic evidence indicating no applicable actions.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with all 4 rows from the dataset being utilized. The explanation was based on the complete dataset, ensuring accurate representation of the engagement distribution."
+}

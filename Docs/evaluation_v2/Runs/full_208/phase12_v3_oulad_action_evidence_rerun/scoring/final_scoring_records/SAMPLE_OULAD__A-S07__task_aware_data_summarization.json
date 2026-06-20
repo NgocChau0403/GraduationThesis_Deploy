@@ -1,0 +1,98 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-S07__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the absence of data in the dataset, which is a key point for the audience to understand the limitations of the analysis."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "There are no numerical claims made due to the lack of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation notes the absence of data and suggests a recommendation, but it could have elaborated more on the implications of this absence."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is relevant to the task of advising on student support, directly addressing the actionable question posed."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendation to collect comprehensive background data is actionable and relevant to the audience's needs."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some parts could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and frames the context appropriately for an academic audience."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The dataset on student background context is currently empty.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_context"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation correctly states the dataset's status based on the evidence provided."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Without data on student backgrounds, it is challenging to identify specific support needs.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_context"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the explanation's context regarding the implications of missing data."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Collect comprehensive background data from students.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_context"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and relevant to the task, supported by the context of the explanation."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.06,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.06,
+  "verdict": "good",
+  "invalid_reason": null
+}

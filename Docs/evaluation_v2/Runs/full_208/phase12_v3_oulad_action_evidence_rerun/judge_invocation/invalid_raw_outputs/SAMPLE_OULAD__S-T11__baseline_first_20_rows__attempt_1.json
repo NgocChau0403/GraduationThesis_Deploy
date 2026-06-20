@@ -1,0 +1,85 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T11__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the evidence of a negative correlation between registration lead time and average score, but it could clarify that the correlation is negligible."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation correctly identifies the correlation direction and provides numerical context, but it does not explicitly mention the negligible strength of the correlation."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core requirement but lacks depth in discussing the implications of the correlation and does not fully address the educational implications."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is relevant to the task of assessing the correlation between enrollment timing and performance, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendation to encourage early registration is actionable, but it could be strengthened with more specific strategies or evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear but could benefit from improved structure and clarity in presenting the correlation findings."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": null,
+      "rationale": "The task does not involve safety or fairness considerations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a negative correlation between Registration Lead Time and Average Score.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "impact_type": null,
+      "evidence_refs": [
+        "S-T11__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim is supported by the derived statistic showing a negative correlation, although the strength is negligible."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students who register later tend to have lower average scores.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "impact_type": null,
+      "evidence_refs": [
+        "S-T11__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the evidence indicating that as registration lead time increases, average scores decrease."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Encouraging early registration could help students achieve better academic outcomes.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the recommendation is logical, it lacks direct evidence from the data to support the claim that early registration leads to better outcomes."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation successfully addresses the core task of explaining the correlation between registration timing and academic performance. It provides relevant insights and actionable recommendations, although it could improve in clarity and completeness. The scoring reflects a generally strong performance with some areas for enhancement.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 1988 rows from the registration_data dataset. The retrieval log confirmed that all relevant data was available and used in the explanation. The derived statistic indicating a negligible correlation was appropriately referenced in the claims.",
+  "invalid_reason": null
+}

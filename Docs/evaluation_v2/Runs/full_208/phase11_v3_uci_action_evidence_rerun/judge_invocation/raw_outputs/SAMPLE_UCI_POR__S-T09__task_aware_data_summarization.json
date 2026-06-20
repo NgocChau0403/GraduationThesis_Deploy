@@ -1,0 +1,71 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T09__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the evidence of a weak negative correlation between lifestyle risk and average scores, but it could clarify the limitations of the correlation."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The correlation coefficient of -0.1041 is correctly reported, but the explanation could better contextualize the significance of this value."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation addresses the core outputs but lacks depth in discussing the implications of the correlation and does not mention the sample size's impact on the correlation's reliability."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task, addressing the student's lifestyle habits in relation to academic performance."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendation to evaluate and adjust lifestyle habits is actionable, but it could provide more specific guidance on what changes to consider."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear but could benefit from improved structure and clarity in conveying the correlation's implications."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language or harmful recommendations, maintaining a neutral tone."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a weak negative correlation between Lifestyle Risk Score and Average Score.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "S-T09__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim is supported by the derived statistic showing a Pearson correlation coefficient of -0.1041."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Improving lifestyle habits may help enhance academic performance.",
+      "claim_type": "interpretative",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim suggests a potential benefit, the weak correlation indicates that the relationship is not strong enough to definitively support this conclusion."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of correlating lifestyle risk with academic performance, providing a summary and insights based on the evidence. However, it lacks depth in discussing the implications of the correlation and could improve clarity and specificity in recommendations.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 649 rows from the lifestyle risk scatter dataset. The retrieval log confirmed that all relevant data was available and correctly referenced in the explanation.",
+  "invalid_reason": null
+}

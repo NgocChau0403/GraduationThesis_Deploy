@@ -1,0 +1,95 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T06__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation accurately reflects the lack of data available for analysis, but it could have been clearer about the implications of this absence."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical data was available to assess."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation provides a summary and recommendations, but it lacks a clear characterization of the study pattern due to the absence of data."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the task of analyzing study patterns, but the lack of data limits its effectiveness."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The recommendation to establish a weekly study schedule is actionable, but it is based on insufficient evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear, but the structure could be improved for better understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is no data available to analyze your study patterns.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_access_mode: direct_embedding",
+        "full_result_row_count: 0"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation correctly states the absence of data, which is supported by the evidence."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Regular engagement is key to mastering course material.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is a widely accepted educational principle and is relevant to the context."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Establish a weekly study schedule.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and aligns with the goal of improving study habits."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 6.13,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 6.13,
+  "verdict": "acceptable",
+  "invalid_reason": null
+}

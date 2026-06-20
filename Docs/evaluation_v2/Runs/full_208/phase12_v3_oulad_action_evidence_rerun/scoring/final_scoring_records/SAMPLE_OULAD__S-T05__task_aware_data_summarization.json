@@ -1,0 +1,99 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__S-T05__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the engagement data and trends observed, maintaining a clear connection to the evidence provided."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Most numerical claims are correct, but the explanation could have provided more precise figures for the weeks with low engagement."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs but lacks some details on the implications of the engagement drops."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task, addressing the student's engagement trends and providing actionable insights."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are practical and relevant, encouraging the student to take specific actions to improve engagement."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation is sensitive and fair, avoiding stigmatizing language and providing constructive feedback."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Your engagement has shown a significant decline over the weeks.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "weekly_engagement"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the observed data showing a decline in weekly clicks."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "You experienced a sharp drop in weekly clicks from 98 in week 1 to just 4 in week 2.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "weekly_engagement"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data showing the specific drop in engagement."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Several weeks recorded fewer than 10 clicks.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "weekly_engagement"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is generally true, the explanation could have specified which weeks had fewer than 10 clicks for clarity."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.65,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.65,
+  "verdict": "good",
+  "invalid_reason": null
+}

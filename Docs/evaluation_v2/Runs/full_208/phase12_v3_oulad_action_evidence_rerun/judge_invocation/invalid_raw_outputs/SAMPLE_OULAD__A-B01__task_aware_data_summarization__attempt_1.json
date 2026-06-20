@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-B01__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, discussing the distribution of scores and the implications of students with no scores."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Most numerical claims are correct, but the total number of students mentioned (1,500) does not match the sum of students in the score buckets (1,067 + 500 + 1,500)."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs but lacks a clear flagging of the proportion below the passing threshold, which is a requirement."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of summarizing overall performance distribution and addresses the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the issues identified in the performance distribution."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sentences could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A significant portion of students are clustered in the higher score buckets.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing a majority of students in higher score buckets."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "There are 500 students (20% of the class) who have not received any scores.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data indicating 500 students with no scores."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The high number of students with no scores may require immediate attention.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The educational implications are well-founded based on the data regarding students without scores."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the overall performance distribution, addressing the core requirements and providing actionable insights. While there are minor numerical inaccuracies and completeness issues, the overall quality remains high.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 11. All rows were included in the explanation, and the retrieval log was not applicable. The explanation utilized the complete dataset effectively."
+}

@@ -1,0 +1,72 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T13__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the provided data, indicating the student's average score and engagement score, which are critical for understanding their academic situation."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as the average score of 41.25 and the engagement score of 0, are correct and align with the data provided."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "While the explanation provides insights into the average score and engagement, it lacks specific actionable recommendations, which are required for a complete response."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the task of generating an action plan by highlighting areas of concern, but it does not synthesize the risk signals into prioritized actions as required."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation identifies issues but does not provide concrete actions or steps for the student to take, which limits its effectiveness in guiding the student."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, making it easy for the student to understand their current academic standing."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, maintaining a supportive tone throughout."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The average score is 41.25, which is just above the passing threshold of 40.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "avg_score",
+        "pass_threshold"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the provided data, confirming the average score and passing threshold."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The engagement score is currently at 0, indicating low participation.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The engagement score of 0 is accurately reflected in the explanation, supporting the claim of low participation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation provides a solid overview of the student's academic performance, accurately reflecting the data. However, it falls short in generating specific actionable steps, which is crucial for the task of action plan generation. The clarity and numerical correctness are strong points, but the lack of completeness and actionability detracts from the overall effectiveness.",
+  "evidence_usage_notes": "The evidence access mode is 'direct_embedding', with a full result row count of 1. The explanation utilized the provided data effectively, referencing the average score and engagement score directly from the embedded dataset."
+}

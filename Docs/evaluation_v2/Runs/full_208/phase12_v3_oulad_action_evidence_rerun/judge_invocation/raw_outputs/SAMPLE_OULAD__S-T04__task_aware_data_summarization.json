@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T04__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the risk signals present in the data, maintaining alignment with the evidence provided."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation are consistent with the data, particularly regarding flag values and thresholds."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers all triggered flags and provides detailed insights for each, but could improve by explicitly stating the absence of non-triggered flags."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of identifying risk signals relevant to the student, aligning well with the actionable question."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the identified risks, offering clear steps for the student to take."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation avoids stigmatizing language and presents the information in a supportive manner, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You have a history of previous attempts, which may indicate that you are facing some difficulties.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "flag_repeated"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence indicating the flag for repeated attempts is triggered."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Your submission punctuality is currently below the expected threshold.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "flag_low_punctuality"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing the low punctuality flag is triggered."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Your scores are trending downward across assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "flag_neg_trend"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence indicating the negative trend flag is triggered."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies and explains the risk signals relevant to the student, providing actionable recommendations based on the evidence. The clarity and completeness are generally strong, though there is room for improvement in conciseness. Overall, the explanation meets the task requirements well.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 5. All rows were utilized in the explanation, and the retrieval log was not applicable. The explanation was grounded in the provided risk flags data."
+}

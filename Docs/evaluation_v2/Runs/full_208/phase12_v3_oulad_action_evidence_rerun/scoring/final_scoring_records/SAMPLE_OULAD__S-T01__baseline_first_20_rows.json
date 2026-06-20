@@ -1,0 +1,110 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__S-T01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the observed data trends and provides a coherent summary of performance, though it could be more precise in detailing specific fluctuations."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation are consistent with the data, including the highest and lowest scores, as well as the performance trend."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation identifies the overall trend and notable fluctuations but lacks a direct mention of assessments below pass or target thresholds, which is a core requirement."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing score trends and addresses the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, focusing on reevaluating study methods based on performance dips."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from improved structure and conciseness to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Your performance shows a generally stable trend with some fluctuations across assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__S-T01__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the observed data showing consistent high scores with minor fluctuations."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "You have achieved high scores, with the highest score of 100 in Assessment 1 and the lowest score of 83 in Assessment 8.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__S-T01__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is directly supported by the data, which lists the highest and lowest scores accurately."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "You experienced a drop from 90 in Assessment 5 to 83 in Assessment 8.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__S-T01__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the scores for Assessments 5 and 8."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The recent drop indicates that consistent study habits are crucial for sustained performance.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__S-T01__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the overall trend analysis and the recommendation to reevaluate study methods."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.2,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.2,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

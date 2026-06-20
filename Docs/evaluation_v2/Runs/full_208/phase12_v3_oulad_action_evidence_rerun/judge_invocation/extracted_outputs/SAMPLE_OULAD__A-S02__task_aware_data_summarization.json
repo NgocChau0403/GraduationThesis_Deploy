@@ -1,0 +1,96 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-S02__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, indicating a stable performance trend with slight fluctuations, which aligns with the evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The normalized scores and performance trend values are correctly reported, with the trend value of -0.71875 accurately reflecting the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation identifies the student's performance trend and references the performance trend slope, but could provide more detail on the implications of the scores."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of assessing whether the student is improving or declining, providing relevant insights."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were triggered based on the deterministic action evidence, which is marked as not applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sentences could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student's performance shows a generally stable trend with slight fluctuations across assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S02.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing consistent scores across assessments."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The normalized scores range from a high of 100 in Assessment 1 to a low of 83 in Assessment 8.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S02.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is directly supported by the provided score data."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The performance trend across assessments is stable, with a consistent performance_trend value of -0.71875.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S02.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The performance trend value is accurately reported and supported by the data."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The slight decline in scores suggests a need for continued engagement and support.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S02.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is reasonable, the evidence does not explicitly indicate a need for engagement, making it partially supported."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student's performance trend, accurately reflecting the data provided. It identifies key aspects of the student's performance while maintaining clarity and relevance to the task. However, it could enhance completeness by providing more detailed implications of the scores.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 5. All rows were included in the explanation, and the retrieval log was not applicable."
+}

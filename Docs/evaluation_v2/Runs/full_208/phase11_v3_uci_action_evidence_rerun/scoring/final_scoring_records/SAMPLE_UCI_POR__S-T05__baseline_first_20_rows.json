@@ -1,0 +1,94 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T05__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the absence of engagement data, which is consistent with the evidence provided. However, it could have better contextualized the implications of this lack of data."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical claims were made in the explanation due to the absence of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation addresses the core outputs by summarizing the engagement pattern and implications, but it lacks specific flags for weeks with drops since no data is available."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is relevant to the task of identifying engagement trends, but it could have more explicitly linked the lack of data to the actionable question posed."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendation to track engagement activities is actionable and relevant, but it could have included more specific steps or tools to assist the student."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sentences could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain stigmatizing language or unfair recommendations, maintaining a supportive tone throughout."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is no engagement data available for your weekly activities.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence indicating zero engagement rows."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Regular engagement is crucial for understanding course material and succeeding in assessments.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This is a widely accepted educational principle and aligns with the context of the task."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Start tracking your weekly engagement activities.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and relevant to the student's situation."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.25,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.25,
+  "verdict": "good",
+  "invalid_reason": null
+}

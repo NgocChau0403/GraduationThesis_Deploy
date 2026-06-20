@@ -1,0 +1,72 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G05__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the evidence provided, indicating that late submissions are not a systemic problem, which is supported by the data showing a late submission rate of 0%."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "All numerical claims regarding late submission rates and average scores are correct and directly supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation addresses the core outputs required, including the analysis of late submission rates and average scores, but could provide more detail on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation is highly relevant to the task of analyzing submission behavior and directly addresses the actionable question posed."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendations provided are actionable, but could be more specific in terms of the types of interventions suggested."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, maintaining a focus on educational improvement."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Late submissions are not a systemic problem in this class.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_rows_sha256"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing a late submission rate of 0% across all assessments."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The average scores for failing assessments indicate a significant gap in understanding.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_rows_sha256"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average scores of 34.45 for exams and 38.28 for quizzes substantiate the claim of a gap in understanding."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing submission behavior, providing a clear summary of findings and actionable recommendations. The claims made are well-supported by the evidence, and the overall clarity and relevance of the explanation are strong.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 4. All rows were included in the analysis, and the explanation utilized the complete dataset effectively.",
+  "invalid_reason": null
+}

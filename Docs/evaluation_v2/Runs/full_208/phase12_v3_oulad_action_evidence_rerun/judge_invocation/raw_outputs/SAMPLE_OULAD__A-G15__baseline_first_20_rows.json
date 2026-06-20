@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G15__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the at-risk scores and flags for the top-ranked students."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values mentioned, such as the at-risk score of 5 and average scores, are consistent with the retrieved data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including ranking by at-risk score and listing flags, but could provide more detail on actions per priority group."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of ranking students by intervention priority, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the needs of the students identified as at risk."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and focuses on constructive recommendations for student support."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The top-ranked students exhibit consistently low average scores and high at-risk scores.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_69494",
+        "SAMPLE_OULAD_STU_338731"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing the at-risk scores and average scores of the top students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "All top-ranked students have multiple flags triggered.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_69494",
+        "SAMPLE_OULAD_STU_338731"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence confirms that the top students have flags for low scores and engagement."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Immediate intervention strategies are necessary to support students with high at-risk scores.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the overall context of the analysis and the identified needs of the students."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of ranking students by intervention priority, providing relevant insights and actionable recommendations. The claims made are well-supported by the evidence, and the overall clarity and relevance of the explanation are strong.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 50 rows from the intervention priority list. The retrieval log confirmed that all relevant data was available and readable, supporting the claims made in the explanation.",
+  "invalid_reason": null
+}

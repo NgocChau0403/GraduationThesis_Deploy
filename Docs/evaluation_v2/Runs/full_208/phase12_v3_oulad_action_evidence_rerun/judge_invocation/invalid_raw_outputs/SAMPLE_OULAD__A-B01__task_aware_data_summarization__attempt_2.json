@@ -1,0 +1,82 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-B01__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, discussing the distribution of scores and the implications of a significant number of students with no scores."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical claims regarding the number of students in each score bucket and the percentage of students with no scores are correct and well-supported by the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the score spread and the flagging of students below the passing threshold, but could provide more detail on the implications of the data."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of summarizing overall performance distribution and addresses the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, focusing on interventions for students with no scores, which is a critical area for improvement."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language or unfair recommendations, and it appropriately highlights the need for attention to disengagement."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A majority of students, specifically 1,067 out of 1,500, are concentrated in the score buckets from 50-100.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the distribution of students across score buckets."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "There are 500 students (20% of the class) who have not received any scores.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data indicating that 500 students have no scores, which is 20% of the total class."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The high number of students with no scores may require immediate attention to understand barriers to assessment completion.",
+      "claim_type": "interpretation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This interpretation is valid given the data and highlights a critical area for intervention."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the overall performance distribution, accurately reflects the data, and provides actionable insights and recommendations. While it could improve in clarity and completeness, it meets the core requirements of the task.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 11. All rows were included in the explanation, and the retrieval log was not applicable. The explanation utilized the complete dataset to support its claims.",
+  "invalid_reason": null
+}

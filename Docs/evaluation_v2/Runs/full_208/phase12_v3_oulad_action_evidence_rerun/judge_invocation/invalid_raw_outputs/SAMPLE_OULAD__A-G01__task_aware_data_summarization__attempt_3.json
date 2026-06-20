@@ -1,0 +1,82 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G01__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of low engagement scores and the need for outreach, though it could provide more detail on the implications of the engagement scores."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented, such as the engagement score of 0.0018, total clicks of 1, and active days of 1, are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including defining the low engagement threshold and recommending actions, but lacks a detailed list of students below the threshold."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of identifying low-engagement students and recommending actions for outreach."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendation to initiate outreach is actionable and well-supported, although it could specify the method of outreach more clearly."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from improved structure and organization to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation maintains a focus on educational support without stigmatizing language, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A significant number of students exhibit dangerously low engagement levels, with the lowest engagement score recorded at 0.0018.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G01.json"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim is supported by the evidence showing the lowest engagement score of 0.0018."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students in the low engagement group have recorded only 1 total click and 1 active day.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G01.json"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim is supported by the evidence indicating that students have only 1 total click and 1 active day."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Initiate outreach to students with engagement scores below 0.05.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and aligns with the identified need for outreach based on low engagement scores."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies low engagement students and provides actionable recommendations. It is mostly accurate and relevant, with minor issues in completeness and clarity. Overall, it meets the task requirements well.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 1544 rows from the low engagement group dataset. The retrieval log confirmed complete coverage of the required data, ensuring that the explanation was based on comprehensive evidence.",
+  "invalid_reason": null
+}

@@ -1,0 +1,15 @@
+{
+  "run_version": "openai_pointwise_judge_v3_action_evidence_v1",
+  "model": "gpt-4o-mini",
+  "expected_records": 104,
+  "selected_records": 3,
+  "valid_or_existing_records": 3,
+  "failed_records": 0,
+  "elapsed_ms": 33118.896,
+  "new_prompt_tokens": 34735,
+  "new_completion_tokens": 2513,
+  "new_total_tokens": 37248,
+  "concurrency": 1,
+  "full_context_used_for_every_record": true,
+  "log_path": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/openai_judge_run_log.jsonl"
+}

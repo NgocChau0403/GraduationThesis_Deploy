@@ -1,0 +1,70 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T14__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation accurately reflects the lack of data available for analysis, but it could have been clearer about the implications of this absence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation correctly states that there is no data to analyze, but it does not provide any numerical context or alternative insights."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "While the explanation addresses the core outputs, it lacks depth in discussing the implications of the missing data."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is relevant to the task of assessing social balance versus performance, but it could have better connected the recommendations to the specific context of the student."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The recommendations provided are actionable, but they could be more tailored to the specific situation of the student based on the available data."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation is generally clear, but the structure could be improved for better readability and understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, maintaining a neutral tone."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is no data available to analyze the relationship between Social Balance Score and Average Score.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T14.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence indicating zero rows available for analysis."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Maintaining a balance between social life and academic commitments is crucial for overall success.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "local_detail",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is generally accepted, it lacks specific evidence from the dataset to support its relevance in this context."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation addresses the task of analyzing social balance versus performance but is limited by the absence of data. It provides a reasonable summary and actionable recommendations, though it could improve in clarity and depth. The scoring reflects a balance between the strengths of the explanation and the limitations imposed by the lack of data.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 0, indicating no data was available for analysis. The explanation correctly reflects this limitation."
+}

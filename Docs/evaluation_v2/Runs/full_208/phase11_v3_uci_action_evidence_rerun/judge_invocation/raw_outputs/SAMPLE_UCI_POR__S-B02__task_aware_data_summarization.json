@@ -1,0 +1,95 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-B02__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the risk status based on the provided data, including the at-risk score and average score."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as the at-risk score of 1 and average score of 41.25, are correct and consistent with the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation includes the required core output of the risk badge and at-risk score, but it lacks a detailed mention of the engagement score and punctuality rate as supporting outputs."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of assessing risk status for the student, providing relevant insights and recommendations."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were triggered based on the deterministic action evidence, as it was marked not applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sentences could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You are currently showing a low risk of failing with an at-risk score of 1 out of 5.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "1a485de427c24e8c2fb0104a457969ec012bf0939bd3e2ba3be0de413c1deb2f"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing an at-risk score of 1, which corresponds to a low risk label."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Your average score is 41.25, which is above the passing threshold.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "1a485de427c24e8c2fb0104a457969ec012bf0939bd3e2ba3be0de413c1deb2f"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average score of 41.25 is accurately reported and is above the passing threshold of 40."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Your engagement score is currently at 0.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "1a485de427c24e8c2fb0104a457969ec012bf0939bd3e2ba3be0de413c1deb2f"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The engagement score of 0 is correctly stated and reflects the student's current participation level."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Your punctuality rate is at 1.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "1a485de427c24e8c2fb0104a457969ec012bf0939bd3e2ba3be0de413c1deb2f"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The punctuality rate of 1 is accurately reported, indicating consistent attendance."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student's risk status, providing accurate numerical data and relevant insights. While it meets most requirements, it could improve by explicitly mentioning the engagement and punctuality metrics in the context of the recommendations.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 1. The explanation utilized the complete dataset available, ensuring accurate representation of the student's risk status."
+}

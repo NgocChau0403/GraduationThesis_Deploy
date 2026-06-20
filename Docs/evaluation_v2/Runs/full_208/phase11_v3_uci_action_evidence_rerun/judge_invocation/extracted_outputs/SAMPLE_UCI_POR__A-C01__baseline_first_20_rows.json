@@ -1,0 +1,73 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-C01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, discussing the divergence in performance trajectories based on the scores of the two students."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation are correct, with specific scores for each student clearly stated and compared."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs, explaining divergence points and identifying when one student fell behind, but could provide more detail on the implications of these findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of comparing performance trajectories, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or supported based on the deterministic action evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Student SAMPLE_UCI_POR_STU_000001 started with a score of 0 on the first quiz, while SAMPLE_UCI_POR_STU_000002 began with a score of 45.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_UCI_POR_STU_000001's first quiz score",
+        "SAMPLE_UCI_POR_STU_000002's first quiz score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing the initial scores of both students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "By the second quiz and the final exam, both students scored 55.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_UCI_POR_STU_000001's second quiz score",
+        "SAMPLE_UCI_POR_STU_000002's second quiz score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing both students achieving a score of 55 in the later assessments."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of comparing performance trajectories, providing clear insights into the divergence points and performance trends of the two students. The claims made are well-supported by the evidence, and the overall clarity and relevance of the explanation are strong.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 6. All relevant data was available and utilized in the explanation, ensuring a comprehensive analysis of the students' performance trajectories."
+}

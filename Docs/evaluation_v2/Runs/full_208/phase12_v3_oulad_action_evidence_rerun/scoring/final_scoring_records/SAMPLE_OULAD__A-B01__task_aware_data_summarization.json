@@ -1,0 +1,122 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-B01__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, discussing the distribution of scores and the implications of students with no scores."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Most numerical claims are correct, but the total number of students mentioned (1,500) does not match the sum of students in the score buckets (1,067 + 500 + 1,500)."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs but lacks a clear flagging of the proportion below the passing threshold, which is a requirement."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of summarizing overall performance distribution and addresses the actionable question."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to improving student engagement and performance."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from more structured presentation of insights and recommendations."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language and appropriately addresses potential issues of disengagement."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A majority of students, specifically 1,067 out of 1,500, are concentrated in the score buckets from 50-100.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim about the majority of students in the upper score buckets is partially supported, but the total number of students does not match the provided data."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "There are 500 students (20% of the class) who have not received any scores.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the data showing 500 students with no scores, which is accurately reflected in the explanation."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The high number of students with no scores may require immediate attention to understand barriers to assessment completion.",
+      "claim_type": "interpretative",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This interpretative claim is supported by the context of the explanation and the implications drawn from the data."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_core_output",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 6.5,
+      "rationale": "The explanation fails to clearly flag the proportion of students below the passing threshold, which is a core requirement.",
+      "evidence_refs": []
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "major",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 1,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.55,
+  "caps_applied": [
+    {
+      "type": "missing_core_output",
+      "severity": "major",
+      "cap": 6.5,
+      "error_id": "E01",
+      "claim_ids": [
+        "C01"
+      ],
+      "evidence_refs": []
+    }
+  ],
+  "effective_cap": 6.5,
+  "final_score_after_caps": 6.5,
+  "verdict": "good",
+  "invalid_reason": null
+}

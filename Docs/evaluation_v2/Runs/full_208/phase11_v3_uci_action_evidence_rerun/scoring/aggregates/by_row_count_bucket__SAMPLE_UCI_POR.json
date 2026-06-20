@@ -1,0 +1,33 @@
+{
+  "<=20": {
+    "records": 92,
+    "scored_records": 91,
+    "invalid_records": 1,
+    "average_raw_weighted_score": 8.11,
+    "average_final_score_after_caps": 8.11,
+    "verdict_counts": {
+      "excellent": 64,
+      "good": 24,
+      "acceptable": 3
+    },
+    "highest_error_severity_counts": {
+      "none": 92
+    }
+  },
+  ">20": {
+    "records": 12,
+    "scored_records": 12,
+    "invalid_records": 0,
+    "average_raw_weighted_score": 7.22,
+    "average_final_score_after_caps": 7.07,
+    "verdict_counts": {
+      "acceptable": 3,
+      "good": 8,
+      "excellent": 1
+    },
+    "highest_error_severity_counts": {
+      "major": 2,
+      "none": 10
+    }
+  }
+}

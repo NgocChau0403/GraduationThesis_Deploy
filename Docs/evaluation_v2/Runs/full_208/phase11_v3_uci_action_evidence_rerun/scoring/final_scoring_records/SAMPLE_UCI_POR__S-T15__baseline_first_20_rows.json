@@ -1,0 +1,114 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T15__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation claims a negative correlation between Family Stability Score and Average Score, which contradicts the derived statistic showing a weak positive correlation (Pearson r = 0.144)."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "The explanation incorrectly states the nature of the correlation (negative instead of positive), which misrepresents the derived statistic."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation addresses the core outputs but lacks clarity on the implications of the correlation and does not fully explore the cohort context."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is relevant to the task of analyzing family context versus performance, but it misrepresents the correlation, affecting its relevance."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were required in the task context."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation is somewhat clear but contains significant inaccuracies that could confuse the reader regarding the correlation."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain harmful or stigmatizing language, but it could lead to misinterpretation of the data."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a negative correlation between Family Stability Score and Average Score.",
+      "claim_type": "correlation",
+      "claim_scope": "core",
+      "support_status": "contradicted",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [
+        "S-T15__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The derived statistic indicates a weak positive correlation (Pearson r = 0.144), contradicting the claim of a negative correlation."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students with a Family Stability Score of 1 tend to have varying Average Scores.",
+      "claim_type": "observation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This observation is consistent with the data showing a range of Average Scores for students with a Family Stability Score of 1."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "unsupported_numerical_claim",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "major",
+      "primary_metric": "numerical_correctness",
+      "secondary_metrics": [],
+      "cap_candidate": 5,
+      "rationale": "The claim of a negative correlation is unsupported by the derived statistic, which shows a weak positive correlation.",
+      "evidence_refs": [
+        "S-T15__pearson_r__1"
+      ]
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "major",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 1,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 5.44,
+  "caps_applied": [
+    {
+      "type": "unsupported_numerical_claim",
+      "severity": "major",
+      "cap": 5,
+      "error_id": "E01",
+      "claim_ids": [
+        "C01"
+      ],
+      "evidence_refs": [
+        "S-T15__pearson_r__1"
+      ]
+    }
+  ],
+  "effective_cap": 5,
+  "final_score_after_caps": 5,
+  "verdict": "acceptable",
+  "invalid_reason": null
+}

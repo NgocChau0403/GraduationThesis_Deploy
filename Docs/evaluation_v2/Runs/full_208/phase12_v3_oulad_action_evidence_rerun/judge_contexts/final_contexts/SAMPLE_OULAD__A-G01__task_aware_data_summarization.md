@@ -1,0 +1,11323 @@
+# LLM Judge Final Judge Context - SAMPLE_OULAD__A-G01__task_aware_data_summarization
+
+This Phase F6 context is the record-level evidence package to supply with the frozen Judge Prompt V2 during full-run judge invocation.
+
+## Frozen Prompt Reference
+
+- Prompt path: `Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V3.md`
+- Prompt SHA-256: `8c7655b0389d4228328d00fa9573d5ac9d38ef0fd7846cf49b4628cff6a8d670`
+
+## Record Identity
+
+```json
+{
+  "record_id": "SAMPLE_OULAD__A-G01__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G01",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v3_action_evidence_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_action_evidence_calibrated"
+}
+```
+
+## Task Context
+
+```json
+{
+  "task_name": "Identify low-engagement group",
+  "scope": "Many students",
+  "actionable_question": "Which students are dangerously disengaged and need outreach?",
+  "target_audience": "instructor, admin",
+  "ai_summary_type": "ranking",
+  "ai_prompt_hint": "Define 'low engagement' threshold. List students below it. Recommend admin action (email/contact).",
+  "query_labels": [
+    "low_engagement_group"
+  ],
+  "explanation_strategy": "behavioral"
+}
+```
+
+## Schema Context
+
+```json
+{
+  "source_tables": [
+    "enrollment",
+    "engagement"
+  ],
+  "key_db_fields": [
+    "engagement_score [FE cross]",
+    "study_effort_level [FE cross]",
+    "total_clicks (engagement)",
+    "active_days"
+  ],
+  "output_schema": {},
+  "query_labels": [
+    "low_engagement_group"
+  ]
+}
+```
+
+## Evaluation Requirements
+
+```json
+{
+  "required_core_outputs": [
+    {
+      "requirement_id": "A-G01-CORE-01",
+      "description": "Define 'low engagement' threshold."
+    },
+    {
+      "requirement_id": "A-G01-CORE-02",
+      "description": "List students below it."
+    },
+    {
+      "requirement_id": "A-G01-CORE-03",
+      "description": "Recommend admin action (email/contact)."
+    }
+  ],
+  "required_supporting_outputs": [],
+  "evaluation_constraints": [
+    {
+      "constraint_id": "A-G01-CONSTRAINT-01",
+      "description": "Do not name individual students beyond identifiers already present in returned data."
+    },
+    {
+      "constraint_id": "A-G01-CONSTRAINT-02",
+      "description": "Treat the output as internal admin use when individual identifiers are listed."
+    }
+  ],
+  "safety_fairness_applicability": "applicable",
+  "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+}
+```
+
+## Deterministic Derived-Stat Evidence
+
+```json
+[]
+```
+
+## Deterministic Action Evidence
+
+```json
+{
+  "applicable": false,
+  "source_type": "not_applicable",
+  "rule_set_id": null,
+  "rule_version": null,
+  "evaluation_status": "not_applicable",
+  "supported_action_count": 0,
+  "supported_actions": [],
+  "rule_evaluations": [],
+  "conflict_evaluations": []
+}
+```
+
+## Deterministic Retrieval Evidence
+
+```json
+{
+  "full_query_artifacts": [
+    {
+      "dataset_label": "low_engagement_group",
+      "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G01.json",
+      "artifact_sha256": "1561e97d242b1221e6702d8486ef8b4e04e20c8666661b54a458f5e5076509fb",
+      "row_count": 1544,
+      "readable": true
+    }
+  ],
+  "evidence_access_mode": "deterministic_artifact_retrieval",
+  "full_result_row_count": 1544,
+  "prompt_embedded_row_count": 0,
+  "retrieved_row_count": 1544,
+  "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G01__task_aware_data_summarization.json",
+  "full_access_available": true,
+  "full_result_sent_to_llm": false,
+  "evidence_artifact_file_sha256": "1561e97d242b1221e6702d8486ef8b4e04e20c8666661b54a458f5e5076509fb",
+  "evidence_rows_sha256": "6b611a636af5cff1cfce8b1bcd0d5d150d8d72146b56f5dd1889110f2456e203",
+  "retrieval_validation": {
+    "status": "pass",
+    "retrieved_row_count": 1544,
+    "chunk_count": 1,
+    "chunk_ids": [
+      "SAMPLE_OULAD__A-G01__task_aware_data_summarization__low_engagement_group__chunk_1"
+    ],
+    "row_ranges": [
+      {
+        "dataset_label": "low_engagement_group",
+        "row_start_inclusive": 0,
+        "row_end_inclusive": 1543,
+        "row_count": 1544
+      }
+    ],
+    "issues": []
+  }
+}
+```
+
+```json
+{
+  "evidence_access_mode": "deterministic_artifact_retrieval",
+  "retrieval_log": {
+    "artifact_type": "llm_judge_v2_phase6_4_deterministic_retrieval_log",
+    "generated_at": "2026-06-19T07:41:45.378Z",
+    "record_id": "SAMPLE_OULAD__A-G01__task_aware_data_summarization",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "chunks": [
+      {
+        "chunk_id": "SAMPLE_OULAD__A-G01__task_aware_data_summarization__low_engagement_group__chunk_1",
+        "dataset_label": "low_engagement_group",
+        "row_start_inclusive": 0,
+        "row_end_inclusive": 1543,
+        "row_count": 1544,
+        "source_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G01.json",
+        "source_artifact_sha256": "1561e97d242b1221e6702d8486ef8b4e04e20c8666661b54a458f5e5076509fb"
+      }
+    ]
+  },
+  "retrieved_datasets_sha256": "6b611a636af5cff1cfce8b1bcd0d5d150d8d72146b56f5dd1889110f2456e203",
+  "retrieved_datasets": {
+    "low_engagement_group": [
+      {
+        "student_id": "SAMPLE_OULAD_STU_611852",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_393094",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_616407",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654888",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_529179",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_680698",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2613225",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_684944",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_695760",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_592124",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_585526",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_490443",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1976004",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_632134",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_639232",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_546400",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_498225",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_500031",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_649215",
+        "total_clicks": 1,
+        "active_days": 1,
+        "engagement_score": 0.0018192745194871073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679325",
+        "total_clicks": 2,
+        "active_days": 1,
+        "engagement_score": 0.0018399878878950777,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_649394",
+        "total_clicks": 2,
+        "active_days": 1,
+        "engagement_score": 0.0018399878878950777,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654407",
+        "total_clicks": 2,
+        "active_days": 1,
+        "engagement_score": 0.0018399878878950777,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_624092",
+        "total_clicks": 2,
+        "active_days": 1,
+        "engagement_score": 0.0018399878878950777,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_646077",
+        "total_clicks": 2,
+        "active_days": 1,
+        "engagement_score": 0.0018399878878950777,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_645847",
+        "total_clicks": 2,
+        "active_days": 1,
+        "engagement_score": 0.0018399878878950777,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_697554",
+        "total_clicks": 2,
+        "active_days": 1,
+        "engagement_score": 0.0018399878878950777,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_696253",
+        "total_clicks": 2,
+        "active_days": 1,
+        "engagement_score": 0.0018399878878950777,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_690631",
+        "total_clicks": 3,
+        "active_days": 1,
+        "engagement_score": 0.0018607012563030482,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_682041",
+        "total_clicks": 3,
+        "active_days": 1,
+        "engagement_score": 0.0018607012563030482,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_600898",
+        "total_clicks": 3,
+        "active_days": 1,
+        "engagement_score": 0.0018607012563030482,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_630541",
+        "total_clicks": 3,
+        "active_days": 1,
+        "engagement_score": 0.0018607012563030482,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_296222",
+        "total_clicks": 3,
+        "active_days": 1,
+        "engagement_score": 0.0018607012563030482,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_592805",
+        "total_clicks": 3,
+        "active_days": 1,
+        "engagement_score": 0.0018607012563030482,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_293321",
+        "total_clicks": 3,
+        "active_days": 1,
+        "engagement_score": 0.0018607012563030482,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_157310",
+        "total_clicks": 4,
+        "active_days": 1,
+        "engagement_score": 0.001881414624711019,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_287897",
+        "total_clicks": 4,
+        "active_days": 1,
+        "engagement_score": 0.001881414624711019,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_649701",
+        "total_clicks": 4,
+        "active_days": 1,
+        "engagement_score": 0.001881414624711019,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694361",
+        "total_clicks": 4,
+        "active_days": 1,
+        "engagement_score": 0.001881414624711019,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2297770",
+        "total_clicks": 5,
+        "active_days": 1,
+        "engagement_score": 0.0019021279931189894,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_688028",
+        "total_clicks": 5,
+        "active_days": 1,
+        "engagement_score": 0.0019021279931189894,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_556788",
+        "total_clicks": 5,
+        "active_days": 1,
+        "engagement_score": 0.0019021279931189894,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_657211",
+        "total_clicks": 5,
+        "active_days": 1,
+        "engagement_score": 0.0019021279931189894,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_684208",
+        "total_clicks": 6,
+        "active_days": 1,
+        "engagement_score": 0.0019228413615269598,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_563430",
+        "total_clicks": 6,
+        "active_days": 1,
+        "engagement_score": 0.0019228413615269598,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_633205",
+        "total_clicks": 6,
+        "active_days": 1,
+        "engagement_score": 0.0019228413615269598,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_646628",
+        "total_clicks": 7,
+        "active_days": 1,
+        "engagement_score": 0.0019435547299349303,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_500440",
+        "total_clicks": 7,
+        "active_days": 1,
+        "engagement_score": 0.0019435547299349303,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_443837",
+        "total_clicks": 8,
+        "active_days": 1,
+        "engagement_score": 0.001964268098342901,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_686813",
+        "total_clicks": 11,
+        "active_days": 1,
+        "engagement_score": 0.0020264082035668122,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_652571",
+        "total_clicks": 14,
+        "active_days": 1,
+        "engagement_score": 0.002088548308790724,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_520854",
+        "total_clicks": 16,
+        "active_days": 1,
+        "engagement_score": 0.002129975045606665,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_596931",
+        "total_clicks": 18,
+        "active_days": 1,
+        "engagement_score": 0.0021714017824226058,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647184",
+        "total_clicks": 18,
+        "active_days": 1,
+        "engagement_score": 0.0021714017824226058,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_657319",
+        "total_clicks": 31,
+        "active_days": 1,
+        "engagement_score": 0.0024406755717262226,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_529512",
+        "total_clicks": 41,
+        "active_days": 1,
+        "engagement_score": 0.0026478092558059273,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_687146",
+        "total_clicks": 49,
+        "active_days": 1,
+        "engagement_score": 0.0028135162030696916,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_556450",
+        "total_clicks": 54,
+        "active_days": 1,
+        "engagement_score": 0.0029170830451095437,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_570895",
+        "total_clicks": 74,
+        "active_days": 1,
+        "engagement_score": 0.003331350413268954,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_597560",
+        "total_clicks": 2,
+        "active_days": 2,
+        "engagement_score": 0.0036385490389742145,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_691056",
+        "total_clicks": 2,
+        "active_days": 2,
+        "engagement_score": 0.0036385490389742145,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_524431",
+        "total_clicks": 2,
+        "active_days": 2,
+        "engagement_score": 0.0036385490389742145,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_643416",
+        "total_clicks": 3,
+        "active_days": 2,
+        "engagement_score": 0.003659262407382185,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_689352",
+        "total_clicks": 3,
+        "active_days": 2,
+        "engagement_score": 0.003659262407382185,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_684511",
+        "total_clicks": 4,
+        "active_days": 2,
+        "engagement_score": 0.0036799757757901555,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_690724",
+        "total_clicks": 4,
+        "active_days": 2,
+        "engagement_score": 0.0036799757757901555,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_678090",
+        "total_clicks": 4,
+        "active_days": 2,
+        "engagement_score": 0.0036799757757901555,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_649780",
+        "total_clicks": 5,
+        "active_days": 2,
+        "engagement_score": 0.003700689144198126,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_642261",
+        "total_clicks": 5,
+        "active_days": 2,
+        "engagement_score": 0.003700689144198126,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_608669",
+        "total_clicks": 5,
+        "active_days": 2,
+        "engagement_score": 0.003700689144198126,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_689346",
+        "total_clicks": 5,
+        "active_days": 2,
+        "engagement_score": 0.003700689144198126,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648819",
+        "total_clicks": 5,
+        "active_days": 2,
+        "engagement_score": 0.003700689144198126,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_588261",
+        "total_clicks": 5,
+        "active_days": 2,
+        "engagement_score": 0.003700689144198126,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_509177",
+        "total_clicks": 5,
+        "active_days": 2,
+        "engagement_score": 0.003700689144198126,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654258",
+        "total_clicks": 6,
+        "active_days": 2,
+        "engagement_score": 0.0037214025126060964,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_298777",
+        "total_clicks": 7,
+        "active_days": 2,
+        "engagement_score": 0.003742115881014067,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_544071",
+        "total_clicks": 7,
+        "active_days": 2,
+        "engagement_score": 0.003742115881014067,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679114",
+        "total_clicks": 7,
+        "active_days": 2,
+        "engagement_score": 0.003742115881014067,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685750",
+        "total_clicks": 8,
+        "active_days": 2,
+        "engagement_score": 0.003762829249422038,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_651187",
+        "total_clicks": 9,
+        "active_days": 2,
+        "engagement_score": 0.003783542617830008,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_284741",
+        "total_clicks": 9,
+        "active_days": 2,
+        "engagement_score": 0.003783542617830008,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_275882",
+        "total_clicks": 10,
+        "active_days": 2,
+        "engagement_score": 0.0038042559862379787,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_651236",
+        "total_clicks": 10,
+        "active_days": 2,
+        "engagement_score": 0.0038042559862379787,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679207",
+        "total_clicks": 10,
+        "active_days": 2,
+        "engagement_score": 0.0038042559862379787,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_600042",
+        "total_clicks": 11,
+        "active_days": 2,
+        "engagement_score": 0.003824969354645949,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_584414",
+        "total_clicks": 11,
+        "active_days": 2,
+        "engagement_score": 0.003824969354645949,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_266558",
+        "total_clicks": 13,
+        "active_days": 2,
+        "engagement_score": 0.00386639609146189,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_581914",
+        "total_clicks": 13,
+        "active_days": 2,
+        "engagement_score": 0.00386639609146189,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_503400",
+        "total_clicks": 19,
+        "active_days": 2,
+        "engagement_score": 0.003990676301909713,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_256532",
+        "total_clicks": 19,
+        "active_days": 2,
+        "engagement_score": 0.003990676301909713,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_500339",
+        "total_clicks": 20,
+        "active_days": 2,
+        "engagement_score": 0.004011389670317684,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1559964",
+        "total_clicks": 21,
+        "active_days": 2,
+        "engagement_score": 0.004032103038725654,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648833",
+        "total_clicks": 22,
+        "active_days": 2,
+        "engagement_score": 0.0040528164071336244,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_675441",
+        "total_clicks": 26,
+        "active_days": 2,
+        "engagement_score": 0.004135669880765506,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_328674",
+        "total_clicks": 26,
+        "active_days": 2,
+        "engagement_score": 0.004135669880765506,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_697511",
+        "total_clicks": 29,
+        "active_days": 2,
+        "engagement_score": 0.004197809985989418,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_598887",
+        "total_clicks": 29,
+        "active_days": 2,
+        "engagement_score": 0.004197809985989418,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_554444",
+        "total_clicks": 34,
+        "active_days": 2,
+        "engagement_score": 0.004301376828029271,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_594627",
+        "total_clicks": 36,
+        "active_days": 2,
+        "engagement_score": 0.0043428035648452115,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_688271",
+        "total_clicks": 43,
+        "active_days": 2,
+        "engagement_score": 0.004487797143701005,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_134982",
+        "total_clicks": 44,
+        "active_days": 2,
+        "engagement_score": 0.004508510512108975,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2041743",
+        "total_clicks": 49,
+        "active_days": 2,
+        "engagement_score": 0.004612077354148828,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2138146",
+        "total_clicks": 51,
+        "active_days": 2,
+        "engagement_score": 0.00465350409096477,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679539",
+        "total_clicks": 52,
+        "active_days": 2,
+        "engagement_score": 0.00467421745937274,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_651839",
+        "total_clicks": 55,
+        "active_days": 2,
+        "engagement_score": 0.004736357564596652,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_574523",
+        "total_clicks": 73,
+        "active_days": 2,
+        "engagement_score": 0.005109198195940121,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_591655",
+        "total_clicks": 3,
+        "active_days": 3,
+        "engagement_score": 0.005457823558461322,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_695976",
+        "total_clicks": 3,
+        "active_days": 3,
+        "engagement_score": 0.005457823558461322,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_478496",
+        "total_clicks": 3,
+        "active_days": 3,
+        "engagement_score": 0.005457823558461322,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_634853",
+        "total_clicks": 4,
+        "active_days": 3,
+        "engagement_score": 0.005478536926869292,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_596855",
+        "total_clicks": 4,
+        "active_days": 3,
+        "engagement_score": 0.005478536926869292,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_620608",
+        "total_clicks": 5,
+        "active_days": 3,
+        "engagement_score": 0.0054992502952772625,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650074",
+        "total_clicks": 6,
+        "active_days": 3,
+        "engagement_score": 0.005519963663685234,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_415023",
+        "total_clicks": 7,
+        "active_days": 3,
+        "engagement_score": 0.005540677032093204,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_472616",
+        "total_clicks": 8,
+        "active_days": 3,
+        "engagement_score": 0.005561390400501174,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1407549",
+        "total_clicks": 8,
+        "active_days": 3,
+        "engagement_score": 0.005561390400501174,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1638548",
+        "total_clicks": 9,
+        "active_days": 3,
+        "engagement_score": 0.005582103768909145,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_505815",
+        "total_clicks": 9,
+        "active_days": 3,
+        "engagement_score": 0.005582103768909145,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_264723",
+        "total_clicks": 9,
+        "active_days": 3,
+        "engagement_score": 0.005582103768909145,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_690406",
+        "total_clicks": 10,
+        "active_days": 3,
+        "engagement_score": 0.0056028171373171155,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647887",
+        "total_clicks": 11,
+        "active_days": 3,
+        "engagement_score": 0.005623530505725086,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_688683",
+        "total_clicks": 12,
+        "active_days": 3,
+        "engagement_score": 0.005644243874133056,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_331622",
+        "total_clicks": 13,
+        "active_days": 3,
+        "engagement_score": 0.005664957242541027,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650927",
+        "total_clicks": 15,
+        "active_days": 3,
+        "engagement_score": 0.005706383979356968,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_678843",
+        "total_clicks": 16,
+        "active_days": 3,
+        "engagement_score": 0.005727097347764939,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_653506",
+        "total_clicks": 18,
+        "active_days": 3,
+        "engagement_score": 0.005768524084580879,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2063436",
+        "total_clicks": 18,
+        "active_days": 3,
+        "engagement_score": 0.005768524084580879,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_608821",
+        "total_clicks": 105,
+        "active_days": 2,
+        "engagement_score": 0.005772025984995177,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_565109",
+        "total_clicks": 19,
+        "active_days": 3,
+        "engagement_score": 0.00578923745298885,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_589223",
+        "total_clicks": 19,
+        "active_days": 3,
+        "engagement_score": 0.00578923745298885,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_515125",
+        "total_clicks": 20,
+        "active_days": 3,
+        "engagement_score": 0.005809950821396821,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_653700",
+        "total_clicks": 21,
+        "active_days": 3,
+        "engagement_score": 0.005830664189804791,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_289397",
+        "total_clicks": 23,
+        "active_days": 3,
+        "engagement_score": 0.005872090926620732,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_696848",
+        "total_clicks": 24,
+        "active_days": 3,
+        "engagement_score": 0.005892804295028703,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_634655",
+        "total_clicks": 34,
+        "active_days": 3,
+        "engagement_score": 0.006099937979108408,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_357820",
+        "total_clicks": 41,
+        "active_days": 3,
+        "engagement_score": 0.006244931557964201,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_608983",
+        "total_clicks": 42,
+        "active_days": 3,
+        "engagement_score": 0.006265644926372172,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_653726",
+        "total_clicks": 43,
+        "active_days": 3,
+        "engagement_score": 0.006286358294780142,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_609044",
+        "total_clicks": 43,
+        "active_days": 3,
+        "engagement_score": 0.006286358294780142,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1930949",
+        "total_clicks": 48,
+        "active_days": 3,
+        "engagement_score": 0.006389925136819995,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647417",
+        "total_clicks": 54,
+        "active_days": 3,
+        "engagement_score": 0.006514205347267817,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_486300",
+        "total_clicks": 57,
+        "active_days": 3,
+        "engagement_score": 0.006576345452491729,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_573481",
+        "total_clicks": 64,
+        "active_days": 3,
+        "engagement_score": 0.0067213390313475225,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_677270",
+        "total_clicks": 151,
+        "active_days": 2,
+        "engagement_score": 0.00672484093176182,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_596789",
+        "total_clicks": 73,
+        "active_days": 3,
+        "engagement_score": 0.006907759347019257,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_592951",
+        "total_clicks": 75,
+        "active_days": 3,
+        "engagement_score": 0.006949186083835198,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_653352",
+        "total_clicks": 76,
+        "active_days": 3,
+        "engagement_score": 0.006969899452243168,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648314",
+        "total_clicks": 83,
+        "active_days": 3,
+        "engagement_score": 0.0071148930310989626,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_633990",
+        "total_clicks": 87,
+        "active_days": 3,
+        "engagement_score": 0.0071977465047308445,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_622015",
+        "total_clicks": 89,
+        "active_days": 3,
+        "engagement_score": 0.007239173241546785,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_625078",
+        "total_clicks": 4,
+        "active_days": 4,
+        "engagement_score": 0.007277098077948429,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_601054",
+        "total_clicks": 7,
+        "active_days": 4,
+        "engagement_score": 0.007339238183172341,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_676150",
+        "total_clicks": 10,
+        "active_days": 4,
+        "engagement_score": 0.007401378288396252,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_596052",
+        "total_clicks": 11,
+        "active_days": 4,
+        "engagement_score": 0.007422091656804223,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2595526",
+        "total_clicks": 15,
+        "active_days": 4,
+        "engagement_score": 0.0075049451304361045,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_350929",
+        "total_clicks": 18,
+        "active_days": 4,
+        "engagement_score": 0.007567085235660016,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_279883",
+        "total_clicks": 19,
+        "active_days": 4,
+        "engagement_score": 0.007587798604067986,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2473058",
+        "total_clicks": 26,
+        "active_days": 4,
+        "engagement_score": 0.00773279218292378,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1848820",
+        "total_clicks": 27,
+        "active_days": 4,
+        "engagement_score": 0.007753505551331751,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_638040",
+        "total_clicks": 29,
+        "active_days": 4,
+        "engagement_score": 0.0077949322881476915,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_606182",
+        "total_clicks": 29,
+        "active_days": 4,
+        "engagement_score": 0.0077949322881476915,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_559912",
+        "total_clicks": 31,
+        "active_days": 4,
+        "engagement_score": 0.007836359024963633,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_572250",
+        "total_clicks": 39,
+        "active_days": 4,
+        "engagement_score": 0.008002065972227397,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_524276",
+        "total_clicks": 128,
+        "active_days": 3,
+        "engagement_score": 0.008046994609457635,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_610549",
+        "total_clicks": 128,
+        "active_days": 3,
+        "engagement_score": 0.008046994609457635,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_556521",
+        "total_clicks": 47,
+        "active_days": 4,
+        "engagement_score": 0.00816777291949116,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_599461",
+        "total_clicks": 50,
+        "active_days": 4,
+        "engagement_score": 0.008229913024715072,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_636443",
+        "total_clicks": 137,
+        "active_days": 3,
+        "engagement_score": 0.00823341492512937,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_88758",
+        "total_clicks": 51,
+        "active_days": 4,
+        "engagement_score": 0.008250626393123043,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_676760",
+        "total_clicks": 52,
+        "active_days": 4,
+        "engagement_score": 0.008271339761531013,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_645160",
+        "total_clicks": 56,
+        "active_days": 4,
+        "engagement_score": 0.008354193235162895,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_467753",
+        "total_clicks": 57,
+        "active_days": 4,
+        "engagement_score": 0.008374906603570867,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_582514",
+        "total_clicks": 65,
+        "active_days": 4,
+        "engagement_score": 0.00854061355083463,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_595746",
+        "total_clicks": 73,
+        "active_days": 4,
+        "engagement_score": 0.008706320498098394,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_693147",
+        "total_clicks": 164,
+        "active_days": 3,
+        "engagement_score": 0.008792675872144573,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_552475",
+        "total_clicks": 170,
+        "active_days": 3,
+        "engagement_score": 0.008916956082592397,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_687345",
+        "total_clicks": 84,
+        "active_days": 4,
+        "engagement_score": 0.00893416755058607,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_686003",
+        "total_clicks": 86,
+        "active_days": 4,
+        "engagement_score": 0.00897559428740201,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654202",
+        "total_clicks": 93,
+        "active_days": 4,
+        "engagement_score": 0.009120587866257805,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_602585",
+        "total_clicks": 9,
+        "active_days": 5,
+        "engagement_score": 0.009179226071067418,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_67685",
+        "total_clicks": 10,
+        "active_days": 5,
+        "engagement_score": 0.009199939439475387,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694536",
+        "total_clicks": 100,
+        "active_days": 4,
+        "engagement_score": 0.009265581445113597,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_436900",
+        "total_clicks": 16,
+        "active_days": 5,
+        "engagement_score": 0.00932421964992321,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648654",
+        "total_clicks": 18,
+        "active_days": 5,
+        "engagement_score": 0.009365646386739153,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_636628",
+        "total_clicks": 108,
+        "active_days": 4,
+        "engagement_score": 0.009431288392377361,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_627290",
+        "total_clicks": 28,
+        "active_days": 5,
+        "engagement_score": 0.009572780070818857,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_600547",
+        "total_clicks": 28,
+        "active_days": 5,
+        "engagement_score": 0.009572780070818857,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2138904",
+        "total_clicks": 115,
+        "active_days": 4,
+        "engagement_score": 0.009576281971233155,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2405801",
+        "total_clicks": 205,
+        "active_days": 3,
+        "engagement_score": 0.009641923976871363,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_625218",
+        "total_clicks": 32,
+        "active_days": 5,
+        "engagement_score": 0.00965563354445074,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_693910",
+        "total_clicks": 32,
+        "active_days": 5,
+        "engagement_score": 0.00965563354445074,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_441024",
+        "total_clicks": 32,
+        "active_days": 5,
+        "engagement_score": 0.00965563354445074,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_551589",
+        "total_clicks": 36,
+        "active_days": 5,
+        "engagement_score": 0.009738487018082621,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_536825",
+        "total_clicks": 126,
+        "active_days": 4,
+        "engagement_score": 0.00980412902372083,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_544319",
+        "total_clicks": 42,
+        "active_days": 5,
+        "engagement_score": 0.009862767228530444,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647645",
+        "total_clicks": 130,
+        "active_days": 4,
+        "engagement_score": 0.009886982497352714,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_656026",
+        "total_clicks": 44,
+        "active_days": 5,
+        "engagement_score": 0.009904193965346385,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_605264",
+        "total_clicks": 45,
+        "active_days": 5,
+        "engagement_score": 0.009924907333754356,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_523817",
+        "total_clicks": 45,
+        "active_days": 5,
+        "engagement_score": 0.009924907333754356,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_617341",
+        "total_clicks": 46,
+        "active_days": 5,
+        "engagement_score": 0.009945620702162327,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_691177",
+        "total_clicks": 135,
+        "active_days": 4,
+        "engagement_score": 0.009990549339392566,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_426316",
+        "total_clicks": 50,
+        "active_days": 5,
+        "engagement_score": 0.010028474175794208,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_586233",
+        "total_clicks": 52,
+        "active_days": 5,
+        "engagement_score": 0.010069900912610149,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_627599",
+        "total_clicks": 141,
+        "active_days": 4,
+        "engagement_score": 0.010114829549840387,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679468",
+        "total_clicks": 55,
+        "active_days": 5,
+        "engagement_score": 0.01013204101783406,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_131663",
+        "total_clicks": 58,
+        "active_days": 5,
+        "engagement_score": 0.010194181123057972,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2147889",
+        "total_clicks": 63,
+        "active_days": 5,
+        "engagement_score": 0.010297747965097824,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2244214",
+        "total_clicks": 64,
+        "active_days": 5,
+        "engagement_score": 0.010318461333505795,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_695915",
+        "total_clicks": 66,
+        "active_days": 5,
+        "engagement_score": 0.010359888070321736,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_695122",
+        "total_clicks": 155,
+        "active_days": 4,
+        "engagement_score": 0.010404816707551976,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_468623",
+        "total_clicks": 157,
+        "active_days": 4,
+        "engagement_score": 0.010446243444367917,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_580709",
+        "total_clicks": 78,
+        "active_days": 5,
+        "engagement_score": 0.010608448491217382,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_520750",
+        "total_clicks": 87,
+        "active_days": 5,
+        "engagement_score": 0.010794868806889117,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_542134",
+        "total_clicks": 87,
+        "active_days": 5,
+        "engagement_score": 0.010794868806889117,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_536736",
+        "total_clicks": 265,
+        "active_days": 3,
+        "engagement_score": 0.010884726081349595,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_682565",
+        "total_clicks": 8,
+        "active_days": 6,
+        "engagement_score": 0.010957073853738585,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_560399",
+        "total_clicks": 97,
+        "active_days": 5,
+        "engagement_score": 0.011002002490968821,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650133",
+        "total_clicks": 102,
+        "active_days": 5,
+        "engagement_score": 0.011105569333008675,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_599429",
+        "total_clicks": 105,
+        "active_days": 5,
+        "engagement_score": 0.011167709438232587,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_596860",
+        "total_clicks": 106,
+        "active_days": 5,
+        "engagement_score": 0.011188422806640556,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_549922",
+        "total_clicks": 21,
+        "active_days": 6,
+        "engagement_score": 0.0112263476430422,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_578634",
+        "total_clicks": 24,
+        "active_days": 6,
+        "engagement_score": 0.011288487748266112,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_618377",
+        "total_clicks": 25,
+        "active_days": 6,
+        "engagement_score": 0.011309201116674083,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_574056",
+        "total_clicks": 25,
+        "active_days": 6,
+        "engagement_score": 0.011309201116674083,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_587195",
+        "total_clicks": 26,
+        "active_days": 6,
+        "engagement_score": 0.011329914485082054,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2609069",
+        "total_clicks": 29,
+        "active_days": 6,
+        "engagement_score": 0.011392054590305966,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_683865",
+        "total_clicks": 120,
+        "active_days": 5,
+        "engagement_score": 0.011478409964352143,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_613644",
+        "total_clicks": 121,
+        "active_days": 5,
+        "engagement_score": 0.011499123332760115,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_467144",
+        "total_clicks": 35,
+        "active_days": 6,
+        "engagement_score": 0.01151633480075379,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_596441",
+        "total_clicks": 122,
+        "active_days": 5,
+        "engagement_score": 0.011519836701168084,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2182333",
+        "total_clicks": 123,
+        "active_days": 5,
+        "engagement_score": 0.011540550069576055,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_575162",
+        "total_clicks": 45,
+        "active_days": 6,
+        "engagement_score": 0.011723468484833494,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650838",
+        "total_clicks": 137,
+        "active_days": 5,
+        "engagement_score": 0.011830537227287642,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_524851",
+        "total_clicks": 51,
+        "active_days": 6,
+        "engagement_score": 0.011847748695281317,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_425919",
+        "total_clicks": 54,
+        "active_days": 6,
+        "engagement_score": 0.011909888800505228,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_560723",
+        "total_clicks": 58,
+        "active_days": 6,
+        "engagement_score": 0.01199274227413711,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2009279",
+        "total_clicks": 150,
+        "active_days": 5,
+        "engagement_score": 0.012099811016591258,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685399",
+        "total_clicks": 151,
+        "active_days": 5,
+        "engagement_score": 0.01212052438499923,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_607427",
+        "total_clicks": 65,
+        "active_days": 6,
+        "engagement_score": 0.012137735852992904,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_601653",
+        "total_clicks": 156,
+        "active_days": 5,
+        "engagement_score": 0.012224091227039081,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_600509",
+        "total_clicks": 73,
+        "active_days": 6,
+        "engagement_score": 0.012303442800256668,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_620782",
+        "total_clicks": 77,
+        "active_days": 6,
+        "engagement_score": 0.012386296273888549,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_623407",
+        "total_clicks": 251,
+        "active_days": 4,
+        "engagement_score": 0.012393300074717143,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_587547",
+        "total_clicks": 89,
+        "active_days": 6,
+        "engagement_score": 0.012634856694784195,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_505967",
+        "total_clicks": 178,
+        "active_days": 5,
+        "engagement_score": 0.012679785332014432,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654671",
+        "total_clicks": 98,
+        "active_days": 6,
+        "engagement_score": 0.01282127701045593,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_484787",
+        "total_clicks": 99,
+        "active_days": 6,
+        "engagement_score": 0.0128419903788639,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_567152",
+        "total_clicks": 103,
+        "active_days": 6,
+        "engagement_score": 0.012924843852495782,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_608577",
+        "total_clicks": 18,
+        "active_days": 7,
+        "engagement_score": 0.012962768688897426,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_510846",
+        "total_clicks": 105,
+        "active_days": 6,
+        "engagement_score": 0.012966270589311723,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_129198",
+        "total_clicks": 20,
+        "active_days": 7,
+        "engagement_score": 0.013004195425713367,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_242636",
+        "total_clicks": 108,
+        "active_days": 6,
+        "engagement_score": 0.013028410694535635,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1850818",
+        "total_clicks": 108,
+        "active_days": 6,
+        "engagement_score": 0.013028410694535635,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_678538",
+        "total_clicks": 108,
+        "active_days": 6,
+        "engagement_score": 0.013028410694535635,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_569625",
+        "total_clicks": 22,
+        "active_days": 7,
+        "engagement_score": 0.013045622162529307,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_657210",
+        "total_clicks": 196,
+        "active_days": 5,
+        "engagement_score": 0.013052625963357902,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_440637",
+        "total_clicks": 25,
+        "active_days": 7,
+        "engagement_score": 0.01310776226775322,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_651734",
+        "total_clicks": 115,
+        "active_days": 6,
+        "engagement_score": 0.013173404273391429,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_465764",
+        "total_clicks": 119,
+        "active_days": 6,
+        "engagement_score": 0.013256257747023312,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647684",
+        "total_clicks": 119,
+        "active_days": 6,
+        "engagement_score": 0.013256257747023312,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_678474",
+        "total_clicks": 34,
+        "active_days": 7,
+        "engagement_score": 0.013294182583424954,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_344740",
+        "total_clicks": 127,
+        "active_days": 6,
+        "engagement_score": 0.013421964694287074,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_651616",
+        "total_clicks": 129,
+        "active_days": 6,
+        "engagement_score": 0.013463391431103016,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_307297",
+        "total_clicks": 133,
+        "active_days": 6,
+        "engagement_score": 0.013546244904734897,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_633756",
+        "total_clicks": 47,
+        "active_days": 7,
+        "engagement_score": 0.01356345637272857,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_699370",
+        "total_clicks": 223,
+        "active_days": 5,
+        "engagement_score": 0.013611886910373105,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_552255",
+        "total_clicks": 54,
+        "active_days": 7,
+        "engagement_score": 0.013708449951584364,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_619472",
+        "total_clicks": 57,
+        "active_days": 7,
+        "engagement_score": 0.013770590056808276,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_684617",
+        "total_clicks": 144,
+        "active_days": 6,
+        "engagement_score": 0.013774091957222574,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_494911",
+        "total_clicks": 59,
+        "active_days": 7,
+        "engagement_score": 0.013812016793624217,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_510401",
+        "total_clicks": 59,
+        "active_days": 7,
+        "engagement_score": 0.013812016793624217,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_626753",
+        "total_clicks": 61,
+        "active_days": 7,
+        "engagement_score": 0.013853443530440157,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_617327",
+        "total_clicks": 63,
+        "active_days": 7,
+        "engagement_score": 0.0138948702672561,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_600869",
+        "total_clicks": 154,
+        "active_days": 6,
+        "engagement_score": 0.013981225641302279,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_595988",
+        "total_clicks": 71,
+        "active_days": 7,
+        "engagement_score": 0.014060577214519863,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650544",
+        "total_clicks": 75,
+        "active_days": 7,
+        "engagement_score": 0.014143430688151744,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_564356",
+        "total_clicks": 75,
+        "active_days": 7,
+        "engagement_score": 0.014143430688151744,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_448370",
+        "total_clicks": 82,
+        "active_days": 7,
+        "engagement_score": 0.014288424267007539,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_518503",
+        "total_clicks": 169,
+        "active_days": 6,
+        "engagement_score": 0.014291926167421837,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2376717",
+        "total_clicks": 83,
+        "active_days": 7,
+        "engagement_score": 0.014309137635415508,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_501897",
+        "total_clicks": 92,
+        "active_days": 7,
+        "engagement_score": 0.014495557951087243,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_325497",
+        "total_clicks": 93,
+        "active_days": 7,
+        "engagement_score": 0.014516271319495214,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_622686",
+        "total_clicks": 93,
+        "active_days": 7,
+        "engagement_score": 0.014516271319495214,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_482751",
+        "total_clicks": 93,
+        "active_days": 7,
+        "engagement_score": 0.014516271319495214,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_645353",
+        "total_clicks": 99,
+        "active_days": 7,
+        "engagement_score": 0.014640551529943036,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_517223",
+        "total_clicks": 100,
+        "active_days": 7,
+        "engagement_score": 0.014661264898351007,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_625288",
+        "total_clicks": 104,
+        "active_days": 7,
+        "engagement_score": 0.01474411837198289,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_643514",
+        "total_clicks": 278,
+        "active_days": 5,
+        "engagement_score": 0.014751122172811482,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_519879",
+        "total_clicks": 105,
+        "active_days": 7,
+        "engagement_score": 0.014764831740390859,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_605545",
+        "total_clicks": 106,
+        "active_days": 7,
+        "engagement_score": 0.01478554510879883,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_651325",
+        "total_clicks": 107,
+        "active_days": 7,
+        "engagement_score": 0.014806258477206801,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_335401",
+        "total_clicks": 109,
+        "active_days": 7,
+        "engagement_score": 0.014847685214022742,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_551791",
+        "total_clicks": 111,
+        "active_days": 7,
+        "engagement_score": 0.014889111950838682,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2533650",
+        "total_clicks": 111,
+        "active_days": 7,
+        "engagement_score": 0.014889111950838682,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_624585",
+        "total_clicks": 25,
+        "active_days": 8,
+        "engagement_score": 0.014906323418832357,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_606036",
+        "total_clicks": 199,
+        "active_days": 6,
+        "engagement_score": 0.014913327219660951,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_696930",
+        "total_clicks": 199,
+        "active_days": 6,
+        "engagement_score": 0.014913327219660951,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_470253",
+        "total_clicks": 113,
+        "active_days": 7,
+        "engagement_score": 0.014930538687654624,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_651058",
+        "total_clicks": 114,
+        "active_days": 7,
+        "engagement_score": 0.014951252056062594,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_543417",
+        "total_clicks": 31,
+        "active_days": 8,
+        "engagement_score": 0.01503060362928018,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2454119",
+        "total_clicks": 36,
+        "active_days": 8,
+        "engagement_score": 0.015134170471320032,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_290043",
+        "total_clicks": 125,
+        "active_days": 7,
+        "engagement_score": 0.01517909910855027,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_248818",
+        "total_clicks": 127,
+        "active_days": 7,
+        "engagement_score": 0.01522052584536621,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_325518",
+        "total_clicks": 132,
+        "active_days": 7,
+        "engagement_score": 0.015324092687406064,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_434841",
+        "total_clicks": 48,
+        "active_days": 8,
+        "engagement_score": 0.015382730892215679,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_624469",
+        "total_clicks": 136,
+        "active_days": 7,
+        "engagement_score": 0.015406946161037945,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_681966",
+        "total_clicks": 139,
+        "active_days": 7,
+        "engagement_score": 0.015469086266261856,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_586550",
+        "total_clicks": 55,
+        "active_days": 8,
+        "engagement_score": 0.015527724471071471,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_688537",
+        "total_clicks": 231,
+        "active_days": 6,
+        "engagement_score": 0.015576155008716008,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_655484",
+        "total_clicks": 147,
+        "active_days": 7,
+        "engagement_score": 0.015634793213525622,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_271526",
+        "total_clicks": 147,
+        "active_days": 7,
+        "engagement_score": 0.015634793213525622,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_592787",
+        "total_clicks": 63,
+        "active_days": 8,
+        "engagement_score": 0.015693431418335235,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_628008",
+        "total_clicks": 65,
+        "active_days": 8,
+        "engagement_score": 0.015734858155151178,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_643457",
+        "total_clicks": 80,
+        "active_days": 8,
+        "engagement_score": 0.016045558681270736,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_353660",
+        "total_clicks": 82,
+        "active_days": 8,
+        "engagement_score": 0.016086985418086674,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2216442",
+        "total_clicks": 82,
+        "active_days": 8,
+        "engagement_score": 0.016086985418086674,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_529723",
+        "total_clicks": 170,
+        "active_days": 7,
+        "engagement_score": 0.016111200686908942,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_632929",
+        "total_clicks": 172,
+        "active_days": 7,
+        "engagement_score": 0.016152627423724884,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_534074",
+        "total_clicks": 86,
+        "active_days": 8,
+        "engagement_score": 0.01616983889171856,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_617418",
+        "total_clicks": 89,
+        "active_days": 8,
+        "engagement_score": 0.01623197899694247,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_692850",
+        "total_clicks": 178,
+        "active_days": 7,
+        "engagement_score": 0.016276907634172708,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_628720",
+        "total_clicks": 180,
+        "active_days": 7,
+        "engagement_score": 0.016318334370988646,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_577148",
+        "total_clicks": 94,
+        "active_days": 8,
+        "engagement_score": 0.01633554583898232,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2590948",
+        "total_clicks": 101,
+        "active_days": 8,
+        "engagement_score": 0.016480539417838114,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_491033",
+        "total_clicks": 108,
+        "active_days": 8,
+        "engagement_score": 0.01662553299669391,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_622086",
+        "total_clicks": 25,
+        "active_days": 9,
+        "engagement_score": 0.016704884569911493,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2612725",
+        "total_clicks": 286,
+        "active_days": 6,
+        "engagement_score": 0.016715390271154384,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648868",
+        "total_clicks": 204,
+        "active_days": 7,
+        "engagement_score": 0.01681545521277994,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650849",
+        "total_clicks": 207,
+        "active_days": 7,
+        "engagement_score": 0.01687759531800385,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_607600",
+        "total_clicks": 124,
+        "active_days": 8,
+        "engagement_score": 0.016956946891221437,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_646502",
+        "total_clicks": 211,
+        "active_days": 7,
+        "engagement_score": 0.016960448791635732,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685557",
+        "total_clicks": 125,
+        "active_days": 8,
+        "engagement_score": 0.016977660259629407,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_279879",
+        "total_clicks": 128,
+        "active_days": 8,
+        "engagement_score": 0.01703980036485332,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2274929",
+        "total_clicks": 130,
+        "active_days": 8,
+        "engagement_score": 0.01708122710166926,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_624730",
+        "total_clicks": 134,
+        "active_days": 8,
+        "engagement_score": 0.017164080575301142,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_676138",
+        "total_clicks": 49,
+        "active_days": 9,
+        "engagement_score": 0.017202005411702786,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_636243",
+        "total_clicks": 50,
+        "active_days": 9,
+        "engagement_score": 0.017222718780110755,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_652971",
+        "total_clicks": 141,
+        "active_days": 8,
+        "engagement_score": 0.017309074154156934,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_604379",
+        "total_clicks": 141,
+        "active_days": 8,
+        "engagement_score": 0.017309074154156934,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_697490",
+        "total_clicks": 148,
+        "active_days": 8,
+        "engagement_score": 0.01745406773301273,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2630469",
+        "total_clicks": 152,
+        "active_days": 8,
+        "engagement_score": 0.01753692120664461,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_566664",
+        "total_clicks": 155,
+        "active_days": 8,
+        "engagement_score": 0.017599061311868523,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_652994",
+        "total_clicks": 71,
+        "active_days": 9,
+        "engagement_score": 0.017657699516678137,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_585222",
+        "total_clicks": 71,
+        "active_days": 9,
+        "engagement_score": 0.017657699516678137,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_646841",
+        "total_clicks": 158,
+        "active_days": 8,
+        "engagement_score": 0.017661201417092435,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2633981",
+        "total_clicks": 245,
+        "active_days": 7,
+        "engagement_score": 0.01766470331750673,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_595655",
+        "total_clicks": 72,
+        "active_days": 9,
+        "engagement_score": 0.017678412885086106,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1896088",
+        "total_clicks": 75,
+        "active_days": 9,
+        "engagement_score": 0.017740552990310018,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_406326",
+        "total_clicks": 249,
+        "active_days": 7,
+        "engagement_score": 0.01774755679113861,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_651963",
+        "total_clicks": 77,
+        "active_days": 9,
+        "engagement_score": 0.01778197972712596,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_682309",
+        "total_clicks": 82,
+        "active_days": 9,
+        "engagement_score": 0.01788554656916581,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_584077",
+        "total_clicks": 82,
+        "active_days": 9,
+        "engagement_score": 0.01788554656916581,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2677097",
+        "total_clicks": 83,
+        "active_days": 9,
+        "engagement_score": 0.017906259937573783,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_548926",
+        "total_clicks": 170,
+        "active_days": 8,
+        "engagement_score": 0.01790976183798808,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2373648",
+        "total_clicks": 170,
+        "active_days": 8,
+        "engagement_score": 0.01790976183798808,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_260062",
+        "total_clicks": 86,
+        "active_days": 9,
+        "engagement_score": 0.017968400042797695,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_632626",
+        "total_clicks": 175,
+        "active_days": 8,
+        "engagement_score": 0.018013328680027932,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_278600",
+        "total_clicks": 91,
+        "active_days": 9,
+        "engagement_score": 0.018071966884837545,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_635410",
+        "total_clicks": 92,
+        "active_days": 9,
+        "engagement_score": 0.018092680253245518,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679363",
+        "total_clicks": 267,
+        "active_days": 7,
+        "engagement_score": 0.01812039742248208,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_548922",
+        "total_clicks": 101,
+        "active_days": 9,
+        "engagement_score": 0.01827910056891725,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_577427",
+        "total_clicks": 189,
+        "active_days": 8,
+        "engagement_score": 0.01830331583773952,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_470617",
+        "total_clicks": 103,
+        "active_days": 9,
+        "engagement_score": 0.018320527305733192,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685802",
+        "total_clicks": 103,
+        "active_days": 9,
+        "engagement_score": 0.018320527305733192,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_575265",
+        "total_clicks": 106,
+        "active_days": 9,
+        "engagement_score": 0.018382667410957104,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1478030",
+        "total_clicks": 111,
+        "active_days": 9,
+        "engagement_score": 0.018486234252996957,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_119310",
+        "total_clicks": 119,
+        "active_days": 9,
+        "engagement_score": 0.01865194120026072,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_132423",
+        "total_clicks": 121,
+        "active_days": 9,
+        "engagement_score": 0.01869336793707666,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_649856",
+        "total_clicks": 297,
+        "active_days": 7,
+        "engagement_score": 0.018741798474721197,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_687348",
+        "total_clicks": 386,
+        "active_days": 6,
+        "engagement_score": 0.018786727111951437,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_686034",
+        "total_clicks": 127,
+        "active_days": 9,
+        "engagement_score": 0.018817648147524485,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650414",
+        "total_clicks": 129,
+        "active_days": 9,
+        "engagement_score": 0.018859074884340424,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_629748",
+        "total_clicks": 304,
+        "active_days": 7,
+        "engagement_score": 0.01888679205357699,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_533006",
+        "total_clicks": 131,
+        "active_days": 9,
+        "engagement_score": 0.018900501621156366,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647947",
+        "total_clicks": 131,
+        "active_days": 9,
+        "engagement_score": 0.018900501621156366,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_329455",
+        "total_clicks": 311,
+        "active_days": 7,
+        "engagement_score": 0.019031785632432782,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_594399",
+        "total_clicks": 139,
+        "active_days": 9,
+        "engagement_score": 0.01906620856842013,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_628806",
+        "total_clicks": 58,
+        "active_days": 10,
+        "engagement_score": 0.019186986878453657,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_686797",
+        "total_clicks": 145,
+        "active_days": 9,
+        "engagement_score": 0.019190488778867955,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1491894",
+        "total_clicks": 145,
+        "active_days": 9,
+        "engagement_score": 0.019190488778867955,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_481618",
+        "total_clicks": 60,
+        "active_days": 10,
+        "engagement_score": 0.019228413615269595,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1864086",
+        "total_clicks": 147,
+        "active_days": 9,
+        "engagement_score": 0.019231915515683894,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_588556",
+        "total_clicks": 149,
+        "active_days": 9,
+        "engagement_score": 0.019273342252499836,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694147",
+        "total_clicks": 63,
+        "active_days": 10,
+        "engagement_score": 0.019290553720493507,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_695340",
+        "total_clicks": 238,
+        "active_days": 8,
+        "engagement_score": 0.019318270889730073,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_163067",
+        "total_clicks": 68,
+        "active_days": 10,
+        "engagement_score": 0.01939412056253336,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_532649",
+        "total_clicks": 157,
+        "active_days": 9,
+        "engagement_score": 0.019439049199763598,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_563951",
+        "total_clicks": 246,
+        "active_days": 8,
+        "engagement_score": 0.01948397783699384,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_655293",
+        "total_clicks": 73,
+        "active_days": 10,
+        "engagement_score": 0.01949768740457321,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648606",
+        "total_clicks": 250,
+        "active_days": 8,
+        "engagement_score": 0.01956683131062572,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_330952",
+        "total_clicks": 80,
+        "active_days": 10,
+        "engagement_score": 0.019642680983429008,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_472309",
+        "total_clicks": 80,
+        "active_days": 10,
+        "engagement_score": 0.019642680983429008,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_622972",
+        "total_clicks": 83,
+        "active_days": 10,
+        "engagement_score": 0.01970482108865292,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_621380",
+        "total_clicks": 170,
+        "active_days": 9,
+        "engagement_score": 0.019708322989067217,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_599976",
+        "total_clicks": 84,
+        "active_days": 10,
+        "engagement_score": 0.01972553445706089,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_446479",
+        "total_clicks": 442,
+        "active_days": 6,
+        "engagement_score": 0.019946675742797786,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_592259",
+        "total_clicks": 95,
+        "active_days": 10,
+        "engagement_score": 0.019953381509548562,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_96864",
+        "total_clicks": 96,
+        "active_days": 10,
+        "engagement_score": 0.019974094877956535,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_618590",
+        "total_clicks": 96,
+        "active_days": 10,
+        "engagement_score": 0.019974094877956535,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_492020",
+        "total_clicks": 105,
+        "active_days": 10,
+        "engagement_score": 0.02016051519362827,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679179",
+        "total_clicks": 194,
+        "active_days": 9,
+        "engagement_score": 0.020205443830858507,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_319492",
+        "total_clicks": 108,
+        "active_days": 10,
+        "engagement_score": 0.02022265529885218,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_596812",
+        "total_clicks": 286,
+        "active_days": 8,
+        "engagement_score": 0.02031251257331266,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_689527",
+        "total_clicks": 117,
+        "active_days": 10,
+        "engagement_score": 0.020409075614523917,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_573689",
+        "total_clicks": 33,
+        "active_days": 11,
+        "engagement_score": 0.02046771381933353,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1841850",
+        "total_clicks": 33,
+        "active_days": 11,
+        "engagement_score": 0.02046771381933353,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650085",
+        "total_clicks": 120,
+        "active_days": 10,
+        "engagement_score": 0.020471215719747825,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_643757",
+        "total_clicks": 121,
+        "active_days": 10,
+        "engagement_score": 0.020491929088155798,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_369208",
+        "total_clicks": 125,
+        "active_days": 10,
+        "engagement_score": 0.02057478256178768,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_625126",
+        "total_clicks": 215,
+        "active_days": 9,
+        "engagement_score": 0.02064042456742589,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2367058",
+        "total_clicks": 45,
+        "active_days": 11,
+        "engagement_score": 0.020716274240229173,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_389267",
+        "total_clicks": 138,
+        "active_days": 10,
+        "engagement_score": 0.020844056351091295,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_433508",
+        "total_clicks": 59,
+        "active_days": 11,
+        "engagement_score": 0.021006261397940762,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_430020",
+        "total_clicks": 235,
+        "active_days": 9,
+        "engagement_score": 0.021054691935585297,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_569049",
+        "total_clicks": 152,
+        "active_days": 10,
+        "engagement_score": 0.021134043508802883,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_128072",
+        "total_clicks": 153,
+        "active_days": 10,
+        "engagement_score": 0.021154756877210853,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_646689",
+        "total_clicks": 240,
+        "active_days": 9,
+        "engagement_score": 0.02115825877762515,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2421961",
+        "total_clicks": 68,
+        "active_days": 11,
+        "engagement_score": 0.021192681713612497,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1719166",
+        "total_clicks": 158,
+        "active_days": 10,
+        "engagement_score": 0.021258323719250707,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_587881",
+        "total_clicks": 164,
+        "active_days": 10,
+        "engagement_score": 0.02138260392969853,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_497955",
+        "total_clicks": 253,
+        "active_days": 9,
+        "engagement_score": 0.021427532566928767,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_498602",
+        "total_clicks": 253,
+        "active_days": 9,
+        "engagement_score": 0.021427532566928767,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_634193",
+        "total_clicks": 347,
+        "active_days": 8,
+        "engagement_score": 0.02157602804619886,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647735",
+        "total_clicks": 174,
+        "active_days": 10,
+        "engagement_score": 0.021589737613778234,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_549113",
+        "total_clicks": 174,
+        "active_days": 10,
+        "engagement_score": 0.021589737613778234,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_639176",
+        "total_clicks": 435,
+        "active_days": 7,
+        "engagement_score": 0.021600243315021125,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_371429",
+        "total_clicks": 438,
+        "active_days": 7,
+        "engagement_score": 0.021662383420245037,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2554973",
+        "total_clicks": 96,
+        "active_days": 11,
+        "engagement_score": 0.02177265602903567,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1468838",
+        "total_clicks": 188,
+        "active_days": 10,
+        "engagement_score": 0.02187972477148982,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_587122",
+        "total_clicks": 275,
+        "active_days": 9,
+        "engagement_score": 0.021883226671904118,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648872",
+        "total_clicks": 190,
+        "active_days": 10,
+        "engagement_score": 0.021921151508305762,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2578004",
+        "total_clicks": 111,
+        "active_days": 11,
+        "engagement_score": 0.02208335655515523,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2094849",
+        "total_clicks": 112,
+        "active_days": 11,
+        "engagement_score": 0.0221040699235632,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_589723",
+        "total_clicks": 202,
+        "active_days": 10,
+        "engagement_score": 0.02216971192920141,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_572816",
+        "total_clicks": 120,
+        "active_days": 11,
+        "engagement_score": 0.022269776870826964,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_469281",
+        "total_clicks": 207,
+        "active_days": 10,
+        "engagement_score": 0.02227327877124126,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2483382",
+        "total_clicks": 294,
+        "active_days": 9,
+        "engagement_score": 0.02227678067165556,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_73664",
+        "total_clicks": 38,
+        "active_days": 12,
+        "engagement_score": 0.02236984181245252,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_360483",
+        "total_clicks": 127,
+        "active_days": 11,
+        "engagement_score": 0.022414770449682757,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_574891",
+        "total_clicks": 45,
+        "active_days": 12,
+        "engagement_score": 0.022514835391308313,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_469614",
+        "total_clicks": 51,
+        "active_days": 12,
+        "engagement_score": 0.022639115601756136,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2032057",
+        "total_clicks": 138,
+        "active_days": 11,
+        "engagement_score": 0.02264261750217043,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_857856",
+        "total_clicks": 142,
+        "active_days": 11,
+        "engagement_score": 0.022725470975802315,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_529975",
+        "total_clicks": 142,
+        "active_days": 11,
+        "engagement_score": 0.022725470975802315,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_637325",
+        "total_clicks": 147,
+        "active_days": 11,
+        "engagement_score": 0.022829037817842165,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_488755",
+        "total_clicks": 149,
+        "active_days": 11,
+        "engagement_score": 0.022870464554658108,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_696019",
+        "total_clicks": 63,
+        "active_days": 12,
+        "engagement_score": 0.022887676022651782,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_263150",
+        "total_clicks": 151,
+        "active_days": 11,
+        "engagement_score": 0.02291189129147405,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_507031",
+        "total_clicks": 66,
+        "active_days": 12,
+        "engagement_score": 0.022949816127875694,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2561862",
+        "total_clicks": 154,
+        "active_days": 11,
+        "engagement_score": 0.022974031396697958,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_608571",
+        "total_clicks": 248,
+        "active_days": 10,
+        "engagement_score": 0.023122526875968052,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685015",
+        "total_clicks": 81,
+        "active_days": 12,
+        "engagement_score": 0.023260516653995252,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_681844",
+        "total_clicks": 172,
+        "active_days": 11,
+        "engagement_score": 0.023346872028041428,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_629822",
+        "total_clicks": 86,
+        "active_days": 12,
+        "engagement_score": 0.023364083496035106,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_633047",
+        "total_clicks": 173,
+        "active_days": 11,
+        "engagement_score": 0.023367585396449397,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_692933",
+        "total_clicks": 176,
+        "active_days": 11,
+        "engagement_score": 0.023429725501673312,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_692179",
+        "total_clicks": 181,
+        "active_days": 11,
+        "engagement_score": 0.023533292343713163,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_609527",
+        "total_clicks": 356,
+        "active_days": 9,
+        "engagement_score": 0.02356100951294973,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_529309",
+        "total_clicks": 183,
+        "active_days": 11,
+        "engagement_score": 0.023574719080529105,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_335914",
+        "total_clicks": 98,
+        "active_days": 12,
+        "engagement_score": 0.02361264391693075,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_622384",
+        "total_clicks": 98,
+        "active_days": 12,
+        "engagement_score": 0.02361264391693075,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_638426",
+        "total_clicks": 275,
+        "active_days": 10,
+        "engagement_score": 0.023681787822983254,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_28952",
+        "total_clicks": 105,
+        "active_days": 12,
+        "engagement_score": 0.023757637495786545,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_268018",
+        "total_clicks": 280,
+        "active_days": 10,
+        "engagement_score": 0.023785354665023108,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1841267",
+        "total_clicks": 107,
+        "active_days": 12,
+        "engagement_score": 0.023799064232602484,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_526124",
+        "total_clicks": 108,
+        "active_days": 12,
+        "engagement_score": 0.023819777601010457,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_637089",
+        "total_clicks": 374,
+        "active_days": 9,
+        "engagement_score": 0.0239338501442932,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_675442",
+        "total_clicks": 377,
+        "active_days": 9,
+        "engagement_score": 0.02399599024951711,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_509148",
+        "total_clicks": 204,
+        "active_days": 11,
+        "engagement_score": 0.024009699817096483,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_572588",
+        "total_clicks": 204,
+        "active_days": 11,
+        "engagement_score": 0.024009699817096483,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_610537",
+        "total_clicks": 121,
+        "active_days": 12,
+        "engagement_score": 0.024089051390314073,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_696234",
+        "total_clicks": 124,
+        "active_days": 12,
+        "engagement_score": 0.024151191495537985,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_590519",
+        "total_clicks": 220,
+        "active_days": 11,
+        "engagement_score": 0.024341113711624014,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_74290",
+        "total_clicks": 47,
+        "active_days": 13,
+        "engagement_score": 0.02435482327920339,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_305036",
+        "total_clicks": 223,
+        "active_days": 11,
+        "engagement_score": 0.024403253816847922,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2139273",
+        "total_clicks": 138,
+        "active_days": 12,
+        "engagement_score": 0.02444117865324957,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_539727",
+        "total_clicks": 401,
+        "active_days": 9,
+        "engagement_score": 0.024493111091308403,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2424697",
+        "total_clicks": 233,
+        "active_days": 11,
+        "engagement_score": 0.02461038750092763,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_550393",
+        "total_clicks": 150,
+        "active_days": 12,
+        "engagement_score": 0.024689739074145216,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_512330",
+        "total_clicks": 77,
+        "active_days": 13,
+        "engagement_score": 0.024976224331442507,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_656634",
+        "total_clicks": 254,
+        "active_days": 11,
+        "engagement_score": 0.025045368237495008,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_482868",
+        "total_clicks": 172,
+        "active_days": 12,
+        "engagement_score": 0.025145433179120567,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_369242",
+        "total_clicks": 259,
+        "active_days": 11,
+        "engagement_score": 0.025148935079534862,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_618982",
+        "total_clicks": 88,
+        "active_days": 13,
+        "engagement_score": 0.02520407138393018,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_695643",
+        "total_clicks": 263,
+        "active_days": 11,
+        "engagement_score": 0.025231788553166747,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_683220",
+        "total_clicks": 181,
+        "active_days": 12,
+        "engagement_score": 0.025331853494792302,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_499683",
+        "total_clicks": 278,
+        "active_days": 11,
+        "engagement_score": 0.0255424890792863,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_632700",
+        "total_clicks": 198,
+        "active_days": 12,
+        "engagement_score": 0.0256839807577278,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_612439",
+        "total_clicks": 200,
+        "active_days": 12,
+        "engagement_score": 0.02572540749454374,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_539408",
+        "total_clicks": 375,
+        "active_days": 10,
+        "engagement_score": 0.025753124663780304,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_689143",
+        "total_clicks": 116,
+        "active_days": 13,
+        "engagement_score": 0.025784045699353355,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_677887",
+        "total_clicks": 210,
+        "active_days": 12,
+        "engagement_score": 0.025932541178623446,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_587641",
+        "total_clicks": 212,
+        "active_days": 12,
+        "engagement_score": 0.025973967915439388,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_525060",
+        "total_clicks": 213,
+        "active_days": 12,
+        "engagement_score": 0.02599468128384736,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_634817",
+        "total_clicks": 132,
+        "active_days": 13,
+        "engagement_score": 0.026115459593880883,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_571610",
+        "total_clicks": 224,
+        "active_days": 12,
+        "engagement_score": 0.026222528336335035,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_425053",
+        "total_clicks": 398,
+        "active_days": 10,
+        "engagement_score": 0.026229532137163628,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_479649",
+        "total_clicks": 227,
+        "active_days": 12,
+        "engagement_score": 0.026284668441558946,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_599297",
+        "total_clicks": 144,
+        "active_days": 13,
+        "engagement_score": 0.02636402001477653,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_54062",
+        "total_clicks": 147,
+        "active_days": 13,
+        "engagement_score": 0.02642616012000044,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_492537",
+        "total_clicks": 62,
+        "active_days": 14,
+        "engagement_score": 0.026464084956402085,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_574507",
+        "total_clicks": 150,
+        "active_days": 13,
+        "engagement_score": 0.026488300225224352,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2622627",
+        "total_clicks": 150,
+        "active_days": 13,
+        "engagement_score": 0.026488300225224352,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_612283",
+        "total_clicks": 152,
+        "active_days": 13,
+        "engagement_score": 0.026529726962040295,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_322499",
+        "total_clicks": 239,
+        "active_days": 12,
+        "engagement_score": 0.026533228862454593,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_641684",
+        "total_clicks": 241,
+        "active_days": 12,
+        "engagement_score": 0.02657465559927053,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2202076",
+        "total_clicks": 328,
+        "active_days": 11,
+        "engagement_score": 0.026578157499684826,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_524170",
+        "total_clicks": 244,
+        "active_days": 12,
+        "engagement_score": 0.026636795704494443,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_542180",
+        "total_clicks": 245,
+        "active_days": 12,
+        "engagement_score": 0.026657509072902416,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_653177",
+        "total_clicks": 250,
+        "active_days": 12,
+        "engagement_score": 0.026761075914942267,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_401011",
+        "total_clicks": 341,
+        "active_days": 11,
+        "engagement_score": 0.026847431288988442,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_200372",
+        "total_clicks": 83,
+        "active_days": 14,
+        "engagement_score": 0.026899065692969466,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_610324",
+        "total_clicks": 84,
+        "active_days": 14,
+        "engagement_score": 0.026919779061377436,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_564931",
+        "total_clicks": 176,
+        "active_days": 13,
+        "engagement_score": 0.027026847803831584,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_600350",
+        "total_clicks": 176,
+        "active_days": 13,
+        "engagement_score": 0.027026847803831584,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_247304",
+        "total_clicks": 177,
+        "active_days": 13,
+        "engagement_score": 0.027047561172239557,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_557608",
+        "total_clicks": 264,
+        "active_days": 12,
+        "engagement_score": 0.027051063072653855,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_597166",
+        "total_clicks": 181,
+        "active_days": 13,
+        "engagement_score": 0.027130414645871438,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_492613",
+        "total_clicks": 182,
+        "active_days": 13,
+        "engagement_score": 0.027151128014279408,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_653998",
+        "total_clicks": 359,
+        "active_days": 11,
+        "engagement_score": 0.027220271920331912,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_526132",
+        "total_clicks": 100,
+        "active_days": 14,
+        "engagement_score": 0.027251192955904963,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_522004",
+        "total_clicks": 275,
+        "active_days": 12,
+        "engagement_score": 0.02727891012514153,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_645867",
+        "total_clicks": 363,
+        "active_days": 11,
+        "engagement_score": 0.027303125393963797,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_698112",
+        "total_clicks": 191,
+        "active_days": 13,
+        "engagement_score": 0.027337548329951143,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_497536",
+        "total_clicks": 195,
+        "active_days": 13,
+        "engagement_score": 0.027420401803583024,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_234957",
+        "total_clicks": 25,
+        "active_days": 15,
+        "engagement_score": 0.02749625147638631,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_697460",
+        "total_clicks": 205,
+        "active_days": 13,
+        "engagement_score": 0.02762753548766273,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_680222",
+        "total_clicks": 213,
+        "active_days": 13,
+        "engagement_score": 0.027793242434926493,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_358075",
+        "total_clicks": 214,
+        "active_days": 13,
+        "engagement_score": 0.027813955803334466,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2462862",
+        "total_clicks": 128,
+        "active_days": 14,
+        "engagement_score": 0.027831167271328137,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654755",
+        "total_clicks": 128,
+        "active_days": 14,
+        "engagement_score": 0.027831167271328137,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_643690",
+        "total_clicks": 215,
+        "active_days": 13,
+        "engagement_score": 0.027834669171742436,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2588294",
+        "total_clicks": 217,
+        "active_days": 13,
+        "engagement_score": 0.027876095908558378,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_190780",
+        "total_clicks": 218,
+        "active_days": 13,
+        "engagement_score": 0.027896809276966347,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_464780",
+        "total_clicks": 314,
+        "active_days": 12,
+        "engagement_score": 0.02808673149305238,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_199261",
+        "total_clicks": 402,
+        "active_days": 11,
+        "engagement_score": 0.028110946761874644,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_642790",
+        "total_clicks": 57,
+        "active_days": 15,
+        "engagement_score": 0.028159079265441367,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_553741",
+        "total_clicks": 59,
+        "active_days": 15,
+        "engagement_score": 0.02820050600225731,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_604825",
+        "total_clicks": 235,
+        "active_days": 13,
+        "engagement_score": 0.028248936539901848,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_577149",
+        "total_clicks": 238,
+        "active_days": 13,
+        "engagement_score": 0.028311076645125756,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_628803",
+        "total_clicks": 240,
+        "active_days": 13,
+        "engagement_score": 0.028352503381941698,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_574508",
+        "total_clicks": 416,
+        "active_days": 11,
+        "engagement_score": 0.02840093391958623,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_645590",
+        "total_clicks": 158,
+        "active_days": 14,
+        "engagement_score": 0.028452568323567254,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694807",
+        "total_clicks": 158,
+        "active_days": 14,
+        "engagement_score": 0.028452568323567254,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_353804",
+        "total_clicks": 75,
+        "active_days": 15,
+        "engagement_score": 0.028531919896784837,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_478562",
+        "total_clicks": 249,
+        "active_days": 13,
+        "engagement_score": 0.028538923697613433,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_510460",
+        "total_clicks": 336,
+        "active_days": 12,
+        "engagement_score": 0.02854242559802773,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_512546",
+        "total_clicks": 166,
+        "active_days": 14,
+        "engagement_score": 0.028618275270831016,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_649607",
+        "total_clicks": 253,
+        "active_days": 13,
+        "engagement_score": 0.028621777171245314,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_545758",
+        "total_clicks": 178,
+        "active_days": 14,
+        "engagement_score": 0.028866835691726662,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_561848",
+        "total_clicks": 266,
+        "active_days": 13,
+        "engagement_score": 0.028891050960548934,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_638243",
+        "total_clicks": 183,
+        "active_days": 14,
+        "engagement_score": 0.028970402533766516,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_610287",
+        "total_clicks": 102,
+        "active_days": 15,
+        "engagement_score": 0.02909118084380004,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_585643",
+        "total_clicks": 281,
+        "active_days": 13,
+        "engagement_score": 0.029201751486668488,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_573473",
+        "total_clicks": 195,
+        "active_days": 14,
+        "engagement_score": 0.029218962954662163,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_285637",
+        "total_clicks": 196,
+        "active_days": 14,
+        "engagement_score": 0.029239676323070132,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_682226",
+        "total_clicks": 197,
+        "active_days": 14,
+        "engagement_score": 0.0292603896914781,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_348351",
+        "total_clicks": 377,
+        "active_days": 12,
+        "engagement_score": 0.02939167370275452,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648448",
+        "total_clicks": 206,
+        "active_days": 14,
+        "engagement_score": 0.029446810007149837,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_644516",
+        "total_clicks": 124,
+        "active_days": 15,
+        "engagement_score": 0.029546874948775392,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_691257",
+        "total_clicks": 126,
+        "active_days": 15,
+        "engagement_score": 0.02958830168559133,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_566694",
+        "total_clicks": 127,
+        "active_days": 15,
+        "engagement_score": 0.029609015053999304,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_612568",
+        "total_clicks": 217,
+        "active_days": 14,
+        "engagement_score": 0.029674657059637514,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_610622",
+        "total_clicks": 136,
+        "active_days": 15,
+        "engagement_score": 0.02979543536967104,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_235121",
+        "total_clicks": 51,
+        "active_days": 16,
+        "engagement_score": 0.029833360206072683,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_505403",
+        "total_clicks": 146,
+        "active_days": 15,
+        "engagement_score": 0.030002569053750743,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_590886",
+        "total_clicks": 73,
+        "active_days": 16,
+        "engagement_score": 0.030289054311048034,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_628618",
+        "total_clicks": 248,
+        "active_days": 14,
+        "engagement_score": 0.030316771480284596,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_609823",
+        "total_clicks": 249,
+        "active_days": 14,
+        "engagement_score": 0.03033748484869257,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_646363",
+        "total_clicks": 163,
+        "active_days": 15,
+        "engagement_score": 0.03035469631668624,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_496530",
+        "total_clicks": 168,
+        "active_days": 15,
+        "engagement_score": 0.030458263158726094,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_587082",
+        "total_clicks": 169,
+        "active_days": 15,
+        "engagement_score": 0.030478976527134063,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_689042",
+        "total_clicks": 343,
+        "active_days": 13,
+        "engagement_score": 0.03048598032796266,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_523239",
+        "total_clicks": 174,
+        "active_days": 15,
+        "engagement_score": 0.030582543369173917,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_423664",
+        "total_clicks": 262,
+        "active_days": 14,
+        "engagement_score": 0.030606758637996185,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_573920",
+        "total_clicks": 178,
+        "active_days": 15,
+        "engagement_score": 0.0306653968428058,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2555596",
+        "total_clicks": 180,
+        "active_days": 15,
+        "engagement_score": 0.03070682357962174,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_358578",
+        "total_clicks": 269,
+        "active_days": 14,
+        "engagement_score": 0.030751752216851978,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_445921",
+        "total_clicks": 270,
+        "active_days": 14,
+        "engagement_score": 0.03077246558525995,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650105",
+        "total_clicks": 194,
+        "active_days": 15,
+        "engagement_score": 0.030996810737333326,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_382378",
+        "total_clicks": 195,
+        "active_days": 15,
+        "engagement_score": 0.031017524105741295,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647869",
+        "total_clicks": 282,
+        "active_days": 14,
+        "engagement_score": 0.031021026006155597,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_568307",
+        "total_clicks": 290,
+        "active_days": 14,
+        "engagement_score": 0.03118673295341936,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_627581",
+        "total_clicks": 126,
+        "active_days": 16,
+        "engagement_score": 0.03138686283667047,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_487570",
+        "total_clicks": 214,
+        "active_days": 15,
+        "engagement_score": 0.031411078105492735,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_528700",
+        "total_clicks": 216,
+        "active_days": 15,
+        "engagement_score": 0.03145250484230868,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_324338",
+        "total_clicks": 218,
+        "active_days": 15,
+        "engagement_score": 0.03149393157912462,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679271",
+        "total_clicks": 135,
+        "active_days": 16,
+        "engagement_score": 0.03157328315234221,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_676469",
+        "total_clicks": 144,
+        "active_days": 16,
+        "engagement_score": 0.03175970346801394,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_509710",
+        "total_clicks": 242,
+        "active_days": 15,
+        "engagement_score": 0.03199105242091591,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_633334",
+        "total_clicks": 156,
+        "active_days": 16,
+        "engagement_score": 0.03200826388890959,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_682414",
+        "total_clicks": 247,
+        "active_days": 15,
+        "engagement_score": 0.032094619262955766,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_519506",
+        "total_clicks": 266,
+        "active_days": 15,
+        "engagement_score": 0.032488173262707205,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1529458",
+        "total_clicks": 469,
+        "active_days": 13,
+        "engagement_score": 0.03309586474736694,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_688843",
+        "total_clicks": 218,
+        "active_days": 16,
+        "engagement_score": 0.03329249273020376,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_547506",
+        "total_clicks": 224,
+        "active_days": 16,
+        "engagement_score": 0.03341677294065158,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_690763",
+        "total_clicks": 225,
+        "active_days": 16,
+        "engagement_score": 0.03343748630905955,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_632389",
+        "total_clicks": 313,
+        "active_days": 15,
+        "engagement_score": 0.033461701577881815,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_579325",
+        "total_clicks": 503,
+        "active_days": 13,
+        "engagement_score": 0.03380011927323794,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_630200",
+        "total_clicks": 246,
+        "active_days": 16,
+        "engagement_score": 0.033872467045626936,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_96874",
+        "total_clicks": 164,
+        "active_days": 17,
+        "engagement_score": 0.03397253198725249,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_401258",
+        "total_clicks": 349,
+        "active_days": 15,
+        "engagement_score": 0.034207382840568755,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_511350",
+        "total_clicks": 176,
+        "active_days": 17,
+        "engagement_score": 0.034221092408148135,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694705",
+        "total_clicks": 271,
+        "active_days": 16,
+        "engagement_score": 0.03439030125582619,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2268049",
+        "total_clicks": 273,
+        "active_days": 16,
+        "engagement_score": 0.03443172799264214,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_655408",
+        "total_clicks": 282,
+        "active_days": 16,
+        "engagement_score": 0.03461814830831387,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_124711",
+        "total_clicks": 196,
+        "active_days": 17,
+        "engagement_score": 0.034635359776307544,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_692500",
+        "total_clicks": 297,
+        "active_days": 16,
+        "engagement_score": 0.03492884883443343,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_285412",
+        "total_clicks": 306,
+        "active_days": 16,
+        "engagement_score": 0.03511526915010516,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2439239",
+        "total_clicks": 393,
+        "active_days": 15,
+        "engagement_score": 0.03511877105051946,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694914",
+        "total_clicks": 481,
+        "active_days": 14,
+        "engagement_score": 0.03514298631934173,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_581770",
+        "total_clicks": 231,
+        "active_days": 17,
+        "engagement_score": 0.035360327670586514,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_584553",
+        "total_clicks": 321,
+        "active_days": 16,
+        "engagement_score": 0.03542596967622472,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2472995",
+        "total_clicks": 408,
+        "active_days": 15,
+        "engagement_score": 0.03542947157663902,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_651217",
+        "total_clicks": 323,
+        "active_days": 16,
+        "engagement_score": 0.03546739641304066,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_542054",
+        "total_clicks": 415,
+        "active_days": 15,
+        "engagement_score": 0.03557446515549481,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_551220",
+        "total_clicks": 243,
+        "active_days": 17,
+        "engagement_score": 0.03560888809148216,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_612127",
+        "total_clicks": 245,
+        "active_days": 17,
+        "engagement_score": 0.0356503148282981,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_638504",
+        "total_clicks": 339,
+        "active_days": 16,
+        "engagement_score": 0.03579881030756819,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_605468",
+        "total_clicks": 266,
+        "active_days": 17,
+        "engagement_score": 0.03608529556486548,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_646553",
+        "total_clicks": 269,
+        "active_days": 17,
+        "engagement_score": 0.03614743567008939,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_544720",
+        "total_clicks": 277,
+        "active_days": 17,
+        "engagement_score": 0.036313142617353154,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_692219",
+        "total_clicks": 283,
+        "active_days": 17,
+        "engagement_score": 0.03643742282780098,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_585662",
+        "total_clicks": 374,
+        "active_days": 16,
+        "engagement_score": 0.03652377820184716,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_467381",
+        "total_clicks": 375,
+        "active_days": 16,
+        "engagement_score": 0.036544491570255126,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_104480",
+        "total_clicks": 203,
+        "active_days": 18,
+        "engagement_score": 0.036578914506242476,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_561113",
+        "total_clicks": 294,
+        "active_days": 17,
+        "engagement_score": 0.036665269880288655,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_628480",
+        "total_clicks": 294,
+        "active_days": 17,
+        "engagement_score": 0.036665269880288655,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_502353",
+        "total_clicks": 215,
+        "active_days": 18,
+        "engagement_score": 0.036827474927138115,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_185057",
+        "total_clicks": 302,
+        "active_days": 17,
+        "engagement_score": 0.03683097682755242,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_130671",
+        "total_clicks": 219,
+        "active_days": 18,
+        "engagement_score": 0.03691032840077,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_688171",
+        "total_clicks": 134,
+        "active_days": 19,
+        "engagement_score": 0.036948253237171644,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_359657",
+        "total_clicks": 222,
+        "active_days": 18,
+        "engagement_score": 0.036972468505993915,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1461795",
+        "total_clicks": 324,
+        "active_days": 17,
+        "engagement_score": 0.03728667093252777,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_341361",
+        "total_clicks": 238,
+        "active_days": 18,
+        "engagement_score": 0.03730388240052144,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_624860",
+        "total_clicks": 239,
+        "active_days": 18,
+        "engagement_score": 0.03732459576892941,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_620819",
+        "total_clicks": 332,
+        "active_days": 17,
+        "engagement_score": 0.03745237787979153,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_633238",
+        "total_clicks": 159,
+        "active_days": 19,
+        "engagement_score": 0.03746608744737091,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_518134",
+        "total_clicks": 333,
+        "active_days": 17,
+        "engagement_score": 0.0374730912481995,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_591733",
+        "total_clicks": 510,
+        "active_days": 15,
+        "engagement_score": 0.03754223515425201,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_610684",
+        "total_clicks": 338,
+        "active_days": 17,
+        "engagement_score": 0.03757665809023936,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_522708",
+        "total_clicks": 341,
+        "active_days": 17,
+        "engagement_score": 0.037638798195463265,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_610681",
+        "total_clicks": 430,
+        "active_days": 16,
+        "engagement_score": 0.037683726832693505,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_584711",
+        "total_clicks": 170,
+        "active_days": 19,
+        "engagement_score": 0.03769393449985858,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2044299",
+        "total_clicks": 87,
+        "active_days": 20,
+        "engagement_score": 0.037773286073076166,
+        "study_effort_level": "very_low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_334154",
+        "total_clicks": 176,
+        "active_days": 19,
+        "engagement_score": 0.03781821471030641,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_693812",
+        "total_clicks": 350,
+        "active_days": 17,
+        "engagement_score": 0.037825218511135,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_621442",
+        "total_clicks": 178,
+        "active_days": 19,
+        "engagement_score": 0.03785964144712235,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_546934",
+        "total_clicks": 271,
+        "active_days": 18,
+        "engagement_score": 0.03798742355798447,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_470914",
+        "total_clicks": 275,
+        "active_days": 18,
+        "engagement_score": 0.03807027703161635,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_152626",
+        "total_clicks": 455,
+        "active_days": 16,
+        "engagement_score": 0.03820156104289277,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_161781",
+        "total_clicks": 195,
+        "active_days": 19,
+        "engagement_score": 0.038211768710057846,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_256680",
+        "total_clicks": 282,
+        "active_days": 18,
+        "engagement_score": 0.03821527061047214,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_644905",
+        "total_clicks": 287,
+        "active_days": 18,
+        "engagement_score": 0.038318837452511995,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650271",
+        "total_clicks": 212,
+        "active_days": 19,
+        "engagement_score": 0.038563895972993346,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_644848",
+        "total_clicks": 473,
+        "active_days": 16,
+        "engagement_score": 0.03857440167423624,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_623079",
+        "total_clicks": 387,
+        "active_days": 17,
+        "engagement_score": 0.038591613142229905,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1449245",
+        "total_clicks": 399,
+        "active_days": 17,
+        "engagement_score": 0.03884017356312555,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_656954",
+        "total_clicks": 226,
+        "active_days": 19,
+        "engagement_score": 0.03885388313070493,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694150",
+        "total_clicks": 401,
+        "active_days": 17,
+        "engagement_score": 0.0388816002999415,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_486877",
+        "total_clicks": 228,
+        "active_days": 19,
+        "engagement_score": 0.03889530986752088,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_632260",
+        "total_clicks": 151,
+        "active_days": 20,
+        "engagement_score": 0.03909894165118628,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_533512",
+        "total_clicks": 325,
+        "active_days": 18,
+        "engagement_score": 0.03910594545201487,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_606344",
+        "total_clicks": 591,
+        "active_days": 15,
+        "engagement_score": 0.03922001799529762,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_526601",
+        "total_clicks": 333,
+        "active_days": 18,
+        "engagement_score": 0.03927165239927864,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_483793",
+        "total_clicks": 334,
+        "active_days": 18,
+        "engagement_score": 0.03929236576768661,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_367815",
+        "total_clicks": 248,
+        "active_days": 19,
+        "engagement_score": 0.039309577235680286,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_602827",
+        "total_clicks": 337,
+        "active_days": 18,
+        "engagement_score": 0.03935450587291052,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_410176",
+        "total_clicks": 169,
+        "active_days": 20,
+        "engagement_score": 0.039471782282529747,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_590974",
+        "total_clicks": 256,
+        "active_days": 19,
+        "engagement_score": 0.03947528418294405,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_597948",
+        "total_clicks": 518,
+        "active_days": 16,
+        "engagement_score": 0.03950650325259491,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_465619",
+        "total_clicks": 173,
+        "active_days": 20,
+        "engagement_score": 0.03955463575616163,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_630452",
+        "total_clicks": 347,
+        "active_days": 18,
+        "engagement_score": 0.03956163955699023,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_583288",
+        "total_clicks": 267,
+        "active_days": 19,
+        "engagement_score": 0.039703131235431725,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_322907",
+        "total_clicks": 267,
+        "active_days": 19,
+        "engagement_score": 0.039703131235431725,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647406",
+        "total_clicks": 441,
+        "active_days": 17,
+        "engagement_score": 0.039710135036260315,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_577551",
+        "total_clicks": 269,
+        "active_days": 19,
+        "engagement_score": 0.039744557972247664,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_597319",
+        "total_clicks": 184,
+        "active_days": 20,
+        "engagement_score": 0.03978248280864931,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_582530",
+        "total_clicks": 359,
+        "active_days": 18,
+        "engagement_score": 0.039810199977885874,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2338535",
+        "total_clicks": 187,
+        "active_days": 20,
+        "engagement_score": 0.039844622913873216,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_134190",
+        "total_clicks": 363,
+        "active_days": 18,
+        "engagement_score": 0.03989305345151775,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_278413",
+        "total_clicks": 278,
+        "active_days": 19,
+        "engagement_score": 0.0399309782879194,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_70214",
+        "total_clicks": 369,
+        "active_days": 18,
+        "engagement_score": 0.040017333661965575,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_543653",
+        "total_clicks": 198,
+        "active_days": 20,
+        "engagement_score": 0.040072469966360894,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_643770",
+        "total_clicks": 198,
+        "active_days": 20,
+        "engagement_score": 0.040072469966360894,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_421111",
+        "total_clicks": 202,
+        "active_days": 20,
+        "engagement_score": 0.04015532343999277,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_625928",
+        "total_clicks": 290,
+        "active_days": 19,
+        "engagement_score": 0.04017953870881505,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_482938",
+        "total_clicks": 381,
+        "active_days": 18,
+        "engagement_score": 0.04026589408286122,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_690439",
+        "total_clicks": 388,
+        "active_days": 18,
+        "engagement_score": 0.040410887661717014,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685952",
+        "total_clicks": 138,
+        "active_days": 21,
+        "engagement_score": 0.0406282290129618,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_468902",
+        "total_clicks": 316,
+        "active_days": 19,
+        "engagement_score": 0.04071808628742228,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_592657",
+        "total_clicks": 751,
+        "active_days": 14,
+        "engagement_score": 0.04073559578949376,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_575553",
+        "total_clicks": 405,
+        "active_days": 18,
+        "engagement_score": 0.040763014924652514,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_539451",
+        "total_clicks": 405,
+        "active_days": 18,
+        "engagement_score": 0.040763014924652514,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_572746",
+        "total_clicks": 406,
+        "active_days": 18,
+        "engagement_score": 0.040783728293060484,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_640109",
+        "total_clicks": 328,
+        "active_days": 19,
+        "engagement_score": 0.04096664670831793,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_589327",
+        "total_clicks": 415,
+        "active_days": 18,
+        "engagement_score": 0.040970148608732215,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_29411",
+        "total_clicks": 329,
+        "active_days": 19,
+        "engagement_score": 0.0409873600767259,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_554266",
+        "total_clicks": 419,
+        "active_days": 18,
+        "engagement_score": 0.0410530020823641,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_973526",
+        "total_clicks": 680,
+        "active_days": 15,
+        "engagement_score": 0.04106350778360699,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_570671",
+        "total_clicks": 253,
+        "active_days": 20,
+        "engagement_score": 0.04121170522879927,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_620243",
+        "total_clicks": 253,
+        "active_days": 20,
+        "engagement_score": 0.04121170522879927,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_379255",
+        "total_clicks": 254,
+        "active_days": 20,
+        "engagement_score": 0.04123241859720724,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_51576",
+        "total_clicks": 428,
+        "active_days": 18,
+        "engagement_score": 0.04123942239803584,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_367510",
+        "total_clicks": 352,
+        "active_days": 19,
+        "engagement_score": 0.04146376755010922,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_698024",
+        "total_clicks": 355,
+        "active_days": 19,
+        "engagement_score": 0.04152590765533313,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_534203",
+        "total_clicks": 530,
+        "active_days": 17,
+        "engagement_score": 0.04155362482456969,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_165647",
+        "total_clicks": 270,
+        "active_days": 20,
+        "engagement_score": 0.041563832491734766,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_695874",
+        "total_clicks": 618,
+        "active_days": 16,
+        "engagement_score": 0.04157784009339196,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_560554",
+        "total_clicks": 271,
+        "active_days": 20,
+        "engagement_score": 0.041584545860142735,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2242383",
+        "total_clicks": 190,
+        "active_days": 21,
+        "engagement_score": 0.041705324170176264,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2410609",
+        "total_clicks": 365,
+        "active_days": 19,
+        "engagement_score": 0.04173304133941284,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2372788",
+        "total_clicks": 367,
+        "active_days": 19,
+        "engagement_score": 0.041774468076228775,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_641347",
+        "total_clicks": 643,
+        "active_days": 16,
+        "engagement_score": 0.04209567430359122,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_418971",
+        "total_clicks": 211,
+        "active_days": 21,
+        "engagement_score": 0.04214030490674365,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_416284",
+        "total_clicks": 298,
+        "active_days": 20,
+        "engagement_score": 0.042143806807157944,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_693141",
+        "total_clicks": 213,
+        "active_days": 21,
+        "engagement_score": 0.04218173164355959,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_508244",
+        "total_clicks": 484,
+        "active_days": 18,
+        "engagement_score": 0.042399371028882187,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_628706",
+        "total_clicks": 143,
+        "active_days": 22,
+        "engagement_score": 0.042530357006080786,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_582395",
+        "total_clicks": 231,
+        "active_days": 21,
+        "engagement_score": 0.04255457227490306,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_432478",
+        "total_clicks": 322,
+        "active_days": 20,
+        "engagement_score": 0.04264092764894924,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_676526",
+        "total_clicks": 244,
+        "active_days": 21,
+        "engagement_score": 0.04282384606420667,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_540509",
+        "total_clicks": 419,
+        "active_days": 19,
+        "engagement_score": 0.04285156323344324,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648085",
+        "total_clicks": 335,
+        "active_days": 20,
+        "engagement_score": 0.04291020143825285,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_681335",
+        "total_clicks": 257,
+        "active_days": 21,
+        "engagement_score": 0.04309311985351029,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_684990",
+        "total_clicks": 433,
+        "active_days": 19,
+        "engagement_score": 0.04314155039115483,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_559518",
+        "total_clicks": 182,
+        "active_days": 22,
+        "engagement_score": 0.043338178373991634,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_622890",
+        "total_clicks": 271,
+        "active_days": 21,
+        "engagement_score": 0.043383107011221875,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_400266",
+        "total_clicks": 272,
+        "active_days": 21,
+        "engagement_score": 0.04340382037962985,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_546634",
+        "total_clicks": 289,
+        "active_days": 21,
+        "engagement_score": 0.043755947642565345,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_439855",
+        "total_clicks": 292,
+        "active_days": 21,
+        "engagement_score": 0.04381808774778926,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_572589",
+        "total_clicks": 207,
+        "active_days": 22,
+        "engagement_score": 0.0438560125841909,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_676783",
+        "total_clicks": 294,
+        "active_days": 21,
+        "engagement_score": 0.0438595144846052,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_697948",
+        "total_clicks": 216,
+        "active_days": 22,
+        "engagement_score": 0.044042432899862635,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_552666",
+        "total_clicks": 394,
+        "active_days": 20,
+        "engagement_score": 0.04413229017432311,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_643404",
+        "total_clicks": 226,
+        "active_days": 22,
+        "engagement_score": 0.044249566583942336,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_582651",
+        "total_clicks": 315,
+        "active_days": 21,
+        "engagement_score": 0.04429449522117258,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_133419",
+        "total_clicks": 491,
+        "active_days": 19,
+        "engagement_score": 0.04434292575881712,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_602030",
+        "total_clicks": 234,
+        "active_days": 22,
+        "engagement_score": 0.044415273531206105,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_578823",
+        "total_clicks": 326,
+        "active_days": 21,
+        "engagement_score": 0.044522342273660254,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_296725",
+        "total_clicks": 413,
+        "active_days": 20,
+        "engagement_score": 0.04452584417407455,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_508295",
+        "total_clicks": 240,
+        "active_days": 22,
+        "engagement_score": 0.04453955374165393,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_572599",
+        "total_clicks": 258,
+        "active_days": 22,
+        "engagement_score": 0.04491239437299739,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_125777",
+        "total_clicks": 438,
+        "active_days": 20,
+        "engagement_score": 0.04504367838427381,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_580657",
+        "total_clicks": 265,
+        "active_days": 22,
+        "engagement_score": 0.045057387951853184,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_695653",
+        "total_clicks": 358,
+        "active_days": 21,
+        "engagement_score": 0.045185170062715316,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_594319",
+        "total_clicks": 622,
+        "active_days": 18,
+        "engagement_score": 0.045257815869182115,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_634309",
+        "total_clicks": 276,
+        "active_days": 22,
+        "engagement_score": 0.04528523500434086,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2598631",
+        "total_clicks": 201,
+        "active_days": 23,
+        "engagement_score": 0.04553029352482221,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2101566",
+        "total_clicks": 466,
+        "active_days": 20,
+        "engagement_score": 0.04562365269969699,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_565840",
+        "total_clicks": 300,
+        "active_days": 22,
+        "engagement_score": 0.045782355846132154,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_579278",
+        "total_clicks": 562,
+        "active_days": 19,
+        "engagement_score": 0.04581357491578302,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_684643",
+        "total_clicks": 389,
+        "active_days": 21,
+        "engagement_score": 0.0458272844833624,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_559225",
+        "total_clicks": 483,
+        "active_days": 20,
+        "engagement_score": 0.04597577996263248,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1986081",
+        "total_clicks": 571,
+        "active_days": 19,
+        "engagement_score": 0.04599999523145476,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_330966",
+        "total_clicks": 224,
+        "active_days": 23,
+        "engagement_score": 0.04600670099820554,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_546139",
+        "total_clicks": 228,
+        "active_days": 23,
+        "engagement_score": 0.04608955447183742,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_620159",
+        "total_clicks": 234,
+        "active_days": 23,
+        "engagement_score": 0.046213834682285244,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_579283",
+        "total_clicks": 410,
+        "active_days": 21,
+        "engagement_score": 0.04626226521992978,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_615242",
+        "total_clicks": 238,
+        "active_days": 23,
+        "engagement_score": 0.04629668815591712,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_627527",
+        "total_clicks": 334,
+        "active_days": 22,
+        "engagement_score": 0.046486610372003155,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_696501",
+        "total_clicks": 599,
+        "active_days": 19,
+        "engagement_score": 0.04657996954687793,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2637912",
+        "total_clicks": 339,
+        "active_days": 22,
+        "engagement_score": 0.046590177214043,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_624354",
+        "total_clicks": 345,
+        "active_days": 22,
+        "engagement_score": 0.046714457424490825,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_631880",
+        "total_clicks": 269,
+        "active_days": 23,
+        "engagement_score": 0.04693880257656421,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_311332",
+        "total_clicks": 531,
+        "active_days": 20,
+        "engagement_score": 0.04697002164621507,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_589441",
+        "total_clicks": 190,
+        "active_days": 24,
+        "engagement_score": 0.04710100762341368,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_402883",
+        "total_clicks": 279,
+        "active_days": 23,
+        "engagement_score": 0.047145936260643916,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_526235",
+        "total_clicks": 453,
+        "active_days": 21,
+        "engagement_score": 0.04715294006147251,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_691931",
+        "total_clicks": 541,
+        "active_days": 20,
+        "engagement_score": 0.047177155330294776,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_619503",
+        "total_clicks": 285,
+        "active_days": 23,
+        "engagement_score": 0.04727021647109174,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_690962",
+        "total_clicks": 199,
+        "active_days": 24,
+        "engagement_score": 0.047287427939085414,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_634111",
+        "total_clicks": 380,
+        "active_days": 22,
+        "engagement_score": 0.047439425318769796,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679663",
+        "total_clicks": 214,
+        "active_days": 24,
+        "engagement_score": 0.04759812846520497,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_622413",
+        "total_clicks": 301,
+        "active_days": 23,
+        "engagement_score": 0.04760163036561926,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_680145",
+        "total_clicks": 389,
+        "active_days": 22,
+        "engagement_score": 0.04762584563444153,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_570997",
+        "total_clicks": 312,
+        "active_days": 23,
+        "engagement_score": 0.04782947741810694,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_601567",
+        "total_clicks": 326,
+        "active_days": 23,
+        "engagement_score": 0.048119464575818525,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2485655",
+        "total_clicks": 500,
+        "active_days": 21,
+        "engagement_score": 0.04812646837664712,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_627401",
+        "total_clicks": 428,
+        "active_days": 22,
+        "engagement_score": 0.04843366700235238,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_510070",
+        "total_clicks": 351,
+        "active_days": 23,
+        "engagement_score": 0.04863729878601779,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_549677",
+        "total_clicks": 527,
+        "active_days": 21,
+        "engagement_score": 0.04868572932366233,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_682738",
+        "total_clicks": 528,
+        "active_days": 21,
+        "engagement_score": 0.0487064426920703,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_384106",
+        "total_clicks": 442,
+        "active_days": 22,
+        "engagement_score": 0.04872365416006397,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_696324",
+        "total_clicks": 530,
+        "active_days": 21,
+        "engagement_score": 0.04874786942888624,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2574909",
+        "total_clicks": 368,
+        "active_days": 23,
+        "engagement_score": 0.04898942604895329,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_572339",
+        "total_clicks": 371,
+        "active_days": 23,
+        "engagement_score": 0.049051566154177204,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_563321",
+        "total_clicks": 462,
+        "active_days": 22,
+        "engagement_score": 0.049137921528223376,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_586921",
+        "total_clicks": 291,
+        "active_days": 24,
+        "engagement_score": 0.0491930578326187,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1118218",
+        "total_clicks": 293,
+        "active_days": 24,
+        "engagement_score": 0.04923448456943464,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_573093",
+        "total_clicks": 305,
+        "active_days": 24,
+        "engagement_score": 0.04948304499033029,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_632904",
+        "total_clicks": 412,
+        "active_days": 23,
+        "engagement_score": 0.04990081425890399,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_48635",
+        "total_clicks": 592,
+        "active_days": 21,
+        "engagement_score": 0.05003209827018041,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_656347",
+        "total_clicks": 419,
+        "active_days": 23,
+        "engagement_score": 0.05004580783775978,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_371439",
+        "total_clicks": 335,
+        "active_days": 24,
+        "engagement_score": 0.0501044460425694,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_592950",
+        "total_clicks": 509,
+        "active_days": 22,
+        "engagement_score": 0.05011144984339799,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_479987",
+        "total_clicks": 426,
+        "active_days": 23,
+        "engagement_score": 0.05019080141661558,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_626463",
+        "total_clicks": 253,
+        "active_days": 25,
+        "engagement_score": 0.050204510984194956,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_622425",
+        "total_clicks": 173,
+        "active_days": 26,
+        "engagement_score": 0.05034600266263645,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_603979",
+        "total_clicks": 439,
+        "active_days": 23,
+        "engagement_score": 0.05046007520591919,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1744800",
+        "total_clicks": 193,
+        "active_days": 26,
+        "engagement_score": 0.05076027003079586,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_496355",
+        "total_clicks": 368,
+        "active_days": 24,
+        "engagement_score": 0.05078798720003243,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_593607",
+        "total_clicks": 283,
+        "active_days": 25,
+        "engagement_score": 0.050825912036434065,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_519684",
+        "total_clicks": 461,
+        "active_days": 23,
+        "engagement_score": 0.050915769310894546,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1656486",
+        "total_clicks": 548,
+        "active_days": 22,
+        "engagement_score": 0.05091927121130884,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_465732",
+        "total_clicks": 292,
+        "active_days": 25,
+        "engagement_score": 0.0510123323521058,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2464118",
+        "total_clicks": 555,
+        "active_days": 22,
+        "engagement_score": 0.05106426479016463,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_587550",
+        "total_clicks": 295,
+        "active_days": 25,
+        "engagement_score": 0.05107447245732971,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2637000",
+        "total_clicks": 301,
+        "active_days": 25,
+        "engagement_score": 0.051198752667777535,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_291156",
+        "total_clicks": 304,
+        "active_days": 25,
+        "engagement_score": 0.05126089277300145,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_695369",
+        "total_clicks": 413,
+        "active_days": 24,
+        "engagement_score": 0.0517200887783911,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_578000",
+        "total_clicks": 505,
+        "active_days": 23,
+        "engagement_score": 0.05182715752084525,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_266097",
+        "total_clicks": 595,
+        "active_days": 22,
+        "engagement_score": 0.05189279952648346,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_689792",
+        "total_clicks": 519,
+        "active_days": 23,
+        "engagement_score": 0.05211714467855683,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_656929",
+        "total_clicks": 452,
+        "active_days": 24,
+        "engagement_score": 0.052527910146301954,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_258042",
+        "total_clicks": 281,
+        "active_days": 26,
+        "engagement_score": 0.052583046450697266,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_643309",
+        "total_clicks": 385,
+        "active_days": 25,
+        "engagement_score": 0.05293867561404706,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_502004",
+        "total_clicks": 299,
+        "active_days": 26,
+        "engagement_score": 0.052955887082040735,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_605459",
+        "total_clicks": 219,
+        "active_days": 27,
+        "engagement_score": 0.05309737876048223,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_599084",
+        "total_clicks": 654,
+        "active_days": 22,
+        "engagement_score": 0.053114888262553714,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_233444",
+        "total_clicks": 221,
+        "active_days": 27,
+        "engagement_score": 0.05313880549729817,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_169297",
+        "total_clicks": 400,
+        "active_days": 25,
+        "engagement_score": 0.053249376140166615,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_579362",
+        "total_clicks": 321,
+        "active_days": 26,
+        "engagement_score": 0.05341158118701608,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_630431",
+        "total_clicks": 411,
+        "active_days": 25,
+        "engagement_score": 0.05347722319265429,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_423622",
+        "total_clicks": 239,
+        "active_days": 27,
+        "engagement_score": 0.05351164612864164,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2564333",
+        "total_clicks": 503,
+        "active_days": 24,
+        "engagement_score": 0.05358429193510845,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_675902",
+        "total_clicks": 594,
+        "active_days": 23,
+        "engagement_score": 0.05367064730915462,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_646359",
+        "total_clicks": 337,
+        "active_days": 26,
+        "engagement_score": 0.053742995081543614,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_396631",
+        "total_clicks": 265,
+        "active_days": 27,
+        "engagement_score": 0.05405019370724888,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_389250",
+        "total_clicks": 352,
+        "active_days": 26,
+        "engagement_score": 0.05405369560766317,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_532846",
+        "total_clicks": 444,
+        "active_days": 25,
+        "engagement_score": 0.05416076435011732,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_545118",
+        "total_clicks": 185,
+        "active_days": 28,
+        "engagement_score": 0.05419168538569037,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2112670",
+        "total_clicks": 364,
+        "active_days": 26,
+        "engagement_score": 0.054302256028558815,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_595938",
+        "total_clicks": 542,
+        "active_days": 24,
+        "engagement_score": 0.054392113303019296,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_370839",
+        "total_clicks": 562,
+        "active_days": 24,
+        "engagement_score": 0.054806380671178705,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_601753",
+        "total_clicks": 748,
+        "active_days": 22,
+        "engagement_score": 0.05506194489290294,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_656539",
+        "total_clicks": 319,
+        "active_days": 27,
+        "engagement_score": 0.05516871560127928,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_617130",
+        "total_clicks": 495,
+        "active_days": 25,
+        "engagement_score": 0.05521714613892381,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_563051",
+        "total_clicks": 502,
+        "active_days": 25,
+        "engagement_score": 0.055362139717779604,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_636716",
+        "total_clicks": 332,
+        "active_days": 27,
+        "engagement_score": 0.0554379893905829,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_543953",
+        "total_clicks": 942,
+        "active_days": 20,
+        "engagement_score": 0.055483216061890946,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_682717",
+        "total_clicks": 511,
+        "active_days": 25,
+        "engagement_score": 0.05554856003345134,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_645939",
+        "total_clicks": 428,
+        "active_days": 26,
+        "engagement_score": 0.05562791160666893,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_604694",
+        "total_clicks": 256,
+        "active_days": 28,
+        "engagement_score": 0.055662334542656275,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_523334",
+        "total_clicks": 344,
+        "active_days": 27,
+        "engagement_score": 0.055686549811478546,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_379185",
+        "total_clicks": 611,
+        "active_days": 24,
+        "engagement_score": 0.05582133572316926,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_471810",
+        "total_clicks": 184,
+        "active_days": 29,
+        "engagement_score": 0.05596953316836154,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_385980",
+        "total_clicks": 358,
+        "active_days": 27,
+        "engagement_score": 0.05597653696919014,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_634776",
+        "total_clicks": 362,
+        "active_days": 27,
+        "engagement_score": 0.056059390442822016,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_598478",
+        "total_clicks": 733,
+        "active_days": 23,
+        "engagement_score": 0.056549805517862525,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_625100",
+        "total_clicks": 303,
+        "active_days": 28,
+        "engagement_score": 0.05663586285783089,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_587377",
+        "total_clicks": 307,
+        "active_days": 28,
+        "engagement_score": 0.05671871633146277,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1994385",
+        "total_clicks": 484,
+        "active_days": 26,
+        "engagement_score": 0.05678786023751528,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_605666",
+        "total_clicks": 230,
+        "active_days": 29,
+        "engagement_score": 0.05692234811512818,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1554143",
+        "total_clicks": 319,
+        "active_days": 28,
+        "engagement_score": 0.056967276752358416,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_628300",
+        "total_clicks": 239,
+        "active_days": 29,
+        "engagement_score": 0.057108768430799914,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_642839",
+        "total_clicks": 330,
+        "active_days": 28,
+        "engagement_score": 0.05719512380484609,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_575763",
+        "total_clicks": 344,
+        "active_days": 28,
+        "engagement_score": 0.05748511096255768,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2133234",
+        "total_clicks": 351,
+        "active_days": 28,
+        "engagement_score": 0.05763010454141347,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_624957",
+        "total_clicks": 365,
+        "active_days": 28,
+        "engagement_score": 0.05792009169912506,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_484435",
+        "total_clicks": 281,
+        "active_days": 29,
+        "engagement_score": 0.05797872990393468,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_483666",
+        "total_clicks": 462,
+        "active_days": 27,
+        "engagement_score": 0.058130727283619066,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_580722",
+        "total_clicks": 307,
+        "active_days": 29,
+        "engagement_score": 0.05851727748254191,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_185127",
+        "total_clicks": 394,
+        "active_days": 28,
+        "engagement_score": 0.0585207793829562,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_651267",
+        "total_clicks": 916,
+        "active_days": 22,
+        "engagement_score": 0.058541790785441986,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_581410",
+        "total_clicks": 489,
+        "active_days": 27,
+        "engagement_score": 0.058689988230634274,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_338983",
+        "total_clicks": 578,
+        "active_days": 26,
+        "engagement_score": 0.05873491686786451,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_311862",
+        "total_clicks": 498,
+        "active_days": 27,
+        "engagement_score": 0.058876408546306006,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_601431",
+        "total_clicks": 588,
+        "active_days": 26,
+        "engagement_score": 0.05894205055194421,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_604991",
+        "total_clicks": 1120,
+        "active_days": 20,
+        "engagement_score": 0.0591701956385097,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_522924",
+        "total_clicks": 433,
+        "active_days": 28,
+        "engagement_score": 0.05932860075086706,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_522534",
+        "total_clicks": 696,
+        "active_days": 25,
+        "engagement_score": 0.05938053318892589,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_621414",
+        "total_clicks": 523,
+        "active_days": 27,
+        "engagement_score": 0.05939424275650527,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_646413",
+        "total_clicks": 610,
+        "active_days": 26,
+        "engagement_score": 0.05939774465691956,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_599341",
+        "total_clicks": 792,
+        "active_days": 24,
+        "engagement_score": 0.05957045540501192,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_102209",
+        "total_clicks": 535,
+        "active_days": 27,
+        "engagement_score": 0.059642803177400915,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_545255",
+        "total_clicks": 799,
+        "active_days": 24,
+        "engagement_score": 0.059715448983867714,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_693111",
+        "total_clicks": 549,
+        "active_days": 27,
+        "engagement_score": 0.0599327903351125,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_588824",
+        "total_clicks": 813,
+        "active_days": 24,
+        "engagement_score": 0.0600054361415793,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_688117",
+        "total_clicks": 380,
+        "active_days": 29,
+        "engagement_score": 0.06002935337632376,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_611407",
+        "total_clicks": 555,
+        "active_days": 27,
+        "engagement_score": 0.06005707054556032,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_653887",
+        "total_clicks": 643,
+        "active_days": 26,
+        "engagement_score": 0.06008128581438259,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_612449",
+        "total_clicks": 471,
+        "active_days": 28,
+        "engagement_score": 0.06011570875036994,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_578815",
+        "total_clicks": 472,
+        "active_days": 28,
+        "engagement_score": 0.060136422118777906,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_655051",
+        "total_clicks": 650,
+        "active_days": 26,
+        "engagement_score": 0.06022627939323838,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_565883",
+        "total_clicks": 829,
+        "active_days": 24,
+        "engagement_score": 0.06033685003610683,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_641363",
+        "total_clicks": 490,
+        "active_days": 28,
+        "engagement_score": 0.060509262750121376,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_601857",
+        "total_clicks": 932,
+        "active_days": 23,
+        "engagement_score": 0.06067176583104865,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_570453",
+        "total_clicks": 330,
+        "active_days": 30,
+        "engagement_score": 0.060792246107004365,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648250",
+        "total_clicks": 1727,
+        "active_days": 14,
+        "engagement_score": 0.06095184335567297,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_505930",
+        "total_clicks": 427,
+        "active_days": 29,
+        "engagement_score": 0.06100288169149837,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_631860",
+        "total_clicks": 688,
+        "active_days": 26,
+        "engagement_score": 0.06101338739274126,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1583847",
+        "total_clicks": 348,
+        "active_days": 30,
+        "engagement_score": 0.061165086738347835,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650850",
+        "total_clicks": 609,
+        "active_days": 27,
+        "engagement_score": 0.06117559243959073,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_627295",
+        "total_clicks": 700,
+        "active_days": 26,
+        "engagement_score": 0.061261947813636905,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_622096",
+        "total_clicks": 443,
+        "active_days": 29,
+        "engagement_score": 0.0613342955860259,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_598028",
+        "total_clicks": 531,
+        "active_days": 28,
+        "engagement_score": 0.06135851085484816,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_533689",
+        "total_clicks": 365,
+        "active_days": 30,
+        "engagement_score": 0.061517214001283335,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_594214",
+        "total_clicks": 374,
+        "active_days": 30,
+        "engagement_score": 0.06170363431695507,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_328123",
+        "total_clicks": 548,
+        "active_days": 28,
+        "engagement_score": 0.06171063811778366,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1916140",
+        "total_clicks": 815,
+        "active_days": 25,
+        "engagement_score": 0.06184542402947438,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_522754",
+        "total_clicks": 301,
+        "active_days": 31,
+        "engagement_score": 0.06199011957425236,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_611173",
+        "total_clicks": 312,
+        "active_days": 31,
+        "engagement_score": 0.062217966626740034,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_581708",
+        "total_clicks": 487,
+        "active_days": 29,
+        "engagement_score": 0.0622456837959766,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_564714",
+        "total_clicks": 324,
+        "active_days": 31,
+        "engagement_score": 0.06246652704763568,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_622027",
+        "total_clicks": 326,
+        "active_days": 31,
+        "engagement_score": 0.06250795378445162,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_447695",
+        "total_clicks": 679,
+        "active_days": 27,
+        "engagement_score": 0.06262552822814867,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_608423",
+        "total_clicks": 336,
+        "active_days": 31,
+        "engagement_score": 0.06271508746853133,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_582723",
+        "total_clicks": 1383,
+        "active_days": 19,
+        "engagement_score": 0.06281925037872681,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_674965",
+        "total_clicks": 1036,
+        "active_days": 23,
+        "engagement_score": 0.06282595614547759,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2689013",
+        "total_clicks": 527,
+        "active_days": 29,
+        "engagement_score": 0.06307421853229542,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_175638",
+        "total_clicks": 267,
+        "active_days": 32,
+        "engagement_score": 0.0630844261994605,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_491926",
+        "total_clicks": 528,
+        "active_days": 29,
+        "engagement_score": 0.0630949319007034,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_524019",
+        "total_clicks": 534,
+        "active_days": 29,
+        "engagement_score": 0.06321921211115121,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_513969",
+        "total_clicks": 283,
+        "active_days": 32,
+        "engagement_score": 0.06341584009398803,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2462628",
+        "total_clicks": 284,
+        "active_days": 32,
+        "engagement_score": 0.063436553462396,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_340010",
+        "total_clicks": 1072,
+        "active_days": 23,
+        "engagement_score": 0.06357163740816452,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_636732",
+        "total_clicks": 560,
+        "active_days": 29,
+        "engagement_score": 0.06375775968975844,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_485920",
+        "total_clicks": 315,
+        "active_days": 32,
+        "engagement_score": 0.06407866788304309,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_511612",
+        "total_clicks": 578,
+        "active_days": 29,
+        "engagement_score": 0.06413060032110192,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_351903",
+        "total_clicks": 670,
+        "active_days": 28,
+        "engagement_score": 0.06423766906355606,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_630891",
+        "total_clicks": 504,
+        "active_days": 30,
+        "engagement_score": 0.06439637220999123,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_316091",
+        "total_clicks": 347,
+        "active_days": 32,
+        "engagement_score": 0.06474149567209814,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_649001",
+        "total_clicks": 349,
+        "active_days": 32,
+        "engagement_score": 0.06478292240891409,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_586227",
+        "total_clicks": 442,
+        "active_days": 31,
+        "engagement_score": 0.06491070451977621,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_567597",
+        "total_clicks": 707,
+        "active_days": 28,
+        "engagement_score": 0.06500406369465098,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_607085",
+        "total_clicks": 448,
+        "active_days": 31,
+        "engagement_score": 0.06503498473022402,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_107883",
+        "total_clicks": 626,
+        "active_days": 29,
+        "engagement_score": 0.0651248420046845,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_586526",
+        "total_clicks": 461,
+        "active_days": 31,
+        "engagement_score": 0.06530425851952765,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1634278",
+        "total_clicks": 466,
+        "active_days": 31,
+        "engagement_score": 0.06540782536156749,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_404863",
+        "total_clicks": 311,
+        "active_days": 33,
+        "engagement_score": 0.06579437556049034,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_419024",
+        "total_clicks": 833,
+        "active_days": 27,
+        "engagement_score": 0.06581538696297612,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_657285",
+        "total_clicks": 748,
+        "active_days": 28,
+        "engagement_score": 0.06585331179937776,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_584281",
+        "total_clicks": 488,
+        "active_days": 31,
+        "engagement_score": 0.06586351946654284,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_414772",
+        "total_clicks": 405,
+        "active_days": 32,
+        "engagement_score": 0.06594287103976043,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_601566",
+        "total_clicks": 323,
+        "active_days": 33,
+        "engagement_score": 0.06604293598138598,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2593689",
+        "total_clicks": 501,
+        "active_days": 31,
+        "engagement_score": 0.06613279325584646,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_412304",
+        "total_clicks": 506,
+        "active_days": 31,
+        "engagement_score": 0.06623636009788632,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_689101",
+        "total_clicks": 690,
+        "active_days": 29,
+        "engagement_score": 0.06645049758279462,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_91040",
+        "total_clicks": 446,
+        "active_days": 32,
+        "engagement_score": 0.06679211914448722,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694212",
+        "total_clicks": 709,
+        "active_days": 29,
+        "engagement_score": 0.06684405158254605,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_527958",
+        "total_clicks": 366,
+        "active_days": 33,
+        "engagement_score": 0.06693361082292872,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_643434",
+        "total_clicks": 455,
+        "active_days": 32,
+        "engagement_score": 0.06697853946015896,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685289",
+        "total_clicks": 1154,
+        "active_days": 24,
+        "engagement_score": 0.06706869476869724,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_687310",
+        "total_clicks": 641,
+        "active_days": 30,
+        "engagement_score": 0.06723410368188319,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_696515",
+        "total_clicks": 468,
+        "active_days": 32,
+        "engagement_score": 0.06724781324946258,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_610285",
+        "total_clicks": 482,
+        "active_days": 32,
+        "engagement_score": 0.06753780040717416,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_528290",
+        "total_clicks": 658,
+        "active_days": 30,
+        "engagement_score": 0.06758623094481869,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_339824",
+        "total_clicks": 408,
+        "active_days": 33,
+        "engagement_score": 0.06780357229606347,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_682259",
+        "total_clicks": 416,
+        "active_days": 33,
+        "engagement_score": 0.06796927924332724,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_584443",
+        "total_clicks": 941,
+        "active_days": 27,
+        "engagement_score": 0.06805243075103694,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_691195",
+        "total_clicks": 595,
+        "active_days": 31,
+        "engagement_score": 0.06807984988619568,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685988",
+        "total_clicks": 520,
+        "active_days": 32,
+        "engagement_score": 0.06832490840667704,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2557563",
+        "total_clicks": 608,
+        "active_days": 31,
+        "engagement_score": 0.06834912367549931,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_616646",
+        "total_clicks": 610,
+        "active_days": 31,
+        "engagement_score": 0.06839055041231525,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2230407",
+        "total_clicks": 705,
+        "active_days": 30,
+        "engagement_score": 0.0685597592599933,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_572919",
+        "total_clicks": 798,
+        "active_days": 29,
+        "engagement_score": 0.06868754137085542,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2522932",
+        "total_clicks": 369,
+        "active_days": 34,
+        "engagement_score": 0.06879431207923177,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2020916",
+        "total_clicks": 205,
+        "active_days": 36,
+        "engagement_score": 0.06899444196248287,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_687023",
+        "total_clicks": 298,
+        "active_days": 35,
+        "engagement_score": 0.06912222407334499,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_665414",
+        "total_clicks": 484,
+        "active_days": 33,
+        "engagement_score": 0.06937778829506923,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_283618",
+        "total_clicks": 578,
+        "active_days": 32,
+        "engagement_score": 0.06952628377433932,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_540694",
+        "total_clicks": 495,
+        "active_days": 33,
+        "engagement_score": 0.06960563534755691,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679569",
+        "total_clicks": 583,
+        "active_days": 32,
+        "engagement_score": 0.06962985061637918,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_597755",
+        "total_clicks": 508,
+        "active_days": 33,
+        "engagement_score": 0.06987490913686052,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_551332",
+        "total_clicks": 782,
+        "active_days": 30,
+        "engagement_score": 0.07015468862740704,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_695673",
+        "total_clicks": 444,
+        "active_days": 34,
+        "engagement_score": 0.07034781470982955,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_354688",
+        "total_clicks": 359,
+        "active_days": 35,
+        "engagement_score": 0.07038573954623119,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_422343",
+        "total_clicks": 721,
+        "active_days": 31,
+        "engagement_score": 0.07068973430559997,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_552220",
+        "total_clicks": 725,
+        "active_days": 31,
+        "engagement_score": 0.07077258777923186,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_178072",
+        "total_clicks": 295,
+        "active_days": 36,
+        "engagement_score": 0.07085864511920022,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_603179",
+        "total_clicks": 731,
+        "active_days": 31,
+        "engagement_score": 0.07089686798967967,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_628777",
+        "total_clicks": 749,
+        "active_days": 31,
+        "engagement_score": 0.07126970862102315,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_503610",
+        "total_clicks": 315,
+        "active_days": 36,
+        "engagement_score": 0.07127291248735963,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_680602",
+        "total_clicks": 414,
+        "active_days": 35,
+        "engagement_score": 0.07152497480866957,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_628376",
+        "total_clicks": 332,
+        "active_days": 36,
+        "engagement_score": 0.07162503975029513,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_690046",
+        "total_clicks": 604,
+        "active_days": 33,
+        "engagement_score": 0.0718633925040257,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2384666",
+        "total_clicks": 436,
+        "active_days": 35,
+        "engagement_score": 0.07198066891364492,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2149324",
+        "total_clicks": 526,
+        "active_days": 34,
+        "engagement_score": 0.07204631091928314,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_607143",
+        "total_clicks": 442,
+        "active_days": 35,
+        "engagement_score": 0.07210494912409274,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685236",
+        "total_clicks": 712,
+        "active_days": 32,
+        "engagement_score": 0.07230187514100737,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_519116",
+        "total_clicks": 715,
+        "active_days": 32,
+        "engagement_score": 0.07236401524623129,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1966597",
+        "total_clicks": 803,
+        "active_days": 31,
+        "engagement_score": 0.07238823051505355,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_470159",
+        "total_clicks": 306,
+        "active_days": 37,
+        "engagement_score": 0.07288505332276704,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_165733",
+        "total_clicks": 662,
+        "active_days": 33,
+        "engagement_score": 0.07306476787168799,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_689436",
+        "total_clicks": 236,
+        "active_days": 38,
+        "engagement_score": 0.07323367868528824,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1681946",
+        "total_clicks": 671,
+        "active_days": 33,
+        "engagement_score": 0.07325118818735972,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_675495",
+        "total_clicks": 675,
+        "active_days": 33,
+        "engagement_score": 0.0733340416609916,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648959",
+        "total_clicks": 596,
+        "active_days": 34,
+        "engagement_score": 0.07349624670784106,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_528506",
+        "total_clicks": 425,
+        "active_days": 36,
+        "engagement_score": 0.07355138301223639,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_519057",
+        "total_clicks": 342,
+        "active_days": 37,
+        "engagement_score": 0.07363073458545397,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_188251",
+        "total_clicks": 603,
+        "active_days": 34,
+        "engagement_score": 0.07364124028669686,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_684663",
+        "total_clicks": 444,
+        "active_days": 36,
+        "engagement_score": 0.07394493701198783,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_105168",
+        "total_clicks": 540,
+        "active_days": 35,
+        "engagement_score": 0.07413485922807385,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_601043",
+        "total_clicks": 466,
+        "active_days": 36,
+        "engagement_score": 0.07440063111696317,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_578820",
+        "total_clicks": 727,
+        "active_days": 33,
+        "engagement_score": 0.07441113681820606,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_574720",
+        "total_clicks": 997,
+        "active_days": 30,
+        "engagement_score": 0.0746080628351207,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_642817",
+        "total_clicks": 651,
+        "active_days": 34,
+        "engagement_score": 0.07463548197027944,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_599452",
+        "total_clicks": 479,
+        "active_days": 36,
+        "engagement_score": 0.07466990490626679,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_71723",
+        "total_clicks": 486,
+        "active_days": 36,
+        "engagement_score": 0.07481489848512259,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_684498",
+        "total_clicks": 400,
+        "active_days": 37,
+        "engagement_score": 0.07483210995311626,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694523",
+        "total_clicks": 488,
+        "active_days": 36,
+        "engagement_score": 0.07485632522193852,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679386",
+        "total_clicks": 673,
+        "active_days": 34,
+        "engagement_score": 0.0750911760752548,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_633634",
+        "total_clicks": 333,
+        "active_days": 38,
+        "engagement_score": 0.07524287542086137,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_415631",
+        "total_clicks": 513,
+        "active_days": 36,
+        "engagement_score": 0.0753741594321378,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_246829",
+        "total_clicks": 349,
+        "active_days": 38,
+        "engagement_score": 0.0755742893153889,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_676909",
+        "total_clicks": 524,
+        "active_days": 36,
+        "engagement_score": 0.07560200648462546,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_691433",
+        "total_clicks": 699,
+        "active_days": 34,
+        "engagement_score": 0.07562972365386203,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_245217",
+        "total_clicks": 444,
+        "active_days": 37,
+        "engagement_score": 0.07574349816306697,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_402210",
+        "total_clicks": 640,
+        "active_days": 35,
+        "engagement_score": 0.0762061960688709,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1483632",
+        "total_clicks": 389,
+        "active_days": 38,
+        "engagement_score": 0.07640282405170773,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_562437",
+        "total_clicks": 478,
+        "active_days": 37,
+        "engagement_score": 0.07644775268893796,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_636420",
+        "total_clicks": 568,
+        "active_days": 36,
+        "engagement_score": 0.07651339469457617,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_483108",
+        "total_clicks": 754,
+        "active_days": 34,
+        "engagement_score": 0.07676895891630041,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_422542",
+        "total_clicks": 497,
+        "active_days": 37,
+        "engagement_score": 0.0768413066886894,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_688533",
+        "total_clicks": 413,
+        "active_days": 38,
+        "engagement_score": 0.07689994489349902,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_697283",
+        "total_clicks": 677,
+        "active_days": 35,
+        "engagement_score": 0.07697259069996581,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_655988",
+        "total_clicks": 591,
+        "active_days": 36,
+        "engagement_score": 0.07698980216795949,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_472290",
+        "total_clicks": 507,
+        "active_days": 37,
+        "engagement_score": 0.0770484403727691,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_422697",
+        "total_clicks": 510,
+        "active_days": 37,
+        "engagement_score": 0.07711058047799302,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_567719",
+        "total_clicks": 511,
+        "active_days": 37,
+        "engagement_score": 0.077131293846401,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_678393",
+        "total_clicks": 883,
+        "active_days": 33,
+        "engagement_score": 0.07764242228984947,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_627947",
+        "total_clicks": 628,
+        "active_days": 36,
+        "engagement_score": 0.07775619679905439,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679039",
+        "total_clicks": 633,
+        "active_days": 36,
+        "engagement_score": 0.07785976364109425,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_632637",
+        "total_clicks": 549,
+        "active_days": 37,
+        "engagement_score": 0.07791840184590387,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654504",
+        "total_clicks": 549,
+        "active_days": 37,
+        "engagement_score": 0.07791840184590387,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_630073",
+        "total_clicks": 478,
+        "active_days": 38,
+        "engagement_score": 0.0782463138400171,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_607947",
+        "total_clicks": 567,
+        "active_days": 37,
+        "engagement_score": 0.07829124247724734,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2142055",
+        "total_clicks": 396,
+        "active_days": 39,
+        "engagement_score": 0.07834637878164265,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_567451",
+        "total_clicks": 483,
+        "active_days": 38,
+        "engagement_score": 0.07834988068205695,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_653115",
+        "total_clicks": 571,
+        "active_days": 37,
+        "engagement_score": 0.07837409595087921,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_618865",
+        "total_clicks": 486,
+        "active_days": 38,
+        "engagement_score": 0.07841202078728086,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_656642",
+        "total_clicks": 578,
+        "active_days": 37,
+        "engagement_score": 0.078519089529735,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_588033",
+        "total_clicks": 579,
+        "active_days": 37,
+        "engagement_score": 0.07853980289814298,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679959",
+        "total_clicks": 666,
+        "active_days": 36,
+        "engagement_score": 0.07854330479855728,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_693204",
+        "total_clicks": 600,
+        "active_days": 37,
+        "engagement_score": 0.07897478363471036,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_657352",
+        "total_clicks": 514,
+        "active_days": 38,
+        "engagement_score": 0.07899199510270404,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2623427",
+        "total_clicks": 431,
+        "active_days": 39,
+        "engagement_score": 0.07907134667592161,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_692363",
+        "total_clicks": 522,
+        "active_days": 38,
+        "engagement_score": 0.0791577020499678,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_620897",
+        "total_clicks": 964,
+        "active_days": 33,
+        "engagement_score": 0.07932020513089508,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_634824",
+        "total_clicks": 791,
+        "active_days": 35,
+        "engagement_score": 0.07933391469847445,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2326041",
+        "total_clicks": 1500,
+        "active_days": 27,
+        "engagement_score": 0.07963120369109244,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_465331",
+        "total_clicks": 285,
+        "active_days": 41,
+        "engagement_score": 0.07964431719051619,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_615241",
+        "total_clicks": 459,
+        "active_days": 39,
+        "engagement_score": 0.07965132099134478,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_565066",
+        "total_clicks": 721,
+        "active_days": 36,
+        "engagement_score": 0.07968254006099565,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_126812",
+        "total_clicks": 661,
+        "active_days": 37,
+        "engagement_score": 0.08023829910759656,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_475149",
+        "total_clicks": 749,
+        "active_days": 36,
+        "engagement_score": 0.08026251437641883,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_628717",
+        "total_clicks": 752,
+        "active_days": 36,
+        "engagement_score": 0.08032465448164273,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_405125",
+        "total_clicks": 1541,
+        "active_days": 27,
+        "engagement_score": 0.08048045179581924,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_253496",
+        "total_clicks": 510,
+        "active_days": 39,
+        "engagement_score": 0.08070770278015128,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679529",
+        "total_clicks": 1035,
+        "active_days": 33,
+        "engagement_score": 0.08079085428786098,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_608891",
+        "total_clicks": 344,
+        "active_days": 41,
+        "engagement_score": 0.08086640592658646,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2620661",
+        "total_clicks": 432,
+        "active_days": 40,
+        "engagement_score": 0.08089062119540873,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_551772",
+        "total_clicks": 519,
+        "active_days": 39,
+        "engagement_score": 0.08089412309582301,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_603049",
+        "total_clicks": 527,
+        "active_days": 39,
+        "engagement_score": 0.08105983004308678,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_437968",
+        "total_clicks": 528,
+        "active_days": 39,
+        "engagement_score": 0.08108054341149475,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_136335",
+        "total_clicks": 792,
+        "active_days": 36,
+        "engagement_score": 0.08115318921796155,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_563230",
+        "total_clicks": 364,
+        "active_days": 41,
+        "engagement_score": 0.08128067329474586,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_681302",
+        "total_clicks": 820,
+        "active_days": 36,
+        "engagement_score": 0.08173316353338474,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_645698",
+        "total_clicks": 913,
+        "active_days": 35,
+        "engagement_score": 0.08186094564424685,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_188273",
+        "total_clicks": 662,
+        "active_days": 38,
+        "engagement_score": 0.08205757362708367,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_586476",
+        "total_clicks": 762,
+        "active_days": 37,
+        "engagement_score": 0.08233034931680158,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_490394",
+        "total_clicks": 420,
+        "active_days": 41,
+        "engagement_score": 0.08244062192559222,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_564649",
+        "total_clicks": 772,
+        "active_days": 37,
+        "engagement_score": 0.08253748300088129,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647888",
+        "total_clicks": 427,
+        "active_days": 41,
+        "engagement_score": 0.08258561550444801,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_586046",
+        "total_clicks": 612,
+        "active_days": 39,
+        "engagement_score": 0.08282046635776427,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_243358",
+        "total_clicks": 721,
+        "active_days": 38,
+        "engagement_score": 0.08327966236315393,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_501617",
+        "total_clicks": 1335,
+        "active_days": 31,
+        "engagement_score": 0.08340774250809387,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_619359",
+        "total_clicks": 564,
+        "active_days": 40,
+        "engagement_score": 0.08362478582526083,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_552498",
+        "total_clicks": 478,
+        "active_days": 41,
+        "engagement_score": 0.0836419972932545,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_599663",
+        "total_clicks": 479,
+        "active_days": 41,
+        "engagement_score": 0.08366271066166248,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2252437",
+        "total_clicks": 570,
+        "active_days": 40,
+        "engagement_score": 0.08374906603570866,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_412600",
+        "total_clicks": 399,
+        "active_days": 42,
+        "engagement_score": 0.08380420234010397,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_572011",
+        "total_clicks": 747,
+        "active_days": 38,
+        "engagement_score": 0.08381820994176117,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_574259",
+        "total_clicks": 492,
+        "active_days": 41,
+        "engagement_score": 0.08393198445096609,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679599",
+        "total_clicks": 756,
+        "active_days": 38,
+        "engagement_score": 0.0840046302574329,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_80491",
+        "total_clicks": 330,
+        "active_days": 43,
+        "engagement_score": 0.08417354107103314,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_693182",
+        "total_clicks": 504,
+        "active_days": 41,
+        "engagement_score": 0.08418054487186175,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_482145",
+        "total_clicks": 421,
+        "active_days": 42,
+        "engagement_score": 0.08425989644507932,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_652428",
+        "total_clicks": 864,
+        "active_days": 37,
+        "engagement_score": 0.08444311289441457,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_131933",
+        "total_clicks": 1216,
+        "active_days": 33,
+        "engagement_score": 0.08453997396970364,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_588566",
+        "total_clicks": 619,
+        "active_days": 40,
+        "engagement_score": 0.0847640210876992,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_425287",
+        "total_clicks": 710,
+        "active_days": 39,
+        "engagement_score": 0.08485037646174538,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_300611",
+        "total_clicks": 459,
+        "active_days": 42,
+        "engagement_score": 0.0850470044445822,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_695518",
+        "total_clicks": 899,
+        "active_days": 37,
+        "engagement_score": 0.08516808078869355,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_690695",
+        "total_clicks": 646,
+        "active_days": 40,
+        "engagement_score": 0.08532328203471441,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_199760",
+        "total_clicks": 1256,
+        "active_days": 33,
+        "engagement_score": 0.08536850870602246,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_698598",
+        "total_clicks": 390,
+        "active_days": 43,
+        "engagement_score": 0.08541634317551138,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_679939",
+        "total_clicks": 482,
+        "active_days": 42,
+        "engagement_score": 0.08552341191796553,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_393526",
+        "total_clicks": 836,
+        "active_days": 38,
+        "engagement_score": 0.08566169973007054,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694472",
+        "total_clicks": 411,
+        "active_days": 43,
+        "engagement_score": 0.08585132391207875,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_616439",
+        "total_clicks": 1194,
+        "active_days": 34,
+        "engagement_score": 0.08588284101580743,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_171896",
+        "total_clicks": 934,
+        "active_days": 37,
+        "engagement_score": 0.08589304868297251,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_649343",
+        "total_clicks": 679,
+        "active_days": 40,
+        "engagement_score": 0.08600682319217744,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_572783",
+        "total_clicks": 519,
+        "active_days": 42,
+        "engagement_score": 0.08628980654906043,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_652894",
+        "total_clicks": 1996,
+        "active_days": 25,
+        "engagement_score": 0.08630791211928754,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_506144",
+        "total_clicks": 611,
+        "active_days": 41,
+        "engagement_score": 0.08639687529151457,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_473082",
+        "total_clicks": 873,
+        "active_days": 38,
+        "engagement_score": 0.08642809436116544,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654817",
+        "total_clicks": 529,
+        "active_days": 42,
+        "engagement_score": 0.08649694023314014,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_688770",
+        "total_clicks": 443,
+        "active_days": 43,
+        "engagement_score": 0.08651415170113382,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_550814",
+        "total_clicks": 362,
+        "active_days": 44,
+        "engagement_score": 0.08663493001116733,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_535648",
+        "total_clicks": 1583,
+        "active_days": 30,
+        "engagement_score": 0.08674609672219141,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_465577",
+        "total_clicks": 976,
+        "active_days": 37,
+        "engagement_score": 0.08676301015610727,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_609605",
+        "total_clicks": 642,
+        "active_days": 41,
+        "engagement_score": 0.08703898971216167,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2358258",
+        "total_clicks": 997,
+        "active_days": 37,
+        "engagement_score": 0.08719799089267466,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1532840",
+        "total_clicks": 830,
+        "active_days": 39,
+        "engagement_score": 0.08733598067070183,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_499848",
+        "total_clicks": 845,
+        "active_days": 39,
+        "engagement_score": 0.0876466811968214,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_674882",
+        "total_clicks": 499,
+        "active_days": 43,
+        "engagement_score": 0.08767410033198017,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_494498",
+        "total_clicks": 506,
+        "active_days": 43,
+        "engagement_score": 0.08781909391083596,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2437591",
+        "total_clicks": 1226,
+        "active_days": 35,
+        "engagement_score": 0.08834422995594163,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_585134",
+        "total_clicks": 881,
+        "active_days": 39,
+        "engagement_score": 0.08839236245950834,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_649868",
+        "total_clicks": 708,
+        "active_days": 41,
+        "engagement_score": 0.08840607202708772,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_627184",
+        "total_clicks": 640,
+        "active_days": 42,
+        "engagement_score": 0.08879612412642486,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_595553",
+        "total_clicks": 730,
+        "active_days": 41,
+        "engagement_score": 0.08886176613206308,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1332514",
+        "total_clicks": 1516,
+        "active_days": 32,
+        "engagement_score": 0.08895542334101567,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_466372",
+        "total_clicks": 566,
+        "active_days": 43,
+        "engagement_score": 0.08906189601531418,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_308953",
+        "total_clicks": 1174,
+        "active_days": 36,
+        "engagement_score": 0.08906569594980629,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_570757",
+        "total_clicks": 742,
+        "active_days": 41,
+        "engagement_score": 0.08911032655295872,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_601388",
+        "total_clicks": 575,
+        "active_days": 43,
+        "engagement_score": 0.08924831633098593,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_242778",
+        "total_clicks": 669,
+        "active_days": 42,
+        "engagement_score": 0.08939681181025601,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_686907",
+        "total_clicks": 756,
+        "active_days": 41,
+        "engagement_score": 0.08940031371067031,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_160536",
+        "total_clicks": 500,
+        "active_days": 44,
+        "engagement_score": 0.08949337485146726,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_556140",
+        "total_clicks": 676,
+        "active_days": 42,
+        "engagement_score": 0.0895418053891118,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_581288",
+        "total_clicks": 332,
+        "active_days": 46,
+        "engagement_score": 0.0896106512610865,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_261160",
+        "total_clicks": 514,
+        "active_days": 44,
+        "engagement_score": 0.08978336200917884,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_645174",
+        "total_clicks": 428,
+        "active_days": 45,
+        "engagement_score": 0.08980057347717252,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_137281",
+        "total_clicks": 1040,
+        "active_days": 38,
+        "engagement_score": 0.08988722688529652,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_442924",
+        "total_clicks": 871,
+        "active_days": 40,
+        "engagement_score": 0.08998378992650777,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_566464",
+        "total_clicks": 437,
+        "active_days": 45,
+        "engagement_score": 0.08998699379284426,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_330453",
+        "total_clicks": 524,
+        "active_days": 44,
+        "engagement_score": 0.08999049569325855,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_342799",
+        "total_clicks": 530,
+        "active_days": 44,
+        "engagement_score": 0.09011477590370637,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_678203",
+        "total_clicks": 540,
+        "active_days": 44,
+        "engagement_score": 0.09032190958778608,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_623100",
+        "total_clicks": 1152,
+        "active_days": 37,
+        "engagement_score": 0.09040856299591007,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_572584",
+        "total_clicks": 1504,
+        "active_days": 33,
+        "engagement_score": 0.09050542407119914,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2154220",
+        "total_clicks": 469,
+        "active_days": 45,
+        "engagement_score": 0.09064982158189931,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_644369",
+        "total_clicks": 647,
+        "active_days": 43,
+        "engagement_score": 0.09073967885635979,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_25261",
+        "total_clicks": 997,
+        "active_days": 39,
+        "engagement_score": 0.09079511319483291,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_238255",
+        "total_clicks": 219,
+        "active_days": 48,
+        "engagement_score": 0.0908671629331441,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_610643",
+        "total_clicks": 657,
+        "active_days": 43,
+        "engagement_score": 0.0909468125404395,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_600175",
+        "total_clicks": 1185,
+        "active_days": 37,
+        "engagement_score": 0.0910921041533731,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_469887",
+        "total_clicks": 926,
+        "active_days": 40,
+        "engagement_score": 0.09112302518894615,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_634552",
+        "total_clicks": 410,
+        "active_days": 46,
+        "engagement_score": 0.0912262939969082,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_653821",
+        "total_clicks": 585,
+        "active_days": 44,
+        "engagement_score": 0.09125401116614476,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_588170",
+        "total_clicks": 847,
+        "active_days": 41,
+        "engagement_score": 0.09128523023579563,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_641804",
+        "total_clicks": 1469,
+        "active_days": 34,
+        "engagement_score": 0.09157901732799932,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_547612",
+        "total_clicks": 776,
+        "active_days": 42,
+        "engagement_score": 0.09161314222990885,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_688707",
+        "total_clicks": 521,
+        "active_days": 45,
+        "engagement_score": 0.09172691673911378,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_413200",
+        "total_clicks": 350,
+        "active_days": 47,
+        "engagement_score": 0.0917820530435091,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_630165",
+        "total_clicks": 785,
+        "active_days": 42,
+        "engagement_score": 0.09179956254558058,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_514504",
+        "total_clicks": 460,
+        "active_days": 46,
+        "engagement_score": 0.09226196241730672,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2358707",
+        "total_clicks": 808,
+        "active_days": 42,
+        "engagement_score": 0.09227597001896391,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2500064",
+        "total_clicks": 635,
+        "active_days": 44,
+        "engagement_score": 0.09228967958654327,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_297166",
+        "total_clicks": 1158,
+        "active_days": 38,
+        "engagement_score": 0.09233140435743704,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_592093",
+        "total_clicks": 639,
+        "active_days": 44,
+        "engagement_score": 0.09237253306017516,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1646172",
+        "total_clicks": 1083,
+        "active_days": 39,
+        "engagement_score": 0.09257646287791838,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_626878",
+        "total_clicks": 476,
+        "active_days": 46,
+        "engagement_score": 0.09259337631183424,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_644951",
+        "total_clicks": 396,
+        "active_days": 47,
+        "engagement_score": 0.09273486799027575,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_579052",
+        "total_clicks": 747,
+        "active_days": 43,
+        "engagement_score": 0.09281101569715686,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_598501",
+        "total_clicks": 747,
+        "active_days": 43,
+        "engagement_score": 0.09281101569715686,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_561208",
+        "total_clicks": 405,
+        "active_days": 47,
+        "engagement_score": 0.09292128830594748,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2470326",
+        "total_clicks": 678,
+        "active_days": 44,
+        "engagement_score": 0.093180354428086,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_366164",
+        "total_clicks": 1113,
+        "active_days": 39,
+        "engagement_score": 0.0931978639301575,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_554459",
+        "total_clicks": 594,
+        "active_days": 45,
+        "engagement_score": 0.09323899263289563,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_521292",
+        "total_clicks": 597,
+        "active_days": 45,
+        "engagement_score": 0.09330113273811953,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_589778",
+        "total_clicks": 1038,
+        "active_days": 40,
+        "engagement_score": 0.09344292245063884,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_607094",
+        "total_clicks": 529,
+        "active_days": 46,
+        "engagement_score": 0.09369118483745668,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1478775",
+        "total_clicks": 964,
+        "active_days": 41,
+        "engagement_score": 0.09370869433952816,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650787",
+        "total_clicks": 447,
+        "active_days": 47,
+        "engagement_score": 0.09379124977908224,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_145114",
+        "total_clicks": 893,
+        "active_days": 42,
+        "engagement_score": 0.0940366063336414,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_427390",
+        "total_clicks": 1076,
+        "active_days": 40,
+        "engagement_score": 0.09423003045014172,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_618513",
+        "total_clicks": 655,
+        "active_days": 45,
+        "engagement_score": 0.09450250810578183,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_691218",
+        "total_clicks": 744,
+        "active_days": 44,
+        "engagement_score": 0.09454743674301207,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_312061",
+        "total_clicks": 1011,
+        "active_days": 41,
+        "engagement_score": 0.09468222265470279,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_574586",
+        "total_clicks": 759,
+        "active_days": 44,
+        "engagement_score": 0.09485813726913161,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_490313",
+        "total_clicks": 421,
+        "active_days": 48,
+        "engagement_score": 0.09505126335155414,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_598751",
+        "total_clicks": 600,
+        "active_days": 46,
+        "engagement_score": 0.09516183399442259,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647148",
+        "total_clicks": 516,
+        "active_days": 47,
+        "engagement_score": 0.0952204721992322,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_643568",
+        "total_clicks": 1142,
+        "active_days": 40,
+        "engagement_score": 0.09559711276506778,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_606170",
+        "total_clicks": 802,
+        "active_days": 44,
+        "engagement_score": 0.09574881211067435,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_571765",
+        "total_clicks": 803,
+        "active_days": 44,
+        "engagement_score": 0.09576952547908232,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_688521",
+        "total_clicks": 456,
+        "active_days": 48,
+        "engagement_score": 0.09577623124583312,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_682301",
+        "total_clicks": 1065,
+        "active_days": 41,
+        "engagement_score": 0.09580074454873319,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647865",
+        "total_clicks": 374,
+        "active_days": 49,
+        "engagement_score": 0.09587629618745866,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_565743",
+        "total_clicks": 820,
+        "active_days": 44,
+        "engagement_score": 0.09612165274201782,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_400958",
+        "total_clicks": 738,
+        "active_days": 45,
+        "engagement_score": 0.09622171768364338,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654002",
+        "total_clicks": 912,
+        "active_days": 43,
+        "engagement_score": 0.09622872148447198,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_407404",
+        "total_clicks": 394,
+        "active_days": 49,
+        "engagement_score": 0.09629056355561808,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_585422",
+        "total_clicks": 923,
+        "active_days": 43,
+        "engagement_score": 0.09645656853695966,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_364103",
+        "total_clicks": 847,
+        "active_days": 44,
+        "engagement_score": 0.09668091368903303,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_674808",
+        "total_clicks": 674,
+        "active_days": 46,
+        "engagement_score": 0.0966946232566124,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2613746",
+        "total_clicks": 852,
+        "active_days": 44,
+        "engagement_score": 0.09678448053107289,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_626625",
+        "total_clicks": 1553,
+        "active_days": 36,
+        "engagement_score": 0.09691606257642711,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685474",
+        "total_clicks": 520,
+        "active_days": 48,
+        "engagement_score": 0.09710188682394323,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_549888",
+        "total_clicks": 696,
+        "active_days": 46,
+        "engagement_score": 0.09715031736158776,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_629535",
+        "total_clicks": 612,
+        "active_days": 47,
+        "engagement_score": 0.09720895556639737,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_556440",
+        "total_clicks": 799,
+        "active_days": 45,
+        "engagement_score": 0.09748523315652959,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_406698",
+        "total_clicks": 1062,
+        "active_days": 42,
+        "engagement_score": 0.09753716559458842,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647083",
+        "total_clicks": 629,
+        "active_days": 47,
+        "engagement_score": 0.09756108282933287,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_680890",
+        "total_clicks": 630,
+        "active_days": 47,
+        "engagement_score": 0.09758179619774085,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685287",
+        "total_clicks": 980,
+        "active_days": 43,
+        "engagement_score": 0.09763723053621398,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_561560",
+        "total_clicks": 894,
+        "active_days": 44,
+        "engagement_score": 0.09765444200420764,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2559144",
+        "total_clicks": 637,
+        "active_days": 47,
+        "engagement_score": 0.09772678977659664,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_680133",
+        "total_clicks": 1077,
+        "active_days": 42,
+        "engagement_score": 0.09784786612070798,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_651850",
+        "total_clicks": 564,
+        "active_days": 48,
+        "engagement_score": 0.09801327503389393,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_620652",
+        "total_clicks": 568,
+        "active_days": 48,
+        "engagement_score": 0.09809612850752582,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_596981",
+        "total_clicks": 483,
+        "active_days": 49,
+        "engagement_score": 0.09813405334392744,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_612860",
+        "total_clicks": 745,
+        "active_days": 46,
+        "engagement_score": 0.09816527241357831,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_558463",
+        "total_clicks": 834,
+        "active_days": 45,
+        "engagement_score": 0.09821020105080855,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_605111",
+        "total_clicks": 576,
+        "active_days": 48,
+        "engagement_score": 0.09826183545478957,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_532565",
+        "total_clicks": 409,
+        "active_days": 50,
+        "engagement_score": 0.09839982523281676,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_570954",
+        "total_clicks": 1374,
+        "active_days": 39,
+        "engagement_score": 0.0986040530846378,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694726",
+        "total_clicks": 1374,
+        "active_days": 39,
+        "engagement_score": 0.0986040530846378,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_586047",
+        "total_clicks": 1289,
+        "active_days": 40,
+        "engagement_score": 0.09864197792103944,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_633198",
+        "total_clicks": 337,
+        "active_days": 51,
+        "engagement_score": 0.09870702385852204,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_475163",
+        "total_clicks": 1307,
+        "active_days": 40,
+        "engagement_score": 0.09901481855238292,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_366367",
+        "total_clicks": 532,
+        "active_days": 49,
+        "engagement_score": 0.099149008395918,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_561826",
+        "total_clicks": 971,
+        "active_days": 44,
+        "engagement_score": 0.09924937137162138,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_631073",
+        "total_clicks": 981,
+        "active_days": 44,
+        "engagement_score": 0.09945650505570107,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2499779",
+        "total_clicks": 1156,
+        "active_days": 42,
+        "engagement_score": 0.09948422222493765,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_505700",
+        "total_clicks": 650,
+        "active_days": 48,
+        "engagement_score": 0.09979462471697939,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648818",
+        "total_clicks": 763,
+        "active_days": 47,
+        "engagement_score": 0.10033667419600092,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654016",
+        "total_clicks": 942,
+        "active_days": 45,
+        "engagement_score": 0.10044724483886935,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_505722",
+        "total_clicks": 943,
+        "active_days": 45,
+        "engagement_score": 0.10046795820727733,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_508775",
+        "total_clicks": 947,
+        "active_days": 45,
+        "engagement_score": 0.10055081168090921,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_577460",
+        "total_clicks": 1209,
+        "active_days": 42,
+        "engagement_score": 0.10058203075056008,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_413087",
+        "total_clicks": 1036,
+        "active_days": 44,
+        "engagement_score": 0.10059574031813945,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2593755",
+        "total_clicks": 776,
+        "active_days": 47,
+        "engagement_score": 0.10060594798530453,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685619",
+        "total_clicks": 695,
+        "active_days": 48,
+        "engagement_score": 0.10072672629533806,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650341",
+        "total_clicks": 1139,
+        "active_days": 43,
+        "engagement_score": 0.10093065611308129,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_429015",
+        "total_clicks": 1318,
+        "active_days": 41,
+        "engagement_score": 0.10104122675594973,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_614761",
+        "total_clicks": 1151,
+        "active_days": 43,
+        "engagement_score": 0.10117921653397693,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_653452",
+        "total_clicks": 631,
+        "active_days": 49,
+        "engagement_score": 0.10119963186830708,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1958121",
+        "total_clicks": 1414,
+        "active_days": 40,
+        "engagement_score": 0.10123114897203575,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_262385",
+        "total_clicks": 1011,
+        "active_days": 45,
+        "engagement_score": 0.10187646725901933,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_322844",
+        "total_clicks": 667,
+        "active_days": 49,
+        "engagement_score": 0.10194531313099402,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_526441",
+        "total_clicks": 672,
+        "active_days": 49,
+        "engagement_score": 0.10204887997303387,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_603529",
+        "total_clicks": 1457,
+        "active_days": 40,
+        "engagement_score": 0.10212182381357848,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_269388",
+        "total_clicks": 1024,
+        "active_days": 45,
+        "engagement_score": 0.10214574104832294,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_612177",
+        "total_clicks": 854,
+        "active_days": 47,
+        "engagement_score": 0.10222159072112624,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_138997",
+        "total_clicks": 344,
+        "active_days": 53,
+        "engagement_score": 0.10244913973953611,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_607429",
+        "total_clicks": 1214,
+        "active_days": 43,
+        "engagement_score": 0.10248415874367908,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_440103",
+        "total_clicks": 621,
+        "active_days": 50,
+        "engagement_score": 0.10279105933530651,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1091274",
+        "total_clicks": 972,
+        "active_days": 46,
+        "engagement_score": 0.10286720704218762,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_541040",
+        "total_clicks": 634,
+        "active_days": 50,
+        "engagement_score": 0.10306033312461013,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_611593",
+        "total_clicks": 582,
+        "active_days": 51,
+        "engagement_score": 0.10378179911847481,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_579176",
+        "total_clicks": 848,
+        "active_days": 48,
+        "engagement_score": 0.10389587166175755,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1490624",
+        "total_clicks": 604,
+        "active_days": 51,
+        "engagement_score": 0.10423749322345016,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_697998",
+        "total_clicks": 1473,
+        "active_days": 41,
+        "engagement_score": 0.10425179885918516,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_531896",
+        "total_clicks": 955,
+        "active_days": 47,
+        "engagement_score": 0.10431364093033126,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_566135",
+        "total_clicks": 437,
+        "active_days": 53,
+        "engagement_score": 0.10437548300147736,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2339333",
+        "total_clicks": 454,
+        "active_days": 53,
+        "engagement_score": 0.10472761026441285,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_693998",
+        "total_clicks": 1155,
+        "active_days": 45,
+        "engagement_score": 0.10485919230976708,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_610279",
+        "total_clicks": 810,
+        "active_days": 49,
+        "engagement_score": 0.1049073248133338,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_314956",
+        "total_clicks": 641,
+        "active_days": 51,
+        "engagement_score": 0.10500388785454506,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_29420",
+        "total_clicks": 816,
+        "active_days": 49,
+        "engagement_score": 0.10503160502378162,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1564630",
+        "total_clicks": 909,
+        "active_days": 48,
+        "engagement_score": 0.10515938713464376,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2595204",
+        "total_clicks": 1438,
+        "active_days": 42,
+        "engagement_score": 0.10532539211598532,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_529550",
+        "total_clicks": 844,
+        "active_days": 49,
+        "engagement_score": 0.1056115793392048,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1301103",
+        "total_clicks": 678,
+        "active_days": 51,
+        "engagement_score": 0.10577028248563997,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_379265",
+        "total_clicks": 941,
+        "active_days": 48,
+        "engagement_score": 0.10582221492369881,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1101190",
+        "total_clicks": 784,
+        "active_days": 50,
+        "engagement_score": 0.1061673383858057,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_465900",
+        "total_clicks": 448,
+        "active_days": 54,
+        "engagement_score": 0.10640189120504417,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_629696",
+        "total_clicks": 1496,
+        "active_days": 42,
+        "engagement_score": 0.10652676748364762,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_596711",
+        "total_clicks": 1236,
+        "active_days": 45,
+        "engagement_score": 0.10653697515081269,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_631870",
+        "total_clicks": 891,
+        "active_days": 49,
+        "engagement_score": 0.10658510765437941,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_602856",
+        "total_clicks": 1678,
+        "active_days": 40,
+        "engagement_score": 0.10669947823173997,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_624927",
+        "total_clicks": 816,
+        "active_days": 50,
+        "engagement_score": 0.10683016617486077,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_575398",
+        "total_clicks": 849,
+        "active_days": 50,
+        "engagement_score": 0.1075137073323238,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_608422",
+        "total_clicks": 763,
+        "active_days": 51,
+        "engagement_score": 0.10753091880031747,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1828753",
+        "total_clicks": 504,
+        "active_days": 54,
+        "engagement_score": 0.10756183983589052,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1752098",
+        "total_clicks": 594,
+        "active_days": 53,
+        "engagement_score": 0.10762748184152873,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_686558",
+        "total_clicks": 944,
+        "active_days": 49,
+        "engagement_score": 0.10768291618000185,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_367352",
+        "total_clicks": 775,
+        "active_days": 51,
+        "engagement_score": 0.10777947922121311,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_631016",
+        "total_clicks": 1385,
+        "active_days": 44,
+        "engagement_score": 0.10782470589252116,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_574637",
+        "total_clicks": 867,
+        "active_days": 50,
+        "engagement_score": 0.10788654796366726,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_94978",
+        "total_clicks": 1234,
+        "active_days": 46,
+        "engagement_score": 0.10829410956507589,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_574325",
+        "total_clicks": 1761,
+        "active_days": 40,
+        "engagement_score": 0.10841868780960152,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_391059",
+        "total_clicks": 546,
+        "active_days": 54,
+        "engagement_score": 0.10843180130902529,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_563920",
+        "total_clicks": 634,
+        "active_days": 53,
+        "engagement_score": 0.10845601657784755,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_611033",
+        "total_clicks": 739,
+        "active_days": 52,
+        "engagement_score": 0.10883235910960531,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_576433",
+        "total_clicks": 928,
+        "active_days": 50,
+        "engagement_score": 0.10915006343655345,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2655763",
+        "total_clicks": 606,
+        "active_days": 54,
+        "engagement_score": 0.10967460341350352,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654188",
+        "total_clicks": 955,
+        "active_days": 50,
+        "engagement_score": 0.10970932438356866,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_608681",
+        "total_clicks": 454,
+        "active_days": 56,
+        "engagement_score": 0.11012329371765026,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_680267",
+        "total_clicks": 655,
+        "active_days": 54,
+        "engagement_score": 0.11068955846549407,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_608746",
+        "total_clicks": 832,
+        "active_days": 52,
+        "engagement_score": 0.11075870237154657,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2517389",
+        "total_clicks": 508,
+        "active_days": 56,
+        "engagement_score": 0.11124181561168067,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_631663",
+        "total_clicks": 1030,
+        "active_days": 50,
+        "engagement_score": 0.11126282701416645,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_683406",
+        "total_clicks": 1033,
+        "active_days": 50,
+        "engagement_score": 0.11132496711939036,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_446778",
+        "total_clicks": 599,
+        "active_days": 55,
+        "engagement_score": 0.11132817098572685,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_651823",
+        "total_clicks": 1555,
+        "active_days": 44,
+        "engagement_score": 0.11134597852187614,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_336014",
+        "total_clicks": 602,
+        "active_days": 55,
+        "engagement_score": 0.11139031109095075,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1658963",
+        "total_clicks": 609,
+        "active_days": 55,
+        "engagement_score": 0.11153530466980655,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_34068",
+        "total_clicks": 613,
+        "active_days": 55,
+        "engagement_score": 0.11161815814343844,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_650145",
+        "total_clicks": 1054,
+        "active_days": 50,
+        "engagement_score": 0.11175994785595775,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_634420",
+        "total_clicks": 714,
+        "active_days": 54,
+        "engagement_score": 0.11191164720156432,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_30096",
+        "total_clicks": 714,
+        "active_days": 54,
+        "engagement_score": 0.11191164720156432,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2376512",
+        "total_clicks": 716,
+        "active_days": 54,
+        "engagement_score": 0.11195307393838028,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_681642",
+        "total_clicks": 717,
+        "active_days": 54,
+        "engagement_score": 0.11197378730678824,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_589438",
+        "total_clicks": 805,
+        "active_days": 53,
+        "engagement_score": 0.1119980025756105,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_474495",
+        "total_clicks": 805,
+        "active_days": 53,
+        "engagement_score": 0.1119980025756105,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685860",
+        "total_clicks": 984,
+        "active_days": 51,
+        "engagement_score": 0.11210857321847895,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_647518",
+        "total_clicks": 1517,
+        "active_days": 45,
+        "engagement_score": 0.11235743167345241,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_350267",
+        "total_clicks": 651,
+        "active_days": 55,
+        "engagement_score": 0.11240526614294132,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654295",
+        "total_clicks": 1001,
+        "active_days": 51,
+        "engagement_score": 0.11246070048141445,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_678204",
+        "total_clicks": 485,
+        "active_days": 57,
+        "engagement_score": 0.11256396928937648,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_687844",
+        "total_clicks": 416,
+        "active_days": 58,
+        "engagement_score": 0.11293330802030566,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_61236",
+        "total_clicks": 506,
+        "active_days": 57,
+        "engagement_score": 0.11299895002594387,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1442981",
+        "total_clicks": 1211,
+        "active_days": 49,
+        "engagement_score": 0.11321338554492998,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_585359",
+        "total_clicks": 785,
+        "active_days": 54,
+        "engagement_score": 0.11338229635853023,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_612179",
+        "total_clicks": 452,
+        "active_days": 58,
+        "engagement_score": 0.1136789892829926,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_550545",
+        "total_clicks": 715,
+        "active_days": 55,
+        "engagement_score": 0.11373092172105143,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694103",
+        "total_clicks": 638,
+        "active_days": 56,
+        "engagement_score": 0.11393455350471683,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_684111",
+        "total_clicks": 745,
+        "active_days": 55,
+        "engagement_score": 0.11435232277329054,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_645369",
+        "total_clicks": 834,
+        "active_days": 54,
+        "engagement_score": 0.11439725141052079,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_590676",
+        "total_clicks": 925,
+        "active_days": 53,
+        "engagement_score": 0.11448360678456697,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1906003",
+        "total_clicks": 847,
+        "active_days": 54,
+        "engagement_score": 0.1146665251998244,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_245600",
+        "total_clicks": 680,
+        "active_days": 56,
+        "engagement_score": 0.1148045149778516,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_493416",
+        "total_clicks": 680,
+        "active_days": 56,
+        "engagement_score": 0.1148045149778516,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_601956",
+        "total_clicks": 685,
+        "active_days": 56,
+        "engagement_score": 0.11490808181989146,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_681174",
+        "total_clicks": 686,
+        "active_days": 56,
+        "engagement_score": 0.11492879518829942,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_561476",
+        "total_clicks": 954,
+        "active_days": 53,
+        "engagement_score": 0.1150842944683981,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1945240",
+        "total_clicks": 700,
+        "active_days": 56,
+        "engagement_score": 0.115218782346011,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_37652",
+        "total_clicks": 885,
+        "active_days": 54,
+        "engagement_score": 0.11545363319932728,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_629096",
+        "total_clicks": 1330,
+        "active_days": 49,
+        "engagement_score": 0.11567827638547847,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_572154",
+        "total_clicks": 983,
+        "active_days": 53,
+        "engagement_score": 0.11568498215222925,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_378576",
+        "total_clicks": 897,
+        "active_days": 54,
+        "engagement_score": 0.11570219362022294,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694362",
+        "total_clicks": 469,
+        "active_days": 59,
+        "engagement_score": 0.11582967769700724,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_657048",
+        "total_clicks": 556,
+        "active_days": 58,
+        "engagement_score": 0.11583317959742154,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_678860",
+        "total_clicks": 1258,
+        "active_days": 50,
+        "engagement_score": 0.11598547501118373,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_620231",
+        "total_clicks": 920,
+        "active_days": 54,
+        "engagement_score": 0.11617860109360625,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_628216",
+        "total_clicks": 576,
+        "active_days": 58,
+        "engagement_score": 0.11624744696558094,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_675477",
+        "total_clicks": 1360,
+        "active_days": 49,
+        "engagement_score": 0.11629967743771757,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_575047",
+        "total_clicks": 2055,
+        "active_days": 41,
+        "engagement_score": 0.11630697927262398,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_440171",
+        "total_clicks": 1284,
+        "active_days": 50,
+        "engagement_score": 0.11652402258979096,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_603129",
+        "total_clicks": 511,
+        "active_days": 59,
+        "engagement_score": 0.116699639170142,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_612187",
+        "total_clicks": 1294,
+        "active_days": 50,
+        "engagement_score": 0.11673115627387066,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_549769",
+        "total_clicks": 1483,
+        "active_days": 48,
+        "engagement_score": 0.11704886060081882,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_689217",
+        "total_clicks": 1224,
+        "active_days": 51,
+        "engagement_score": 0.11707978163639186,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_142092",
+        "total_clicks": 1226,
+        "active_days": 51,
+        "engagement_score": 0.1171212083732078,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_144745",
+        "total_clicks": 796,
+        "active_days": 56,
+        "engagement_score": 0.11720726571317618,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_603302",
+        "total_clicks": 800,
+        "active_days": 56,
+        "engagement_score": 0.11729011918680805,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_585098",
+        "total_clicks": 1061,
+        "active_days": 53,
+        "engagement_score": 0.11730062488805096,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_583993",
+        "total_clicks": 907,
+        "active_days": 55,
+        "engagement_score": 0.11770788845538176,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_604906",
+        "total_clicks": 1356,
+        "active_days": 50,
+        "engagement_score": 0.11801538511516484,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_688033",
+        "total_clicks": 665,
+        "active_days": 58,
+        "engagement_score": 0.11809093675389032,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2078353",
+        "total_clicks": 593,
+        "active_days": 59,
+        "engagement_score": 0.11839813537959558,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_596620",
+        "total_clicks": 1310,
+        "active_days": 51,
+        "engagement_score": 0.11886113131947733,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_577458",
+        "total_clicks": 965,
+        "active_days": 55,
+        "engagement_score": 0.11890926382304405,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_447644",
+        "total_clicks": 966,
+        "active_days": 55,
+        "engagement_score": 0.11892997719145201,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_581656",
+        "total_clicks": 884,
+        "active_days": 56,
+        "engagement_score": 0.11903004213307758,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_28787",
+        "total_clicks": 645,
+        "active_days": 59,
+        "engagement_score": 0.11947523053681004,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2596553",
+        "total_clicks": 993,
+        "active_days": 55,
+        "engagement_score": 0.11948923813846722,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_581123",
+        "total_clicks": 650,
+        "active_days": 59,
+        "engagement_score": 0.1195787973788499,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_633328",
+        "total_clicks": 572,
+        "active_days": 60,
+        "engagement_score": 0.11976171579410733,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_678790",
+        "total_clicks": 1284,
+        "active_days": 52,
+        "engagement_score": 0.12012114489194924,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_392890",
+        "total_clicks": 510,
+        "active_days": 61,
+        "engagement_score": 0.1202760481038923,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_622812",
+        "total_clicks": 1133,
+        "active_days": 54,
+        "engagement_score": 0.12059054856450396,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_602533",
+        "total_clicks": 701,
+        "active_days": 59,
+        "engagement_score": 0.1206351791676564,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_649592",
+        "total_clicks": 876,
+        "active_days": 57,
+        "engagement_score": 0.12066289633689295,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648321",
+        "total_clicks": 876,
+        "active_days": 57,
+        "engagement_score": 0.12066289633689295,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_601517",
+        "total_clicks": 880,
+        "active_days": 57,
+        "engagement_score": 0.12074574981052484,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_629560",
+        "total_clicks": 713,
+        "active_days": 59,
+        "engagement_score": 0.12088373958855204,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_526741",
+        "total_clicks": 827,
+        "active_days": 58,
+        "engagement_score": 0.12144650243598154,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_687877",
+        "total_clicks": 1104,
+        "active_days": 55,
+        "engagement_score": 0.12178842203175194,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_643199",
+        "total_clicks": 503,
+        "active_days": 62,
+        "engagement_score": 0.12192961567611564,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1561750",
+        "total_clicks": 860,
+        "active_days": 58,
+        "engagement_score": 0.12213004359344456,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_567304",
+        "total_clicks": 1299,
+        "active_days": 53,
+        "engagement_score": 0.12223040656914794,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_547153",
+        "total_clicks": 1569,
+        "active_days": 50,
+        "engagement_score": 0.12242733258606256,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_634721",
+        "total_clicks": 879,
+        "active_days": 58,
+        "engagement_score": 0.122523597593196,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_128510",
+        "total_clicks": 459,
+        "active_days": 63,
+        "engagement_score": 0.12281678861724407,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_580714",
+        "total_clicks": 980,
+        "active_days": 57,
+        "engagement_score": 0.12281708665132189,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_594909",
+        "total_clicks": 986,
+        "active_days": 57,
+        "engagement_score": 0.12294136686176971,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_598665",
+        "total_clicks": 1436,
+        "active_days": 52,
+        "engagement_score": 0.12326957688996075,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1439723",
+        "total_clicks": 749,
+        "active_days": 60,
+        "engagement_score": 0.12342798200231811,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_556476",
+        "total_clicks": 933,
+        "active_days": 58,
+        "engagement_score": 0.12364211948722642,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685412",
+        "total_clicks": 941,
+        "active_days": 58,
+        "engagement_score": 0.12380782643449018,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_675063",
+        "total_clicks": 599,
+        "active_days": 62,
+        "engagement_score": 0.12391809904328081,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_675374",
+        "total_clicks": 947,
+        "active_days": 58,
+        "engagement_score": 0.123932106644938,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1076015",
+        "total_clicks": 601,
+        "active_days": 62,
+        "engagement_score": 0.12395952578009675,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_635802",
+        "total_clicks": 1221,
+        "active_days": 55,
+        "engagement_score": 0.1242118861354845,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1345808",
+        "total_clicks": 1049,
+        "active_days": 57,
+        "engagement_score": 0.12424630907147186,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_637691",
+        "total_clicks": 881,
+        "active_days": 59,
+        "engagement_score": 0.12436358548109108,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_646071",
+        "total_clicks": 1330,
+        "active_days": 54,
+        "engagement_score": 0.12467108214087416,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_623221",
+        "total_clicks": 1084,
+        "active_days": 57,
+        "engagement_score": 0.12497127696575082,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_607047",
+        "total_clicks": 1097,
+        "active_days": 57,
+        "engagement_score": 0.12524055075505444,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_555989",
+        "total_clicks": 751,
+        "active_days": 61,
+        "engagement_score": 0.1252679698902132,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_611813",
+        "total_clicks": 925,
+        "active_days": 59,
+        "engagement_score": 0.1252749736910418,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_681165",
+        "total_clicks": 2065,
+        "active_days": 46,
+        "engagement_score": 0.12550691871209937,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_578026",
+        "total_clicks": 1376,
+        "active_days": 54,
+        "engagement_score": 0.1256238970876408,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_503710",
+        "total_clicks": 1220,
+        "active_days": 56,
+        "engagement_score": 0.12598973391815566,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_632378",
+        "total_clicks": 1583,
+        "active_days": 52,
+        "engagement_score": 0.12631444204593242,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_264845",
+        "total_clicks": 811,
+        "active_days": 61,
+        "engagement_score": 0.1265107719946914,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_592372",
+        "total_clicks": 988,
+        "active_days": 59,
+        "engagement_score": 0.12657991590074394,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_138861",
+        "total_clicks": 818,
+        "active_days": 61,
+        "engagement_score": 0.1266557655735472,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685849",
+        "total_clicks": 739,
+        "active_days": 62,
+        "engagement_score": 0.12681797062039668,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_690589",
+        "total_clicks": 654,
+        "active_days": 63,
+        "engagement_score": 0.12685589545679832,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694680",
+        "total_clicks": 915,
+        "active_days": 60,
+        "engagement_score": 0.1268664011580412,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694563",
+        "total_clicks": 1092,
+        "active_days": 58,
+        "engagement_score": 0.1269355450640937,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_586838",
+        "total_clicks": 1451,
+        "active_days": 54,
+        "engagement_score": 0.1271773997182386,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_188662",
+        "total_clicks": 944,
+        "active_days": 60,
+        "engagement_score": 0.12746708884187236,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1474903",
+        "total_clicks": 1469,
+        "active_days": 54,
+        "engagement_score": 0.12755024034958207,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685572",
+        "total_clicks": 1209,
+        "active_days": 57,
+        "engagement_score": 0.12756044801674712,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_682367",
+        "total_clicks": 1645,
+        "active_days": 52,
+        "engagement_score": 0.1275986708872266,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685206",
+        "total_clicks": 2167,
+        "active_days": 46,
+        "engagement_score": 0.12761968228971238,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_554691",
+        "total_clicks": 1052,
+        "active_days": 59,
+        "engagement_score": 0.12790557147885404,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_391466",
+        "total_clicks": 1054,
+        "active_days": 59,
+        "engagement_score": 0.12794699821567,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_551158",
+        "total_clicks": 2123,
+        "active_days": 47,
+        "engagement_score": 0.12850685523084082,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648781",
+        "total_clicks": 1518,
+        "active_days": 54,
+        "engagement_score": 0.12856519540157263,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_477185",
+        "total_clicks": 1003,
+        "active_days": 60,
+        "engagement_score": 0.12868917757794263,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_584926",
+        "total_clicks": 923,
+        "active_days": 61,
+        "engagement_score": 0.12883066925638412,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_656203",
+        "total_clicks": 501,
+        "active_days": 66,
+        "engagement_score": 0.12908243354361623,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_560065",
+        "total_clicks": 762,
+        "active_days": 63,
+        "engagement_score": 0.12909293924485915,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_691069",
+        "total_clicks": 764,
+        "active_days": 63,
+        "engagement_score": 0.12913436598167508,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_557959",
+        "total_clicks": 592,
+        "active_days": 65,
+        "engagement_score": 0.12916878891766242,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_676390",
+        "total_clicks": 1466,
+        "active_days": 55,
+        "engagement_score": 0.12928666139543726,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_145490",
+        "total_clicks": 1121,
+        "active_days": 59,
+        "engagement_score": 0.129334793899004,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_339235",
+        "total_clicks": 519,
+        "active_days": 66,
+        "engagement_score": 0.12945527417495972,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_623511",
+        "total_clicks": 1060,
+        "active_days": 60,
+        "engagement_score": 0.12986983957719694,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_633618",
+        "total_clicks": 627,
+        "active_days": 65,
+        "engagement_score": 0.12989375681194137,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_685705",
+        "total_clicks": 1169,
+        "active_days": 59,
+        "engagement_score": 0.1303290355825866,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2084711",
+        "total_clicks": 825,
+        "active_days": 63,
+        "engagement_score": 0.13039788145456127,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_123598",
+        "total_clicks": 740,
+        "active_days": 64,
+        "engagement_score": 0.13043580629096294,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_417724",
+        "total_clicks": 1523,
+        "active_days": 55,
+        "engagement_score": 0.13046732339469158,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_613122",
+        "total_clicks": 1611,
+        "active_days": 54,
+        "engagement_score": 0.13049153866351387,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_506705",
+        "total_clicks": 320,
+        "active_days": 69,
+        "engagement_score": 0.130728997315011,
+        "study_effort_level": "low"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_696271",
+        "total_clicks": 756,
+        "active_days": 64,
+        "engagement_score": 0.13076722018549045,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2434666",
+        "total_clicks": 588,
+        "active_days": 66,
+        "engagement_score": 0.13088449659510967,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_655973",
+        "total_clicks": 675,
+        "active_days": 65,
+        "engagement_score": 0.13088799849552396,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_554761",
+        "total_clicks": 1198,
+        "active_days": 59,
+        "engagement_score": 0.13092972326641775,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_366873",
+        "total_clicks": 767,
+        "active_days": 64,
+        "engagement_score": 0.13099506723797813,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_674497",
+        "total_clicks": 945,
+        "active_days": 62,
+        "engagement_score": 0.1310849245124386,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_512852",
+        "total_clicks": 1731,
+        "active_days": 53,
+        "engagement_score": 0.13117858172139119,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_642850",
+        "total_clicks": 981,
+        "active_days": 62,
+        "engagement_score": 0.13183060577512554,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_694510",
+        "total_clicks": 1639,
+        "active_days": 55,
+        "engagement_score": 0.13287007413001617,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_408608",
+        "total_clicks": 947,
+        "active_days": 63,
+        "engagement_score": 0.1329249124003337,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_232072",
+        "total_clicks": 1989,
+        "active_days": 51,
+        "engagement_score": 0.1329255084684893,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1340760",
+        "total_clicks": 517,
+        "active_days": 68,
+        "engagement_score": 0.13301096974030205,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_502356",
+        "total_clicks": 1249,
+        "active_days": 60,
+        "engagement_score": 0.13378466620630336,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_626768",
+        "total_clicks": 991,
+        "active_days": 63,
+        "engagement_score": 0.1338363006102844,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_603560",
+        "total_clicks": 3002,
+        "active_days": 40,
+        "engagement_score": 0.13412397800389292,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_372577",
+        "total_clicks": 485,
+        "active_days": 69,
+        "engagement_score": 0.13414670310232613,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_614804",
+        "total_clicks": 1180,
+        "active_days": 61,
+        "engagement_score": 0.13415400493723253,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_614265",
+        "total_clicks": 756,
+        "active_days": 66,
+        "engagement_score": 0.13436434248764872,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_624493",
+        "total_clicks": 757,
+        "active_days": 66,
+        "engagement_score": 0.1343850558560567,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_634119",
+        "total_clicks": 1192,
+        "active_days": 61,
+        "engagement_score": 0.13440256535812817,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_594419",
+        "total_clicks": 1028,
+        "active_days": 63,
+        "engagement_score": 0.1346026952413793,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_597433",
+        "total_clicks": 688,
+        "active_days": 67,
+        "engagement_score": 0.13475439458698588,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2030117",
+        "total_clicks": 951,
+        "active_days": 64,
+        "engagement_score": 0.1348063270250447,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_674430",
+        "total_clicks": 1391,
+        "active_days": 59,
+        "engagement_score": 0.13492740336915604,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2614093",
+        "total_clicks": 527,
+        "active_days": 69,
+        "engagement_score": 0.13501666457546088,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_393142",
+        "total_clicks": 875,
+        "active_days": 65,
+        "engagement_score": 0.13503067217711806,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_484223",
+        "total_clicks": 877,
+        "active_days": 65,
+        "engagement_score": 0.135072098913934,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_607453",
+        "total_clicks": 974,
+        "active_days": 64,
+        "engagement_score": 0.13528273449842804,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_639012",
+        "total_clicks": 990,
+        "active_days": 64,
+        "engagement_score": 0.13561414839295555,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_591891",
+        "total_clicks": 907,
+        "active_days": 65,
+        "engagement_score": 0.13569349996617314,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_494211",
+        "total_clicks": 907,
+        "active_days": 65,
+        "engagement_score": 0.13569349996617314,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_610650",
+        "total_clicks": 393,
+        "active_days": 71,
+        "engagement_score": 0.1358381955109511,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2593920",
+        "total_clicks": 1095,
+        "active_days": 63,
+        "engagement_score": 0.13599049092471333,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_697253",
+        "total_clicks": 1099,
+        "active_days": 63,
+        "engagement_score": 0.1360733443983452,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_257887",
+        "total_clicks": 752,
+        "active_days": 67,
+        "engagement_score": 0.13608005016509597,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_629692",
+        "total_clicks": 2071,
+        "active_days": 52,
+        "engagement_score": 0.136422565829022,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_596846",
+        "total_clicks": 1118,
+        "active_days": 63,
+        "engagement_score": 0.13646689839809664,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_291674",
+        "total_clicks": 1316,
+        "active_days": 61,
+        "engagement_score": 0.1369710230407165,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_555760",
+        "total_clicks": 625,
+        "active_days": 69,
+        "engagement_score": 0.137046574679442,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_606345",
+        "total_clicks": 2893,
+        "active_days": 43,
+        "engagement_score": 0.13726190430066154,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_416860",
+        "total_clicks": 821,
+        "active_days": 67,
+        "engagement_score": 0.13750927258524595,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_589782",
+        "total_clicks": 995,
+        "active_days": 65,
+        "engagement_score": 0.13751627638607453,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_683503",
+        "total_clicks": 1432,
+        "active_days": 60,
+        "engagement_score": 0.13757521262496197,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_515734",
+        "total_clicks": 1086,
+        "active_days": 64,
+        "engagement_score": 0.13760263176012072,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_592625",
+        "total_clicks": 1003,
+        "active_days": 65,
+        "engagement_score": 0.1376819833333383,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_689190",
+        "total_clicks": 1011,
+        "active_days": 65,
+        "engagement_score": 0.13784769028060206,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_598713",
+        "total_clicks": 768,
+        "active_days": 68,
+        "engagement_score": 0.13821002521070264,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_35355",
+        "total_clicks": 1116,
+        "active_days": 64,
+        "engagement_score": 0.13822403281235984,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_515857",
+        "total_clicks": 1205,
+        "active_days": 63,
+        "engagement_score": 0.13826896144959008,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_622192",
+        "total_clicks": 866,
+        "active_days": 67,
+        "engagement_score": 0.1384413741636046,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_588178",
+        "total_clicks": 1912,
+        "active_days": 55,
+        "engagement_score": 0.13852482370539212,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_675823",
+        "total_clicks": 1307,
+        "active_days": 62,
+        "engagement_score": 0.13858316387612393,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_690062",
+        "total_clicks": 1135,
+        "active_days": 64,
+        "engagement_score": 0.13861758681211128,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_678419",
+        "total_clicks": 878,
+        "active_days": 67,
+        "engagement_score": 0.13868993458450027,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_656340",
+        "total_clicks": 793,
+        "active_days": 68,
+        "engagement_score": 0.1387278594209019,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_500189",
+        "total_clicks": 976,
+        "active_days": 66,
+        "engagement_score": 0.13892128353740224,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2647893",
+        "total_clicks": 1067,
+        "active_days": 65,
+        "engagement_score": 0.1390076389114484,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_683777",
+        "total_clicks": 645,
+        "active_days": 70,
+        "engagement_score": 0.13925940319868055,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_551214",
+        "total_clicks": 401,
+        "active_days": 73,
+        "engagement_score": 0.13960102476037314,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_264151",
+        "total_clicks": 922,
+        "active_days": 67,
+        "engagement_score": 0.13960132279445098,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_648285",
+        "total_clicks": 839,
+        "active_days": 68,
+        "engagement_score": 0.13968067436766854,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_600814",
+        "total_clicks": 1190,
+        "active_days": 64,
+        "engagement_score": 0.13975682207454965,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_696869",
+        "total_clicks": 1193,
+        "active_days": 64,
+        "engagement_score": 0.13981896217977358,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_921739",
+        "total_clicks": 771,
+        "active_days": 69,
+        "engagement_score": 0.1400707264670057,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1810414",
+        "total_clicks": 603,
+        "active_days": 71,
+        "engagement_score": 0.14018800287662492,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_695270",
+        "total_clicks": 865,
+        "active_days": 68,
+        "engagement_score": 0.14021922194627578,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_571962",
+        "total_clicks": 1043,
+        "active_days": 66,
+        "engagement_score": 0.14030907922073627,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_645216",
+        "total_clicks": 698,
+        "active_days": 70,
+        "engagement_score": 0.140357211724303,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_627283",
+        "total_clicks": 1403,
+        "active_days": 62,
+        "engagement_score": 0.14057164724328908,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_633544",
+        "total_clicks": 1064,
+        "active_days": 66,
+        "engagement_score": 0.14074405995730363,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_686645",
+        "total_clicks": 2636,
+        "active_days": 48,
+        "engagement_score": 0.1409313743752088,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_689246",
+        "total_clicks": 1626,
+        "active_days": 60,
+        "engagement_score": 0.14159360609610824,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_445114",
+        "total_clicks": 1372,
+        "active_days": 63,
+        "engagement_score": 0.14172809397372116,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_649604",
+        "total_clicks": 1473,
+        "active_days": 62,
+        "engagement_score": 0.14202158303184703,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_509150",
+        "total_clicks": 1649,
+        "active_days": 60,
+        "engagement_score": 0.14207001356949156,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_602123",
+        "total_clicks": 1392,
+        "active_days": 63,
+        "engagement_score": 0.14214236134188055,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_105413",
+        "total_clicks": 963,
+        "active_days": 68,
+        "engagement_score": 0.14224913205025688,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_430487",
+        "total_clicks": 964,
+        "active_days": 68,
+        "engagement_score": 0.14226984541866486,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_681731",
+        "total_clicks": 1138,
+        "active_days": 66,
+        "engagement_score": 0.14227684921949346,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_595106",
+        "total_clicks": 972,
+        "active_days": 68,
+        "engagement_score": 0.14243555236592864,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_1612600",
+        "total_clicks": 1668,
+        "active_days": 60,
+        "engagement_score": 0.142463567569243,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_355935",
+        "total_clicks": 549,
+        "active_days": 73,
+        "engagement_score": 0.14266660328475278,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_549439",
+        "total_clicks": 1076,
+        "active_days": 67,
+        "engagement_score": 0.14279118152927842,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_542167",
+        "total_clicks": 1255,
+        "active_days": 65,
+        "engagement_score": 0.14290175217214687,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_644416",
+        "total_clicks": 1260,
+        "active_days": 65,
+        "engagement_score": 0.14300531901418673,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_568948",
+        "total_clicks": 653,
+        "active_days": 72,
+        "engagement_score": 0.14302223244810258,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_599398",
+        "total_clicks": 1462,
+        "active_days": 63,
+        "engagement_score": 0.1435922971304385,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_334225",
+        "total_clicks": 1464,
+        "active_days": 63,
+        "engagement_score": 0.14363372386725443,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_692603",
+        "total_clicks": 872,
+        "active_days": 70,
+        "engagement_score": 0.14396133782728984,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_430806",
+        "total_clicks": 967,
+        "active_days": 69,
+        "engagement_score": 0.1441305466749679,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_327057",
+        "total_clicks": 1143,
+        "active_days": 67,
+        "engagement_score": 0.14417897721261244,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_584771",
+        "total_clicks": 1235,
+        "active_days": 66,
+        "engagement_score": 0.14428604595506658,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_654646",
+        "total_clicks": 2278,
+        "active_days": 54,
+        "engagement_score": 0.1443073553916302,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_638018",
+        "total_clicks": 889,
+        "active_days": 70,
+        "engagement_score": 0.14431346509022533,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_535161",
+        "total_clicks": 977,
+        "active_days": 69,
+        "engagement_score": 0.14433768035904762,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_498236",
+        "total_clicks": 1428,
+        "active_days": 64,
+        "engagement_score": 0.14468660375564663,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_549687",
+        "total_clicks": 909,
+        "active_days": 70,
+        "engagement_score": 0.14472773245838474,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_23698",
+        "total_clicks": 910,
+        "active_days": 70,
+        "engagement_score": 0.14474844582679272,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_294112",
+        "total_clicks": 1042,
+        "active_days": 69,
+        "engagement_score": 0.1456840493055657,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_641696",
+        "total_clicks": 1047,
+        "active_days": 69,
+        "engagement_score": 0.14578761614760555,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_645948",
+        "total_clicks": 1489,
+        "active_days": 64,
+        "engagement_score": 0.14595011922853285,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_621300",
+        "total_clicks": 623,
+        "active_days": 74,
+        "engagement_score": 0.14599795369802174,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_2388623",
+        "total_clicks": 632,
+        "active_days": 74,
+        "engagement_score": 0.14618437401369347,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_684709",
+        "total_clicks": 1004,
+        "active_days": 70,
+        "engagement_score": 0.14669550245714194,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_675915",
+        "total_clicks": 1363,
+        "active_days": 66,
+        "engagement_score": 0.1469373571112868,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_35508",
+        "total_clicks": 1142,
+        "active_days": 69,
+        "engagement_score": 0.14775538614636274,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_678194",
+        "total_clicks": 1318,
+        "active_days": 67,
+        "engagement_score": 0.14780381668400727,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_199361",
+        "total_clicks": 1580,
+        "active_days": 64,
+        "engagement_score": 0.14783503575365814,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_109577",
+        "total_clicks": 2018,
+        "active_days": 59,
+        "engagement_score": 0.14791468536095354,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_576568",
+        "total_clicks": 460,
+        "active_days": 77,
+        "engagement_score": 0.14801735810075994,
+        "study_effort_level": "medium"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_601082",
+        "total_clicks": 1074,
+        "active_days": 70,
+        "engagement_score": 0.1481454382456999,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_483858",
+        "total_clicks": 1081,
+        "active_days": 70,
+        "engagement_score": 0.14829043182455567,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_678339",
+        "total_clicks": 1173,
+        "active_days": 69,
+        "engagement_score": 0.14839750056700984,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_554065",
+        "total_clicks": 1112,
+        "active_days": 70,
+        "engagement_score": 0.14893254624520277,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_603325",
+        "total_clicks": 1640,
+        "active_days": 64,
+        "engagement_score": 0.14907783785813639,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_569277",
+        "total_clicks": 949,
+        "active_days": 72,
+        "engagement_score": 0.14915338949686185,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_583704",
+        "total_clicks": 1407,
+        "active_days": 67,
+        "engagement_score": 0.14964730647231667,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_613370",
+        "total_clicks": 1416,
+        "active_days": 67,
+        "engagement_score": 0.1498337267879884,
+        "study_effort_level": "high"
+      },
+      {
+        "student_id": "SAMPLE_OULAD_STU_556251",
+        "total_clicks": 900,
+        "active_days": 73,
+        "engagement_score": 0.14993699559595042,
+        "study_effort_level": "high"
+      }
+    ]
+  }
+}
+```
+
+## Generator Input Provenance
+
+```json
+{
+  "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-G01__task_aware_data_summarization.json",
+  "explanation_artifact_sha256": "3a7c27b1c810895d694c11b4e731427ebcaabb0b3ae72fe3a15468fab9e633c4",
+  "generator_input_sha256": "38d19920173d7a9c6324f69017a9d2876d41d9a8dfd466db36315ec8ff590f6d",
+  "generator_input_compact": {
+    "task_id": "A-G01",
+    "execution_id": "exec_1781847673084_be8daf4d",
+    "task_name": "Identify low-engagement group",
+    "analysis_type": "segmentation",
+    "explanation_strategy": "behavioral",
+    "actionable_question": "Which students are dangerously disengaged and need outreach?",
+    "target_audience": [
+      "instructor",
+      "admin"
+    ],
+    "query_labels": [
+      "low_engagement_group"
+    ],
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "dataset_labels": [
+      "low_engagement_group"
+    ],
+    "dataset_row_counts": {
+      "low_engagement_group": 1544
+    },
+    "ai_summary_config_summary": {
+      "summary_type": "ranking",
+      "metric_column": "engagement_score",
+      "entity_column": "student_id",
+      "group_column": null,
+      "time_column": null,
+      "sort_by": null,
+      "sort_direction": "asc",
+      "top_k": 10,
+      "bottom_k": 5,
+      "threshold_direction": null,
+      "numeric_threshold": null,
+      "require_sensitive_context_policy": false,
+      "require_complete_action_provenance": true
+    }
+  }
+}
+```
+
+## AI Explanation To Judge
+
+```json
+{
+  "raw_text": "Summary: A significant number of students exhibit dangerously low engagement levels, with the lowest engagement score recorded at 0.0018. This pattern indicates a concerning lack of interaction with course materials, suggesting that these students may require immediate outreach to address their disengagement.\n\nInsights: Consistent Low Engagement Scores: The top students in the low engagement group all share an engagement score of 0.0018, indicating a uniform level of disengagement. This suggests a systemic issue affecting these students' ability to engage with the course content. | Minimal Interaction Metrics: Students in the low engagement group have recorded only 1 total click and 1 active day, highlighting a severe lack of interaction with the learning platform. This behavior suggests that these students are not utilizing available resources effectively.\n\nEducational implications: Students with low engagement scores may be at risk of failing the course due to insufficient interaction with course materials.\n\nRecommendations: high - Initiate outreach to students with engagement scores below 0.05. - Direct communication can help identify barriers to engagement and provide necessary support to improve their academic performance.",
+  "structured_payload": {
+    "task_id": "A-G01",
+    "execution_id": "exec_1781847673084_be8daf4d",
+    "explanation": {
+      "summary": "A significant number of students exhibit dangerously low engagement levels, with the lowest engagement score recorded at 0.0018. This pattern indicates a concerning lack of interaction with course materials, suggesting that these students may require immediate outreach to address their disengagement.",
+      "insights": [
+        {
+          "title": "Consistent Low Engagement Scores",
+          "description": "The top students in the low engagement group all share an engagement score of 0.0018, indicating a uniform level of disengagement. This suggests a systemic issue affecting these students' ability to engage with the course content.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "engagement_score",
+              "value": 0.0018,
+              "comparison": "stable",
+              "delta": null,
+              "context": "Top 10 students in low engagement group"
+            }
+          ]
+        },
+        {
+          "title": "Minimal Interaction Metrics",
+          "description": "Students in the low engagement group have recorded only 1 total click and 1 active day, highlighting a severe lack of interaction with the learning platform. This behavior suggests that these students are not utilizing available resources effectively.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "total_clicks",
+              "value": 1,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Total clicks for top low engagement students"
+            },
+            {
+              "metric": "active_days",
+              "value": 1,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Active days for top low engagement students"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Students with low engagement scores may be at risk of failing the course due to insufficient interaction with course materials."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Initiate outreach to students with engagement scores below 0.05.",
+          "rationale": "Direct communication can help identify barriers to engagement and provide necessary support to improve their academic performance."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The dataset provides a clear ranking of engagement scores, allowing for accurate identification of low engagement students.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "behavioral",
+    "explanation_type": "behavioral",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "ranking",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 1544,
+    "included_row_count": null,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": false,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "low_engagement_group",
+        "row_count": 1544,
+        "included_row_count": 1544
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 9362,
+      "token_usage": {
+        "prompt_tokens": 2140,
+        "completion_tokens": 512,
+        "total_tokens": 2652
+      },
+      "strategy": "behavioral",
+      "granularity": "semester",
+      "cost_usd": 0.000628
+    }
+  },
+  "generation_metadata": {
+    "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-G01__task_aware_data_summarization.json",
+    "explanation_artifact_sha256": "3a7c27b1c810895d694c11b4e731427ebcaabb0b3ae72fe3a15468fab9e633c4",
+    "ai_service_url": "http://localhost:8000",
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "degraded": false,
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 2140,
+      "completion_tokens": 512,
+      "total_tokens": 2652
+    },
+    "latency_ms": 9444,
+    "attempts_used": 1
+  },
+  "source_response_body": {
+    "task_id": "A-G01",
+    "execution_id": "exec_1781847673084_be8daf4d",
+    "explanation": {
+      "summary": "A significant number of students exhibit dangerously low engagement levels, with the lowest engagement score recorded at 0.0018. This pattern indicates a concerning lack of interaction with course materials, suggesting that these students may require immediate outreach to address their disengagement.",
+      "insights": [
+        {
+          "title": "Consistent Low Engagement Scores",
+          "description": "The top students in the low engagement group all share an engagement score of 0.0018, indicating a uniform level of disengagement. This suggests a systemic issue affecting these students' ability to engage with the course content.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "engagement_score",
+              "value": 0.0018,
+              "comparison": "stable",
+              "delta": null,
+              "context": "Top 10 students in low engagement group"
+            }
+          ]
+        },
+        {
+          "title": "Minimal Interaction Metrics",
+          "description": "Students in the low engagement group have recorded only 1 total click and 1 active day, highlighting a severe lack of interaction with the learning platform. This behavior suggests that these students are not utilizing available resources effectively.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "total_clicks",
+              "value": 1,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Total clicks for top low engagement students"
+            },
+            {
+              "metric": "active_days",
+              "value": 1,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Active days for top low engagement students"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Students with low engagement scores may be at risk of failing the course due to insufficient interaction with course materials."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Initiate outreach to students with engagement scores below 0.05.",
+          "rationale": "Direct communication can help identify barriers to engagement and provide necessary support to improve their academic performance."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The dataset provides a clear ranking of engagement scores, allowing for accurate identification of low engagement students.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "behavioral",
+    "explanation_type": "behavioral",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "ranking",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 1544,
+    "included_row_count": null,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": false,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "low_engagement_group",
+        "row_count": 1544,
+        "included_row_count": 1544
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 9362,
+      "token_usage": {
+        "prompt_tokens": 2140,
+        "completion_tokens": 512,
+        "total_tokens": 2652
+      },
+      "strategy": "behavioral",
+      "granularity": "semester",
+      "cost_usd": 0.000628
+    }
+  }
+}
+```
+
+## Full-run Deterministic Checks
+
+```json
+[
+  {
+    "check_id": "row_count_total",
+    "check_type": "row_count",
+    "status": "pass",
+    "expected": 1544,
+    "observed": 1544
+  },
+  {
+    "check_id": "artifact_file_sha256",
+    "check_type": "artifact_hash",
+    "status": "pass",
+    "observed": "1561e97d242b1221e6702d8486ef8b4e04e20c8666661b54a458f5e5076509fb",
+    "expected_values": [
+      "1561e97d242b1221e6702d8486ef8b4e04e20c8666661b54a458f5e5076509fb"
+    ]
+  },
+  {
+    "check_id": "canonical_rows_sha256",
+    "check_type": "embedded_rows_hash",
+    "status": "pass",
+    "observed": "6b611a636af5cff1cfce8b1bcd0d5d150d8d72146b56f5dd1889110f2456e203",
+    "expected": "6b611a636af5cff1cfce8b1bcd0d5d150d8d72146b56f5dd1889110f2456e203"
+  },
+  {
+    "check_id": "numeric_fields_low_engagement_group",
+    "check_type": "numeric_field_extraction",
+    "status": "pass",
+    "dataset_label": "low_engagement_group",
+    "numeric_columns": [
+      "active_days",
+      "engagement_score",
+      "total_clicks"
+    ],
+    "numeric_summaries": {
+      "active_days": {
+        "count": 1544,
+        "min": 1,
+        "max": 77
+      },
+      "engagement_score": {
+        "count": 1544,
+        "min": 0.0018192745194871073,
+        "max": 0.14993699559595042
+      },
+      "total_clicks": {
+        "count": 1544,
+        "min": 1,
+        "max": 3002
+      }
+    }
+  },
+  {
+    "check_id": "threshold_flag_fields_low_engagement_group",
+    "check_type": "threshold_flag_detection",
+    "status": "not_applicable",
+    "dataset_label": "low_engagement_group",
+    "flag_columns": [],
+    "triggered_like_counts": {}
+  }
+]
+```

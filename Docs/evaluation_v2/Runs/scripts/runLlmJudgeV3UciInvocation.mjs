@@ -7,7 +7,7 @@ const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "../../../..");
 const RUN_ROOT = path.join(
   PROJECT_ROOT,
-  "Docs/evaluation_v2/Runs/full_208/phase10_v3_uci_rerun",
+  "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun",
 );
 
 const DEFAULT_QUEUE_MANIFEST_PATH = path.join(
@@ -45,9 +45,9 @@ const RECORD_STATUS_SCHEMA_PATH = path.join(
   "Docs/evaluation_v2/LLM_JUDGE_V2_RECORD_EXECUTION_STATUS_SCHEMA_V1.json",
 );
 
-const OFFICIAL_PROMPT_SHA256 = "ce82959702c6d15d972b2d7610b202f2c4d95c77b1aba184930d0991895647f9";
-const OFFICIAL_SCORING_POLICY_SHA256 = "64d5fff45009fca7eb71f5b001b6e8582ea618bf7d44a9c65ff31b212d0b8cc4";
-const OFFICIAL_JUDGE_INPUT_SCHEMA_SHA256 = "556a75bf16323c919dd48d4eee64238f78a0b7a5bca84477b46ea4d853b6aa24";
+const OFFICIAL_PROMPT_SHA256 = "8c7655b0389d4228328d00fa9573d5ac9d38ef0fd7846cf49b4628cff6a8d670";
+const OFFICIAL_SCORING_POLICY_SHA256 = "deb522edc2fdf59097e81993e5356fed8b2b0d3921bbd8c77f9216ae47d10088";
+const OFFICIAL_JUDGE_INPUT_SCHEMA_SHA256 = "8eb103d2d8d4fedd97ac3d3948a4f9b9bd0dbbb7f3714705143f097b60f174bf";
 const OFFICIAL_MASTER_PROMPT_SHA256 = "73af6fae6efe3e60df220aa62f59366f0b96ca76ef6a54149ba3839f53d3739b";
 const OFFICIAL_CONTRACT_MANIFEST_SHA256 = "1d3c7805d3903132491a37955346ebbd52edc3e0707b1a629d1e6e5bc3a425e0";
 const DEFAULT_DATASET_ID = "SAMPLE_UCI_POR";
@@ -83,8 +83,8 @@ function parseArgs(argv) {
   const datasetStem = safeFileStem(args.datasetId);
   return {
     ...args,
-    evaluationRunId: `llm_judge_v3_uci_rerun__${datasetStem}`,
-    sessionSegmentId: `phase10_v3_uci_rerun__${datasetStem}__segment_001`,
+    evaluationRunId: `llm_judge_v3_uci_action_evidence_rerun__${datasetStem}`,
+    sessionSegmentId: `phase11_v3_uci_action_evidence_rerun__${datasetStem}__segment_001`,
     promptQueueDir: path.join(args.outputDir, "prompt_queue"),
     rawOutputsDir: path.join(args.outputDir, "raw_outputs"),
     extractedOutputsDir: path.join(args.outputDir, "extracted_outputs"),
@@ -108,7 +108,9 @@ function repoPathToAbsolute(repoPath) {
 }
 
 async function readText(filePath) {
-  return (await readFile(filePath, "utf8")).replace(/^\uFEFF/, "");
+  return (await readFile(filePath, "utf8"))
+    .replace(/^\uFEFF/, "")
+    .replace(/\r\n/g, "\n");
 }
 
 async function readJson(filePath) {
@@ -163,9 +165,10 @@ function countBy(items, keyFn) {
   return counts;
 }
 
-function judgeInputRepoPathFor(entry) {
+function judgeInputRepoPathFor(entry, args) {
+  const inferredRunRoot = path.dirname(args.outputDir);
   return entry.judge_input_path
-    ?? `Docs/evaluation_v2/Runs/full_208/phase10_v3_uci_rerun/judge_inputs/records/${safeFileStem(entry.record_id)}.json`;
+    ?? toRepoPath(path.join(inferredRunRoot, "judge_inputs", "records", `${safeFileStem(entry.record_id)}.json`));
 }
 
 async function verifyOfficialFreeze() {
@@ -259,7 +262,7 @@ async function prepareInvocation({ args, freeze, generatedAt }) {
     await copyFile(sourcePromptPath, invocationPromptPath);
     const invocationPromptSha256 = await sha256File(invocationPromptPath);
 
-    const judgeInputRepoPath = judgeInputRepoPathFor(entry);
+    const judgeInputRepoPath = judgeInputRepoPathFor(entry, args);
     const judgeInputAbsPath = repoPathToAbsolute(judgeInputRepoPath);
     const judgeInputSha256 = await sha256File(judgeInputAbsPath);
 

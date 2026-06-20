@@ -1,0 +1,82 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G12__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, comparing the failure and pass rates between the GP and MS groups without misrepresenting the findings."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The failure rates of 30.1% for the MS group and 7.6% for the GP group are correctly stated, along with the pass rates of 69.9% and 92.4%, respectively."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation includes the required core outputs of failure and withdrawal rates, but does not explicitly flag groups where fail+withdrawn > cohort threshold."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of comparing demographic groups' failure and withdrawal rates, providing relevant insights for the target audience."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations for additional academic support programs for the MS group are actionable and relevant to the findings presented."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but could benefit from a more structured presentation of insights and recommendations."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is sensitive to the implications of the data, avoiding stigmatizing language and focusing on support for the MS group."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The MS group has a failure rate of 30.1%, which is significantly higher than the GP group's failure rate of 7.6%.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_rows_sha256"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the provided data showing the respective failure rates."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The GP group has a pass rate of 92.4%, while the MS group has a pass rate of 69.9%.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_rows_sha256"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the provided data showing the respective pass rates."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The higher failure rate in the MS group suggests a need for targeted interventions to support these students.",
+      "claim_type": "interpretation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This interpretation is logical based on the data presented and aligns with the educational implications stated."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of comparing failure and withdrawal rates across demographic groups, providing accurate numerical data and actionable recommendations. While it could improve in completeness by explicitly flagging groups exceeding the cohort threshold, it remains relevant and clear overall.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 4. All relevant data was available and utilized in the explanation, ensuring a comprehensive analysis of the demographic groups' performance.",
+  "invalid_reason": null
+}

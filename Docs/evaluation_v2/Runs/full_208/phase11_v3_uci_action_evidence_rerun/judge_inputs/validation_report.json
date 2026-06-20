@@ -1,0 +1,15 @@
+{
+  "report_version": "llm_judge_v3_uci_judge_input_validation_v1",
+  "status": "PASS",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "expected_records": 104,
+  "materialized_records": 104,
+  "ready_records": 104,
+  "records_with_derived_stats": 14,
+  "unique_tasks_with_derived_stats": 7,
+  "validation_issues": [],
+  "outputs": {
+    "manifest": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_inputs/judge_input_manifest.jsonl",
+    "records_dir": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_inputs/records"
+  }
+}

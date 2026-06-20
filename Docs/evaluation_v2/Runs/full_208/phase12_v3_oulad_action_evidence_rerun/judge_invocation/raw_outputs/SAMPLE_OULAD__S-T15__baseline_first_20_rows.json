@@ -1,0 +1,70 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T15__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the lack of data available for analysis, which is consistent with the evidence provided."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical claims were made due to the absence of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation addresses the core outputs but lacks specific details about the student's position in the scatter plot."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is relevant to the task of analyzing family context versus performance, focusing on the implications of family stability."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were provided due to the lack of data."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could be more concise in stating the implications of the lack of data."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation avoids stigmatizing language and does not make unjustified claims."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is no data available to analyze the relationship between Family Stability Score and Average Score.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T15.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation correctly states the absence of data, which is supported by the evidence."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Understanding how family stability might influence academic performance is important.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is a reasonable inference based on the context of the task."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively communicates the lack of data and its implications for understanding the relationship between family stability and academic performance. While it meets the core requirements, it could improve in completeness by providing more context about the student's position. The clarity is generally good, but some statements could be more concise.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 0, confirming that no data was available for analysis. The explanation appropriately reflects this limitation.",
+  "invalid_reason": null
+}

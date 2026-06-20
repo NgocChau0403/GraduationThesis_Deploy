@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T10__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, highlighting the student's engagement with quizzes and underutilized resources."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as the number of clicks for each resource type, are correct and consistent with the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, but could provide more detail on the implications of low engagement with certain resources."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of resource engagement breakdown and is relevant to the student's learning context."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, encouraging the student to engage more with forums and underutilized resources."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student has a strong preference for quizzes, with 623 clicks, making up nearly 49% of total resource usage.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "resource_usage"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing 623 clicks on quizzes, which is accurately reflected in the explanation."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student's engagement with forums is low, with only 140 clicks, about 11% of total usage.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "resource_usage"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data indicating 140 clicks on forums, accurately represented in the explanation."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Other resources like 'subpage' and 'resource' have very low engagement, with only 94 and 71 clicks respectively.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "resource_usage"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation correctly identifies the low engagement with these resources, supported by the data."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student's resource engagement, providing clear insights and actionable recommendations. It is well-supported by the data and addresses the task requirements comprehensively.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 9. All relevant data was included in the explanation, and the retrieval log path was not applicable."
+}

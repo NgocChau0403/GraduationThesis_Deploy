@@ -1,0 +1,79 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T14__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation accurately reflects the lack of data available for analysis, but it could have been clearer about the implications of this absence."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical claims were made due to the absence of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation addresses the core outputs but lacks depth in discussing the implications of the missing data."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is relevant to the task of assessing social balance versus performance, but it could have better highlighted the student's position."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The recommendation to gather data is actionable, but the explanation could provide more context on how to achieve this."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear, but the structure could be improved for better readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is no data available to analyze the relationship between your Social Balance Score and Average Score.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation correctly states the absence of data, which is supported by the evidence of zero rows."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Understanding the balance between social activities and academic performance is crucial for your overall success.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is a widely accepted educational principle and is relevant to the context."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Gather data on your Social Balance Score and Average Score.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "local_detail",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the recommendation is actionable, it lacks specific guidance on how to gather this data."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively communicates the lack of data and its implications for the student's social and academic balance. However, it could improve in clarity and depth regarding the recommendations and implications of the missing data.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 0, indicating no data was available for analysis. The explanation appropriately reflects this context.",
+  "invalid_reason": null
+}

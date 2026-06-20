@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G04__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, identifying G1 as the assessment with the highest fail rate and suggesting it may be the most challenging for students."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The fail rate of 7.7% for G1 is correctly stated and compared to G2 and G3, which have lower fail rates."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation includes the required core outputs of flagging assessments with high fail rates and suggesting curriculum review, but could provide more detail on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of assessing difficulty and identifying assessments causing student failures, aligning well with the actionable question."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or supported based on the deterministic action evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and does not place blame on students, framing the high fail rate as a signal for review."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "G1 has the highest fail rate among the three assessments.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "assessment_difficulty"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing G1's fail rate of 7.7%, which is higher than G2 and G3."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The high fail rate in G1 suggests that students may require additional support.",
+      "claim_type": "interpretative",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "assessment_difficulty"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This interpretation is reasonable given the context of the fail rates and aligns with educational implications."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Review the curriculum and instructional strategies for G1.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "assessment_difficulty"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is directly tied to the findings of the analysis and is appropriate given the high fail rate."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of assessing assessment difficulty, accurately identifies G1 as the most challenging assessment, and provides actionable recommendations. While it could be more concise in some areas, it remains clear and relevant to the target audience.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 3. All rows were included in the explanation, and the evidence was fully accessible and readable."
+}

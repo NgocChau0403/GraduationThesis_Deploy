@@ -1,0 +1,71 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-B03__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the student's engagement data, stating that the total engagement count, active days, and engagement score are all zero, which is supported by the evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation (0 for total engagement count, active days, and engagement score) are correct and match the data provided."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core requirement of characterizing the student's effort level but could provide more context on the implications of low engagement."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the actionable question of how active the student is compared to classmates, making relevant comparisons."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actions were triggered or applicable based on the deterministic action evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is mostly clear and structured well, though some phrases could be simplified for better understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not use stigmatizing language and appropriately addresses the student's lack of engagement without labeling it as low effort."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student has a total engagement count of 0.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-B03.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing a total engagement count of 0."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student has not engaged with the course at all this semester.",
+      "claim_type": "qualitative",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-B03.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation correctly states that the student has not engaged, which is consistent with the evidence."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student's engagement status, accurately reflecting the data provided. It addresses the task requirements and presents the information in a clear manner, although it could benefit from additional context regarding the implications of low engagement.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 1. The explanation utilized the available engagement data to support its claims, and the retrieval log path was not applicable as the evidence was directly embedded."
+}

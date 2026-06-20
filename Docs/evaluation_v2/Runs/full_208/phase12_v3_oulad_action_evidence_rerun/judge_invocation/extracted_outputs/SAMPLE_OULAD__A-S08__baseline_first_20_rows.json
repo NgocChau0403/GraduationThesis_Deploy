@@ -1,0 +1,98 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-S08__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the student's at-risk status and performance indicators based on the provided evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented, such as the performance trend of -0.71875 and engagement score of 0.2024, are correctly reported and match the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation synthesizes key risk indicators but lacks specific recommendations for actions, which are required outputs."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is relevant to the task of recommending interventions for the student, addressing the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "While the explanation identifies issues, it does not provide specific actionable recommendations, which limits its effectiveness."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain stigmatizing language or unfair recommendations, maintaining a neutral tone."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student exhibits a high at-risk score despite achieving a distinction.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "at_risk_score",
+        "final_outcome"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing a high at-risk score of 3 and a final outcome of 'Distinction'."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The performance trend shows a significant decline of -0.71875.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_trend"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence indicating a performance trend of -0.71875."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The engagement score of 0.2024 is notably low.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing an engagement score of 0.2024."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The student may not be actively participating in their learning environment.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "engagement_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the low engagement score suggests potential issues, the claim lacks direct evidence of participation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies the student's at-risk status and performance issues, supported by accurate numerical data. However, it lacks specific actionable recommendations, which affects its overall actionability. The clarity and relevance of the explanation are strong, making it a useful synthesis of the student's situation.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 1. The explanation utilized the embedded dataset to derive claims about the student's performance and engagement metrics. No retrieval log was necessary as the evidence was directly embedded.",
+  "invalid_reason": null
+}

@@ -1,0 +1,96 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-S04__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the risk factors identified in the data, including low academic performance and low punctuality, and provides a clear rationale for the need for intervention."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as the average score of 36.67 and punctuality of 0, are correct and align with the data provided."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the values and reasons for the triggered flags, but could have more detail on the implications of the other flags."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the task of identifying risk factors for the student, making it highly relevant to the audience of instructors and academic advisors."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and prioritize immediate interventions, although they could include more specific steps for implementation."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability and understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation maintains a neutral tone and does not include stigmatizing language, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student's average score is 36.67, which is below the pass threshold of 40.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the student's average score."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student's submission punctuality is at 0, which is below the expected threshold of 0.7.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the student's punctuality."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Immediate academic support is necessary to address low scores and improve submission habits.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is a logical conclusion based on the identified risks."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.3,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.3,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

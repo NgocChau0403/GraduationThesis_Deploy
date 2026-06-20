@@ -1,0 +1,82 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T12__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, linking submission delays to potential impacts on performance."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented, such as the average submission delay of 3.25 days and scores ranging from 83 to 100, are correct and supported by the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the core outputs required, identifying systematic late submissions and discussing their impact on scores, but could provide more detail on the implications of these findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing procrastination and its effects on academic performance, directly addressing the actionable question posed."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are practical and actionable, offering specific strategies to improve punctuality and reduce procrastination."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair implications, maintaining a supportive tone throughout."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You have an average submission delay of 3.25 days across your assessments, indicating a systematic pattern of procrastination.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_delay_avg"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing an average submission delay of 3.25 days."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Despite submitting late, you have managed to score well on your assessments, with scores ranging from 83 to 100.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_normalized"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing scores ranging from 83 to 100."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Improving punctuality could enhance your learning experience and reduce stress.",
+      "claim_type": "qualitative",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is a reasonable inference based on the context of the explanation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing procrastination, providing a clear summary of submission patterns and their implications on performance. It is well-supported by the evidence, with actionable recommendations for improvement. The clarity and relevance of the explanation are strong, though there is room for improvement in conciseness.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 6. All relevant data was available and utilized in the explanation, ensuring a comprehensive analysis of the student's submission patterns.",
+  "invalid_reason": null
+}

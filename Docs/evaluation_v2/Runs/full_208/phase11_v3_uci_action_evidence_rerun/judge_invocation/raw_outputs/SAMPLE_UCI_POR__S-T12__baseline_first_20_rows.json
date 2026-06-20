@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T12__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of no submissions and a punctuality rate of 0, indicating a pattern of procrastination."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation correctly states the normalized scores of 55 for G2 and G3, but the impact of these scores could be more clearly articulated."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation identifies the lack of submissions and discusses the impact on scores, but it does not fully address the systematic nature of the late submissions as required."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing procrastination and its impact on scores, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, suggesting specific strategies to mitigate procrastination."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise and structured for better readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, maintaining a supportive tone."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student has not submitted any assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "punctuality_rate"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence shows a punctuality rate of 0, confirming that no submissions were made."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The punctuality rate is 0.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "punctuality_rate"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The punctuality summary indicates a punctuality rate of 0, which is accurately reflected in the explanation."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The normalized scores for G2 and G3 are both 55.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_normalized"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The scores for G2 and G3 are confirmed by the evidence, supporting the claim made in the explanation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing procrastination, providing relevant insights and actionable recommendations. While it is generally clear and accurate, there are minor areas for improvement in completeness and clarity.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 4. All relevant data was available and readable, supporting the claims made in the explanation.",
+  "invalid_reason": null
+}

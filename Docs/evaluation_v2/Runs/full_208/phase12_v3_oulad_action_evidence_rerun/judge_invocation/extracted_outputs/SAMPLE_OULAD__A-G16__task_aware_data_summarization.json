@@ -1,0 +1,93 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G16__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, focusing on the derived engagement and risk rates to inform the recommended actions."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for low engagement rate (0.6206) and high-risk rate (0.4535) are correctly stated and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation synthesizes the required actions but could provide more detail on how each action directly addresses the identified issues."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation is highly relevant to the task of recommending actions for the admin based on the provided data."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommended actions are concrete and actionable, though some could benefit from clearer prioritization based on urgency."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could be structured better to enhance readability and understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation avoids stigmatizing language and presents the recommendations in a fair manner, focusing on support rather than blame."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The derived low engagement rate is 0.6206.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.low_engagement_count",
+        "synthesis_data.total_students"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing a low engagement count of 1240 out of 1998 total students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The derived high-risk rate is 0.4535.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.high_risk_count",
+        "synthesis_data.total_students"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing a high-risk count of 906 out of 1998 total students."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Coordinating a targeted engagement outreach is essential to identify and address potential barriers.",
+      "claim_type": "action",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This action is directly supported by the identified low engagement rate, indicating a need for outreach."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Reviewing the high-risk student caseload is critical to ensure that students needing direct support are identified.",
+      "claim_type": "action",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This action is directly supported by the identified high-risk rate, indicating a need for review."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively synthesizes the required actions based on the provided data, demonstrating a clear understanding of the task and audience. The claims made are well-supported by the evidence, and the recommendations are actionable and relevant. However, there is room for improvement in clarity and completeness.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 1. The explanation utilized the embedded dataset 'synthesis_data' to derive the engagement and risk rates, which were crucial for formulating the recommended actions."
+}

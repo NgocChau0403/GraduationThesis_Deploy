@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T12__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, linking submission delays to potential impacts on performance."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented, such as the average submission delay of 3.25 days and the lowest score of 83, are correct and supported by the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, identifying systematic late submissions and describing the relationship between submission delay and scores, but could provide more detail on implications."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of procrastination analysis, addressing the student's submission patterns and their implications."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, suggesting the creation of a study schedule to improve time management."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair implications, maintaining a supportive tone."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You have an average submission delay of 3.25 days across your assessments.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_delay_avg"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the punctuality summary data."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Despite late submissions, your scores remain high, with the lowest being 83.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_normalized"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the submission series data."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The trend of submitting late could lead to stress and potential lower scores in the future.",
+      "claim_type": "interpretative",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is reasonable, it lacks direct evidence from the data to support the assertion about future stress and scores."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing procrastination by linking submission delays to performance impacts. It provides accurate numerical data and actionable recommendations, though it could improve clarity in some areas. Overall, it meets the requirements well.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 6. All relevant data was included in the explanation, and the retrieval log was not applicable as all data was directly embedded.",
+  "invalid_reason": null
+}

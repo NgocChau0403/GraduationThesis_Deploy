@@ -1,0 +1,82 @@
+{
+  "report_version": "llm_judge_v3_uci_rerun_judge_invocation_report_v1",
+  "generated_at": "2026-06-20T02:58:02.812Z",
+  "mode": "import",
+  "status": "PASS",
+  "phase_scope": [
+    "Phase 10 V3 official UCI judge invocation/import",
+    "UCI calibration rerun"
+  ],
+  "dataset_scope": "SAMPLE_UCI_POR",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun__SAMPLE_UCI_POR",
+  "session_segment_id": "phase11_v3_uci_action_evidence_rerun__SAMPLE_UCI_POR__segment_001",
+  "inputs": {
+    "prompt_queue_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/judge_prompt_queue_manifest.jsonl",
+    "prompt_path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V3.md",
+    "prompt_sha256": "8c7655b0389d4228328d00fa9573d5ac9d38ef0fd7846cf49b4628cff6a8d670",
+    "scoring_policy_path": "Docs/evaluation_v2/Rubric/JUDGE_SCORING_POLICY_V3.md",
+    "scoring_policy_sha256": "deb522edc2fdf59097e81993e5356fed8b2b0d3921bbd8c77f9216ae47d10088",
+    "judge_input_schema_path": "Docs/evaluation_v2/Input_AI/judge_input_schema_v3.json",
+    "judge_input_schema_sha256": "8eb103d2d8d4fedd97ac3d3948a4f9b9bd0dbbb7f3714705143f097b60f174bf",
+    "master_prompt_path": "Docs/evaluation_v2/PromptEvaluateAI/PHASE10_UCI_V3_CODEX_SESSION_MASTER_PROMPT_OFFICIAL.md",
+    "master_prompt_sha256": "73af6fae6efe3e60df220aa62f59366f0b96ca76ef6a54149ba3839f53d3739b",
+    "official_contract_manifest_path": "Docs/evaluation_v2/PromptEvaluateAI/V3_FREEZE_MANIFEST.md",
+    "official_contract_manifest_sha256": "1d3c7805d3903132491a37955346ebbd52edc3e0707b1a629d1e6e5bc3a425e0",
+    "judge_response_schema_path": "Docs/evaluation_v2/LLM_JUDGE_V2_JUDGE_RESPONSE_SCHEMA_V1.json",
+    "attempt_wrapper_schema_path": "Docs/evaluation_v2/LLM_JUDGE_V2_EXECUTION_ATTEMPT_WRAPPER_SCHEMA_V1.json",
+    "record_status_schema_path": "Docs/evaluation_v2/LLM_JUDGE_V2_RECORD_EXECUTION_STATUS_SCHEMA_V1.json"
+  },
+  "counts": {
+    "expected_records": 104,
+    "invocation_manifest_records": 104,
+    "prompt_queue_records": 104,
+    "raw_received_records": 104,
+    "valid_records": 104,
+    "retryable_invalid_records": 0,
+    "missing_records": 0,
+    "errors": 0,
+    "warnings": 0
+  },
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 104
+    },
+    "explanation_modes": {
+      "baseline_first_20_rows": 52,
+      "task_aware_data_summarization": 52
+    },
+    "evidence_access_modes": {
+      "direct_embedding": 92,
+      "deterministic_artifact_retrieval": 12
+    },
+    "queue_strategies": {
+      "full_context": 94,
+      "compact_retrieval_context": 10
+    },
+    "record_statuses": {
+      "valid": 104
+    }
+  },
+  "outputs": {
+    "prompt_queue_dir": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/prompt_queue",
+    "raw_outputs_dir": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/raw_outputs",
+    "extracted_outputs_dir": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/extracted_outputs",
+    "validated_outputs_dir": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/validated_outputs",
+    "attempt_wrappers_dir": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/attempt_wrappers",
+    "record_status_dir": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/record_status",
+    "invocation_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/judge_invocation_manifest.jsonl",
+    "attempt_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/judge_attempt_manifest.jsonl",
+    "status_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/record_execution_status_manifest.jsonl",
+    "report_json": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/judge_invocation_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/full_208/phase11_v3_uci_action_evidence_rerun/judge_invocation/judge_invocation_report.md"
+  },
+  "gate_decision": {
+    "prompt_queue_ready": true,
+    "actual_judge_invocation_completed": true,
+    "judge_output_validation_passed": true,
+    "phase10_v3_scoring_allowed_for_dataset": true,
+    "full_208_finalization_allowed": false,
+    "reason": "All dataset-scoped raw judge outputs imported and schema-validated."
+  },
+  "issues": []
+}

@@ -1,0 +1,98 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-G05__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the systemic issue of late submissions based on the high late submission rates observed in the data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as late submission rates, are consistent with the data provided, demonstrating a high level of accuracy."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including insights on late submission rates and educational implications, but could provide more detail on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of analyzing submission behavior and is relevant to the instructor's actionable question regarding systemic issues."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or supported based on the deterministic action evidence provided."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could benefit from more concise language."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Late submissions are a systemic issue within the class.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_behaviour"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the high late submission rates observed in the data, particularly in CMAs."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "High late submission rates in CMAs exceed 98%.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_behaviour"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data showing late submission rates of 99.51% for Distinction and 98.99% for Pass in CMAs."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Moderate late submission rates in TMAs indicate some students are submitting on time.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_behaviour"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing late submission rates of 18.9% for Pass and 30.17% for Fail in TMAs."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.33,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.33,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

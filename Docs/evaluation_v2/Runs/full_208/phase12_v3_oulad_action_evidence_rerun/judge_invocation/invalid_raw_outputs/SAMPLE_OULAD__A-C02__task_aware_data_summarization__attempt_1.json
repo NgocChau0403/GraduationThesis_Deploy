@@ -1,0 +1,107 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C02__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the engagement metrics from the provided data, maintaining fidelity to the evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented for active days, engagement scores, and total clicks are correct and consistent with the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation covers the required core outputs, comparing the two students and explaining the engagement dimension with the largest gap."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of comparing engagement patterns between the two students, focusing on relevant metrics."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were required as per the task constraints."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Student SAMPLE_OULAD_STU_100788 has recorded 98 active days.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing 98 active days for SAMPLE_OULAD_STU_100788."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "SAMPLE_OULAD_STU_100788 has an engagement score of 0.202.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing an engagement score of 0.202 for SAMPLE_OULAD_STU_100788."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "SAMPLE_OULAD_STU_101700 has zero active days.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing zero active days for SAMPLE_OULAD_STU_101700."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "SAMPLE_OULAD_STU_101700 has an engagement score of 0.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing an engagement score of 0 for SAMPLE_OULAD_STU_101700."
+    },
+    {
+      "claim_id": "C05",
+      "claim_text": "SAMPLE_OULAD_STU_100788 has a total of 1261 clicks.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing a total of 1261 clicks for SAMPLE_OULAD_STU_100788."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively compares the engagement metrics of the two students, providing clear insights and supporting evidence. It meets the task requirements and maintains a high level of clarity and correctness.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 6. All relevant data was included in the explanation, and the retrieval log was not applicable."
+}

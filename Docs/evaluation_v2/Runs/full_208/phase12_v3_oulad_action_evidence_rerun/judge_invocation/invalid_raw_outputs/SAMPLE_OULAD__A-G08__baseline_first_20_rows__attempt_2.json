@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G08__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, discussing the performance and engagement of demographic groups without making unsupported causal claims."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented for average scores and engagement scores are correct and align with the data from the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs by comparing average scores and engagement scores, but could provide more detail on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task, addressing the performance and engagement of demographic groups as requested."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the identified low-performing groups, suggesting targeted support programs."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation appropriately addresses equity-sensitive issues and avoids stigmatizing language."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The 'Unknown' group outperforms all other demographic groups with an average score of 81.21.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "demographic_performance"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the 'Unknown' group's average score."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The '10-20' group has the lowest average score of 62.96.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "demographic_performance"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the '10-20' group's average score."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The disparity in performance and engagement scores suggests that certain demographic groups may require additional support.",
+      "claim_type": "interpretation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "demographic_performance"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This interpretation is consistent with the observed data and aligns with the educational implications discussed."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing demographic performance and engagement, providing accurate numerical comparisons and actionable recommendations. While it is generally clear, there is room for improvement in conciseness. Overall, the explanation meets the requirements and demonstrates a strong understanding of the data.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 11. All relevant data was utilized to support the claims made in the explanation."
+}

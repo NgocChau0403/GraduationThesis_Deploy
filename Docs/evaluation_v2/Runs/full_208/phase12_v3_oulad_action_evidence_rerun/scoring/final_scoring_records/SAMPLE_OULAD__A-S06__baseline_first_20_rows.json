@@ -1,0 +1,122 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-S06__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of consistent late submissions and the punctuality rate, aligning well with the provided data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The average submission delay of 3.25 days and punctuality rate of 0 are correctly stated, with no discrepancies in the numerical data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including average delay, punctuality rate, and systematic late submissions, but could provide more detail on the implications."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the actionable question regarding the student's submission patterns and their impact on scores."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, suggesting practical steps to improve the student's punctuality."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and does not attribute late submissions to personal failings, adhering to the safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student exhibits a consistent pattern of late submissions across multiple assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence shows multiple late submissions, confirming the claim."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The average submission delay is 3.25 days.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average delay is explicitly stated in the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The punctuality rate is 0.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence confirms that the punctuality rate is indeed 0."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The student has passed all assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence indicates that the student has passed all assessments despite late submissions."
+    },
+    {
+      "claim_id": "C05",
+      "claim_text": "Recommendations include implementing deadline reminders.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "structured_payload"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendations are clearly stated in the explanation."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.1,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.1,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

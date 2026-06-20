@@ -1,0 +1,80 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately describes the correlation direction and strength based on the evidence provided, but it slightly overstates the correlation as weak rather than moderate."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The numerical values presented in the explanation align with the derived statistics, but the description of the correlation strength could be clearer."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation covers the required core outputs, including the correlation direction and the identification of outliers."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the task of analyzing the engagement-performance relationship and is relevant to the target audience."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, particularly for students with high engagement but low performance."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "While the explanation is generally clear, some phrases could be more concise, and the correlation description could be more precise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain stigmatizing language or unfair recommendations, but it does highlight the need for targeted interventions."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a weak positive correlation between Engagement Score and Average Score.",
+      "claim_type": "correlation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "A-G02__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The derived statistic indicates a moderate correlation (0.41), which contradicts the claim of a weak correlation."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Several students with high engagement scores have low average scores.",
+      "claim_type": "observation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation correctly identifies the presence of outliers, which is supported by the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Engagement strategies should be tailored to ensure they effectively support learning outcomes.",
+      "claim_type": "recommendation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation aligns with the insights provided and is actionable."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing the engagement-performance relationship, providing a generally accurate description of the correlation and identifying outliers. However, it slightly misrepresents the strength of the correlation, which affects the overall faithfulness score. The recommendations are actionable and relevant, contributing to a coherent metric pattern.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 1998 rows from the engagement_performance_scatter dataset. The retrieval log confirmed that all relevant data was available for evaluation. The derived statistic supporting the correlation claim was referenced appropriately."
+}

@@ -1,0 +1,209 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_OULAD__A-S03__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-S03",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v3_action_evidence_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_action_evidence_calibrated",
+  "task_context": {
+    "task_name": "Student engagement trajectory",
+    "scope": "1 student",
+    "actionable_question": "When exactly did this student start disengaging?",
+    "target_audience": "instructor, academic_advisor",
+    "ai_summary_type": "trend_series",
+    "ai_prompt_hint": "Flag the exact week engagement dropped. Compare to pre-drop average. Recommend admin outreach timing.",
+    "query_labels": [
+      "engagement_trajectory"
+    ],
+    "explanation_strategy": "behavioral"
+  },
+  "schema_context": {
+    "source_tables": [
+      "engagement [OULAD only]"
+    ],
+    "key_db_fields": [
+      "week_number",
+      "engagement_count; early_warning_week [FE cross]",
+      "weekly_engagement_drop [FE cross]",
+      "consistency_level [FE cross]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "engagement_trajectory"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis reveals a significant decline in student engagement, with weekly clicks dropping from 86 in week -2 to just 5 by week 35. This downward trend indicates a concerning disengagement pattern, particularly marked by a drastic drop in week 2.\n\nInsights: Significant Engagement Drop: The largest adjacent drop in engagement occurred between week 1 and week 2, where weekly clicks fell from 98 to 4, indicating a critical point of disengagement.\n\nEducational implications: The drastic drop in engagement suggests that students may be struggling with course content or facing external challenges that hinder their participation.\n\nRecommendations: high - Initiate outreach to students around week 2 to assess barriers to engagement. - Proactive communication can help identify issues early and provide necessary support to re-engage students.",
+    "structured_payload": {
+      "task_id": "A-S03",
+      "execution_id": "exec_1781847829425_34c7f219",
+      "explanation": {
+        "summary": "The analysis reveals a significant decline in student engagement, with weekly clicks dropping from 86 in week -2 to just 5 by week 35. This downward trend indicates a concerning disengagement pattern, particularly marked by a drastic drop in week 2.",
+        "insights": [
+          {
+            "title": "Significant Engagement Drop",
+            "description": "The largest adjacent drop in engagement occurred between week 1 and week 2, where weekly clicks fell from 98 to 4, indicating a critical point of disengagement.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "weekly_clicks",
+                "value": 4,
+                "comparison": "down_from_previous",
+                "delta": -94,
+                "context": "Drop from week 1 (98 clicks) to week 2 (4 clicks)"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The drastic drop in engagement suggests that students may be struggling with course content or facing external challenges that hinder their participation."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Initiate outreach to students around week 2 to assess barriers to engagement.",
+            "rationale": "Proactive communication can help identify issues early and provide necessary support to re-engage students."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data shows a clear and significant trend in engagement metrics over the observed weeks.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "behavioral",
+      "explanation_type": "behavioral",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "trend_series",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 32,
+      "included_row_count": null,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": false,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "engagement_trajectory",
+          "row_count": 32,
+          "included_row_count": 32
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 5034,
+        "token_usage": {
+          "prompt_tokens": 1971,
+          "completion_tokens": 339,
+          "total_tokens": 2310
+        },
+        "strategy": "behavioral",
+        "granularity": "weekly",
+        "cost_usd": 0.000499
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-S03__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "8200b04fe19999c48f38a3769f064e2d01d4cea3c92d74c872abaf77700ff093",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1971,
+        "completion_tokens": 339,
+        "total_tokens": 2310
+      },
+      "latency_ms": 5043,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 32,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "engagement_trajectory",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S03.json",
+        "artifact_sha256": "88c292f06cfb5610c79ec1b926d0f15b1e7e3f392430633bb7897b342969ab65",
+        "row_count": 32,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 32,
+    "retrieved_row_count_by_dataset": {
+      "engagement_trajectory": 32
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "engagement_trajectory",
+        "start": 0,
+        "end": 31
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_OULAD__A-S03__task_aware_data_summarization__engagement_trajectory__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/retrieval_logs/SAMPLE_OULAD__A-S03__task_aware_data_summarization.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "engagement_trajectory": 32
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-S03-CORE-01",
+        "description": "Identify the specific week in which engagement dropped when the data supports one."
+      },
+      {
+        "requirement_id": "A-S03-CORE-02",
+        "description": "Compare engagement after the drop with the pre-drop average."
+      }
+    ],
+    "required_supporting_outputs": [
+      {
+        "requirement_id": "A-S03-SUPPORT-01",
+        "description": "When a specific drop week is identified, recommend outreach timing relative to that week."
+      }
+    ],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  },
+  "derived_stat_evidence": [],
+  "action_evidence": {
+    "applicable": false,
+    "source_type": "not_applicable",
+    "rule_set_id": null,
+    "rule_version": null,
+    "evaluation_status": "not_applicable",
+    "supported_action_count": 0,
+    "supported_actions": [],
+    "rule_evaluations": [],
+    "conflict_evaluations": []
+  }
+}

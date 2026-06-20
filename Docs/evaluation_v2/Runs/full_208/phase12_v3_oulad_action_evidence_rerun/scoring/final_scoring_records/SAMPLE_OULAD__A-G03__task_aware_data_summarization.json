@@ -1,0 +1,96 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-G03__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, including the identification of high-risk students based on their scores and engagement metrics."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Most numerical claims are correct, but there are minor discrepancies in the specific values mentioned for some students' scores."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs required, but it lacks some details on the ranking of students by at-risk scores."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of identifying at-risk students and recommending actions based on their performance."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendation to prioritize academic support is actionable and directly addresses the needs of the identified students."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and focuses on constructive recommendations for student support."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A cohort of students has been identified as high-risk due to multiple simultaneous risk signals.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_624354",
+        "SAMPLE_OULAD_STU_548926",
+        "SAMPLE_OULAD_STU_532565"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence of low scores and engagement metrics for the identified students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students with low scores and engagement are at risk of failing or withdrawing from the course.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is a logical conclusion based on the identified risk factors and is supported by educational implications."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Prioritize academic support for low average score.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is directly aligned with the identified needs of the students based on their performance metrics."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.55,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.55,
+  "verdict": "good",
+  "invalid_reason": null
+}

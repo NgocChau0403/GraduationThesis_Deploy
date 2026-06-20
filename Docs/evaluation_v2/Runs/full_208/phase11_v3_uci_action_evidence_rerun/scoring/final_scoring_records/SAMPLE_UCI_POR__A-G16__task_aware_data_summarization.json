@@ -1,0 +1,86 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-G16__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, linking the recommended actions to the identified low engagement and hardest assessment."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The numerical values mentioned in the explanation, such as the low engagement rate of 1.0, are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation includes the core outputs required, but it could have provided more detail on the implications of the actions."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of recommending actions for the admin based on student performance data."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommended actions are concrete and actionable, with clear ownership and deadlines."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A targeted engagement outreach is necessary due to a derived low engagement rate of 1.0.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "low_engagement_rate"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing a low engagement rate of 1.0."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "A review of learner support and preparation materials for the hardest assessment (G1) is warranted.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "hardest_assessment"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence identifying G1 as the hardest assessment."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.65,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.65,
+  "verdict": "good",
+  "invalid_reason": null
+}

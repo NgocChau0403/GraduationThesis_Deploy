@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-B01__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, discussing the concentration of students in lower score buckets and the drop-off in higher score ranges."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical claims regarding student counts in specific score buckets are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the core outputs required, including the description of score spread and the flagging of students below the passing threshold, but could provide more detail on the implications."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of summarizing overall performance distribution for the intended audience."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or supported in the evidence, making this metric not applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A large proportion of students, specifically 108 students (16.6% of the class), fall within the 40-50 score bucket.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing 108 students in the 40-50 score bucket."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "There is a sharp decline in student count as scores increase, with only 7 students (1.1% of the class) achieving scores in the 90-100 range.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing only 7 students in the 90-100 score bucket."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The data reveals a concerning number of students scoring below the passing threshold.",
+      "claim_type": "interpretative",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation correctly interprets the data indicating a significant number of students below the passing threshold."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the overall performance distribution, accurately reflecting the data and addressing the core requirements. While it could be more concise in some areas, it provides a clear and relevant analysis for the intended audience.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 10. All rows were included in the explanation, and the retrieval log was not applicable as the full dataset was provided."
+}

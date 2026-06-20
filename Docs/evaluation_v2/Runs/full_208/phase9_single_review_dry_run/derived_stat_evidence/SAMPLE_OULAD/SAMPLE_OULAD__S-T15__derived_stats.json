@@ -1,0 +1,34 @@
+{
+  "artifact_type": "llm_judge_v3_deterministic_derived_stat_evidence_v1",
+  "generated_at": "2026-06-20T03:05:29.026Z",
+  "dry_run_mode": "single_review",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "S-T15",
+  "task_name": "Family context vs performance",
+  "ai_summary_type": "correlation_evidence",
+  "stat_family": "correlation",
+  "coefficient_method": "pearson",
+  "x_column": "family_stability_score",
+  "y_column": "avg_score",
+  "entity_column": "student_id",
+  "source_full_query_artifact": {
+    "path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T15.json",
+    "sha256": "8b025f10072f27ccd61bc132cd3a9fd3f79f9e36db79ff4a9b7a38e4acb0b389",
+    "evidence_id": "SAMPLE_OULAD__S-T15"
+  },
+  "source_judge_input_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_inputs/SAMPLE_OULAD__S-T15__baseline_first_20_rows.json",
+  "derived_stats": [
+    {
+      "dataset_label": "family_context_scatter",
+      "status": "skipped",
+      "reason": "no_valid_numeric_pairs",
+      "row_count": 0,
+      "valid_pair_count": 0,
+      "invalid_x_count": 0,
+      "invalid_y_count": 0,
+      "warnings": []
+    }
+  ],
+  "judge_usage_note": "Use this artifact as deterministic support for correlation coefficient claims. It proves derived Pearson r from all valid x/y pairs in the full query result; it does not prove causality or statistical significance.",
+  "artifact_sha256": "72d4e7cfba32fc17b0a96f0ede57635a1ad97deb4927e05ff8e4dfd4c335d017"
+}

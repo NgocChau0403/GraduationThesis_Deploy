@@ -1,0 +1,85 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C01__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the significant decline in scores and identifying divergence points based on the data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values mentioned, such as the peak score of 100 and the decline to 61, are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including divergence points and when one student fell behind, but could provide more detail on the implications."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of comparing performance trajectories and addresses the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were required as per the deterministic action evidence, which indicated that no actions were applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student demonstrated a significant decline in scores during the later assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "trajectory_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing a drop in scores from 100 to 61."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student's performance peaked at a normalized score of 100 in the CMA assessment during week 3.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "trajectory_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing the peak score in week 3."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The student may require additional support and intervention to address learning gaps.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "trajectory_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is reasonable, it lacks specific evidence from the dataset to quantify the need for support."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of comparing performance trajectories, providing a clear analysis of the student's performance decline and identifying divergence points. The claims made are mostly supported by the evidence, with minor issues in the completeness of the implications drawn from the data.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 17. All rows were included in the analysis, and the explanation utilized the complete dataset effectively.",
+  "invalid_reason": null
+}

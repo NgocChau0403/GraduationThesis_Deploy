@@ -1,0 +1,92 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G06__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the correlation between resource types and average scores without overstating claims."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented for average scores are correct and consistent with the evidence, particularly the highest score of 78.9 for 'page' resources."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, highlighting high and low-performing resource types, but could provide more detail on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of identifying effective resource types and provides actionable recommendations for the instructor."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations are clear and actionable, suggesting specific resource types to promote or reassess based on their effectiveness."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a negative correlation between Resource Type and Avg Score of Users.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation correctly identifies the correlation as per the task requirements.",
+      "impact_type": null
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The 'page' resource type has the highest average score of 78.9.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence provided, confirming the highest average score.",
+      "impact_type": null
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Resource types such as 'quiz' and 'homepage' have the lowest average scores of 70.28 and 70.22 respectively.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation accurately reflects the evidence regarding low-performing resource types.",
+      "impact_type": null
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Encouraging the use of higher-scoring resource types may enhance overall student performance.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the recommendation is logical, it lacks direct evidence linking the promotion of these resources to improved performance.",
+      "impact_type": "weakens_support"
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of identifying effective learning resources, providing a clear summary of findings and actionable recommendations. While it is generally strong, there is a minor weakness in the support for the educational implications, which could be better substantiated.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 9. All relevant data was available and utilized in the explanation, ensuring a comprehensive evaluation of resource effectiveness.",
+  "invalid_reason": null
+}

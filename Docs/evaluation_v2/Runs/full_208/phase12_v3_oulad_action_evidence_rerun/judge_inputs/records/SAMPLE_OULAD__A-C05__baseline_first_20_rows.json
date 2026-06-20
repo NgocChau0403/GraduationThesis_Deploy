@@ -1,0 +1,208 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_OULAD__A-C05__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-C05",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v3_action_evidence_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_action_evidence_calibrated",
+  "task_context": {
+    "task_name": "Compare academic background",
+    "scope": "2 students",
+    "actionable_question": "Does one student face more structural disadvantage than the other?",
+    "target_audience": "academic_advisor",
+    "ai_summary_type": "multi_metric_comparison",
+    "ai_prompt_hint": "Identify background-driven performance differences. Avoid causal claims.",
+    "query_labels": [
+      "background_comparison"
+    ],
+    "explanation_strategy": "comparison"
+  },
+  "schema_context": {
+    "source_tables": [
+      "student",
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "highest_education",
+      "previous_attempt_count",
+      "imd_score_numeric",
+      "socioeconomic_band",
+      "disability_flag",
+      "disadvantage_score [FE single]",
+      "support_score [FE single]",
+      "family_stability_score [FE single]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "background_comparison"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The comparison between the two students reveals significant differences in their academic backgrounds and associated disadvantage scores. Student SAMPLE_OULAD_STU_100788 exhibits a higher level of education and a lower disadvantage score compared to SAMPLE_OULAD_STU_101700, indicating a more favorable structural position.\n\nInsights: Disadvantage Score Comparison: SAMPLE_OULAD_STU_100788 has a significantly lower disadvantage score than SAMPLE_OULAD_STU_101700, suggesting a more advantageous background. | IMD Score Comparison: The IMD score for SAMPLE_OULAD_STU_100788 is significantly higher than that of SAMPLE_OULAD_STU_101700, indicating a better socioeconomic position.\n\nEducational implications: Students with lower disadvantage scores and higher IMD scores may have better access to resources and support, impacting their academic performance.\n\nRecommendations: high - Implement targeted support programs for students with high disadvantage scores. - To help mitigate the structural disadvantages faced by students like SAMPLE_OULAD_STU_101700.",
+    "structured_payload": {
+      "task_id": "A-C05",
+      "execution_id": "exec_1781847669642_4a78c740",
+      "explanation": {
+        "summary": "The comparison between the two students reveals significant differences in their academic backgrounds and associated disadvantage scores. Student SAMPLE_OULAD_STU_100788 exhibits a higher level of education and a lower disadvantage score compared to SAMPLE_OULAD_STU_101700, indicating a more favorable structural position.",
+        "insights": [
+          {
+            "title": "Disadvantage Score Comparison",
+            "description": "SAMPLE_OULAD_STU_100788 has a significantly lower disadvantage score than SAMPLE_OULAD_STU_101700, suggesting a more advantageous background.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "disadvantage_score",
+                "value": 0.075,
+                "comparison": "baseline",
+                "delta": -0.65,
+                "context": "SAMPLE_OULAD_STU_101700 has a disadvantage score of 0.725"
+              }
+            ]
+          },
+          {
+            "title": "IMD Score Comparison",
+            "description": "The IMD score for SAMPLE_OULAD_STU_100788 is significantly higher than that of SAMPLE_OULAD_STU_101700, indicating a better socioeconomic position.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "imd_score_numeric",
+                "value": 85,
+                "comparison": "baseline",
+                "delta": 70,
+                "context": "SAMPLE_OULAD_STU_101700 has an IMD score of 15"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Students with lower disadvantage scores and higher IMD scores may have better access to resources and support, impacting their academic performance."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted support programs for students with high disadvantage scores.",
+            "rationale": "To help mitigate the structural disadvantages faced by students like SAMPLE_OULAD_STU_101700."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "Data is complete and directly comparable between the two students.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "comparison",
+      "explanation_type": "comparison",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 8617,
+        "token_usage": {
+          "prompt_tokens": 743,
+          "completion_tokens": 473,
+          "total_tokens": 1216
+        },
+        "strategy": "comparison",
+        "granularity": "semester",
+        "cost_usd": 0.000395
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-C05__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "df8f38a5d33d3f65bf249207854a9d701d426ec72d0f4c5c993a6db3c28ffcb7",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 743,
+        "completion_tokens": 473,
+        "total_tokens": 1216
+      },
+      "latency_ms": 8621,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 2,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "background_comparison",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-C05.json",
+        "artifact_sha256": "16a72c8aeb422fd6828703a33c5b3188d70812acd57a7a65c57dfdebfb8743fb",
+        "row_count": 2,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 2,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "background_comparison": 2
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-C05-CORE-01",
+        "description": "Identify background-driven performance differences."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-C05-CONSTRAINT-01",
+        "description": "Avoid causal claims."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  },
+  "derived_stat_evidence": [],
+  "action_evidence": {
+    "applicable": false,
+    "source_type": "not_applicable",
+    "rule_set_id": null,
+    "rule_version": null,
+    "evaluation_status": "not_applicable",
+    "supported_action_count": 0,
+    "supported_actions": [],
+    "rule_evaluations": [],
+    "conflict_evaluations": []
+  }
+}

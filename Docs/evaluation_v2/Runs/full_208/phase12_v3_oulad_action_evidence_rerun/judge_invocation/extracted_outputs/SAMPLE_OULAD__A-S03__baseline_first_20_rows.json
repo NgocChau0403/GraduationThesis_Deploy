@@ -1,0 +1,85 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-S03__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the engagement data, highlighting the significant drop in engagement and its implications."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Most numerical claims are correct, but the explanation could clarify the context of the engagement drop more explicitly."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation identifies the drop week and discusses post-drop engagement but lacks a clear recommendation for outreach timing."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of identifying engagement drops and their implications for the target audience."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "While there is a recommendation for outreach, it lacks specificity regarding timing relative to the identified drop week."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from improved structure and clarity in presenting the recommendations."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language and appropriately addresses potential challenges faced by the student."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student's engagement dropped to 27 clicks in week 0 from a pre-drop average of 90.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-S03__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the retrieved data showing the engagement drop."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The engagement drop indicates a concerning disengagement trend.",
+      "claim_type": "interpretative",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-S03__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The interpretation aligns with the observed data trends."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Recommendations include initiating outreach in week 0.",
+      "claim_type": "action",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "local_detail",
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-S03__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is present but lacks specificity regarding timing relative to the drop."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies the engagement drop and its implications, though it could improve in clarity and specificity regarding recommendations. The scoring reflects a strong understanding of the task and relevant data.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 32 rows of engagement data. The retrieval log confirmed that all relevant data was available and correctly referenced in the explanation.",
+  "invalid_reason": null
+}

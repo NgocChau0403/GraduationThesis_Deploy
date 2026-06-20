@@ -1,0 +1,80 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T06__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the lack of data available for analysis, which is consistent with the evidence provided."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical claims were made due to the absence of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation addresses the core output requirement by stating that no data is available to analyze study patterns, but it lacks a clear characterization of the study pattern as steady or concentrated."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is relevant to the task of assessing study consistency, directly addressing the actionable question posed."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were supported due to the lack of data."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but the structure could be improved for better readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, maintaining a neutral tone."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is no available data to analyze your study patterns.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence indicating zero engagement rows."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Regular engagement is crucial for effective learning.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is a widely accepted educational principle and does not require specific evidence in this context."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Establish a weekly study schedule.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "unsupported",
+      "impact_type": "local_detail",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the recommendation is reasonable, it is not grounded in the available evidence due to the lack of data."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively communicates the absence of data for analysis, which is crucial for the task. However, it falls short in fully characterizing the study pattern and providing actionable recommendations due to the lack of data. The clarity and relevance of the explanation are strong points, while the completeness and actionability could be improved.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 0, indicating no data was available for analysis. The explanation appropriately reflects this lack of data."
+}

@@ -1,0 +1,93 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G10__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, particularly in describing the distribution of students across consistency levels and the implications of low consistency."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Numerical claims regarding student counts and percentages are correct and supported by the evidence, such as the low consistency group comprising 979 students (39.19%)."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs, including the distribution of students and the implications of low consistency, but could provide more detail on recommended interventions."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing student consistency and provides actionable insights for the target audience."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations for structured study schedules are actionable and relevant to the identified low consistency group."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation acknowledges potential external factors affecting study patterns, but could further emphasize the need for sensitivity in recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The low consistency group comprises 979 students, representing 39.19% of the cohort.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "consistency_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence showing the student count and percentage for the low consistency group."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students in the low consistency category have an average of 21.8 active weeks.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "consistency_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average active weeks for the low consistency group is accurately reported based on the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "A significant number of students are likely cramming rather than engaging in consistent study practices.",
+      "claim_type": "interpretative",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is reasonable based on the evidence, it lacks direct statistical support and could be seen as an interpretation rather than a fact."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Implement structured study schedules for low consistency students.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation aligns with the identified issues in study habits and is actionable."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing student consistency, providing a clear distribution of students and actionable recommendations. While it is generally strong, there are minor areas for improvement in clarity and completeness.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 3. All relevant data was included in the explanation, and the retrieval log was not applicable as the evidence was directly embedded.",
+  "invalid_reason": null
+}

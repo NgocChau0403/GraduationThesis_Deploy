@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-C03__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the data provided, correctly identifying the risk levels and flags for both students based on the at-risk scores and other metrics."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for at-risk scores and flags are correctly reported and compared, with no discrepancies found in the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation covers the required core outputs, including the comparison of risk profiles and the use of at-risk scores and flags. However, it could have explicitly mentioned the missing avg_score evidence."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation is highly relevant to the task of comparing the risk profiles of the two students, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, focusing on personalized support strategies for the high-risk student, though more specific actions could enhance clarity."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to improve readability and understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain stigmatizing language or unfair recommendations, maintaining a focus on supportive interventions."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Student SAMPLE_UCI_POR_STU_000001 is classified as high risk with an at risk score of 3.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "33d6ef8eca1e92b00c492524834dd46f13711d77c7502329db68916881185245"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the at-risk score for SAMPLE_UCI_POR_STU_000001."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Student SAMPLE_UCI_POR_STU_000002 is classified as medium risk with an at risk score of 2.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "33d6ef8eca1e92b00c492524834dd46f13711d77c7502329db68916881185245"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the at-risk score for SAMPLE_UCI_POR_STU_000002."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Both students exhibit low engagement and punctuality rates.",
+      "claim_type": "qualitative",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "33d6ef8eca1e92b00c492524834dd46f13711d77c7502329db68916881185245"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the flags for low engagement and punctuality present in the data."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of comparing the risk profiles of two students, providing a clear and accurate analysis based on the available data. It identifies key differences in risk levels and flags for intervention, while also offering actionable recommendations. Minor improvements in clarity and completeness could enhance the overall quality.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 2. All relevant data was included in the explanation, and the retrieval log was not applicable as the full dataset was provided. The explanation utilized all available evidence effectively."
+}

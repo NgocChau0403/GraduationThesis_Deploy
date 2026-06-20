@@ -1,0 +1,81 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the data provided, highlighting the significant gap in G1 and comparing it to G2 and G3."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "All numerical claims regarding average scores and pass rates are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation identifies the competency gap and suggests focus areas, but could provide more detail on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the task of identifying competency gaps and suggesting areas for improvement."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or supported due to the deterministic action evidence indicating no applicable actions."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is well-structured and clear, making it easy for the target audience to understand the findings."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "G1 has an average score of 0 and a pass rate of 0.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "competency_scores"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is directly supported by the data provided in the competency_scores dataset."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "G2 and G3 both have average scores of 55 and pass rates of 100%.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "competency_scores"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is also supported by the data provided in the competency_scores dataset."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Focusing on G1 will help improve overall competency and confidence in assessments.",
+      "claim_type": "insight",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This insight logically follows from the identified gaps in G1 and is a reasonable recommendation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies the competency gap in G1 and provides a clear rationale for focusing on this area for improvement. The claims made are well-supported by the evidence, and the overall clarity and relevance to the task are strong.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 3. All relevant data was available and utilized in the explanation."
+}

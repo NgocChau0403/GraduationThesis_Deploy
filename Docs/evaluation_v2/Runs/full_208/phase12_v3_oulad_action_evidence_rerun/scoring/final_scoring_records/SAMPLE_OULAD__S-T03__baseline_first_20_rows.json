@@ -1,0 +1,110 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__S-T03__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the data provided, highlighting the student's performance compared to the cohort benchmark."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "All numerical values presented in the explanation are correct and match the evidence from the dataset."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation covers the required core outputs, including the student's standing and metrics comparison, but could provide more detail on educational implications."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation is highly relevant to the task of peer comparison, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendations provided are actionable, though they could be more specific in terms of how to challenge oneself."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair implications, maintaining a positive tone."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You are performing exceptionally well compared to your cohort.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "peer_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the comparative metrics provided in the dataset."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Your average score of 94.34 is well above the cohort benchmark of 66.68.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "peer_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average score is accurately reflected in the explanation and matches the dataset."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "With a score percentile of 89.8, you are in the top 10% of your class.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "peer_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the percentile data provided in the dataset."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Your engagement percentile of 75 is also above the cohort benchmark of 50.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "peer_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The engagement percentile is correctly stated and supported by the dataset."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.9,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.9,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

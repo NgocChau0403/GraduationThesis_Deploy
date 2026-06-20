@@ -1,0 +1,189 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_UCI_POR__S-T05__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-T05",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v3_action_evidence_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_action_evidence_calibrated",
+  "task_context": {
+    "task_name": "Weekly engagement trend",
+    "scope": "1 student",
+    "actionable_question": "Which weeks did I disengage and why might that be?",
+    "target_audience": "student",
+    "ai_summary_type": "trend_series",
+    "ai_prompt_hint": "Describe engagement pattern. Flag weeks with sharp drops. Note if drop precedes assessment.",
+    "query_labels": [
+      "weekly_engagement"
+    ],
+    "explanation_strategy": "behavioral"
+  },
+  "schema_context": {
+    "source_tables": [
+      "engagement [OULAD only]"
+    ],
+    "key_db_fields": [
+      "week_number",
+      "engagement_count; early_warning_week [FE cross]",
+      "weekly_engagement_drop [FE cross]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "weekly_engagement"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: It appears that there is no available data on your weekly engagement, which makes it challenging to identify specific patterns or weeks of disengagement. This lack of data suggests that you may not have been active in the course recently.\n\nEducational implications: Regular engagement is crucial for your success in the course.\n\nRecommendations: high - Increase your weekly participation in course activities. - Engaging more consistently will help you stay on track and improve your understanding of the material.",
+    "structured_payload": {
+      "task_id": "S-T05",
+      "execution_id": "exec_1781847242190_05e087d3",
+      "explanation": {
+        "summary": "It appears that there is no available data on your weekly engagement, which makes it challenging to identify specific patterns or weeks of disengagement. This lack of data suggests that you may not have been active in the course recently.",
+        "insights": [],
+        "educational_implications": [
+          "Regular engagement is crucial for your success in the course."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Increase your weekly participation in course activities.",
+            "rationale": "Engaging more consistently will help you stay on track and improve your understanding of the material."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "LOW",
+        "reason": "There is no engagement data available to analyze.",
+        "based_on": [
+          "sparse_data",
+          "limited_temporal_range",
+          "single_student"
+        ]
+      },
+      "explanation_strategy": "behavioral",
+      "explanation_type": "behavioral",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "full_rows_due_to_small_result",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 0,
+      "included_row_count": 0,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "weekly_engagement",
+          "row_count": 0,
+          "included_row_count": 0
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 2889,
+        "token_usage": {
+          "prompt_tokens": 664,
+          "completion_tokens": 174,
+          "total_tokens": 838
+        },
+        "strategy": "behavioral",
+        "granularity": "weekly",
+        "cost_usd": 0.000204
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__S-T05__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "3f82ffc0d122dff44ac6c33df50f4d14a38c1052b056333cc243abfbf4843e94",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 664,
+        "completion_tokens": 174,
+        "total_tokens": 838
+      },
+      "latency_ms": 2894,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 0,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "weekly_engagement",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T05.json",
+        "artifact_sha256": "0e89c2d313eab105f19afa03a99195aa5694fef582e72af05d58e0462c2fe2bb",
+        "row_count": 0,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "weekly_engagement": 0
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "S-T05-CORE-01",
+        "description": "Describe engagement pattern."
+      },
+      {
+        "requirement_id": "S-T05-CORE-02",
+        "description": "Flag weeks with sharp drops."
+      },
+      {
+        "requirement_id": "S-T05-CORE-03",
+        "description": "Note if drop precedes assessment."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "S-T05-CONSTRAINT-01",
+        "description": "Treat temporal proximity between engagement drops and assessments as an association, not proof that the assessment caused the drop."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  },
+  "derived_stat_evidence": [],
+  "action_evidence": {
+    "applicable": false,
+    "source_type": "not_applicable",
+    "rule_set_id": null,
+    "rule_version": null,
+    "evaluation_status": "not_applicable",
+    "supported_action_count": 0,
+    "supported_actions": [],
+    "rule_evaluations": [],
+    "conflict_evaluations": []
+  }
+}

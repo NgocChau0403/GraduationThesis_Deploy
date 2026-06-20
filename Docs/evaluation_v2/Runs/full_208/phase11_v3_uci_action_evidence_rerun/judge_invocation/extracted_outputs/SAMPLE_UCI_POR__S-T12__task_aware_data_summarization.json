@@ -1,0 +1,71 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T12__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, indicating a lack of submissions and a punctuality rate of 0%."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical claims regarding submission delays and punctuality rates are correct and supported by the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the core outputs required, but could provide more detail on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing procrastination and its impact on scores."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or supported based on the evidence provided."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You have not submitted any of your assessments, which suggests a pattern of procrastination.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_series"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing no submissions."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Your punctuality rate is 0%, indicating that you have not submitted any work on time.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "punctuality_summary"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the punctuality rate of 0% in the evidence."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing procrastination, providing clear insights and relevant numerical data. While it could benefit from additional detail in some areas, it meets the core requirements and maintains clarity throughout.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 4. All relevant data was included in the explanation, and the retrieval log was not applicable."
+}

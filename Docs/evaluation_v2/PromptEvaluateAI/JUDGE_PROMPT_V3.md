@@ -152,11 +152,23 @@ deterministic_artifact_retrieval
 ```
 
 For `full_result_row_count <= 20`, `rows[:20]` covers the complete result. Do
-not award task-aware summarization an automatic evidence advantage.
+not award task-aware summarization an automatic evidence advantage. Also do not
+award baseline an automatic simplicity or terseness advantage. In this bucket,
+large score differences must be justified by concrete quality defects such as
+wrong values, contradicted claims, omitted required outputs, unsafe framing or
+materially poorer clarity. If both modes make the same supported claims from the
+same complete evidence, they should receive similar scores.
 
 For `full_result_row_count > 20`, broader task-aware coverage may be relevant,
 but it is not an automatic quality win. Accuracy, required outputs,
 specificity, proportionality and unsupported claims still decide quality.
+However, baseline-first-20 does not receive full-result coverage credit for
+large-result tasks unless its claims are explicitly limited to the visible rows
+or independently supported by deterministic checks. Penalize baseline when it
+makes cohort-wide, ranking, distribution, trend or relationship claims from a
+truncated first-20 preview without sufficient evidence. Credit task-aware
+summarization when it correctly uses broader task-relevant evidence, preserves
+required rows/statistics, or avoids misleading first-20 overgeneralization.
 
 Partial retrieval is not automatically invalid when artifact access,
 deterministic checks and retrieved evidence are sufficient for the required
@@ -211,6 +223,34 @@ for omitting an unavailable statistic.
 
 Use the canonical strength mapping from `JUDGE_SCORING_POLICY_V3.md`.
 
+## Step 2c - Apply Deterministic Action Evidence
+
+Read `action_evidence` before evaluating action, recommendation or risk-flag
+explanations.
+
+When `action_evidence.applicable = true`:
+
+- treat `supported_actions` as the authoritative action set for this record;
+- use `rule_evaluations` to distinguish `triggered`, `not_triggered` and
+  `unknown` rules;
+- use each action's `trigger_evidence`, priority, owner, time horizon,
+  support category and claim limits when checking explanation accuracy;
+- do not require an action from a `not_triggered` or `unknown` rule;
+- do not credit an invented action that is absent from `supported_actions`;
+- do not penalize the explanation for failing to invent additional actions;
+- if `supported_action_count = 0`, accept a supported statement that no
+  action was triggered;
+- if `supported_action_count > 0`, treat a statement that no action exists as
+  a contradiction of deterministic action evidence.
+
+For `source_type = returned_recommended_action_fields`, the returned flag rows
+and their existing `recommended_action` values are the evaluation target. The
+explanation may prioritize or explain those actions, but it is not required to
+create new recommendations.
+
+When `action_evidence.applicable = false`, do not infer an action requirement
+from this section.
+
 ## Step 3 - Resolve Task Requirements Before Omissions
 
 Use:
@@ -222,6 +262,25 @@ Use:
 - `evaluation_requirements.safety_fairness_note`.
 
 Do not invent mandatory outputs after reading the explanation.
+
+For `ai_summary_type = "action_synthesis"` tasks, interpret action requirements
+as explanation of the action-rule contract output, not unconstrained invention
+by the explanation model. The judge should evaluate whether the explanation:
+
+- accurately explains supported/generated actions when those actions or
+  triggered rules are present in the judge input;
+- references the triggering feature-engineered evidence, thresholds, rule IDs,
+  priority, owner and time horizon when available;
+- avoids proposing unsupported actions outside the supplied rule/action
+  contract;
+- correctly states that no supported action is available only when rule
+  evidence confirms that no action was triggered or returned.
+
+Do not penalize an explanation merely because it does not invent 3-5 new actions
+when the backend/rule layer did not return supported actions. Conversely, if the
+input contains triggered/supported actions and the explanation says no action is
+available, treat that as an action-evidence contradiction rather than as a
+generic "missing generated action plan" defect.
 
 - missing core output: material failure of the central task;
 - missing supporting output: useful required support is absent;

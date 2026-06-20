@@ -1,0 +1,80 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G09__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of a negative correlation between Disadvantage Score and Average Score, aligning with the derived statistical evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation correctly identifies the negative correlation and its implications, with no numerical inaccuracies present."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, but could provide more detail on specific imd_band groups."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing socioeconomic disadvantage and providing actionable insights."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations for targeted support programs are actionable and relevant to the identified issues."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation frames socioeconomic factors appropriately without assigning blame, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a negative correlation between Disadvantage Score and Average Score.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "A-G09__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The derived statistical evidence shows a Pearson correlation coefficient of -0.135, confirming the negative correlation."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students with higher disadvantage scores may be at risk of lower academic performance.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is logically derived from the observed negative correlation and aligns with educational implications."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Implement targeted support programs for students with high disadvantage scores.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and directly addresses the identified issue of academic performance related to disadvantage scores."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing the impact of socioeconomic disadvantage on academic performance. It provides a clear summary of the negative correlation observed, highlights the implications for at-risk students, and offers actionable recommendations for support. The scoring reflects strong alignment with the evidence and task requirements, with minor areas for improvement in completeness and clarity.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full retrieval coverage of 1998 rows from the disadvantage_impact dataset. The derived statistical evidence was utilized to support claims regarding the correlation between disadvantage scores and average scores. The retrieval log confirmed that all relevant data was accessible and used appropriately.",
+  "invalid_reason": null
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T02__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, highlighting CMA 8 as the area needing improvement based on its average score."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The average score of 83 for CMA 8 is correctly stated, and comparisons to other scores are accurate."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation identifies the lowest average score and suggests a focus area, but could provide more detail on other competencies."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the actionable question of which skill area to prioritize for improvement."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the identified competency gap."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "CMA 8 has the lowest average score of 83.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "competency_scores"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the data showing CMA 8's average score."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Focusing on CMA 8 could help improve your overall competency and confidence.",
+      "claim_type": "interpretation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This interpretation is reasonable based on the identified gap in competency."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies CMA 8 as the competency area needing improvement, supported by accurate numerical data. It provides actionable recommendations and maintains clarity throughout. The overall quality is high, with minor areas for improvement in completeness and conciseness.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with full access to the query results. The explanation utilized all available data from the competency_scores dataset, which contained 5 rows of relevant information."
+}

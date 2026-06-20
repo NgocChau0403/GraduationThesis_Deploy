@@ -1,0 +1,69 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G15__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the absence of data in the intervention priority dataset, which is supported by the evidence of zero rows returned."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical claims were made due to the absence of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, noting the lack of students and the implications of this absence."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of identifying students in need of intervention, directly addressing the lack of data."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable insights can be derived from an empty dataset."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is clear and well-structured, effectively communicating the situation regarding the dataset."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There are currently no students listed in the intervention priority dataset.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "row_count_total"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the deterministic check confirming zero rows in the dataset."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The absence of data may hinder the ability to identify students in need of intervention.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim logically follows from the first claim and is a reasonable implication of the lack of data."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of intervention priority ranking by clearly stating the absence of data, which is crucial for identifying students in need of intervention. The clarity and relevance of the explanation are strong, although the lack of actionable insights is noted due to the empty dataset.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 0, confirming the dataset's emptiness. The retrieval log path was not applicable as there were no rows retrieved."
+}

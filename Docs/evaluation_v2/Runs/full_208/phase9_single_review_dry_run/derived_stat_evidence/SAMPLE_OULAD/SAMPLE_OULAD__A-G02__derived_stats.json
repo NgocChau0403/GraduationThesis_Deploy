@@ -1,0 +1,45 @@
+{
+  "artifact_type": "llm_judge_v3_deterministic_derived_stat_evidence_v1",
+  "generated_at": "2026-06-20T03:05:28.914Z",
+  "dry_run_mode": "single_review",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G02",
+  "task_name": "Engagement–performance relationship",
+  "ai_summary_type": "correlation_evidence",
+  "stat_family": "correlation",
+  "coefficient_method": "pearson",
+  "x_column": "engagement_score",
+  "y_column": "avg_score",
+  "entity_column": "student_id",
+  "source_full_query_artifact": {
+    "path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G02.json",
+    "sha256": "3242136abfe19ae0217e74844477d8b5c5ea4b928e1a704a28b80ec392af2f22",
+    "evidence_id": "SAMPLE_OULAD__A-G02"
+  },
+  "source_judge_input_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_inputs/SAMPLE_OULAD__A-G02__baseline_first_20_rows.json",
+  "derived_stats": [
+    {
+      "dataset_label": "engagement_performance_scatter",
+      "status": "pass",
+      "reason": null,
+      "row_count": 1998,
+      "valid_pair_count": 1998,
+      "invalid_x_count": 0,
+      "invalid_y_count": 0,
+      "x_mean": 0.145296,
+      "y_mean": 70.219584,
+      "x_variance": 30.2004484389,
+      "y_variance": 884150.81418258,
+      "covariance": 2111.3220021651,
+      "pearson_r": 0.40858705407767,
+      "pearson_r_rounded_4": 0.4086,
+      "direction": "positive",
+      "strength": "moderate",
+      "coefficient_source": "deterministic_recompute_from_full_query_rows",
+      "formula": "sum((x - mean_x) * (y - mean_y)) / sqrt(sum((x - mean_x)^2) * sum((y - mean_y)^2))",
+      "warnings": []
+    }
+  ],
+  "judge_usage_note": "Use this artifact as deterministic support for correlation coefficient claims. It proves derived Pearson r from all valid x/y pairs in the full query result; it does not prove causality or statistical significance.",
+  "artifact_sha256": "bce0df86c0cb544ed6026065a8e34360070996c4d805bed13f2c85f39172e062"
+}

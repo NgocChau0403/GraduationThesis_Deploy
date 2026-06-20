@@ -1,0 +1,71 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-S02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the student's performance trend based on the provided data, highlighting both improvement and ongoing challenges."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as the score increase from 0 to 55, are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation identifies the student's improvement and challenges but could provide more detail on the implications of the performance trend."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of assessing the student's performance trend, making it relevant to the audience."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or applicable based on the deterministic action evidence provided."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student's performance shows a slight improvement over the assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_UCI_POR__A-S02__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing an increase in normalized scores from 0 to 55."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The scores remain below the target threshold, indicating ongoing challenges.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_UCI_POR__A-S02__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence indicating that the scores are below the target threshold of 70."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student's performance trend, accurately reflecting the data provided. It identifies both improvement and areas needing attention, making it relevant and actionable for the intended audience.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 3. All relevant data was available and utilized in the explanation."
+}

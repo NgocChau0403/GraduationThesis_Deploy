@@ -122,9 +122,14 @@ const TASK_REVIEW_OVERRIDES = {
     ],
   },
   "S-T13": {
+    core: [
+      "Explain the supported actions already generated or exposed by the action_synthesis rule contract; do not require the explanation model to invent actions outside the returned or triggered action set.",
+      "For each supported action that is present, explain the triggering FE feature, threshold or rule evidence when available.",
+    ],
     constraints: [
-      "Do not include actions that reference signals not present in returned data.",
-      "Do not invent risk context, urgency, or priority unsupported by returned feature-engineered signals.",
+      "Do not include or endorse actions that reference signals not present in returned data or the supplied action-rule contract.",
+      "Do not invent risk context, urgency, priority, or additional actions unsupported by returned feature-engineered signals or supported action evidence.",
+      "If no supported action is returned or triggered, saying no supported action is available is acceptable; penalize that only when deterministic action evidence shows at least one supported action exists.",
     ],
   },
   "A-S01": {
@@ -142,6 +147,17 @@ const TASK_REVIEW_OVERRIDES = {
       "When a specific drop week is identified, recommend outreach timing relative to that week.",
     ],
   },
+  "A-S04": {
+    core: [
+      "Explain the returned student risk flags and identify which flags are triggered.",
+      "For each triggered flag, explain the exact value, threshold, severity, description, and existing recommended_action when those fields are returned.",
+    ],
+    constraints: [
+      "Do not require the explanation model to create new recommendations; this task already returns recommended_action fields for flags.",
+      "If no flags are triggered, state that explicitly and keep non-triggered flags brief.",
+      "Do not invent risk signals, priorities, or actions that are not present in returned flags.",
+    ],
+  },
   "A-S06": {
     constraints: [
       "Do not characterise late submission as low motivation or a personal failing.",
@@ -154,9 +170,14 @@ const TASK_REVIEW_OVERRIDES = {
     ],
   },
   "A-S08": {
+    core: [
+      "Explain the supported admin actions already generated or exposed by the action_synthesis rule contract and rank/describe them by urgency when priority evidence is supplied.",
+      "For each supported admin action that is present, specify who should act and by when when owner/time-horizon evidence is supplied.",
+    ],
     constraints: [
-      "Every proposed action and urgency level must reference returned feature-engineered signals.",
-      "Do not invent urgency that is not supported by returned signals.",
+      "Every explained or proposed action and urgency level must reference returned feature-engineered signals or the supplied action-rule contract.",
+      "Do not invent urgency, owner, time horizon, or additional actions that are not supported by returned signals or supported action evidence.",
+      "If no supported admin action is returned or triggered, saying no supported action is available is acceptable; penalize that only when deterministic action evidence shows at least one supported action exists.",
     ],
   },
   "A-C04": {
@@ -284,10 +305,13 @@ const TASK_REVIEW_OVERRIDES = {
     ],
   },
   "A-G16": {
-    core: ["Synthesise cohort feature-engineered signals into 3–5 admin actions."],
+    core: [
+      "Explain the supported cohort-level admin actions already generated or exposed by the action_synthesis rule contract; do not require invented actions outside the returned or triggered action set.",
+    ],
     constraints: [
-      "Every recommended action must be grounded in returned cohort feature-engineered signals.",
-      "Do not invent urgency or priority without supporting returned data.",
+      "Every explained or recommended action must be grounded in returned cohort feature-engineered signals or the supplied action-rule contract.",
+      "Do not invent urgency, priority, or additional actions without supporting returned data or supported action evidence.",
+      "If no supported cohort-level action is returned or triggered, saying no supported action is available is acceptable; penalize that only when deterministic action evidence shows at least one supported action exists.",
     ],
     review_note:
       "Removed descriptive task-importance metadata from core deliverables during human review.",

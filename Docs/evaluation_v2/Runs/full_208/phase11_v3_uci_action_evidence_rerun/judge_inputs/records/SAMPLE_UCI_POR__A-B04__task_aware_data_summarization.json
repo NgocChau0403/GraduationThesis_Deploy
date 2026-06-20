@@ -1,0 +1,209 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_UCI_POR__A-B04__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-B04",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v3_action_evidence_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_action_evidence_calibrated",
+  "task_context": {
+    "task_name": "At-risk overview",
+    "scope": "Cohort",
+    "actionable_question": "How many students need urgent intervention?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "categorical_distribution",
+    "ai_prompt_hint": "State number of high/medium/low risk students. Recommend immediate review of high group.",
+    "query_labels": [
+      "risk_overview"
+    ],
+    "explanation_strategy": "risk"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "at_risk_label [FE]",
+      "at_risk_score [FE]; enrollment_id and avg_score from enrollment + score_agg JOIN (not from risk_flags directly)"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "risk_overview"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis indicates that there are 50 students categorized as high risk, 155 as medium risk, and 444 as low risk. The high-risk group requires immediate attention to address their needs effectively.\n\nInsights: High-Risk Student Count: There are 50 students identified as high risk, indicating a significant need for urgent intervention strategies to support their academic success. | Medium-Risk Student Count: A total of 155 students fall into the medium-risk category, suggesting a need for monitoring and potential support interventions to prevent escalation to high risk.\n\nEducational implications: Immediate review of high-risk students is essential to implement targeted support measures.\n\nRecommendations: high - Conduct an immediate review of the 50 high-risk students. - This review will help identify specific needs and tailor interventions to support their academic progress.",
+    "structured_payload": {
+      "task_id": "A-B04",
+      "execution_id": "exec_1781847231795_24cc83c5",
+      "explanation": {
+        "summary": "The analysis indicates that there are 50 students categorized as high risk, 155 as medium risk, and 444 as low risk. The high-risk group requires immediate attention to address their needs effectively.",
+        "insights": [
+          {
+            "title": "High-Risk Student Count",
+            "description": "There are 50 students identified as high risk, indicating a significant need for urgent intervention strategies to support their academic success.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "student_count",
+                "value": 50,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "High-risk students identified"
+              }
+            ]
+          },
+          {
+            "title": "Medium-Risk Student Count",
+            "description": "A total of 155 students fall into the medium-risk category, suggesting a need for monitoring and potential support interventions to prevent escalation to high risk.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "student_count",
+                "value": 155,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Medium-risk students identified"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Immediate review of high-risk students is essential to implement targeted support measures."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Conduct an immediate review of the 50 high-risk students.",
+            "rationale": "This review will help identify specific needs and tailor interventions to support their academic progress."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "Data is complete and accurately reflects the current risk status of students.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "risk",
+      "explanation_type": "risk",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "full_rows_due_to_small_result",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 3,
+      "included_row_count": 3,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "risk_overview",
+          "row_count": 3,
+          "included_row_count": 3
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 6164,
+        "token_usage": {
+          "prompt_tokens": 733,
+          "completion_tokens": 388,
+          "total_tokens": 1121
+        },
+        "strategy": "risk",
+        "granularity": "semester",
+        "cost_usd": 0.000343
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-B04__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "8d322542c8a6c1c5e2d5129cbcc842037c2e6c727636f97ab7f4f9bfb4b9b019",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 733,
+        "completion_tokens": 388,
+        "total_tokens": 1121
+      },
+      "latency_ms": 6172,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 3,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "risk_overview",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-B04.json",
+        "artifact_sha256": "dbff2289fd184dfe8aa5e15da291ca6740e8f8a49e3c6a46d1026f020b4fc367",
+        "row_count": 3,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 3,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "risk_overview": 3
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-B04-CORE-01",
+        "description": "State number of high/medium/low risk students."
+      },
+      {
+        "requirement_id": "A-B04-CORE-02",
+        "description": "Recommend immediate review of high group."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  },
+  "derived_stat_evidence": [],
+  "action_evidence": {
+    "applicable": false,
+    "source_type": "not_applicable",
+    "rule_set_id": null,
+    "rule_version": null,
+    "evaluation_status": "not_applicable",
+    "supported_action_count": 0,
+    "supported_actions": [],
+    "rule_evaluations": [],
+    "conflict_evaluations": []
+  }
+}

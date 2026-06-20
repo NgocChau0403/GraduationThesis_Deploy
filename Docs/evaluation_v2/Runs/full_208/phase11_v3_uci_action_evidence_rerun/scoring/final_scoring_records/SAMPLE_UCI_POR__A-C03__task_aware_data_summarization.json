@@ -1,0 +1,98 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-C03__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the data provided, correctly identifying the risk levels and flags for both students based on the at-risk scores and other metrics."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for at-risk scores and flags are correctly reported and compared, with no discrepancies found in the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation covers the required core outputs, including the comparison of risk profiles and the use of at-risk scores and flags. However, it could have explicitly mentioned the missing avg_score evidence."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation is highly relevant to the task of comparing the risk profiles of the two students, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, focusing on personalized support strategies for the high-risk student, though more specific actions could enhance clarity."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to improve readability and understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain stigmatizing language or unfair recommendations, maintaining a focus on supportive interventions."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Student SAMPLE_UCI_POR_STU_000001 is classified as high risk with an at risk score of 3.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "33d6ef8eca1e92b00c492524834dd46f13711d77c7502329db68916881185245"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the at-risk score for SAMPLE_UCI_POR_STU_000001."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Student SAMPLE_UCI_POR_STU_000002 is classified as medium risk with an at risk score of 2.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "33d6ef8eca1e92b00c492524834dd46f13711d77c7502329db68916881185245"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the at-risk score for SAMPLE_UCI_POR_STU_000002."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Both students exhibit low engagement and punctuality rates.",
+      "claim_type": "qualitative",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "33d6ef8eca1e92b00c492524834dd46f13711d77c7502329db68916881185245"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the flags for low engagement and punctuality present in the data."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.7,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.7,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

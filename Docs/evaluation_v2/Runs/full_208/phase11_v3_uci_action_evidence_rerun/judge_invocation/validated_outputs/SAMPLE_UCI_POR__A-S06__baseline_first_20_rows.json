@@ -1,0 +1,81 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-S06__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of no submissions and a punctuality rate of 0%, maintaining alignment with the provided data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical claims regarding the punctuality rate and submission delays are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the core outputs required, including the average delay, systematic late submissions, and recommendations, but could provide more detail on the implications of the punctuality rate."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of assessing student submission behavior and its impact on scores."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, suggesting practical steps to improve the student's submission behavior."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sentences could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation avoids stigmatizing language and does not attribute late submissions to personal failings, adhering to the evaluation constraints."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student has not submitted any assessments, resulting in a punctuality rate of 0%.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_rows_sha256"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence showing no submissions and a punctuality rate of 0%."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "This consistent pattern of non-submission suggests a lack of engagement with the course material.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_rows_sha256"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence indicating no submissions, which implies disengagement."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Implement deadline reminders and regular check-ins with the student.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and aligns with the identified issues in submission behavior."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task requirements, providing a clear summary of the student's submission behavior and actionable recommendations. The claims made are well-supported by the evidence, and the overall clarity and relevance of the explanation are strong.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 3. The explanation utilized the complete dataset available, confirming the claims made regarding submission behavior and punctuality."
+}

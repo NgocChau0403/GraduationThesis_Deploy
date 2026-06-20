@@ -1,0 +1,98 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__S-T09__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation accurately states that there is no data available for analysis, which aligns with the evidence provided. However, it could have been clearer in framing the implications of this lack of data."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical claims were made due to the absence of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation addresses the core outputs but lacks specific details about the student's position in the lifestyle risk scatter, which is a required output."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is relevant to the task of analyzing lifestyle risk versus performance, but it does not fully engage with the actionable question due to the lack of data."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The recommendation to track lifestyle habits is actionable, but the lack of data limits the effectiveness of this advice."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear but could benefit from more structured presentation and elaboration on the implications of the findings."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, maintaining a fair approach."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is no data available to analyze the relationship between Lifestyle Risk Score and Average Score.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__S-T09__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence indicating zero rows available for analysis."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Understanding the impact of lifestyle choices on academic performance can help you make informed decisions.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__S-T09__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported as it reflects a general educational implication relevant to the task."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Consider tracking your lifestyle habits and academic performance over time.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__S-T09__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This recommendation is actionable and aligns with the task's goal of improving academic performance."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 6.13,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 6.13,
+  "verdict": "acceptable",
+  "invalid_reason": null
+}

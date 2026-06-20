@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "judge_input_schema_v3.json",
   "title": "LLM Judge V3 Judge Input",
-  "description": "Strict pointwise judge input contract for the UCI V3 rerun. Preserves the V2 contract and adds deterministic derived-stat evidence.",
+  "description": "Strict pointwise judge input contract for the UCI V3 rerun. Preserves the V2 contract and adds deterministic derived-stat and action evidence.",
   "type": "object",
   "additionalProperties": false,
   "required": [
@@ -19,7 +19,8 @@
     "explanation",
     "evidence_access",
     "evaluation_requirements",
-    "derived_stat_evidence"
+    "derived_stat_evidence",
+    "action_evidence"
   ],
   "properties": {
     "schema_version": {
@@ -169,6 +170,32 @@
           "type": "string",
           "minLength": 1
         }
+      }
+    },
+    "action_evidence": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "applicable",
+        "source_type",
+        "evaluation_status",
+        "supported_action_count",
+        "supported_actions",
+        "rule_evaluations",
+        "conflict_evaluations"
+      ],
+      "properties": {
+        "applicable": { "type": "boolean" },
+        "source_type": { "type": "string" },
+        "rule_set_id": { "type": ["string", "null"] },
+        "rule_version": { "type": ["string", "null"] },
+        "evaluation_status": {
+          "enum": ["complete", "partial", "not_applicable"]
+        },
+        "supported_action_count": { "type": "integer", "minimum": 0 },
+        "supported_actions": { "type": "array" },
+        "rule_evaluations": { "type": "array" },
+        "conflict_evaluations": { "type": "array" }
       }
     },
     "derived_stat_evidence": {

@@ -1,0 +1,110 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__S-T13__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, including the high at-risk score and the negative performance trend, which are critical for the recommended actions."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as the at-risk score of 3 and the performance trend of -0.71875, are correct and consistent with the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation includes two prioritized actions, but it could have provided more detail on how to implement these actions effectively."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the actionable question regarding what the student should do differently, aligning well with the task requirements."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommended actions are clear and actionable, providing specific steps for the student to take based on their current situation."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some phrases could be simplified for better understanding, particularly for a student audience."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and presents the information in a supportive manner, although it should emphasize the importance of seeking help without implying failure."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student has a high at-risk score of 3.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.at_risk_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is directly supported by the evidence showing an at-risk score of 3."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The performance trend is showing a decline.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.performance_trend"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The performance trend of -0.71875 indicates a decline, supporting this claim."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The student should request a short advisor check-in.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "deterministic_action_evidence.supported_actions"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This action is supported by the deterministic action evidence indicating a need for advisor support."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The student should reflect on assessment feedback.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "deterministic_action_evidence.supported_actions"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This action is also supported by the evidence, emphasizing the importance of feedback."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.1,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.1,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

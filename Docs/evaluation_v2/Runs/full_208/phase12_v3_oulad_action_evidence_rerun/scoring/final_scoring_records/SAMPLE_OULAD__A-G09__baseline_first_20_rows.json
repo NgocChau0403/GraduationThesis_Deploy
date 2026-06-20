@@ -1,0 +1,94 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-G09__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of a negative correlation between Disadvantage Score and Average Score, aligning with the derived statistical evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation correctly identifies the negative correlation and its implications, with no numerical inaccuracies present."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the trend and implications but could provide more detail on specific imd_band groups."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing socioeconomic disadvantage and providing actionable insights."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations for targeted support programs are actionable and relevant to the identified issues."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation frames socioeconomic factors appropriately without assigning blame, adhering to fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a negative correlation between Disadvantage Score and Average Score.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "A-G09__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The derived statistical evidence shows a Pearson correlation coefficient of -0.135, confirming the negative correlation."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students with higher disadvantage scores may be at risk of lower academic performance.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim logically follows from the identified negative correlation, supported by the explanation's context."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Implement targeted support programs for students with high disadvantage scores.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and directly addresses the identified issue of academic performance related to disadvantage scores."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.25,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.25,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

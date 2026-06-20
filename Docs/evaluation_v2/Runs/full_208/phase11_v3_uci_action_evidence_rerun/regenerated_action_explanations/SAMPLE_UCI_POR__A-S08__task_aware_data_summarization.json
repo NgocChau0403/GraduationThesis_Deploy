@@ -1,0 +1,554 @@
+{
+  "artifact_type": "llm_judge_v3_regenerated_action_explanation_v1",
+  "generated_at": "2026-06-20T02:53:58.677594+00:00",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-S08__task_aware_data_summarization",
+    "case_id": "SAMPLE_UCI_POR__A-S08",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-S08",
+    "task_name": "Student intervention recommendation",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S08.json",
+    "full_query_artifact_sha256": "bf57942636e4f198c02b375ea0335ea4bcec9fac35716717442fcea3518f9db1"
+  },
+  "request_payload": {
+    "task_id": "A-S08",
+    "execution_id": "exec_1781847238156_2843360f",
+    "task_name": "Student intervention recommendation",
+    "analysis_type": "synthesis",
+    "explanation_strategy": "risk",
+    "explanation_type": "recommendation",
+    "ai_prompt_hint": "Synthesise all [FE] signals into 3–5 admin actions ranked by urgency. Specify who should act (tutor / admin / counsellor) and by when.",
+    "actionable_question": "What should admin do for this student in the next 7 days?",
+    "target_audience": [
+      "academic_advisor",
+      "admin"
+    ],
+    "visualization_config": {
+      "x_field": null,
+      "y_field": null,
+      "series_field": null,
+      "color_field": "at_risk_label",
+      "orientation": null,
+      "variant": "intervention_plan",
+      "x_label": null,
+      "y_label": null,
+      "semantic_roles": {
+        "x": null,
+        "y": null,
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "instructor"
+    },
+    "datasets": {
+      "synthesis_data": [
+        {
+          "avg_score": 36.666666666666664,
+          "performance_trend": 27.5,
+          "engagement_score": 0,
+          "punctuality_rate": "1",
+          "early_warning_week": null,
+          "support_score": 0.25,
+          "at_risk_score": 2,
+          "at_risk_label": "medium",
+          "final_outcome": "Pass"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "LOW",
+      "reason": "No positive engagement activity found (0 engagement rows)."
+    },
+    "student_context": null,
+    "query_labels": [
+      "synthesis_data"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [
+        "avg_score",
+        "performance_trend",
+        "engagement_score",
+        "punctuality_rate",
+        "early_warning_week",
+        "support_score",
+        "at_risk_score",
+        "at_risk_label",
+        "final_outcome"
+      ],
+      "evidence_dataset_roles": {
+        "synthesis_data": "primary_evidence"
+      },
+      "action_evidence_contract": [
+        {
+          "column": "avg_score",
+          "role": "metric",
+          "unit": "score_runtime_scale",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": false
+        },
+        {
+          "column": "performance_trend",
+          "role": "metric",
+          "unit": "score_change_per_assessment_order",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "engagement_score",
+          "role": "metric",
+          "unit": "ratio_0_1",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "punctuality_rate",
+          "role": "metric",
+          "unit": "ratio_0_1",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "early_warning_week",
+          "role": "context",
+          "unit": "week_number",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": false,
+          "semantic_note": "Not used by v1 because the current runtime field lacks enough context for a standalone action."
+        },
+        {
+          "column": "support_score",
+          "role": "context",
+          "unit": "dataset_specific_score",
+          "required": false,
+          "nullable": true,
+          "sensitive": true,
+          "allowed_as_trigger": false,
+          "semantic_note": "Sensitive/background support context; preserve for audit only."
+        },
+        {
+          "column": "at_risk_score",
+          "role": "metric",
+          "unit": "flag_count",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "at_risk_label",
+          "role": "status",
+          "unit": "risk_band",
+          "required": true,
+          "nullable": false,
+          "sensitive": false,
+          "allowed_as_trigger": true
+        },
+        {
+          "column": "final_outcome",
+          "role": "status",
+          "unit": "outcome_category",
+          "required": false,
+          "nullable": true,
+          "sensitive": false,
+          "allowed_as_trigger": false
+        }
+      ],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [
+        {
+          "conflict_id": "A-S08-C01",
+          "when": {
+            "all": [
+              {
+                "evidence_id": "final_outcome",
+                "operator": "eq",
+                "value": "Distinction"
+              }
+            ],
+            "any": [
+              {
+                "evidence_id": "at_risk_label",
+                "operator": "eq",
+                "value": "high"
+              },
+              {
+                "evidence_id": "performance_trend",
+                "operator": "lt",
+                "value": 0
+              }
+            ]
+          },
+          "behavior": "preserve_and_warn"
+        }
+      ],
+      "action_rules": [
+        {
+          "rule_id": "A-S08-R01",
+          "description": "Assign a rapid staff review when the backend composite risk score is high.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "at_risk_score",
+                "operator": "gte",
+                "value": 3
+              },
+              {
+                "evidence_id": "at_risk_label",
+                "operator": "eq",
+                "value": "high"
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "staff_review_student_risk_profile",
+            "action_text": "Assign an academic advisor to review the student's current risk profile and coordinate the next follow-up.",
+            "priority": "high",
+            "owner": "academic_advisor",
+            "time_horizon_days": 2,
+            "support_category": "case_coordination",
+            "claim_limits": [
+              "Treat the composite risk score as a screening signal, not a diagnosis.",
+              "Do not use support_score to justify the action."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "A-S08-R02",
+          "description": "Create a submission support plan when punctuality is below 70 percent.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "punctuality_rate",
+                "operator": "lt",
+                "value": 0.7
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "staff_create_submission_support_plan",
+            "action_text": "Ask the tutor to agree a short submission plan with clear upcoming deadlines and one follow-up check.",
+            "priority": "high",
+            "owner": "tutor",
+            "time_horizon_days": 7,
+            "support_category": "submission_support",
+            "claim_limits": [
+              "Do not infer why submissions were late.",
+              "Preserve the raw punctuality value, including numeric strings."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "A-S08-R03",
+          "description": "Review recent assessment changes when the observed performance trend is negative.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "performance_trend",
+                "operator": "lt",
+                "value": 0
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "staff_review_recent_assessment_pattern",
+            "action_text": "Review the student's recent assessment sequence and identify one concrete academic follow-up.",
+            "priority": "medium",
+            "owner": "tutor",
+            "time_horizon_days": 7,
+            "support_category": "academic_support",
+            "claim_limits": [
+              "Do not claim the negative slope proves future decline.",
+              "Do not ignore conflicting positive outcome evidence."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        },
+        {
+          "rule_id": "A-S08-R04",
+          "description": "Check engagement barriers when the normalized engagement score is below 0.15.",
+          "trigger": {
+            "all": [
+              {
+                "evidence_id": "engagement_score",
+                "operator": "lt",
+                "value": 0.15
+              }
+            ],
+            "any": []
+          },
+          "action": {
+            "action_id": "staff_check_engagement_barriers",
+            "action_text": "Contact the student to check for practical engagement barriers and agree one reachable participation step.",
+            "priority": "medium",
+            "owner": "student_support_team",
+            "time_horizon_days": 7,
+            "support_category": "engagement_support",
+            "claim_limits": [
+              "Do not infer the cause of low engagement.",
+              "Do not claim engagement caused the student's performance."
+            ]
+          },
+          "provenance_requirements": [
+            "dataset_label",
+            "dataset_role",
+            "row_index",
+            "column",
+            "raw_value",
+            "parsed_value",
+            "unit",
+            "rule_id",
+            "rule_version"
+          ]
+        }
+      ],
+      "trigger_columns": [
+        "at_risk_label",
+        "at_risk_score",
+        "engagement_score",
+        "performance_trend",
+        "punctuality_rate"
+      ],
+      "provenance_required_fields": [
+        "dataset_label",
+        "dataset_role",
+        "row_index",
+        "column",
+        "raw_value",
+        "parsed_value",
+        "unit",
+        "rule_id",
+        "rule_version"
+      ],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": true,
+      "summary_type": "action_synthesis",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": "versioned_registry_rules",
+      "action_rule_set_id": "A-S08.action_synthesis",
+      "action_rule_version": "1.0.0",
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": 5,
+      "sensitive_action_policy": "exclude_sensitive_triggers",
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 1529,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 753,
+      "completion_tokens": 85,
+      "total_tokens": 838
+    },
+    "attempts": 2,
+    "final_attempt": 1,
+    "regenerated_after_action_synthesis_small_result_fix": true
+  },
+  "response_body": {
+    "task_id": "A-S08",
+    "execution_id": "exec_1781847238156_2843360f",
+    "explanation": {
+      "summary": "The action plan focuses on addressing potential engagement barriers for the student, as indicated by their low engagement score. The student support team is tasked with contacting the student to identify these barriers and agree on a manageable participation step within a week.",
+      "insights": [
+        {
+          "title": "Low Engagement Score",
+          "description": "The student's engagement score is recorded at 0.0, indicating a significant lack of participation.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "engagement_score",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "The engagement score is critical for assessing participation levels."
+            }
+          ]
+        }
+      ],
+      "educational_implications": [],
+      "recommendations": [],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The evidence used to support the action is complete and directly linked to the identified engagement issue.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "risk",
+    "explanation_type": "risk",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v1",
+    "baseline_available": true,
+    "input_summary_type": "action_synthesis",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 1,
+    "included_row_count": 1,
+    "small_result_threshold": 20,
+    "small_result_full_rows_applied": true,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "synthesis_data",
+        "row_count": 1,
+        "included_row_count": 1
+      }
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 4847,
+      "token_usage": {
+        "prompt_tokens": 2140,
+        "completion_tokens": 225,
+        "total_tokens": 2365
+      },
+      "strategy": "risk",
+      "granularity": "semester",
+      "cost_usd": 0.000456
+    }
+  },
+  "raw_text": "Summary: The action plan focuses on addressing potential engagement barriers for the student, as indicated by their low engagement score. The student support team is tasked with contacting the student to identify these barriers and agree on a manageable participation step within a week.\nLow Engagement Score: The student's engagement score is recorded at 0.0, indicating a significant lack of participation."
+}

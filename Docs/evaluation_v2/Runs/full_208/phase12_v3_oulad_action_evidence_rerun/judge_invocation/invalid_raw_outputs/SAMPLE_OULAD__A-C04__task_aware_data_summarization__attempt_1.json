@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C04__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation accurately reflects the lack of measurable data across all dimensions, which is supported by the evidence provided. However, it does not fully address the implications of this lack of data in terms of specific lifestyle dimensions."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation mentions null values for lifestyle metrics, which is correct based on the evidence. However, it lacks specific numerical comparisons or insights that could have been drawn from the available data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation covers the core outputs required, but it does not highlight the largest dimension gaps as explicitly as required, which affects its completeness."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is relevant to the task of comparing lifestyle dimensions, but it could have been more focused on the actionable question regarding which dimensions differ most."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or supported based on the evidence, making this metric not applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear but could benefit from more structured presentation and clearer identification of the gaps in data."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language or harmful recommendations, and it appropriately frames the lack of data without assigning blame."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Both students exhibit null values for all lifestyle metrics.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "lifestyle_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing that all lifestyle metrics for both students are null."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The lack of data on lifestyle dimensions may hinder the ability to provide targeted support and interventions for students.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "lifestyle_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is reasonable, the evidence does not provide specific details on how the lack of data directly impacts support and interventions."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Implement a structured data collection process for lifestyle metrics.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "unsupported",
+      "impact_type": "local_detail",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation lacks direct support from the evidence provided, as it does not specify how this action would address the identified gaps."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation addresses the task of comparing lifestyle dimensions but falls short in fully meeting the completeness and actionability requirements. While it accurately reflects the lack of data, it does not sufficiently highlight the largest gaps or provide actionable insights based on the evidence. The clarity of the explanation is adequate but could be improved with better structure.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 10. All rows were included in the explanation, and the retrieval log was not applicable. The explanation utilized the complete dataset for analysis."
+}

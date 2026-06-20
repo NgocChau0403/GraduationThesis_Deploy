@@ -1,0 +1,107 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-S06__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of consistent late submissions and the punctuality rate, aligning well with the provided data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The average submission delay of 3.25 days and punctuality rate of 0 are correctly stated, with no discrepancies in the numerical data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including average delay, punctuality rate, and systematic late submissions, but could provide more detail on the implications."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the actionable question regarding the student's submission patterns and their impact on scores."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, suggesting practical steps to improve the student's punctuality."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and does not attribute late submissions to personal failings, adhering to the safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student exhibits a consistent pattern of late submissions across multiple assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence shows multiple late submissions, confirming the claim."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The average submission delay is 3.25 days.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average delay is explicitly stated in the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The punctuality rate is 0.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence confirms that the punctuality rate is indeed 0."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The student has passed all assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence indicates that the student has passed all assessments despite late submissions."
+    },
+    {
+      "claim_id": "C05",
+      "claim_text": "Recommendations include implementing deadline reminders.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "structured_payload"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendations are clearly stated in the explanation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task requirements, providing a clear summary of the student's submission patterns and actionable recommendations. The claims made are well-supported by the evidence, with only minor clarity issues.",
+  "evidence_usage_notes": "The evidence access mode is 'direct_embedding', with a full result row count of 5. All relevant data was utilized to support the claims made in the explanation."
+}

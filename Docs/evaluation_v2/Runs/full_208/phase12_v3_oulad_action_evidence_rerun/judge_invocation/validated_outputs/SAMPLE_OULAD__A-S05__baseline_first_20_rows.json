@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-S05__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, highlighting the lower average scores in CMA 3 and CMA 8, which aligns with the evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The average scores mentioned (87 for CMA 3 and 83 for CMA 8) are correct and supported by the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, but could provide more detail on the implications of the scores."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of identifying competency gaps and recommending support."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations for using flashcards are actionable and relevant to the identified gaps."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "CMA 3 has the lowest average score of 87.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "competency_scores"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing CMA 3's average score."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "CMA 8 has the lowest average score of 83.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "competency_scores"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing CMA 8's average score."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Students may benefit from additional support in CMA 3 and CMA 8.",
+      "claim_type": "interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "competency_scores"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is logically derived from the identified gaps in scores."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies the competency gaps and provides actionable recommendations based on the data. It is mostly clear and relevant to the task, with minor areas for improvement in completeness and clarity.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 5. All relevant data was available and used to support the claims made in the explanation.",
+  "invalid_reason": null
+}

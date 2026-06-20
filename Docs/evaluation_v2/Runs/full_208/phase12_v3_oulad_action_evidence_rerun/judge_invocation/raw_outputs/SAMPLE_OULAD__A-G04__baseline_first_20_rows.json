@@ -1,0 +1,95 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G04__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, highlighting the highest fail rate and comparing it with other assessments."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The fail rates mentioned (50% for assessment '24288', 11.5% for '25345', and 12.1% for '25359') are correctly stated and supported by the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the identification of the assessment with the highest fail rate and the recommendation for a curriculum review."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of analyzing assessment difficulty and provides relevant insights for the instructor audience."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendation to conduct a curriculum review is actionable and relevant given the high fail rate identified."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and frames the fail rates as a signal for review rather than blaming students."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The assessment '24288' has the highest fail rate at 50%.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-G04__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing '24288' with a fail rate of 50%."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Assessments '25345' and '25359' have fail rates of 11.5% and 12.1% respectively.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-G04__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the respective fail rates for these assessments."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The high fail rate in assessment '24288' suggests a need for targeted interventions.",
+      "claim_type": "interpretative",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-G04__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the context of the analysis indicating significant challenges for students."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Conduct a curriculum review for assessment '24288'.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-G04__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This recommendation is actionable and directly follows from the analysis of the fail rates."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of assessing difficulty in assessments, providing clear insights and actionable recommendations based on the data. The claims made are well-supported by the evidence, and the overall clarity and relevance to the target audience are strong.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 112 rows of data. The retrieval log confirmed that all relevant data was available and correctly referenced in the explanation."
+}

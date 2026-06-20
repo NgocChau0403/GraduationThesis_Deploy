@@ -1,0 +1,108 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-G06__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the correlation between resource types and average scores without overstating claims."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented for average scores are correct and consistent with the evidence, particularly the highest score of 78.9 for pages."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, highlighting resource types associated with higher scores and providing recommendations, but could include more detail on lower-scoring resources."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of identifying effective learning activities and provides actionable recommendations for the instructor."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations are clear and actionable, suggesting specific resource types to promote, which aligns with the task's goal."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a negative correlation between Resource Type and Avg Score of Users.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence indicating that as resource types change, average scores tend to decrease."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The resource type 'page' has the highest average score of 78.9.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data showing that 'page' has the highest average score."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Resource types such as 'oucollaborate' and 'oucontent' show lower average scores of 74.67 and 71.46 respectively.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation accurately reflects the lower scores of these resource types as per the evidence."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Encouraging the use of resource types that yield higher average scores may enhance overall student performance.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is a logical conclusion drawn from the analysis and is supported by the evidence."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.2,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.2,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

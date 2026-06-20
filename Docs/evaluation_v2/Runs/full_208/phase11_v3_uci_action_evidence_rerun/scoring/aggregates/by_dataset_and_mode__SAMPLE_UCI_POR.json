@@ -1,0 +1,33 @@
+{
+  "SAMPLE_UCI_POR__baseline_first_20_rows": {
+    "records": 52,
+    "scored_records": 51,
+    "invalid_records": 1,
+    "average_raw_weighted_score": 7.99,
+    "average_final_score_after_caps": 7.96,
+    "verdict_counts": {
+      "excellent": 33,
+      "acceptable": 3,
+      "good": 15
+    },
+    "highest_error_severity_counts": {
+      "none": 50,
+      "major": 2
+    }
+  },
+  "SAMPLE_UCI_POR__task_aware_data_summarization": {
+    "records": 52,
+    "scored_records": 52,
+    "invalid_records": 0,
+    "average_raw_weighted_score": 8.02,
+    "average_final_score_after_caps": 8.02,
+    "verdict_counts": {
+      "excellent": 32,
+      "good": 17,
+      "acceptable": 3
+    },
+    "highest_error_severity_counts": {
+      "none": 52
+    }
+  }
+}

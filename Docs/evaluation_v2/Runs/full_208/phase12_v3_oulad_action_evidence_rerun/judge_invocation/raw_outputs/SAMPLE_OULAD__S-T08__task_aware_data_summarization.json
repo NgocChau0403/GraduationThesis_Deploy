@@ -1,0 +1,82 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T08__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the pattern of late submissions and their impact on scores."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for submission delays and scores are correctly reported and consistent with the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs, but could provide more detail on the implications of punctuality."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of assessing lateness impact on scores, aligning well with the actionable question."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to improving punctuality, though they could be more specific."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and presents the information in a supportive manner."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You have submitted all assessments late, with delays ranging from 2 to 5 days.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_delay_days"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing submission delays of 2 to 5 days."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Your punctuality rate is currently at 0.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "punctuality_rate"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence indicating a punctuality rate of 0."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Late submissions may not directly lower your scores.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is partially supported by the evidence, it lacks a direct correlation between lateness and score reduction."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of assessing the impact of submission lateness on scores. It provides a clear summary of the student's performance, supported by relevant evidence. However, there are minor areas for improvement in clarity and completeness, particularly in elaborating on the implications of punctuality.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 5. All rows were included in the explanation, and the retrieval log was not applicable. The explanation utilized the complete dataset effectively."
+}

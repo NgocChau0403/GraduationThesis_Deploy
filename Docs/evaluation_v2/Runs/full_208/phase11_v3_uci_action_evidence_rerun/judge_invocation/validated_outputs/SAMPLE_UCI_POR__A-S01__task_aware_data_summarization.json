@@ -1,0 +1,95 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-S01__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided about the student, including gender, age, previous attempts, final outcome, average score, engagement score, and at-risk status."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The numerical values presented in the explanation, such as the average score of 36.67 and engagement score of 0, are correct and consistent with the data. However, the average score could be more explicitly contextualized against typical passing thresholds."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core requirement of summarizing the student's profile but lacks some supporting details that could enhance understanding, such as specific recommendations based on the student's profile."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of summarizing the student's profile and current situation, making it relevant to the target audience of instructors and academic advisors."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendations provided are actionable, focusing on improving engagement and study habits. However, they could be more specific in terms of implementation strategies."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could benefit from more concise language to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation avoids stigmatizing language and presents the student's situation in a constructive manner, focusing on support rather than blame."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student is a female aged 18-20.",
+      "claim_type": "fact",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "0c10f4df138d1a4a879ee1ca0e9aa788f9246d0acb4a47b54e5818fcc8b508a8"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data provided in the student profile."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student has an average score of 36.67.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "0c10f4df138d1a4a879ee1ca0e9aa788f9246d0acb4a47b54e5818fcc8b508a8"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average score is accurately reported and matches the data."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The student has an engagement score of 0.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "0c10f4df138d1a4a879ee1ca0e9aa788f9246d0acb4a47b54e5818fcc8b508a8"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The engagement score is correctly stated and supported by the data."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The student has an at-risk score of 2, labeled as 'medium'.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "0c10f4df138d1a4a879ee1ca0e9aa788f9246d0acb4a47b54e5818fcc8b508a8"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data regarding the student's at-risk status."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student's profile, addressing key aspects such as demographics, academic performance, and engagement. While it is generally clear and relevant, there are minor areas for improvement in completeness and specificity of recommendations.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 1. The explanation utilized the complete dataset available for the student profile, ensuring accurate representation of the student's situation."
+}

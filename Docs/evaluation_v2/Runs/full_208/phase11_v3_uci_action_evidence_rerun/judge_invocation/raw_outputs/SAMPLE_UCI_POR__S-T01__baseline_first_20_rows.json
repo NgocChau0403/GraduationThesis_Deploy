@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the observed trends in the data, including the initial struggle, improvement, and plateau in performance."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation align with the data, including scores and thresholds, with no discrepancies."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including trend direction and assessments below thresholds, but could provide more detail on the implications of the plateau."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of scoring trend analysis, addressing the student's performance over time effectively."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were required as the deterministic action evidence indicated that no actions were applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, maintaining a supportive tone."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The performance shows an initial struggle in Assessment 1.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_UCI_POR__S-T01__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing a score of 0 in Assessment 1, which is below the pass threshold."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "There was an improvement in Assessment 2 with a score of 55.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_UCI_POR__S-T01__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data indicating a score of 55 in Assessment 2, which is above the pass threshold."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Scores plateaued in Assessment 3 with a score of 55.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_UCI_POR__S-T01__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing that the score remained at 55 in Assessment 3."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of scoring trend analysis by accurately summarizing the student's performance over time. It identifies key trends, including initial struggles, improvements, and plateaus, while providing relevant insights and recommendations. The clarity and relevance of the explanation are strong, with minor areas for improvement in completeness.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 3. All relevant data was available and utilized in the explanation, ensuring a comprehensive analysis of the student's performance trends.",
+  "invalid_reason": null
+}

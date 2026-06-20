@@ -1,0 +1,47 @@
+{
+  "artifact_type": "llm_judge_v3_deterministic_derived_stat_evidence_v1",
+  "generated_at": "2026-06-20T03:05:28.939Z",
+  "dry_run_mode": "single_review",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G09",
+  "task_name": "Socioeconomic disadvantage impact",
+  "ai_summary_type": "correlation_evidence",
+  "stat_family": "correlation",
+  "coefficient_method": "pearson",
+  "x_column": "disadvantage_score",
+  "y_column": "avg_score",
+  "entity_column": "student_id",
+  "source_full_query_artifact": {
+    "path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G09.json",
+    "sha256": "712c85d5b91756b92383d5ceab9e44e0bba550ea3ddf80d5f234de0deac1c40b",
+    "evidence_id": "SAMPLE_OULAD__A-G09"
+  },
+  "source_judge_input_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_inputs/SAMPLE_OULAD__A-G09__baseline_first_20_rows.json",
+  "derived_stats": [
+    {
+      "dataset_label": "disadvantage_impact",
+      "status": "pass",
+      "reason": null,
+      "row_count": 1998,
+      "valid_pair_count": 1875,
+      "invalid_x_count": 123,
+      "invalid_y_count": 0,
+      "x_mean": 0.268653,
+      "y_mean": 69.51223,
+      "x_variance": 51.8394746667,
+      "y_variance": 838335.1875452038,
+      "covariance": -891.7147897513,
+      "pearson_r": -0.13526543274817163,
+      "pearson_r_rounded_4": -0.1353,
+      "direction": "negative",
+      "strength": "weak",
+      "coefficient_source": "deterministic_recompute_from_full_query_rows",
+      "formula": "sum((x - mean_x) * (y - mean_y)) / sqrt(sum((x - mean_x)^2) * sum((y - mean_y)^2))",
+      "warnings": [
+        "Skipped 123 rows with invalid disadvantage_score."
+      ]
+    }
+  ],
+  "judge_usage_note": "Use this artifact as deterministic support for correlation coefficient claims. It proves derived Pearson r from all valid x/y pairs in the full query result; it does not prove causality or statistical significance.",
+  "artifact_sha256": "aae79f17283e08f42deb8fb595d5c9755e8146e83e06e7c88068361b1469cc82"
+}

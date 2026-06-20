@@ -1,0 +1,80 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G09__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of a negative correlation between Disadvantage Score and Average Score, aligning with the derived statistical evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation correctly identifies the negative correlation and its implications, with no numerical inaccuracies present."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the trend and implications but could provide more detail on specific imd_band groups as required."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task, addressing the needs of academic advisors and administrators regarding disadvantaged students."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations for targeted support programs are actionable and relevant to the identified issues."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation frames socioeconomic factors appropriately without assigning blame, adhering to fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a negative correlation between Disadvantage Score and Average Score.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "A-G09__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The derived statistical evidence shows a Pearson correlation coefficient of -0.135, confirming the negative correlation."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students with higher disadvantage scores may be at risk of lower academic performance.",
+      "claim_type": "interpretative",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is a logical interpretation of the observed negative correlation."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Implement targeted support programs for students with high disadvantage scores.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is directly linked to the identified need for support based on the negative correlation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task by summarizing the negative correlation between disadvantage scores and academic performance, providing actionable recommendations for support. The claims made are well-supported by the evidence, and the overall clarity and relevance to the target audience are strong.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with a full result row count of 1998. The retrieval log confirmed that all relevant data was accessible and utilized in the explanation. The derived statistical evidence was applied to validate the correlation claims made in the explanation.",
+  "invalid_reason": null
+}

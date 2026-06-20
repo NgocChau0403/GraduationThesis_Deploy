@@ -1,0 +1,97 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T07__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the data trends observed in the score series, indicating a moderate negative correlation between assessment order and normalized scores."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The numerical values presented in the explanation are correct, with the highest score of 100 at assessment order 1 and a lower score of 83 at assessment order 8."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation addresses the core outputs required, but it lacks a clear statement of the proportion of missed sessions due to the absence data being null."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing the impact of absences on grades, focusing on the correlation between absence rate and average score."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were triggered as the action evidence was marked as not applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis shows a moderate negative correlation between assessment order and normalized scores.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "8a9b790ebabcf6df78c0ad0b904e88b3dff30f500b488e34a43e484e1b0036b7"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the observed data trends in the score series."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The normalized scores show a downward trend as the assessment order increases.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "8a9b790ebabcf6df78c0ad0b904e88b3dff30f500b488e34a43e484e1b0036b7"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the numerical data provided in the explanation."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Students may need additional support or resources as they progress through assessments.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "unsupported",
+      "impact_type": "local_detail",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim suggests a need for support, it lacks specific evidence from the dataset to substantiate this recommendation."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing core output",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 6.5,
+      "rationale": "The explanation fails to state the proportion of missed sessions, which is a required core output.",
+      "evidence_refs": []
+    }
+  ],
+  "holistic_rationale": "The explanation provides a solid analysis of the correlation between assessment order and normalized scores, but it lacks a critical core output regarding the proportion of missed sessions. The clarity and relevance of the explanation are strong, but the absence of specific evidence for the need for additional support weakens the overall completeness.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 6. All relevant data was available and readable, allowing for a comprehensive evaluation of the explanation.",
+  "invalid_reason": null
+}

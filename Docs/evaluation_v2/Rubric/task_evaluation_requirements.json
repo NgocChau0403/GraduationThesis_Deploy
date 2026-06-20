@@ -2,7 +2,7 @@
   "schema_version": "task_evaluation_requirements_v1",
   "status": "APPROVED_FOR_PILOT",
   "scope_source": "Backend/src/config/taskRegistry.json",
-  "scope_source_sha256": "dbe92c76bb84c63b6a07cab3339f999ab231120c191d105d93cf8fab34958fca",
+  "scope_source_sha256": "32b5225d70ad34e2f84f14fb12073af9a6f07e58a871044553168af477d5877c",
   "materialization_policy": {
     "core": "Non-conditional task deliverables from aiPromptHint; actionableQuestion is fallback only.",
     "supporting": "Conditional deliverables such as when available or if a stated condition applies.",
@@ -738,25 +738,30 @@
       "required_core_outputs": [
         {
           "requirement_id": "S-T13-CORE-01",
-          "description": "Synthesise all [FE] risk signals into 3–5 prioritised actions.",
-          "source_field": "aiPromptHint"
+          "description": "Explain the supported actions already generated or exposed by the action_synthesis rule contract; do not require the explanation model to invent actions outside the returned or triggered action set.",
+          "source_field": "human_review_override"
         },
         {
           "requirement_id": "S-T13-CORE-02",
-          "description": "Reference which FE feature triggered each item.",
-          "source_field": "aiPromptHint"
+          "description": "For each supported action that is present, explain the triggering FE feature, threshold or rule evidence when available.",
+          "source_field": "human_review_override"
         }
       ],
       "required_supporting_outputs": [],
       "evaluation_constraints": [
         {
           "constraint_id": "S-T13-CONSTRAINT-01",
-          "description": "Do not include actions that reference signals not present in returned data.",
+          "description": "Do not include or endorse actions that reference signals not present in returned data or the supplied action-rule contract.",
           "source_field": "human_review_override"
         },
         {
           "constraint_id": "S-T13-CONSTRAINT-02",
-          "description": "Do not invent risk context, urgency, or priority unsupported by returned feature-engineered signals.",
+          "description": "Do not invent risk context, urgency, priority, or additional actions unsupported by returned feature-engineered signals or supported action evidence.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "S-T13-CONSTRAINT-03",
+          "description": "If no supported action is returned or triggered, saying no supported action is available is acceptable; penalize that only when deterministic action evidence shows at least one supported action exists.",
           "source_field": "human_review_override"
         }
       ],
@@ -1146,17 +1151,33 @@
       "required_core_outputs": [
         {
           "requirement_id": "A-S04-CORE-01",
-          "description": "For each triggered flag, state the exact value and why it crosses the threshold.",
-          "source_field": "aiPromptHint"
+          "description": "Explain the returned student risk flags and identify which flags are triggered.",
+          "source_field": "human_review_override"
         },
         {
           "requirement_id": "A-S04-CORE-02",
-          "description": "Prioritise the top 2 for immediate action.",
-          "source_field": "aiPromptHint"
+          "description": "For each triggered flag, explain the exact value, threshold, severity, description, and existing recommended_action when those fields are returned.",
+          "source_field": "human_review_override"
         }
       ],
       "required_supporting_outputs": [],
-      "evaluation_constraints": [],
+      "evaluation_constraints": [
+        {
+          "constraint_id": "A-S04-CONSTRAINT-01",
+          "description": "Do not require the explanation model to create new recommendations; this task already returns recommended_action fields for flags.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-S04-CONSTRAINT-02",
+          "description": "If no flags are triggered, state that explicitly and keep non-triggered flags brief.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-S04-CONSTRAINT-03",
+          "description": "Do not invent risk signals, priorities, or actions that are not present in returned flags.",
+          "source_field": "human_review_override"
+        }
+      ],
       "safety_fairness_applicability": "applicable",
       "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception.",
       "review_status": "approved_for_pilot"
@@ -1324,25 +1345,30 @@
       "required_core_outputs": [
         {
           "requirement_id": "A-S08-CORE-01",
-          "description": "Synthesise all [FE] signals into 3–5 admin actions ranked by urgency.",
-          "source_field": "aiPromptHint"
+          "description": "Explain the supported admin actions already generated or exposed by the action_synthesis rule contract and rank/describe them by urgency when priority evidence is supplied.",
+          "source_field": "human_review_override"
         },
         {
           "requirement_id": "A-S08-CORE-02",
-          "description": "Specify who should act (tutor / admin / counsellor) and by when.",
-          "source_field": "aiPromptHint"
+          "description": "For each supported admin action that is present, specify who should act and by when when owner/time-horizon evidence is supplied.",
+          "source_field": "human_review_override"
         }
       ],
       "required_supporting_outputs": [],
       "evaluation_constraints": [
         {
           "constraint_id": "A-S08-CONSTRAINT-01",
-          "description": "Every proposed action and urgency level must reference returned feature-engineered signals.",
+          "description": "Every explained or proposed action and urgency level must reference returned feature-engineered signals or the supplied action-rule contract.",
           "source_field": "human_review_override"
         },
         {
           "constraint_id": "A-S08-CONSTRAINT-02",
-          "description": "Do not invent urgency that is not supported by returned signals.",
+          "description": "Do not invent urgency, owner, time horizon, or additional actions that are not supported by returned signals or supported action evidence.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-S08-CONSTRAINT-03",
+          "description": "If no supported admin action is returned or triggered, saying no supported action is available is acceptable; penalize that only when deterministic action evidence shows at least one supported action exists.",
           "source_field": "human_review_override"
         }
       ],
@@ -2352,7 +2378,7 @@
       "required_core_outputs": [
         {
           "requirement_id": "A-G16-CORE-01",
-          "description": "Synthesise cohort feature-engineered signals into 3–5 admin actions.",
+          "description": "Explain the supported cohort-level admin actions already generated or exposed by the action_synthesis rule contract; do not require invented actions outside the returned or triggered action set.",
           "source_field": "human_review_override"
         }
       ],
@@ -2360,12 +2386,17 @@
       "evaluation_constraints": [
         {
           "constraint_id": "A-G16-CONSTRAINT-01",
-          "description": "Every recommended action must be grounded in returned cohort feature-engineered signals.",
+          "description": "Every explained or recommended action must be grounded in returned cohort feature-engineered signals or the supplied action-rule contract.",
           "source_field": "human_review_override"
         },
         {
           "constraint_id": "A-G16-CONSTRAINT-02",
-          "description": "Do not invent urgency or priority without supporting returned data.",
+          "description": "Do not invent urgency, priority, or additional actions without supporting returned data or supported action evidence.",
+          "source_field": "human_review_override"
+        },
+        {
+          "constraint_id": "A-G16-CONSTRAINT-03",
+          "description": "If no supported cohort-level action is returned or triggered, saying no supported action is available is acceptable; penalize that only when deterministic action evidence shows at least one supported action exists.",
           "source_field": "human_review_override"
         }
       ],

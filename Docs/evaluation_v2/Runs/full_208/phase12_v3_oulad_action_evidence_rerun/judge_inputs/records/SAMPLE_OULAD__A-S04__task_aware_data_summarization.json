@@ -1,0 +1,258 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_OULAD__A-S04__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-S04",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v3_action_evidence_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_action_evidence_calibrated",
+  "task_context": {
+    "task_name": "Student risk flag breakdown",
+    "scope": "1 student",
+    "actionable_question": "Which specific risk factors should admin address for this student?",
+    "target_audience": "instructor, academic_advisor",
+    "ai_summary_type": "risk_flags",
+    "ai_prompt_hint": "For each triggered flag, state the exact value and why it crosses the threshold. Prioritise the top 2 for immediate action.",
+    "query_labels": [
+      "risk_flags"
+    ],
+    "explanation_strategy": "risk"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "at_risk_score [FE cross]",
+      "at_risk_label [FE cross]",
+      "avg_score [FE cross]",
+      "engagement_score [FE cross]",
+      "punctuality_rate [FE cross]",
+      "performance_trend [FE cross]",
+      "previous_attempt_count"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "flag_name",
+        "flag_value",
+        "threshold",
+        "triggered"
+      ],
+      "optional_columns": [
+        "severity",
+        "flag_description",
+        "recommended_action",
+        "support_category"
+      ]
+    },
+    "query_labels": [
+      "risk_flags"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The checklist prioritizes Low Punctuality and Negative Trend because their current values cross the risk thresholds; highest severity is medium because both flags indicate significant areas of concern in student performance and engagement.\n\nInsights: Why Low Punctuality is Active: The current submission punctuality value is 0, which is below the expected threshold of 0.7. This triggered the flag as it indicates a consistent pattern of late submissions, mapping to a medium severity level due to its potential impact on overall academic performance. This explains why that visible checklist flag is surfaced in the card. | Why Negative Trend is Active: The current score trend value is -0.71875, which indicates a downward trend across assessments, triggering the flag. This medium severity reflects the urgency of addressing declining performance before it further impacts the student's academic standing. This explains why that visible checklist flag is surfaced in the card.",
+    "structured_payload": {
+      "task_id": "A-S04",
+      "execution_id": "exec_1781847835477_0935da99",
+      "explanation": {
+        "summary": "The checklist prioritizes Low Punctuality and Negative Trend because their current values cross the risk thresholds; highest severity is medium because both flags indicate significant areas of concern in student performance and engagement.",
+        "insights": [
+          {
+            "title": "Why Low Punctuality is Active",
+            "description": "The current submission punctuality value is 0, which is below the expected threshold of 0.7. This triggered the flag as it indicates a consistent pattern of late submissions, mapping to a medium severity level due to its potential impact on overall academic performance. This explains why that visible checklist flag is surfaced in the card.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "flag_low_punctuality",
+                "value": 0,
+                "comparison": "down_from_previous",
+                "delta": null,
+                "context": "Submission punctuality is significantly below the threshold."
+              }
+            ]
+          },
+          {
+            "title": "Why Negative Trend is Active",
+            "description": "The current score trend value is -0.71875, which indicates a downward trend across assessments, triggering the flag. This medium severity reflects the urgency of addressing declining performance before it further impacts the student's academic standing. This explains why that visible checklist flag is surfaced in the card.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "flag_neg_trend",
+                "value": -0.7187500000000001,
+                "comparison": "down_from_previous",
+                "delta": null,
+                "context": "Scores are trending downward, indicating a need for monitoring."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [],
+        "recommendations": [],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "Data quality is consistent and reliable based on the current dataset.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "risk",
+      "explanation_type": "risk",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "full_rows_due_to_small_result",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 4,
+      "included_row_count": 4,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": true,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "risk_flags",
+          "row_count": 4,
+          "included_row_count": 4
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 5740,
+        "token_usage": {
+          "prompt_tokens": 1420,
+          "completion_tokens": 394,
+          "total_tokens": 1814
+        },
+        "strategy": "risk",
+        "granularity": "semester",
+        "cost_usd": 0.000449
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-S04__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "394eccdf6d509fa0c92b1d76d11f9cb4896a6bb9cd54c505bcdbbff5aa9a960d",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1420,
+        "completion_tokens": 394,
+        "total_tokens": 1814
+      },
+      "latency_ms": 5746,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 4,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "risk_flags",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S04.json",
+        "artifact_sha256": "56234f92505f3fe716ac63c7a562bcc89cd336c17f088068ec2071db7d685538",
+        "row_count": 4,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 4,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "risk_flags": 4
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-S04-CORE-01",
+        "description": "For each triggered flag, state the exact value and why it crosses the threshold."
+      },
+      {
+        "requirement_id": "A-S04-CORE-02",
+        "description": "Prioritise the top 2 for immediate action."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  },
+  "derived_stat_evidence": [],
+  "action_evidence": {
+    "applicable": true,
+    "source_type": "returned_recommended_action_fields",
+    "rule_set_id": null,
+    "rule_version": null,
+    "evaluation_status": "complete",
+    "supported_action_count": 2,
+    "supported_actions": [
+      {
+        "action_id": "A-S04__flag_low_punctuality",
+        "action_text": "Use deadline reminders and submit drafts earlier to reduce late-submission risk.",
+        "priority": "medium",
+        "owner": null,
+        "time_horizon_days": null,
+        "support_category": "time_management",
+        "source_type": "returned_query_row",
+        "source_rule_id": null,
+        "trigger_evidence": {
+          "dataset_label": "risk_flags",
+          "row_index": 2,
+          "flag_name": "flag_low_punctuality",
+          "flag_value": 0,
+          "threshold": "0.7",
+          "triggered": true
+        },
+        "claim_limits": []
+      },
+      {
+        "action_id": "A-S04__flag_neg_trend",
+        "action_text": "Compare recent feedback with earlier stronger work and intervene before the next assessment.",
+        "priority": "medium",
+        "owner": null,
+        "time_horizon_days": null,
+        "support_category": "trend_monitoring",
+        "source_type": "returned_query_row",
+        "source_rule_id": null,
+        "trigger_evidence": {
+          "dataset_label": "risk_flags",
+          "row_index": 3,
+          "flag_name": "flag_neg_trend",
+          "flag_value": -0.7187500000000001,
+          "threshold": "0",
+          "triggered": true
+        },
+        "claim_limits": []
+      }
+    ],
+    "rule_evaluations": [],
+    "conflict_evaluations": []
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of low engagement levels among students, aligning well with the provided data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The engagement score of 0.0018 is correctly reported, but the explanation could clarify the implications of this score more explicitly."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "All required core outputs are addressed, including defining the low engagement threshold, listing students below it, and recommending actions."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation is highly relevant to the task of identifying low-engagement students and recommending outreach actions."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendation to initiate outreach is actionable and well-supported by the analysis of the data."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could benefit from more concise language to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation maintains a focus on educational support without stigmatizing language, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A total of 1544 students have been identified with an engagement score below 0.002.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G01.json"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the evidence showing 1544 students with low engagement scores."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Most students in this group have only one active day and a maximum of two clicks.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G01.json"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "While the claim is generally accurate, the specific numbers regarding active days and clicks were not explicitly detailed in the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Direct communication can help identify barriers to engagement and provide necessary support to re-engage these students.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This recommendation logically follows from the analysis of low engagement and is a common practice in educational outreach."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies a significant group of students with low engagement and provides actionable recommendations. While it is mostly clear and complete, minor improvements in clarity and numerical detail could enhance the overall quality.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with a full result row count of 1544. The retrieval log confirmed that all relevant data was accessible and utilized in the explanation.",
+  "invalid_reason": null
+}

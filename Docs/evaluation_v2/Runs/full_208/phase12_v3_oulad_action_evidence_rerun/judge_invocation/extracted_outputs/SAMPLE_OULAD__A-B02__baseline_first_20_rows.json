@@ -1,0 +1,95 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-B02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, including the percentages of students who withdrew, passed, failed, and achieved distinction."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation match the data from the evidence, with correct percentages for each outcome."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs, including counts and proportions, but could provide more detail on implications."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the actionable question regarding student outcomes, making it highly relevant to the task."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were required in the task context, and the explanation does not propose new actions."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "43.1% of students withdrew from the course.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "outcome_counts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing that 1077 out of 2500 students withdrew, which corresponds to 43.1%."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "28.4% passed the course.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "outcome_counts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing that 709 out of 2500 students passed, which corresponds to 28.4%."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "16.3% failed the course.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "outcome_counts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing that 406 out of 2500 students failed, which corresponds to 16.3%."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "12.2% achieved a distinction.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "outcome_counts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing that 306 out of 2500 students achieved a distinction, which corresponds to 12.2%."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the distribution of student outcomes, providing accurate numerical data and relevant insights. It meets the core requirements of the task while maintaining clarity and relevance. The absence of errors and the high scores across metrics indicate a strong performance overall.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 4. All claims were verified against the provided outcome_counts dataset, confirming the accuracy of the explanation."
+}

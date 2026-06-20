@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-S08__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, linking the actions to the student's at-risk score, punctuality issues, and performance trend."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Numerical values such as the at-risk score of 3 and performance trend of -0.71875 are correctly stated and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation includes the necessary core outputs, but could have provided more detail on the specific actions recommended."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of recommending interventions for the student based on their performance metrics."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The actions proposed are actionable and clearly specify who should act and the urgency of the actions."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and presents the student's situation in a fair manner, although it acknowledges conflicting evidence."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student has a high at-risk score of 3, indicating significant academic concerns that necessitate immediate intervention.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.at_risk_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing the at-risk score of 3."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student's punctuality rate is recorded at 0, suggesting a complete lack of timely submissions.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.punctuality_rate"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing a punctuality rate of 0."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The student's performance trend shows a negative slope of -0.71875, indicating a decline in academic performance.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.performance_trend"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing a performance trend of -0.71875."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively synthesizes the student's academic risks and submission challenges, providing a clear and actionable set of recommendations based on the evidence. The claims made are well-supported by the data, and the overall clarity and relevance to the task are strong, though there is room for improvement in conciseness.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 1. The explanation utilized all available evidence from the embedded dataset, confirming the accuracy of the claims made."
+}

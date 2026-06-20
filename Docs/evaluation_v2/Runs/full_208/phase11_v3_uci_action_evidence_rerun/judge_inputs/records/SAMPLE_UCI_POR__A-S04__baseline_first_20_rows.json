@@ -1,0 +1,265 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_UCI_POR__A-S04__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-S04",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v3_action_evidence_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_action_evidence_calibrated",
+  "task_context": {
+    "task_name": "Student risk flag breakdown",
+    "scope": "1 student",
+    "actionable_question": "Which specific risk factors should admin address for this student?",
+    "target_audience": "instructor, academic_advisor",
+    "ai_summary_type": "risk_flags",
+    "ai_prompt_hint": "For each triggered flag, state the exact value and why it crosses the threshold. Prioritise the top 2 for immediate action.",
+    "query_labels": [
+      "risk_flags"
+    ],
+    "explanation_strategy": "risk"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "at_risk_score [FE cross]",
+      "at_risk_label [FE cross]",
+      "avg_score [FE cross]",
+      "engagement_score [FE cross]",
+      "punctuality_rate [FE cross]",
+      "performance_trend [FE cross]",
+      "previous_attempt_count"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "flag_name",
+        "flag_value",
+        "threshold",
+        "triggered"
+      ],
+      "optional_columns": [
+        "severity",
+        "flag_description",
+        "recommended_action",
+        "support_category"
+      ]
+    },
+    "query_labels": [
+      "risk_flags"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis indicates that the student is at risk due to low academic performance and low punctuality in submissions. These factors suggest a need for immediate intervention to support the student's learning trajectory.\n\nInsights: Low Academic Performance: The student's average score is 36.67, which is below the pass threshold of 40, indicating a significant risk in academic performance. | Low Punctuality: The student's submission punctuality is at 0, which is below the expected threshold of 0.7, indicating a medium risk in time management.\n\nEducational implications: Immediate academic support is necessary to address low scores and improve submission habits.\n\nRecommendations: high - Review the weakest assessment topics and schedule tutor support before the next assessment. - Targeted academic support can help improve the student's understanding and performance in critical areas. | medium - Use deadline reminders and submit drafts earlier to reduce late-submission risk. - Improving time management skills can enhance punctuality and overall academic performance.",
+    "structured_payload": {
+      "task_id": "A-S04",
+      "execution_id": "exec_1781847238058_6684c265",
+      "explanation": {
+        "summary": "The analysis indicates that the student is at risk due to low academic performance and low punctuality in submissions. These factors suggest a need for immediate intervention to support the student's learning trajectory.",
+        "insights": [
+          {
+            "title": "Low Academic Performance",
+            "description": "The student's average score is 36.67, which is below the pass threshold of 40, indicating a significant risk in academic performance.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "flag_low_score",
+                "value": 36.666666666666664,
+                "comparison": "baseline",
+                "delta": -3.333333333333336,
+                "context": "Average score below passing threshold"
+              }
+            ]
+          },
+          {
+            "title": "Low Punctuality",
+            "description": "The student's submission punctuality is at 0, which is below the expected threshold of 0.7, indicating a medium risk in time management.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "flag_low_punctuality",
+                "value": 0,
+                "comparison": "baseline",
+                "delta": -0.7,
+                "context": "Submission punctuality below expected threshold"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Immediate academic support is necessary to address low scores and improve submission habits."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Review the weakest assessment topics and schedule tutor support before the next assessment.",
+            "rationale": "Targeted academic support can help improve the student's understanding and performance in critical areas."
+          },
+          {
+            "priority": "medium",
+            "action": "Use deadline reminders and submit drafts earlier to reduce late-submission risk.",
+            "rationale": "Improving time management skills can enhance punctuality and overall academic performance."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "Data is complete and accurately reflects the student's current risk indicators.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "risk",
+      "explanation_type": "risk",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 9440,
+        "token_usage": {
+          "prompt_tokens": 890,
+          "completion_tokens": 462,
+          "total_tokens": 1352
+        },
+        "strategy": "risk",
+        "granularity": "semester",
+        "cost_usd": 0.000411
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-S04__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "fba84f3a26dc81ad40ec6d59aba47dd7900094d49e35e6649f0026a821f5e7f5",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 890,
+        "completion_tokens": 462,
+        "total_tokens": 1352
+      },
+      "latency_ms": 9446,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 4,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "risk_flags",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S04.json",
+        "artifact_sha256": "c06bd7d82ba2e9b844a13c63392929a9759f108eb64ee2d323f7be509a59ee53",
+        "row_count": 4,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 4,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "risk_flags": 4
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-S04-CORE-01",
+        "description": "For each triggered flag, state the exact value and why it crosses the threshold."
+      },
+      {
+        "requirement_id": "A-S04-CORE-02",
+        "description": "Prioritise the top 2 for immediate action."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  },
+  "derived_stat_evidence": [],
+  "action_evidence": {
+    "applicable": true,
+    "source_type": "returned_recommended_action_fields",
+    "rule_set_id": null,
+    "rule_version": null,
+    "evaluation_status": "complete",
+    "supported_action_count": 2,
+    "supported_actions": [
+      {
+        "action_id": "A-S04__flag_low_score",
+        "action_text": "Review the weakest assessment topics and schedule tutor support before the next assessment.",
+        "priority": "high",
+        "owner": null,
+        "time_horizon_days": null,
+        "support_category": "academic_performance",
+        "source_type": "returned_query_row",
+        "source_rule_id": null,
+        "trigger_evidence": {
+          "dataset_label": "risk_flags",
+          "row_index": 0,
+          "flag_name": "flag_low_score",
+          "flag_value": 36.666666666666664,
+          "threshold": "40",
+          "triggered": true
+        },
+        "claim_limits": []
+      },
+      {
+        "action_id": "A-S04__flag_low_punctuality",
+        "action_text": "Use deadline reminders and submit drafts earlier to reduce late-submission risk.",
+        "priority": "medium",
+        "owner": null,
+        "time_horizon_days": null,
+        "support_category": "time_management",
+        "source_type": "returned_query_row",
+        "source_rule_id": null,
+        "trigger_evidence": {
+          "dataset_label": "risk_flags",
+          "row_index": 2,
+          "flag_name": "flag_low_punctuality",
+          "flag_value": 0,
+          "threshold": "0.7",
+          "triggered": true
+        },
+        "claim_limits": []
+      }
+    ],
+    "rule_evaluations": [],
+    "conflict_evaluations": []
+  }
+}

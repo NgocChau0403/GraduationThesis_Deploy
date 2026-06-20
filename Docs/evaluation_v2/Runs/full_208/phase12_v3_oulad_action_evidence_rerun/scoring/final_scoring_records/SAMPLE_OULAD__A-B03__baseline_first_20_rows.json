@@ -1,0 +1,108 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-B03__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the engagement distribution data, highlighting the high percentage of students in the 'very low' engagement category."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as 69.7% for 'very low' engagement, are correct and supported by the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the proportions of low, medium, and high effort students, but could provide more detail on the implications of these findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of describing engagement distribution and addressing the actionable question posed."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to improving student engagement, though more specific strategies could enhance this further."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, but some sections could be more concise to improve readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "69.7% of students fall into the 'very low' study effort level.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data showing that 69.7% of students are categorized as 'very low' in study effort."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Only 5.1% of students are in the 'medium' effort category.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data indicating that 5.1% of students are categorized as 'medium' in study effort."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "A mere 0.5% of students are in the 'high' category.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_distribution"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing that only 0.5% of students are categorized as 'high' in study effort."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The high percentage of students in the 'very low' engagement category suggests a need for targeted interventions.",
+      "claim_type": "interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This interpretation is valid based on the data presented and aligns with the educational implications discussed."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.3,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.3,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

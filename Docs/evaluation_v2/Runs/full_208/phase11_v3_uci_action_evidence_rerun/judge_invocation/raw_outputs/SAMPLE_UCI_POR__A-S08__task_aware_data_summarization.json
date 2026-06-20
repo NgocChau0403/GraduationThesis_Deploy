@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-S08__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence regarding the student's low engagement score and the recommended action to address it."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented, such as the engagement score of 0.0, are correct and align with the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation includes the core outputs required, but it lacks a detailed breakdown of urgency levels for the proposed action."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of recommending actions for the student based on their engagement score."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommended action is clear and actionable, specifying who should act and the timeframe."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some phrasing could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language and appropriately addresses the student's situation."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The action plan focuses on addressing potential engagement barriers for the student.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence indicating a low engagement score."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student support team is tasked with contacting the student to identify barriers.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "staff_check_engagement_barriers"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the deterministic action evidence that specifies the action to be taken."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The student's engagement score is recorded at 0.0.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence showing the engagement score."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively synthesizes the necessary actions based on the student's low engagement score, providing a clear and actionable plan. While it meets most requirements, it could improve in completeness by detailing urgency levels for the proposed actions.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 1. The explanation utilized the complete dataset available, ensuring that all relevant information was considered in the action synthesis.",
+  "invalid_reason": null
+}

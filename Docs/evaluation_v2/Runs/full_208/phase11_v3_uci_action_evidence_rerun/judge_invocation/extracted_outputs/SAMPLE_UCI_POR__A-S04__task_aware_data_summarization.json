@@ -1,0 +1,81 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-S04__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the risk flags and their respective values, thresholds, and severity levels based on the provided evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation (e.g., average score of 36.67 and punctuality of 0) are correct and align with the data from the query results."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation addresses both required core outputs, detailing the values and reasons for the triggered flags, but could further elaborate on the implications of the flags."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation is highly relevant to the task of identifying risk factors for the student, directly addressing the actionable question posed."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation provides insights into the risk factors but does not explicitly recommend actions, which could enhance its actionability."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from improved structure to enhance readability and comprehension."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The average score is 36.67, which is below the pass threshold of 40.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "risk_flags"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the average score and the threshold."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Submission punctuality is at 0, which is below the expected threshold of 0.7.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "risk_flags"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing the punctuality value and the threshold."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The checklist prioritizes Low Score and Low Punctuality because their current values cross the respective risk thresholds.",
+      "claim_type": "interpretative",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the explanation's summary, which aligns with the risk flags triggered."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of identifying risk factors for a student by accurately summarizing the relevant data and providing insights into the triggered risk flags. While it is mostly clear and actionable, there is room for improvement in structure and explicit recommendations.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 4. All rows were included in the explanation, and the retrieval log was not applicable. The explanation utilized the complete dataset for accurate claims."
+}

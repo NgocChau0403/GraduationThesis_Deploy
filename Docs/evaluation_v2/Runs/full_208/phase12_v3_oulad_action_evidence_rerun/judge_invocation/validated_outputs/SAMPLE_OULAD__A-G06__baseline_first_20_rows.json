@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G06__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the correlation between resource types and average scores. However, it slightly overstates the negative correlation without sufficient evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The numerical values presented for average scores are correct and align with the evidence. The explanation correctly identifies the highest and lowest scoring resource types."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs required, but it lacks a clear recommendation for promoting the identified high-performing resource types."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of identifying effective learning activities and provides actionable insights for the target audience."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendations provided are actionable, but the explanation could benefit from more specific strategies for promoting the high-performing resource types."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear, but some sections could be more concise and structured to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a negative correlation between Resource Type and Avg Score of Users.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "unsupported",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The claim of a negative correlation is not supported by the evidence provided, which does not explicitly state this relationship."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The 'page' resource type has the highest average score of 78.9.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the evidence, which shows that the 'page' resource type has the highest average score."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Resource types such as 'quiz' and 'homepage' have the lowest average scores of 70.28 and 70.22 respectively.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the evidence, which confirms the average scores for these resource types."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation provides a solid overview of the effectiveness of different resource types based on average scores. While it successfully identifies high and low performers, it lacks sufficient evidence to support the claim of a negative correlation. The actionable recommendations are relevant but could be more specific.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 9. All rows were accessible and relevant to the claims made in the explanation.",
+  "invalid_reason": null
+}

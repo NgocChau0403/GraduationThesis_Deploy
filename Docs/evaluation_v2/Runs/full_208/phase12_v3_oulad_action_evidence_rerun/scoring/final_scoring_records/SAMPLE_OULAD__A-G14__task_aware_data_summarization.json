@@ -1,0 +1,110 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-G14__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the trends observed in the data, particularly the significant drop in engagement metrics for the Withdrawn group."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Most numerical claims are correct, but the explanation could clarify the context of the peak engagement in week 35, which may mislead about the overall trend."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation identifies the core outputs but lacks a detailed comparison with passing students, which is a requirement."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing early withdrawal signals and provides actionable insights for the target audience."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or supported in the deterministic action evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from improved structure and clarity in presenting the insights."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language or harmful recommendations, but it does note the need for caution regarding low student counts."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The trend for the Withdrawn group shows a significant decline in engagement.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "withdrawal_signal_trend"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the observed data showing a drop in average clicks."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Early detection of students at risk of withdrawal can be identified around week 32.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "withdrawal_signal_trend"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The data indicates a significant drop in engagement metrics at week 32, supporting this claim."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The highest engagement for the Withdrawn group occurred in week 35 with an average of 323.75 clicks.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "withdrawal_signal_trend"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data showing peak engagement in week 35."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "3 Withdrawn points have student_count below 10; avoid over-weighting these weeks.",
+      "claim_type": "incidental",
+      "claim_scope": "incidental",
+      "support_status": "supported",
+      "evidence_refs": [
+        "withdrawal_signal_trend"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data indicating low student counts in certain weeks."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.5,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.5,
+  "verdict": "good",
+  "invalid_reason": null
+}

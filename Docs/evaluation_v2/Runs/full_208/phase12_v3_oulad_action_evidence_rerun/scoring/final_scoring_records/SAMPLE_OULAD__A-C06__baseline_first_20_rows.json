@@ -1,0 +1,122 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-C06__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, highlighting the disparity in resource usage between the two students."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as total clicks and resource types used, are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, but could provide more detail on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of comparing resource usage between the two students, making it highly relevant."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the context of improving student engagement."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation maintains a fair tone and does not stigmatize either student, addressing the safety and fairness considerations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "SAMPLE_OULAD_STU_100788 demonstrates a more strategic and diversified approach to resource engagement compared to SAMPLE_OULAD_STU_101700.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_100788",
+        "SAMPLE_OULAD_STU_101700"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing the total clicks and resource types used by both students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "SAMPLE_OULAD_STU_100788 has a total of 1261 clicks across various resource types.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_100788"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence showing the total clicks for SAMPLE_OULAD_STU_100788."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "SAMPLE_OULAD_STU_101700 has zero clicks, suggesting a lack of engagement with available resources.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_101700"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence confirms that SAMPLE_OULAD_STU_101700 has no recorded clicks, supporting this claim."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "SAMPLE_OULAD_STU_100788 utilized 9 different resource types.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_100788"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence shows that SAMPLE_OULAD_STU_100788 used 9 resource types, supporting this claim."
+    },
+    {
+      "claim_id": "C05",
+      "claim_text": "The lack of resource engagement by SAMPLE_OULAD_STU_101700 may hinder their learning outcomes.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is reasonable, it lacks direct evidence linking the lack of engagement to specific learning outcomes."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.1,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.1,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

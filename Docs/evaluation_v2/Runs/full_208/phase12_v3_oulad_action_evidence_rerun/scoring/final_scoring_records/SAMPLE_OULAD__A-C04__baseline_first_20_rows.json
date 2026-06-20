@@ -1,0 +1,99 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-C04__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation accurately reflects the lack of measurable data across all dimensions, but it could have provided more specific details about the dimensions being compared."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical values were present in the explanation due to the absence of measurable data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation addresses the core outputs but lacks specific details on the largest dimension gaps, which were required."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is relevant to the task of comparing lifestyle dimensions, but it does not fully address the actionable question regarding differences."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendation to implement a structured lifestyle assessment tool is actionable and relevant to the context."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear but could benefit from more structured presentation and specific examples."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain stigmatizing language or harmful recommendations, maintaining a fair approach."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The comparison of lifestyle dimensions reveals a lack of measurable data across all dimensions.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-C04.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation accurately reflects the evidence of no measurable data."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Both students exhibit similar gaps in lifestyle context, with no discernible differences in their scores.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "unsupported",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-C04.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim about similar gaps is unsupported as the evidence does not provide comparative scores."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The absence of data in lifestyle dimensions suggests that students may not be engaging in self-assessment.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-C04.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This interpretation aligns with the evidence of missing data."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 6.44,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 6.44,
+  "verdict": "acceptable",
+  "invalid_reason": null
+}

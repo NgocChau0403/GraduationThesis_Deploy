@@ -1,0 +1,96 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T03__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the student's performance compared to the cohort, using the provided metrics and context."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "All numerical values presented in the explanation are correct and align with the evidence provided."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs, but could provide more detail on the implications of the metrics."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the task of peer comparison and is relevant to the target audience."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the student's situation, encouraging improvement."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation avoids stigmatizing language and presents the information in a constructive manner."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You are currently performing below the cohort benchmark in both average score and engagement.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "peer_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the provided metrics showing the student's average score and engagement percentile."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Your average score is significantly lower than the cohort benchmark.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "peer_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average score of 41.25 is indeed lower than the cohort benchmark of 58.31."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "You are in the 8.8th percentile for scores.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "peer_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The percentile claim is accurate as per the provided data."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Your engagement percentile is at 0.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "peer_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the engagement data provided."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student's performance in relation to their peers, providing clear insights and actionable recommendations. While it is mostly complete and accurate, there is room for improvement in clarity and detail.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 6. All relevant metrics were included in the explanation, and the retrieval log was not applicable as the full dataset was provided.",
+  "invalid_reason": null
+}

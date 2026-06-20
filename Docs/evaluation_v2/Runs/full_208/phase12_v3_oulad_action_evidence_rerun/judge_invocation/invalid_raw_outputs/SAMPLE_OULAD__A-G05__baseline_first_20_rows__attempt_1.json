@@ -1,0 +1,93 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G05__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the systemic issue of late submissions based on the high late submission rates across different assessment types."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for late submission rates are correctly reported and align with the evidence, showing high rates for CMAs and moderate rates for TMAs."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including insights into late submission rates and educational implications, but could provide more detail on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing submission behavior, addressing the systemic nature of late submissions as requested."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, suggesting time management workshops and improved communication about deadlines."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Late submissions are a systemic issue within the class.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_behaviour"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing high late submission rates across multiple assessment types."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "CMA assessment types exhibit late submission rates exceeding 98%.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_behaviour"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the reported late submission rates of 99.51% for Distinction and 98.99% for Pass in CMAs."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "TMA assessments show a late submission rate of approximately 19% for Pass outcomes.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_behaviour"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing a late submission rate of 18.9% for TMA Pass outcomes."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The high rates of late submissions may indicate a lack of time management skills among students.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is a reasonable interpretation of the data presented and aligns with the educational implications discussed."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing submission behavior, providing a clear summary of the systemic issue of late submissions supported by relevant data. The recommendations are actionable and relevant, contributing to the overall quality of the explanation.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 11. All relevant data was utilized to support the claims made in the explanation."
+}

@@ -1,0 +1,89 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the absence of students in the low engagement group based on the provided data, while also acknowledging the potential implications of missing data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation correctly states that there are no students classified within the low engagement group, aligning with the observed data of zero rows."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation defines the low engagement threshold and discusses the implications of the absence of data, but it does not explicitly list students or recommend specific actions as required."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is relevant to the task of identifying low-engagement students and provides insights into the need for monitoring, which is aligned with the actionable question."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "While the explanation suggests implementing regular engagement assessments, it lacks specific recommendations for outreach actions to individual students, which would enhance its actionability."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though it could benefit from more explicit recommendations for action."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation maintains a focus on monitoring and does not include any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There are currently no students classified within the low engagement group.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing zero rows in the low engagement group."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The absence of data may imply a lack of monitoring or reporting on student engagement levels.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim logically follows from the context of the task and the observed data."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Continuous monitoring of student engagement is essential to identify at-risk students early.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is a reasonable educational implication based on the context of the task."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Implement regular engagement assessments to ensure that any potential disengagement is identified promptly.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This recommendation aligns with the need for proactive measures in monitoring student engagement."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of identifying low-engagement students by accurately reporting the absence of such students and emphasizing the importance of monitoring. While it could improve in providing specific actionable recommendations, it remains relevant and clear.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 0, confirming that no students were found in the low engagement group. The explanation appropriately reflects this lack of data."
+}

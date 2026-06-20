@@ -1,0 +1,94 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C02__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the engagement metrics of both students based on the provided data, maintaining fidelity to the evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented for active days, engagement scores, and total clicks are correct and consistent with the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation covers the required core outputs, including comparisons of engagement metrics and identification of the largest gap."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of comparing student engagement, focusing on relevant metrics."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were required as the action evidence was marked as not applicable."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Student SAMPLE_OULAD_STU_100788 demonstrates a higher level of engagement across all metrics compared to SAMPLE_OULAD_STU_101700.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing that SAMPLE_OULAD_STU_100788 has higher active days, engagement scores, and total clicks."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "SAMPLE_OULAD_STU_100788 has recorded 98 active days.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence showing 98 active days for SAMPLE_OULAD_STU_100788."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "SAMPLE_OULAD_STU_101700 has an engagement score of 0.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The engagement score of 0 for SAMPLE_OULAD_STU_101700 is confirmed by the data."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The lack of engagement from SAMPLE_OULAD_STU_101700 suggests a need for targeted interventions.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is reasonable, it lacks direct evidence from the dataset to support the need for interventions."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively compares the engagement metrics of two students, providing a clear summary and insights based on the data. It meets the core requirements of the task, although some areas could benefit from improved clarity. The claims made are well-supported by the evidence, with one claim being partially supported due to a lack of direct evidence for the suggested interventions.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 6. All rows were included in the explanation, and the retrieval log was not applicable. The explanation utilized the complete dataset for accurate comparisons."
+}

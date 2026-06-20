@@ -1,0 +1,100 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-S02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the student's performance trend based on the provided data, maintaining a high level of fidelity to the evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation correctly identifies the highest and lowest scores, but the mention of a 'minor decline' could be misleading as the performance trend is consistently negative."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs required, but it lacks a direct reference to the performance trend's slope direction and magnitude as specified in the requirements."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of assessing the student's score trend, addressing the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendations provided are actionable, though they could be more specific in addressing the areas of decline."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, but some phrases could be simplified for better understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair implications, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student's performance shows a generally stable trend with slight fluctuations across assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S02.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the data showing consistent scores across assessments."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The normalized scores indicate a high level of achievement, with the highest score recorded in Assessment 1 and a minor decline observed in subsequent assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S02.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the highest score is correctly identified, the term 'minor decline' is misleading as the performance trend is consistently negative."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The performance trend remains stable, indicating consistent performance without significant improvement or decline.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "contradicted",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S02.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The performance trend is negative, contradicting the claim of stability."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.65,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.65,
+  "verdict": "good",
+  "invalid_reason": null
+}

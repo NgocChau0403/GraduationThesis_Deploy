@@ -1,0 +1,110 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-G16__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, linking the action recommendations to the identified metrics of low engagement and high risk."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation (e.g., 1,240 low engagement students and 906 high-risk students) are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation synthesizes the required core outputs into actionable insights, but could include more detail on the specific actions to be taken."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of recommending actions for the admin based on the cohort data."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommended actions are concrete and actionable, addressing the needs of high-risk and low-engagement students."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and presents the data in a fair manner, focusing on support rather than blame."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There are 1,240 students identified as having low engagement.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.low_engagement_count"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is directly supported by the evidence showing 1,240 low engagement students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "906 students are categorized as high risk.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.high_risk_count"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is directly supported by the evidence showing 906 high-risk students."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The hardest assessment is noted as '24299'.",
+      "claim_type": "categorical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.hardest_assessment"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is directly supported by the evidence indicating '24299' as the hardest assessment."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Quizzes are highlighted as the best resource type.",
+      "claim_type": "categorical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "synthesis_data.best_resource_type"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is directly supported by the evidence indicating quizzes as the best resource type."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.1,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.1,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

@@ -1,0 +1,94 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G05__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the systemic issue of late submissions based on the high late submission rates across different assessment types."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for late submission rates are correctly reported and align with the evidence, particularly the rates exceeding 98% for CMAs."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the systemic nature of late submissions and the prioritization of groups with high late submission rates."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing submission behavior, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, suggesting workshops and improved communication to address the identified issues."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, though some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language or unfair recommendations, maintaining a focus on educational improvement."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Late submissions are a systemic issue within the class.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_behaviour"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing high late submission rates across multiple assessment types."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "CMA assessments exhibit late submission rates exceeding 98%.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_behaviour"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence indicating late submission rates of 99.51% for Distinction and 98.99% for Pass in CMAs."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "TMA assessments show a moderate late submission rate of approximately 19% for Pass outcomes.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "submission_behaviour"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing a late submission rate of 18.9% for TMA Pass outcomes."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Implement time management workshops for students.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and aligns with the identified need for improved time management skills among students."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of analyzing submission behavior, providing a comprehensive overview of late submission rates and their implications. The claims made are well-supported by the evidence, and the recommendations are actionable and relevant to the identified issues.",
+  "evidence_usage_notes": "The evidence access mode was direct_embedding, with a full result row count of 11. All rows were included in the analysis, and the explanation utilized the complete dataset effectively.",
+  "invalid_reason": null
+}

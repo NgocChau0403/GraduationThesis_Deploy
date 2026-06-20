@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-B03__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation accurately reflects the engagement data provided, maintaining fidelity to the source metrics."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "All numerical values presented in the explanation are correct and match the provided data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation covers the core requirement of characterizing the student's effort level but could include more detail on implications."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the task of summarizing engagement relative to classmates."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were required in the task context."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is clear and well-structured, making it easy for the target audience to understand."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair implications."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The total engagement count of 1261 is above the class average of 1118.08.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_summary"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the provided engagement data."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student has been active for 98 days, which is significantly more than the class average of 52.55 days.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_summary"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the provided engagement data."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The engagement score of 0.2024 is higher than the class average of 0.1177.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_summary"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the provided engagement data."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student's engagement metrics, accurately reflecting the data provided. It meets the task requirements and is clear and relevant to the target audience. Minor improvements could enhance completeness, but overall, it is a strong response.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 1. All relevant metrics were included in the explanation, and the retrieval log was not applicable as the full data was provided directly."
+}

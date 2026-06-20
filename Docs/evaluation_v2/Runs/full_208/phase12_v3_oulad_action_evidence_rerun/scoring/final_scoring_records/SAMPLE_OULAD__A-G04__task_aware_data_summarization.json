@@ -1,0 +1,86 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-G04__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, particularly highlighting the assessment '24288' with a fail rate of 50.0% as a critical area for intervention."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented, such as the fail rate of 50.0% for assessment '24288', are correct and supported by the retrieved data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the identification of the high fail rate assessment and the recommendation for curriculum review, but could provide more detail on other assessments."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of assessing difficulty and identifying assessments causing student failures, directly addressing the actionable question."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendation to conduct a curriculum review for assessment '24288' is actionable and well-supported by the analysis of the fail rates."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and frames the fail rates as a signal for review rather than blaming students, aligning with safety and fairness considerations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The assessment '24288' has the highest fail rate at 50.0%.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "assessment_difficulty"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the retrieved data showing a fail rate of 50.0% for assessment '24288'."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "A curriculum review for assessment '24288' is recommended.",
+      "claim_type": "recommendation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "assessment_difficulty"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is directly supported by the analysis of the fail rate and the need for targeted support."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.1,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.1,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

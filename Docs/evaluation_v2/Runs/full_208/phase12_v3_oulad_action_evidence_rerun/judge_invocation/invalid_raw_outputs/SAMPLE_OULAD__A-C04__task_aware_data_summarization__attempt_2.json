@@ -1,0 +1,79 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C04__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation accurately reflects the lack of measurable data across all dimensions, but it could have provided more context on the implications of this absence."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical claims were made due to the absence of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation addresses the core outputs but lacks specific details on the dimensions compared."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is relevant to the task of comparing lifestyle dimensions, but it does not highlight specific gaps as required."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to improving data collection processes."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear but could be structured better to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Both students exhibit null values for all lifestyle metrics.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "lifestyle_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The evidence confirms that all lifestyle metrics are null for both students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The lack of data on lifestyle dimensions may hinder the ability to provide targeted support and interventions for students.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim logically follows from the absence of data, indicating potential challenges in providing support."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Implement a structured data collection process for lifestyle metrics.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and directly addresses the identified issue of data absence."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies the lack of data as a critical issue for comparing lifestyle dimensions. While it meets the core requirements, it could improve in completeness and clarity. The actionable recommendations are strong, providing a clear path forward for addressing the data gaps.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 10. All rows were included in the explanation, confirming the absence of data across all lifestyle metrics."
+}

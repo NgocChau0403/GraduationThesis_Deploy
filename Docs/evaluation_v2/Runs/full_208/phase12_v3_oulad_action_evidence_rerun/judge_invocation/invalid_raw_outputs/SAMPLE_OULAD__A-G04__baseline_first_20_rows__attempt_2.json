@@ -1,0 +1,87 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G04__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, highlighting the highest fail rate and comparing it with other assessments."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The fail rates mentioned (50% for assessment '24288', 11.5% for '25345', and 12.1% for '25359') are correctly stated and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the identification of the assessment with the highest fail rate and the recommendation for a curriculum review."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of analyzing assessment difficulty and provides relevant insights for the target audience."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or supported based on the deterministic action evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sentences could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and frames the fail rates as a signal for review rather than blaming students."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The assessment '24288' has the highest fail rate at 50%.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "impact_type": null,
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-G04__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing that '24288' has a fail rate of 50%."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Assessments '25345' and '25359' have fail rates of 11.5% and 12.1% respectively.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "impact_type": null,
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-G04__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing the fail rates for these assessments."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The high fail rate in assessment '24288' suggests a need for targeted interventions.",
+      "claim_type": "interpretative",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "impact_type": null,
+      "evidence_refs": [
+        "SAMPLE_OULAD__A-G04__baseline_first_20_rows"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the context provided in the explanation regarding the implications of the fail rate."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of assessing difficulty in assessments, providing accurate numerical data and actionable insights. The clarity and relevance of the content are strong, although there is room for improvement in conciseness. Overall, the explanation meets the requirements well.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full coverage of 112 rows from the dataset. The retrieval log confirmed that all relevant data was accessible and correctly referenced in the explanation.",
+  "invalid_reason": null
+}

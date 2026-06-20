@@ -1,0 +1,94 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G06__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the evidence provided, but it overstates the correlation by implying causation, which is not supported by the data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The numerical values presented for average scores are correct and align with the evidence, but the interpretation of correlation could mislead."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation covers all required core outputs, including highlighting high and low-performing resource types and providing recommendations."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is relevant to the task of identifying effective learning activities, but could better emphasize the correlation aspect."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendations provided are actionable, but the rationale for reassessing lower-performing resources could be more specific."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "While the explanation is generally clear, some sections could be more concise and structured to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a negative correlation between Resource Type and Avg Score of Users.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "unsupported",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The claim suggests a causal relationship rather than a correlational one, which contradicts the task requirements."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The 'page' resource type has the highest average score of 78.9.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is directly supported by the evidence provided in the dataset."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Resource types such as 'quiz' and 'homepage' have the lowest average scores of 70.28 and 70.22 respectively.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "activity_effectiveness"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is also supported by the evidence, accurately reflecting the data."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "Encouraging the use of higher-scoring resource types may enhance overall student performance.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "unsupported",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim implies a causal relationship that is not substantiated by the evidence, which only supports correlation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation provides a comprehensive overview of resource effectiveness based on average scores, fulfilling most task requirements. However, it misinterprets correlation as causation in some claims, which affects the overall clarity and faithfulness of the explanation.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 9. All relevant data was available and utilized in the explanation, ensuring a strong basis for the claims made.",
+  "invalid_reason": null
+}

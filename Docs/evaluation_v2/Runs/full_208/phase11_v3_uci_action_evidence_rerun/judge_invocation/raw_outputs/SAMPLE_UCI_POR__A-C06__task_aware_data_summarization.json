@@ -1,0 +1,81 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-C06__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of no recorded resource usage for both students, maintaining alignment with the provided data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation correctly states that both students have zero clicks and total clicks, which is supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the core outputs required, highlighting the lack of resource engagement and the implications, but could further elaborate on specific strategies for improvement."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is directly relevant to the task of comparing resource usage between the two students, addressing the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, suggesting targeted outreach to promote resource usage, which is a feasible intervention."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could benefit from more concise language."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation maintains a neutral tone and does not present any stigmatizing language or unfair implications regarding the students' engagement."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Both students show no recorded resource usage.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_rows_sha256"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing zero clicks for both students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "There are no discernible differences in their resource utilization strategies.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "evidence_rows_sha256"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported as both students have identical engagement metrics."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The lack of resource engagement suggests a need for interventions.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is logically derived from the observed lack of engagement."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of comparing resource usage between two students, accurately reflecting the evidence of no engagement. It provides actionable recommendations while maintaining clarity and relevance to the audience. The overall quality is high, with minor areas for improvement in completeness and clarity.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 2. All rows were included in the explanation, and the retrieval log path was not applicable. The explanation utilized the complete dataset available."
+}

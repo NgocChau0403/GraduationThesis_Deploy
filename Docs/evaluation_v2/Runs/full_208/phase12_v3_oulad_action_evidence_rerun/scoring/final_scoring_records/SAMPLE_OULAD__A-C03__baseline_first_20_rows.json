@@ -1,0 +1,100 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__A-C03__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the risk profiles of the two students based on the provided data, maintaining fidelity to the evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for at_risk_score and engagement scores are correctly reported and compared."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs but does not explicitly state that avg_score is null, which is a minor omission."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the task of comparing the risk profiles of the two students."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the students' risk profiles."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain stigmatizing language and appropriately addresses the need for intervention."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "SAMPLE_OULAD_STU_100788 is at a higher risk compared to SAMPLE_OULAD_STU_101700.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_100788 at_risk_score: 3",
+        "SAMPLE_OULAD_STU_101700 at_risk_score: 1"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the at_risk_score values provided in the evidence."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The key differences lie in their engagement and punctuality metrics.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "SAMPLE_OULAD_STU_100788 engagement_score: 0.202",
+        "SAMPLE_OULAD_STU_100788 punctuality_rate: 0",
+        "SAMPLE_OULAD_STU_101700 punctuality_rate: 1"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the engagement and punctuality metrics provided in the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "If avg_score is null, state that score evidence is missing rather than guessing.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "unsupported",
+      "impact_type": "local_detail",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation does not mention that avg_score is null, which is a required statement according to the evaluation requirements."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.4,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.4,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

@@ -1,0 +1,85 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-S08__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the risk indicators based on the provided data, including the low average score and engagement score."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as the average score of 36.67 and engagement score of 0, are correct and consistent with the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation synthesizes the key risk indicators but lacks specific actionable recommendations, which are part of the core outputs required."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is relevant to the task of recommending interventions for the student, addressing the identified risk factors."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "While the explanation identifies risk factors, it does not provide specific actions or recommendations for intervention, which limits its actionability."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from a more structured presentation of insights and recommendations."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language or unfair recommendations, maintaining a focus on support."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student exhibits several risk indicators, including a low average score and engagement score.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "avg_score",
+        "engagement_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence showing a low average score of 36.67 and an engagement score of 0."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The average score is significantly below the expected threshold.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "avg_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average score of 36.67 is below typical passing standards, supporting the claim."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The engagement score is recorded at 0, suggesting the student is not participating in learning activities.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The engagement score of 0 directly supports the claim about lack of participation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively identifies key risk indicators for the student, supported by accurate numerical data. However, it lacks specific actionable recommendations, which affects its overall completeness and actionability. The clarity is generally good, but a more structured approach could enhance understanding.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 1. The explanation utilized the complete dataset available, ensuring that all claims were grounded in the provided evidence.",
+  "invalid_reason": null
+}

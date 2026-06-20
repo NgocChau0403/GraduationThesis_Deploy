@@ -1,0 +1,96 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T08__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of punctuality and score performance, maintaining a clear correlation without overstating claims."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The scores and punctuality rate mentioned are correct and consistent with the provided data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the core outputs required, but could provide more detail on the relationship between delay and score."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is relevant to the task of assessing lateness impact on scores, directly addressing the actionable question."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to improving scores while maintaining punctuality."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair implications, adhering to safety and fairness standards."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You have maintained a punctuality rate of 0.",
+      "claim_type": "fact",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "punctuality_rate"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The punctuality rate of 0 is directly supported by the evidence provided."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Your scores for the quizzes and exam are both 55.",
+      "claim_type": "fact",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "score_normalized"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The scores of 55 for both quizzes and exam are accurately reflected in the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Improving your grasp of the content can help raise your scores while maintaining your punctuality.",
+      "claim_type": "recommendation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation aligns with the observed performance and is actionable."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.3,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.3,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

@@ -1,0 +1,96 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T10__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the absence of resource usage data, which is supported by the evidence of zero recorded engagement."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation correctly states that the resource usage is zero, aligning with the evidence provided."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation addresses the core outputs by stating the lack of resource usage and suggesting exploration of resources, but it could have more explicitly identified under-used resource types."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is relevant to the task of assessing resource engagement and provides actionable insights for the student."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, encouraging the student to explore available resources."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some phrasing could be simplified for better understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain stigmatizing language or unfair implications, maintaining a supportive tone."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is currently no recorded resource usage data for you this semester.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "resource_usage"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing zero resource usage."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "You may not be fully engaging with the available learning resources.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "resource_usage"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The lack of resource usage suggests potential disengagement, which is a reasonable inference."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Engaging with a variety of resources can enhance your understanding and retention of course material.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This is a widely accepted educational principle and is relevant to the context."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.5,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.5,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

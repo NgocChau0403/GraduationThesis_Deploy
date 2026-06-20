@@ -11,7 +11,8 @@ const DEFAULT_DERIVED_DIR = path.join(
   RUN_ROOT,
   "phase9_single_review_dry_run/derived_stat_evidence/SAMPLE_UCI_POR",
 );
-const DEFAULT_OUTPUT_DIR = path.join(RUN_ROOT, "phase10_v3_uci_rerun/judge_inputs");
+const DEFAULT_OUTPUT_DIR = path.join(RUN_ROOT, "phase11_v3_uci_action_evidence_rerun/judge_inputs");
+const TASK_REGISTRY_PATH = path.join(PROJECT_ROOT, "Backend/src/config/taskRegistry.json");
 
 function parseArgs(argv) {
   const args = {
@@ -109,12 +110,215 @@ async function loadDerivedByTask(args) {
   return result;
 }
 
+function getArtifactDatasets(artifact) {
+  return artifact?.full_response_body?.datasets
+    ?? artifact?.response_body?.datasets
+    ?? {};
+}
+
+function flattenArtifactRows(artifacts) {
+  const rows = [];
+  for (const artifact of artifacts) {
+    for (const [datasetLabel, datasetRows] of Object.entries(getArtifactDatasets(artifact))) {
+      for (const [rowIndex, row] of (Array.isArray(datasetRows) ? datasetRows : []).entries()) {
+        rows.push({ dataset_label: datasetLabel, row_index: rowIndex, row });
+      }
+    }
+  }
+  return rows;
+}
+
+function coerceComparable(value, operator) {
+  if (["lt", "lte", "gt", "gte"].includes(operator)) {
+    const parsed = typeof value === "number" ? value : Number(value);
+    return Number.isFinite(parsed) ? parsed : undefined;
+  }
+  return value;
+}
+
+function evaluateCondition(condition, evidence) {
+  const observed = evidence.get(condition.evidence_id);
+  const expected = condition.compare_to_evidence_id
+    ? evidence.get(condition.compare_to_evidence_id)
+    : condition.value;
+  const operator = condition.operator;
+  let result;
+
+  if (operator === "is_present") result = observed !== undefined && observed !== null && observed !== "";
+  else if (operator === "is_absent" || operator === "is_not_present") {
+    result = observed === undefined || observed === null || observed === "";
+  } else if (operator === "is_true") result = observed === true || observed === "true";
+  else if (operator === "is_false") result = observed === false || observed === "false";
+  else if (observed === undefined || observed === null || expected === undefined || expected === null) {
+    result = null;
+  } else {
+    const left = coerceComparable(observed, operator);
+    const right = coerceComparable(expected, operator);
+    if (left === undefined || right === undefined) result = null;
+    else if (operator === "lt") result = left < right;
+    else if (operator === "lte") result = left <= right;
+    else if (operator === "gt") result = left > right;
+    else if (operator === "gte") result = left >= right;
+    else if (operator === "eq") result = left === right;
+    else if (operator === "neq" || operator === "ne") result = left !== right;
+    else result = null;
+  }
+
+  return {
+    evidence_id: condition.evidence_id,
+    operator,
+    observed_value: observed ?? null,
+    expected_value: expected ?? null,
+    compare_to_evidence_id: condition.compare_to_evidence_id ?? null,
+    result,
+  };
+}
+
+function evaluateConditionGroup(trigger, evidence) {
+  const all = (trigger?.all ?? []).map((condition) => evaluateCondition(condition, evidence));
+  const any = (trigger?.any ?? []).map((condition) => evaluateCondition(condition, evidence));
+  const allState = all.some((item) => item.result === false)
+    ? false
+    : all.some((item) => item.result === null) ? null : true;
+  const anyState = any.length === 0
+    ? true
+    : any.some((item) => item.result === true)
+      ? true
+      : any.some((item) => item.result === null) ? null : false;
+  const triggered = allState === false || anyState === false
+    ? false
+    : allState === true && anyState === true ? true : null;
+  return { triggered, all, any };
+}
+
+function deriveActionEvidenceValues(task, rowEntries) {
+  const evidence = new Map();
+  for (const { row } of rowEntries) {
+    for (const [column, value] of Object.entries(row ?? {})) {
+      if (!evidence.has(column)) evidence.set(column, value);
+    }
+  }
+  for (const derived of task.aiActionDerivedEvidence ?? []) {
+    if (derived.operation !== "safe_divide") continue;
+    const numerator = Number(evidence.get(derived.numerator_column));
+    const denominator = Number(evidence.get(derived.denominator_column));
+    evidence.set(
+      derived.evidence_id,
+      Number.isFinite(numerator) && Number.isFinite(denominator) && denominator !== 0
+        ? numerator / denominator
+        : null,
+    );
+  }
+  return evidence;
+}
+
+function buildReturnedActionEvidence(task, rowEntries) {
+  if (task.taskId !== "A-S04") return null;
+  const actions = rowEntries
+    .filter(({ row }) => row?.triggered === true)
+    .map(({ dataset_label: datasetLabel, row_index: rowIndex, row }) => ({
+      action_id: `${task.taskId}__${row.flag_name}`,
+      action_text: row.recommended_action,
+      priority: row.severity,
+      owner: null,
+      time_horizon_days: null,
+      support_category: row.support_category ?? null,
+      source_type: "returned_query_row",
+      source_rule_id: null,
+      trigger_evidence: {
+        dataset_label: datasetLabel,
+        row_index: rowIndex,
+        flag_name: row.flag_name,
+        flag_value: row.flag_value,
+        threshold: row.threshold,
+        triggered: row.triggered,
+      },
+      claim_limits: [],
+    }));
+  return {
+    applicable: true,
+    source_type: "returned_recommended_action_fields",
+    rule_set_id: null,
+    rule_version: null,
+    evaluation_status: "complete",
+    supported_action_count: actions.length,
+    supported_actions: actions,
+    rule_evaluations: [],
+    conflict_evaluations: [],
+  };
+}
+
+function buildRuleActionEvidence(task, rowEntries) {
+  if (task.aiSummaryType !== "action_synthesis" || !Array.isArray(task.aiActionRules)) return null;
+  const evidence = deriveActionEvidenceValues(task, rowEntries);
+  const ruleEvaluations = task.aiActionRules.map((rule) => {
+    const evaluation = evaluateConditionGroup(rule.trigger, evidence);
+    return {
+      rule_id: rule.rule_id,
+      description: rule.description,
+      status: evaluation.triggered === true ? "triggered" : evaluation.triggered === false ? "not_triggered" : "unknown",
+      conditions: { all: evaluation.all, any: evaluation.any },
+      action: rule.action,
+    };
+  });
+  const conflictEvaluations = (task.aiActionConflictRules ?? []).map((conflict) => {
+    const evaluation = evaluateConditionGroup(conflict.when, evidence);
+    return {
+      conflict_id: conflict.conflict_id,
+      status: evaluation.triggered === true ? "triggered" : evaluation.triggered === false ? "not_triggered" : "unknown",
+      behavior: conflict.behavior,
+      conditions: { all: evaluation.all, any: evaluation.any },
+    };
+  });
+  const supportedActions = ruleEvaluations
+    .filter((rule) => rule.status === "triggered")
+    .map((rule) => ({
+      ...rule.action,
+      source_type: "versioned_registry_rule",
+      source_rule_id: rule.rule_id,
+      trigger_evidence: rule.conditions,
+    }));
+  return {
+    applicable: true,
+    source_type: "deterministic_registry_rule_evaluation",
+    rule_set_id: task.aiActionRuleSetId ?? null,
+    rule_version: task.aiActionRuleVersion ?? null,
+    evaluation_status: ruleEvaluations.some((rule) => rule.status === "unknown") ? "partial" : "complete",
+    supported_action_count: supportedActions.length,
+    supported_actions: supportedActions,
+    rule_evaluations: ruleEvaluations,
+    conflict_evaluations: conflictEvaluations,
+  };
+}
+
+async function buildActionEvidence(task, source) {
+  const artifacts = [];
+  for (const artifactRef of source.evidence_access?.full_query_artifacts ?? []) {
+    artifacts.push(await readJson(repoPathToAbsolute(artifactRef.artifact_path)));
+  }
+  const rowEntries = flattenArtifactRows(artifacts);
+  return buildReturnedActionEvidence(task, rowEntries)
+    ?? buildRuleActionEvidence(task, rowEntries)
+    ?? {
+      applicable: false,
+      source_type: "not_applicable",
+      rule_set_id: null,
+      rule_version: null,
+      evaluation_status: "not_applicable",
+      supported_action_count: 0,
+      supported_actions: [],
+      rule_evaluations: [],
+      conflict_evaluations: [],
+    };
+}
+
 function validateRecord(record) {
   const issues = [];
   if (record.schema_version !== "judge_input_schema_v3") issues.push("schema_version");
-  if (record.evaluation_run_id !== "llm_judge_v3_uci_rerun") issues.push("evaluation_run_id");
-  if (record.prompt_version !== "judge_prompt_v3_uci_rerun") issues.push("prompt_version");
+  if (record.evaluation_run_id !== "llm_judge_v3_uci_action_evidence_rerun") issues.push("evaluation_run_id");
+  if (record.prompt_version !== "judge_prompt_v3_action_evidence_rerun") issues.push("prompt_version");
   if (!Array.isArray(record.derived_stat_evidence)) issues.push("derived_stat_evidence_not_array");
+  if (!record.action_evidence || typeof record.action_evidence !== "object") issues.push("action_evidence_missing");
   for (const entry of record.derived_stat_evidence ?? []) {
     if (entry.status === "pass" && (!Number.isFinite(entry.pearson_r) || !Number.isInteger(entry.n))) {
       issues.push(`invalid_pass:${entry.stat_id}`);
@@ -133,6 +337,8 @@ async function main() {
   await mkdir(outputRecordsDir, { recursive: true });
 
   const derivedByTask = await loadDerivedByTask(args);
+  const registry = await readJson(TASK_REGISTRY_PATH);
+  const taskById = new Map(registry.map((task) => [task.taskId, task]));
   const sourceEntries = (await readJsonl(args.sourceManifest))
     .filter((entry) => entry.dataset_id === args.dataset && entry.status === "judge_input_ready");
   if (sourceEntries.length !== args.expectedCount) {
@@ -143,13 +349,16 @@ async function main() {
   const validationIssues = [];
   for (const sourceEntry of sourceEntries) {
     const source = await readJson(repoPathToAbsolute(sourceEntry.judge_input_path));
+    const task = taskById.get(source.task_id);
+    if (!task) throw new Error(`Task ${source.task_id} not found in task registry.`);
     const record = {
       ...source,
       schema_version: "judge_input_schema_v3",
-      evaluation_run_id: "llm_judge_v3_uci_rerun",
-      prompt_version: "judge_prompt_v3_uci_rerun",
-      rubric_version: "judge_rubric_1_to_10_v3_uci_rerun_candidate",
+      evaluation_run_id: "llm_judge_v3_uci_action_evidence_rerun",
+      prompt_version: "judge_prompt_v3_action_evidence_rerun",
+      rubric_version: "judge_rubric_1_to_10_v3_action_evidence_calibrated",
       derived_stat_evidence: derivedByTask.get(source.task_id) ?? [],
+      action_evidence: await buildActionEvidence(task, source),
     };
     const issues = validateRecord(record);
     validationIssues.push(...issues.map((issue) => ({ record_id: record.record_id, issue })));

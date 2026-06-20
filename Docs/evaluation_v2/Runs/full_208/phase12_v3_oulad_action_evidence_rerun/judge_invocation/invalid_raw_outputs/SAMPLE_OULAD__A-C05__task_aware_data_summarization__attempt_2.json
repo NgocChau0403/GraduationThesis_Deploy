@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C05__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, discussing the socioeconomic status and disadvantage scores of the students without making unsupported causal claims."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented for disadvantage scores and socioeconomic bands are correct and align with the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation identifies key differences in background but could provide more detail on the implications of these differences."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of comparing academic backgrounds and structural disadvantages."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the identified disadvantages faced by the students."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation maintains a fair and sensitive tone, avoiding stigmatizing language."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Student SAMPLE_OULAD_STU_100788 belongs to a higher socioeconomic band compared to SAMPLE_OULAD_STU_101700.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The socioeconomic bands of both students are accurately reported in the evidence."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The disadvantage score for SAMPLE_OULAD_STU_101700 is significantly higher than that of SAMPLE_OULAD_STU_100788.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The disadvantage scores are correctly stated and supported by the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Students from lower socioeconomic backgrounds may require additional support to succeed academically.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "local_detail",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is reasonable, it lacks direct evidence from the dataset to fully support it."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of comparing academic backgrounds, providing relevant insights and actionable recommendations. The claims made are well-supported by the evidence, with minor issues in completeness and support for broader implications.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with full access to the two relevant rows from the background comparison dataset. All claims were verified against the provided evidence, and no retrieval issues were noted.",
+  "invalid_reason": null
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T13__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, linking the actions to the relevant metrics (absence rate and average score) and their respective thresholds."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation (absence rate of 1.0 and average score of 41.25) are correct and align with the data retrieved."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation includes two prioritized actions, but it could have provided more detail on how to implement these actions or additional context regarding the urgency of the situation."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the actionable question posed, providing relevant actions for the student based on their current performance metrics."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The actions suggested are practical and feasible for the student to implement within the specified time frame, although more specific steps could enhance clarity."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sentences could be more concise to improve readability and understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The absence rate is 1.0, indicating a need for improvement in attendance.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "absence_rate"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the retrieved data showing an absence rate of 1.0."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The average score is currently 41.25, with a target threshold of 70.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "avg_score",
+        "target_threshold"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the retrieved data showing an average score of 41.25 and a target threshold of 70."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The actions are designed to help the student stay organized and set clear goals.",
+      "claim_type": "interpretative",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The explanation effectively summarizes the purpose of the actions in relation to the student's needs."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation successfully synthesizes the risk signals into actionable items for the student, providing a clear and relevant response to the task. While it could improve in completeness and clarity, it effectively communicates the necessary actions based on the provided data.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 1. The explanation utilized the complete dataset available, ensuring that all claims were grounded in the provided evidence.",
+  "invalid_reason": null
+}

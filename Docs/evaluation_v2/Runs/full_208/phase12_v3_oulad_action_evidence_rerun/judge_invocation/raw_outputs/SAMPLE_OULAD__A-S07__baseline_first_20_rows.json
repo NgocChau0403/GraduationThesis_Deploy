@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-S07__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the absence of data in the dataset, which is a critical aspect of the task."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "There are no numerical claims made due to the lack of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation notes the absence of data and its implications, but it could have elaborated more on the context of the missing data."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is relevant to the task of identifying background factors for student support, addressing the lack of data directly."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The recommendation to collect data is actionable and relevant, though it could include more specific steps."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some phrasing could be simplified for better understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation avoids stigmatizing language and frames the issue in a professional context."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The dataset on student background context is currently empty.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "full_query_artifacts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the evidence indicating zero rows in the dataset."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The absence of background context data limits the ability to tailor support strategies for students.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "raw_text"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the logical implications of having no data."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Collect comprehensive background context data from students.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "raw_text"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and directly addresses the identified issue."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task by noting the absence of data and its implications for student support. It provides actionable recommendations, although it could benefit from more detail in some areas. Overall, the explanation is relevant and clear, with a good understanding of the context required for academic advisors.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 0, confirming the dataset's emptiness. The explanation utilized this context to frame its claims and recommendations appropriately.",
+  "invalid_reason": null
+}

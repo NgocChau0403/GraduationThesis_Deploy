@@ -1,0 +1,81 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately describes the correlation direction and strength based on the evidence provided, but it slightly overstates the strength of the correlation as 'weak positive' instead of 'moderate' based on the derived statistics."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation mentions a weak positive correlation, but the derived Pearson coefficient indicates a moderate correlation (0.41). This misrepresentation affects the numerical correctness."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation covers the required core outputs, including the correlation direction and the identification of outliers, fulfilling the task requirements."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing the engagement-performance relationship and addresses the actionable question effectively."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, particularly for students with high engagement but low average scores, suggesting targeted support."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from more precise language regarding the correlation strength to avoid confusion."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation addresses potential outliers and suggests interventions without stigmatizing language, maintaining a focus on educational support."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a weak positive correlation between Engagement Score and Average Score.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [
+        "A-G02__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The claim states a weak positive correlation, but the derived Pearson coefficient indicates a moderate correlation (0.41), which changes the interpretation of the strength of the relationship."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Several outliers exist, particularly students with high engagement scores but low average scores.",
+      "claim_type": "qualitative",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The claim about outliers is supported by the explanation and aligns with the task requirements."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Engagement strategies should be tailored to ensure they effectively support learning outcomes.",
+      "claim_type": "recommendation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is actionable and relevant to the findings presented in the explanation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation successfully addresses the task of analyzing the engagement-performance relationship, providing insights into correlation and outliers. However, it misrepresents the strength of the correlation, which affects the overall accuracy. The recommendations are actionable and relevant, contributing positively to the evaluation.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full access to 1998 rows from the engagement_performance_scatter dataset. The retrieval log confirmed complete coverage of the dataset, and the derived statistics were used to evaluate correlation claims. The retrieval log path was utilized to verify the completeness of the evidence accessed.",
+  "invalid_reason": null
+}

@@ -1,0 +1,246 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_UCI_POR__A-G13__baseline_first_20_rows",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G13",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v3_action_evidence_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_action_evidence_calibrated",
+  "task_context": {
+    "task_name": "Lifestyle risk across cohort",
+    "scope": "Many students",
+    "actionable_question": "Which lifestyle patterns are most common among low-performing students?",
+    "target_audience": "academic_advisor",
+    "ai_summary_type": "correlation_evidence",
+    "ai_prompt_hint": "Rank students by lifestyle_risk_score. Correlate with avg_score. Frame as correlational, not prescriptive.",
+    "query_labels": [
+      "lifestyle_risk_scatter"
+    ],
+    "explanation_strategy": "correlation"
+  },
+  "schema_context": {
+    "source_tables": [
+      "student",
+      "enrollment",
+      "assessment_result",
+      "assessment [UCI only]"
+    ],
+    "key_db_fields": [
+      "alcohol_weekday",
+      "alcohol_weekend",
+      "go_out_freq",
+      "health_status",
+      "lifestyle_risk_score [FE single]; avg_score [FE cross]"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "student_id",
+        "lifestyle_risk_score",
+        "avg_score"
+      ],
+      "optional_columns": [
+        "alcohol_weekday",
+        "alcohol_weekend",
+        "go_out_freq",
+        "health_status"
+      ]
+    },
+    "query_labels": [
+      "lifestyle_risk_scatter"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis reveals a negative correlation between Lifestyle Risk Score and Average Score among students, indicating that higher lifestyle risk scores are associated with lower average scores. This relationship suggests that students with riskier lifestyle choices tend to perform worse academically.\n\nInsights: Negative Correlation Observed: As the Lifestyle Risk Score increases, the Average Score tends to decrease, demonstrating a negative correlation. For instance, students with a Lifestyle Risk Score of 1 have an Average Score of 33.33, while those with a score of 0.725 have an Average Score of 71.67.\n\nEducational implications: Students with higher lifestyle risks may require additional support to improve academic performance.\n\nRecommendations: high - Implement lifestyle education programs - To address the negative correlation and support students in making healthier lifestyle choices that could enhance their academic performance.",
+    "structured_payload": {
+      "task_id": "A-G13",
+      "execution_id": "exec_1781847232759_b13bae36",
+      "explanation": {
+        "summary": "The analysis reveals a negative correlation between Lifestyle Risk Score and Average Score among students, indicating that higher lifestyle risk scores are associated with lower average scores. This relationship suggests that students with riskier lifestyle choices tend to perform worse academically.",
+        "insights": [
+          {
+            "title": "Negative Correlation Observed",
+            "description": "As the Lifestyle Risk Score increases, the Average Score tends to decrease, demonstrating a negative correlation. For instance, students with a Lifestyle Risk Score of 1 have an Average Score of 33.33, while those with a score of 0.725 have an Average Score of 71.67.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "lifestyle_risk_score",
+                "value": 1,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Average Score of 33.33"
+              },
+              {
+                "metric": "lifestyle_risk_score",
+                "value": 0.725,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Average Score of 71.67"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Students with higher lifestyle risks may require additional support to improve academic performance."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement lifestyle education programs",
+            "rationale": "To address the negative correlation and support students in making healthier lifestyle choices that could enhance their academic performance."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset contains 649 rows, providing a robust sample size for correlation analysis.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "correlation",
+      "explanation_type": "correlation",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 5862,
+        "token_usage": {
+          "prompt_tokens": 2159,
+          "completion_tokens": 383,
+          "total_tokens": 2542
+        },
+        "strategy": "correlation",
+        "granularity": "semester",
+        "cost_usd": 0.000554
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G13__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "78f902e904e9cc972823e04aac9a71e3a093a0ad32f646aafe91aa70e2f549d3",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 2159,
+        "completion_tokens": 383,
+        "total_tokens": 2542
+      },
+      "latency_ms": 5867,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 649,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "lifestyle_risk_scatter",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G13.json",
+        "artifact_sha256": "397dfe683a1408e0b120cba9a71cfce6162d98f0fa9fbfdf6779ba6d21741dc1",
+        "row_count": 649,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 649,
+    "retrieved_row_count_by_dataset": {
+      "lifestyle_risk_scatter": 649
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "lifestyle_risk_scatter",
+        "start": 0,
+        "end": 648
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_UCI_POR__A-G13__baseline_first_20_rows__lifestyle_risk_scatter__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G13__baseline_first_20_rows.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "lifestyle_risk_scatter": 649
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G13-CORE-01",
+        "description": "Rank students by lifestyle_risk_score."
+      },
+      {
+        "requirement_id": "A-G13-CORE-02",
+        "description": "Correlate with avg_score."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G13-CONSTRAINT-01",
+        "description": "Frame lifestyle-risk ranking as descriptive and correlational, not causal or deterministic."
+      },
+      {
+        "constraint_id": "A-G13-CONSTRAINT-02",
+        "description": "When listing students by lifestyle-risk rank, avoid language that implies individual blame."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Applicable because the task ranks identifiable students using lifestyle context."
+  },
+  "derived_stat_evidence": [
+    {
+      "stat_id": "A-G13__pearson_r__1",
+      "stat_type": "pearson_r",
+      "dataset_label": "lifestyle_risk_scatter",
+      "x_column": "lifestyle_risk_score",
+      "y_column": "avg_score",
+      "source_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G13.json",
+      "source_artifact_sha256": "397dfe683a1408e0b120cba9a71cfce6162d98f0fa9fbfdf6779ba6d21741dc1",
+      "status": "pass",
+      "pearson_r": -0.10413814597596738,
+      "n": 649,
+      "strength_label": "weak",
+      "direction": "negative",
+      "skip_reason": null
+    }
+  ],
+  "action_evidence": {
+    "applicable": false,
+    "source_type": "not_applicable",
+    "rule_set_id": null,
+    "rule_version": null,
+    "evaluation_status": "not_applicable",
+    "supported_action_count": 0,
+    "supported_actions": [],
+    "rule_evaluations": [],
+    "conflict_evaluations": []
+  }
+}

@@ -1,0 +1,108 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-G02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation correctly identifies the weak negative correlation between engagement and average scores, but it does not adequately clarify that the correlation is not statistically significant due to zero variance in engagement scores."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "The explanation mentions a weak negative correlation but does not provide a numerical value or direction, which is critical given the context of the task."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, including the correlation direction and outlier identification, but lacks depth in discussing the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is relevant to the task of analyzing the engagement-performance relationship, addressing the actionable question posed."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The recommendations provided are actionable, but they could be more specific in terms of the types of interventions suggested for students with high engagement but low scores."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is generally clear but could benefit from improved structure and conciseness to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a weak negative correlation between Engagement Score and Average Score.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "unsupported",
+      "impact_type": "changes_interpretation",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The claim about the correlation is not supported by the provided evidence, as the derived-stat evidence indicates zero variance."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Several students exhibit high average scores despite having an engagement score of 0.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the explanation, which identifies outliers effectively."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "unsupported_numerical_claim",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "major",
+      "primary_metric": "numerical_correctness",
+      "secondary_metrics": [],
+      "cap_candidate": 5,
+      "rationale": "The claim regarding the correlation is unsupported due to the zero variance in engagement scores.",
+      "evidence_refs": []
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "major",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 1,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 6.35,
+  "caps_applied": [
+    {
+      "type": "unsupported_numerical_claim",
+      "severity": "major",
+      "cap": 5,
+      "error_id": "E01",
+      "claim_ids": [
+        "C01"
+      ],
+      "evidence_refs": []
+    }
+  ],
+  "effective_cap": 5,
+  "final_score_after_caps": 5,
+  "verdict": "acceptable",
+  "invalid_reason": null
+}

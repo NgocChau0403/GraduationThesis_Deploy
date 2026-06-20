@@ -1,0 +1,78 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G13__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the absence of data and correctly states that no correlation analysis can be conducted."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical claims were made due to the absence of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, but lacks specific insights or recommendations due to the data absence."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task of analyzing lifestyle risks among students, addressing the actionable question directly."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations can be made due to the lack of data."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is clear and well-structured, effectively communicating the lack of data and its implications."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation avoids any language that could imply blame and frames the findings appropriately."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis of the relationship between Lifestyle Risk Score and Average Score cannot be conducted due to the absence of data in the dataset.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence of zero rows in the dataset, confirming that no analysis can be performed."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The lack of data limits the ability to understand how lifestyle risks may impact student performance.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported as it logically follows from the absence of data, which prevents understanding of any potential impacts."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "No data available for analysis, which prevents any correlation assessment.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence of zero rows, confirming that correlation assessment is not possible."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively communicates the lack of data and its implications for the analysis of lifestyle risks among students. It meets the core requirements of the task while maintaining clarity and relevance. The absence of data is well-articulated, and the explanation avoids any language that could imply blame, adhering to safety and fairness standards.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 0, confirming that no data was available for analysis. The explanation correctly reflects this lack of data and its implications for the task.",
+  "invalid_reason": null
+}

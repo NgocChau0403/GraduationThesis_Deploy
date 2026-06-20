@@ -1,0 +1,82 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-C01__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence provided, detailing the student's performance trajectory and the significant decline in scores."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values presented in the explanation, such as the peak score of 100 and the decline to 61, are correct and supported by the data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the required core outputs, including divergence points and when one student fell behind, but could provide more detail on the implications of the decline."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of comparing performance trajectories and is relevant to the instructor audience."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were required as per the task context, and the explanation does not propose any unsupported actions."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student demonstrated a significant decline in scores during the later assessments.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "trajectory_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing a drop from a score of 100 to 61."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The student's performance peaked at a normalized score of 100 in the CMA assessment during week 3.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "trajectory_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the evidence showing the peak score."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The student may require additional support and intervention to address learning gaps.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim suggests a need for support, it lacks specific evidence from the data to substantiate the necessity for intervention."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of comparing performance trajectories, providing a clear summary of the student's decline in scores and relevant insights. While it meets most requirements, it could enhance completeness by elaborating on the implications of the performance drop. The clarity and relevance are strong, making it a useful resource for the intended audience.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 17. All rows were included in the explanation, and the retrieval log was not applicable. The explanation utilized the complete dataset effectively."
+}

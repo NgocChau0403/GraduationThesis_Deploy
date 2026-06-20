@@ -1,0 +1,99 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_OULAD",
+  "record_id": "SAMPLE_OULAD__S-T11__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the evidence of a negative correlation between registration lead time and average score, but it could clarify that the correlation is negligible."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation correctly identifies the correlation direction as negative, but it does not mention the negligible strength of the correlation (0.0017)."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation provides a summary and insights but lacks detailed statistical context regarding the correlation strength."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of correlating early enrollment with academic performance."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendation to encourage early registration is actionable and relevant to the audience."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from more precise language regarding the correlation's strength."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There is a negative correlation between Registration Lead Time and Average Score.",
+      "claim_type": "correlation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "impact_type": null,
+      "evidence_refs": [
+        "S-T11__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The derived statistic shows a negative correlation, confirming the claim."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Students who register later tend to have lower average scores.",
+      "claim_type": "correlation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "impact_type": null,
+      "evidence_refs": [
+        "S-T11__pearson_r__1"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "This claim is supported by the observed negative correlation."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Encouraging early registration could help students achieve better academic outcomes.",
+      "claim_type": "recommendation",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "impact_type": null,
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The recommendation is logical based on the correlation observed."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.6,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 7.6,
+  "verdict": "good",
+  "invalid_reason": null
+}

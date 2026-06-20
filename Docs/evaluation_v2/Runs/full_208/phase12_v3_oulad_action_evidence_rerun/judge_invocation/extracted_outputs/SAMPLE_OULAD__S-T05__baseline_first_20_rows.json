@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T05__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the engagement data, highlighting significant drops and recovery weeks based on the provided evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Most numerical claims are correct, but some specific values could be more precise in context, particularly regarding the implications of engagement drops."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation covers the core outputs but lacks detailed insights into all flagged weeks, missing some context for the drops."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation is highly relevant to the task, addressing the student's engagement trends and providing actionable insights."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant, encouraging the student to reflect and set goals."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could benefit from more structured presentation to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation maintains a supportive tone and avoids stigmatizing language, focusing on constructive feedback."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Your engagement has shown fluctuations over the weeks.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "weekly_engagement"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the engagement data showing varying weekly clicks."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Weeks 0, 2, 4, 8, 10, 11, 15, 16, and 18 experienced significant declines.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "weekly_engagement"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim identifies weeks with drops, it does not fully contextualize the reasons behind each drop."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "You can bounce back when you find the motivation.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "weekly_engagement"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing recovery in weeks 12 and 13."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively addresses the task of summarizing engagement trends, providing relevant insights and actionable recommendations. While it is generally strong, there are minor gaps in completeness and clarity that could be improved for better understanding.",
+  "evidence_usage_notes": "The evidence access mode was deterministic_artifact_retrieval, with full coverage of 32 rows from the weekly engagement dataset. The retrieval log confirmed that all relevant data was accessible and utilized in the explanation."
+}

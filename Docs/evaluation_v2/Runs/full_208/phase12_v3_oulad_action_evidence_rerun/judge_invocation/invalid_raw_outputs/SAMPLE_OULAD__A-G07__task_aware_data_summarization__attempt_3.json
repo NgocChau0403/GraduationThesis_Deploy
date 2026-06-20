@@ -1,0 +1,83 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G07__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the correlations found in the dataset, maintaining a clear connection to the evidence provided."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for correlations are correctly stated and match the evidence from the dataset."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation includes the top features and their correlations but could further elaborate on the implications of the findings."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of identifying predictors of student success, focusing on relevant features."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and based on the correlations identified, though they could be more specific."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could benefit from more concise language to enhance understanding."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "While the explanation notes the potential sensitivity of demographic factors, it could better address the implications of these correlations."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The feature 'active_days' shows a moderate positive correlation (0.4181) with average score.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "factor_correlation_matrix"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The correlation value is directly supported by the dataset."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The feature 'total_clicks' has a moderate positive correlation (0.3237) with average score.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "factor_correlation_matrix"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The correlation value is directly supported by the dataset."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The feature 'disadvantage_score' exhibits a weak negative correlation (-0.1353) with average score.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "factor_correlation_matrix"
+      ],
+      "checker_source": "deterministic_checker",
+      "rationale": "The correlation value is directly supported by the dataset."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the correlation analysis, providing clear insights and actionable recommendations. While it is generally strong, there are minor areas for improvement in clarity and completeness.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 4. All rows were included in the explanation, and the retrieval log was not applicable."
+}

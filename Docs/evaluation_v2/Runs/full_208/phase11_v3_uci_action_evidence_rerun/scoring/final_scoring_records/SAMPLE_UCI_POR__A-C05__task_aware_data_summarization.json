@@ -1,0 +1,96 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-C05__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, discussing the differences in parental education levels and disadvantage scores without making causal claims."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for disadvantage scores and parental education levels are correctly stated and compared."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation identifies key differences in background but could provide more detail on the implications of these differences."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the task of comparing academic backgrounds and structural disadvantages."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were required as per the task constraints."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation avoids stigmatizing language and presents the information in a fair manner."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The first student has a higher parental education level (4/4) compared to the second student (1/4).",
+      "claim_type": "fact",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is directly supported by the data provided in the background comparison."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The first student has a disadvantage score of 0.2, while the second student has a score of 0.4.",
+      "claim_type": "fact",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "background_comparison"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The numerical values for disadvantage scores are accurately reflected in the explanation."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Students with lower parental education levels may require additional support to overcome structural disadvantages.",
+      "claim_type": "implication",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This implication is reasonable based on the data presented, although it is not directly supported by specific evidence."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.33,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.33,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

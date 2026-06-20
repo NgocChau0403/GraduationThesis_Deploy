@@ -1,0 +1,69 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-C02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the evidence of identical engagement patterns with no recorded activity, aligning well with the provided data."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "All numerical claims regarding engagement metrics (active days, total clicks, engagement score) are correct and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation covers all required core outputs, including the comparison of engagement metrics and the identification of the largest gap."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the task of comparing engagement patterns between the two students, making it highly relevant."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actions were triggered or applicable based on the evidence provided, as indicated by the deterministic action evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but could benefit from more concise structuring to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation does not contain stigmatizing language or harmful recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "Both students exhibit identical engagement patterns, with no recorded activity across all metrics.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "1e9644a1b7e6385caa75480aa65e5ca5a91e648dbd563b160fd5623f58076440"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence showing zero engagement across all metrics for both students."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "The lack of engagement from both students suggests a need for intervention to stimulate participation and interaction with course materials.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "The claim logically follows from the observed data, indicating a need for intervention based on the lack of engagement."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively fulfills the task requirements by comparing the engagement patterns of the two students, accurately reflecting the evidence provided. While the clarity could be improved, the overall quality of the explanation is strong, with all core outputs addressed and supported by the data.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 6. All relevant data was available and utilized in the explanation, confirming the claims made."
+}

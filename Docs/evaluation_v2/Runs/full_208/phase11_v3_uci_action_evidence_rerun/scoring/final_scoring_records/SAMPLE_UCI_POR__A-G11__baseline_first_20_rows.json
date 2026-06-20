@@ -1,0 +1,92 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-G11__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation accurately reflects the lack of engagement data and its implications, but it could provide more detail on how this affects the ability to identify critical weeks."
+    },
+    "numerical_correctness": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No numerical claims were made due to the absence of data."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation identifies the lack of engagement data but does not fully address the required core outputs regarding specific weeks for intervention."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is relevant to the task of detecting engagement drops, but it lacks specific recommendations for weeks due to the absence of data."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "While the explanation suggests implementing a system to track engagement metrics, it does not provide actionable steps for immediate intervention."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear but could be structured better to enhance understanding of the implications of the data absence."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain any stigmatizing language or harmful recommendations, maintaining a focus on data collection improvement."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis indicates a lack of engagement data, resulting in no discernible trends or patterns.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the evidence of zero engagement rows."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "No specific weeks can be identified for intervention.",
+      "claim_type": "core",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the lack of data, which prevents identifying critical weeks."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The absence of engagement data suggests a need for improved data collection methods.",
+      "claim_type": "supporting",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is logical given the context of the analysis."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 6.88,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 6.88,
+  "verdict": "good",
+  "invalid_reason": null
+}

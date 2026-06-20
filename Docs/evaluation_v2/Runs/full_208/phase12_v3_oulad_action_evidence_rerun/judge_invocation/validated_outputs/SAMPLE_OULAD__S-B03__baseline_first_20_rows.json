@@ -1,0 +1,98 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-B03__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the engagement data provided, maintaining fidelity to the metrics and comparisons outlined in the task context."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "All numerical values presented in the explanation are correct and align with the retrieved data, including engagement counts and averages."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core requirement of characterizing the student's effort level but could include more detail on implications or recommendations."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation directly addresses the actionable question regarding the student's engagement compared to classmates, using relevant metrics."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No specific actions were triggered or required based on the deterministic action evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair implications, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The total engagement count of 1261 exceeds the class average of 1118.08.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "total_engagement_count",
+        "class_avg_total_engagement_count"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the retrieved data, which confirms the total engagement count and class average."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "With 98 active days, the student is significantly more active than the class average of 52.55 days.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "active_days",
+        "class_avg_active_days"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the retrieved data, confirming the active days and class average."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "The engagement score of 0.2024 is higher than the class average of 0.1177.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "engagement_score",
+        "class_avg_engagement_score"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The claim is supported by the retrieved data, confirming the engagement score and class average."
+    },
+    {
+      "claim_id": "C04",
+      "claim_text": "The student has shown a commendable level of engagement this semester.",
+      "claim_type": "qualitative",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [],
+      "checker_source": "llm_judge",
+      "rationale": "While the statement reflects the data, it lacks specific metrics to fully substantiate the commendation."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student's engagement metrics, accurately reflecting the data provided. It meets the core requirements of the task while maintaining clarity and relevance. However, it could benefit from a more detailed exploration of implications and recommendations.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 1. The explanation utilized all available metrics from the retrieved data, confirming the accuracy of claims made. No retrieval log path was necessary as the evidence was directly embedded.",
+  "invalid_reason": null
+}

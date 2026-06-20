@@ -1,0 +1,99 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v3_uci_calibration_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-B01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "v3_uci_calibration_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the provided performance metrics, including the average score, class average, and percentile rank."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "All numerical values presented in the explanation, such as the average score of 41.25 and class average of 58.31, are correct and consistent with the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation includes the overall score and pass/fail status, but it lacks a comparison against the class benchmark and does not explicitly state the absence of percentile data."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation addresses the task of providing a performance overview for the student, focusing on relevant metrics."
+    },
+    "actionability": {
+      "applicability": "not_applicable",
+      "score": null,
+      "rationale": "No actionable recommendations were supported by the returned fields, as the action evidence indicates that no actions were triggered."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is generally clear and well-structured, though some sections could be more concise."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation does not contain any stigmatizing language or unfair recommendations, adhering to safety and fairness guidelines."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You have an average score of 41.25, which is just above the passing threshold of 40.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_summary.avg_score",
+        "performance_summary.pass_threshold"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The average score and passing threshold are correctly stated and supported by the evidence."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "Your performance places you in the 8.8 percentile.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_summary.score_percentile"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The percentile rank is accurately reported and supported by the evidence."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "Your average score is 17.06 points lower than the class average.",
+      "claim_type": "numerical",
+      "claim_scope": "supporting",
+      "support_status": "supported",
+      "evidence_refs": [
+        "performance_summary.score_vs_class_avg"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The difference between the average score and class average is correctly calculated and supported."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.17,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.17,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

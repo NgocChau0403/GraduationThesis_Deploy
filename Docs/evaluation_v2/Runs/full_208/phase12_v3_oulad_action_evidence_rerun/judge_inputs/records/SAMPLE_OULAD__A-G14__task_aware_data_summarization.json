@@ -1,0 +1,243 @@
+{
+  "schema_version": "judge_input_schema_v3",
+  "record_id": "SAMPLE_OULAD__A-G14__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v3_uci_action_evidence_rerun",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G14",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v3_action_evidence_rerun",
+  "rubric_version": "judge_rubric_1_to_10_v3_action_evidence_calibrated",
+  "task_context": {
+    "task_name": "Early withdrawal signal analysis",
+    "scope": "Many students",
+    "actionable_question": "How early can admin detect a student about to drop out?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "trend_comparison",
+    "ai_prompt_hint": "Use early_warning_week [FE] to show when engagement collapsed for withdrawn students. Compare to passing students.",
+    "query_labels": [
+      "withdrawal_signal_trend"
+    ],
+    "explanation_strategy": "trend"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "engagement [OULAD only]"
+    ],
+    "key_db_fields": [
+      "week_number",
+      "engagement_count; final_outcome",
+      "avg_clicks by outcome group"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "withdrawal_signal_trend"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The trend for the Withdrawn group shows a significant decline in engagement, particularly marked by a sharp drop in average clicks. This decline suggests that early detection of students at risk of withdrawal can be identified around week 32, where engagement metrics plummeted.\n\nInsights: Sudden Decline in Engagement: There was a sharp drop in average clicks from 116.63 in week 31 to 4.57 in week 32, indicating a significant disengagement among students who later withdrew. | Peak Engagement Before Withdrawal: The highest engagement for the Withdrawn group occurred in week 35 with an average of 323.75 clicks, but this was after a significant drop, indicating a potential last-minute effort before final withdrawal. | Engagement Trough Significance: The lowest engagement was recorded in week 32 with an average of 4.57 clicks, suggesting a critical point for intervention as students were likely disengaging.\n\nEducational implications: The drastic drop in engagement metrics indicates that students may be at risk of withdrawal as early as week 32, suggesting the need for timely interventions.\n\nRecommendations: high - Implement early warning systems to monitor engagement metrics weekly. - By identifying students with declining engagement early, educators can provide targeted support to prevent withdrawal.\n\nWarnings: 3 Withdrawn points have student_count below 10; avoid over-weighting these weeks.",
+    "structured_payload": {
+      "task_id": "A-G14",
+      "execution_id": "exec_1781847775085_95441256",
+      "explanation": {
+        "summary": "The trend for the Withdrawn group shows a significant decline in engagement, particularly marked by a sharp drop in average clicks. This decline suggests that early detection of students at risk of withdrawal can be identified around week 32, where engagement metrics plummeted.",
+        "insights": [
+          {
+            "title": "Sudden Decline in Engagement",
+            "description": "There was a sharp drop in average clicks from 116.63 in week 31 to 4.57 in week 32, indicating a significant disengagement among students who later withdrew.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "avg_clicks",
+                "value": 4.57,
+                "comparison": "down_from_previous",
+                "delta": -112.06,
+                "context": "Week 32 engagement dropped drastically from week 31."
+              }
+            ]
+          },
+          {
+            "title": "Peak Engagement Before Withdrawal",
+            "description": "The highest engagement for the Withdrawn group occurred in week 35 with an average of 323.75 clicks, but this was after a significant drop, indicating a potential last-minute effort before final withdrawal.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "avg_clicks",
+                "value": 323.75,
+                "comparison": "peak",
+                "delta": null,
+                "context": "Week 35 shows a peak engagement despite the overall declining trend."
+              }
+            ]
+          },
+          {
+            "title": "Engagement Trough Significance",
+            "description": "The lowest engagement was recorded in week 32 with an average of 4.57 clicks, suggesting a critical point for intervention as students were likely disengaging.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "avg_clicks",
+                "value": 4.57,
+                "comparison": "trough",
+                "delta": null,
+                "context": "Week 32 marks the lowest engagement before withdrawal."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The drastic drop in engagement metrics indicates that students may be at risk of withdrawal as early as week 32, suggesting the need for timely interventions."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement early warning systems to monitor engagement metrics weekly.",
+            "rationale": "By identifying students with declining engagement early, educators can provide targeted support to prevent withdrawal."
+          }
+        ],
+        "warnings": [
+          "3 Withdrawn points have student_count below 10; avoid over-weighting these weeks."
+        ]
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset has a strong statistical basis with 1998 students and 9 assessments across 8 weeks.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "trend",
+      "explanation_type": "trend",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v1",
+      "baseline_available": true,
+      "input_summary_type": "trend_comparison",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 164,
+      "included_row_count": null,
+      "small_result_threshold": 20,
+      "small_result_full_rows_applied": false,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "withdrawal_signal_trend",
+          "row_count": 164,
+          "included_row_count": 164
+        }
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 6959,
+        "token_usage": {
+          "prompt_tokens": 2711,
+          "completion_tokens": 616,
+          "total_tokens": 3327
+        },
+        "strategy": "trend",
+        "granularity": "weekly",
+        "cost_usd": 0.000776
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-G14__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "1a1603b5b84579a5ab8211e6c75eff1db3f41e16bd928af851f8b80f599c08fe",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 2711,
+        "completion_tokens": 616,
+        "total_tokens": 3327
+      },
+      "latency_ms": 6964,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 164,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "withdrawal_signal_trend",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G14.json",
+        "artifact_sha256": "64c67afde434dcdc16e3b44225b1be83ff387bfc4ca03234bd334a5e7b8e5e9a",
+        "row_count": 164,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 164,
+    "retrieved_row_count_by_dataset": {
+      "withdrawal_signal_trend": 164
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "withdrawal_signal_trend",
+        "start": 0,
+        "end": 163
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_OULAD__A-G14__task_aware_data_summarization__withdrawal_signal_trend__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G14__task_aware_data_summarization.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "withdrawal_signal_trend": 164
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G14-CORE-01",
+        "description": "Identify when engagement collapsed for withdrawn students."
+      },
+      {
+        "requirement_id": "A-G14-CORE-02",
+        "description": "Compare the timing or trajectory with passing students."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G14-CONSTRAINT-01",
+        "description": "Use early_warning_week as the primary collapse-timing field when returned."
+      },
+      {
+        "constraint_id": "A-G14-CONSTRAINT-02",
+        "description": "Frame the comparison as an observed pattern, not proof of withdrawal causation."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  },
+  "derived_stat_evidence": [],
+  "action_evidence": {
+    "applicable": false,
+    "source_type": "not_applicable",
+    "rule_set_id": null,
+    "rule_version": null,
+    "evaluation_status": "not_applicable",
+    "supported_action_count": 0,
+    "supported_actions": [],
+    "rule_evaluations": [],
+    "conflict_evaluations": []
+  }
+}

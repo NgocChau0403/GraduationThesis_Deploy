@@ -1,0 +1,84 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-B02__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation accurately reflects the data provided, including the withdrawal and pass rates, and discusses their implications."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The numerical values for withdrawal (43.1%) and pass rates (28.4%) are correctly stated and supported by the evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation covers the core outputs required, but could provide more detail on the implications of the failure rate."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "The explanation directly addresses the actionable question regarding student outcomes, making it highly relevant."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The recommendations provided are actionable and relevant to the issues identified in the data."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "The explanation is generally clear, but some sections could be more concise to enhance readability."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "The explanation does not contain stigmatizing language and appropriately addresses the need for interventions."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "43.1% of students withdrew from the course.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "outcome_counts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing that 1,077 students withdrew, which is 43.1% of the class."
+    },
+    {
+      "claim_id": "C02",
+      "claim_text": "28.4% of students passed.",
+      "claim_type": "numerical",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "outcome_counts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "This claim is supported by the data showing that 709 students passed, which is 28.4% of the class."
+    },
+    {
+      "claim_id": "C03",
+      "claim_text": "A substantial number of students are struggling to meet course requirements.",
+      "claim_type": "interpretative",
+      "claim_scope": "supporting",
+      "support_status": "partially_supported",
+      "impact_type": "weakens_support",
+      "evidence_refs": [
+        "outcome_counts"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "While the claim is reasonable given the low pass rate, it lacks direct statistical support from the evidence."
+    }
+  ],
+  "errors": [],
+  "holistic_rationale": "The explanation effectively summarizes the student outcomes, providing clear insights and actionable recommendations. It is well-supported by the data, with minor issues in clarity and completeness.",
+  "evidence_usage_notes": "The evidence access mode was 'direct_embedding', with a full result row count of 4. All relevant data was included in the explanation, and the retrieval log was not applicable."
+}
