@@ -1,0 +1,389 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-20T14:42:06.001Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-G08__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__A-G08",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G08",
+    "task_name": "Background group performance & engagement profile",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G08.json",
+    "full_query_artifact_sha256": "8f4e41747ea3f615d793457834081d21309a8a5f5847129b33cf83033b87ad18"
+  },
+  "request_payload": {
+    "task_id": "A-G08",
+    "execution_id": "exec_1781847735724_ef073aa0",
+    "task_name": "Background group performance & engagement profile",
+    "analysis_type": "segmentation",
+    "explanation_strategy": "comparison",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "For each demographic group, compare mean avg_score [FE] and engagement_score [FE] to cohort average. Use colour intensity to show deviation. Avoid causal claims. Note: output is continuous score — distinct from A-G12 which uses categorical final_outcome.",
+    "actionable_question": "Which demographic groups are scoring or engaging below the class average?",
+    "target_audience": [
+      "instructor",
+      "academic_advisor"
+    ],
+    "visualization_config": {
+      "x_field": "group_value",
+      "y_field": "avg_score",
+      "series_field": null,
+      "color_field": "score_vs_cohort",
+      "orientation": "horizontal",
+      "variant": "ranked",
+      "x_label": "Demographic Group",
+      "y_label": "Average Score",
+      "semantic_roles": {
+        "x": "category",
+        "y": "performance_metric",
+        "color": "performance_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "cohort_aggregate",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "demographic_performance": [
+        {
+          "group_value": "Unknown",
+          "student_count": 131,
+          "avg_score": 81.21,
+          "avg_engagement_score": 0.1903,
+          "score_vs_cohort": 10.77
+        },
+        {
+          "group_value": "90-100%",
+          "student_count": 181,
+          "avg_score": 74.53,
+          "avg_engagement_score": 0.1457,
+          "score_vs_cohort": 4.09
+        },
+        {
+          "group_value": "80-90%",
+          "student_count": 201,
+          "avg_score": 72.35,
+          "avg_engagement_score": 0.1668,
+          "score_vs_cohort": 1.92
+        },
+        {
+          "group_value": "60-70%",
+          "student_count": 193,
+          "avg_score": 71.85,
+          "avg_engagement_score": 0.1414,
+          "score_vs_cohort": 1.42
+        },
+        {
+          "group_value": "70-80%",
+          "student_count": 194,
+          "avg_score": 71.33,
+          "avg_engagement_score": 0.138,
+          "score_vs_cohort": 0.89
+        },
+        {
+          "group_value": "50-60%",
+          "student_count": 191,
+          "avg_score": 70.27,
+          "avg_engagement_score": 0.1484,
+          "score_vs_cohort": -0.17
+        },
+        {
+          "group_value": "30-40%",
+          "student_count": 206,
+          "avg_score": 68.5,
+          "avg_engagement_score": 0.1392,
+          "score_vs_cohort": -1.94
+        },
+        {
+          "group_value": "0-10%",
+          "student_count": 152,
+          "avg_score": 68.05,
+          "avg_engagement_score": 0.1463,
+          "score_vs_cohort": -2.39
+        },
+        {
+          "group_value": "40-50%",
+          "student_count": 185,
+          "avg_score": 67.76,
+          "avg_engagement_score": 0.1312,
+          "score_vs_cohort": -2.67
+        },
+        {
+          "group_value": "20-30%",
+          "student_count": 196,
+          "avg_score": 65.99,
+          "avg_engagement_score": 0.1318,
+          "score_vs_cohort": -4.45
+        },
+        {
+          "group_value": "10-20",
+          "student_count": 168,
+          "avg_score": 62.96,
+          "avg_engagement_score": 0.1312,
+          "score_vs_cohort": -7.48
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "demographic_performance"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [
+        "avg_engagement_score"
+      ],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "group_comparison",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "avg_score",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": "group_value",
+      "series_column": null,
+      "gap_column": "score_vs_cohort",
+      "reliability_column": null,
+      "minimum_reliable_count": 10,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": "student_count",
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": "score_vs_cohort",
+      "sort_direction": "asc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": 10,
+      "bottom_k": 5
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 7391,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 2006,
+      "completion_tokens": 548,
+      "total_tokens": 2554
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-G08",
+    "execution_id": "exec_1781847735724_ef073aa0",
+    "explanation": {
+      "summary": "The analysis of student performance and engagement across demographic groups reveals significant disparities, particularly between high-performing and low-performing groups. The 'Unknown' group stands out with the highest average score and engagement, while lower-scoring groups exhibit markedly reduced engagement levels.",
+      "insights": [
+        {
+          "title": "High Performance of Unknown Group",
+          "description": "The 'Unknown' group has the highest average score and engagement score, indicating a strong performance relative to other groups.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "avg_score",
+              "value": 81.21,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Highest average score among all groups"
+            },
+            {
+              "metric": "avg_engagement_score",
+              "value": 0.1903,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Highest engagement score among all groups"
+            }
+          ]
+        },
+        {
+          "title": "Low Engagement in Lower Scoring Groups",
+          "description": "Groups scoring below the cohort average, particularly those in the 10-20% and 20-30% ranges, show significantly lower engagement scores, suggesting a potential area for intervention.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "avg_engagement_score",
+              "value": 0.1312,
+              "comparison": "down_from_previous",
+              "delta": -0.0591,
+              "context": "Lowest engagement score in the 10-20% group"
+            },
+            {
+              "metric": "avg_engagement_score",
+              "value": 0.1318,
+              "comparison": "down_from_previous",
+              "delta": -0.0585,
+              "context": "Lowest engagement score in the 20-30% group"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "The disparity in engagement scores suggests that students in lower-performing groups may require additional support and resources to enhance their learning experience."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement targeted engagement strategies for low-performing groups.",
+          "rationale": "Enhancing engagement in these groups may lead to improved academic performance and overall student success."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "Data quality is robust, with clear metrics and group comparisons available.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "comparison",
+    "explanation_type": "comparison",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3-experimental",
+    "baseline_available": true,
+    "input_summary_type": "group_comparison",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 11,
+    "included_row_count": 11,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "demographic_performance",
+        "row_count": 11,
+        "included_row_count": 11
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 11,
+    "baseline_reference_tokens": 431,
+    "task_aware_prompt_tokens": 1142,
+    "token_ratio": 2.6497,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [
+      "limitations.causal_claim_allowed",
+      "limitations.fairness_warnings",
+      "limitations.low_count_warnings",
+      "limitations.missing_groups",
+      "exceptions.weakest_group",
+      "exceptions.dominant_group",
+      "comparison.gaps"
+    ],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (2.6497 > 1.2).",
+      "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 7388,
+      "token_usage": {
+        "prompt_tokens": 2006,
+        "completion_tokens": 548,
+        "total_tokens": 2554
+      },
+      "strategy": "comparison",
+      "granularity": "cohort_aggregate",
+      "cost_usd": 0.00063
+    }
+  },
+  "raw_text": "Summary: The analysis of student performance and engagement across demographic groups reveals significant disparities, particularly between high-performing and low-performing groups. The 'Unknown' group stands out with the highest average score and engagement, while lower-scoring groups exhibit markedly reduced engagement levels.\n\nInsights: High Performance of Unknown Group: The 'Unknown' group has the highest average score and engagement score, indicating a strong performance relative to other groups. | Low Engagement in Lower Scoring Groups: Groups scoring below the cohort average, particularly those in the 10-20% and 20-30% ranges, show significantly lower engagement scores, suggesting a potential area for intervention.\n\nEducational implications: The disparity in engagement scores suggests that students in lower-performing groups may require additional support and resources to enhance their learning experience.\n\nRecommendations: high - Implement targeted engagement strategies for low-performing groups. - Enhancing engagement in these groups may lead to improved academic performance and overall student success."
+}

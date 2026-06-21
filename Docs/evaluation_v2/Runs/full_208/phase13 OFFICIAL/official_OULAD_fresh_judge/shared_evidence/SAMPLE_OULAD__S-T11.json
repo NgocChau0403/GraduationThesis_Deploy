@@ -1,0 +1,198 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__S-T11",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T11",
+ "source_explanation_record_id": "SAMPLE_OULAD__S-T11__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "be95970fb6c286fd0a0ad5576439c4a46080d8f36597334fc0634d303ecf2001",
+ "deterministic_summary": {
+ "summary_type": "correlation_evidence",
+ "dataset_name": "registration_data",
+ "row_count": 1988,
+ "x_column": "registration_lead_time",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "selected_entity_column": "is_selected_student",
+ "metric_units": {
+ "registration_lead_time": "days_before_course_start",
+ "avg_score": "score_on_runtime_scale"
+ },
+ "metric_directions": {
+ "registration_lead_time": "higher_is_earlier_registration",
+ "avg_score": "higher_is_better"
+ },
+ "coefficient": 0.0017,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 1988,
+ "p_value": null,
+ "outliers": [],
+ "selected_entity_evidence": [
+ {
+ "row_index": 0,
+ "selected_column": "is_selected_student",
+ "selected_value": true,
+ "is_valid_pair": true,
+ "raw_values": {
+ "registration_lead_time": 103,
+ "avg_score": 91.2
+ },
+ "registration_lead_time": 103,
+ "avg_score": 91.2,
+ "cohort_context": {
+ "coefficient": 0.0017,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 1988,
+ "direction": "positive",
+ "strength": "weak",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ },
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "student_marker": "Selected student",
+ "label_context": {
+ "student_marker": "Selected student",
+ "cohort_avg_registration_lead_time": 63.92,
+ "cohort_avg_score": 70.24,
+ "registration_timing_percentile": 77,
+ "score_percentile": 83.4
+ },
+ "percentile_context": {
+ "cohort_avg_registration_lead_time": 63.92,
+ "cohort_avg_score": 70.24,
+ "registration_timing_percentile": 77,
+ "score_percentile": 83.4
+ }
+ }
+ ],
+ "missing_selected_entity_evidence": [],
+ "selected_entity_count": 1,
+ "sensitive_context_policy": null,
+ "direction": "positive",
+ "strength": "weak",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false,
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "correlation_evidence",
+ "task_id": "S-T11",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "registration_data",
+ "row_count": 1988,
+ "x_column": "registration_lead_time",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "sample_size": 1988,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "selected_entity_column": "is_selected_student",
+ "selected_entity_count": 1,
+ "metric_units": {
+ "registration_lead_time": "days_before_course_start",
+ "avg_score": "score_on_runtime_scale"
+ },
+ "metric_directions": {
+ "registration_lead_time": "higher_is_earlier_registration",
+ "avg_score": "higher_is_better"
+ }
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "coefficient": 0.0017,
+ "direction": "positive",
+ "strength": "weak"
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "p_value": null,
+ "selected_entity_evidence": [
+ {
+ "row_index": 0,
+ "selected_column": "is_selected_student",
+ "selected_value": true,
+ "is_valid_pair": true,
+ "raw_values": {
+ "registration_lead_time": 103,
+ "avg_score": 91.2
+ },
+ "registration_lead_time": 103,
+ "avg_score": 91.2,
+ "cohort_context": {
+ "coefficient": 0.0017,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 1988,
+ "direction": "positive",
+ "strength": "weak",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ },
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "student_marker": "Selected student",
+ "label_context": {
+ "student_marker": "Selected student",
+ "cohort_avg_registration_lead_time": 63.92,
+ "cohort_avg_score": 70.24,
+ "registration_timing_percentile": 77,
+ "score_percentile": 83.4
+ },
+ "percentile_context": {
+ "cohort_avg_registration_lead_time": 63.92,
+ "cohort_avg_score": 70.24,
+ "registration_timing_percentile": 77,
+ "score_percentile": 83.4
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "outliers": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_selected_entity_evidence": [],
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "sensitive_context_policy": null,
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ }
+ }
+ ]
+ }
+}

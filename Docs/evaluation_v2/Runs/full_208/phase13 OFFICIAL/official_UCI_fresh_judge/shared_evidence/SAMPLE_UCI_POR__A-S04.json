@@ -1,0 +1,228 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__A-S04",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-S04",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__A-S04__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "3eb4c01c7fc3f096bd9acb2682381e072412fbe23a2b98d5542a07effc1b8cf1",
+ "deterministic_summary": {
+ "summary_type": "risk_flags",
+ "dataset_name": "risk_flags",
+ "row_count": 4,
+ "total_flags": 4,
+ "triggered_count": 2,
+ "non_triggered_count": 2,
+ "unknown_triggered_count": 0,
+ "severity_available": false,
+ "severity_counts": {},
+ "triggered_flags": [
+ {
+ "flag_name": "flag_low_score",
+ "triggered": true,
+ "flag_description": "Average score is below the pass threshold for this dataset scale.",
+ "recommended_action": "Review the weakest assessment topics and schedule tutor support before the next assessment.",
+ "support_category": "academic_performance"
+ },
+ {
+ "flag_name": "flag_low_punctuality",
+ "triggered": true,
+ "flag_description": "Submission punctuality is below the expected threshold.",
+ "recommended_action": "Use deadline reminders and submit drafts earlier to reduce late-submission risk.",
+ "support_category": "time_management"
+ }
+ ],
+ "non_triggered_flags": [
+ {
+ "flag_name": "flag_high_absence",
+ "triggered": false,
+ "flag_description": "Absences are within the high-absence risk limit.",
+ "recommended_action": "Keep monitoring attendance and confirm there are no new absence spikes.",
+ "support_category": "attendance"
+ },
+ {
+ "flag_name": "flag_neg_trend",
+ "triggered": false,
+ "flag_description": "Scores are maintaining an upward or stable trend across assessments.",
+ "recommended_action": "Continue monitoring assessment feedback over time.",
+ "support_category": "trend_monitoring"
+ }
+ ],
+ "highest_severity_triggered": null,
+ "threshold_evidence": [
+ {
+ "flag_name": "flag_low_score",
+ "flag_value": 36.6667,
+ "flag_value_raw": 36.666666666666664,
+ "threshold": 40,
+ "threshold_raw": "40",
+ "triggered": true,
+ "triggered_raw": true
+ },
+ {
+ "flag_name": "flag_low_punctuality",
+ "flag_value": 0,
+ "flag_value_raw": 0,
+ "threshold": 0.7,
+ "threshold_raw": "0.7",
+ "triggered": true,
+ "triggered_raw": true
+ },
+ {
+ "flag_name": "flag_high_absence",
+ "flag_value": 4,
+ "flag_value_raw": 4,
+ "threshold": 10,
+ "threshold_raw": "10",
+ "triggered": false,
+ "triggered_raw": false
+ },
+ {
+ "flag_name": "flag_neg_trend",
+ "flag_value": 27.5,
+ "flag_value_raw": 27.5,
+ "threshold": 0,
+ "threshold_raw": "0",
+ "triggered": false,
+ "triggered_raw": false
+ }
+ ],
+ "recommended_actions": [
+ {
+ "flag_name": "flag_low_score",
+ "recommended_action": "Review the weakest assessment topics and schedule tutor support before the next assessment."
+ },
+ {
+ "flag_name": "flag_low_punctuality",
+ "recommended_action": "Use deadline reminders and submit drafts earlier to reduce late-submission risk."
+ }
+ ],
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "risk_flags",
+ "task_id": "A-S04",
+ "task_output_contract": [
+ "Use checklist style: triggered flags first, then non-triggered flags briefly.",
+ "For triggered flags, state flag_value versus threshold plus severity, description, support category, and existing recommended_action when supplied.",
+ "Do not invent new risk flags or new recommendations outside returned flag evidence.",
+ "For every triggered flag, explain the existing recommended_action; do not create a replacement action."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "risk_flags",
+ "row_count": 4,
+ "total_flags": 4,
+ "triggered_count": 2,
+ "non_triggered_count": 2,
+ "unknown_triggered_count": 0,
+ "severity_available": false
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "highest_severity_triggered": null,
+ "triggered_flags": [
+ {
+ "flag_name": "flag_low_score",
+ "triggered": true,
+ "flag_description": "Average score is below the pass threshold for this dataset scale.",
+ "recommended_action": "Review the weakest assessment topics and schedule tutor support before the next assessment.",
+ "support_category": "academic_performance"
+ },
+ {
+ "flag_name": "flag_low_punctuality",
+ "triggered": true,
+ "flag_description": "Submission punctuality is below the expected threshold.",
+ "recommended_action": "Use deadline reminders and submit drafts earlier to reduce late-submission risk.",
+ "support_category": "time_management"
+ }
+ ],
+ "non_triggered_flags": [
+ {
+ "flag_name": "flag_high_absence",
+ "triggered": false,
+ "flag_description": "Absences are within the high-absence risk limit.",
+ "recommended_action": "Keep monitoring attendance and confirm there are no new absence spikes.",
+ "support_category": "attendance"
+ },
+ {
+ "flag_name": "flag_neg_trend",
+ "triggered": false,
+ "flag_description": "Scores are maintaining an upward or stable trend across assessments.",
+ "recommended_action": "Continue monitoring assessment feedback over time.",
+ "support_category": "trend_monitoring"
+ }
+ ]
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "threshold_evidence": [
+ {
+ "flag_name": "flag_low_score",
+ "flag_value": 36.6667,
+ "flag_value_raw": 36.666666666666664,
+ "threshold": 40,
+ "threshold_raw": "40",
+ "triggered": true,
+ "triggered_raw": true
+ },
+ {
+ "flag_name": "flag_low_punctuality",
+ "flag_value": 0,
+ "flag_value_raw": 0,
+ "threshold": 0.7,
+ "threshold_raw": "0.7",
+ "triggered": true,
+ "triggered_raw": true
+ },
+ {
+ "flag_name": "flag_high_absence",
+ "flag_value": 4,
+ "flag_value_raw": 4,
+ "threshold": 10,
+ "threshold_raw": "10",
+ "triggered": false,
+ "triggered_raw": false
+ },
+ {
+ "flag_name": "flag_neg_trend",
+ "flag_value": 27.5,
+ "flag_value_raw": 27.5,
+ "threshold": 0,
+ "threshold_raw": "0",
+ "triggered": false,
+ "triggered_raw": false
+ }
+ ],
+ "severity_counts": {}
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "recommended_actions": [
+ {
+ "flag_name": "flag_low_score",
+ "recommended_action": "Review the weakest assessment topics and schedule tutor support before the next assessment."
+ },
+ {
+ "flag_name": "flag_low_punctuality",
+ "recommended_action": "Use deadline reminders and submit drafts earlier to reduce late-submission risk."
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

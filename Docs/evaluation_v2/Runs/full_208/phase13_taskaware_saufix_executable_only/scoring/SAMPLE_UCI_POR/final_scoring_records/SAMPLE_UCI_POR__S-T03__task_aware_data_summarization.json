@@ -1,0 +1,101 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T03__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Grounding and interpretation: The direction of comparison is correct, but exact returned values and the requested top-X-percent standing are omitted."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Values, directions, and comparisons: The direction of comparison is correct, but exact returned values and the requested top-X-percent standing are omitted."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Coverage of supplied requirements: The direction of comparison is correct, but exact returned values and the requested top-X-percent standing are omitted."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Fit to the stated task and audience: The direction of comparison is correct, but exact returned values and the requested top-X-percent standing are omitted."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Usefulness and evidence basis: The direction of comparison is correct, but exact returned values and the requested top-X-percent standing are omitted."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Precision and organization: The direction of comparison is correct, but exact returned values and the requested top-X-percent standing are omitted."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Fair and non-stigmatizing treatment: The direction of comparison is correct, but exact returned values and the requested top-X-percent standing are omitted."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You are currently performing below the cohort benchmark in all key metrics. This indicates areas where you can focus on improving your scores and engagement.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T03.json; dataset peer_comparison"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The direction of comparison is correct, but exact returned values and the requested top-X-percent standing are omitted.",
+      "impact_type": "changes_interpretation"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_required_output",
+      "claim_ids": [],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 7,
+      "rationale": "The direction of comparison is correct, but exact returned values and the requested top-X-percent standing are omitted.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T03.json; dataset peer_comparison"
+      ],
+      "requirement_id": "S-T03-CORE-01"
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "major",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 1,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 6.85,
+  "caps_applied": [
+    {
+      "type": "missing_required_output",
+      "severity": "major",
+      "cap": 7,
+      "error_id": "E01",
+      "claim_ids": [],
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T03.json; dataset peer_comparison"
+      ]
+    }
+  ],
+  "effective_cap": 7,
+  "final_score_after_caps": 6.85,
+  "verdict": "good",
+  "invalid_reason": null
+}

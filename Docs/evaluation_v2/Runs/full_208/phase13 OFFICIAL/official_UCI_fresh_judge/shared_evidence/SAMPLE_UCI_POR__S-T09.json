@@ -1,0 +1,198 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__S-T09",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "S-T09",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__S-T09__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "5a31e3c1d64b3c6f16f3d77dd6a0a2d94cec6dcfcc8307aedb1f68b9d5968ac5",
+ "deterministic_summary": {
+ "summary_type": "correlation_evidence",
+ "dataset_name": "lifestyle_risk_scatter",
+ "row_count": 649,
+ "x_column": "lifestyle_risk_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "selected_entity_column": "is_current_student",
+ "metric_units": {
+ "lifestyle_risk_score": "index_0_1",
+ "avg_score": "score_on_runtime_scale"
+ },
+ "metric_directions": {
+ "lifestyle_risk_score": "higher_is_more_risk",
+ "avg_score": "higher_is_better"
+ },
+ "coefficient": -0.1041,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 649,
+ "p_value": null,
+ "outliers": [],
+ "selected_entity_evidence": [
+ {
+ "row_index": 648,
+ "selected_column": "is_current_student",
+ "selected_value": true,
+ "is_valid_pair": true,
+ "raw_values": {
+ "lifestyle_risk_score": 0.375,
+ "avg_score": 36.67
+ },
+ "lifestyle_risk_score": 0.375,
+ "avg_score": 36.67,
+ "cohort_context": {
+ "coefficient": -0.1041,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 649,
+ "direction": "negative",
+ "strength": "weak",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ },
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "point_role": "Selected student",
+ "label_context": {
+ "point_role": "Selected student"
+ },
+ "sensitive_context": {
+ "alcohol_weekday": 1,
+ "alcohol_weekend": 1,
+ "go_out_freq": 4,
+ "health_status": 3,
+ "family_relation": 4,
+ "free_time": 3
+ },
+ "sensitive_context_policy": "descriptive_only",
+ "claim_limit": "Sensitive/background context is descriptive only; do not infer causality or prescribe actions from it."
+ }
+ ],
+ "missing_selected_entity_evidence": [],
+ "selected_entity_count": 1,
+ "sensitive_context_policy": "descriptive_only",
+ "direction": "negative",
+ "strength": "weak",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false,
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "correlation_evidence",
+ "task_id": "S-T09",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "lifestyle_risk_scatter",
+ "row_count": 649,
+ "x_column": "lifestyle_risk_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "sample_size": 649,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "selected_entity_column": "is_current_student",
+ "selected_entity_count": 1,
+ "metric_units": {
+ "lifestyle_risk_score": "index_0_1",
+ "avg_score": "score_on_runtime_scale"
+ },
+ "metric_directions": {
+ "lifestyle_risk_score": "higher_is_more_risk",
+ "avg_score": "higher_is_better"
+ }
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "coefficient": -0.1041,
+ "direction": "negative",
+ "strength": "weak"
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "p_value": null,
+ "selected_entity_evidence": [
+ {
+ "row_index": 648,
+ "selected_column": "is_current_student",
+ "selected_value": true,
+ "is_valid_pair": true,
+ "raw_values": {
+ "lifestyle_risk_score": 0.375,
+ "avg_score": 36.67
+ },
+ "lifestyle_risk_score": 0.375,
+ "avg_score": 36.67,
+ "cohort_context": {
+ "coefficient": -0.1041,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 649,
+ "direction": "negative",
+ "strength": "weak",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ },
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "point_role": "Selected student",
+ "label_context": {
+ "point_role": "Selected student"
+ },
+ "sensitive_context": {
+ "alcohol_weekday": 1,
+ "alcohol_weekend": 1,
+ "go_out_freq": 4,
+ "health_status": 3,
+ "family_relation": 4,
+ "free_time": 3
+ },
+ "sensitive_context_policy": "descriptive_only",
+ "claim_limit": "Sensitive/background context is descriptive only; do not infer causality or prescribe actions from it."
+ }
+ ]
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "outliers": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_selected_entity_evidence": [],
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "sensitive_context_policy": "descriptive_only",
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ }
+ }
+ ]
+ }
+}

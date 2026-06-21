@@ -1,0 +1,827 @@
+{
+ "schema_version": "judge_input_schema_v1",
+ "record_id": "SAMPLE_OULAD__S-T08__baseline_first_20_rows",
+ "evaluation_run_id": "oulad_official_r5",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T08",
+ "explanation_mode": "baseline_first_20_rows",
+ "prompt_version": "judge_prompt_v2_pilot_v1",
+ "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+ "task_context": {
+ "task_name": "Assessment lateness impact",
+ "scope": "1 student",
+ "actionable_question": "Does submitting late actually lower my score?",
+ "target_audience": "student",
+ "ai_summary_type": "trend_series",
+ "ai_prompt_hint": "Use submission_delay_avg [FE] and punctuality_rate [FE]. Explain how delay magnitude correlates with score drop.",
+ "query_labels": [
+ "submission_lateness"
+ ],
+ "explanation_strategy": "behavioral"
+ },
+ "schema_context": {
+ "source_tables": [
+ "assessment_result",
+ "assessment [OULAD only]"
+ ],
+ "key_db_fields": [
+ "submission_delay_days",
+ "score_normalized",
+ "assessment_type; submission_delay_avg [FE cross]",
+ "punctuality_rate [FE cross]"
+ ],
+ "output_schema": {},
+ "query_labels": [
+ "submission_lateness"
+ ]
+ },
+ "explanation": {
+ "raw_text": "Summary: Your submission patterns show that while you have been submitting assessments late, you are still achieving passing scores. However, there is a noticeable trend where your scores tend to decrease as the submission delay increases.\n\nInsights: Impact of Submission Delay on Scores: As your submission delay increases, your scores show a slight decline. For instance, your highest score of 100 was achieved with a 3-day delay, while a 5-day delay resulted in a score of 83.\n\nEducational implications: Submitting late may not directly prevent you from passing, but it can impact your overall performance.\n\nRecommendations: high - Aim to submit assessments on or before the due date. - Improving your punctuality can help maintain or improve your scores, as evidenced by the correlation between timely submissions and higher scores.",
+ "structured_payload": {
+ "task_id": "S-T08",
+ "execution_id": "exec_1781847912365_48ce21c2",
+ "explanation": {
+ "summary": "Your submission patterns show that while you have been submitting assessments late, you are still achieving passing scores. However, there is a noticeable trend where your scores tend to decrease as the submission delay increases.",
+ "insights": [
+ {
+ "title": "Impact of Submission Delay on Scores",
+ "description": "As your submission delay increases, your scores show a slight decline. For instance, your highest score of 100 was achieved with a 3-day delay, while a 5-day delay resulted in a score of 83.",
+ "severity": "medium",
+ "evidence": [
+ {
+ "metric": "submission_delay_days",
+ "value": 5,
+ "comparison": "up_from_previous",
+ "delta": -7,
+ "context": "Score dropped from 90 to 83 with a 5-day delay."
+ }
+ ]
+ }
+ ],
+ "educational_implications": [
+ "Submitting late may not directly prevent you from passing, but it can impact your overall performance."
+ ],
+ "recommendations": [
+ {
+ "priority": "high",
+ "action": "Aim to submit assessments on or before the due date.",
+ "rationale": "Improving your punctuality can help maintain or improve your scores, as evidenced by the correlation between timely submissions and higher scores."
+ }
+ ],
+ "warnings": []
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "The data clearly shows a pattern between submission delays and score outcomes.",
+ "based_on": [
+ "sufficient_data"
+ ]
+ },
+ "explanation_strategy": "behavioral",
+ "explanation_type": "behavioral",
+ "ai_summary_method": "baseline_first_20_rows",
+ "ai_summary_version": "baseline",
+ "baseline_available": true,
+ "input_summary_type": "raw_first_20_rows",
+ "ai_summary_method_warning": null,
+ "full_result_row_count": null,
+ "included_row_count": null,
+ "small_result_threshold": null,
+ "small_result_full_rows_applied": null,
+ "dataset_row_breakdown": [],
+ "safety_flags": [],
+ "degraded": false,
+ "meta": {
+ "model": "gpt-4o-mini-2024-07-18",
+ "latency_ms": 5777,
+ "token_usage": {
+ "prompt_tokens": 970,
+ "completion_tokens": 329,
+ "total_tokens": 1299
+ },
+ "strategy": "behavioral",
+ "granularity": "per_assessment",
+ "cost_usd": 0.000343
+ }
+ },
+ "generation_metadata": {
+ "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__S-T08__baseline_first_20_rows.json",
+ "explanation_artifact_sha256": "cf5e9817adf736fd79df00acd5a3aee4d6eb33fc58bf4c1ef8a46a64040146e1",
+ "ai_service_url": "http://localhost:8000",
+ "expected_ai_summary_method": "baseline_first_20_rows",
+ "observed_ai_summary_method": "baseline_first_20_rows",
+ "degraded": false,
+ "model": "gpt-4o-mini-2024-07-18",
+ "token_usage": {
+ "prompt_tokens": 970,
+ "completion_tokens": 329,
+ "total_tokens": 1299
+ },
+ "latency_ms": 5779,
+ "attempts_used": 1
+ }
+ },
+ "evidence_access": {
+ "full_result_row_count": 5,
+ "full_query_artifacts": [
+ {
+ "dataset_label": "submission_lateness",
+ "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T08.json",
+ "artifact_sha256": "02a77476593087a352549dbdb2c5098286e2277063652aeec9fd94cb464a5018",
+ "row_count": 5,
+ "readable": true
+ }
+ ],
+ "evidence_access_mode": "direct_embedding",
+ "small_result_row_threshold": 20,
+ "direct_embedding_token_budget": 120000,
+ "prompt_embedded_row_count": 5,
+ "retrieved_row_count": 0,
+ "retrieved_row_count_by_dataset": {},
+ "retrieved_row_ranges": [],
+ "retrieved_chunk_ids": [],
+ "retrieval_log_path": null,
+ "retrieval_request_complete": true,
+ "retrieval_coverage_status": "not_applicable",
+ "full_access_available": true,
+ "deterministic_scan_scope": "full_query_artifact_all_rows",
+ "deterministic_scan_row_count_by_dataset": {
+ "submission_lateness": 5
+ },
+ "full_result_sent_to_llm": true,
+ "deterministic_checks": [
+ {
+ "check_type": "task_aware_shared_evidence_contract",
+ "case_id": "SAMPLE_OULAD__S-T08",
+ "task_id": "S-T08",
+ "sidecar_sha256": "a07d78e2a7c5ad5add655ee58059e73dbfbf9b958bcf1e63fdbc387836f5e245",
+ "evidence": {
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__S-T08",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T08",
+ "source_explanation_record_id": "SAMPLE_OULAD__S-T08__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "529144afa6988188649edce602299d572add630eb26dfc8a186274adbabf1c49",
+ "deterministic_summary": {
+ "summary_type": "trend_series",
+ "dataset_name": "submission_lateness",
+ "row_count": 5,
+ "time_column": "assessment_order",
+ "metric_column": "submission_delay_days",
+ "metric_units": {
+ "submission_delay_days": "days_relative_to_due_date",
+ "submission_delay_avg": "days_late_average_positive_only",
+ "punctuality_rate": "ratio_0_1",
+ "score_normalized": "score_on_runtime_scale"
+ },
+ "metric_directions": {
+ "submission_delay_days": "higher_is_worse",
+ "submission_delay_avg": "higher_is_worse",
+ "punctuality_rate": "higher_is_better",
+ "score_normalized": "higher_is_better"
+ },
+ "dataset_roles": {},
+ "point_count": 4,
+ "first_point": {
+ "assessment_order": 1,
+ "submission_delay_days": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24295"
+ },
+ "secondary_metrics": {
+ "score_normalized": 100,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "last_point": {
+ "assessment_order": 8,
+ "submission_delay_days": 5,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24298"
+ },
+ "secondary_metrics": {
+ "score_normalized": 83,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "peak": {
+ "assessment_order": 8,
+ "submission_delay_days": 5,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24298"
+ },
+ "secondary_metrics": {
+ "score_normalized": 83,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "trough": {
+ "assessment_order": 3,
+ "submission_delay_days": 2,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24296"
+ },
+ "secondary_metrics": {
+ "score_normalized": 87,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "overall_change": {
+ "from": {
+ "assessment_order": 1,
+ "submission_delay_days": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24295"
+ },
+ "secondary_metrics": {
+ "score_normalized": 100,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "to": {
+ "assessment_order": 8,
+ "submission_delay_days": 5,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24298"
+ },
+ "secondary_metrics": {
+ "score_normalized": 83,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "delta": 2,
+ "percent_change": 66.6667
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "assessment_order": 1,
+ "submission_delay_days": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24295"
+ },
+ "secondary_metrics": {
+ "score_normalized": 100,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "to": {
+ "assessment_order": 3,
+ "submission_delay_days": 2,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24296"
+ },
+ "secondary_metrics": {
+ "score_normalized": 87,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "delta": -1
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "assessment_order": 5,
+ "submission_delay_days": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24297"
+ },
+ "secondary_metrics": {
+ "score_normalized": 90,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "to": {
+ "assessment_order": 8,
+ "submission_delay_days": 5,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24298"
+ },
+ "secondary_metrics": {
+ "score_normalized": 83,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "delta": 2
+ },
+ "flagged_points": [
+ {
+ "assessment_order": 1,
+ "submission_delay_days": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24295"
+ },
+ "secondary_metrics": {
+ "score_normalized": 100,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ },
+ "flags": {
+ "pass_flag": true
+ },
+ "flag_raw_values": {
+ "pass_flag": true
+ }
+ },
+ {
+ "assessment_order": 3,
+ "submission_delay_days": 2,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24296"
+ },
+ "secondary_metrics": {
+ "score_normalized": 87,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ },
+ "flags": {
+ "pass_flag": true
+ },
+ "flag_raw_values": {
+ "pass_flag": true
+ }
+ },
+ {
+ "assessment_order": 5,
+ "submission_delay_days": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24297"
+ },
+ "secondary_metrics": {
+ "score_normalized": 90,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ },
+ "flags": {
+ "pass_flag": true
+ },
+ "flag_raw_values": {
+ "pass_flag": true
+ }
+ },
+ {
+ "assessment_order": 8,
+ "submission_delay_days": 5,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24298"
+ },
+ "secondary_metrics": {
+ "score_normalized": 83,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ },
+ "flags": {
+ "pass_flag": true
+ },
+ "flag_raw_values": {
+ "pass_flag": true
+ }
+ }
+ ],
+ "secondary_metric_evidence": {
+ "score_normalized": {
+ "count": 4,
+ "min": 83,
+ "max": 100,
+ "first": 100,
+ "last": 83
+ },
+ "submission_delay_avg": {
+ "count": 4,
+ "min": 3.25,
+ "max": 3.25,
+ "first": 3.25,
+ "last": 3.25
+ },
+ "punctuality_rate": {
+ "count": 4,
+ "min": 0,
+ "max": 0,
+ "first": 0,
+ "last": 0
+ }
+ },
+ "secondary_metric_associations": {
+ "score_normalized": {
+ "paired_point_count": 4,
+ "method": "pearson_on_aligned_points",
+ "correlation": -0.4015,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": true
+ },
+ "submission_delay_avg": {
+ "paired_point_count": 4,
+ "method": "pearson_on_aligned_points",
+ "correlation": null,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": true
+ },
+ "punctuality_rate": {
+ "paired_point_count": 4,
+ "method": "pearson_on_aligned_points",
+ "correlation": null,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": true
+ }
+ },
+ "multi_dataset_evidence": [],
+ "small_sample_caveats": [
+ {
+ "point_count": 4,
+ "minimum_sample_size": 6,
+ "warning": "Only 4 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+ }
+ ],
+ "causal_claim_allowed": false,
+ "action_evidence": [],
+ "summarization_warnings": [
+ "Skipped 1 rows with invalid submission_delay_days.",
+ "Only 4 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+ ],
+ "delay_score_evidence": {
+ "submission_delay_avg": "3.25",
+ "punctuality_rate": "0",
+ "valid_pair_count": 4,
+ "null_delay_count": 1,
+ "pairs": [
+ {
+ "assessment_order": 1,
+ "delay": 3,
+ "score": 100
+ },
+ {
+ "assessment_order": 3,
+ "delay": 2,
+ "score": 87
+ },
+ {
+ "assessment_order": 5,
+ "delay": 3,
+ "score": 90
+ },
+ {
+ "assessment_order": 8,
+ "delay": 5,
+ "score": 83
+ }
+ ],
+ "pearson_correlation": -0.4015,
+ "association_status": "descriptive_only_not_statistically_reliable"
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "trend_series",
+ "task_id": "S-T08",
+ "task_output_contract": [
+ "Identify timing, first/last points, overall change, and flagged points when supplied.",
+ "For empty or insufficient data, state row count and missing capability/data-quality warnings instead of inferring a trend.",
+ "Only recommend timing when critical weeks or action_evidence are present.",
+ "State submission_delay_avg, punctuality_rate, all valid delay-score pairs, the null Exam delay, and the deterministic descriptive correlation.",
+ "With four valid pairs, label the relationship descriptive_only_not_statistically_reliable; do not claim monotonic delay growth, causality, or score benefit from punctuality."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "submission_lateness",
+ "row_count": 5,
+ "point_count": 4,
+ "time_column": "assessment_order",
+ "metric_column": "submission_delay_days",
+ "dataset_roles": {},
+ "metric_units": {
+ "submission_delay_days": "days_relative_to_due_date",
+ "submission_delay_avg": "days_late_average_positive_only",
+ "punctuality_rate": "ratio_0_1",
+ "score_normalized": "score_on_runtime_scale"
+ },
+ "metric_directions": {
+ "submission_delay_days": "higher_is_worse",
+ "submission_delay_avg": "higher_is_worse",
+ "punctuality_rate": "higher_is_better",
+ "score_normalized": "higher_is_better"
+ }
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "first_point": {
+ "assessment_order": 1,
+ "submission_delay_days": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24295"
+ },
+ "secondary_metrics": {
+ "score_normalized": 100,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "last_point": {
+ "assessment_order": 8,
+ "submission_delay_days": 5,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24298"
+ },
+ "secondary_metrics": {
+ "score_normalized": 83,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "overall_change": {
+ "from": {
+ "assessment_order": 1,
+ "submission_delay_days": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24295"
+ },
+ "secondary_metrics": {
+ "score_normalized": 100,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "to": {
+ "assessment_order": 8,
+ "submission_delay_days": 5,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24298"
+ },
+ "secondary_metrics": {
+ "score_normalized": 83,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "delta": 2,
+ "percent_change": 66.6667
+ },
+ "delay_score_evidence": {
+ "submission_delay_avg": "3.25",
+ "punctuality_rate": "0",
+ "valid_pair_count": 4,
+ "null_delay_count": 1,
+ "pairs": [
+ {
+ "assessment_order": 1,
+ "delay": 3,
+ "score": 100
+ },
+ {
+ "assessment_order": 3,
+ "delay": 2,
+ "score": 87
+ },
+ {
+ "assessment_order": 5,
+ "delay": 3,
+ "score": 90
+ },
+ {
+ "assessment_order": 8,
+ "delay": 5,
+ "score": 83
+ }
+ ],
+ "pearson_correlation": -0.4015,
+ "association_status": "descriptive_only_not_statistically_reliable"
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "secondary_metric_evidence": {
+ "score_normalized": {
+ "count": 4,
+ "min": 83,
+ "max": 100,
+ "first": 100,
+ "last": 83
+ },
+ "submission_delay_avg": {
+ "count": 4,
+ "min": 3.25,
+ "max": 3.25,
+ "first": 3.25,
+ "last": 3.25
+ },
+ "punctuality_rate": {
+ "count": 4,
+ "min": 0,
+ "max": 0,
+ "first": 0,
+ "last": 0
+ }
+ }
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "largest_adjacent_drop": {
+ "from": {
+ "assessment_order": 1,
+ "submission_delay_days": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24295"
+ },
+ "secondary_metrics": {
+ "score_normalized": 100,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "to": {
+ "assessment_order": 3,
+ "submission_delay_days": 2,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24296"
+ },
+ "secondary_metrics": {
+ "score_normalized": 87,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ }
+ },
+ "delta": -1
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flagged_points": [
+ {
+ "assessment_order": 1,
+ "submission_delay_days": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24295"
+ },
+ "secondary_metrics": {
+ "score_normalized": 100,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ },
+ "flags": {
+ "pass_flag": true
+ },
+ "flag_raw_values": {
+ "pass_flag": true
+ }
+ },
+ {
+ "assessment_order": 3,
+ "submission_delay_days": 2,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24296"
+ },
+ "secondary_metrics": {
+ "score_normalized": 87,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ },
+ "flags": {
+ "pass_flag": true
+ },
+ "flag_raw_values": {
+ "pass_flag": true
+ }
+ },
+ {
+ "assessment_order": 5,
+ "submission_delay_days": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24297"
+ },
+ "secondary_metrics": {
+ "score_normalized": 90,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ },
+ "flags": {
+ "pass_flag": true
+ },
+ "flag_raw_values": {
+ "pass_flag": true
+ }
+ },
+ {
+ "assessment_order": 8,
+ "submission_delay_days": 5,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_name": "24298"
+ },
+ "secondary_metrics": {
+ "score_normalized": 83,
+ "submission_delay_avg": 3.25,
+ "punctuality_rate": 0
+ },
+ "flags": {
+ "pass_flag": true
+ },
+ "flag_raw_values": {
+ "pass_flag": true
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "action_evidence": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "small_sample_caveats": [
+ {
+ "point_count": 4,
+ "minimum_sample_size": 6,
+ "warning": "Only 4 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+ }
+ ],
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Skipped 1 rows with invalid submission_delay_days.",
+ "Only 4 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+ ]
+ }
+ }
+ ]
+ }
+ }
+ }
+ ],
+ "checked_claim_types": [
+ "task_specific_evidence_contract"
+ ],
+ "unchecked_claim_types": [
+ "semantic_interpretation",
+ "causal_framing",
+ "actionability_quality"
+ ],
+ "judge_evidence_citations": []
+ },
+ "evaluation_requirements": {
+ "required_core_outputs": [
+ {
+ "requirement_id": "S-T08-CORE-01",
+ "description": "State average submission delay and punctuality rate."
+ },
+ {
+ "requirement_id": "S-T08-CORE-02",
+ "description": "Describe the observed relationship between delay magnitude and score."
+ }
+ ],
+ "required_supporting_outputs": [],
+ "evaluation_constraints": [
+ {
+ "constraint_id": "S-T08-CONSTRAINT-01",
+ "description": "Use submission_delay_avg and punctuality_rate when returned."
+ },
+ {
+ "constraint_id": "S-T08-CONSTRAINT-02",
+ "description": "Frame the delay-score relationship as correlational, not causal."
+ }
+ ],
+ "safety_fairness_applicability": "applicable",
+ "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+ }
+}

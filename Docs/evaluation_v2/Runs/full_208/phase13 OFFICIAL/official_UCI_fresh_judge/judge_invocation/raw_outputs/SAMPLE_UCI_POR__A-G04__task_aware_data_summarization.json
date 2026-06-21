@@ -1,0 +1,72 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__A-G04__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable actionability requirements are strongly satisfied by the supported claims."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "G1's 7.7% fail rate is highest, compared with 5.1% for G2 and 4.6% for G3.",
+ "claim_type": "assessment_ranking",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "assessment_difficulty three rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "All values and ordering are correct."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "The mean of the three assessment fail rates is approximately 5.8%, so G1 is above that comparison level.",
+ "claim_type": "derived_comparison",
+ "claim_scope": "supporting",
+ "support_status": "supported",
+ "evidence_refs": [
+ "assessment_difficulty fail_rate_pct values"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The arithmetic mean is 5.8% after rounding."
+ }
+ ],
+ "errors": [],
+ "holistic_rationale": "The response gives a complete, numerically correct assessment comparison and a grounded curriculum-review recommendation.",
+ "evidence_usage_notes": "Evidence access mode was direct_embedding. All 3 rows were directly embedded; retrieval_log_path is not applicable. Evidence references: assessment_difficulty:Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G04.json. Deterministic checks were used only for covered values, directions, rankings, thresholds, and availability; semantic and causal claims were judged separately. Evidence access does not prove model attention to every row.",
+ "invalid_reason": null
+}

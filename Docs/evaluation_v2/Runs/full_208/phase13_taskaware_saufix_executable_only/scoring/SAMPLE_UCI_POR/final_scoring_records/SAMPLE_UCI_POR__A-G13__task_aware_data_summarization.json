@@ -1,0 +1,100 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-G13__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Grounding and interpretation: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "Values, directions, and comparisons: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Coverage of supplied requirements: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Fit to the stated task and audience: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Usefulness and evidence basis: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Precision and organization: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Fair and non-stigmatizing treatment: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a weak negative correlation (coefficient = -0.1041) between Lifestyle Risk Score and Average Score, indicating that as the Lifestyle Risk Score increases, the Average Score tends to decrease slightly. This suggests that students with higher lifestyle risk scores may perform less well academically.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G13__task_aware_data_summarization.json; retrieved evidence for A-G13"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_required_output",
+      "claim_ids": [],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 6,
+      "rationale": "The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G13__task_aware_data_summarization.json; retrieved evidence for A-G13"
+      ],
+      "requirement_id": "A-G13-CORE-01"
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "major",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 1,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 7.5,
+  "caps_applied": [
+    {
+      "type": "missing_required_output",
+      "severity": "major",
+      "cap": 6,
+      "error_id": "E01",
+      "claim_ids": [],
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G13__task_aware_data_summarization.json; retrieved evidence for A-G13"
+      ]
+    }
+  ],
+  "effective_cap": 6,
+  "final_score_after_caps": 6,
+  "verdict": "acceptable",
+  "invalid_reason": null
+}

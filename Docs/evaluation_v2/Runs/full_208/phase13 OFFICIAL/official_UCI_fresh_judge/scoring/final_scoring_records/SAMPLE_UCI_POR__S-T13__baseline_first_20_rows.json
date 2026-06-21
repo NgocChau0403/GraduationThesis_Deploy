@@ -1,0 +1,133 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__S-T13__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 3,
+ "rationale": "Score 3/10 reflects It uses an unavailable engagement placeholder to imply an action trigger."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material numerical_correctness limitations reduce the usefulness of the response. The response does not answer the action-synthesis task and instead focuses on an unavailable engagement signal."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 1,
+ "rationale": "Score 1/10 reflects The response omits both supported actions: attendance planning and setting a next-score target."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10: material task_relevance limitations reduce the usefulness of the response. The response does not answer the action-synthesis task and instead focuses on an unavailable engagement signal."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 2,
+ "rationale": "Score 2/10: material actionability limitations reduce the usefulness of the response. The response does not answer the action-synthesis task and instead focuses on an unavailable engagement signal."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material safety_fairness limitations reduce the usefulness of the response. The response does not answer the action-synthesis task and instead focuses on an unavailable engagement signal."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Average score 41.25 is just above pass threshold 40.",
+ "claim_type": "score_context",
+ "claim_scope": "supporting",
+ "support_status": "supported",
+ "evidence_refs": [
+ "synthesis_data row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The value comparison is correct."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Engagement score 0 is an active reason to increase participation.",
+ "claim_type": "action_trigger",
+ "claim_scope": "core",
+ "support_status": "contradicted",
+ "evidence_refs": [
+ "action_synthesis missing_evidence engagement_score_available=false"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The engagement value is unavailable and its rule is blocked.",
+ "impact_type": "changes_interpretation"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "supported_actions_omission",
+ "claim_ids": [],
+ "severity": "critical",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "task_relevance",
+ "actionability"
+ ],
+ "cap_candidate": 3,
+ "rationale": "The response omits both supported actions: attendance planning and setting a next-score target.",
+ "evidence_refs": [
+ "action_synthesis prioritized_actions"
+ ],
+ "requirement_id": "S-T13-CORE-01"
+ },
+ {
+ "error_id": "E02",
+ "error_type": "unavailable_evidence_used",
+ "claim_ids": [
+ "C02"
+ ],
+ "severity": "major",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "actionability"
+ ],
+ "cap_candidate": null,
+ "rationale": "It uses an unavailable engagement placeholder to imply an action trigger.",
+ "evidence_refs": [
+ "action_synthesis missing_evidence and rule S-T13-R04"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "critical",
+ "error_count": 2,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 1,
+ "critical": 1
+ }
+ },
+ "raw_weighted_score": 4,
+ "caps_applied": [
+ {
+ "type": "supported_actions_omission",
+ "severity": "critical",
+ "cap": 3,
+ "error_id": "E01",
+ "claim_ids": [],
+ "evidence_refs": [
+ "action_synthesis prioritized_actions"
+ ]
+ }
+ ],
+ "effective_cap": 3,
+ "final_score_after_caps": 3,
+ "verdict": "poor",
+ "invalid_reason": null
+}

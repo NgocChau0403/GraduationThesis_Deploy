@@ -1,0 +1,377 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-B01",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-B01",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-B01__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "61ea9fb5d2058317c0ecca742f3e51a9d5a2b0a584b9c423844c7f65d707f5a6",
+ "deterministic_summary": {
+ "summary_type": "numeric_distribution",
+ "dataset_name": "score_distribution",
+ "row_count": 11,
+ "bin_column": "score_bucket",
+ "count_column": "student_count",
+ "percent_column": "pct_of_class",
+ "bin_distribution": [
+ {
+ "bin": "0-10",
+ "count": 25,
+ "percent": 1,
+ "metrics": {
+ "avg_score_in_bucket": 2.56
+ }
+ },
+ {
+ "bin": "10-20",
+ "count": 27,
+ "percent": 1.1,
+ "metrics": {
+ "avg_score_in_bucket": 13.53
+ }
+ },
+ {
+ "bin": "20-30",
+ "count": 43,
+ "percent": 1.7,
+ "metrics": {
+ "avg_score_in_bucket": 24.07
+ }
+ },
+ {
+ "bin": "30-40",
+ "count": 78,
+ "percent": 3.1,
+ "metrics": {
+ "avg_score_in_bucket": 34.79
+ }
+ },
+ {
+ "bin": "40-50",
+ "count": 148,
+ "percent": 5.9,
+ "metrics": {
+ "avg_score_in_bucket": 45.2
+ }
+ },
+ {
+ "bin": "50-60",
+ "count": 241,
+ "percent": 9.6,
+ "metrics": {
+ "avg_score_in_bucket": 55.34
+ }
+ },
+ {
+ "bin": "60-70",
+ "count": 325,
+ "percent": 13,
+ "metrics": {
+ "avg_score_in_bucket": 65.24
+ }
+ },
+ {
+ "bin": "70-80",
+ "count": 344,
+ "percent": 13.8,
+ "metrics": {
+ "avg_score_in_bucket": 75.48
+ }
+ },
+ {
+ "bin": "80-90",
+ "count": 395,
+ "percent": 15.8,
+ "metrics": {
+ "avg_score_in_bucket": 85.13
+ }
+ },
+ {
+ "bin": "90-100",
+ "count": 372,
+ "percent": 14.9,
+ "metrics": {
+ "avg_score_in_bucket": 94.9
+ }
+ },
+ {
+ "bin": "No score",
+ "count": 500,
+ "percent": 20
+ }
+ ],
+ "total_count": 2498,
+ "dominant_bin": {
+ "bin": "No score",
+ "count": 500,
+ "percent": 20
+ },
+ "focus_bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "focus_total": {
+ "bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "present_bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "missing_bins": [],
+ "count": 173,
+ "percent": 6.9
+ },
+ "threshold_summary": {
+ "threshold": 40,
+ "direction": "below",
+ "bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "count": 173,
+ "percent": 6.9
+ },
+ "missing_expected_bins": [],
+ "metric_evidence_by_bin": {
+ "0-10": {
+ "avg_score_in_bucket": 2.56
+ },
+ "10-20": {
+ "avg_score_in_bucket": 13.53
+ },
+ "20-30": {
+ "avg_score_in_bucket": 24.07
+ },
+ "30-40": {
+ "avg_score_in_bucket": 34.79
+ },
+ "40-50": {
+ "avg_score_in_bucket": 45.2
+ },
+ "50-60": {
+ "avg_score_in_bucket": 55.34
+ },
+ "60-70": {
+ "avg_score_in_bucket": 65.24
+ },
+ "70-80": {
+ "avg_score_in_bucket": 75.48
+ },
+ "80-90": {
+ "avg_score_in_bucket": 85.13
+ },
+ "90-100": {
+ "avg_score_in_bucket": 94.9
+ }
+ },
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "numeric_distribution",
+ "task_id": "A-B01",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "score_distribution",
+ "row_count": 11,
+ "bin_column": "score_bucket",
+ "count_column": "student_count",
+ "percent_column": "pct_of_class",
+ "total_count": 2498,
+ "focus_bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ]
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "bin_distribution": [
+ {
+ "bin": "0-10",
+ "count": 25,
+ "percent": 1,
+ "metrics": {
+ "avg_score_in_bucket": 2.56
+ }
+ },
+ {
+ "bin": "10-20",
+ "count": 27,
+ "percent": 1.1,
+ "metrics": {
+ "avg_score_in_bucket": 13.53
+ }
+ },
+ {
+ "bin": "20-30",
+ "count": 43,
+ "percent": 1.7,
+ "metrics": {
+ "avg_score_in_bucket": 24.07
+ }
+ },
+ {
+ "bin": "30-40",
+ "count": 78,
+ "percent": 3.1,
+ "metrics": {
+ "avg_score_in_bucket": 34.79
+ }
+ },
+ {
+ "bin": "40-50",
+ "count": 148,
+ "percent": 5.9,
+ "metrics": {
+ "avg_score_in_bucket": 45.2
+ }
+ },
+ {
+ "bin": "50-60",
+ "count": 241,
+ "percent": 9.6,
+ "metrics": {
+ "avg_score_in_bucket": 55.34
+ }
+ },
+ {
+ "bin": "60-70",
+ "count": 325,
+ "percent": 13,
+ "metrics": {
+ "avg_score_in_bucket": 65.24
+ }
+ },
+ {
+ "bin": "70-80",
+ "count": 344,
+ "percent": 13.8,
+ "metrics": {
+ "avg_score_in_bucket": 75.48
+ }
+ },
+ {
+ "bin": "80-90",
+ "count": 395,
+ "percent": 15.8,
+ "metrics": {
+ "avg_score_in_bucket": 85.13
+ }
+ },
+ {
+ "bin": "90-100",
+ "count": 372,
+ "percent": 14.9,
+ "metrics": {
+ "avg_score_in_bucket": 94.9
+ }
+ },
+ {
+ "bin": "No score",
+ "count": 500,
+ "percent": 20
+ }
+ ],
+ "focus_total": {
+ "bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "present_bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "missing_bins": [],
+ "count": 173,
+ "percent": 6.9
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "threshold_summary": {
+ "threshold": 40,
+ "direction": "below",
+ "bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "count": 173,
+ "percent": 6.9
+ },
+ "metric_evidence_by_bin": {
+ "0-10": {
+ "avg_score_in_bucket": 2.56
+ },
+ "10-20": {
+ "avg_score_in_bucket": 13.53
+ },
+ "20-30": {
+ "avg_score_in_bucket": 24.07
+ },
+ "30-40": {
+ "avg_score_in_bucket": 34.79
+ },
+ "40-50": {
+ "avg_score_in_bucket": 45.2
+ },
+ "50-60": {
+ "avg_score_in_bucket": 55.34
+ },
+ "60-70": {
+ "avg_score_in_bucket": 65.24
+ },
+ "70-80": {
+ "avg_score_in_bucket": 75.48
+ },
+ "80-90": {
+ "avg_score_in_bucket": 85.13
+ },
+ "90-100": {
+ "avg_score_in_bucket": 94.9
+ }
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "dominant_bin": {
+ "bin": "No score",
+ "count": 500,
+ "percent": 20
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_expected_bins": [],
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

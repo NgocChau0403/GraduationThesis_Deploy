@@ -1,0 +1,3273 @@
+{
+ "schema_version": "judge_input_schema_v1",
+ "record_id": "SAMPLE_OULAD__A-G15__task_aware_data_summarization",
+ "evaluation_run_id": "oulad_official_r5",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G15",
+ "explanation_mode": "task_aware_data_summarization",
+ "prompt_version": "judge_prompt_v2_pilot_v1",
+ "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+ "task_context": {
+ "task_name": "Intervention priority ranking",
+ "scope": "Many students",
+ "actionable_question": "Who are the top 10 students most in need of intervention right now?",
+ "target_audience": "instructor, admin",
+ "ai_summary_type": "ranking",
+ "ai_prompt_hint": "Rank by at_risk_score [FE] descending. List triggered flags per student. Provide action per priority group.",
+ "query_labels": [
+ "intervention_priority_list"
+ ],
+ "explanation_strategy": "ranking"
+ },
+ "schema_context": {
+ "source_tables": [
+ "enrollment",
+ "assessment_result",
+ "assessment",
+ "engagement",
+ "student"
+ ],
+ "key_db_fields": [
+ "student_id",
+ "gender",
+ "age_group",
+ "region; at_risk_score [FE cross]",
+ "at_risk_label [FE cross]",
+ "avg_score [FE cross]",
+ "all 5 flags",
+ "final_outcome"
+ ],
+ "output_schema": {},
+ "query_labels": [
+ "intervention_priority_list"
+ ]
+ },
+ "explanation": {
+ "raw_text": "Summary: Top ten internal admin ranking: rank=1, student_id=SAMPLE_OULAD_STU_69494, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Withdrawn | rank=2, student_id=SAMPLE_OULAD_STU_338731, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Fail | rank=3, student_id=SAMPLE_OULAD_STU_624354, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Fail | rank=4, student_id=SAMPLE_OULAD_STU_629056, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Withdrawn | rank=5, student_id=SAMPLE_OULAD_STU_171896, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Withdrawn | rank=6, student_id=SAMPLE_OULAD_STU_548926, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Fail | rank=7, student_id=SAMPLE_OULAD_STU_616439, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Fail | rank=8, student_id=SAMPLE_OULAD_STU_465619, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Withdrawn | rank=9, student_id=SAMPLE_OULAD_STU_532565, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Fail | rank=10, student_id=SAMPLE_OULAD_STU_586526, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Withdrawn. priority_group_action_mapping_version=oulad_admin_review_v1. score=5 action=review this highest-score group first and assign a follow-up owner based on returned flags; score=4 action=review this next-score group after score-5 cases and confirm which returned flags require follow-up.\n\nInsights: High Risk with Multiple Flags: The top three students, all with an at-risk score of 5, display critical flags such as low scores, low engagement, and negative trends, indicating urgent need for intervention. | Consistent Low Performance: Students ranked 1 to 10 consistently show low average scores, with the highest being 39.67, suggesting a systemic issue in engagement and understanding of course material.\n\nEducational implications: Use identifiers, risk score, and returned flags only; do not use demographic attributes or promise that review will improve outcomes.",
+ "structured_payload": {
+ "task_id": "A-G15",
+ "execution_id": "exec_1781847783925_1391f9af",
+ "explanation": {
+ "summary": "Top ten internal admin ranking: rank=1, student_id=SAMPLE_OULAD_STU_69494, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Withdrawn | rank=2, student_id=SAMPLE_OULAD_STU_338731, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Fail | rank=3, student_id=SAMPLE_OULAD_STU_624354, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Fail | rank=4, student_id=SAMPLE_OULAD_STU_629056, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Withdrawn | rank=5, student_id=SAMPLE_OULAD_STU_171896, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Withdrawn | rank=6, student_id=SAMPLE_OULAD_STU_548926, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Fail | rank=7, student_id=SAMPLE_OULAD_STU_616439, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Fail | rank=8, student_id=SAMPLE_OULAD_STU_465619, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Withdrawn | rank=9, student_id=SAMPLE_OULAD_STU_532565, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Fail | rank=10, student_id=SAMPLE_OULAD_STU_586526, at_risk_score=5, triggered_flags=flag_low_score,flag_repeated,flag_low_engagement,flag_low_punctuality,flag_neg_trend, final_outcome=Withdrawn. priority_group_action_mapping_version=oulad_admin_review_v1. score=5 action=review this highest-score group first and assign a follow-up owner based on returned flags; score=4 action=review this next-score group after score-5 cases and confirm which returned flags require follow-up.",
+ "insights": [
+ {
+ "title": "High Risk with Multiple Flags",
+ "description": "The top three students, all with an at-risk score of 5, display critical flags such as low scores, low engagement, and negative trends, indicating urgent need for intervention.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "at_risk_score",
+ "value": 5,
+ "comparison": "baseline",
+ "delta": null,
+ "context": "Top-ranked students"
+ }
+ ]
+ },
+ {
+ "title": "Consistent Low Performance",
+ "description": "Students ranked 1 to 10 consistently show low average scores, with the highest being 39.67, suggesting a systemic issue in engagement and understanding of course material.",
+ "severity": "medium",
+ "evidence": [
+ {
+ "metric": "avg_score",
+ "value": 39.67,
+ "comparison": "baseline",
+ "delta": null,
+ "context": "Top average score among at-risk students"
+ }
+ ]
+ }
+ ],
+ "educational_implications": [
+ "Use identifiers, risk score, and returned flags only; do not use demographic attributes or promise that review will improve outcomes."
+ ],
+ "recommendations": [],
+ "warnings": []
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "The data is derived from a comprehensive ranking based on at-risk scores and associated flags.",
+ "based_on": [
+ "sufficient_data"
+ ]
+ },
+ "explanation_strategy": "ranking",
+ "explanation_type": "ranking",
+ "ai_summary_method": "task_aware_data_summarization",
+ "ai_summary_version": "v3.1-experimental",
+ "baseline_available": true,
+ "input_summary_type": "ranking",
+ "ai_summary_method_warning": null,
+ "full_result_row_count": 50,
+ "included_row_count": 15,
+ "small_result_threshold": null,
+ "small_result_full_rows_applied": null,
+ "dataset_row_breakdown": [
+ {
+ "dataset_name": "intervention_priority_list",
+ "row_count": 50,
+ "included_row_count": 15
+ }
+ ],
+ "raw_row_limit": 15,
+ "included_raw_row_count": 15,
+ "baseline_reference_tokens": 2567,
+ "task_aware_prompt_tokens": 5095,
+ "token_ratio": 1.9848,
+ "token_count_method": "utf8_bytes_div_4",
+ "evidence_sections_included": [
+ "scope",
+ "primary_finding",
+ "comparison",
+ "exceptions",
+ "limitations"
+ ],
+ "evidence_sections_omitted": [
+ "exceptions.tie_warnings",
+ "primary_finding.bottom_items",
+ "primary_finding.median_item"
+ ],
+ "task_output_contract": [
+ "State the ranking/top entities, rank metric value, and why they are prioritized.",
+ "For risk/admin ranking rows, include returned flags or recommended action fields when present.",
+ "Do not generalize beyond returned rows or omit the top ranked examples.",
+ "List the top ten identifiers in rank order with at_risk_score, exact triggered flags, and final outcome.",
+ "Use only the versioned internal admin-review mapping for score priority groups; do not use demographic attributes or promise outcomes."
+ ],
+ "must_keep_keys": [
+ "dataset_name",
+ "entity_column",
+ "flag_evidence",
+ "metric_column",
+ "metric_stats",
+ "priority_group_actions",
+ "row_count",
+ "sort_direction",
+ "summarization_warnings",
+ "top_items"
+ ],
+ "v3_warnings": [
+ "Task-aware V3 prompt exceeded the configured soft token ratio (1.9848 > 1.2).",
+ "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+ ],
+ "task_aware_evidence_payload": {
+ "evidence_payload": {
+ "summary_type": "ranking",
+ "task_id": "A-G15",
+ "task_output_contract": [
+ "State the ranking/top entities, rank metric value, and why they are prioritized.",
+ "For risk/admin ranking rows, include returned flags or recommended action fields when present.",
+ "Do not generalize beyond returned rows or omit the top ranked examples.",
+ "List the top ten identifiers in rank order with at_risk_score, exact triggered flags, and final outcome.",
+ "Use only the versioned internal admin-review mapping for score priority groups; do not use demographic attributes or promise outcomes."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "intervention_priority_list",
+ "row_count": 50,
+ "entity_column": "student_id",
+ "metric_column": "at_risk_score",
+ "sort_direction": "desc"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "top_items": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_69494",
+ "at_risk_score": 5,
+ "rank": 1,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 15.5
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "at_risk_score": 5,
+ "rank": 2,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 19.25
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_624354",
+ "at_risk_score": 5,
+ "rank": 3,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 23.1429
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_629056",
+ "at_risk_score": 5,
+ "rank": 4,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 35
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_171896",
+ "at_risk_score": 5,
+ "rank": 5,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 35.3333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_548926",
+ "at_risk_score": 5,
+ "rank": 6,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.3333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_616439",
+ "at_risk_score": 5,
+ "rank": 7,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.375
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_465619",
+ "at_risk_score": 5,
+ "rank": 8,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.6667
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_532565",
+ "at_risk_score": 5,
+ "rank": 9,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.8333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_586526",
+ "at_risk_score": 5,
+ "rank": 10,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 39.6667
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ }
+ ],
+ "priority_group_actions": {
+ "mapping_version": "oulad_admin_review_v1",
+ "actions": [
+ {
+ "at_risk_score": 5,
+ "action": "Review this highest-score group first and assign a follow-up owner based on the returned flags.",
+ "claim_limit": "review workflow only; do not promise outcomes"
+ },
+ {
+ "at_risk_score": 4,
+ "action": "Review this next-score group after score-5 cases and confirm which returned flags require follow-up.",
+ "claim_limit": "review workflow only; do not promise outcomes"
+ }
+ ]
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_stats": {
+ "count": 50,
+ "min": 4,
+ "max": 5,
+ "mean": 4.2,
+ "median": 4
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_69494",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_624354",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_629056",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_171896",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_548926",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_616439",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_465619",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_532565",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_586526",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_362548",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_592372",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_2595204",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_2405934",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": false
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 0
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_505700",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "summarization_warnings": []
+ }
+ }
+ ]
+ },
+ "source_evidence_summary": {
+ "summary_type": "ranking",
+ "dataset_name": "intervention_priority_list",
+ "row_count": 50,
+ "entity_column": "student_id",
+ "metric_column": "at_risk_score",
+ "sort_direction": "desc",
+ "top_items": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_69494",
+ "at_risk_score": 5,
+ "rank": 1,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 15.5
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "at_risk_score": 5,
+ "rank": 2,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 19.25
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_624354",
+ "at_risk_score": 5,
+ "rank": 3,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 23.1429
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_629056",
+ "at_risk_score": 5,
+ "rank": 4,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 35
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_171896",
+ "at_risk_score": 5,
+ "rank": 5,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 35.3333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_548926",
+ "at_risk_score": 5,
+ "rank": 6,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.3333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_616439",
+ "at_risk_score": 5,
+ "rank": 7,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.375
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_465619",
+ "at_risk_score": 5,
+ "rank": 8,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.6667
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_532565",
+ "at_risk_score": 5,
+ "rank": 9,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.8333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_586526",
+ "at_risk_score": 5,
+ "rank": 10,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 39.6667
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ }
+ ],
+ "bottom_items": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_362548",
+ "at_risk_score": 4,
+ "rank": 46,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 33.8
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_592372",
+ "at_risk_score": 4,
+ "rank": 47,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 34.1667
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_2595204",
+ "at_risk_score": 4,
+ "rank": 48,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 34.4286
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_2405934",
+ "at_risk_score": 4,
+ "rank": 49,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 34.5556
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": false
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 0
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_505700",
+ "at_risk_score": 4,
+ "rank": 50,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 34.6667
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ }
+ ],
+ "median_item": {
+ "student_id": "SAMPLE_OULAD_STU_568307",
+ "at_risk_score": 4,
+ "rank": 26,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 24.3333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ "metric_stats": {
+ "count": 50,
+ "min": 4,
+ "max": 5,
+ "mean": 4.2,
+ "median": 4
+ },
+ "tie_warnings": [
+ "bottom_items boundary has 40 tied items at at_risk_score=4.0; only 5 are included."
+ ],
+ "flag_evidence": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_69494",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_624354",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_629056",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_171896",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_548926",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_616439",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_465619",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_532565",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_586526",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_362548",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_592372",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_2595204",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_2405934",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": false
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 0
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_505700",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ }
+ ],
+ "summarization_warnings": [],
+ "priority_group_actions": {
+ "mapping_version": "oulad_admin_review_v1",
+ "actions": [
+ {
+ "at_risk_score": 5,
+ "action": "Review this highest-score group first and assign a follow-up owner based on the returned flags.",
+ "claim_limit": "review workflow only; do not promise outcomes"
+ },
+ {
+ "at_risk_score": 4,
+ "action": "Review this next-score group after score-5 cases and confirm which returned flags require follow-up.",
+ "claim_limit": "review workflow only; do not promise outcomes"
+ }
+ ]
+ }
+ }
+ },
+ "safety_flags": [],
+ "degraded": false,
+ "meta": {
+ "model": "gpt-4o-mini-2024-07-18",
+ "latency_ms": 6441,
+ "token_usage": {
+ "prompt_tokens": 6770,
+ "completion_tokens": 434,
+ "total_tokens": 7204
+ },
+ "strategy": "ranking",
+ "granularity": "semester",
+ "cost_usd": 0.001276
+ }
+ },
+ "generation_metadata": {
+ "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/explanations/explanation_artifacts/SAMPLE_OULAD__A-G15__task_aware_data_summarization.json",
+ "explanation_artifact_sha256": "bdd820b796c24e02947aa0a1482e96d2ceb0334e5126a0bfeb0eb6115886e1c3",
+ "ai_service_url": "http://localhost:8000",
+ "expected_ai_summary_method": "task_aware_data_summarization",
+ "observed_ai_summary_method": "task_aware_data_summarization",
+ "degraded": false,
+ "model": "gpt-4o-mini-2024-07-18",
+ "token_usage": {
+ "prompt_tokens": 6770,
+ "completion_tokens": 434,
+ "total_tokens": 7204
+ },
+ "latency_ms": 6463,
+ "attempts_used": 1
+ }
+ },
+ "evidence_access": {
+ "full_result_row_count": 50,
+ "full_query_artifacts": [
+ {
+ "dataset_label": "intervention_priority_list",
+ "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G15.json",
+ "artifact_sha256": "fd0892367ab4f4b3965fbfa243b4a856ae8901a1f8f7c8ff616484765adb837b",
+ "row_count": 50,
+ "readable": true
+ }
+ ],
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "small_result_row_threshold": 20,
+ "direct_embedding_token_budget": 120000,
+ "prompt_embedded_row_count": 0,
+ "retrieved_row_count": 50,
+ "retrieved_row_count_by_dataset": {
+ "intervention_priority_list": 50
+ },
+ "retrieved_row_ranges": [
+ {
+ "dataset_label": "intervention_priority_list",
+ "start": 0,
+ "end": 49
+ }
+ ],
+ "retrieved_chunk_ids": [
+ "SAMPLE_OULAD__A-G15__task_aware_data_summarization__intervention_priority_list__chunk_1"
+ ],
+ "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G15__task_aware_data_summarization.json",
+ "retrieval_request_complete": true,
+ "retrieval_coverage_status": "full",
+ "full_access_available": true,
+ "deterministic_scan_scope": "full_query_artifact_all_rows",
+ "deterministic_scan_row_count_by_dataset": {
+ "intervention_priority_list": 50
+ },
+ "full_result_sent_to_llm": false,
+ "deterministic_checks": [
+ {
+ "check_type": "task_aware_shared_evidence_contract",
+ "case_id": "SAMPLE_OULAD__A-G15",
+ "task_id": "A-G15",
+ "sidecar_sha256": "58f8801232d72bdde5e2e328d796ff4587ac67ce8b5ee888dcbea9ae57ab978c",
+ "evidence": {
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G15",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G15",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G15__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "bdd820b796c24e02947aa0a1482e96d2ceb0334e5126a0bfeb0eb6115886e1c3",
+ "deterministic_summary": {
+ "summary_type": "ranking",
+ "dataset_name": "intervention_priority_list",
+ "row_count": 50,
+ "entity_column": "student_id",
+ "metric_column": "at_risk_score",
+ "sort_direction": "desc",
+ "top_items": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_69494",
+ "at_risk_score": 5,
+ "rank": 1,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 15.5
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "at_risk_score": 5,
+ "rank": 2,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 19.25
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_624354",
+ "at_risk_score": 5,
+ "rank": 3,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 23.1429
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_629056",
+ "at_risk_score": 5,
+ "rank": 4,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 35
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_171896",
+ "at_risk_score": 5,
+ "rank": 5,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 35.3333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_548926",
+ "at_risk_score": 5,
+ "rank": 6,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.3333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_616439",
+ "at_risk_score": 5,
+ "rank": 7,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.375
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_465619",
+ "at_risk_score": 5,
+ "rank": 8,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.6667
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_532565",
+ "at_risk_score": 5,
+ "rank": 9,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.8333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_586526",
+ "at_risk_score": 5,
+ "rank": 10,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 39.6667
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ }
+ ],
+ "bottom_items": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_362548",
+ "at_risk_score": 4,
+ "rank": 46,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 33.8
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_592372",
+ "at_risk_score": 4,
+ "rank": 47,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 34.1667
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_2595204",
+ "at_risk_score": 4,
+ "rank": 48,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 34.4286
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_2405934",
+ "at_risk_score": 4,
+ "rank": 49,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 34.5556
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": false
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 0
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_505700",
+ "at_risk_score": 4,
+ "rank": 50,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 34.6667
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ }
+ ],
+ "median_item": {
+ "student_id": "SAMPLE_OULAD_STU_568307",
+ "at_risk_score": 4,
+ "rank": 26,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 24.3333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ "metric_stats": {
+ "count": 50,
+ "min": 4,
+ "max": 5,
+ "mean": 4.2,
+ "median": 4
+ },
+ "tie_warnings": [
+ "bottom_items boundary has 40 tied items at at_risk_score=4.0; only 5 are included."
+ ],
+ "flag_evidence": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_69494",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_624354",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_629056",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_171896",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_548926",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_616439",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_465619",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_532565",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_586526",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_362548",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_592372",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_2595204",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_2405934",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": false
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 0
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_505700",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ }
+ ],
+ "summarization_warnings": [],
+ "priority_group_actions": {
+ "mapping_version": "oulad_admin_review_v1",
+ "actions": [
+ {
+ "at_risk_score": 5,
+ "action": "Review this highest-score group first and assign a follow-up owner based on the returned flags.",
+ "claim_limit": "review workflow only; do not promise outcomes"
+ },
+ {
+ "at_risk_score": 4,
+ "action": "Review this next-score group after score-5 cases and confirm which returned flags require follow-up.",
+ "claim_limit": "review workflow only; do not promise outcomes"
+ }
+ ]
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "ranking",
+ "task_id": "A-G15",
+ "task_output_contract": [
+ "State the ranking/top entities, rank metric value, and why they are prioritized.",
+ "For risk/admin ranking rows, include returned flags or recommended action fields when present.",
+ "Do not generalize beyond returned rows or omit the top ranked examples.",
+ "List the top ten identifiers in rank order with at_risk_score, exact triggered flags, and final outcome.",
+ "Use only the versioned internal admin-review mapping for score priority groups; do not use demographic attributes or promise outcomes."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "intervention_priority_list",
+ "row_count": 50,
+ "entity_column": "student_id",
+ "metric_column": "at_risk_score",
+ "sort_direction": "desc"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "top_items": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_69494",
+ "at_risk_score": 5,
+ "rank": 1,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 15.5
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "at_risk_score": 5,
+ "rank": 2,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 19.25
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_624354",
+ "at_risk_score": 5,
+ "rank": 3,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 23.1429
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_629056",
+ "at_risk_score": 5,
+ "rank": 4,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 35
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_171896",
+ "at_risk_score": 5,
+ "rank": 5,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 35.3333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_548926",
+ "at_risk_score": 5,
+ "rank": 6,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.3333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_616439",
+ "at_risk_score": 5,
+ "rank": 7,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.375
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_465619",
+ "at_risk_score": 5,
+ "rank": 8,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.6667
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_532565",
+ "at_risk_score": 5,
+ "rank": 9,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 37.8333
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_586526",
+ "at_risk_score": 5,
+ "rank": 10,
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 39.6667
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ }
+ ],
+ "priority_group_actions": {
+ "mapping_version": "oulad_admin_review_v1",
+ "actions": [
+ {
+ "at_risk_score": 5,
+ "action": "Review this highest-score group first and assign a follow-up owner based on the returned flags.",
+ "claim_limit": "review workflow only; do not promise outcomes"
+ },
+ {
+ "at_risk_score": 4,
+ "action": "Review this next-score group after score-5 cases and confirm which returned flags require follow-up.",
+ "claim_limit": "review workflow only; do not promise outcomes"
+ }
+ ]
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_stats": {
+ "count": 50,
+ "min": 4,
+ "max": 5,
+ "mean": 4.2,
+ "median": 4
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_69494",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_624354",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_629056",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_171896",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_548926",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_616439",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_465619",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_532565",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_586526",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_362548",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_592372",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_2595204",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_2405934",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": false
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 1,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 0
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_505700",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 1,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+ }
+ }
+ ],
+ "checked_claim_types": [
+ "task_specific_evidence_contract"
+ ],
+ "unchecked_claim_types": [
+ "semantic_interpretation",
+ "causal_framing",
+ "actionability_quality"
+ ],
+ "judge_evidence_citations": []
+ },
+ "evaluation_requirements": {
+ "required_core_outputs": [
+ {
+ "requirement_id": "A-G15-CORE-01",
+ "description": "Rank by at_risk_score [FE] descending."
+ },
+ {
+ "requirement_id": "A-G15-CORE-02",
+ "description": "List triggered flags per student."
+ },
+ {
+ "requirement_id": "A-G15-CORE-03",
+ "description": "Provide action per priority group."
+ }
+ ],
+ "required_supporting_outputs": [],
+ "evaluation_constraints": [
+ {
+ "constraint_id": "A-G15-CONSTRAINT-01",
+ "description": "Treat the output as internal admin use only."
+ },
+ {
+ "constraint_id": "A-G15-CONSTRAINT-02",
+ "description": "Do not include personally identifying information beyond identifiers already present in returned data."
+ }
+ ],
+ "safety_fairness_applicability": "applicable",
+ "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+ }
+}

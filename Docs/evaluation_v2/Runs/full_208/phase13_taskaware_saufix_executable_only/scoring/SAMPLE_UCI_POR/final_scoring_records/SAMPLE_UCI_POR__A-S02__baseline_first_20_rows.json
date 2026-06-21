@@ -1,0 +1,100 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-S02__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Grounding and interpretation: The observed improvement is described, but the returned performance_trend slope magnitude of 27.5 is not stated."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "Values, directions, and comparisons: The observed improvement is described, but the returned performance_trend slope magnitude of 27.5 is not stated."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Coverage of supplied requirements: The observed improvement is described, but the returned performance_trend slope magnitude of 27.5 is not stated."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Fit to the stated task and audience: The observed improvement is described, but the returned performance_trend slope magnitude of 27.5 is not stated."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Usefulness and evidence basis: The observed improvement is described, but the returned performance_trend slope magnitude of 27.5 is not stated."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Precision and organization: The observed improvement is described, but the returned performance_trend slope magnitude of 27.5 is not stated."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Fair and non-stigmatizing treatment: The observed improvement is described, but the returned performance_trend slope magnitude of 27.5 is not stated."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student's performance shows a slight improvement over the assessments, with a normalized score increase from 0 in Assessment 1 to 55 in Assessments 2 and 3. However, the scores remain below the target threshold, indicating ongoing challenges.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S02.json; dataset score_trend"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The observed improvement is described, but the returned performance_trend slope magnitude of 27.5 is not stated."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_required_output",
+      "claim_ids": [],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 7,
+      "rationale": "The observed improvement is described, but the returned performance_trend slope magnitude of 27.5 is not stated.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S02.json; dataset score_trend"
+      ],
+      "requirement_id": "A-S02-CORE-02"
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "major",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 1,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.5,
+  "caps_applied": [
+    {
+      "type": "missing_required_output",
+      "severity": "major",
+      "cap": 7,
+      "error_id": "E01",
+      "claim_ids": [],
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S02.json; dataset score_trend"
+      ]
+    }
+  ],
+  "effective_cap": 7,
+  "final_score_after_caps": 7,
+  "verdict": "good",
+  "invalid_reason": null
+}

@@ -1,0 +1,793 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G16",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G16",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G16__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "92ee895be7633c9055eee5409f82d7fdcd4ca7ed0d662d5bd45ce9897bcecec1",
+ "deterministic_summary": {
+ "summary_type": "action_synthesis",
+ "action_rule_set_id": "A-G16.action_synthesis",
+ "action_rule_version": "1.0.0",
+ "source_datasets": [
+ {
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_count": 1,
+ "available": true
+ }
+ ],
+ "evidence_items": [
+ {
+ "evidence_item_id": "ev-synthesis_data-0-class_id",
+ "task_id": "A-G16",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "class_id",
+ "raw_value": "SAMPLE_OULAD_CLASS_CCC_2014J",
+ "parsed_value": "SAMPLE_OULAD_CLASS_CCC_2014J",
+ "unit": "identifier",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-low_engagement_count",
+ "task_id": "A-G16",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "low_engagement_count",
+ "raw_value": 1240,
+ "parsed_value": 1240,
+ "unit": "student_count",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-high_risk_count",
+ "task_id": "A-G16",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "high_risk_count",
+ "raw_value": 906,
+ "parsed_value": 906,
+ "unit": "student_count",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-hardest_assessment",
+ "task_id": "A-G16",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "hardest_assessment",
+ "raw_value": "24299",
+ "parsed_value": 24299,
+ "unit": "assessment_identifier",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-best_resource_type",
+ "task_id": "A-G16",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "best_resource_type",
+ "raw_value": "quiz",
+ "parsed_value": "quiz",
+ "unit": "resource_type",
+ "available": true,
+ "sensitive": false,
+ "semantic_alias": "most_used_resource_type"
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-total_students",
+ "task_id": "A-G16",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "total_students",
+ "raw_value": 1998,
+ "parsed_value": 1998,
+ "unit": "student_count",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-derived-low_engagement_rate",
+ "task_id": "A-G16",
+ "dataset_label": "derived",
+ "dataset_role": "derived_evidence",
+ "row_index": null,
+ "column": "low_engagement_rate",
+ "raw_value": null,
+ "parsed_value": 0.6206206206,
+ "unit": "ratio_0_1",
+ "available": true,
+ "sensitive": false,
+ "operation": "safe_divide",
+ "source_columns": [
+ "low_engagement_count",
+ "total_students"
+ ],
+ "source_evidence_item_ids": [
+ "ev-synthesis_data-0-low_engagement_count",
+ "ev-synthesis_data-0-total_students"
+ ]
+ },
+ {
+ "evidence_item_id": "ev-derived-high_risk_rate",
+ "task_id": "A-G16",
+ "dataset_label": "derived",
+ "dataset_role": "derived_evidence",
+ "row_index": null,
+ "column": "high_risk_rate",
+ "raw_value": null,
+ "parsed_value": 0.4534534535,
+ "unit": "ratio_0_1",
+ "available": true,
+ "sensitive": false,
+ "operation": "safe_divide",
+ "source_columns": [
+ "high_risk_count",
+ "total_students"
+ ],
+ "source_evidence_item_ids": [
+ "ev-synthesis_data-0-high_risk_count",
+ "ev-synthesis_data-0-total_students"
+ ]
+ }
+ ],
+ "prioritized_actions": [
+ {
+ "action_id": "admin_launch_engagement_outreach",
+ "action_text": "Coordinate a targeted engagement outreach and check whether access, scheduling, or course-navigation barriers need follow-up.",
+ "priority": "high",
+ "owner": "student_support_team",
+ "time_horizon_days": 7,
+ "support_category": "engagement_support",
+ "claim_limits": [
+ "Do not claim low engagement caused low performance.",
+ "Do not infer a specific barrier from the aggregate signal."
+ ],
+ "rule_id": "A-G16-R02",
+ "rule_ids": [
+ "A-G16-R02"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-derived-low_engagement_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "admin_review_high_risk_caseload",
+ "action_text": "Review the high-risk student caseload, assign named follow-up owners, and confirm which students need direct support.",
+ "priority": "high",
+ "owner": "academic_admin",
+ "time_horizon_days": 7,
+ "support_category": "risk_coordination",
+ "claim_limits": [
+ "Do not infer causes from the aggregate count.",
+ "Do not identify individual students unless a separate student-level evidence source is available."
+ ],
+ "rule_id": "A-G16-R01",
+ "rule_ids": [
+ "A-G16-R01"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-derived-high_risk_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "admin_review_assessment_support",
+ "action_text": "Ask the module team to review learner support and preparation materials for the identified assessment.",
+ "priority": "medium",
+ "owner": "module_lead",
+ "time_horizon_days": 14,
+ "support_category": "assessment_support",
+ "claim_limits": [
+ "Do not state a fail-rate value because the runtime row does not expose it.",
+ "Do not claim the assessment itself caused failure."
+ ],
+ "rule_id": "A-G16-R03",
+ "rule_ids": [
+ "A-G16-R03"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-hardest_assessment"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "admin_review_most_used_resource_format",
+ "action_text": "Review whether the most-used resource format can support the planned outreach, while separately checking its learning suitability.",
+ "priority": "low",
+ "owner": "learning_design_team",
+ "time_horizon_days": 14,
+ "support_category": "resource_planning",
+ "claim_limits": [
+ "Refer to this field as most-used, not best-performing.",
+ "Do not claim engagement clicks demonstrate learning effectiveness."
+ ],
+ "rule_id": "A-G16-R04",
+ "rule_ids": [
+ "A-G16-R04"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-best_resource_type"
+ ],
+ "provenance_status": "complete"
+ }
+ ],
+ "action_evidence_links": [
+ {
+ "action_id": "admin_launch_engagement_outreach",
+ "rule_id": "A-G16-R02",
+ "rule_ids": [
+ "A-G16-R02"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-derived-low_engagement_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "admin_review_high_risk_caseload",
+ "rule_id": "A-G16-R01",
+ "rule_ids": [
+ "A-G16-R01"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-derived-high_risk_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "admin_review_assessment_support",
+ "rule_id": "A-G16-R03",
+ "rule_ids": [
+ "A-G16-R03"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-hardest_assessment"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "admin_review_most_used_resource_format",
+ "rule_id": "A-G16-R04",
+ "rule_ids": [
+ "A-G16-R04"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-best_resource_type"
+ ],
+ "provenance_status": "complete"
+ }
+ ],
+ "unsupported_actions": [],
+ "conflicting_evidence": [],
+ "missing_evidence": [],
+ "rule_evaluations": [
+ {
+ "rule_id": "A-G16-R01",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "high_risk_rate",
+ "operator": "gte",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-derived-high_risk_rate"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-derived-high_risk_rate"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "A-G16-R02",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "low_engagement_rate",
+ "operator": "gte",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-derived-low_engagement_rate"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-derived-low_engagement_rate"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "A-G16-R03",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "hardest_assessment",
+ "operator": "is_present",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-hardest_assessment"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-hardest_assessment"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "A-G16-R04",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "best_resource_type",
+ "operator": "is_present",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-best_resource_type"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-best_resource_type"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "summarization_warnings": [
+ "The LLM may paraphrase prioritized_actions but must not invent new actions or rules."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "action_synthesis",
+ "task_id": "A-G16",
+ "task_output_contract": [
+ "Explain only actions already present in prioritized_actions or supported action-rule evidence.",
+ "Do not create duplicate recommendations; explanation.recommendations may be empty by design.",
+ "For every explained action, connect it to rule_evaluations, action_evidence_links, evidence_items, owner, priority, and time horizon when supplied.",
+ "If no supported action exists, say that only when missing_evidence/unsupported_actions/rule output supports it.",
+ "Explain every triggered prioritized action with rule ID, action ID, owner, priority, time horizon, and linked evidence; recommendations must remain empty."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "source_datasets": [
+ {
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_count": 1,
+ "available": true
+ }
+ ],
+ "action_rule_set_id": "A-G16.action_synthesis",
+ "action_rule_version": "1.0.0"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "evidence_items": [
+ {
+ "evidence_item_id": "ev-synthesis_data-0-class_id",
+ "task_id": "A-G16",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "class_id",
+ "raw_value": "SAMPLE_OULAD_CLASS_CCC_2014J",
+ "parsed_value": "SAMPLE_OULAD_CLASS_CCC_2014J",
+ "unit": "identifier",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-low_engagement_count",
+ "task_id": "A-G16",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "low_engagement_count",
+ "raw_value": 1240,
+ "parsed_value": 1240,
+ "unit": "student_count",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-high_risk_count",
+ "task_id": "A-G16",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "high_risk_count",
+ "raw_value": 906,
+ "parsed_value": 906,
+ "unit": "student_count",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-hardest_assessment",
+ "task_id": "A-G16",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "hardest_assessment",
+ "raw_value": "24299",
+ "parsed_value": 24299,
+ "unit": "assessment_identifier",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-best_resource_type",
+ "task_id": "A-G16",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "best_resource_type",
+ "raw_value": "quiz",
+ "parsed_value": "quiz",
+ "unit": "resource_type",
+ "available": true,
+ "sensitive": false,
+ "semantic_alias": "most_used_resource_type"
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-total_students",
+ "task_id": "A-G16",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "total_students",
+ "raw_value": 1998,
+ "parsed_value": 1998,
+ "unit": "student_count",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-derived-low_engagement_rate",
+ "task_id": "A-G16",
+ "dataset_label": "derived",
+ "dataset_role": "derived_evidence",
+ "row_index": null,
+ "column": "low_engagement_rate",
+ "raw_value": null,
+ "parsed_value": 0.6206206206,
+ "unit": "ratio_0_1",
+ "available": true,
+ "sensitive": false,
+ "operation": "safe_divide",
+ "source_columns": [
+ "low_engagement_count",
+ "total_students"
+ ],
+ "source_evidence_item_ids": [
+ "ev-synthesis_data-0-low_engagement_count",
+ "ev-synthesis_data-0-total_students"
+ ]
+ },
+ {
+ "evidence_item_id": "ev-derived-high_risk_rate",
+ "task_id": "A-G16",
+ "dataset_label": "derived",
+ "dataset_role": "derived_evidence",
+ "row_index": null,
+ "column": "high_risk_rate",
+ "raw_value": null,
+ "parsed_value": 0.4534534535,
+ "unit": "ratio_0_1",
+ "available": true,
+ "sensitive": false,
+ "operation": "safe_divide",
+ "source_columns": [
+ "high_risk_count",
+ "total_students"
+ ],
+ "source_evidence_item_ids": [
+ "ev-synthesis_data-0-high_risk_count",
+ "ev-synthesis_data-0-total_students"
+ ]
+ }
+ ],
+ "rule_evaluations": [
+ {
+ "rule_id": "A-G16-R01",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "high_risk_rate",
+ "operator": "gte",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-derived-high_risk_rate"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-derived-high_risk_rate"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "A-G16-R02",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "low_engagement_rate",
+ "operator": "gte",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-derived-low_engagement_rate"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-derived-low_engagement_rate"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "A-G16-R03",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "hardest_assessment",
+ "operator": "is_present",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-hardest_assessment"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-hardest_assessment"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "A-G16-R04",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "best_resource_type",
+ "operator": "is_present",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-best_resource_type"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-best_resource_type"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ }
+ ]
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "prioritized_actions": [
+ {
+ "action_id": "admin_launch_engagement_outreach",
+ "action_text": "Coordinate a targeted engagement outreach and check whether access, scheduling, or course-navigation barriers need follow-up.",
+ "priority": "high",
+ "owner": "student_support_team",
+ "time_horizon_days": 7,
+ "support_category": "engagement_support",
+ "claim_limits": [
+ "Do not claim low engagement caused low performance.",
+ "Do not infer a specific barrier from the aggregate signal."
+ ],
+ "rule_id": "A-G16-R02",
+ "rule_ids": [
+ "A-G16-R02"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-derived-low_engagement_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "admin_review_high_risk_caseload",
+ "action_text": "Review the high-risk student caseload, assign named follow-up owners, and confirm which students need direct support.",
+ "priority": "high",
+ "owner": "academic_admin",
+ "time_horizon_days": 7,
+ "support_category": "risk_coordination",
+ "claim_limits": [
+ "Do not infer causes from the aggregate count.",
+ "Do not identify individual students unless a separate student-level evidence source is available."
+ ],
+ "rule_id": "A-G16-R01",
+ "rule_ids": [
+ "A-G16-R01"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-derived-high_risk_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "admin_review_assessment_support",
+ "action_text": "Ask the module team to review learner support and preparation materials for the identified assessment.",
+ "priority": "medium",
+ "owner": "module_lead",
+ "time_horizon_days": 14,
+ "support_category": "assessment_support",
+ "claim_limits": [
+ "Do not state a fail-rate value because the runtime row does not expose it.",
+ "Do not claim the assessment itself caused failure."
+ ],
+ "rule_id": "A-G16-R03",
+ "rule_ids": [
+ "A-G16-R03"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-hardest_assessment"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "admin_review_most_used_resource_format",
+ "action_text": "Review whether the most-used resource format can support the planned outreach, while separately checking its learning suitability.",
+ "priority": "low",
+ "owner": "learning_design_team",
+ "time_horizon_days": 14,
+ "support_category": "resource_planning",
+ "claim_limits": [
+ "Refer to this field as most-used, not best-performing.",
+ "Do not claim engagement clicks demonstrate learning effectiveness."
+ ],
+ "rule_id": "A-G16-R04",
+ "rule_ids": [
+ "A-G16-R04"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-best_resource_type"
+ ],
+ "provenance_status": "complete"
+ }
+ ],
+ "action_evidence_links": [
+ {
+ "action_id": "admin_launch_engagement_outreach",
+ "rule_id": "A-G16-R02",
+ "rule_ids": [
+ "A-G16-R02"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-derived-low_engagement_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "admin_review_high_risk_caseload",
+ "rule_id": "A-G16-R01",
+ "rule_ids": [
+ "A-G16-R01"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-derived-high_risk_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "admin_review_assessment_support",
+ "rule_id": "A-G16-R03",
+ "rule_ids": [
+ "A-G16-R03"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-hardest_assessment"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "admin_review_most_used_resource_format",
+ "rule_id": "A-G16-R04",
+ "rule_ids": [
+ "A-G16-R04"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-best_resource_type"
+ ],
+ "provenance_status": "complete"
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_evidence": [],
+ "unsupported_actions": [],
+ "summarization_warnings": [
+ "The LLM may paraphrase prioritized_actions but must not invent new actions or rules."
+ ]
+ }
+ }
+ ]
+ }
+}

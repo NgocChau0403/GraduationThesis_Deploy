@@ -15,6 +15,7 @@ const DEFAULT_PROMPT_PATH = path.join(PROJECT_ROOT, "Docs/evaluation_v2/PromptEv
 const PROMPT_QUEUE_DIRNAME = "prompt_queue";
 const DEFAULT_FULL_CONTEXT_TOKEN_CAP = 32000;
 const TOKEN_THRESHOLDS = [32000, 64000, 128000, 190000];
+const PACKET_LAYOUTS = ["embedded_prompt_full_context", "session_static_record_context"];
 
 function parseArgs(argv) {
   const args = {
@@ -24,6 +25,7 @@ function parseArgs(argv) {
     reportBasename: "token_budget_report",
     promptPath: DEFAULT_PROMPT_PATH,
     expectedCount: 208,
+    packetLayout: "embedded_prompt_full_context",
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -35,7 +37,12 @@ function parseArgs(argv) {
     else if (arg === "--report-basename") args.reportBasename = next, i += 1;
     else if (arg === "--prompt-path") args.promptPath = path.resolve(next), i += 1;
     else if (arg === "--expected-count") args.expectedCount = Number(next), i += 1;
+    else if (arg === "--packet-layout") args.packetLayout = next, i += 1;
     else throw new Error(`Unknown argument: ${arg}`);
+  }
+
+  if (!PACKET_LAYOUTS.includes(args.packetLayout)) {
+    throw new Error(`--packet-layout must be one of: ${PACKET_LAYOUTS.join(", ")}`);
   }
 
   return {
@@ -136,6 +143,9 @@ function buildArtifactReferences(judgeInput) {
 
 async function buildCompactPromptPacket({
   promptText,
+  promptPath,
+  promptSha256,
+  packetLayout,
   entry,
   judgeInput,
   evidenceArtifact,
@@ -161,6 +171,7 @@ async function buildCompactPromptPacket({
     schema_context: judgeInput.schema_context,
     evaluation_requirements: judgeInput.evaluation_requirements,
     derived_stat_evidence: judgeInput.derived_stat_evidence ?? [],
+    deterministic_checks: judgeInput.evidence_access?.deterministic_checks ?? [],
     evidence_access_summary: {
       evidence_access_mode: judgeInput.evidence_access.evidence_access_mode,
       full_result_row_count: judgeInput.evidence_access.full_result_row_count,
@@ -211,12 +222,23 @@ async function buildCompactPromptPacket({
     },
   };
 
+  const staticPromptSection = packetLayout === "session_static_record_context"
+    ? [
+      "## Session-Static Judge Contract Reference",
+      "",
+      "The Judge Prompt is intentionally not embedded in this record packet. The session must load and verify it once, then combine it with this record-specific context.",
+      "",
+      renderJsonBlock({
+        static_prompt_path: toRepoPath(promptPath),
+        static_prompt_sha256: promptSha256,
+      }),
+    ]
+    : ["## Frozen Judge Prompt V2", "", promptText];
+
   return [
     "# LLM Judge V2 Prompt Queue Packet",
     "",
-    "## Frozen Judge Prompt V2",
-    "",
-    promptText,
+    ...staticPromptSection,
     "",
     "## Queue Strategy",
     "",
@@ -229,13 +251,24 @@ async function buildCompactPromptPacket({
   ].join("\n");
 }
 
-function buildFullPromptPacket({ promptText, finalContextText }) {
+function buildFullPromptPacket({ promptText, promptPath, promptSha256, packetLayout, finalContextText }) {
+  const staticPromptSection = packetLayout === "session_static_record_context"
+    ? [
+      "## Session-Static Judge Contract Reference",
+      "",
+      "The Judge Prompt is intentionally not embedded in this record packet. The session must load and verify it once, then combine it with this record-specific context.",
+      "",
+      renderJsonBlock({
+        static_prompt_path: toRepoPath(promptPath),
+        static_prompt_sha256: promptSha256,
+      }),
+    ]
+    : ["## Frozen Judge Prompt V2", "", promptText];
+
   return [
     "# LLM Judge V2 Prompt Queue Packet",
     "",
-    "## Frozen Judge Prompt V2",
-    "",
-    promptText,
+    ...staticPromptSection,
     "",
     "## Full Final Judge Context",
     "",
@@ -244,7 +277,7 @@ function buildFullPromptPacket({ promptText, finalContextText }) {
   ].join("\n");
 }
 
-async function buildQueueEntry({ entry, args, promptText }) {
+async function buildQueueEntry({ entry, args, promptText, promptSha256 }) {
   const strategy = pickQueueStrategy(entry, args.fullContextTokenCap);
   const finalContextPath = repoPathToAbsolute(entry.final_context_path);
   const finalContextText = await readText(finalContextPath);
@@ -257,9 +290,18 @@ async function buildQueueEntry({ entry, args, promptText }) {
   }
 
   const promptPacketText = strategy === "full_context"
-    ? buildFullPromptPacket({ promptText, finalContextText })
+    ? buildFullPromptPacket({
+      promptText,
+      promptPath: args.promptPath,
+      promptSha256,
+      packetLayout: args.packetLayout,
+      finalContextText,
+    })
     : await buildCompactPromptPacket({
       promptText,
+      promptPath: args.promptPath,
+      promptSha256,
+      packetLayout: args.packetLayout,
       entry,
       judgeInput,
       evidenceArtifact,
@@ -269,6 +311,7 @@ async function buildQueueEntry({ entry, args, promptText }) {
   const promptPacketPath = path.join(args.promptQueueDir, `${safeFileStem(entry.record_id)}.md`);
   await writeFile(promptPacketPath, promptPacketText, "utf8");
   const packetTokenEstimate = estimateTokens(promptPacketText);
+  const staticPromptTokenEstimate = estimateTokens(promptText);
   const contextTokenEstimate = entry.token_accounting?.context_token_count ?? estimateTokens(finalContextText);
 
   return {
@@ -283,9 +326,19 @@ async function buildQueueEntry({ entry, args, promptText }) {
     token_risk_bucket: riskBucket(contextTokenEstimate),
     context_token_count: contextTokenEstimate,
     prompt_packet_token_count: packetTokenEstimate,
+    packet_layout: args.packetLayout,
+    static_prompt_path: toRepoPath(args.promptPath),
+    static_prompt_sha256: promptSha256,
+    static_prompt_token_count: staticPromptTokenEstimate,
+    record_context_path: toRepoPath(promptPacketPath),
+    record_context_sha256: sha256Text(promptPacketText),
+    record_context_token_count: packetTokenEstimate,
+    first_record_combined_token_count: staticPromptTokenEstimate + packetTokenEstimate,
     full_context_token_cap: args.fullContextTokenCap,
     final_context_path: entry.final_context_path,
     final_context_sha256: entry.final_context_sha256,
+    judge_input_path: entry.judge_input_path,
+    judge_input_sha256: entry.judge_input_sha256,
     prompt_packet_path: toRepoPath(promptPacketPath),
     prompt_packet_sha256: sha256Text(promptPacketText),
     evidence_access_mode: entry.evidence_access_mode,
@@ -312,6 +365,16 @@ function summarize({ generatedAt, entries, args, promptSha256, maxEntry }) {
     && new Set(entries.map((entry) => entry.record_id)).size === args.expectedCount
     && oversizedFullContext.length === 0
     && entries.every((entry) => entry.status === "prompt_queue_ready");
+  const staticPromptTokenCount = entries[0]?.static_prompt_token_count ?? 0;
+  const recordContextTokenCount = entries.reduce((sum, entry) => sum + entry.record_context_token_count, 0);
+  const embeddedPromptEquivalentTokenCount = recordContextTokenCount
+    + (args.packetLayout === "session_static_record_context" ? staticPromptTokenCount * entries.length : 0);
+  const sessionStaticTotalTokenCount = recordContextTokenCount
+    + (args.packetLayout === "session_static_record_context" ? staticPromptTokenCount : 0);
+  const avoidedTokenCount = embeddedPromptEquivalentTokenCount - sessionStaticTotalTokenCount;
+  const savingsRatio = embeddedPromptEquivalentTokenCount > 0
+    ? Number((avoidedTokenCount / embeddedPromptEquivalentTokenCount).toFixed(4))
+    : 0;
 
   return {
     report_version: "llm_judge_v2_phase_f7_preflight_token_budget_v1",
@@ -322,11 +385,13 @@ function summarize({ generatedAt, entries, args, promptSha256, maxEntry }) {
       judge_context_manifest_jsonl: toRepoPath(args.contextManifestPath),
       prompt_path: toRepoPath(args.promptPath),
       prompt_sha256: promptSha256,
+      packet_layout: args.packetLayout,
     },
     configuration: {
       full_context_token_cap: args.fullContextTokenCap,
       tokenizer_method: "heuristic_chars_div_4_ceiling",
       thresholds: TOKEN_THRESHOLDS,
+      static_prompt_loaded_once_per_session: args.packetLayout === "session_static_record_context",
     },
     counts: {
       prompt_queue_ready_records: entries.filter((entry) => entry.status === "prompt_queue_ready").length,
@@ -336,6 +401,15 @@ function summarize({ generatedAt, entries, args, promptSha256, maxEntry }) {
       compact_retrieval_context_records: entries.filter((entry) => entry.queue_strategy === "compact_retrieval_context").length,
       oversized_full_context_records: oversizedFullContext.length,
       threshold_counts: thresholdCounts,
+    },
+    token_savings: {
+      static_prompt_token_count: staticPromptTokenCount,
+      record_context_token_count_total: recordContextTokenCount,
+      embedded_prompt_equivalent_token_count: embeddedPromptEquivalentTokenCount,
+      session_static_total_token_count: sessionStaticTotalTokenCount,
+      repeated_static_tokens_avoided: avoidedTokenCount,
+      estimated_savings_ratio: savingsRatio,
+      estimated_savings_percent: Number((savingsRatio * 100).toFixed(2)),
     },
     coverage_summary: {
       datasets: countBy(entries, (entry) => entry.dataset_id),
@@ -354,6 +428,7 @@ function summarize({ generatedAt, entries, args, promptSha256, maxEntry }) {
         evidence_access_mode: maxEntry.evidence_access_mode,
         context_token_count: maxEntry.context_token_count,
         prompt_packet_token_count: maxEntry.prompt_packet_token_count,
+        packet_layout: maxEntry.packet_layout,
         queue_strategy: maxEntry.queue_strategy,
         final_context_path: maxEntry.final_context_path,
         prompt_packet_path: maxEntry.prompt_packet_path,
@@ -396,6 +471,9 @@ function renderMarkdownReport(report) {
     `- Prompt queue ready records: ${report.counts.prompt_queue_ready_records}/${report.counts.total_records}`,
     `- Full-context records: ${report.counts.full_context_records}`,
     `- Compact retrieval-context records: ${report.counts.compact_retrieval_context_records}`,
+    `- Packet layout: ${report.inputs.packet_layout}`,
+    `- Estimated repeated static tokens avoided: ${report.token_savings.repeated_static_tokens_avoided}`,
+    `- Estimated token savings: ${report.token_savings.estimated_savings_percent}%`,
     "",
     "## Threshold Counts",
     "",
@@ -459,7 +537,7 @@ async function main() {
   const queueEntries = [];
   for (const entry of contextEntries) {
     console.log(`[phaseF7-preflight] ${entry.record_id}`);
-    queueEntries.push(await buildQueueEntry({ entry, args, promptText }));
+    queueEntries.push(await buildQueueEntry({ entry, args, promptText, promptSha256 }));
   }
 
   const maxEntry = queueEntries

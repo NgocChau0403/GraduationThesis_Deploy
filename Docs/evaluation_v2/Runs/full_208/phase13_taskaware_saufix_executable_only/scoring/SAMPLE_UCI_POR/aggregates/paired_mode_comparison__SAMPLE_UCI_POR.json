@@ -1,0 +1,2042 @@
+{
+  "dataset_scope": "SAMPLE_UCI_POR",
+  "pair_count": 24,
+  "comparable_pair_count": 24,
+  "non_comparable_pair_count": 0,
+  "average_delta_task_aware_minus_baseline": 0.51,
+  "winner_counts": {
+    "task_aware_data_summarization": 12,
+    "tie": 6,
+    "baseline_first_20_rows": 6
+  },
+  "row_count_context": {
+    "comparable_by_row_count_bucket": {
+      "<=20": 19,
+      ">20": 5
+    },
+    "gt20_pair_count": 5,
+    "gt20_tie_pair_count": 1,
+    "gt20_non_tie_pair_count": 4,
+    "gt20_pairs": [
+      {
+        "task_id": "A-G03",
+        "full_result_row_count": 50,
+        "winner": "tie",
+        "baseline_final_score": 5,
+        "task_aware_final_score": 5,
+        "delta_task_aware_minus_baseline": 0
+      },
+      {
+        "task_id": "A-G13",
+        "full_result_row_count": 649,
+        "winner": "task_aware_data_summarization",
+        "baseline_final_score": 4.4,
+        "task_aware_final_score": 6,
+        "delta_task_aware_minus_baseline": 1.6
+      },
+      {
+        "task_id": "S-T09",
+        "full_result_row_count": 649,
+        "winner": "task_aware_data_summarization",
+        "baseline_final_score": 4.8,
+        "task_aware_final_score": 6,
+        "delta_task_aware_minus_baseline": 1.2
+      },
+      {
+        "task_id": "S-T14",
+        "full_result_row_count": 649,
+        "winner": "task_aware_data_summarization",
+        "baseline_final_score": 5,
+        "task_aware_final_score": 6,
+        "delta_task_aware_minus_baseline": 1
+      },
+      {
+        "task_id": "S-T15",
+        "full_result_row_count": 649,
+        "winner": "task_aware_data_summarization",
+        "baseline_final_score": 3,
+        "task_aware_final_score": 6,
+        "delta_task_aware_minus_baseline": 3
+      }
+    ]
+  },
+  "non_tie_analysis": {
+    "non_tie_pair_count": 18,
+    "non_tie_by_row_count_bucket": {
+      "<=20": 14,
+      ">20": 4
+    },
+    "non_tie_by_winner_and_row_count_bucket": {
+      "task_aware_data_summarization__<=20": 8,
+      "task_aware_data_summarization__>20": 4,
+      "baseline_first_20_rows__<=20": 6
+    },
+    "non_tie_by_evidence_access_mode": {
+      "direct_embedding": 14,
+      "deterministic_artifact_retrieval": 4
+    },
+    "interpretation": "Non-tie outcomes are not determined only by whether full SQL results have <=20 rows. When <=20, rows[:20] already covers the full result; wins usually come from explanation completeness, actionability, unsupported claims, or severity caps. When >20, evidence coverage can matter, but the final winner is still determined by judge metric scores and caps."
+  },
+  "pairs": [
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-B01",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-B01",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-B01__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-B01__task_aware_data_summarization",
+      "baseline_final_score": 7,
+      "task_aware_final_score": 9.35,
+      "baseline_raw_weighted_score": 7.5,
+      "task_aware_raw_weighted_score": 9.35,
+      "delta_task_aware_minus_baseline": 2.35,
+      "winner": "task_aware_data_summarization",
+      "full_result_row_count": 10,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": 7,
+      "task_aware_effective_cap": null,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": null,
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 7,
+          "rationale": "The score-bucket values are accurate, but the response does not quantify or clearly flag the 7.6% below the pass threshold and overstates the lower-range concentration."
+        }
+      ],
+      "task_aware_error_details": [],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 7,
+          "task_aware": 9,
+          "delta": 2
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "completeness",
+          "baseline": 6,
+          "task_aware": 9,
+          "delta": 3
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 7,
+          "task_aware": 10,
+          "delta": 3
+        },
+        {
+          "metric": "actionability",
+          "baseline": 6,
+          "task_aware": 9,
+          "delta": 3
+        },
+        {
+          "metric": "clarity",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 7 because of major judge error(s). baseline rows[:20] issue(s): major missing_required_output."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-B02",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-B02",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-B02__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-B02__task_aware_data_summarization",
+      "baseline_final_score": 8.8,
+      "task_aware_final_score": 9.25,
+      "baseline_raw_weighted_score": 8.8,
+      "task_aware_raw_weighted_score": 9.25,
+      "delta_task_aware_minus_baseline": 0.45,
+      "winner": "task_aware_data_summarization",
+      "full_result_row_count": 2,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": null,
+      "task_aware_effective_cap": null,
+      "baseline_highest_error_severity": "minor",
+      "task_aware_highest_error_severity": null,
+      "baseline_error_details": [
+        {
+          "severity": "minor",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": null,
+          "rationale": "Pass and fail counts are accurate, but the requested withdrawn category is not explicitly reported as absent or zero."
+        }
+      ],
+      "task_aware_error_details": [],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "completeness",
+          "baseline": 7,
+          "task_aware": 9,
+          "delta": 2
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 9,
+          "task_aware": 10,
+          "delta": 1
+        },
+        {
+          "metric": "actionability",
+          "baseline": 8,
+          "task_aware": 8,
+          "delta": 0
+        },
+        {
+          "metric": "clarity",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, task_relevance +1. baseline rows[:20] issue(s): minor missing_required_output."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-C01",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-C01",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-C01__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-C01__task_aware_data_summarization",
+      "baseline_final_score": 8.35,
+      "task_aware_final_score": 9.25,
+      "baseline_raw_weighted_score": 8.35,
+      "task_aware_raw_weighted_score": 9.25,
+      "delta_task_aware_minus_baseline": 0.9,
+      "winner": "task_aware_data_summarization",
+      "full_result_row_count": 6,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": null,
+      "task_aware_effective_cap": null,
+      "baseline_highest_error_severity": "minor",
+      "task_aware_highest_error_severity": null,
+      "baseline_error_details": [
+        {
+          "severity": "minor",
+          "type": "imprecise_trajectory_interpretation",
+          "primary_metric": "faithfulness",
+          "cap_candidate": null,
+          "rationale": "The initial divergence and later convergence are supported, but the explanation overlooks that the students were already equal at assessment 2 and speculates about confidence."
+        }
+      ],
+      "task_aware_error_details": [],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 9,
+          "task_aware": 10,
+          "delta": 1
+        },
+        {
+          "metric": "completeness",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 9,
+          "task_aware": 10,
+          "delta": 1
+        },
+        {
+          "metric": "actionability",
+          "baseline": 7,
+          "task_aware": 8,
+          "delta": 1
+        },
+        {
+          "metric": "clarity",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: faithfulness +1, numerical_correctness +1, completeness +1. baseline rows[:20] issue(s): minor imprecise_trajectory_interpretation."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-C04",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-C04",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-C04__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-C04__task_aware_data_summarization",
+      "baseline_final_score": 6,
+      "task_aware_final_score": 6,
+      "baseline_raw_weighted_score": 6.55,
+      "task_aware_raw_weighted_score": 6.55,
+      "delta_task_aware_minus_baseline": 0,
+      "winner": "tie",
+      "full_result_row_count": 10,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": 6,
+      "task_aware_effective_cap": 6,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": "major",
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 6,
+          "rationale": "The go-out-frequency gap is correct, but most required dimensions and both supporting composite scores are omitted, while the social-activity intervention is not supported by the contextual evidence."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 6,
+          "rationale": "The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 6,
+          "task_aware": 6,
+          "delta": 0
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "completeness",
+          "baseline": 5,
+          "task_aware": 5,
+          "delta": 0
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 7,
+          "task_aware": 7,
+          "delta": 0
+        },
+        {
+          "metric": "actionability",
+          "baseline": 4,
+          "task_aware": 4,
+          "delta": 0
+        },
+        {
+          "metric": "clarity",
+          "baseline": 8,
+          "task_aware": 8,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 5,
+          "task_aware": 5,
+          "delta": 0
+        }
+      ],
+      "interpretation": "Both modes received the same final score."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-C05",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-C05",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-C05__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-C05__task_aware_data_summarization",
+      "baseline_final_score": 7,
+      "task_aware_final_score": 8.75,
+      "baseline_raw_weighted_score": 7.45,
+      "task_aware_raw_weighted_score": 8.75,
+      "delta_task_aware_minus_baseline": 1.75,
+      "winner": "task_aware_data_summarization",
+      "full_result_row_count": 2,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": 7,
+      "task_aware_effective_cap": null,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": null,
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "unsupported_causal_framing",
+          "primary_metric": "faithfulness",
+          "cap_candidate": 7,
+          "rationale": "The comparative values are supported, but claims about a more supportive academic environment and performance impact exceed the non-causal evidence."
+        }
+      ],
+      "task_aware_error_details": [],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 6,
+          "task_aware": 8,
+          "delta": 2
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 9,
+          "task_aware": 10,
+          "delta": 1
+        },
+        {
+          "metric": "completeness",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "actionability",
+          "baseline": 7,
+          "task_aware": 8,
+          "delta": 1
+        },
+        {
+          "metric": "clarity",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 5,
+          "task_aware": 7,
+          "delta": 2
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 7 because of major judge error(s). baseline rows[:20] issue(s): major unsupported_causal_framing."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-G03",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G03",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-G03__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-G03__task_aware_data_summarization",
+      "baseline_final_score": 5,
+      "task_aware_final_score": 5,
+      "baseline_raw_weighted_score": 6.65,
+      "task_aware_raw_weighted_score": 6.65,
+      "delta_task_aware_minus_baseline": 0,
+      "winner": "tie",
+      "full_result_row_count": 50,
+      "row_count_bucket": ">20",
+      "evidence_access_mode": "deterministic_artifact_retrieval",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": 5,
+      "task_aware_effective_cap": 5,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": "major",
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 5,
+          "rationale": "Only a small subset of the 50 returned students is discussed; the required ranking and per-high-risk-student flags and actions are not delivered."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 5,
+          "rationale": "Only three examples are named; the required cohort ranking and per-high-risk-student explanation remain substantially incomplete."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 8,
+          "task_aware": 8,
+          "delta": 0
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "completeness",
+          "baseline": 3,
+          "task_aware": 3,
+          "delta": 0
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 5,
+          "task_aware": 5,
+          "delta": 0
+        },
+        {
+          "metric": "actionability",
+          "baseline": 5,
+          "task_aware": 5,
+          "delta": 0
+        },
+        {
+          "metric": "clarity",
+          "baseline": 8,
+          "task_aware": 8,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 7,
+          "task_aware": 7,
+          "delta": 0
+        }
+      ],
+      "interpretation": "Both modes received the same final score."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-G04",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G04",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-G04__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-G04__task_aware_data_summarization",
+      "baseline_final_score": 9.35,
+      "task_aware_final_score": 9.35,
+      "baseline_raw_weighted_score": 9.35,
+      "task_aware_raw_weighted_score": 9.35,
+      "delta_task_aware_minus_baseline": 0,
+      "winner": "tie",
+      "full_result_row_count": 3,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": null,
+      "task_aware_effective_cap": null,
+      "baseline_highest_error_severity": null,
+      "task_aware_highest_error_severity": null,
+      "baseline_error_details": [],
+      "task_aware_error_details": [],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "completeness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "actionability",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "clarity",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        }
+      ],
+      "interpretation": "Both modes received the same final score."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-G12",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G12",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-G12__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-G12__task_aware_data_summarization",
+      "baseline_final_score": 6,
+      "task_aware_final_score": 6,
+      "baseline_raw_weighted_score": 7.75,
+      "task_aware_raw_weighted_score": 7.45,
+      "delta_task_aware_minus_baseline": 0,
+      "winner": "tie",
+      "full_result_row_count": 4,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": 6,
+      "task_aware_effective_cap": 6,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": "major",
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 6,
+          "rationale": "The group failure rates are accurate, but withdrawal rates and the requested fail-plus-withdrawn threshold comparison are absent."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 6,
+          "rationale": "The failure-rate comparison is accurate, but withdrawal percentages and the fail-plus-withdrawn threshold flag are omitted."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 8,
+          "task_aware": 8,
+          "delta": 0
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "completeness",
+          "baseline": 5,
+          "task_aware": 4,
+          "delta": -1
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 8,
+          "task_aware": 7,
+          "delta": -1
+        },
+        {
+          "metric": "actionability",
+          "baseline": 6,
+          "task_aware": 6,
+          "delta": 0
+        },
+        {
+          "metric": "clarity",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 6,
+          "task_aware": 6,
+          "delta": 0
+        }
+      ],
+      "interpretation": "Both modes received the same final score."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-G13",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-G13",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-G13__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-G13__task_aware_data_summarization",
+      "baseline_final_score": 4.4,
+      "task_aware_final_score": 6,
+      "baseline_raw_weighted_score": 4.4,
+      "task_aware_raw_weighted_score": 7.5,
+      "delta_task_aware_minus_baseline": 1.6,
+      "winner": "task_aware_data_summarization",
+      "full_result_row_count": 649,
+      "row_count_bucket": ">20",
+      "evidence_access_mode": "deterministic_artifact_retrieval",
+      "queue_strategy": "compact_retrieval_context",
+      "baseline_effective_cap": 5,
+      "task_aware_effective_cap": 6,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": "major",
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "misleading_correlation_interpretation",
+          "primary_metric": "faithfulness",
+          "cap_candidate": 5,
+          "rationale": "The response overstates a weak negative association, relies on selected examples instead of the full coefficient, and does not rank students as required."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 6,
+          "rationale": "The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 4,
+          "task_aware": 8,
+          "delta": 4
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 4,
+          "task_aware": 10,
+          "delta": 6
+        },
+        {
+          "metric": "completeness",
+          "baseline": 3,
+          "task_aware": 5,
+          "delta": 2
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 5,
+          "task_aware": 7,
+          "delta": 2
+        },
+        {
+          "metric": "actionability",
+          "baseline": 4,
+          "task_aware": 5,
+          "delta": 1
+        },
+        {
+          "metric": "clarity",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 4,
+          "task_aware": 6,
+          "delta": 2
+        }
+      ],
+      "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 5 because of major judge error(s). baseline rows[:20] issue(s): major misleading_correlation_interpretation."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-S02",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-S02",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-S02__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-S02__task_aware_data_summarization",
+      "baseline_final_score": 7,
+      "task_aware_final_score": 7,
+      "baseline_raw_weighted_score": 8.5,
+      "task_aware_raw_weighted_score": 7.55,
+      "delta_task_aware_minus_baseline": 0,
+      "winner": "tie",
+      "full_result_row_count": 3,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": 7,
+      "task_aware_effective_cap": 7,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": "major",
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 7,
+          "rationale": "The observed improvement is described, but the returned performance_trend slope magnitude of 27.5 is not stated."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "major",
+          "type": "unsupported_causal_framing",
+          "primary_metric": "faithfulness",
+          "cap_candidate": 7,
+          "rationale": "The score change is accurate, but the 27.5 slope magnitude is omitted and the claim that interventions were effective is unsupported."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 9,
+          "task_aware": 6,
+          "delta": -3
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "completeness",
+          "baseline": 6,
+          "task_aware": 6,
+          "delta": 0
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 8,
+          "task_aware": 8,
+          "delta": 0
+        },
+        {
+          "metric": "actionability",
+          "baseline": 8,
+          "task_aware": 7,
+          "delta": -1
+        },
+        {
+          "metric": "clarity",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 9,
+          "task_aware": 7,
+          "delta": -2
+        }
+      ],
+      "interpretation": "Both modes received the same final score."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-S04",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-S04",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-S04__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-S04__task_aware_data_summarization",
+      "baseline_final_score": 8.9,
+      "task_aware_final_score": 7,
+      "baseline_raw_weighted_score": 8.9,
+      "task_aware_raw_weighted_score": 8.3,
+      "delta_task_aware_minus_baseline": -1.9,
+      "winner": "baseline_first_20_rows",
+      "full_result_row_count": 4,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": null,
+      "task_aware_effective_cap": 7,
+      "baseline_highest_error_severity": "minor",
+      "task_aware_highest_error_severity": "major",
+      "baseline_error_details": [
+        {
+          "severity": "minor",
+          "type": "missing_required_detail",
+          "primary_metric": "completeness",
+          "cap_candidate": null,
+          "rationale": "Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 7,
+          "rationale": "The values, thresholds, and severities are clear, but both existing recommended_action fields required for triggered flags are omitted."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "completeness",
+          "baseline": 7,
+          "task_aware": 6,
+          "delta": -1
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 9,
+          "task_aware": 8,
+          "delta": -1
+        },
+        {
+          "metric": "actionability",
+          "baseline": 9,
+          "task_aware": 6,
+          "delta": -3
+        },
+        {
+          "metric": "clarity",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. baseline rows[:20] wins mainly because task_aware_data_summarization was capped at 7 because of major judge error(s). task-aware issue(s): major missing_required_output."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-S05",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-S05",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-S05__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-S05__task_aware_data_summarization",
+      "baseline_final_score": 9.85,
+      "task_aware_final_score": 9,
+      "baseline_raw_weighted_score": 9.85,
+      "task_aware_raw_weighted_score": 9,
+      "delta_task_aware_minus_baseline": -0.85,
+      "winner": "baseline_first_20_rows",
+      "full_result_row_count": 3,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": null,
+      "task_aware_effective_cap": null,
+      "baseline_highest_error_severity": null,
+      "task_aware_highest_error_severity": "minor",
+      "baseline_error_details": [],
+      "task_aware_error_details": [
+        {
+          "severity": "minor",
+          "type": "scope_imprecision",
+          "primary_metric": "faithfulness",
+          "cap_candidate": null,
+          "rationale": "The evidence is for one student, so wording that no students passed quiz 1 introduces a scope imprecision even though the value and recommendation are correct."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 10,
+          "task_aware": 8,
+          "delta": -2
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "completeness",
+          "baseline": 10,
+          "task_aware": 9,
+          "delta": -1
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 10,
+          "task_aware": 9,
+          "delta": -1
+        },
+        {
+          "metric": "actionability",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "clarity",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 9,
+          "task_aware": 8,
+          "delta": -1
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. baseline rows[:20] wins on metric differences: faithfulness -2, completeness -1, task_relevance -1. task-aware issue(s): minor scope_imprecision."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__A-S07",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "A-S07",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__A-S07__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__A-S07__task_aware_data_summarization",
+      "baseline_final_score": 6,
+      "task_aware_final_score": 5.5,
+      "baseline_raw_weighted_score": 7.4,
+      "task_aware_raw_weighted_score": 5.5,
+      "delta_task_aware_minus_baseline": -0.5,
+      "winner": "baseline_first_20_rows",
+      "full_result_row_count": 1,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": 6,
+      "task_aware_effective_cap": 6,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": "major",
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 6,
+          "rationale": "Several contextual factors are correctly identified, but existing school support is omitted and the intervention is not grounded in a returned action field."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "major",
+          "type": "unsupported_numerical_claim",
+          "primary_metric": "numerical_correctness",
+          "cap_candidate": 6,
+          "rationale": "The response omits several present disadvantage dimensions and existing school support, and invents an average threshold for the support score."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 8,
+          "task_aware": 5,
+          "delta": -3
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 10,
+          "task_aware": 6,
+          "delta": -4
+        },
+        {
+          "metric": "completeness",
+          "baseline": 5,
+          "task_aware": 4,
+          "delta": -1
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 7,
+          "task_aware": 6,
+          "delta": -1
+        },
+        {
+          "metric": "actionability",
+          "baseline": 5,
+          "task_aware": 5,
+          "delta": 0
+        },
+        {
+          "metric": "clarity",
+          "baseline": 8,
+          "task_aware": 8,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 6,
+          "task_aware": 5,
+          "delta": -1
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. baseline rows[:20] wins mainly because task_aware_data_summarization was capped at 6 because of major judge error(s). task-aware issue(s): major unsupported_numerical_claim."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__S-B01",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-B01",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__S-B01__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__S-B01__task_aware_data_summarization",
+      "baseline_final_score": 9.25,
+      "task_aware_final_score": 9.75,
+      "baseline_raw_weighted_score": 9.25,
+      "task_aware_raw_weighted_score": 9.75,
+      "delta_task_aware_minus_baseline": 0.5,
+      "winner": "task_aware_data_summarization",
+      "full_result_row_count": 1,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": null,
+      "task_aware_effective_cap": null,
+      "baseline_highest_error_severity": null,
+      "task_aware_highest_error_severity": null,
+      "baseline_error_details": [],
+      "task_aware_error_details": [],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 9,
+          "task_aware": 10,
+          "delta": 1
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "completeness",
+          "baseline": 9,
+          "task_aware": 10,
+          "delta": 1
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "actionability",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "clarity",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: faithfulness +1, completeness +1, actionability +1."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__S-B02",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-B02",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__S-B02__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__S-B02__task_aware_data_summarization",
+      "baseline_final_score": 6,
+      "task_aware_final_score": 8.65,
+      "baseline_raw_weighted_score": 6.2,
+      "task_aware_raw_weighted_score": 8.65,
+      "delta_task_aware_minus_baseline": 2.65,
+      "winner": "task_aware_data_summarization",
+      "full_result_row_count": 1,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": 6,
+      "task_aware_effective_cap": null,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": "minor",
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "contradicted_metric_interpretation",
+          "primary_metric": "numerical_correctness",
+          "cap_candidate": 6,
+          "rationale": "The low-risk badge and score are correct, but punctuality_rate=1 is interpreted as a punctuality problem and unavailable engagement is treated as observed evidence."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "minor",
+          "type": "unsupported_action",
+          "primary_metric": "actionability",
+          "cap_candidate": null,
+          "rationale": "Metric interpretation is mostly accurate, but the recommendation to increase engagement is not supported when engagement_score_available is false."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 5,
+          "task_aware": 8,
+          "delta": 3
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 5,
+          "task_aware": 10,
+          "delta": 5
+        },
+        {
+          "metric": "completeness",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "actionability",
+          "baseline": 4,
+          "task_aware": 6,
+          "delta": 2
+        },
+        {
+          "metric": "clarity",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 7,
+          "task_aware": 9,
+          "delta": 2
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major contradicted_metric_interpretation."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__S-T01",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T01",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__S-T01__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__S-T01__task_aware_data_summarization",
+      "baseline_final_score": 9.35,
+      "task_aware_final_score": 9.35,
+      "baseline_raw_weighted_score": 9.35,
+      "task_aware_raw_weighted_score": 9.35,
+      "delta_task_aware_minus_baseline": 0,
+      "winner": "tie",
+      "full_result_row_count": 3,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": null,
+      "task_aware_effective_cap": null,
+      "baseline_highest_error_severity": null,
+      "task_aware_highest_error_severity": null,
+      "baseline_error_details": [],
+      "task_aware_error_details": [],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "completeness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "actionability",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "clarity",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        }
+      ],
+      "interpretation": "Both modes received the same final score."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__S-T02",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T02",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__S-T02__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__S-T02__task_aware_data_summarization",
+      "baseline_final_score": 8.8,
+      "task_aware_final_score": 9.5,
+      "baseline_raw_weighted_score": 8.8,
+      "task_aware_raw_weighted_score": 9.5,
+      "delta_task_aware_minus_baseline": 0.7,
+      "winner": "task_aware_data_summarization",
+      "full_result_row_count": 3,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": null,
+      "task_aware_effective_cap": null,
+      "baseline_highest_error_severity": "minor",
+      "task_aware_highest_error_severity": null,
+      "baseline_error_details": [
+        {
+          "severity": "minor",
+          "type": "scope_imprecision",
+          "primary_metric": "faithfulness",
+          "cap_candidate": null,
+          "rationale": "The G1 evidence is correct, but the response shifts from the selected student to claims about most students."
+        }
+      ],
+      "task_aware_error_details": [],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 10,
+          "task_aware": 10,
+          "delta": 0
+        },
+        {
+          "metric": "completeness",
+          "baseline": 9,
+          "task_aware": 10,
+          "delta": 1
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 9,
+          "task_aware": 10,
+          "delta": 1
+        },
+        {
+          "metric": "actionability",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "clarity",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: faithfulness +1, completeness +1, task_relevance +1. baseline rows[:20] issue(s): minor scope_imprecision."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__S-T03",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T03",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__S-T03__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__S-T03__task_aware_data_summarization",
+      "baseline_final_score": 8.35,
+      "task_aware_final_score": 6.85,
+      "baseline_raw_weighted_score": 8.35,
+      "task_aware_raw_weighted_score": 6.85,
+      "delta_task_aware_minus_baseline": -1.5,
+      "winner": "baseline_first_20_rows",
+      "full_result_row_count": 6,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": null,
+      "task_aware_effective_cap": 7,
+      "baseline_highest_error_severity": "minor",
+      "task_aware_highest_error_severity": "major",
+      "baseline_error_details": [
+        {
+          "severity": "minor",
+          "type": "missing_required_detail",
+          "primary_metric": "completeness",
+          "cap_candidate": null,
+          "rationale": "The percentiles and benchmark comparisons are correct, but the requested top-X-percent standing is not explicitly translated from the 8.8th percentile."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 7,
+          "rationale": "The direction of comparison is correct, but exact returned values and the requested top-X-percent standing are omitted."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 8,
+          "task_aware": 8,
+          "delta": 0
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 9,
+          "task_aware": 7,
+          "delta": -2
+        },
+        {
+          "metric": "completeness",
+          "baseline": 8,
+          "task_aware": 5,
+          "delta": -3
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 9,
+          "task_aware": 6,
+          "delta": -3
+        },
+        {
+          "metric": "actionability",
+          "baseline": 7,
+          "task_aware": 6,
+          "delta": -1
+        },
+        {
+          "metric": "clarity",
+          "baseline": 9,
+          "task_aware": 8,
+          "delta": -1
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 8,
+          "task_aware": 8,
+          "delta": 0
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. baseline rows[:20] wins mainly because task_aware_data_summarization was capped at 7 because of major judge error(s). task-aware issue(s): major missing_required_output."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__S-T04",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T04",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__S-T04__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__S-T04__task_aware_data_summarization",
+      "baseline_final_score": 6,
+      "task_aware_final_score": 9.85,
+      "baseline_raw_weighted_score": 7.5,
+      "task_aware_raw_weighted_score": 9.85,
+      "delta_task_aware_minus_baseline": 3.85,
+      "winner": "task_aware_data_summarization",
+      "full_result_row_count": 5,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": 6,
+      "task_aware_effective_cap": null,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": null,
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 6,
+          "rationale": "The active low-engagement flag and action are identified, but its exact value, threshold, severity, and returned description are omitted."
+        }
+      ],
+      "task_aware_error_details": [],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 8,
+          "task_aware": 10,
+          "delta": 2
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 7,
+          "task_aware": 10,
+          "delta": 3
+        },
+        {
+          "metric": "completeness",
+          "baseline": 5,
+          "task_aware": 10,
+          "delta": 5
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 8,
+          "task_aware": 10,
+          "delta": 2
+        },
+        {
+          "metric": "actionability",
+          "baseline": 8,
+          "task_aware": 10,
+          "delta": 2
+        },
+        {
+          "metric": "clarity",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 9,
+          "task_aware": 9,
+          "delta": 0
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major missing_required_output."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__S-T07",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T07",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__S-T07__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__S-T07__task_aware_data_summarization",
+      "baseline_final_score": 4,
+      "task_aware_final_score": 3,
+      "baseline_raw_weighted_score": 4.95,
+      "task_aware_raw_weighted_score": 3.6,
+      "delta_task_aware_minus_baseline": -1,
+      "winner": "baseline_first_20_rows",
+      "full_result_row_count": 4,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": 4,
+      "task_aware_effective_cap": 3,
+      "baseline_highest_error_severity": "critical",
+      "task_aware_highest_error_severity": "critical",
+      "baseline_error_details": [
+        {
+          "severity": "critical",
+          "type": "contradictory_core_numerical_claim",
+          "primary_metric": "numerical_correctness",
+          "cap_candidate": 4,
+          "rationale": "The absence rate is stated, but a weak negative correlation is fabricated even though absence_rate is constant across the three assessment rows, so that association is not estimable."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "critical",
+          "type": "wrong_evaluation_target",
+          "primary_metric": "task_relevance",
+          "cap_candidate": 3,
+          "rationale": "The response analyzes assessment order versus score instead of absence rate versus performance, omitting both required absence outputs."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 3,
+          "task_aware": 2,
+          "delta": -1
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 3,
+          "task_aware": 5,
+          "delta": 2
+        },
+        {
+          "metric": "completeness",
+          "baseline": 5,
+          "task_aware": 2,
+          "delta": -3
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 8,
+          "task_aware": 2,
+          "delta": -6
+        },
+        {
+          "metric": "actionability",
+          "baseline": 5,
+          "task_aware": 4,
+          "delta": -1
+        },
+        {
+          "metric": "clarity",
+          "baseline": 8,
+          "task_aware": 8,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 7,
+          "task_aware": 6,
+          "delta": -1
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. baseline rows[:20] wins mainly because task_aware_data_summarization was capped at 3 because of critical judge error(s). task-aware issue(s): critical wrong_evaluation_target."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__S-T09",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T09",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__S-T09__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__S-T09__task_aware_data_summarization",
+      "baseline_final_score": 4.8,
+      "task_aware_final_score": 6,
+      "baseline_raw_weighted_score": 4.8,
+      "task_aware_raw_weighted_score": 7.55,
+      "delta_task_aware_minus_baseline": 1.2,
+      "winner": "task_aware_data_summarization",
+      "full_result_row_count": 649,
+      "row_count_bucket": ">20",
+      "evidence_access_mode": "deterministic_artifact_retrieval",
+      "queue_strategy": "compact_retrieval_context",
+      "baseline_effective_cap": 5,
+      "task_aware_effective_cap": 6,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": "major",
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "misleading_correlation_interpretation",
+          "primary_metric": "faithfulness",
+          "cap_candidate": 5,
+          "rationale": "The negative direction is plausible, but the relationship is overstated, selected examples are misleading, and the selected student position is absent."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 6,
+          "rationale": "The -0.1041 coefficient is accurate, but the selected student is not located in the cohort scatter and the lifestyle advice overreaches weak correlational evidence."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 4,
+          "task_aware": 8,
+          "delta": 4
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 5,
+          "task_aware": 10,
+          "delta": 5
+        },
+        {
+          "metric": "completeness",
+          "baseline": 4,
+          "task_aware": 5,
+          "delta": 1
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 5,
+          "task_aware": 7,
+          "delta": 2
+        },
+        {
+          "metric": "actionability",
+          "baseline": 4,
+          "task_aware": 5,
+          "delta": 1
+        },
+        {
+          "metric": "clarity",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 5,
+          "task_aware": 7,
+          "delta": 2
+        }
+      ],
+      "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 5 because of major judge error(s). baseline rows[:20] issue(s): major misleading_correlation_interpretation."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__S-T13",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T13",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__S-T13__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__S-T13__task_aware_data_summarization",
+      "baseline_final_score": 5.85,
+      "task_aware_final_score": 4,
+      "baseline_raw_weighted_score": 5.85,
+      "task_aware_raw_weighted_score": 4.65,
+      "delta_task_aware_minus_baseline": -1.85,
+      "winner": "baseline_first_20_rows",
+      "full_result_row_count": 1,
+      "row_count_bucket": "<=20",
+      "evidence_access_mode": "direct_embedding",
+      "queue_strategy": "full_context",
+      "baseline_effective_cap": 6,
+      "task_aware_effective_cap": 4,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": "critical",
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "unsupported_action_context",
+          "primary_metric": "actionability",
+          "cap_candidate": 6,
+          "rationale": "No supported action is exposed by deterministic action evidence; the response does not say so and treats unavailable engagement as a basis for improvement context."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "critical",
+          "type": "invented_action",
+          "primary_metric": "actionability",
+          "cap_candidate": 4,
+          "rationale": "Deterministic action evidence contains no supported action, yet the response invents attendance-planning and study-goal actions and triggering rationales."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 5,
+          "task_aware": 3,
+          "delta": -2
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 5,
+          "task_aware": 6,
+          "delta": 1
+        },
+        {
+          "metric": "completeness",
+          "baseline": 7,
+          "task_aware": 4,
+          "delta": -3
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 6,
+          "task_aware": 5,
+          "delta": -1
+        },
+        {
+          "metric": "actionability",
+          "baseline": 5,
+          "task_aware": 2,
+          "delta": -3
+        },
+        {
+          "metric": "clarity",
+          "baseline": 8,
+          "task_aware": 8,
+          "delta": 0
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 7,
+          "task_aware": 7,
+          "delta": 0
+        }
+      ],
+      "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. baseline rows[:20] wins mainly because task_aware_data_summarization was capped at 4 because of critical judge error(s). task-aware issue(s): critical invented_action."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__S-T14",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T14",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__S-T14__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__S-T14__task_aware_data_summarization",
+      "baseline_final_score": 5,
+      "task_aware_final_score": 6,
+      "baseline_raw_weighted_score": 5.05,
+      "task_aware_raw_weighted_score": 7.65,
+      "delta_task_aware_minus_baseline": 1,
+      "winner": "task_aware_data_summarization",
+      "full_result_row_count": 649,
+      "row_count_bucket": ">20",
+      "evidence_access_mode": "deterministic_artifact_retrieval",
+      "queue_strategy": "compact_retrieval_context",
+      "baseline_effective_cap": 5,
+      "task_aware_effective_cap": 6,
+      "baseline_highest_error_severity": "major",
+      "task_aware_highest_error_severity": "major",
+      "baseline_error_details": [
+        {
+          "severity": "major",
+          "type": "misleading_correlation_interpretation",
+          "primary_metric": "faithfulness",
+          "cap_candidate": 5,
+          "rationale": "The positive direction is correct, but the 0.0144 association is overstated, the selected student is not compared, and prescriptive advice exceeds the correlational task."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 6,
+          "rationale": "The 0.0144 coefficient and weak interpretation are accurate, but the selected student position is omitted and the recommendation goes beyond the descriptive evidence."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 5,
+          "task_aware": 8,
+          "delta": 3
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 5,
+          "task_aware": 10,
+          "delta": 5
+        },
+        {
+          "metric": "completeness",
+          "baseline": 4,
+          "task_aware": 5,
+          "delta": 1
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 5,
+          "task_aware": 7,
+          "delta": 2
+        },
+        {
+          "metric": "actionability",
+          "baseline": 4,
+          "task_aware": 6,
+          "delta": 2
+        },
+        {
+          "metric": "clarity",
+          "baseline": 8,
+          "task_aware": 9,
+          "delta": 1
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 5,
+          "task_aware": 7,
+          "delta": 2
+        }
+      ],
+      "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 5 because of major judge error(s). baseline rows[:20] issue(s): major misleading_correlation_interpretation."
+    },
+    {
+      "pair_key": "SAMPLE_UCI_POR__S-T15",
+      "dataset_id": "SAMPLE_UCI_POR",
+      "task_id": "S-T15",
+      "comparable": true,
+      "reason": null,
+      "baseline_record_id": "SAMPLE_UCI_POR__S-T15__baseline_first_20_rows",
+      "task_aware_record_id": "SAMPLE_UCI_POR__S-T15__task_aware_data_summarization",
+      "baseline_final_score": 3,
+      "task_aware_final_score": 6,
+      "baseline_raw_weighted_score": 3.05,
+      "task_aware_raw_weighted_score": 7.5,
+      "delta_task_aware_minus_baseline": 3,
+      "winner": "task_aware_data_summarization",
+      "full_result_row_count": 649,
+      "row_count_bucket": ">20",
+      "evidence_access_mode": "deterministic_artifact_retrieval",
+      "queue_strategy": "compact_retrieval_context",
+      "baseline_effective_cap": 3,
+      "task_aware_effective_cap": 6,
+      "baseline_highest_error_severity": "critical",
+      "task_aware_highest_error_severity": "major",
+      "baseline_error_details": [
+        {
+          "severity": "critical",
+          "type": "contradictory_core_numerical_claim",
+          "primary_metric": "numerical_correctness",
+          "cap_candidate": 3,
+          "rationale": "The central relationship has the wrong sign: verified evidence supports a weak positive coefficient near 0.1442, not the claimed negative association; the selected student is also omitted and advice violates the non-prescriptive constraint."
+        }
+      ],
+      "task_aware_error_details": [
+        {
+          "severity": "major",
+          "type": "missing_required_output",
+          "primary_metric": "completeness",
+          "cap_candidate": 6,
+          "rationale": "The 0.1442 coefficient is accurate, but the selected student position is omitted and the recommendation violates the task constraint against prescriptive suggestions."
+        }
+      ],
+      "metric_deltas": [
+        {
+          "metric": "faithfulness",
+          "baseline": 2,
+          "task_aware": 8,
+          "delta": 6
+        },
+        {
+          "metric": "numerical_correctness",
+          "baseline": 2,
+          "task_aware": 10,
+          "delta": 8
+        },
+        {
+          "metric": "completeness",
+          "baseline": 3,
+          "task_aware": 5,
+          "delta": 2
+        },
+        {
+          "metric": "task_relevance",
+          "baseline": 4,
+          "task_aware": 7,
+          "delta": 3
+        },
+        {
+          "metric": "actionability",
+          "baseline": 2,
+          "task_aware": 5,
+          "delta": 3
+        },
+        {
+          "metric": "clarity",
+          "baseline": 7,
+          "task_aware": 9,
+          "delta": 2
+        },
+        {
+          "metric": "safety_fairness",
+          "baseline": 4,
+          "task_aware": 6,
+          "delta": 2
+        }
+      ],
+      "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 3 because of critical judge error(s). baseline rows[:20] issue(s): critical contradictory_core_numerical_claim."
+    }
+  ]
+}

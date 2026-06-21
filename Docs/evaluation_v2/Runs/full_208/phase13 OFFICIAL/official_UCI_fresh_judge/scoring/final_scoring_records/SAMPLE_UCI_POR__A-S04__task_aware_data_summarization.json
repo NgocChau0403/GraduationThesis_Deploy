@@ -1,0 +1,86 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-S04__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable actionability requirements are strongly satisfied by the supported claims."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Low score is high severity at 36.6667 versus threshold 40 with the returned tutor-support action.",
+ "claim_type": "risk_flag",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_flags flag_low_score row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "Value, threshold, severity, description, and action are all preserved."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Low punctuality is medium severity at 0 versus threshold 0.7 with the returned reminder action.",
+ "claim_type": "risk_flag",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_flags flag_low_punctuality row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "All required fields are represented."
+ }
+ ],
+ "errors": [],
+ "error_summary": {
+ "highest_error_severity": null,
+ "error_count": 0,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 9.65,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 9.65,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

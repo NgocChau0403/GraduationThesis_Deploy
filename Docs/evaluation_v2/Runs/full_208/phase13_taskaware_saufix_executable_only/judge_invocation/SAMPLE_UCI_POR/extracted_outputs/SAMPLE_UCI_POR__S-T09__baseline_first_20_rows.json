@@ -1,0 +1,77 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T09__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "Grounding and interpretation: The negative direction is plausible, but the relationship is overstated, selected examples are misleading, and the selected student position is absent."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Values, directions, and comparisons: The negative direction is plausible, but the relationship is overstated, selected examples are misleading, and the selected student position is absent."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "Coverage of supplied requirements: The negative direction is plausible, but the relationship is overstated, selected examples are misleading, and the selected student position is absent."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Fit to the stated task and audience: The negative direction is plausible, but the relationship is overstated, selected examples are misleading, and the selected student position is absent."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "Usefulness and evidence basis: The negative direction is plausible, but the relationship is overstated, selected examples are misleading, and the selected student position is absent."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Precision and organization: The negative direction is plausible, but the relationship is overstated, selected examples are misleading, and the selected student position is absent."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Fair and non-stigmatizing treatment: The negative direction is plausible, but the relationship is overstated, selected examples are misleading, and the selected student position is absent."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "There appears to be a negative correlation between Lifestyle Risk Score and Average Score among students. As the Lifestyle Risk Score increases, the Average Score tends to decrease, indicating that healthier lifestyle choices may be linked to better academic performance.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T09__baseline_first_20_rows.json; retrieved evidence for S-T09"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The negative direction is plausible, but the relationship is overstated, selected examples are misleading, and the selected student position is absent.",
+      "impact_type": "changes_interpretation"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "misleading_correlation_interpretation",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "major",
+      "primary_metric": "faithfulness",
+      "secondary_metrics": [],
+      "cap_candidate": 5,
+      "rationale": "The negative direction is plausible, but the relationship is overstated, selected examples are misleading, and the selected student position is absent.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T09__baseline_first_20_rows.json; retrieved evidence for S-T09"
+      ]
+    }
+  ],
+  "holistic_rationale": "The record is judgeable and addresses the stated task, but the negative direction is plausible, but the relationship is overstated, selected examples are misleading, and the selected student position is absent. The metric pattern reflects that defect without adding an overall score or verdict.",
+  "evidence_usage_notes": "Evidence mode was deterministic_artifact_retrieval. deterministic_artifact_retrieval delivered the manifest-authorized evidence through Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T09__baseline_first_20_rows.json; the full 649-row artifact was not claimed as prompt-embedded. The judgment used the cited artifact or retrieval record plus the packet's deterministic checks; access was not treated as proof that the explanation attended to every row.",
+  "invalid_reason": null
+}

@@ -1,0 +1,138 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__S-T14__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10 reflects A coefficient of 0.0144 is framed as a meaningful beneficial relationship and used to prescribe social activity."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material numerical_correctness limitations reduce the usefulness of the response. The response misses the selected-student comparison and substantially overstates a near-zero, non-causal cohort association."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10 reflects The selected student's position (social_balance_score 0.025, avg_score 36.67) is omitted."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10: material task_relevance limitations reduce the usefulness of the response. The response misses the selected-student comparison and substantially overstates a near-zero, non-causal cohort association."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10: material actionability limitations reduce the usefulness of the response. The response misses the selected-student comparison and substantially overstates a near-zero, non-causal cohort association."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10: material safety_fairness limitations reduce the usefulness of the response. The response misses the selected-student comparison and substantially overstates a near-zero, non-causal cohort association."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The cohort association between social balance and average score is positive.",
+ "claim_type": "correlation",
+ "claim_scope": "core",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "derived correlation evidence coefficient=0.0144"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The direction is positive, but the magnitude is effectively negligible and no significance evidence exists.",
+ "impact_type": "changes_interpretation"
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "A balanced social life supports academic success.",
+ "claim_type": "causal_interpretation",
+ "claim_scope": "incidental",
+ "support_status": "unsupported",
+ "evidence_refs": [
+ "derived correlation evidence causal_claim_allowed=false"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The evidence does not support benefit or causality.",
+ "impact_type": "changes_interpretation"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "selected_student_position_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "task_relevance"
+ ],
+ "cap_candidate": null,
+ "rationale": "The selected student's position (social_balance_score 0.025, avg_score 36.67) is omitted.",
+ "evidence_refs": [
+ "derived selected_entity_evidence"
+ ],
+ "requirement_id": "S-T14-CORE-01"
+ },
+ {
+ "error_id": "E02",
+ "error_type": "negligible_association_overstatement",
+ "claim_ids": [
+ "C01",
+ "C02"
+ ],
+ "severity": "major",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "safety_fairness",
+ "actionability"
+ ],
+ "cap_candidate": 5,
+ "rationale": "A coefficient of 0.0144 is framed as a meaningful beneficial relationship and used to prescribe social activity.",
+ "evidence_refs": [
+ "derived correlation evidence coefficient=0.0144"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 2,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 2,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 5,
+ "caps_applied": [
+ {
+ "type": "negligible_association_overstatement",
+ "severity": "major",
+ "cap": 5,
+ "error_id": "E02",
+ "claim_ids": [
+ "C01",
+ "C02"
+ ],
+ "evidence_refs": [
+ "derived correlation evidence coefficient=0.0144"
+ ]
+ }
+ ],
+ "effective_cap": 5,
+ "final_score_after_caps": 5,
+ "verdict": "acceptable",
+ "invalid_reason": null
+}

@@ -1,0 +1,22 @@
+{
+ "inventory_version": "uci_frozen_protection_v1",
+ "captured_at_local_date": "2026-06-21",
+ "scope": "UCI frozen official roots; read-only during OULAD remediation",
+ "raw_outputs_aggregate_algorithm": "SHA256(UTF8(concatenated uppercase SHA256 file hashes in ordinal filename order))",
+ "roots": {
+ "official_r3": {
+ "official_contract_manifest_v1.json": "50FF44D05AE4C04563621BB2B3EFA30E56F40777DACBE6B42AE9907EC8087A63",
+ "judge_invocation/judge_invocation_manifest.jsonl": "DDB69FC6458F5AA294B52A9C2B4F1A6212AF22BF33C15D5A89DDEAE549F98CD7",
+ "scoring/aggregates/paired_mode_comparison__SAMPLE_UCI_POR.json": "847C6A97C9317592A452D9A2C7AED18FC4FBF7F4ACBFA59856F13246E2BB53E5",
+ "judge_invocation/raw_outputs_count": 48,
+ "judge_invocation/raw_outputs_aggregate_sha256": "16C546E2A091750F8803113835CD781E18FF9FAE563C47B5E51A034085CA2EBC"
+ },
+ "official_r4_fresh_judge": {
+ "official_contract_manifest_v1.json": "5927B71BA49CD303F982617E039F4A07FFAE605402598469D66717A4CF12181D",
+ "judge_invocation/judge_invocation_manifest.jsonl": "E4AEAA17734411F1035E75F5F61FC6D6EC6AE3585415B77F6384C49F8A6F1C5D",
+ "scoring/aggregates/paired_mode_comparison__SAMPLE_UCI_POR.json": "A70F047B4C393F787164F46DA7FA15A1ED71F31CFC80D1B2CCB38567D33C0993",
+ "judge_invocation/raw_outputs_count": 48,
+ "judge_invocation/raw_outputs_aggregate_sha256": "2FC8976CA37500D10B874A23A1FA975E30D9002C5A885AE368C5054812552E0F"
+ }
+ }
+}

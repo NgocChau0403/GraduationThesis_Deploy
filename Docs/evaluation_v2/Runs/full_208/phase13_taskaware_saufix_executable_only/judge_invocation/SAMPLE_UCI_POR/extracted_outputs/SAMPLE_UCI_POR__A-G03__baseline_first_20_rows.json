@@ -1,0 +1,76 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G03__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Grounding and interpretation: Only a small subset of the 50 returned students is discussed; the required ranking and per-high-risk-student flags and actions are not delivered."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Values, directions, and comparisons: Only a small subset of the 50 returned students is discussed; the required ranking and per-high-risk-student flags and actions are not delivered."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 3,
+      "rationale": "Coverage of supplied requirements: Only a small subset of the 50 returned students is discussed; the required ranking and per-high-risk-student flags and actions are not delivered."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Fit to the stated task and audience: Only a small subset of the 50 returned students is discussed; the required ranking and per-high-risk-student flags and actions are not delivered."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Usefulness and evidence basis: Only a small subset of the 50 returned students is discussed; the required ranking and per-high-risk-student flags and actions are not delivered."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Precision and organization: Only a small subset of the 50 returned students is discussed; the required ranking and per-high-risk-student flags and actions are not delivered."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Fair and non-stigmatizing treatment: Only a small subset of the 50 returned students is discussed; the required ranking and per-high-risk-student flags and actions are not delivered."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "A cohort of students has been identified as high-risk due to multiple simultaneous risk signals, including low average scores, repeated attempts, low engagement, and negative performance trends. These indicators suggest a need for immediate academic support to enhance their chances of success.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G03__baseline_first_20_rows.json; retrieved evidence for A-G03"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "Only a small subset of the 50 returned students is discussed; the required ranking and per-high-risk-student flags and actions are not delivered.",
+      "impact_type": "changes_interpretation"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_required_output",
+      "claim_ids": [],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 5,
+      "rationale": "Only a small subset of the 50 returned students is discussed; the required ranking and per-high-risk-student flags and actions are not delivered.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G03__baseline_first_20_rows.json; retrieved evidence for A-G03"
+      ],
+      "requirement_id": "A-G03-CORE-01"
+    }
+  ],
+  "holistic_rationale": "The record is judgeable and addresses the stated task, but only a small subset of the 50 returned students is discussed; the required ranking and per-high-risk-student flags and actions are not delivered. The metric pattern reflects that defect without adding an overall score or verdict.",
+  "evidence_usage_notes": "Evidence mode was deterministic_artifact_retrieval. deterministic_artifact_retrieval delivered the manifest-authorized evidence through Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G03__baseline_first_20_rows.json; the full 50-row artifact was not claimed as prompt-embedded. The judgment used the cited artifact or retrieval record plus the packet's deterministic checks; access was not treated as proof that the explanation attended to every row.",
+  "invalid_reason": null
+}

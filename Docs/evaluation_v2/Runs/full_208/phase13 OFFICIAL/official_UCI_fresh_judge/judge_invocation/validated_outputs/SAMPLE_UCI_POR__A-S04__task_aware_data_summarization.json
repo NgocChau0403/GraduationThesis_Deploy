@@ -1,0 +1,72 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__A-S04__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable actionability requirements are strongly satisfied by the supported claims."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Low score is high severity at 36.6667 versus threshold 40 with the returned tutor-support action.",
+ "claim_type": "risk_flag",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_flags flag_low_score row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "Value, threshold, severity, description, and action are all preserved."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Low punctuality is medium severity at 0 versus threshold 0.7 with the returned reminder action.",
+ "claim_type": "risk_flag",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_flags flag_low_punctuality row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "All required fields are represented."
+ }
+ ],
+ "errors": [],
+ "holistic_rationale": "The response completely explains both triggered flags and their returned actions; minor verbosity and raw decimal precision slightly reduce readability.",
+ "evidence_usage_notes": "Evidence access mode was direct_embedding. All 4 rows were directly embedded; retrieval_log_path is not applicable. Evidence references: risk_flags:Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S04.json. Deterministic checks were used only for covered values, directions, rankings, thresholds, and availability; semantic and causal claims were judged separately. Evidence access does not prove model attention to every row.",
+ "invalid_reason": null
+}

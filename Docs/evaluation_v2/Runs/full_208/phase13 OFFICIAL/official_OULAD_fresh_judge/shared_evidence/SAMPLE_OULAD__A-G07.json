@@ -1,0 +1,256 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G07",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G07",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G07__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "6e0da22a4ef511f2736da1489267643ac01c2d91b1e66425424c507417850ce0",
+ "deterministic_summary": {
+ "summary_type": "ranking",
+ "dataset_name": "factor_correlation_matrix",
+ "row_count": 4,
+ "entity_column": "feature_name",
+ "metric_column": "abs_correlation_rank",
+ "sort_direction": "asc",
+ "top_items": [
+ {
+ "feature_name": "active_days",
+ "abs_correlation_rank": 1,
+ "rank": 1,
+ "secondary_metrics": {
+ "correlation_with_avg_score": 0.4181,
+ "n_samples": 1998
+ }
+ },
+ {
+ "feature_name": "total_clicks",
+ "abs_correlation_rank": 2,
+ "rank": 2,
+ "secondary_metrics": {
+ "correlation_with_avg_score": 0.3237,
+ "n_samples": 1998
+ }
+ },
+ {
+ "feature_name": "disadvantage_score",
+ "abs_correlation_rank": 3,
+ "rank": 3,
+ "secondary_metrics": {
+ "correlation_with_avg_score": -0.1353,
+ "n_samples": 1875
+ }
+ },
+ {
+ "feature_name": "registration_lead_time",
+ "abs_correlation_rank": 4,
+ "rank": 4,
+ "secondary_metrics": {
+ "correlation_with_avg_score": 0.0017,
+ "n_samples": 1988
+ }
+ }
+ ],
+ "bottom_items": [
+ {
+ "feature_name": "total_clicks",
+ "abs_correlation_rank": 2,
+ "rank": 2,
+ "secondary_metrics": {
+ "correlation_with_avg_score": 0.3237,
+ "n_samples": 1998
+ }
+ },
+ {
+ "feature_name": "disadvantage_score",
+ "abs_correlation_rank": 3,
+ "rank": 3,
+ "secondary_metrics": {
+ "correlation_with_avg_score": -0.1353,
+ "n_samples": 1875
+ }
+ },
+ {
+ "feature_name": "registration_lead_time",
+ "abs_correlation_rank": 4,
+ "rank": 4,
+ "secondary_metrics": {
+ "correlation_with_avg_score": 0.0017,
+ "n_samples": 1988
+ }
+ }
+ ],
+ "median_item": {
+ "feature_name": "disadvantage_score",
+ "abs_correlation_rank": 3,
+ "rank": 3,
+ "secondary_metrics": {
+ "correlation_with_avg_score": -0.1353,
+ "n_samples": 1875
+ }
+ },
+ "metric_stats": {
+ "count": 4,
+ "min": 1,
+ "max": 4,
+ "mean": 2.5,
+ "median": 2.5
+ },
+ "tie_warnings": [],
+ "flag_evidence": [],
+ "summarization_warnings": [],
+ "correlation_ranking_evidence": {
+ "returned_feature_count": 4,
+ "fifth_feature_status": "unavailable",
+ "features": [
+ {
+ "feature_name": "active_days",
+ "correlation_with_avg_score": 0.4181,
+ "n_samples": 1998,
+ "abs_correlation_rank": 1
+ },
+ {
+ "feature_name": "total_clicks",
+ "correlation_with_avg_score": 0.3237,
+ "n_samples": 1998,
+ "abs_correlation_rank": 2
+ },
+ {
+ "feature_name": "disadvantage_score",
+ "correlation_with_avg_score": -0.1353,
+ "n_samples": 1875,
+ "abs_correlation_rank": 3
+ },
+ {
+ "feature_name": "registration_lead_time",
+ "correlation_with_avg_score": 0.0017,
+ "n_samples": 1988,
+ "abs_correlation_rank": 4
+ }
+ ],
+ "strength_policy": "abs(r)<0.1 negligible; <0.3 weak; <0.5 moderate; otherwise strong",
+ "causal_claim_allowed": false
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "ranking",
+ "task_id": "A-G07",
+ "task_output_contract": [
+ "State the ranking/top entities, rank metric value, and why they are prioritized.",
+ "For risk/admin ranking rows, include returned flags or recommended action fields when present.",
+ "Do not generalize beyond returned rows or omit the top ranked examples.",
+ "Rank every returned feature by abs_correlation_rank; if fewer than five are returned, state the exact count and that a fifth feature is unavailable.",
+ "Use deterministic strength labels and treat disadvantage_score as sensitive descriptive context; correlation is not causal or prescriptive."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "factor_correlation_matrix",
+ "row_count": 4,
+ "entity_column": "feature_name",
+ "metric_column": "abs_correlation_rank",
+ "sort_direction": "asc"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "top_items": [
+ {
+ "feature_name": "active_days",
+ "abs_correlation_rank": 1,
+ "rank": 1,
+ "secondary_metrics": {
+ "correlation_with_avg_score": 0.4181,
+ "n_samples": 1998
+ }
+ },
+ {
+ "feature_name": "total_clicks",
+ "abs_correlation_rank": 2,
+ "rank": 2,
+ "secondary_metrics": {
+ "correlation_with_avg_score": 0.3237,
+ "n_samples": 1998
+ }
+ },
+ {
+ "feature_name": "disadvantage_score",
+ "abs_correlation_rank": 3,
+ "rank": 3,
+ "secondary_metrics": {
+ "correlation_with_avg_score": -0.1353,
+ "n_samples": 1875
+ }
+ },
+ {
+ "feature_name": "registration_lead_time",
+ "abs_correlation_rank": 4,
+ "rank": 4,
+ "secondary_metrics": {
+ "correlation_with_avg_score": 0.0017,
+ "n_samples": 1988
+ }
+ }
+ ],
+ "correlation_ranking_evidence": {
+ "returned_feature_count": 4,
+ "fifth_feature_status": "unavailable",
+ "features": [
+ {
+ "feature_name": "active_days",
+ "correlation_with_avg_score": 0.4181,
+ "n_samples": 1998,
+ "abs_correlation_rank": 1
+ },
+ {
+ "feature_name": "total_clicks",
+ "correlation_with_avg_score": 0.3237,
+ "n_samples": 1998,
+ "abs_correlation_rank": 2
+ },
+ {
+ "feature_name": "disadvantage_score",
+ "correlation_with_avg_score": -0.1353,
+ "n_samples": 1875,
+ "abs_correlation_rank": 3
+ },
+ {
+ "feature_name": "registration_lead_time",
+ "correlation_with_avg_score": 0.0017,
+ "n_samples": 1988,
+ "abs_correlation_rank": 4
+ }
+ ],
+ "strength_policy": "abs(r)<0.1 negligible; <0.3 weak; <0.5 moderate; otherwise strong",
+ "causal_claim_allowed": false
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_stats": {
+ "count": 4,
+ "min": 1,
+ "max": 4,
+ "mean": 2.5,
+ "median": 2.5
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

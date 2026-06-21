@@ -1,0 +1,91 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-C01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Grounding and interpretation: The initial divergence and later convergence are supported, but the explanation overlooks that the students were already equal at assessment 2 and speculates about confidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Values, directions, and comparisons: The initial divergence and later convergence are supported, but the explanation overlooks that the students were already equal at assessment 2 and speculates about confidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Coverage of supplied requirements: The initial divergence and later convergence are supported, but the explanation overlooks that the students were already equal at assessment 2 and speculates about confidence."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Fit to the stated task and audience: The initial divergence and later convergence are supported, but the explanation overlooks that the students were already equal at assessment 2 and speculates about confidence."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Usefulness and evidence basis: The initial divergence and later convergence are supported, but the explanation overlooks that the students were already equal at assessment 2 and speculates about confidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Precision and organization: The initial divergence and later convergence are supported, but the explanation overlooks that the students were already equal at assessment 2 and speculates about confidence."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Fair and non-stigmatizing treatment: The initial divergence and later convergence are supported, but the explanation overlooks that the students were already equal at assessment 2 and speculates about confidence."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The performance trajectories of two students reveal distinct patterns of improvement over the course of the assessments. While both students achieved the same score on the final exam, their paths diverged significantly during the initial quiz assessment.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C01.json; dataset trajectory_comparison"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The initial divergence and later convergence are supported, but the explanation overlooks that the students were already equal at assessment 2 and speculates about confidence.",
+      "impact_type": "changes_interpretation"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "imprecise_trajectory_interpretation",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "minor",
+      "primary_metric": "faithfulness",
+      "secondary_metrics": [],
+      "cap_candidate": null,
+      "rationale": "The initial divergence and later convergence are supported, but the explanation overlooks that the students were already equal at assessment 2 and speculates about confidence.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C01.json; dataset trajectory_comparison"
+      ]
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "minor",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 1,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.35,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.35,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

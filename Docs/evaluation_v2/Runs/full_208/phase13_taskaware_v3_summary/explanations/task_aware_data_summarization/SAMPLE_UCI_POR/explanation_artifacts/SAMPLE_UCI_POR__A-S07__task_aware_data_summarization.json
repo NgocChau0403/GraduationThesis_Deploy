@@ -1,0 +1,353 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-20T14:38:04.807Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-S07__task_aware_data_summarization",
+    "case_id": "SAMPLE_UCI_POR__A-S07",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-S07",
+    "task_name": "Student background context",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S07.json",
+    "full_query_artifact_sha256": "29f492d729f419d9bedc40a295a26cbcdc2437f460b158fda3570fa7c3b00211"
+  },
+  "request_payload": {
+    "task_id": "A-S07",
+    "execution_id": "exec_1781847238136_ee2bf06a",
+    "task_name": "Student background context",
+    "analysis_type": "aggregation",
+    "explanation_strategy": "distribution",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Frame background factors as context, not judgement. Note which disadvantage dimensions are present and what support is already in place.",
+    "actionable_question": "What background factors should admin consider when deciding how to support this student?",
+    "target_audience": [
+      "academic_advisor",
+      "admin"
+    ],
+    "visualization_config": {
+      "x_field": null,
+      "y_field": null,
+      "series_field": null,
+      "color_field": "disadvantage_score",
+      "orientation": null,
+      "variant": "default",
+      "x_label": null,
+      "y_label": null,
+      "semantic_roles": {
+        "x": null,
+        "y": null,
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "instructor"
+    },
+    "datasets": {
+      "background_context": [
+        {
+          "highest_education": null,
+          "mother_education_level": "4",
+          "father_education_level": "4",
+          "school": "GP",
+          "family_size": "GT3",
+          "gender": "F",
+          "age_years": 18,
+          "age_group": "18-20",
+          "school_support_flag": true,
+          "family_support_flag": false,
+          "has_paid_class": false,
+          "internet_access_flag": false,
+          "support_score": 0.25,
+          "lifestyle_risk_score": 0.47,
+          "social_balance_score": 0.03,
+          "family_stability_score": 0.58,
+          "previous_attempt_count": 0,
+          "studytime": 2,
+          "absences": 4
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "background_context"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [
+        "support_score",
+        "lifestyle_risk_score",
+        "social_balance_score",
+        "family_stability_score",
+        "previous_attempt_count",
+        "studytime",
+        "absences"
+      ],
+      "status_columns": [
+        "school_support_flag",
+        "family_support_flag",
+        "has_paid_class",
+        "internet_access_flag"
+      ],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [
+        "highest_education",
+        "school",
+        "family_size",
+        "gender",
+        "age_years",
+        "age_group",
+        "school_support_flag",
+        "family_support_flag",
+        "has_paid_class",
+        "internet_access_flag",
+        "support_score",
+        "lifestyle_risk_score",
+        "social_balance_score",
+        "family_stability_score",
+        "studytime",
+        "absences"
+      ],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {
+        "support_score": "ratio_0_1",
+        "lifestyle_risk_score": "score_0_1",
+        "social_balance_score": "signed_score",
+        "family_stability_score": "score_0_1",
+        "previous_attempt_count": "count",
+        "studytime": "ordinal_scale_raw",
+        "absences": "count"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": true,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": true,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "metric_snapshot",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": "descriptive_context_only_no_causal_or_prescriptive_inference",
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 5877,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1345,
+      "completion_tokens": 411,
+      "total_tokens": 1756
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-S07",
+    "execution_id": "exec_1781847238136_ee2bf06a",
+    "explanation": {
+      "summary": "The dataset presents a single student's background context, highlighting various educational and social factors. The student exhibits a low support score and limited family support, indicating potential areas for administrative intervention.",
+      "insights": [
+        {
+          "title": "Low Support Score",
+          "description": "The student's support score is 0.25, indicating a low level of support which may hinder academic performance. This score is significantly below the average threshold for effective support.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "support_score",
+              "value": 0.25,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Indicates low support for academic success."
+            }
+          ]
+        },
+        {
+          "title": "Family Support Absence",
+          "description": "The absence of family support (family_support_flag: false) may contribute to the student's challenges, particularly in balancing study and personal life.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "family_support_flag",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Lack of family support can impact student well-being."
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "The student may require additional institutional support to compensate for low family support and support score."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement targeted support programs for students with low support scores.",
+          "rationale": "To enhance academic performance and well-being for students lacking family support."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data is derived from a sufficient sample size for the metrics analyzed, although it is based on a single student.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "distribution",
+    "explanation_type": "distribution",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3-experimental",
+    "baseline_available": true,
+    "input_summary_type": "metric_snapshot",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 1,
+    "included_row_count": 1,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "background_context",
+        "row_count": 1,
+        "included_row_count": 1
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 1,
+    "baseline_reference_tokens": 149,
+    "task_aware_prompt_tokens": 882,
+    "token_ratio": 5.9195,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "comparison",
+      "exceptions",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [
+      "limitations.causal_claim_allowed",
+      "action_evidence.action_evidence",
+      "exceptions.sensitive_context"
+    ],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (5.9195 > 1.2).",
+      "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 5867,
+      "token_usage": {
+        "prompt_tokens": 1345,
+        "completion_tokens": 411,
+        "total_tokens": 1756
+      },
+      "strategy": "distribution",
+      "granularity": "semester",
+      "cost_usd": 0.000448
+    }
+  },
+  "raw_text": "Summary: The dataset presents a single student's background context, highlighting various educational and social factors. The student exhibits a low support score and limited family support, indicating potential areas for administrative intervention.\n\nInsights: Low Support Score: The student's support score is 0.25, indicating a low level of support which may hinder academic performance. This score is significantly below the average threshold for effective support. | Family Support Absence: The absence of family support (family_support_flag: false) may contribute to the student's challenges, particularly in balancing study and personal life.\n\nEducational implications: The student may require additional institutional support to compensate for low family support and support score.\n\nRecommendations: high - Implement targeted support programs for students with low support scores. - To enhance academic performance and well-being for students lacking family support."
+}

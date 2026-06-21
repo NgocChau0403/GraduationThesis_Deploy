@@ -1,0 +1,104 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-G13__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "Grounding and interpretation: The response overstates a weak negative association, relies on selected examples instead of the full coefficient, and does not rank students as required."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "Values, directions, and comparisons: The response overstates a weak negative association, relies on selected examples instead of the full coefficient, and does not rank students as required."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 3,
+      "rationale": "Coverage of supplied requirements: The response overstates a weak negative association, relies on selected examples instead of the full coefficient, and does not rank students as required."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Fit to the stated task and audience: The response overstates a weak negative association, relies on selected examples instead of the full coefficient, and does not rank students as required."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "Usefulness and evidence basis: The response overstates a weak negative association, relies on selected examples instead of the full coefficient, and does not rank students as required."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Precision and organization: The response overstates a weak negative association, relies on selected examples instead of the full coefficient, and does not rank students as required."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "Fair and non-stigmatizing treatment: The response overstates a weak negative association, relies on selected examples instead of the full coefficient, and does not rank students as required."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a negative correlation between Lifestyle Risk Score and Average Score among students, indicating that higher lifestyle risk scores are associated with lower average scores. This relationship suggests that students with riskier lifestyle choices tend to perform worse academically.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G13__baseline_first_20_rows.json; retrieved evidence for A-G13"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The response overstates a weak negative association, relies on selected examples instead of the full coefficient, and does not rank students as required.",
+      "impact_type": "changes_interpretation"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "misleading_correlation_interpretation",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "major",
+      "primary_metric": "faithfulness",
+      "secondary_metrics": [],
+      "cap_candidate": 5,
+      "rationale": "The response overstates a weak negative association, relies on selected examples instead of the full coefficient, and does not rank students as required.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G13__baseline_first_20_rows.json; retrieved evidence for A-G13"
+      ]
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "major",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 1,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 4.4,
+  "caps_applied": [
+    {
+      "type": "misleading_correlation_interpretation",
+      "severity": "major",
+      "cap": 5,
+      "error_id": "E01",
+      "claim_ids": [
+        "C01"
+      ],
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G13__baseline_first_20_rows.json; retrieved evidence for A-G13"
+      ]
+    }
+  ],
+  "effective_cap": 5,
+  "final_score_after_caps": 4.4,
+  "verdict": "poor",
+  "invalid_reason": null
+}

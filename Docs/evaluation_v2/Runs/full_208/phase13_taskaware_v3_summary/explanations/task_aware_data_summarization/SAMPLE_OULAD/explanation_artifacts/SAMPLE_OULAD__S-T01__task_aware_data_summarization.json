@@ -1,0 +1,413 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-20T14:44:20.253Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__S-T01__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__S-T01",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": "SAMPLE_OULAD_STU_100788",
+    "role": "student",
+    "task_id": "S-T01",
+    "task_name": "Score trend analysis",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T01.json",
+    "full_query_artifact_sha256": "2b9890971f14879405dd2a9f346df29e6bca6e4545211d9344f756fd2d4450cc"
+  },
+  "request_payload": {
+    "task_id": "S-T01",
+    "execution_id": "exec_1781847881037_601caebc",
+    "task_name": "Score trend analysis",
+    "analysis_type": "trend",
+    "explanation_strategy": "trend",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Identify trend direction, assessments below pass/target thresholds, and the concrete recommended_action for the weakest recent assessment.",
+    "actionable_question": "Am I getting better or worse over time?",
+    "target_audience": [
+      "student"
+    ],
+    "visualization_config": {
+      "x_field": "assessment_order",
+      "y_field": "score_normalized",
+      "series_field": null,
+      "color_field": null,
+      "orientation": "horizontal",
+      "variant": "default",
+      "x_label": "Assessment Order",
+      "y_label": "Normalized Score",
+      "semantic_roles": {
+        "x": "time",
+        "y": "performance_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "per_assessment",
+      "aggregation_level": "student"
+    },
+    "datasets": {
+      "score_trend": [
+        {
+          "assessment_order": 1,
+          "week_of_class": 3,
+          "assessment_type": "CMA",
+          "assessment_name": "24295",
+          "score_normalized": 100,
+          "pass_flag": true,
+          "class_avg_score": 74.75,
+          "score_vs_class_avg": 25.25,
+          "score_scale": 100,
+          "pass_threshold": 40,
+          "target_threshold": 70,
+          "below_pass_threshold": false,
+          "below_target_threshold": false,
+          "performance_trend": -0.7187500000000001,
+          "support_level": "maintain",
+          "recommended_action": "Keep the current preparation pattern and use feedback to protect this level."
+        },
+        {
+          "assessment_order": 3,
+          "week_of_class": 10,
+          "assessment_type": "CMA",
+          "assessment_name": "24296",
+          "score_normalized": 87,
+          "pass_flag": true,
+          "class_avg_score": 78.94,
+          "score_vs_class_avg": 8.06,
+          "score_scale": 100,
+          "pass_threshold": 40,
+          "target_threshold": 70,
+          "below_pass_threshold": false,
+          "below_target_threshold": false,
+          "performance_trend": -0.7187500000000001,
+          "support_level": "maintain",
+          "recommended_action": "Keep the current preparation pattern and use feedback to protect this level."
+        },
+        {
+          "assessment_order": 5,
+          "week_of_class": 21,
+          "assessment_type": "CMA",
+          "assessment_name": "24297",
+          "score_normalized": 90,
+          "pass_flag": true,
+          "class_avg_score": 75.15,
+          "score_vs_class_avg": 14.85,
+          "score_scale": 100,
+          "pass_threshold": 40,
+          "target_threshold": 70,
+          "below_pass_threshold": false,
+          "below_target_threshold": false,
+          "performance_trend": -0.7187500000000001,
+          "support_level": "maintain",
+          "recommended_action": "Keep the current preparation pattern and use feedback to protect this level."
+        },
+        {
+          "assessment_order": 8,
+          "week_of_class": 31,
+          "assessment_type": "CMA",
+          "assessment_name": "24298",
+          "score_normalized": 83,
+          "pass_flag": true,
+          "class_avg_score": 73.09,
+          "score_vs_class_avg": 9.91,
+          "score_scale": 100,
+          "pass_threshold": 40,
+          "target_threshold": 70,
+          "below_pass_threshold": false,
+          "below_target_threshold": false,
+          "performance_trend": -0.7187500000000001,
+          "support_level": "maintain",
+          "recommended_action": "Keep the current preparation pattern and use feedback to protect this level."
+        },
+        {
+          "assessment_order": 9,
+          "week_of_class": null,
+          "assessment_type": "Exam",
+          "assessment_name": "24299",
+          "score_normalized": 96,
+          "pass_flag": true,
+          "class_avg_score": 68.23,
+          "score_vs_class_avg": 27.77,
+          "score_scale": 100,
+          "pass_threshold": 40,
+          "target_threshold": 70,
+          "below_pass_threshold": false,
+          "below_target_threshold": false,
+          "performance_trend": -0.7187500000000001,
+          "support_level": "maintain",
+          "recommended_action": "Keep the current preparation pattern and use feedback to protect this level."
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": {
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "dataset_id": "SAMPLE_OULAD"
+    },
+    "query_labels": [
+      "score_trend"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [
+        "class_avg_score",
+        "score_vs_class_avg",
+        "performance_trend",
+        "pass_flag"
+      ],
+      "flag_columns": [
+        "below_pass_threshold",
+        "below_target_threshold"
+      ],
+      "action_columns": [
+        "support_level",
+        "recommended_action"
+      ],
+      "label_columns": [
+        "assessment_name",
+        "assessment_type",
+        "week_of_class"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "trend_series",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": "assessment_order",
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "score_normalized",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": "asc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": 30,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 5523,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 2430,
+      "completion_tokens": 477,
+      "total_tokens": 2907
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "S-T01",
+    "execution_id": "exec_1781847881037_601caebc",
+    "explanation": {
+      "summary": "Your performance has shown a slight decline over time, with your normalized score decreasing from 100 in Assessment 1 to 96 in Assessment 9. While you are still performing well above the passing threshold, it's important to maintain your preparation strategies to protect your current level.",
+      "insights": [
+        {
+          "title": "Overall Trend Direction",
+          "description": "Your normalized score decreased from 100 in Assessment 1 to 96 in Assessment 9, indicating a downward trend of 4 points.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "score_normalized",
+              "value": 96,
+              "comparison": "down_from_previous",
+              "delta": -4,
+              "context": "from Assessment 1 to Assessment 9"
+            }
+          ]
+        },
+        {
+          "title": "Highest and Lowest Values",
+          "description": "The highest score was 100 in Assessment 1, while the lowest was 83 in Assessment 8. This suggests that while you started strong, there was a dip in performance in the middle assessments.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "score_normalized",
+              "value": 100,
+              "comparison": "peak",
+              "delta": null,
+              "context": "Assessment 1"
+            },
+            {
+              "metric": "score_normalized",
+              "value": 83,
+              "comparison": "trough",
+              "delta": null,
+              "context": "Assessment 8"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "It's crucial to analyze what factors contributed to the drop in scores, especially between Assessments 1 and 8."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Continue using feedback from assessments to refine your study strategies.",
+          "rationale": "This will help you maintain your performance level and address any areas of weakness."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data quality is strong with a large sample size and consistent metrics.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "trend",
+    "explanation_type": "trend",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3-experimental",
+    "baseline_available": true,
+    "input_summary_type": "trend_series",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 5,
+    "included_row_count": 5,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "score_trend",
+        "row_count": 5,
+        "included_row_count": 5
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 5,
+    "baseline_reference_tokens": 722,
+    "task_aware_prompt_tokens": 1454,
+    "token_ratio": 2.0139,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "comparison",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [
+      "limitations.causal_claim_allowed",
+      "limitations.small_sample_caveats",
+      "action_evidence.action_evidence",
+      "exceptions.flagged_points",
+      "exceptions.trough",
+      "exceptions.peak",
+      "trend_relationship.largest_adjacent_drop",
+      "trend_relationship.largest_adjacent_rise"
+    ],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (2.0139 > 1.2).",
+      "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 5516,
+      "token_usage": {
+        "prompt_tokens": 2430,
+        "completion_tokens": 477,
+        "total_tokens": 2907
+      },
+      "strategy": "trend",
+      "granularity": "per_assessment",
+      "cost_usd": 0.000651
+    }
+  },
+  "raw_text": "Summary: Your performance has shown a slight decline over time, with your normalized score decreasing from 100 in Assessment 1 to 96 in Assessment 9. While you are still performing well above the passing threshold, it's important to maintain your preparation strategies to protect your current level.\n\nInsights: Overall Trend Direction: Your normalized score decreased from 100 in Assessment 1 to 96 in Assessment 9, indicating a downward trend of 4 points. | Highest and Lowest Values: The highest score was 100 in Assessment 1, while the lowest was 83 in Assessment 8. This suggests that while you started strong, there was a dip in performance in the middle assessments.\n\nEducational implications: It's crucial to analyze what factors contributed to the drop in scores, especially between Assessments 1 and 8.\n\nRecommendations: high - Continue using feedback from assessments to refine your study strategies. - This will help you maintain your performance level and address any areas of weakness."
+}

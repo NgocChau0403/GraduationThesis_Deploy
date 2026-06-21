@@ -1,0 +1,135 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__S-T07__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 2,
+ "rationale": "Score 2/10 reflects The central answer invents a correlation and impact magnitude from evidence that is explicitly insufficient for estimation."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material numerical_correctness limitations reduce the usefulness of the response. The absence proportion is present, but the main claimed association is not estimable and therefore materially misanswers the task."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10 reflects The response gives 0.125 but does not clearly state that 12.5% of sessions were missed."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material task_relevance limitations reduce the usefulness of the response. The absence proportion is present, but the main claimed association is not estimable and therefore materially misanswers the task."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10: material actionability limitations reduce the usefulness of the response. The absence proportion is present, but the main claimed association is not estimable and therefore materially misanswers the task."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on safety_fairness, with the limitations summarized in the holistic rationale."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The absence rate is 0.125.",
+ "claim_type": "absence_rate",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "absence_data row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The raw proportion is correct, though it is not translated to 12.5%."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "There is a weak negative correlation between absences and scores.",
+ "claim_type": "association",
+ "claim_scope": "core",
+ "support_status": "unsupported",
+ "evidence_refs": [
+ "absence_data one snapshot and score_series three rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "One absence snapshot cannot estimate an absence-score association.",
+ "impact_type": "changes_interpretation"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "fabricated_association",
+ "claim_ids": [
+ "C02"
+ ],
+ "severity": "critical",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "task_relevance",
+ "actionability"
+ ],
+ "cap_candidate": 3,
+ "rationale": "The central answer invents a correlation and impact magnitude from evidence that is explicitly insufficient for estimation.",
+ "evidence_refs": [
+ "absence_data one snapshot and score_series three rows"
+ ]
+ },
+ {
+ "error_id": "E02",
+ "error_type": "proportion_format_partial",
+ "claim_ids": [],
+ "severity": "minor",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "numerical_correctness"
+ ],
+ "cap_candidate": null,
+ "rationale": "The response gives 0.125 but does not clearly state that 12.5% of sessions were missed.",
+ "evidence_refs": [
+ "absence_data row"
+ ],
+ "requirement_id": "S-T07-CORE-01"
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "critical",
+ "error_count": 2,
+ "count_by_severity": {
+ "minor": 1,
+ "major": 0,
+ "critical": 1
+ }
+ },
+ "raw_weighted_score": 4.9,
+ "caps_applied": [
+ {
+ "type": "fabricated_association",
+ "severity": "critical",
+ "cap": 3,
+ "error_id": "E01",
+ "claim_ids": [
+ "C02"
+ ],
+ "evidence_refs": [
+ "absence_data one snapshot and score_series three rows"
+ ]
+ }
+ ],
+ "effective_cap": 3,
+ "final_score_after_caps": 3,
+ "verdict": "poor",
+ "invalid_reason": null
+}

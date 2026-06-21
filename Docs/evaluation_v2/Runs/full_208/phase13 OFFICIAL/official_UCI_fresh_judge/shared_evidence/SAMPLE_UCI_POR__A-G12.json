@@ -1,0 +1,345 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__A-G12",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-G12",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__A-G12__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "fdba5c8729f9b2cb5e4bfc164f4eede01987d874528da4236e72ca0fd6f3ad3c",
+ "deterministic_summary": {
+ "summary_type": "group_comparison",
+ "dataset_name": "outcome_by_group",
+ "row_count": 4,
+ "group_column": "group_value",
+ "group_key_columns": [
+ "group_value",
+ "final_outcome"
+ ],
+ "series_column": "final_outcome",
+ "composite_group_keys": true,
+ "metric_column": "pct_within_group",
+ "count_column": "student_count",
+ "gap_column": null,
+ "group_metrics": [
+ {
+ "group": "GP",
+ "student_count": 32,
+ "pct_within_group": 7.6,
+ "group_key_values": {
+ "group_value": "GP",
+ "final_outcome": "Fail"
+ },
+ "composite_group_label": "group_value=GP | final_outcome=Fail",
+ "series_value": "Fail",
+ "gap": -68.6136,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ },
+ {
+ "group": "GP",
+ "student_count": 391,
+ "pct_within_group": 92.4,
+ "group_key_values": {
+ "group_value": "GP",
+ "final_outcome": "Pass"
+ },
+ "composite_group_label": "group_value=GP | final_outcome=Pass",
+ "series_value": "Pass",
+ "gap": 16.1864,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ },
+ {
+ "group": "MS",
+ "student_count": 68,
+ "pct_within_group": 30.1,
+ "group_key_values": {
+ "group_value": "MS",
+ "final_outcome": "Fail"
+ },
+ "composite_group_label": "group_value=MS | final_outcome=Fail",
+ "series_value": "Fail",
+ "gap": -46.1136,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ },
+ {
+ "group": "MS",
+ "student_count": 158,
+ "pct_within_group": 69.9,
+ "group_key_values": {
+ "group_value": "MS",
+ "final_outcome": "Pass"
+ },
+ "composite_group_label": "group_value=MS | final_outcome=Pass",
+ "series_value": "Pass",
+ "gap": -6.3136,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ }
+ ],
+ "group_series": [
+ {
+ "group": "GP",
+ "series_count": 2,
+ "total_count": 423,
+ "weighted_average_metric": 85.9849,
+ "series": [
+ {
+ "group": "GP",
+ "student_count": 32,
+ "pct_within_group": 7.6,
+ "group_key_values": {
+ "group_value": "GP",
+ "final_outcome": "Fail"
+ },
+ "composite_group_label": "group_value=GP | final_outcome=Fail",
+ "series_value": "Fail",
+ "gap": -68.6136,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ },
+ {
+ "group": "GP",
+ "student_count": 391,
+ "pct_within_group": 92.4,
+ "group_key_values": {
+ "group_value": "GP",
+ "final_outcome": "Pass"
+ },
+ "composite_group_label": "group_value=GP | final_outcome=Pass",
+ "series_value": "Pass",
+ "gap": 16.1864,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ }
+ ]
+ },
+ {
+ "group": "MS",
+ "series_count": 2,
+ "total_count": 226,
+ "weighted_average_metric": 57.9248,
+ "series": [
+ {
+ "group": "MS",
+ "student_count": 68,
+ "pct_within_group": 30.1,
+ "group_key_values": {
+ "group_value": "MS",
+ "final_outcome": "Fail"
+ },
+ "composite_group_label": "group_value=MS | final_outcome=Fail",
+ "series_value": "Fail",
+ "gap": -46.1136,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ },
+ {
+ "group": "MS",
+ "student_count": 158,
+ "pct_within_group": 69.9,
+ "group_key_values": {
+ "group_value": "MS",
+ "final_outcome": "Pass"
+ },
+ "composite_group_label": "group_value=MS | final_outcome=Pass",
+ "series_value": "Pass",
+ "gap": -6.3136,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ }
+ ]
+ }
+ ],
+ "focus_summary": [
+ {
+ "group": "MS",
+ "focus_categories": [
+ "Fail",
+ "Withdrawn"
+ ],
+ "focus_metric_total": 30.1,
+ "focus_count_total": 68,
+ "metric_column": "pct_within_group",
+ "count_column": "student_count"
+ },
+ {
+ "group": "GP",
+ "focus_categories": [
+ "Fail",
+ "Withdrawn"
+ ],
+ "focus_metric_total": 7.6,
+ "focus_count_total": 32,
+ "metric_column": "pct_within_group",
+ "count_column": "student_count"
+ }
+ ],
+ "gaps": [
+ {
+ "group": "GP",
+ "gap": 16.1864,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "pct_within_group": 92.4,
+ "student_count": 391
+ },
+ {
+ "group": "MS",
+ "gap": -6.3136,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "pct_within_group": 69.9,
+ "student_count": 158
+ },
+ {
+ "group": "MS",
+ "gap": -46.1136,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "pct_within_group": 30.1,
+ "student_count": 68
+ },
+ {
+ "group": "GP",
+ "gap": -68.6136,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "pct_within_group": 7.6,
+ "student_count": 32
+ }
+ ],
+ "dominant_group": {
+ "group": "GP",
+ "student_count": 391,
+ "basis": "largest_count"
+ },
+ "weakest_group": {
+ "group": "GP",
+ "pct_within_group": 7.6,
+ "basis": "most_negative_gap",
+ "gap": -68.6136,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ },
+ "missing_groups": [],
+ "low_count_warnings": [],
+ "fairness_warnings": [
+ "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+ ],
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "No explicit gap column configured; gaps derived from pct_within_group relative to weighted cohort mean.",
+ "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "group_comparison",
+ "task_id": "A-G12",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "outcome_by_group",
+ "row_count": 4,
+ "group_column": "group_value",
+ "group_key_columns": [
+ "group_value",
+ "final_outcome"
+ ],
+ "series_column": "final_outcome",
+ "metric_column": "pct_within_group",
+ "count_column": "student_count",
+ "gap_column": null,
+ "composite_group_keys": true
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "focus_summary": [
+ {
+ "group": "MS",
+ "focus_categories": [
+ "Fail",
+ "Withdrawn"
+ ],
+ "focus_metric_total": 30.1,
+ "focus_count_total": 68,
+ "metric_column": "pct_within_group",
+ "count_column": "student_count"
+ },
+ {
+ "group": "GP",
+ "focus_categories": [
+ "Fail",
+ "Withdrawn"
+ ],
+ "focus_metric_total": 7.6,
+ "focus_count_total": 32,
+ "metric_column": "pct_within_group",
+ "count_column": "student_count"
+ }
+ ],
+ "group_metrics": [
+ {
+ "group": "GP",
+ "student_count": 32,
+ "pct_within_group": 7.6,
+ "group_key_values": {
+ "group_value": "GP",
+ "final_outcome": "Fail"
+ },
+ "composite_group_label": "group_value=GP | final_outcome=Fail",
+ "series_value": "Fail",
+ "gap": -68.6136,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ },
+ {
+ "group": "GP",
+ "student_count": 391,
+ "pct_within_group": 92.4,
+ "group_key_values": {
+ "group_value": "GP",
+ "final_outcome": "Pass"
+ },
+ "composite_group_label": "group_value=GP | final_outcome=Pass",
+ "series_value": "Pass",
+ "gap": 16.1864,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ },
+ {
+ "group": "MS",
+ "student_count": 68,
+ "pct_within_group": 30.1,
+ "group_key_values": {
+ "group_value": "MS",
+ "final_outcome": "Fail"
+ },
+ "composite_group_label": "group_value=MS | final_outcome=Fail",
+ "series_value": "Fail",
+ "gap": -46.1136,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ },
+ {
+ "group": "MS",
+ "student_count": 158,
+ "pct_within_group": 69.9,
+ "group_key_values": {
+ "group_value": "MS",
+ "final_outcome": "Pass"
+ },
+ "composite_group_label": "group_value=MS | final_outcome=Pass",
+ "series_value": "Pass",
+ "gap": -6.3136,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_groups": [],
+ "low_count_warnings": [],
+ "fairness_warnings": [
+ "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+ ],
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "No explicit gap column configured; gaps derived from pct_within_group relative to weighted cohort mean.",
+ "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+ ]
+ }
+ }
+ ]
+ }
+}

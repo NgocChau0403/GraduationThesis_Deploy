@@ -1,0 +1,89 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-S04__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Grounding and interpretation: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "Values, directions, and comparisons: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Coverage of supplied requirements: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Fit to the stated task and audience: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Usefulness and evidence basis: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Precision and organization: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Fair and non-stigmatizing treatment: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis indicates that the student is at risk due to low academic performance and low punctuality in submissions. These factors suggest a need for immediate intervention to support the student's learning trajectory.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S04.json; dataset risk_flags"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_required_detail",
+      "claim_ids": [],
+      "severity": "minor",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": null,
+      "rationale": "Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S04.json; dataset risk_flags"
+      ],
+      "requirement_id": "A-S04-CORE-02"
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "minor",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 1,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 8.9,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 8.9,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

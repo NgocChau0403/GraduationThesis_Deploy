@@ -1,0 +1,86 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-G03__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable actionability requirements are strongly satisfied by the supported claims."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The top five students are listed in manifest order with at_risk_score 4 and exact average scores.",
+ "claim_type": "risk_ranking",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "retrieval log at_risk_cohort rows 0-49 and deterministic top_items"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The identifiers, scores, and ordering match the deterministic ranking evidence."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Each listed student has the four returned risk flags and the same returned academic-support action.",
+ "claim_type": "risk_actions",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "deterministic top_items labels and flags"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The summaries preserve the returned flags and action."
+ }
+ ],
+ "errors": [],
+ "error_summary": {
+ "highest_error_severity": null,
+ "error_count": 0,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 9.15,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 9.15,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

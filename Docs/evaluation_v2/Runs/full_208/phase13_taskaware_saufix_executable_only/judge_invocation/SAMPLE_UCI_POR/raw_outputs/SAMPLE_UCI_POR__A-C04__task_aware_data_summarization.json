@@ -1,0 +1,76 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-C04__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Grounding and interpretation: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Values, directions, and comparisons: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Coverage of supplied requirements: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Fit to the stated task and audience: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "Usefulness and evidence basis: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Precision and organization: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Fair and non-stigmatizing treatment: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The comparison of lifestyle dimensions between two students reveals notable differences in their go-out frequency, while other dimensions remain consistent. Student SAMPLE_UCI_POR_STU_000001 exhibits a higher go-out frequency, which may indicate a more active social lifestyle.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C04.json; dataset lifestyle_comparison"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target.",
+      "impact_type": "changes_interpretation"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_required_output",
+      "claim_ids": [],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 6,
+      "rationale": "The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C04.json; dataset lifestyle_comparison"
+      ],
+      "requirement_id": "A-C04-SUPPORT-01"
+    }
+  ],
+  "holistic_rationale": "The record is judgeable and addresses the stated task, but the go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target. The metric pattern reflects that defect without adding an overall score or verdict.",
+  "evidence_usage_notes": "Evidence mode was direct_embedding. direct_embedding delivered all 10 rows; retrieval_log_path was not applicable. The judgment used the cited artifact or retrieval record plus the packet's deterministic checks; access was not treated as proof that the explanation attended to every row.",
+  "invalid_reason": null
+}

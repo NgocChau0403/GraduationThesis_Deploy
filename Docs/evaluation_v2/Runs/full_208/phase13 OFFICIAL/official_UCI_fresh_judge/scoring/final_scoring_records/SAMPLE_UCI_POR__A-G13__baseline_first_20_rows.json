@@ -1,0 +1,123 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-G13__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10 reflects A weak coefficient is framed as a meaningful lifestyle-performance pattern and as riskier choices, despite no p-value or causal permission."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on numerical_correctness, with the limitations summarized in the holistic rationale."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10 reflects The response does not rank students by lifestyle_risk_score."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material task_relevance limitations reduce the usefulness of the response. The correlation direction is recognized, but the response omits the required ranking and overstates a weak, non-causal association."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10: material actionability limitations reduce the usefulness of the response. The correlation direction is recognized, but the response omits the required ranking and overstates a weak, non-causal association."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10: material safety_fairness limitations reduce the usefulness of the response. The correlation direction is recognized, but the response omits the required ranking and overstates a weak, non-causal association."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Lifestyle risk and average score have a negative association.",
+ "claim_type": "correlation",
+ "claim_scope": "core",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "derived correlation evidence coefficient=-0.1041"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The direction is correct, but the explanation omits that the relationship is weak and lacks significance evidence.",
+ "impact_type": "changes_interpretation"
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Riskier lifestyle choices tend to cause worse academic performance.",
+ "claim_type": "causal_interpretation",
+ "claim_scope": "incidental",
+ "support_status": "unsupported",
+ "evidence_refs": [
+ "derived correlation evidence causal_claim_allowed=false"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The evidence permits association only, not causal or behavioral attribution.",
+ "impact_type": "changes_interpretation"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "ranking_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "task_relevance"
+ ],
+ "cap_candidate": null,
+ "rationale": "The response does not rank students by lifestyle_risk_score.",
+ "evidence_refs": [
+ "retrieval log lifestyle_risk_scatter rows 0-648"
+ ],
+ "requirement_id": "A-G13-CORE-01"
+ },
+ {
+ "error_id": "E02",
+ "error_type": "association_overstatement",
+ "claim_ids": [
+ "C01",
+ "C02"
+ ],
+ "severity": "major",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "safety_fairness"
+ ],
+ "cap_candidate": null,
+ "rationale": "A weak coefficient is framed as a meaningful lifestyle-performance pattern and as riskier choices, despite no p-value or causal permission.",
+ "evidence_refs": [
+ "derived correlation evidence coefficient=-0.1041"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 2,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 2,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 5.6,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 5.6,
+ "verdict": "acceptable",
+ "invalid_reason": null
+}

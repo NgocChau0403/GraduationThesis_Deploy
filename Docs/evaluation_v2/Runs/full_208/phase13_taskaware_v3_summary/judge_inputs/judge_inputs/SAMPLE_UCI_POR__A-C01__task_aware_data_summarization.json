@@ -1,0 +1,236 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-C01__task_aware_data_summarization",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-C01",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Compare performance trajectories",
+    "scope": "2 students",
+    "actionable_question": "Which student is improving faster and when did their paths diverge?",
+    "target_audience": "instructor",
+    "ai_summary_type": "trend_comparison",
+    "ai_prompt_hint": "Explain divergence points. Identify when one student fell behind relative to the other.",
+    "query_labels": [
+      "trajectory_comparison"
+    ],
+    "explanation_strategy": "comparison"
+  },
+  "schema_context": {
+    "source_tables": [
+      "assessment_result",
+      "assessment",
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "score_normalized",
+      "assessment_order",
+      "week_of_class",
+      "assessment_type"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "trajectory_comparison"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis of the performance trajectories of two students reveals distinct improvement patterns over the assessment periods. While both students achieved the same score on the final exam, their paths diverged significantly earlier in the course.\n\nInsights: Initial Performance Gap: At the first assessment, Student SAMPLE_UCI_POR_STU_000001 scored significantly lower than Student SAMPLE_UCI_POR_STU_000002, indicating a starting disadvantage. | Improvement Trajectory: Student SAMPLE_UCI_POR_STU_000001 showed a significant improvement from the first to the second assessment, increasing their score by 55 points, while Student SAMPLE_UCI_POR_STU_000002 improved by only 10 points during the same period.\n\nEducational implications: The initial performance gap suggests that targeted interventions may be necessary for students starting with lower scores to help them catch up.\n\nRecommendations: high - Implement targeted support for students with low initial scores. - Providing additional resources and support can help bridge the performance gap observed in early assessments.",
+    "structured_payload": {
+      "task_id": "A-C01",
+      "execution_id": "exec_1781847231947_8d61eafc",
+      "explanation": {
+        "summary": "The analysis of the performance trajectories of two students reveals distinct improvement patterns over the assessment periods. While both students achieved the same score on the final exam, their paths diverged significantly earlier in the course.",
+        "insights": [
+          {
+            "title": "Initial Performance Gap",
+            "description": "At the first assessment, Student SAMPLE_UCI_POR_STU_000001 scored significantly lower than Student SAMPLE_UCI_POR_STU_000002, indicating a starting disadvantage.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "score_normalized",
+                "value": 0,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "SAMPLE_UCI_POR_STU_000001's score at assessment order 1"
+              },
+              {
+                "metric": "score_normalized",
+                "value": 45,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "SAMPLE_UCI_POR_STU_000002's score at assessment order 1"
+              }
+            ]
+          },
+          {
+            "title": "Improvement Trajectory",
+            "description": "Student SAMPLE_UCI_POR_STU_000001 showed a significant improvement from the first to the second assessment, increasing their score by 55 points, while Student SAMPLE_UCI_POR_STU_000002 improved by only 10 points during the same period.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "score_normalized",
+                "value": 55,
+                "comparison": "up_from_previous",
+                "delta": 55,
+                "context": "SAMPLE_UCI_POR_STU_000001's score change from assessment order 1 to 2"
+              },
+              {
+                "metric": "score_normalized",
+                "value": 55,
+                "comparison": "up_from_previous",
+                "delta": 10,
+                "context": "SAMPLE_UCI_POR_STU_000002's score change from assessment order 1 to 2"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The initial performance gap suggests that targeted interventions may be necessary for students starting with lower scores to help them catch up."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted support for students with low initial scores.",
+            "rationale": "Providing additional resources and support can help bridge the performance gap observed in early assessments."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The analysis is based on sufficient evidence from the dataset, with clear performance metrics available for comparison.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "comparison",
+      "explanation_type": "comparison",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3-experimental",
+      "baseline_available": true,
+      "input_summary_type": "trend_comparison",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 6,
+      "included_row_count": 6,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "trajectory_comparison",
+          "row_count": 6,
+          "included_row_count": 6
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 6,
+      "baseline_reference_tokens": 259,
+      "task_aware_prompt_tokens": 1020,
+      "token_ratio": 3.9382,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [
+        "trend_relationship.divergence_threshold",
+        "comparison.pairwise_comparison"
+      ],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (3.9382 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 7314,
+        "token_usage": {
+          "prompt_tokens": 1679,
+          "completion_tokens": 597,
+          "total_tokens": 2276
+        },
+        "strategy": "comparison",
+        "granularity": "per_assessment",
+        "cost_usd": 0.00061
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-C01__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "a8800a26848a355f47674e9c97efcbcbd5fa8acb93de4e83d2190a1c739ae797",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1679,
+        "completion_tokens": 597,
+        "total_tokens": 2276
+      },
+      "latency_ms": 7320,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 6,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "trajectory_comparison",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C01.json",
+        "artifact_sha256": "e4b071b75d83d7b7d78548f8105459f537483cb5175fb593e574ca8e92e3085f",
+        "row_count": 6,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 6,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "trajectory_comparison": 6
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-C01-CORE-01",
+        "description": "Explain divergence points."
+      },
+      {
+        "requirement_id": "A-C01-CORE-02",
+        "description": "Identify when one student fell behind relative to the other."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-C01-CONSTRAINT-01",
+        "description": "If either student's data is absent or insufficient for trajectory comparison, state that explicitly rather than inferring from the other student's data."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

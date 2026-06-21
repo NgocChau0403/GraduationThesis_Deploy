@@ -1,0 +1,377 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__S-T10",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T10",
+ "source_explanation_record_id": "SAMPLE_OULAD__S-T10__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "42d7aa60ab70771860685ec7a93cea4fe92de8bccdaa59413e2905723c551d78",
+ "deterministic_summary": {
+ "summary_type": "categorical_distribution",
+ "dataset_name": "resource_usage",
+ "row_count": 9,
+ "category_column": "resource_type",
+ "count_column": "clicks",
+ "percent_column": null,
+ "total_count": 1261,
+ "category_distribution": [
+ {
+ "category": "quiz",
+ "count": 623,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.4941,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "homepage",
+ "count": 264,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.2094,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "forumng",
+ "count": 140,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.111,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "subpage",
+ "count": 94,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.0745,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "resource",
+ "count": 71,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.0563,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "oucontent",
+ "count": 40,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.0317,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "url",
+ "count": 27,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.0214,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "page",
+ "count": 1,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.0008,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "oucollaborate",
+ "count": 1,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.0008,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ }
+ ],
+ "largest_category": {
+ "category": "quiz",
+ "count": 623,
+ "percent": null
+ },
+ "focus_categories": [
+ "forumng"
+ ],
+ "focus_total": {
+ "categories": [
+ "forumng"
+ ],
+ "present_categories": [
+ "forumng"
+ ],
+ "missing_categories": [],
+ "count": 140,
+ "percent": null
+ },
+ "missing_expected_categories": [],
+ "missing_focus_categories": [],
+ "metric_columns": [
+ "pct_of_total",
+ "vle_diversity_score",
+ "forum_engagement_rate"
+ ],
+ "metric_evidence_by_category": {
+ "quiz": {
+ "pct_of_total": 0.4941,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "homepage": {
+ "pct_of_total": 0.2094,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "forumng": {
+ "pct_of_total": 0.111,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "subpage": {
+ "pct_of_total": 0.0745,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "resource": {
+ "pct_of_total": 0.0563,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "oucontent": {
+ "pct_of_total": 0.0317,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "url": {
+ "pct_of_total": 0.0214,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "page": {
+ "pct_of_total": 0.0008,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "oucollaborate": {
+ "pct_of_total": 0.0008,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "categorical_distribution",
+ "task_id": "S-T10",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "resource_usage",
+ "row_count": 9,
+ "category_column": "resource_type",
+ "count_column": "clicks",
+ "percent_column": null,
+ "metric_columns": [
+ "pct_of_total",
+ "vle_diversity_score",
+ "forum_engagement_rate"
+ ],
+ "total_count": 1261,
+ "focus_categories": [
+ "forumng"
+ ]
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "category_distribution": [
+ {
+ "category": "quiz",
+ "count": 623,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.4941,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "homepage",
+ "count": 264,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.2094,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "forumng",
+ "count": 140,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.111,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "subpage",
+ "count": 94,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.0745,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "resource",
+ "count": 71,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.0563,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "oucontent",
+ "count": 40,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.0317,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "url",
+ "count": 27,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.0214,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "page",
+ "count": 1,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.0008,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ },
+ {
+ "category": "oucollaborate",
+ "count": 1,
+ "percent": null,
+ "metrics": {
+ "pct_of_total": 0.0008,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ }
+ ],
+ "focus_total": {
+ "categories": [
+ "forumng"
+ ],
+ "present_categories": [
+ "forumng"
+ ],
+ "missing_categories": [],
+ "count": 140,
+ "percent": null
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_evidence_by_category": {
+ "quiz": {
+ "pct_of_total": 0.4941,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "homepage": {
+ "pct_of_total": 0.2094,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "forumng": {
+ "pct_of_total": 0.111,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "subpage": {
+ "pct_of_total": 0.0745,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "resource": {
+ "pct_of_total": 0.0563,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "oucontent": {
+ "pct_of_total": 0.0317,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "url": {
+ "pct_of_total": 0.0214,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "page": {
+ "pct_of_total": 0.0008,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ },
+ "oucollaborate": {
+ "pct_of_total": 0.0008,
+ "vle_diversity_score": 1,
+ "forum_engagement_rate": 0.111
+ }
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_expected_categories": [],
+ "missing_focus_categories": [],
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

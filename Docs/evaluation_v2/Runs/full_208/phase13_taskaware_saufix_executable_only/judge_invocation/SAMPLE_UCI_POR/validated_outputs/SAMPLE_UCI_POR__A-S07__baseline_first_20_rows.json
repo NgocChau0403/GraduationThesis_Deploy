@@ -1,0 +1,76 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-S07__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Grounding and interpretation: Several contextual factors are correctly identified, but existing school support is omitted and the intervention is not grounded in a returned action field."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "Values, directions, and comparisons: Several contextual factors are correctly identified, but existing school support is omitted and the intervention is not grounded in a returned action field."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Coverage of supplied requirements: Several contextual factors are correctly identified, but existing school support is omitted and the intervention is not grounded in a returned action field."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Fit to the stated task and audience: Several contextual factors are correctly identified, but existing school support is omitted and the intervention is not grounded in a returned action field."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Usefulness and evidence basis: Several contextual factors are correctly identified, but existing school support is omitted and the intervention is not grounded in a returned action field."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Precision and organization: Several contextual factors are correctly identified, but existing school support is omitted and the intervention is not grounded in a returned action field."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Fair and non-stigmatizing treatment: Several contextual factors are correctly identified, but existing school support is omitted and the intervention is not grounded in a returned action field."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The student exhibits several background factors that may influence their academic performance, including limited family support and lack of internet access. The distribution of their scores indicates areas of potential concern, particularly in social balance and support.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S07.json; dataset background_context"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "Several contextual factors are correctly identified, but existing school support is omitted and the intervention is not grounded in a returned action field.",
+      "impact_type": "changes_interpretation"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_required_output",
+      "claim_ids": [],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 6,
+      "rationale": "Several contextual factors are correctly identified, but existing school support is omitted and the intervention is not grounded in a returned action field.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S07.json; dataset background_context"
+      ],
+      "requirement_id": "A-S07-CORE-01"
+    }
+  ],
+  "holistic_rationale": "The record is judgeable and addresses the stated task, but several contextual factors are correctly identified, but existing school support is omitted and the intervention is not grounded in a returned action field. The metric pattern reflects that defect without adding an overall score or verdict.",
+  "evidence_usage_notes": "Evidence mode was direct_embedding. direct_embedding delivered all 1 rows; retrieval_log_path was not applicable. The judgment used the cited artifact or retrieval record plus the packet's deterministic checks; access was not treated as proof that the explanation attended to every row.",
+  "invalid_reason": null
+}

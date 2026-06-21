@@ -1,0 +1,377 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__A-B01",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-B01",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__A-B01__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "3ee2e4fe37a2cfccbcd491be533fe367c49dfee6e0c70070f39177d0af7176ad",
+ "deterministic_summary": {
+ "summary_type": "numeric_distribution",
+ "dataset_name": "score_distribution",
+ "row_count": 10,
+ "bin_column": "score_bucket",
+ "count_column": "student_count",
+ "percent_column": "pct_of_class",
+ "bin_distribution": [
+ {
+ "bin": "0-10",
+ "count": 3,
+ "percent": 0.5,
+ "metrics": {
+ "avg_score_in_bucket": 7.78
+ }
+ },
+ {
+ "bin": "10-20",
+ "count": 4,
+ "percent": 0.6,
+ "metrics": {
+ "avg_score_in_bucket": 12.92
+ }
+ },
+ {
+ "bin": "20-30",
+ "count": 9,
+ "percent": 1.4,
+ "metrics": {
+ "avg_score_in_bucket": 24.44
+ }
+ },
+ {
+ "bin": "30-40",
+ "count": 33,
+ "percent": 5.1,
+ "metrics": {
+ "avg_score_in_bucket": 36.01
+ }
+ },
+ {
+ "bin": "40-50",
+ "count": 108,
+ "percent": 16.6,
+ "metrics": {
+ "avg_score_in_bucket": 45.03
+ }
+ },
+ {
+ "bin": "50-60",
+ "count": 187,
+ "percent": 28.8,
+ "metrics": {
+ "avg_score_in_bucket": 53.66
+ }
+ },
+ {
+ "bin": "60-70",
+ "count": 168,
+ "percent": 25.9,
+ "metrics": {
+ "avg_score_in_bucket": 63.78
+ }
+ },
+ {
+ "bin": "70-80",
+ "count": 90,
+ "percent": 13.9,
+ "metrics": {
+ "avg_score_in_bucket": 73.91
+ }
+ },
+ {
+ "bin": "80-90",
+ "count": 40,
+ "percent": 6.2,
+ "metrics": {
+ "avg_score_in_bucket": 83.54
+ }
+ },
+ {
+ "bin": "90-100",
+ "count": 7,
+ "percent": 1.1,
+ "metrics": {
+ "avg_score_in_bucket": 90.48
+ }
+ }
+ ],
+ "total_count": 649,
+ "dominant_bin": {
+ "bin": "50-60",
+ "count": 187,
+ "percent": 28.8,
+ "metrics": {
+ "avg_score_in_bucket": 53.66
+ }
+ },
+ "focus_bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "focus_total": {
+ "bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "present_bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "missing_bins": [],
+ "count": 49,
+ "percent": 7.6
+ },
+ "threshold_summary": {
+ "threshold": 40,
+ "direction": "below",
+ "bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "count": 49,
+ "percent": 7.6
+ },
+ "missing_expected_bins": [
+ "No score"
+ ],
+ "metric_evidence_by_bin": {
+ "0-10": {
+ "avg_score_in_bucket": 7.78
+ },
+ "10-20": {
+ "avg_score_in_bucket": 12.92
+ },
+ "20-30": {
+ "avg_score_in_bucket": 24.44
+ },
+ "30-40": {
+ "avg_score_in_bucket": 36.01
+ },
+ "40-50": {
+ "avg_score_in_bucket": 45.03
+ },
+ "50-60": {
+ "avg_score_in_bucket": 53.66
+ },
+ "60-70": {
+ "avg_score_in_bucket": 63.78
+ },
+ "70-80": {
+ "avg_score_in_bucket": 73.91
+ },
+ "80-90": {
+ "avg_score_in_bucket": 83.54
+ },
+ "90-100": {
+ "avg_score_in_bucket": 90.48
+ }
+ },
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "numeric_distribution",
+ "task_id": "A-B01",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "score_distribution",
+ "row_count": 10,
+ "bin_column": "score_bucket",
+ "count_column": "student_count",
+ "percent_column": "pct_of_class",
+ "total_count": 649,
+ "focus_bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ]
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "bin_distribution": [
+ {
+ "bin": "0-10",
+ "count": 3,
+ "percent": 0.5,
+ "metrics": {
+ "avg_score_in_bucket": 7.78
+ }
+ },
+ {
+ "bin": "10-20",
+ "count": 4,
+ "percent": 0.6,
+ "metrics": {
+ "avg_score_in_bucket": 12.92
+ }
+ },
+ {
+ "bin": "20-30",
+ "count": 9,
+ "percent": 1.4,
+ "metrics": {
+ "avg_score_in_bucket": 24.44
+ }
+ },
+ {
+ "bin": "30-40",
+ "count": 33,
+ "percent": 5.1,
+ "metrics": {
+ "avg_score_in_bucket": 36.01
+ }
+ },
+ {
+ "bin": "40-50",
+ "count": 108,
+ "percent": 16.6,
+ "metrics": {
+ "avg_score_in_bucket": 45.03
+ }
+ },
+ {
+ "bin": "50-60",
+ "count": 187,
+ "percent": 28.8,
+ "metrics": {
+ "avg_score_in_bucket": 53.66
+ }
+ },
+ {
+ "bin": "60-70",
+ "count": 168,
+ "percent": 25.9,
+ "metrics": {
+ "avg_score_in_bucket": 63.78
+ }
+ },
+ {
+ "bin": "70-80",
+ "count": 90,
+ "percent": 13.9,
+ "metrics": {
+ "avg_score_in_bucket": 73.91
+ }
+ },
+ {
+ "bin": "80-90",
+ "count": 40,
+ "percent": 6.2,
+ "metrics": {
+ "avg_score_in_bucket": 83.54
+ }
+ },
+ {
+ "bin": "90-100",
+ "count": 7,
+ "percent": 1.1,
+ "metrics": {
+ "avg_score_in_bucket": 90.48
+ }
+ }
+ ],
+ "focus_total": {
+ "bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "present_bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "missing_bins": [],
+ "count": 49,
+ "percent": 7.6
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "threshold_summary": {
+ "threshold": 40,
+ "direction": "below",
+ "bins": [
+ "0-10",
+ "10-20",
+ "20-30",
+ "30-40"
+ ],
+ "count": 49,
+ "percent": 7.6
+ },
+ "metric_evidence_by_bin": {
+ "0-10": {
+ "avg_score_in_bucket": 7.78
+ },
+ "10-20": {
+ "avg_score_in_bucket": 12.92
+ },
+ "20-30": {
+ "avg_score_in_bucket": 24.44
+ },
+ "30-40": {
+ "avg_score_in_bucket": 36.01
+ },
+ "40-50": {
+ "avg_score_in_bucket": 45.03
+ },
+ "50-60": {
+ "avg_score_in_bucket": 53.66
+ },
+ "60-70": {
+ "avg_score_in_bucket": 63.78
+ },
+ "70-80": {
+ "avg_score_in_bucket": 73.91
+ },
+ "80-90": {
+ "avg_score_in_bucket": 83.54
+ },
+ "90-100": {
+ "avg_score_in_bucket": 90.48
+ }
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "dominant_bin": {
+ "bin": "50-60",
+ "count": 187,
+ "percent": 28.8,
+ "metrics": {
+ "avg_score_in_bucket": 53.66
+ }
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_expected_bins": [
+ "No score"
+ ],
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

@@ -1,0 +1,681 @@
+{
+ "report_version": "llm_judge_v2_full_208_scoring_report_v1",
+ "generated_at": "2026-06-21T21:15:11.527Z",
+ "status": "PASS",
+ "phase_scope": [
+ "Phase 8 official scoring",
+ "dataset-scoped full_208 scoring"
+ ],
+ "dataset_scope": "SAMPLE_OULAD",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_OULAD",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "weights": {
+ "faithfulness": 25,
+ "numerical_correctness": 20,
+ "completeness": 15,
+ "task_relevance": 15,
+ "actionability": 10,
+ "clarity": 10,
+ "safety_fairness": 5
+ },
+ "inputs": {
+ "invocation_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_invocation/judge_invocation_manifest.jsonl",
+ "attempt_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_invocation/judge_attempt_manifest.jsonl",
+ "status_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_invocation/record_execution_status_manifest.jsonl",
+ "d3_schema_path": "Docs/evaluation_v2/LLM_JUDGE_V2_D3_OUTPUT_SCHEMA_V1.json"
+ },
+ "counts": {
+ "expected_records": 88,
+ "valid_source_records": 88,
+ "attempt_records": 88,
+ "final_scoring_records": 88,
+ "scored_records": 88,
+ "invalid_records": 0,
+ "errors": 0,
+ "warnings": 0
+ },
+ "aggregate_summary": {
+ "records": 88,
+ "scored_records": 88,
+ "invalid_records": 0,
+ "average_raw_weighted_score": 7.91,
+ "average_final_score_after_caps": 7.73,
+ "verdict_counts": {
+ "acceptable": 15,
+ "excellent": 40,
+ "good": 31,
+ "poor": 2
+ },
+ "highest_error_severity_counts": {
+ "major": 15,
+ "minor": 9,
+ "none": 62,
+ "critical": 2
+ }
+ },
+ "paired_mode_summary": {
+ "pair_count": 44,
+ "comparable_pair_count": 44,
+ "average_delta_task_aware_minus_baseline": 1.54,
+ "winner_counts": {
+ "task_aware_data_summarization": 42,
+ "tie": 2
+ },
+ "row_count_context": {
+ "comparable_by_row_count_bucket": {
+ "<=20": 31,
+ ">20": 13
+ },
+ "gt20_pair_count": 13,
+ "gt20_tie_pair_count": 2,
+ "gt20_non_tie_pair_count": 11,
+ "gt20_pairs": [
+ {
+ "task_id": "A-G01",
+ "full_result_row_count": 1544,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 5,
+ "task_aware_final_score": 8,
+ "delta_task_aware_minus_baseline": 3
+ },
+ {
+ "task_id": "A-G02",
+ "full_result_row_count": 1998,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75
+ },
+ {
+ "task_id": "A-G03",
+ "full_result_row_count": 50,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05
+ },
+ {
+ "task_id": "A-G04",
+ "full_result_row_count": 112,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05
+ },
+ {
+ "task_id": "A-G09",
+ "full_result_row_count": 1998,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 5.8,
+ "task_aware_final_score": 6,
+ "delta_task_aware_minus_baseline": 0.2
+ },
+ {
+ "task_id": "A-G11",
+ "full_result_row_count": 42,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.1,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.65
+ },
+ {
+ "task_id": "A-G12",
+ "full_result_row_count": 53,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05
+ },
+ {
+ "task_id": "A-G14",
+ "full_result_row_count": 164,
+ "winner": "tie",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 6,
+ "delta_task_aware_minus_baseline": 0
+ },
+ {
+ "task_id": "A-G15",
+ "full_result_row_count": 50,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.1,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.65
+ },
+ {
+ "task_id": "A-S03",
+ "full_result_row_count": 32,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05
+ },
+ {
+ "task_id": "S-T05",
+ "full_result_row_count": 32,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.6,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.15
+ },
+ {
+ "task_id": "S-T06",
+ "full_result_row_count": 32,
+ "winner": "tie",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 6,
+ "delta_task_aware_minus_baseline": 0
+ },
+ {
+ "task_id": "S-T11",
+ "full_result_row_count": 1988,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 4,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 4.75
+ }
+ ]
+ },
+ "non_tie_analysis": {
+ "non_tie_pair_count": 42,
+ "non_tie_by_row_count_bucket": {
+ "<=20": 31,
+ ">20": 11
+ },
+ "non_tie_by_winner_and_row_count_bucket": {
+ "task_aware_data_summarization__<=20": 31,
+ "task_aware_data_summarization__>20": 11
+ },
+ "non_tie_by_evidence_access_mode": {
+ "direct_embedding": 31,
+ "deterministic_artifact_retrieval": 11
+ },
+ "interpretation": "Non-tie outcomes are not determined only by whether full SQL results have <=20 rows. When <=20, rows[:20] already covers the full result; wins usually come from explanation completeness, actionability, unsupported claims, or severity caps. When >20, evidence coverage can matter, but the final winner is still determined by judge metric scores and caps."
+ },
+ "non_tie_pairs": [
+ {
+ "task_id": "A-B01",
+ "full_result_row_count": 11,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8,
+ "delta_task_aware_minus_baseline": 2,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major core_requirement_omission."
+ },
+ {
+ "task_id": "A-B02",
+ "full_result_row_count": 4,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.5,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.25,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 8 because of minor judge error(s). baseline rows[:20] issue(s): minor partial_count_reporting."
+ },
+ {
+ "task_id": "A-B03",
+ "full_result_row_count": 4,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-B04",
+ "full_result_row_count": 3,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-C01",
+ "full_result_row_count": 17,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 4,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 4.75,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 4 because of critical judge error(s). baseline rows[:20] issue(s): critical wrong_evaluation_target."
+ },
+ {
+ "task_id": "A-C02",
+ "full_result_row_count": 6,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-C03",
+ "full_result_row_count": 2,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-C05",
+ "full_result_row_count": 2,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-C06",
+ "full_result_row_count": 10,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-G01",
+ "full_result_row_count": 1544,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 5,
+ "task_aware_final_score": 8,
+ "delta_task_aware_minus_baseline": 3,
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 5 because of major judge error(s). baseline rows[:20] issue(s): major unsupported_threshold_claim."
+ },
+ {
+ "task_id": "A-G02",
+ "full_result_row_count": 1998,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75,
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major numerical_mischaracterization."
+ },
+ {
+ "task_id": "A-G03",
+ "full_result_row_count": 50,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-G04",
+ "full_result_row_count": 112,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-G05",
+ "full_result_row_count": 11,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-G06",
+ "full_result_row_count": 9,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 6.85,
+ "task_aware_final_score": 7.75,
+ "delta_task_aware_minus_baseline": 0.9,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 8 because of minor judge error(s). baseline rows[:20] issue(s): minor unsupported_association_framing."
+ },
+ {
+ "task_id": "A-G07",
+ "full_result_row_count": 4,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-G08",
+ "full_result_row_count": 11,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major core_requirement_omission."
+ },
+ {
+ "task_id": "A-G09",
+ "full_result_row_count": 1998,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 5.8,
+ "task_aware_final_score": 6,
+ "delta_task_aware_minus_baseline": 0.2,
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major core_requirement_omission."
+ },
+ {
+ "task_id": "A-G10",
+ "full_result_row_count": 3,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-G11",
+ "full_result_row_count": 42,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.1,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.65,
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 8 because of minor judge error(s). baseline rows[:20] issue(s): minor partial_coverage."
+ },
+ {
+ "task_id": "A-G12",
+ "full_result_row_count": 53,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-G15",
+ "full_result_row_count": 50,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.1,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.65,
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 8 because of minor judge error(s). baseline rows[:20] issue(s): minor partial_rank_reporting."
+ },
+ {
+ "task_id": "A-G16",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major missing_action_provenance."
+ },
+ {
+ "task_id": "A-S01",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-S02",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-S03",
+ "full_result_row_count": 32,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-S05",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 5,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 3.75,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 5 because of major judge error(s). baseline rows[:20] issue(s): major wrong_evaluation_target."
+ },
+ {
+ "task_id": "A-S06",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "A-S08",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major missing_action_provenance."
+ },
+ {
+ "task_id": "S-B01",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "S-B02",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.55,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.2,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 8 because of minor judge error(s). baseline rows[:20] issue(s): minor unsupported_outcome_claim."
+ },
+ {
+ "task_id": "S-B03",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "S-T01",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "S-T02",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "S-T03",
+ "full_result_row_count": 6,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "S-T04",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "S-T05",
+ "full_result_row_count": 32,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.6,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.15,
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 8 because of minor judge error(s). baseline rows[:20] issue(s): minor unsupported_causal_language."
+ },
+ {
+ "task_id": "S-T08",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major unsupported_association_strength."
+ },
+ {
+ "task_id": "S-T10",
+ "full_result_row_count": 9,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "S-T11",
+ "full_result_row_count": 1988,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 4,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 4.75,
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 4 because of critical judge error(s). baseline rows[:20] issue(s): critical contradicted_correlation_direction."
+ },
+ {
+ "task_id": "S-T12",
+ "full_result_row_count": 6,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "task_id": "S-T13",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75,
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major missing_action_provenance."
+ }
+ ]
+ },
+ "outputs": {
+ "final_records_dir": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/scoring/final_scoring_records",
+ "scoring_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/scoring/scoring_manifest__SAMPLE_OULAD.jsonl",
+ "report_json": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/scoring/scoring_report__SAMPLE_OULAD.json",
+ "report_md": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/scoring/scoring_report__SAMPLE_OULAD.md",
+ "aggregates": {
+ "by_dataset": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/scoring/aggregates/by_dataset__SAMPLE_OULAD.json",
+ "by_mode": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/scoring/aggregates/by_mode__SAMPLE_OULAD.json",
+ "by_dataset_and_mode": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/scoring/aggregates/by_dataset_and_mode__SAMPLE_OULAD.json",
+ "by_row_count_bucket": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/scoring/aggregates/by_row_count_bucket__SAMPLE_OULAD.json",
+ "by_evidence_access_mode": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/scoring/aggregates/by_evidence_access_mode__SAMPLE_OULAD.json",
+ "paired_mode_comparison_json": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/scoring/aggregates/paired_mode_comparison__SAMPLE_OULAD.json",
+ "paired_mode_comparison_md": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/scoring/aggregates/paired_mode_comparison__SAMPLE_OULAD.md"
+ }
+ },
+ "gate_decision": {
+ "dataset_scoring_passed": true,
+ "full_208_finalization_allowed": false,
+ "reason": "All dataset-scoped validated judge outputs were finalized into scoring records."
+ },
+ "issues": []
+}

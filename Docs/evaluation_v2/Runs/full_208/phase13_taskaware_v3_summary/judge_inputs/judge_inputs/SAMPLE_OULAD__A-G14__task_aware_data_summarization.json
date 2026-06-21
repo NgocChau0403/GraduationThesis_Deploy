@@ -1,0 +1,249 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G14__task_aware_data_summarization",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G14",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Early withdrawal signal analysis",
+    "scope": "Many students",
+    "actionable_question": "How early can admin detect a student about to drop out?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "trend_comparison",
+    "ai_prompt_hint": "Use early_warning_week [FE] to show when engagement collapsed for withdrawn students. Compare to passing students.",
+    "query_labels": [
+      "withdrawal_signal_trend"
+    ],
+    "explanation_strategy": "trend"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "engagement [OULAD only]"
+    ],
+    "key_db_fields": [
+      "week_number",
+      "engagement_count; final_outcome",
+      "avg_clicks by outcome group"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "withdrawal_signal_trend"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis of withdrawal signals indicates a declining trend in engagement among students who eventually withdrew, particularly evident in the sharp drop in average clicks during specific weeks. This trend highlights critical periods where intervention may be necessary to prevent further withdrawals.\n\nInsights: Sharp Drop in Engagement: There was a significant decline in avg_clicks from 100.69 in week 21 to 26.55 in week 22, indicating a critical turning point where engagement dropped sharply, suggesting a potential early warning for students at risk of withdrawal. | Lowest Engagement Point: The lowest recorded engagement was 4.57 avg_clicks in week 32, which signifies a critical alert for potential withdrawals, as this indicates a severe lack of interaction with course materials. | Peak Engagement Before Withdrawal: The peak engagement for withdrawn students occurred in week 21 with 100.69 avg_clicks, suggesting that students may initially engage well before a significant drop, indicating a window for intervention.\n\nEducational implications: Monitoring engagement metrics closely, especially around weeks 21 to 22, can provide early signals for students at risk of withdrawal.\n\nRecommendations: high - Implement targeted interventions during weeks 21 and 22. - This period shows a significant drop in engagement, indicating students may need additional support to remain enrolled.\n\nWarnings: 3 Withdrawn points have student_count below 10; avoid over-weighting these weeks.",
+    "structured_payload": {
+      "task_id": "A-G14",
+      "execution_id": "exec_1781847775085_95441256",
+      "explanation": {
+        "summary": "The analysis of withdrawal signals indicates a declining trend in engagement among students who eventually withdrew, particularly evident in the sharp drop in average clicks during specific weeks. This trend highlights critical periods where intervention may be necessary to prevent further withdrawals.",
+        "insights": [
+          {
+            "title": "Sharp Drop in Engagement",
+            "description": "There was a significant decline in avg_clicks from 100.69 in week 21 to 26.55 in week 22, indicating a critical turning point where engagement dropped sharply, suggesting a potential early warning for students at risk of withdrawal.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "avg_clicks",
+                "value": 26.55,
+                "comparison": "down_from_previous",
+                "delta": -74.14,
+                "context": "Week 21 to Week 22"
+              }
+            ]
+          },
+          {
+            "title": "Lowest Engagement Point",
+            "description": "The lowest recorded engagement was 4.57 avg_clicks in week 32, which signifies a critical alert for potential withdrawals, as this indicates a severe lack of interaction with course materials.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "avg_clicks",
+                "value": 4.57,
+                "comparison": "trough",
+                "delta": null,
+                "context": "Week 32"
+              }
+            ]
+          },
+          {
+            "title": "Peak Engagement Before Withdrawal",
+            "description": "The peak engagement for withdrawn students occurred in week 21 with 100.69 avg_clicks, suggesting that students may initially engage well before a significant drop, indicating a window for intervention.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "avg_clicks",
+                "value": 100.69,
+                "comparison": "peak",
+                "delta": null,
+                "context": "Week 21"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Monitoring engagement metrics closely, especially around weeks 21 to 22, can provide early signals for students at risk of withdrawal."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted interventions during weeks 21 and 22.",
+            "rationale": "This period shows a significant drop in engagement, indicating students may need additional support to remain enrolled."
+          }
+        ],
+        "warnings": [
+          "3 Withdrawn points have student_count below 10; avoid over-weighting these weeks."
+        ]
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset has a strong statistical basis with 1998 students and 9 assessments across 8 weeks.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "trend",
+      "explanation_type": "trend",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3-experimental",
+      "baseline_available": true,
+      "input_summary_type": "trend_comparison",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 164,
+      "included_row_count": 15,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "withdrawal_signal_trend",
+          "row_count": 164,
+          "included_row_count": 15
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 15,
+      "baseline_reference_tokens": 617,
+      "task_aware_prompt_tokens": 1007,
+      "token_ratio": 1.6321,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [
+        "comparison.comparison_trends"
+      ],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (1.6321 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 7455,
+        "token_usage": {
+          "prompt_tokens": 2110,
+          "completion_tokens": 601,
+          "total_tokens": 2711
+        },
+        "strategy": "trend",
+        "granularity": "weekly",
+        "cost_usd": 0.000677
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-G14__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "36285d909c78e4fc4df8b90be0543df8e4929eaeb5b07668c51f273cae525463",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 2110,
+        "completion_tokens": 601,
+        "total_tokens": 2711
+      },
+      "latency_ms": 7461,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 164,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "withdrawal_signal_trend",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G14.json",
+        "artifact_sha256": "64c67afde434dcdc16e3b44225b1be83ff387bfc4ca03234bd334a5e7b8e5e9a",
+        "row_count": 164,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 164,
+    "retrieved_row_count_by_dataset": {
+      "withdrawal_signal_trend": 164
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "withdrawal_signal_trend",
+        "start": 0,
+        "end": 163
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_OULAD__A-G14__task_aware_data_summarization__withdrawal_signal_trend__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G14__task_aware_data_summarization.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "withdrawal_signal_trend": 164
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G14-CORE-01",
+        "description": "Identify when engagement collapsed for withdrawn students."
+      },
+      {
+        "requirement_id": "A-G14-CORE-02",
+        "description": "Compare the timing or trajectory with passing students."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G14-CONSTRAINT-01",
+        "description": "Use early_warning_week as the primary collapse-timing field when returned."
+      },
+      {
+        "constraint_id": "A-G14-CONSTRAINT-02",
+        "description": "Frame the comparison as an observed pattern, not proof of withdrawal causation."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

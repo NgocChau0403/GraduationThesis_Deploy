@@ -1,0 +1,1577 @@
+# LLM Judge Final Judge Context - SAMPLE_OULAD__A-S03__task_aware_data_summarization
+
+This Phase F6 context is the record-level evidence package to supply with the frozen Judge Prompt V2 during full-run judge invocation.
+
+## Frozen Prompt Reference
+
+- Prompt path: `Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md`
+- Prompt SHA-256: `e35e0b9d459cc13cd908acc693510832ccf611a61922bcd6bdb3f4e93f569517`
+
+## Record Identity
+
+```json
+{
+ "record_id": "SAMPLE_OULAD__A-S03__task_aware_data_summarization",
+ "evaluation_run_id": "oulad_official_r5",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-S03",
+ "explanation_mode": "task_aware_data_summarization",
+ "prompt_version": "judge_prompt_v2_pilot_v1",
+ "rubric_version": "judge_rubric_1_to_10_pilot_v1"
+}
+```
+
+## Task Context
+
+```json
+{
+ "task_name": "Student engagement trajectory",
+ "scope": "1 student",
+ "actionable_question": "When exactly did this student start disengaging?",
+ "target_audience": "instructor, academic_advisor",
+ "ai_summary_type": "trend_series",
+ "ai_prompt_hint": "Flag the exact week engagement dropped. Compare to pre-drop average. Recommend admin outreach timing.",
+ "query_labels": [
+ "engagement_trajectory"
+ ],
+ "explanation_strategy": "behavioral"
+}
+```
+
+## Schema Context
+
+```json
+{
+ "source_tables": [
+ "engagement [OULAD only]"
+ ],
+ "key_db_fields": [
+ "week_number",
+ "engagement_count; early_warning_week [FE cross]",
+ "weekly_engagement_drop [FE cross]",
+ "consistency_level [FE cross]"
+ ],
+ "output_schema": {},
+ "query_labels": [
+ "engagement_trajectory"
+ ]
+}
+```
+
+## Evaluation Requirements
+
+```json
+{
+ "required_core_outputs": [
+ {
+ "requirement_id": "A-S03-CORE-01",
+ "description": "Identify the specific week in which engagement dropped when the data supports one."
+ },
+ {
+ "requirement_id": "A-S03-CORE-02",
+ "description": "Compare engagement after the drop with the pre-drop average."
+ }
+ ],
+ "required_supporting_outputs": [
+ {
+ "requirement_id": "A-S03-SUPPORT-01",
+ "description": "When a specific drop week is identified, recommend outreach timing relative to that week."
+ }
+ ],
+ "evaluation_constraints": [],
+ "safety_fairness_applicability": "applicable",
+ "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+}
+```
+
+## Deterministic Derived-Stat Evidence
+
+```json
+[]
+```
+
+## Deterministic Action Evidence
+
+```json
+{
+ "applicable": false,
+ "evaluation_status": "not_available",
+ "supported_action_count": 0,
+ "supported_actions": []
+}
+```
+
+## Deterministic Retrieval Evidence
+
+```json
+{
+ "full_query_artifacts": [
+ {
+ "dataset_label": "engagement_trajectory",
+ "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S03.json",
+ "artifact_sha256": "88c292f06cfb5610c79ec1b926d0f15b1e7e3f392430633bb7897b342969ab65",
+ "row_count": 32,
+ "readable": true
+ }
+ ],
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "full_result_row_count": 32,
+ "prompt_embedded_row_count": 0,
+ "retrieved_row_count": 32,
+ "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-S03__task_aware_data_summarization.json",
+ "full_access_available": true,
+ "full_result_sent_to_llm": false,
+ "evidence_artifact_file_sha256": "88c292f06cfb5610c79ec1b926d0f15b1e7e3f392430633bb7897b342969ab65",
+ "evidence_rows_sha256": "ce959133775abc25513cfe5ba069e17f82b777f1dc72e27a543059c0bc0694f4",
+ "retrieval_validation": {
+ "status": "pass",
+ "retrieved_row_count": 32,
+ "chunk_count": 1,
+ "chunk_ids": [
+ "SAMPLE_OULAD__A-S03__task_aware_data_summarization__engagement_trajectory__chunk_1"
+ ],
+ "row_ranges": [
+ {
+ "dataset_label": "engagement_trajectory",
+ "row_start_inclusive": 0,
+ "row_end_inclusive": 31,
+ "row_count": 32
+ }
+ ],
+ "issues": []
+ }
+}
+```
+
+```json
+{
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "retrieval_log": {
+ "artifact_type": "llm_judge_v2_phase6_4_deterministic_retrieval_log",
+ "generated_at": "2026-06-21T20:50:28.322Z",
+ "record_id": "SAMPLE_OULAD__A-S03__task_aware_data_summarization",
+ "retrieval_request_complete": true,
+ "retrieval_coverage_status": "full",
+ "chunks": [
+ {
+ "chunk_id": "SAMPLE_OULAD__A-S03__task_aware_data_summarization__engagement_trajectory__chunk_1",
+ "dataset_label": "engagement_trajectory",
+ "row_start_inclusive": 0,
+ "row_end_inclusive": 31,
+ "row_count": 32,
+ "source_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S03.json",
+ "source_artifact_sha256": "88c292f06cfb5610c79ec1b926d0f15b1e7e3f392430633bb7897b342969ab65"
+ }
+ ]
+ },
+ "retrieved_datasets_sha256": "ce959133775abc25513cfe5ba069e17f82b777f1dc72e27a543059c0bc0694f4",
+ "retrieved_datasets": {
+ "engagement_trajectory": [
+ {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "rolling_3wk_avg": null,
+ "weekly_engagement_drop": null,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": -1,
+ "weekly_clicks": 94,
+ "rolling_3wk_avg": "86",
+ "weekly_engagement_drop": 8,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 0,
+ "weekly_clicks": 27,
+ "rolling_3wk_avg": "90",
+ "weekly_engagement_drop": -67,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "rolling_3wk_avg": "69",
+ "weekly_engagement_drop": 71,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 2,
+ "weekly_clicks": 4,
+ "rolling_3wk_avg": "73",
+ "weekly_engagement_drop": -94,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 3,
+ "weekly_clicks": 28,
+ "rolling_3wk_avg": "43",
+ "weekly_engagement_drop": 24,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 4,
+ "weekly_clicks": 7,
+ "rolling_3wk_avg": "43.3333333333333333",
+ "weekly_engagement_drop": -21,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 5,
+ "weekly_clicks": 16,
+ "rolling_3wk_avg": "13",
+ "weekly_engagement_drop": 9,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 6,
+ "weekly_clicks": 80,
+ "rolling_3wk_avg": "17",
+ "weekly_engagement_drop": 64,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 8,
+ "weekly_clicks": 2,
+ "rolling_3wk_avg": "34.3333333333333333",
+ "weekly_engagement_drop": -78,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 9,
+ "weekly_clicks": 48,
+ "rolling_3wk_avg": "32.6666666666666667",
+ "weekly_engagement_drop": 46,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 10,
+ "weekly_clicks": 3,
+ "rolling_3wk_avg": "43.3333333333333333",
+ "weekly_engagement_drop": -45,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 11,
+ "weekly_clicks": 3,
+ "rolling_3wk_avg": "17.6666666666666667",
+ "weekly_engagement_drop": 0,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 12,
+ "weekly_clicks": 56,
+ "rolling_3wk_avg": "18",
+ "weekly_engagement_drop": 53,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 13,
+ "weekly_clicks": 53,
+ "rolling_3wk_avg": "20.6666666666666667",
+ "weekly_engagement_drop": -3,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 14,
+ "weekly_clicks": 71,
+ "rolling_3wk_avg": "37.3333333333333333",
+ "weekly_engagement_drop": 18,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 15,
+ "weekly_clicks": 29,
+ "rolling_3wk_avg": "60",
+ "weekly_engagement_drop": -42,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 16,
+ "weekly_clicks": 24,
+ "rolling_3wk_avg": "51",
+ "weekly_engagement_drop": -5,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 17,
+ "weekly_clicks": 24,
+ "rolling_3wk_avg": "41.3333333333333333",
+ "weekly_engagement_drop": 0,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 18,
+ "weekly_clicks": 1,
+ "rolling_3wk_avg": "25.6666666666666667",
+ "weekly_engagement_drop": -23,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 19,
+ "weekly_clicks": 45,
+ "rolling_3wk_avg": "16.3333333333333333",
+ "weekly_engagement_drop": 44,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 20,
+ "weekly_clicks": 101,
+ "rolling_3wk_avg": "23.3333333333333333",
+ "weekly_engagement_drop": 56,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 21,
+ "weekly_clicks": 106,
+ "rolling_3wk_avg": "49",
+ "weekly_engagement_drop": 5,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 22,
+ "weekly_clicks": 78,
+ "rolling_3wk_avg": "84",
+ "weekly_engagement_drop": -28,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 24,
+ "weekly_clicks": 10,
+ "rolling_3wk_avg": "95",
+ "weekly_engagement_drop": -68,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 25,
+ "weekly_clicks": 1,
+ "rolling_3wk_avg": "64.6666666666666667",
+ "weekly_engagement_drop": -9,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 27,
+ "weekly_clicks": 15,
+ "rolling_3wk_avg": "29.6666666666666667",
+ "weekly_engagement_drop": 14,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 28,
+ "weekly_clicks": 8,
+ "rolling_3wk_avg": "8.6666666666666667",
+ "weekly_engagement_drop": -7,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 29,
+ "weekly_clicks": 41,
+ "rolling_3wk_avg": "8",
+ "weekly_engagement_drop": 33,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 30,
+ "weekly_clicks": 43,
+ "rolling_3wk_avg": "21.3333333333333333",
+ "weekly_engagement_drop": 2,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 31,
+ "weekly_clicks": 54,
+ "rolling_3wk_avg": "30.6666666666666667",
+ "weekly_engagement_drop": 11,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ },
+ {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "rolling_3wk_avg": "46",
+ "weekly_engagement_drop": -49,
+ "early_warning_week": 0,
+ "consistency_level": "medium"
+ }
+ ]
+ }
+}
+```
+
+## Generator Input Provenance
+
+```json
+{
+ "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/explanations/explanation_artifacts/SAMPLE_OULAD__A-S03__task_aware_data_summarization.json",
+ "explanation_artifact_sha256": "d2000173005163269a5d66d754012eca885b57d7e7d3ee94aa603fdb518fb34e",
+ "generator_input_sha256": "b975c4cbeee835cf3497908c21ceb544b183046444441155164db1e3560afd1a",
+ "generator_input_compact": {
+ "task_id": "A-S03",
+ "execution_id": "exec_1781847829425_34c7f219",
+ "task_name": "Student engagement trajectory",
+ "analysis_type": "trend",
+ "explanation_strategy": "behavioral",
+ "actionable_question": "When exactly did this student start disengaging?",
+ "target_audience": [
+ "instructor",
+ "academic_advisor"
+ ],
+ "query_labels": [
+ "engagement_trajectory"
+ ],
+ "confidence": {
+ "level": "HIGH",
+ "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+ },
+ "dataset_labels": [
+ "engagement_trajectory"
+ ],
+ "dataset_row_counts": {
+ "engagement_trajectory": 32
+ },
+ "ai_summary_config_summary": {
+ "summary_type": "trend_series",
+ "metric_column": "weekly_clicks",
+ "entity_column": null,
+ "group_column": null,
+ "time_column": "week_number",
+ "sort_by": null,
+ "sort_direction": "asc",
+ "top_k": null,
+ "bottom_k": null,
+ "threshold_direction": null,
+ "numeric_threshold": null,
+ "require_sensitive_context_policy": false,
+ "require_complete_action_provenance": true
+ }
+ }
+}
+```
+
+## AI Explanation To Judge
+
+```json
+{
+ "raw_text": "Summary: Primary timing: early_warning_week=0.0; previous_week_clicks=94; warning_week_clicks=27; warning_week_delta=-67; pre_warning_average=90.0; post_warning_average=36.0333. Secondary largest later adjacent drop: week 1 to week 2, delta=-94.0.\n\nEducational implications: Use week 0 as the primary warning timing; the later largest drop is secondary evidence and does not establish a cause.\n\nRecommendations: high - Initiate outreach before or at early_warning_week=0.0. - The timing is grounded only in the returned early-warning signal; no cause or re-engagement effect is claimed.",
+ "structured_payload": {
+ "task_id": "A-S03",
+ "execution_id": "exec_1781847829425_34c7f219",
+ "explanation": {
+ "summary": "Primary timing: early_warning_week=0.0; previous_week_clicks=94; warning_week_clicks=27; warning_week_delta=-67; pre_warning_average=90.0; post_warning_average=36.0333. Secondary largest later adjacent drop: week 1 to week 2, delta=-94.0.",
+ "insights": [],
+ "educational_implications": [
+ "Use week 0 as the primary warning timing; the later largest drop is secondary evidence and does not establish a cause."
+ ],
+ "recommendations": [
+ {
+ "priority": "high",
+ "action": "Initiate outreach before or at early_warning_week=0.0.",
+ "rationale": "The timing is grounded only in the returned early-warning signal; no cause or re-engagement effect is claimed."
+ }
+ ],
+ "warnings": []
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "The data shows a clear trend with sufficient weekly granularity to support the analysis.",
+ "based_on": [
+ "sufficient_data"
+ ]
+ },
+ "explanation_strategy": "behavioral",
+ "explanation_type": "behavioral",
+ "ai_summary_method": "task_aware_data_summarization",
+ "ai_summary_version": "v3.1-experimental",
+ "baseline_available": true,
+ "input_summary_type": "trend_series",
+ "ai_summary_method_warning": null,
+ "full_result_row_count": 32,
+ "included_row_count": 15,
+ "small_result_threshold": null,
+ "small_result_full_rows_applied": null,
+ "dataset_row_breakdown": [
+ {
+ "dataset_name": "engagement_trajectory",
+ "row_count": 32,
+ "included_row_count": 15
+ }
+ ],
+ "raw_row_limit": 15,
+ "included_raw_row_count": 15,
+ "baseline_reference_tokens": 969,
+ "task_aware_prompt_tokens": 1751,
+ "token_ratio": 1.807,
+ "token_count_method": "utf8_bytes_div_4",
+ "evidence_sections_included": [
+ "scope",
+ "primary_finding",
+ "trend_relationship",
+ "exceptions",
+ "action_evidence",
+ "limitations"
+ ],
+ "evidence_sections_omitted": [
+ "exceptions.trough",
+ "exceptions.peak",
+ "trend_relationship.largest_adjacent_rise",
+ "comparison.multi_dataset_evidence",
+ "comparison.secondary_metric_associations",
+ "comparison.secondary_metric_evidence"
+ ],
+ "task_output_contract": [
+ "Identify timing, first/last points, overall change, and flagged points when supplied.",
+ "For empty or insufficient data, state row count and missing capability/data-quality warnings instead of inferring a trend.",
+ "Only recommend timing when critical weeks or action_evidence are present.",
+ "Use early_warning_week as the primary collapse timing when returned, and state the exact previous/current clicks plus deterministic pre/post averages.",
+ "A later largest adjacent drop may be secondary evidence but must not replace early_warning_week.",
+ "Use exact absolute values only; do not add a derived percentage. Explicitly recommend outreach before or at early_warning_week without promising an effect."
+ ],
+ "must_keep_keys": [
+ "action_evidence",
+ "dataset_name",
+ "early_warning_evidence",
+ "first_point",
+ "flagged_points",
+ "largest_adjacent_drop",
+ "last_point",
+ "metric_column",
+ "overall_change",
+ "point_count",
+ "row_count",
+ "small_sample_caveats",
+ "summarization_warnings",
+ "time_column"
+ ],
+ "v3_warnings": [
+ "Task-aware V3 prompt exceeded the configured soft token ratio (1.807 > 1.2).",
+ "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+ ],
+ "task_aware_evidence_payload": {
+ "evidence_payload": {
+ "summary_type": "trend_series",
+ "task_id": "A-S03",
+ "task_output_contract": [
+ "Identify timing, first/last points, overall change, and flagged points when supplied.",
+ "For empty or insufficient data, state row count and missing capability/data-quality warnings instead of inferring a trend.",
+ "Only recommend timing when critical weeks or action_evidence are present.",
+ "Use early_warning_week as the primary collapse timing when returned, and state the exact previous/current clicks plus deterministic pre/post averages.",
+ "A later largest adjacent drop may be secondary evidence but must not replace early_warning_week.",
+ "Use exact absolute values only; do not add a derived percentage. Explicitly recommend outreach before or at early_warning_week without promising an effect."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "engagement_trajectory",
+ "row_count": 32,
+ "point_count": 32,
+ "time_column": "week_number",
+ "metric_column": "weekly_clicks",
+ "dataset_roles": {},
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "first_point": {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "early_warning_week": 0
+ }
+ },
+ "last_point": {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 46,
+ "weekly_engagement_drop": -49,
+ "early_warning_week": 0
+ }
+ },
+ "overall_change": {
+ "from": {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 46,
+ "weekly_engagement_drop": -49,
+ "early_warning_week": 0
+ }
+ },
+ "delta": -81,
+ "percent_change": -94.186
+ },
+ "early_warning_evidence": {
+ "early_warning_week": 0,
+ "previous_week_clicks": 94,
+ "warning_week_clicks": 27,
+ "warning_week_delta": -67,
+ "pre_warning_average": 90,
+ "post_warning_average": 36.0333,
+ "largest_later_drop": {
+ "from": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 69,
+ "weekly_engagement_drop": 71,
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 2,
+ "weekly_clicks": 4,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 73,
+ "weekly_engagement_drop": -94,
+ "early_warning_week": 0
+ }
+ },
+ "delta": -94
+ }
+ }
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 69,
+ "weekly_engagement_drop": 71,
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 2,
+ "weekly_clicks": 4,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 73,
+ "weekly_engagement_drop": -94,
+ "early_warning_week": 0
+ }
+ },
+ "delta": -94
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flagged_points": []
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "action_evidence": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ },
+ "source_evidence_summary": {
+ "summary_type": "trend_series",
+ "dataset_name": "engagement_trajectory",
+ "row_count": 32,
+ "time_column": "week_number",
+ "metric_column": "weekly_clicks",
+ "metric_units": {},
+ "metric_directions": {},
+ "dataset_roles": {},
+ "point_count": 32,
+ "first_point": {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "early_warning_week": 0
+ }
+ },
+ "last_point": {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 46,
+ "weekly_engagement_drop": -49,
+ "early_warning_week": 0
+ }
+ },
+ "peak": {
+ "week_number": 21,
+ "weekly_clicks": 106,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 49,
+ "weekly_engagement_drop": 5,
+ "early_warning_week": 0
+ }
+ },
+ "trough": {
+ "week_number": 18,
+ "weekly_clicks": 1,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 25.6667,
+ "weekly_engagement_drop": -23,
+ "early_warning_week": 0
+ }
+ },
+ "overall_change": {
+ "from": {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 46,
+ "weekly_engagement_drop": -49,
+ "early_warning_week": 0
+ }
+ },
+ "delta": -81,
+ "percent_change": -94.186
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 69,
+ "weekly_engagement_drop": 71,
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 2,
+ "weekly_clicks": 4,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 73,
+ "weekly_engagement_drop": -94,
+ "early_warning_week": 0
+ }
+ },
+ "delta": -94
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "week_number": 0,
+ "weekly_clicks": 27,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 90,
+ "weekly_engagement_drop": -67,
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 69,
+ "weekly_engagement_drop": 71,
+ "early_warning_week": 0
+ }
+ },
+ "delta": 71
+ },
+ "flagged_points": [],
+ "secondary_metric_evidence": {
+ "rolling_3wk_avg": {
+ "count": 31,
+ "min": 8,
+ "max": 95,
+ "first": null,
+ "last": 46
+ },
+ "weekly_engagement_drop": {
+ "count": 31,
+ "min": -94,
+ "max": 71,
+ "first": null,
+ "last": -49
+ },
+ "early_warning_week": {
+ "count": 32,
+ "min": 0,
+ "max": 0,
+ "first": 0,
+ "last": 0
+ }
+ },
+ "secondary_metric_associations": {
+ "rolling_3wk_avg": {
+ "paired_point_count": 31,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.0666,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "weekly_engagement_drop": {
+ "paired_point_count": 31,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.6169,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "early_warning_week": {
+ "paired_point_count": 32,
+ "method": "pearson_on_aligned_points",
+ "correlation": null,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ }
+ },
+ "multi_dataset_evidence": [],
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "action_evidence": [],
+ "summarization_warnings": [],
+ "early_warning_evidence": {
+ "early_warning_week": 0,
+ "previous_week_clicks": 94,
+ "warning_week_clicks": 27,
+ "warning_week_delta": -67,
+ "pre_warning_average": 90,
+ "post_warning_average": 36.0333,
+ "largest_later_drop": {
+ "from": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 69,
+ "weekly_engagement_drop": 71,
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 2,
+ "weekly_clicks": 4,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 73,
+ "weekly_engagement_drop": -94,
+ "early_warning_week": 0
+ }
+ },
+ "delta": -94
+ }
+ }
+ }
+ },
+ "safety_flags": [],
+ "degraded": false,
+ "meta": {
+ "model": "gpt-4o-mini-2024-07-18",
+ "latency_ms": 4537,
+ "token_usage": {
+ "prompt_tokens": 2447,
+ "completion_tokens": 345,
+ "total_tokens": 2792
+ },
+ "strategy": "behavioral",
+ "granularity": "weekly",
+ "cost_usd": 0.000574
+ }
+ },
+ "generation_metadata": {
+ "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/explanations/explanation_artifacts/SAMPLE_OULAD__A-S03__task_aware_data_summarization.json",
+ "explanation_artifact_sha256": "d2000173005163269a5d66d754012eca885b57d7e7d3ee94aa603fdb518fb34e",
+ "ai_service_url": "http://localhost:8000",
+ "expected_ai_summary_method": "task_aware_data_summarization",
+ "observed_ai_summary_method": "task_aware_data_summarization",
+ "degraded": false,
+ "model": "gpt-4o-mini-2024-07-18",
+ "token_usage": {
+ "prompt_tokens": 2447,
+ "completion_tokens": 345,
+ "total_tokens": 2792
+ },
+ "latency_ms": 4578,
+ "attempts_used": 1
+ },
+ "source_response_body": {
+ "task_id": "A-S03",
+ "execution_id": "exec_1781847829425_34c7f219",
+ "explanation": {
+ "summary": "Primary timing: early_warning_week=0.0; previous_week_clicks=94; warning_week_clicks=27; warning_week_delta=-67; pre_warning_average=90.0; post_warning_average=36.0333. Secondary largest later adjacent drop: week 1 to week 2, delta=-94.0.",
+ "insights": [],
+ "educational_implications": [
+ "Use week 0 as the primary warning timing; the later largest drop is secondary evidence and does not establish a cause."
+ ],
+ "recommendations": [
+ {
+ "priority": "high",
+ "action": "Initiate outreach before or at early_warning_week=0.0.",
+ "rationale": "The timing is grounded only in the returned early-warning signal; no cause or re-engagement effect is claimed."
+ }
+ ],
+ "warnings": []
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "The data shows a clear trend with sufficient weekly granularity to support the analysis.",
+ "based_on": [
+ "sufficient_data"
+ ]
+ },
+ "explanation_strategy": "behavioral",
+ "explanation_type": "behavioral",
+ "ai_summary_method": "task_aware_data_summarization",
+ "ai_summary_version": "v3.1-experimental",
+ "baseline_available": true,
+ "input_summary_type": "trend_series",
+ "ai_summary_method_warning": null,
+ "full_result_row_count": 32,
+ "included_row_count": 15,
+ "small_result_threshold": null,
+ "small_result_full_rows_applied": null,
+ "dataset_row_breakdown": [
+ {
+ "dataset_name": "engagement_trajectory",
+ "row_count": 32,
+ "included_row_count": 15
+ }
+ ],
+ "raw_row_limit": 15,
+ "included_raw_row_count": 15,
+ "baseline_reference_tokens": 969,
+ "task_aware_prompt_tokens": 1751,
+ "token_ratio": 1.807,
+ "token_count_method": "utf8_bytes_div_4",
+ "evidence_sections_included": [
+ "scope",
+ "primary_finding",
+ "trend_relationship",
+ "exceptions",
+ "action_evidence",
+ "limitations"
+ ],
+ "evidence_sections_omitted": [
+ "exceptions.trough",
+ "exceptions.peak",
+ "trend_relationship.largest_adjacent_rise",
+ "comparison.multi_dataset_evidence",
+ "comparison.secondary_metric_associations",
+ "comparison.secondary_metric_evidence"
+ ],
+ "task_output_contract": [
+ "Identify timing, first/last points, overall change, and flagged points when supplied.",
+ "For empty or insufficient data, state row count and missing capability/data-quality warnings instead of inferring a trend.",
+ "Only recommend timing when critical weeks or action_evidence are present.",
+ "Use early_warning_week as the primary collapse timing when returned, and state the exact previous/current clicks plus deterministic pre/post averages.",
+ "A later largest adjacent drop may be secondary evidence but must not replace early_warning_week.",
+ "Use exact absolute values only; do not add a derived percentage. Explicitly recommend outreach before or at early_warning_week without promising an effect."
+ ],
+ "must_keep_keys": [
+ "action_evidence",
+ "dataset_name",
+ "early_warning_evidence",
+ "first_point",
+ "flagged_points",
+ "largest_adjacent_drop",
+ "last_point",
+ "metric_column",
+ "overall_change",
+ "point_count",
+ "row_count",
+ "small_sample_caveats",
+ "summarization_warnings",
+ "time_column"
+ ],
+ "v3_warnings": [
+ "Task-aware V3 prompt exceeded the configured soft token ratio (1.807 > 1.2).",
+ "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+ ],
+ "task_aware_evidence_payload": {
+ "evidence_payload": {
+ "summary_type": "trend_series",
+ "task_id": "A-S03",
+ "task_output_contract": [
+ "Identify timing, first/last points, overall change, and flagged points when supplied.",
+ "For empty or insufficient data, state row count and missing capability/data-quality warnings instead of inferring a trend.",
+ "Only recommend timing when critical weeks or action_evidence are present.",
+ "Use early_warning_week as the primary collapse timing when returned, and state the exact previous/current clicks plus deterministic pre/post averages.",
+ "A later largest adjacent drop may be secondary evidence but must not replace early_warning_week.",
+ "Use exact absolute values only; do not add a derived percentage. Explicitly recommend outreach before or at early_warning_week without promising an effect."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "engagement_trajectory",
+ "row_count": 32,
+ "point_count": 32,
+ "time_column": "week_number",
+ "metric_column": "weekly_clicks",
+ "dataset_roles": {},
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "first_point": {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "early_warning_week": 0
+ }
+ },
+ "last_point": {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 46,
+ "weekly_engagement_drop": -49,
+ "early_warning_week": 0
+ }
+ },
+ "overall_change": {
+ "from": {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 46,
+ "weekly_engagement_drop": -49,
+ "early_warning_week": 0
+ }
+ },
+ "delta": -81,
+ "percent_change": -94.186
+ },
+ "early_warning_evidence": {
+ "early_warning_week": 0,
+ "previous_week_clicks": 94,
+ "warning_week_clicks": 27,
+ "warning_week_delta": -67,
+ "pre_warning_average": 90,
+ "post_warning_average": 36.0333,
+ "largest_later_drop": {
+ "from": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 69,
+ "weekly_engagement_drop": 71,
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 2,
+ "weekly_clicks": 4,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 73,
+ "weekly_engagement_drop": -94,
+ "early_warning_week": 0
+ }
+ },
+ "delta": -94
+ }
+ }
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 69,
+ "weekly_engagement_drop": 71,
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 2,
+ "weekly_clicks": 4,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 73,
+ "weekly_engagement_drop": -94,
+ "early_warning_week": 0
+ }
+ },
+ "delta": -94
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flagged_points": []
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "action_evidence": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ },
+ "source_evidence_summary": {
+ "summary_type": "trend_series",
+ "dataset_name": "engagement_trajectory",
+ "row_count": 32,
+ "time_column": "week_number",
+ "metric_column": "weekly_clicks",
+ "metric_units": {},
+ "metric_directions": {},
+ "dataset_roles": {},
+ "point_count": 32,
+ "first_point": {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "early_warning_week": 0
+ }
+ },
+ "last_point": {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 46,
+ "weekly_engagement_drop": -49,
+ "early_warning_week": 0
+ }
+ },
+ "peak": {
+ "week_number": 21,
+ "weekly_clicks": 106,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 49,
+ "weekly_engagement_drop": 5,
+ "early_warning_week": 0
+ }
+ },
+ "trough": {
+ "week_number": 18,
+ "weekly_clicks": 1,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 25.6667,
+ "weekly_engagement_drop": -23,
+ "early_warning_week": 0
+ }
+ },
+ "overall_change": {
+ "from": {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 46,
+ "weekly_engagement_drop": -49,
+ "early_warning_week": 0
+ }
+ },
+ "delta": -81,
+ "percent_change": -94.186
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 69,
+ "weekly_engagement_drop": 71,
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 2,
+ "weekly_clicks": 4,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 73,
+ "weekly_engagement_drop": -94,
+ "early_warning_week": 0
+ }
+ },
+ "delta": -94
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "week_number": 0,
+ "weekly_clicks": 27,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 90,
+ "weekly_engagement_drop": -67,
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 69,
+ "weekly_engagement_drop": 71,
+ "early_warning_week": 0
+ }
+ },
+ "delta": 71
+ },
+ "flagged_points": [],
+ "secondary_metric_evidence": {
+ "rolling_3wk_avg": {
+ "count": 31,
+ "min": 8,
+ "max": 95,
+ "first": null,
+ "last": 46
+ },
+ "weekly_engagement_drop": {
+ "count": 31,
+ "min": -94,
+ "max": 71,
+ "first": null,
+ "last": -49
+ },
+ "early_warning_week": {
+ "count": 32,
+ "min": 0,
+ "max": 0,
+ "first": 0,
+ "last": 0
+ }
+ },
+ "secondary_metric_associations": {
+ "rolling_3wk_avg": {
+ "paired_point_count": 31,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.0666,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "weekly_engagement_drop": {
+ "paired_point_count": 31,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.6169,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "early_warning_week": {
+ "paired_point_count": 32,
+ "method": "pearson_on_aligned_points",
+ "correlation": null,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ }
+ },
+ "multi_dataset_evidence": [],
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "action_evidence": [],
+ "summarization_warnings": [],
+ "early_warning_evidence": {
+ "early_warning_week": 0,
+ "previous_week_clicks": 94,
+ "warning_week_clicks": 27,
+ "warning_week_delta": -67,
+ "pre_warning_average": 90,
+ "post_warning_average": 36.0333,
+ "largest_later_drop": {
+ "from": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 69,
+ "weekly_engagement_drop": 71,
+ "early_warning_week": 0
+ }
+ },
+ "to": {
+ "week_number": 2,
+ "weekly_clicks": 4,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "rolling_3wk_avg": 73,
+ "weekly_engagement_drop": -94,
+ "early_warning_week": 0
+ }
+ },
+ "delta": -94
+ }
+ }
+ }
+ },
+ "safety_flags": [],
+ "degraded": false,
+ "meta": {
+ "model": "gpt-4o-mini-2024-07-18",
+ "latency_ms": 4537,
+ "token_usage": {
+ "prompt_tokens": 2447,
+ "completion_tokens": 345,
+ "total_tokens": 2792
+ },
+ "strategy": "behavioral",
+ "granularity": "weekly",
+ "cost_usd": 0.000574
+ }
+ }
+}
+```
+
+## Full-run Deterministic Checks
+
+```json
+[
+ {
+ "check_id": "row_count_total",
+ "check_type": "row_count",
+ "status": "pass",
+ "expected": 32,
+ "observed": 32
+ },
+ {
+ "check_id": "artifact_file_sha256",
+ "check_type": "artifact_hash",
+ "status": "pass",
+ "observed": "88c292f06cfb5610c79ec1b926d0f15b1e7e3f392430633bb7897b342969ab65",
+ "expected_values": [
+ "88c292f06cfb5610c79ec1b926d0f15b1e7e3f392430633bb7897b342969ab65"
+ ]
+ },
+ {
+ "check_id": "canonical_rows_sha256",
+ "check_type": "embedded_rows_hash",
+ "status": "pass",
+ "observed": "ce959133775abc25513cfe5ba069e17f82b777f1dc72e27a543059c0bc0694f4",
+ "expected": "ce959133775abc25513cfe5ba069e17f82b777f1dc72e27a543059c0bc0694f4"
+ },
+ {
+ "check_id": "numeric_fields_engagement_trajectory",
+ "check_type": "numeric_field_extraction",
+ "status": "pass",
+ "dataset_label": "engagement_trajectory",
+ "numeric_columns": [
+ "early_warning_week",
+ "week_number",
+ "weekly_clicks",
+ "weekly_engagement_drop"
+ ],
+ "numeric_summaries": {
+ "early_warning_week": {
+ "count": 32,
+ "min": 0,
+ "max": 0
+ },
+ "week_number": {
+ "count": 32,
+ "min": -2,
+ "max": 35
+ },
+ "weekly_clicks": {
+ "count": 32,
+ "min": 1,
+ "max": 106
+ },
+ "weekly_engagement_drop": {
+ "count": 31,
+ "min": -94,
+ "max": 71
+ }
+ }
+ },
+ {
+ "check_id": "threshold_flag_fields_engagement_trajectory",
+ "check_type": "threshold_flag_detection",
+ "status": "not_applicable",
+ "dataset_label": "engagement_trajectory",
+ "flag_columns": [],
+ "triggered_like_counts": {}
+ }
+]
+```

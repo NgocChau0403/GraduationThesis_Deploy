@@ -1,0 +1,342 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-20T14:44:25.440Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__S-T02__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__S-T02",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": "SAMPLE_OULAD_STU_100788",
+    "role": "student",
+    "task_id": "S-T02",
+    "task_name": "Competency gap analysis",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T02.json",
+    "full_query_artifact_sha256": "a1848a3f995f7d5beb2bcfa2fc5eeeb8458cd9832da3ae69a4cc584d044ae3e8"
+  },
+  "request_payload": {
+    "task_id": "S-T02",
+    "execution_id": "exec_1781847881158_4c69c270",
+    "task_name": "Competency gap analysis",
+    "analysis_type": "distribution",
+    "explanation_strategy": "distribution",
+    "explanation_type": "observation, interpretation, recommendation",
+    "ai_prompt_hint": "Highlight which competency tags have lowest avg scores. Suggest focus areas.",
+    "actionable_question": "Which skill area should I prioritise for improvement?",
+    "target_audience": [
+      "student"
+    ],
+    "visualization_config": {
+      "x_field": "competency_tag",
+      "y_field": "avg_score",
+      "series_field": null,
+      "color_field": "competency_tag",
+      "orientation": "horizontal",
+      "variant": "ranked",
+      "x_label": "Assessment Proxy",
+      "y_label": "Average Score (0-100)",
+      "semantic_roles": {
+        "x": "category",
+        "y": "performance_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "per_assessment",
+      "aggregation_level": "student"
+    },
+    "datasets": {
+      "competency_scores": [
+        {
+          "competency_tag": "CMA 8",
+          "competency_source": "proxy",
+          "assessment_type": "CMA",
+          "avg_score": 83,
+          "pass_rate": 1,
+          "assessment_count": 1
+        },
+        {
+          "competency_tag": "CMA 3",
+          "competency_source": "proxy",
+          "assessment_type": "CMA",
+          "avg_score": 87,
+          "pass_rate": 1,
+          "assessment_count": 1
+        },
+        {
+          "competency_tag": "CMA 5",
+          "competency_source": "proxy",
+          "assessment_type": "CMA",
+          "avg_score": 90,
+          "pass_rate": 1,
+          "assessment_count": 1
+        },
+        {
+          "competency_tag": "Exam 9",
+          "competency_source": "proxy",
+          "assessment_type": "Exam",
+          "avg_score": 96,
+          "pass_rate": 1,
+          "assessment_count": 1
+        },
+        {
+          "competency_tag": "CMA 1",
+          "competency_source": "proxy",
+          "assessment_type": "CMA",
+          "avg_score": 100,
+          "pass_rate": 1,
+          "assessment_count": 1
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": {
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "dataset_id": "SAMPLE_OULAD"
+    },
+    "query_labels": [
+      "competency_scores"
+    ],
+    "semantic_context": {
+      "competency_mode": "proxy",
+      "competency_proxy_note": "competency_tag uses a 3-tier COALESCE fallback: (1) native competency_tag if dataset has competency ontology, (2) assessment_name as proxy (UCI: G1/G2/G3, OULAD: TMA01/CMA01), (3) 'Unknown' as final safety net."
+    },
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [
+        "pass_rate",
+        "assessment_count"
+      ],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [
+        "assessment_type",
+        "competency_source"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "ranking",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "avg_score",
+      "entity_column": "competency_tag",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": "asc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": 5,
+      "bottom_k": 3
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 5169,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1481,
+      "completion_tokens": 408,
+      "total_tokens": 1889
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "S-T02",
+    "execution_id": "exec_1781847881158_4c69c270",
+    "explanation": {
+      "summary": "The distribution of average scores across the competency areas shows that most students are performing well, with scores ranging from 83 to 100. However, there are notable gaps, particularly in the lower scoring areas, which indicate opportunities for improvement.",
+      "insights": [
+        {
+          "title": "Lowest Average Scores",
+          "description": "The competency area 'CMA 8' has the lowest average score at 83, indicating it may require the most attention for improvement.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "avg_score",
+              "value": 83,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Lowest score among all competency areas"
+            }
+          ]
+        },
+        {
+          "title": "Overall Performance",
+          "description": "The average score across all competency areas is 91.2, suggesting that while most students are performing well, there are still areas that can be enhanced.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "avg_score",
+              "value": 91.2,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Mean score across all assessments"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Focusing on the lower scoring areas can help raise overall competency levels."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Prioritize targeted support and resources for 'CMA 8'.",
+          "rationale": "This area has the lowest average score, indicating a significant opportunity for improvement."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data is consistent and provides a clear view of average scores across competency areas.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "distribution",
+    "explanation_type": "distribution",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3-experimental",
+    "baseline_available": true,
+    "input_summary_type": "ranking",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 5,
+    "included_row_count": 5,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "competency_scores",
+        "row_count": 5,
+        "included_row_count": 5
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 5,
+    "baseline_reference_tokens": 182,
+    "task_aware_prompt_tokens": 737,
+    "token_ratio": 4.0495,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "comparison",
+      "exceptions",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (4.0495 > 1.2).",
+      "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 5163,
+      "token_usage": {
+        "prompt_tokens": 1481,
+        "completion_tokens": 408,
+        "total_tokens": 1889
+      },
+      "strategy": "distribution",
+      "granularity": "per_assessment",
+      "cost_usd": 0.000467
+    }
+  },
+  "raw_text": "Summary: The distribution of average scores across the competency areas shows that most students are performing well, with scores ranging from 83 to 100. However, there are notable gaps, particularly in the lower scoring areas, which indicate opportunities for improvement.\n\nInsights: Lowest Average Scores: The competency area 'CMA 8' has the lowest average score at 83, indicating it may require the most attention for improvement. | Overall Performance: The average score across all competency areas is 91.2, suggesting that while most students are performing well, there are still areas that can be enhanced.\n\nEducational implications: Focusing on the lower scoring areas can help raise overall competency levels.\n\nRecommendations: high - Prioritize targeted support and resources for 'CMA 8'. - This area has the lowest average score, indicating a significant opportunity for improvement."
+}

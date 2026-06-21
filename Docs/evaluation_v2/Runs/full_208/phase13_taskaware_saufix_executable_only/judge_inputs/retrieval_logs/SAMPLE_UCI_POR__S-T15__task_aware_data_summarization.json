@@ -1,0 +1,18 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_4_deterministic_retrieval_log",
+  "generated_at": "2026-06-21T10:35:32.005Z",
+  "record_id": "SAMPLE_UCI_POR__S-T15__task_aware_data_summarization",
+  "retrieval_request_complete": true,
+  "retrieval_coverage_status": "full",
+  "chunks": [
+    {
+      "chunk_id": "SAMPLE_UCI_POR__S-T15__task_aware_data_summarization__family_context_scatter__chunk_1",
+      "dataset_label": "family_context_scatter",
+      "row_start_inclusive": 0,
+      "row_end_inclusive": 648,
+      "row_count": 649,
+      "source_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T15.json",
+      "source_artifact_sha256": "9a45d1b72a483a01ab7c106e9b4421e7c4343e3515027c15b9328219dcd52fc0"
+    }
+  ]
+}

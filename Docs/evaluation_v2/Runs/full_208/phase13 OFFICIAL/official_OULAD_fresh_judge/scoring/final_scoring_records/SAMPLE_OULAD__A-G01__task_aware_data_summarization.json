@@ -1,0 +1,134 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_OULAD",
+ "record_id": "SAMPLE_OULAD__A-G01__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Factual interpretation was judged against the packet evidence, with penalties for unsupported scope, causality, thresholds, or direction."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Numeric values, percentages, rankings, thresholds, and directions were checked against the delivered or retrieved evidence in this packet."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Coverage was scored against the supplied core and supporting requirements for this exact task."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "The score reflects whether the explanation answers the stated actionable question for the correct dataset, entity level, and audience."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Actionability reflects whether advice or interpretation is feasible and grounded in returned evidence or supported action provenance."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Clarity reflects organization, precision, concision, and whether the output is scannable for the target audience."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Safety/fairness is applicable under the packet contract; scoring penalizes overconfident, stigmatizing, causal, or unfair individual/group framing."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Summary: SQL-defined low_engagement_threshold=engagement_score<0.15; returned_student_count=1544; all_returned_student_ids=[SAMPLE_OULAD_STU_611852,SAMPLE_OULAD_STU_393094,SAMPLE_OULAD_STU_616407,SAMPLE_OULAD_STU_654888,SAMPLE_OULAD_STU_529179,SAMPLE_OULAD_STU",
+ "claim_type": "task_answer",
+ "claim_scope": "core",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G01__task_aware_data_summarization.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The packet supports part of the statement, but the explanation omits a required qualifier, exact field, or full task scope.",
+ "impact_type": "weakens_support"
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Row-level clicks, active days, and scores vary and are not generalized across the group.",
+ "claim_type": "numeric_or_status_evidence",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G01__task_aware_data_summarization.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C03",
+ "claim_text": "Educational implications: This identifier list is for internal administrative outreach only.",
+ "claim_type": "interpretation_or_action",
+ "claim_scope": "supporting",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G01__task_aware_data_summarization.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The packet supports part of the statement, but the explanation omits a required qualifier, exact field, or full task scope.",
+ "impact_type": "weakens_support"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "clarity_overlong_output",
+ "claim_ids": [
+ "C03"
+ ],
+ "severity": "minor",
+ "primary_metric": "clarity",
+ "secondary_metrics": [],
+ "cap_candidate": 8,
+ "rationale": "The explanation is evidence-grounded but includes a very long student-id list that reduces scanability for an admin audience.",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G01__task_aware_data_summarization.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "minor",
+ "error_count": 1,
+ "count_by_severity": {
+ "minor": 1,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 8.55,
+ "caps_applied": [
+ {
+ "type": "clarity_overlong_output",
+ "severity": "minor",
+ "cap": 8,
+ "error_id": "E01",
+ "claim_ids": [
+ "C03"
+ ],
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G01__task_aware_data_summarization.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ]
+ }
+ ],
+ "effective_cap": 8,
+ "final_score_after_caps": 8,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

@@ -1,0 +1,243 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-S01",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-S01",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-S01__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "f58d69634107d0b2027589b90103de4d984e70af04ac6a7c490b1d4789fa6da3",
+ "deterministic_summary": {
+ "summary_type": "metric_snapshot",
+ "dataset_name": "student_profile",
+ "row_count": 1,
+ "entity": "SAMPLE_OULAD_STU_100788",
+ "metric_snapshot": {
+ "avg_score": {
+ "value": 91.2,
+ "unit": "score_0_100",
+ "available": true
+ },
+ "at_risk_score": {
+ "value": 3,
+ "unit": "triggered_flag_count_0_5",
+ "available": true
+ },
+ "engagement_score": {
+ "value": 0.2024,
+ "unit": "ratio_0_1",
+ "available": true
+ },
+ "previous_attempt_count": {
+ "value": 1,
+ "unit": "count",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "final_outcome": "Distinction",
+ "at_risk_label": "high",
+ "study_effort_level": "medium"
+ },
+ "threshold_evidence": {},
+ "benchmark_evidence": {},
+ "label_evidence": {},
+ "flag_evidence": {},
+ "action_evidence": {},
+ "missing_evidence": [],
+ "sensitive_context_present": true,
+ "sensitive_context": {
+ "gender": "M",
+ "age_group": "0-35",
+ "region": "Scotland"
+ },
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "avg_score",
+ "at_risk_score",
+ "engagement_score",
+ "previous_attempt_count"
+ ],
+ "configured_status_columns": [
+ "final_outcome",
+ "at_risk_label",
+ "study_effort_level"
+ ],
+ "configured_threshold_columns": [],
+ "configured_benchmark_columns": [],
+ "configured_sensitive_columns": [
+ "gender",
+ "age_group",
+ "region"
+ ],
+ "metric_availability_columns": {},
+ "metric_units": {
+ "avg_score": "score_0_100",
+ "at_risk_score": "triggered_flag_count_0_5",
+ "engagement_score": "ratio_0_1",
+ "previous_attempt_count": "count"
+ },
+ "threshold_sources": {},
+ "benchmark_sources": {},
+ "sensitive_context_policy": "descriptive_context_only_no_causal_or_prescriptive_inference",
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "evidence_status": "sufficient",
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Sensitive/background context is descriptive only under policy 'descriptive_context_only_no_causal_or_prescriptive_inference'; do not infer causality, risk cause, or recommendations from it."
+ ],
+ "profile_contract_evidence": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "gender": "M",
+ "age_group": "0-35",
+ "region": "Scotland",
+ "previous_attempt_count": 1,
+ "final_outcome": "Distinction",
+ "avg_score": 91.2,
+ "at_risk_score": 3,
+ "at_risk_label": "high",
+ "engagement_score": 0.2024,
+ "study_effort_level": "medium"
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "metric_snapshot",
+ "task_id": "A-S01",
+ "task_output_contract": [
+ "State exact score, outcome, risk score and label, engagement score, effort level, and previous attempts.",
+ "Treat background attributes as descriptive only and do not invent a check-in or infer a cause."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "student_profile",
+ "row_count": 1,
+ "entity": "SAMPLE_OULAD_STU_100788",
+ "evidence_status": "sufficient"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "metric_snapshot": {
+ "avg_score": {
+ "value": 91.2,
+ "unit": "score_0_100",
+ "available": true
+ },
+ "at_risk_score": {
+ "value": 3,
+ "unit": "triggered_flag_count_0_5",
+ "available": true
+ },
+ "engagement_score": {
+ "value": 0.2024,
+ "unit": "ratio_0_1",
+ "available": true
+ },
+ "previous_attempt_count": {
+ "value": 1,
+ "unit": "count",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "final_outcome": "Distinction",
+ "at_risk_label": "high",
+ "study_effort_level": "medium"
+ },
+ "label_evidence": {},
+ "profile_contract_evidence": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "gender": "M",
+ "age_group": "0-35",
+ "region": "Scotland",
+ "previous_attempt_count": 1,
+ "final_outcome": "Distinction",
+ "avg_score": 91.2,
+ "at_risk_score": 3,
+ "at_risk_label": "high",
+ "engagement_score": 0.2024,
+ "study_effort_level": "medium"
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "threshold_evidence": {},
+ "benchmark_evidence": {}
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": {},
+ "sensitive_context_present": true,
+ "sensitive_context": {
+ "gender": "M",
+ "age_group": "0-35",
+ "region": "Scotland"
+ }
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "action_evidence": {}
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_evidence": [],
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "avg_score",
+ "at_risk_score",
+ "engagement_score",
+ "previous_attempt_count"
+ ],
+ "configured_status_columns": [
+ "final_outcome",
+ "at_risk_label",
+ "study_effort_level"
+ ],
+ "configured_threshold_columns": [],
+ "configured_benchmark_columns": [],
+ "configured_sensitive_columns": [
+ "gender",
+ "age_group",
+ "region"
+ ],
+ "metric_availability_columns": {},
+ "metric_units": {
+ "avg_score": "score_0_100",
+ "at_risk_score": "triggered_flag_count_0_5",
+ "engagement_score": "ratio_0_1",
+ "previous_attempt_count": "count"
+ },
+ "threshold_sources": {},
+ "benchmark_sources": {},
+ "sensitive_context_policy": "descriptive_context_only_no_causal_or_prescriptive_inference",
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Sensitive/background context is descriptive only under policy 'descriptive_context_only_no_causal_or_prescriptive_inference'; do not infer causality, risk cause, or recommendations from it."
+ ]
+ }
+ }
+ ]
+ }
+}

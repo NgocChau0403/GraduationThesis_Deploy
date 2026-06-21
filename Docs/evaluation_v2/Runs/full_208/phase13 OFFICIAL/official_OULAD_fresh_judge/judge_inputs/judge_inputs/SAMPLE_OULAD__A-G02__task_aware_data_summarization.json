@@ -1,0 +1,737 @@
+{
+ "schema_version": "judge_input_schema_v1",
+ "record_id": "SAMPLE_OULAD__A-G02__task_aware_data_summarization",
+ "evaluation_run_id": "oulad_official_r5",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G02",
+ "explanation_mode": "task_aware_data_summarization",
+ "prompt_version": "judge_prompt_v2_pilot_v1",
+ "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+ "task_context": {
+ "task_name": "Engagement–performance relationship",
+ "scope": "Many students",
+ "actionable_question": "Does engaging more in this class actually lead to better grades?",
+ "target_audience": "instructor",
+ "ai_summary_type": "correlation_evidence",
+ "ai_prompt_hint": "Describe correlation direction and strength. Flag outliers (high engagement, low score) as a special case.",
+ "query_labels": [
+ "engagement_performance_scatter"
+ ],
+ "explanation_strategy": "correlation"
+ },
+ "schema_context": {
+ "source_tables": [
+ "enrollment",
+ "assessment_result",
+ "assessment",
+ "engagement"
+ ],
+ "key_db_fields": [
+ "engagement_score [FE cross]",
+ "avg_score [FE cross]",
+ "final_outcome"
+ ],
+ "output_schema": {},
+ "query_labels": [
+ "engagement_performance_scatter"
+ ]
+ },
+ "explanation": {
+ "raw_text": "Summary: The analysis reveals a moderate positive correlation (coefficient of 0.4086) between Engagement Score and Average Score, indicating that as student engagement increases, their average scores tend to improve. However, there are notable outliers where students with high engagement scores still achieve low average scores.\n\nInsights: Moderate Positive Correlation: The correlation coefficient of 0.4086 suggests a moderate positive relationship between engagement and performance, indicating that higher engagement is generally associated with better average scores. | Outliers with High Engagement but Low Scores: Several students exhibit high engagement scores yet achieve low average scores, highlighting potential issues such as misalignment between engagement activities and effective learning outcomes.\n\nEducational implications: While increased engagement is generally beneficial, it is crucial to ensure that engagement activities are effectively aligned with learning objectives to maximize student performance.\n\nRecommendations: high - Investigate the nature of engagement activities and their impact on learning outcomes. - Understanding why some engaged students perform poorly can help refine teaching strategies and improve overall student success.",
+ "structured_payload": {
+ "task_id": "A-G02",
+ "execution_id": "exec_1781847688954_a2c4738c",
+ "explanation": {
+ "summary": "The analysis reveals a moderate positive correlation (coefficient of 0.4086) between Engagement Score and Average Score, indicating that as student engagement increases, their average scores tend to improve. However, there are notable outliers where students with high engagement scores still achieve low average scores.",
+ "insights": [
+ {
+ "title": "Moderate Positive Correlation",
+ "description": "The correlation coefficient of 0.4086 suggests a moderate positive relationship between engagement and performance, indicating that higher engagement is generally associated with better average scores.",
+ "severity": "medium",
+ "evidence": [
+ {
+ "metric": "engagement_score",
+ "value": "0.4086",
+ "comparison": "baseline",
+ "delta": null,
+ "context": "Correlation coefficient indicating the strength and direction of the relationship."
+ }
+ ]
+ },
+ {
+ "title": "Outliers with High Engagement but Low Scores",
+ "description": "Several students exhibit high engagement scores yet achieve low average scores, highlighting potential issues such as misalignment between engagement activities and effective learning outcomes.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "engagement_score",
+ "value": "0.5062",
+ "comparison": "baseline",
+ "delta": null,
+ "context": "Example of a student with high engagement (0.5062) but low average score (51.0)."
+ }
+ ]
+ }
+ ],
+ "educational_implications": [
+ "While increased engagement is generally beneficial, it is crucial to ensure that engagement activities are effectively aligned with learning objectives to maximize student performance."
+ ],
+ "recommendations": [
+ {
+ "priority": "high",
+ "action": "Investigate the nature of engagement activities and their impact on learning outcomes.",
+ "rationale": "Understanding why some engaged students perform poorly can help refine teaching strategies and improve overall student success."
+ }
+ ],
+ "warnings": []
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "The data quality is robust, with a sufficient sample size and clear correlation metrics.",
+ "based_on": [
+ "sufficient_data"
+ ]
+ },
+ "explanation_strategy": "correlation",
+ "explanation_type": "correlation",
+ "ai_summary_method": "task_aware_data_summarization",
+ "ai_summary_version": "v3.1-experimental",
+ "baseline_available": true,
+ "input_summary_type": "correlation_evidence",
+ "ai_summary_method_warning": null,
+ "full_result_row_count": 1998,
+ "included_row_count": 15,
+ "small_result_threshold": null,
+ "small_result_full_rows_applied": null,
+ "dataset_row_breakdown": [
+ {
+ "dataset_name": "engagement_performance_scatter",
+ "row_count": 1998,
+ "included_row_count": 15
+ }
+ ],
+ "raw_row_limit": 15,
+ "included_raw_row_count": 15,
+ "baseline_reference_tokens": 784,
+ "task_aware_prompt_tokens": 1298,
+ "token_ratio": 1.6556,
+ "token_count_method": "utf8_bytes_div_4",
+ "evidence_sections_included": [
+ "scope",
+ "primary_finding",
+ "comparison",
+ "trend_relationship",
+ "exceptions",
+ "limitations"
+ ],
+ "evidence_sections_omitted": [],
+ "task_output_contract": [],
+ "must_keep_keys": [],
+ "v3_warnings": [
+ "Task-aware V3 prompt exceeded the configured soft token ratio (1.6556 > 1.2).",
+ "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+ ],
+ "task_aware_evidence_payload": {
+ "evidence_payload": {
+ "summary_type": "correlation_evidence",
+ "task_id": "A-G02",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "engagement_performance_scatter",
+ "row_count": 1998,
+ "x_column": "engagement_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "sample_size": 1998,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "selected_entity_column": null,
+ "selected_entity_count": 0,
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "coefficient": 0.4086,
+ "direction": "positive",
+ "strength": "moderate"
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "p_value": null,
+ "selected_entity_evidence": []
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "outliers": [
+ {
+ "engagement_score": 0.5062,
+ "avg_score": 51,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_72609",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3976,
+ "avg_score": 56.3333,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2458925",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3832,
+ "avg_score": 51.6,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_669530",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.367,
+ "avg_score": 54.4444,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_492357",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.365,
+ "avg_score": 50.25,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_586750",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3351,
+ "avg_score": 19.25,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3348,
+ "avg_score": 51,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_685950",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.3288,
+ "avg_score": 54.8,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2396985",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3266,
+ "avg_score": 52.4444,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_586762",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.316,
+ "avg_score": 46.2222,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_647479",
+ "final_outcome": "Fail"
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_selected_entity_evidence": [],
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "sensitive_context_policy": null,
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ }
+ }
+ ]
+ },
+ "source_evidence_summary": {
+ "summary_type": "correlation_evidence",
+ "dataset_name": "engagement_performance_scatter",
+ "row_count": 1998,
+ "x_column": "engagement_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "selected_entity_column": null,
+ "metric_units": {},
+ "metric_directions": {},
+ "coefficient": 0.4086,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 1998,
+ "p_value": null,
+ "outliers": [
+ {
+ "engagement_score": 0.5062,
+ "avg_score": 51,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_72609",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3976,
+ "avg_score": 56.3333,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2458925",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3832,
+ "avg_score": 51.6,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_669530",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.367,
+ "avg_score": 54.4444,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_492357",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.365,
+ "avg_score": 50.25,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_586750",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3351,
+ "avg_score": 19.25,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3348,
+ "avg_score": 51,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_685950",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.3288,
+ "avg_score": 54.8,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2396985",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3266,
+ "avg_score": 52.4444,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_586762",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.316,
+ "avg_score": 46.2222,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_647479",
+ "final_outcome": "Fail"
+ }
+ ],
+ "selected_entity_evidence": [],
+ "missing_selected_entity_evidence": [],
+ "selected_entity_count": 0,
+ "sensitive_context_policy": null,
+ "direction": "positive",
+ "strength": "moderate",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false,
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ }
+ },
+ "safety_flags": [],
+ "degraded": false,
+ "meta": {
+ "model": "gpt-4o-mini-2024-07-18",
+ "latency_ms": 7352,
+ "token_usage": {
+ "prompt_tokens": 2122,
+ "completion_tokens": 467,
+ "total_tokens": 2589
+ },
+ "strategy": "correlation",
+ "granularity": "semester",
+ "cost_usd": 0.000598
+ }
+ },
+ "generation_metadata": {
+ "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/explanations/explanation_artifacts/SAMPLE_OULAD__A-G02__task_aware_data_summarization.json",
+ "explanation_artifact_sha256": "8dc6c8829934f4ae94a09bb25fef631b570d2dd4f2084754bf064d1b99ad6592",
+ "ai_service_url": "http://localhost:8000",
+ "expected_ai_summary_method": "task_aware_data_summarization",
+ "observed_ai_summary_method": "task_aware_data_summarization",
+ "degraded": false,
+ "model": "gpt-4o-mini-2024-07-18",
+ "token_usage": {
+ "prompt_tokens": 2122,
+ "completion_tokens": 467,
+ "total_tokens": 2589
+ },
+ "latency_ms": 7370,
+ "attempts_used": 1
+ }
+ },
+ "evidence_access": {
+ "full_result_row_count": 1998,
+ "full_query_artifacts": [
+ {
+ "dataset_label": "engagement_performance_scatter",
+ "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G02.json",
+ "artifact_sha256": "2514fac21c6ac99f100d55c484c17249d5a9d9f3b7d9e1bcae3df532a49006b5",
+ "row_count": 1998,
+ "readable": true
+ }
+ ],
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "small_result_row_threshold": 20,
+ "direct_embedding_token_budget": 120000,
+ "prompt_embedded_row_count": 0,
+ "retrieved_row_count": 1998,
+ "retrieved_row_count_by_dataset": {
+ "engagement_performance_scatter": 1998
+ },
+ "retrieved_row_ranges": [
+ {
+ "dataset_label": "engagement_performance_scatter",
+ "start": 0,
+ "end": 1997
+ }
+ ],
+ "retrieved_chunk_ids": [
+ "SAMPLE_OULAD__A-G02__task_aware_data_summarization__engagement_performance_scatter__chunk_1"
+ ],
+ "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G02__task_aware_data_summarization.json",
+ "retrieval_request_complete": true,
+ "retrieval_coverage_status": "full",
+ "full_access_available": true,
+ "deterministic_scan_scope": "full_query_artifact_all_rows",
+ "deterministic_scan_row_count_by_dataset": {
+ "engagement_performance_scatter": 1998
+ },
+ "full_result_sent_to_llm": false,
+ "deterministic_checks": [
+ {
+ "check_type": "task_aware_shared_evidence_contract",
+ "case_id": "SAMPLE_OULAD__A-G02",
+ "task_id": "A-G02",
+ "sidecar_sha256": "cec3380997448cb8ecd5c04ccf51625b4ede7d63bb1dd2ba1cdeea993ded167a",
+ "evidence": {
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G02",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G02",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G02__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "8dc6c8829934f4ae94a09bb25fef631b570d2dd4f2084754bf064d1b99ad6592",
+ "deterministic_summary": {
+ "summary_type": "correlation_evidence",
+ "dataset_name": "engagement_performance_scatter",
+ "row_count": 1998,
+ "x_column": "engagement_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "selected_entity_column": null,
+ "metric_units": {},
+ "metric_directions": {},
+ "coefficient": 0.4086,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 1998,
+ "p_value": null,
+ "outliers": [
+ {
+ "engagement_score": 0.5062,
+ "avg_score": 51,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_72609",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3976,
+ "avg_score": 56.3333,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2458925",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3832,
+ "avg_score": 51.6,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_669530",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.367,
+ "avg_score": 54.4444,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_492357",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.365,
+ "avg_score": 50.25,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_586750",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3351,
+ "avg_score": 19.25,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3348,
+ "avg_score": 51,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_685950",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.3288,
+ "avg_score": 54.8,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2396985",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3266,
+ "avg_score": 52.4444,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_586762",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.316,
+ "avg_score": 46.2222,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_647479",
+ "final_outcome": "Fail"
+ }
+ ],
+ "selected_entity_evidence": [],
+ "missing_selected_entity_evidence": [],
+ "selected_entity_count": 0,
+ "sensitive_context_policy": null,
+ "direction": "positive",
+ "strength": "moderate",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false,
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "correlation_evidence",
+ "task_id": "A-G02",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "engagement_performance_scatter",
+ "row_count": 1998,
+ "x_column": "engagement_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "sample_size": 1998,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "selected_entity_column": null,
+ "selected_entity_count": 0,
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "coefficient": 0.4086,
+ "direction": "positive",
+ "strength": "moderate"
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "p_value": null,
+ "selected_entity_evidence": []
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "outliers": [
+ {
+ "engagement_score": 0.5062,
+ "avg_score": 51,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_72609",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3976,
+ "avg_score": 56.3333,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2458925",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3832,
+ "avg_score": 51.6,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_669530",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.367,
+ "avg_score": 54.4444,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_492357",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.365,
+ "avg_score": 50.25,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_586750",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3351,
+ "avg_score": 19.25,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3348,
+ "avg_score": 51,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_685950",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.3288,
+ "avg_score": 54.8,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2396985",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3266,
+ "avg_score": 52.4444,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_586762",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.316,
+ "avg_score": 46.2222,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_647479",
+ "final_outcome": "Fail"
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_selected_entity_evidence": [],
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "sensitive_context_policy": null,
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ }
+ }
+ ]
+ }
+ }
+ }
+ ],
+ "checked_claim_types": [
+ "task_specific_evidence_contract"
+ ],
+ "unchecked_claim_types": [
+ "semantic_interpretation",
+ "causal_framing",
+ "actionability_quality"
+ ],
+ "judge_evidence_citations": []
+ },
+ "evaluation_requirements": {
+ "required_core_outputs": [
+ {
+ "requirement_id": "A-G02-CORE-01",
+ "description": "Describe correlation direction and strength."
+ },
+ {
+ "requirement_id": "A-G02-CORE-02",
+ "description": "Flag outliers (high engagement, low score) as a special case."
+ }
+ ],
+ "required_supporting_outputs": [],
+ "evaluation_constraints": [
+ {
+ "constraint_id": "A-G02-CONSTRAINT-01",
+ "description": "Describe the engagement-score relationship as correlational; do not infer that engagement causes score outcomes."
+ }
+ ],
+ "safety_fairness_applicability": "applicable",
+ "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+ }
+}

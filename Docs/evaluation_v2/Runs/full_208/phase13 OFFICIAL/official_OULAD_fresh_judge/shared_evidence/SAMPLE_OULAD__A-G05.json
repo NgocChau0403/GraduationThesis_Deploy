@@ -1,0 +1,1357 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G05",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G05",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G05__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "eeb67e695561a1dca3b18645f450673f01bb26b3e9d6be3008b0e2732a464974",
+ "deterministic_summary": {
+ "summary_type": "group_comparison",
+ "dataset_name": "submission_behaviour",
+ "row_count": 11,
+ "group_column": "final_outcome",
+ "group_key_columns": [
+ "final_outcome",
+ "assessment_type"
+ ],
+ "series_column": "assessment_type",
+ "composite_group_keys": true,
+ "metric_column": "late_submission_rate",
+ "count_column": "student_count",
+ "gap_column": null,
+ "group_metrics": [
+ {
+ "group": "Distinction",
+ "student_count": 306,
+ "late_submission_rate": 0.9951,
+ "group_key_values": {
+ "final_outcome": "Distinction",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Distinction | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.5074,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 3.25,
+ "net_submission_delay_avg": 2.85,
+ "punctuality_rate": 0.0049,
+ "avg_score": 93.85,
+ "submission_count": 1217
+ }
+ },
+ {
+ "group": "Pass",
+ "student_count": 708,
+ "late_submission_rate": 0.9899,
+ "group_key_values": {
+ "final_outcome": "Pass",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Pass | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.5022,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 3.27,
+ "net_submission_delay_avg": 2.57,
+ "punctuality_rate": 0.0101,
+ "avg_score": 77.49,
+ "submission_count": 2684
+ }
+ },
+ {
+ "group": "Fail",
+ "student_count": 359,
+ "late_submission_rate": 0.9807,
+ "group_key_values": {
+ "final_outcome": "Fail",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Fail | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.493,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 3.05,
+ "net_submission_delay_avg": 1.55,
+ "punctuality_rate": 0.0193,
+ "avg_score": 60.86,
+ "submission_count": 985
+ }
+ },
+ {
+ "group": "Withdrawn",
+ "student_count": 595,
+ "late_submission_rate": 0.9719,
+ "group_key_values": {
+ "final_outcome": "Withdrawn",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Withdrawn | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.4842,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 2.77,
+ "net_submission_delay_avg": 1.51,
+ "punctuality_rate": 0.0281,
+ "avg_score": 62.46,
+ "submission_count": 960
+ }
+ },
+ {
+ "group": "Withdrawn",
+ "student_count": 365,
+ "late_submission_rate": 0.3124,
+ "group_key_values": {
+ "final_outcome": "Withdrawn",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Withdrawn | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.1753,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 9.91,
+ "net_submission_delay_avg": 1.3,
+ "punctuality_rate": 0.6876,
+ "avg_score": 63.74,
+ "submission_count": 525
+ }
+ },
+ {
+ "group": "Fail",
+ "student_count": 292,
+ "late_submission_rate": 0.3017,
+ "group_key_values": {
+ "final_outcome": "Fail",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Fail | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.186,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 7.66,
+ "net_submission_delay_avg": 0.02,
+ "punctuality_rate": 0.6983,
+ "avg_score": 57.67,
+ "submission_count": 759
+ }
+ },
+ {
+ "group": "Pass",
+ "student_count": 608,
+ "late_submission_rate": 0.189,
+ "group_key_values": {
+ "final_outcome": "Pass",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Pass | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.2987,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 7.79,
+ "net_submission_delay_avg": -0.67,
+ "punctuality_rate": 0.811,
+ "avg_score": 76.44,
+ "submission_count": 2206
+ }
+ },
+ {
+ "group": "Distinction",
+ "student_count": 251,
+ "late_submission_rate": 0.0644,
+ "group_key_values": {
+ "final_outcome": "Distinction",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Distinction | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.4233,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 6.02,
+ "net_submission_delay_avg": -4.74,
+ "punctuality_rate": 0.9356,
+ "avg_score": 93.72,
+ "submission_count": 947
+ }
+ },
+ {
+ "group": "Distinction",
+ "student_count": 306,
+ "late_submission_rate": 0,
+ "group_key_values": {
+ "final_outcome": "Distinction",
+ "assessment_type": "Exam"
+ },
+ "composite_group_label": "final_outcome=Distinction | assessment_type=Exam",
+ "series_value": "Exam",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 0,
+ "net_submission_delay_avg": 0,
+ "punctuality_rate": 0,
+ "avg_score": 94.75,
+ "submission_count": 306
+ }
+ },
+ {
+ "group": "Fail",
+ "student_count": 155,
+ "late_submission_rate": 0,
+ "group_key_values": {
+ "final_outcome": "Fail",
+ "assessment_type": "Exam"
+ },
+ "composite_group_label": "final_outcome=Fail | assessment_type=Exam",
+ "series_value": "Exam",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 0,
+ "net_submission_delay_avg": 0,
+ "punctuality_rate": 0,
+ "avg_score": 31.29,
+ "submission_count": 155
+ }
+ },
+ {
+ "group": "Pass",
+ "student_count": 707,
+ "late_submission_rate": 0,
+ "group_key_values": {
+ "final_outcome": "Pass",
+ "assessment_type": "Exam"
+ },
+ "composite_group_label": "final_outcome=Pass | assessment_type=Exam",
+ "series_value": "Exam",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 0,
+ "net_submission_delay_avg": 0,
+ "punctuality_rate": 0,
+ "avg_score": 64.86,
+ "submission_count": 707
+ }
+ }
+ ],
+ "group_series": [
+ {
+ "group": "Pass",
+ "series_count": 3,
+ "total_count": 2023,
+ "weighted_average_metric": 0.4032,
+ "series": [
+ {
+ "group": "Pass",
+ "student_count": 708,
+ "late_submission_rate": 0.9899,
+ "group_key_values": {
+ "final_outcome": "Pass",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Pass | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.5022,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 3.27,
+ "net_submission_delay_avg": 2.57,
+ "punctuality_rate": 0.0101,
+ "avg_score": 77.49,
+ "submission_count": 2684
+ }
+ },
+ {
+ "group": "Pass",
+ "student_count": 707,
+ "late_submission_rate": 0,
+ "group_key_values": {
+ "final_outcome": "Pass",
+ "assessment_type": "Exam"
+ },
+ "composite_group_label": "final_outcome=Pass | assessment_type=Exam",
+ "series_value": "Exam",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 0,
+ "net_submission_delay_avg": 0,
+ "punctuality_rate": 0,
+ "avg_score": 64.86,
+ "submission_count": 707
+ }
+ },
+ {
+ "group": "Pass",
+ "student_count": 608,
+ "late_submission_rate": 0.189,
+ "group_key_values": {
+ "final_outcome": "Pass",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Pass | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.2987,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 7.79,
+ "net_submission_delay_avg": -0.67,
+ "punctuality_rate": 0.811,
+ "avg_score": 76.44,
+ "submission_count": 2206
+ }
+ }
+ ]
+ },
+ {
+ "group": "Withdrawn",
+ "series_count": 2,
+ "total_count": 960,
+ "weighted_average_metric": 0.7212,
+ "series": [
+ {
+ "group": "Withdrawn",
+ "student_count": 595,
+ "late_submission_rate": 0.9719,
+ "group_key_values": {
+ "final_outcome": "Withdrawn",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Withdrawn | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.4842,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 2.77,
+ "net_submission_delay_avg": 1.51,
+ "punctuality_rate": 0.0281,
+ "avg_score": 62.46,
+ "submission_count": 960
+ }
+ },
+ {
+ "group": "Withdrawn",
+ "student_count": 365,
+ "late_submission_rate": 0.3124,
+ "group_key_values": {
+ "final_outcome": "Withdrawn",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Withdrawn | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.1753,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 9.91,
+ "net_submission_delay_avg": 1.3,
+ "punctuality_rate": 0.6876,
+ "avg_score": 63.74,
+ "submission_count": 525
+ }
+ }
+ ]
+ },
+ {
+ "group": "Distinction",
+ "series_count": 3,
+ "total_count": 863,
+ "weighted_average_metric": 0.3716,
+ "series": [
+ {
+ "group": "Distinction",
+ "student_count": 306,
+ "late_submission_rate": 0.9951,
+ "group_key_values": {
+ "final_outcome": "Distinction",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Distinction | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.5074,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 3.25,
+ "net_submission_delay_avg": 2.85,
+ "punctuality_rate": 0.0049,
+ "avg_score": 93.85,
+ "submission_count": 1217
+ }
+ },
+ {
+ "group": "Distinction",
+ "student_count": 306,
+ "late_submission_rate": 0,
+ "group_key_values": {
+ "final_outcome": "Distinction",
+ "assessment_type": "Exam"
+ },
+ "composite_group_label": "final_outcome=Distinction | assessment_type=Exam",
+ "series_value": "Exam",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 0,
+ "net_submission_delay_avg": 0,
+ "punctuality_rate": 0,
+ "avg_score": 94.75,
+ "submission_count": 306
+ }
+ },
+ {
+ "group": "Distinction",
+ "student_count": 251,
+ "late_submission_rate": 0.0644,
+ "group_key_values": {
+ "final_outcome": "Distinction",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Distinction | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.4233,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 6.02,
+ "net_submission_delay_avg": -4.74,
+ "punctuality_rate": 0.9356,
+ "avg_score": 93.72,
+ "submission_count": 947
+ }
+ }
+ ]
+ },
+ {
+ "group": "Fail",
+ "series_count": 3,
+ "total_count": 806,
+ "weighted_average_metric": 0.5461,
+ "series": [
+ {
+ "group": "Fail",
+ "student_count": 359,
+ "late_submission_rate": 0.9807,
+ "group_key_values": {
+ "final_outcome": "Fail",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Fail | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.493,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 3.05,
+ "net_submission_delay_avg": 1.55,
+ "punctuality_rate": 0.0193,
+ "avg_score": 60.86,
+ "submission_count": 985
+ }
+ },
+ {
+ "group": "Fail",
+ "student_count": 155,
+ "late_submission_rate": 0,
+ "group_key_values": {
+ "final_outcome": "Fail",
+ "assessment_type": "Exam"
+ },
+ "composite_group_label": "final_outcome=Fail | assessment_type=Exam",
+ "series_value": "Exam",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 0,
+ "net_submission_delay_avg": 0,
+ "punctuality_rate": 0,
+ "avg_score": 31.29,
+ "submission_count": 155
+ }
+ },
+ {
+ "group": "Fail",
+ "student_count": 292,
+ "late_submission_rate": 0.3017,
+ "group_key_values": {
+ "final_outcome": "Fail",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Fail | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.186,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 7.66,
+ "net_submission_delay_avg": 0.02,
+ "punctuality_rate": 0.6983,
+ "avg_score": 57.67,
+ "submission_count": 759
+ }
+ }
+ ]
+ }
+ ],
+ "focus_summary": [],
+ "gaps": [
+ {
+ "group": "Distinction",
+ "gap": 0.5074,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "late_submission_rate": 0.9951,
+ "student_count": 306
+ },
+ {
+ "group": "Pass",
+ "gap": 0.5022,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "late_submission_rate": 0.9899,
+ "student_count": 708
+ },
+ {
+ "group": "Fail",
+ "gap": 0.493,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "late_submission_rate": 0.9807,
+ "student_count": 359
+ },
+ {
+ "group": "Withdrawn",
+ "gap": 0.4842,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "late_submission_rate": 0.9719,
+ "student_count": 595
+ },
+ {
+ "group": "Withdrawn",
+ "gap": -0.1753,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "late_submission_rate": 0.3124,
+ "student_count": 365
+ },
+ {
+ "group": "Fail",
+ "gap": -0.186,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "late_submission_rate": 0.3017,
+ "student_count": 292
+ },
+ {
+ "group": "Pass",
+ "gap": -0.2987,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "late_submission_rate": 0.189,
+ "student_count": 608
+ },
+ {
+ "group": "Distinction",
+ "gap": -0.4233,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "late_submission_rate": 0.0644,
+ "student_count": 251
+ },
+ {
+ "group": "Pass",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "late_submission_rate": 0,
+ "student_count": 707
+ },
+ {
+ "group": "Fail",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "late_submission_rate": 0,
+ "student_count": 155
+ },
+ {
+ "group": "Distinction",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "late_submission_rate": 0,
+ "student_count": 306
+ }
+ ],
+ "dominant_group": {
+ "group": "Pass",
+ "student_count": 708,
+ "basis": "largest_count"
+ },
+ "weakest_group": {
+ "group": "Distinction",
+ "late_submission_rate": 0,
+ "basis": "most_negative_gap",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean"
+ },
+ "missing_groups": [],
+ "low_count_warnings": [],
+ "fairness_warnings": [
+ "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+ ],
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "No explicit gap column configured; gaps derived from late_submission_rate relative to weighted cohort mean.",
+ "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+ ],
+ "systemic_lateness_evidence": {
+ "all_groups": [
+ {
+ "final_outcome": "Distinction",
+ "assessment_type": "CMA",
+ "student_count": 306,
+ "submission_delay_avg": 3.25,
+ "late_submission_rate": 0.9951,
+ "punctuality_rate": 0.0049
+ },
+ {
+ "final_outcome": "Pass",
+ "assessment_type": "CMA",
+ "student_count": 708,
+ "submission_delay_avg": 3.27,
+ "late_submission_rate": 0.9899,
+ "punctuality_rate": 0.0101
+ },
+ {
+ "final_outcome": "Fail",
+ "assessment_type": "CMA",
+ "student_count": 359,
+ "submission_delay_avg": 3.05,
+ "late_submission_rate": 0.9807,
+ "punctuality_rate": 0.0193
+ },
+ {
+ "final_outcome": "Withdrawn",
+ "assessment_type": "CMA",
+ "student_count": 595,
+ "submission_delay_avg": 2.77,
+ "late_submission_rate": 0.9719,
+ "punctuality_rate": 0.0281
+ },
+ {
+ "final_outcome": "Withdrawn",
+ "assessment_type": "TMA",
+ "student_count": 365,
+ "submission_delay_avg": 9.91,
+ "late_submission_rate": 0.3124,
+ "punctuality_rate": 0.6876
+ },
+ {
+ "final_outcome": "Fail",
+ "assessment_type": "TMA",
+ "student_count": 292,
+ "submission_delay_avg": 7.66,
+ "late_submission_rate": 0.3017,
+ "punctuality_rate": 0.6983
+ },
+ {
+ "final_outcome": "Pass",
+ "assessment_type": "TMA",
+ "student_count": 608,
+ "submission_delay_avg": 7.79,
+ "late_submission_rate": 0.189,
+ "punctuality_rate": 0.811
+ },
+ {
+ "final_outcome": "Distinction",
+ "assessment_type": "TMA",
+ "student_count": 251,
+ "submission_delay_avg": 6.02,
+ "late_submission_rate": 0.0644,
+ "punctuality_rate": 0.9356
+ },
+ {
+ "final_outcome": "Pass",
+ "assessment_type": "Exam",
+ "student_count": 707,
+ "submission_delay_avg": 0,
+ "late_submission_rate": 0,
+ "punctuality_rate": 0
+ },
+ {
+ "final_outcome": "Distinction",
+ "assessment_type": "Exam",
+ "student_count": 306,
+ "submission_delay_avg": 0,
+ "late_submission_rate": 0,
+ "punctuality_rate": 0
+ },
+ {
+ "final_outcome": "Fail",
+ "assessment_type": "Exam",
+ "student_count": 155,
+ "submission_delay_avg": 0,
+ "late_submission_rate": 0,
+ "punctuality_rate": 0
+ }
+ ],
+ "highest_rate_group": {
+ "final_outcome": "Distinction",
+ "assessment_type": "CMA",
+ "submission_count": 1217,
+ "student_count": 306,
+ "submission_delay_avg": 3.25,
+ "net_submission_delay_avg": 2.85,
+ "late_submission_rate": 0.9951,
+ "punctuality_rate": 0.0049,
+ "avg_score": 93.85,
+ "submission_risk_level": "high_lateness"
+ },
+ "largest_count_among_positive_late_rate": {
+ "final_outcome": "Pass",
+ "assessment_type": "CMA",
+ "submission_count": 2684,
+ "student_count": 708,
+ "submission_delay_avg": 3.27,
+ "net_submission_delay_avg": 2.57,
+ "late_submission_rate": 0.9899,
+ "punctuality_rate": 0.0101,
+ "avg_score": 77.49,
+ "submission_risk_level": "high_lateness"
+ }
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "group_comparison",
+ "task_id": "A-G05",
+ "task_output_contract": [
+ "Preserve every returned final_outcome and assessment_type combination with student_count, submission_delay_avg, late_submission_rate, and punctuality_rate.",
+ "Prioritize the highest-rate and largest-count groups without inventing causes, motivation, or outcome effects."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "submission_behaviour",
+ "row_count": 11,
+ "group_column": "final_outcome",
+ "group_key_columns": [
+ "final_outcome",
+ "assessment_type"
+ ],
+ "series_column": "assessment_type",
+ "metric_column": "late_submission_rate",
+ "count_column": "student_count",
+ "gap_column": null,
+ "composite_group_keys": true
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "focus_summary": [],
+ "group_metrics": [
+ {
+ "group": "Distinction",
+ "student_count": 306,
+ "late_submission_rate": 0.9951,
+ "group_key_values": {
+ "final_outcome": "Distinction",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Distinction | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.5074,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 3.25,
+ "net_submission_delay_avg": 2.85,
+ "punctuality_rate": 0.0049,
+ "avg_score": 93.85,
+ "submission_count": 1217
+ }
+ },
+ {
+ "group": "Pass",
+ "student_count": 708,
+ "late_submission_rate": 0.9899,
+ "group_key_values": {
+ "final_outcome": "Pass",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Pass | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.5022,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 3.27,
+ "net_submission_delay_avg": 2.57,
+ "punctuality_rate": 0.0101,
+ "avg_score": 77.49,
+ "submission_count": 2684
+ }
+ },
+ {
+ "group": "Fail",
+ "student_count": 359,
+ "late_submission_rate": 0.9807,
+ "group_key_values": {
+ "final_outcome": "Fail",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Fail | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.493,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 3.05,
+ "net_submission_delay_avg": 1.55,
+ "punctuality_rate": 0.0193,
+ "avg_score": 60.86,
+ "submission_count": 985
+ }
+ },
+ {
+ "group": "Withdrawn",
+ "student_count": 595,
+ "late_submission_rate": 0.9719,
+ "group_key_values": {
+ "final_outcome": "Withdrawn",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Withdrawn | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.4842,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 2.77,
+ "net_submission_delay_avg": 1.51,
+ "punctuality_rate": 0.0281,
+ "avg_score": 62.46,
+ "submission_count": 960
+ }
+ },
+ {
+ "group": "Withdrawn",
+ "student_count": 365,
+ "late_submission_rate": 0.3124,
+ "group_key_values": {
+ "final_outcome": "Withdrawn",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Withdrawn | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.1753,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 9.91,
+ "net_submission_delay_avg": 1.3,
+ "punctuality_rate": 0.6876,
+ "avg_score": 63.74,
+ "submission_count": 525
+ }
+ },
+ {
+ "group": "Fail",
+ "student_count": 292,
+ "late_submission_rate": 0.3017,
+ "group_key_values": {
+ "final_outcome": "Fail",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Fail | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.186,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 7.66,
+ "net_submission_delay_avg": 0.02,
+ "punctuality_rate": 0.6983,
+ "avg_score": 57.67,
+ "submission_count": 759
+ }
+ },
+ {
+ "group": "Pass",
+ "student_count": 608,
+ "late_submission_rate": 0.189,
+ "group_key_values": {
+ "final_outcome": "Pass",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Pass | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.2987,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 7.79,
+ "net_submission_delay_avg": -0.67,
+ "punctuality_rate": 0.811,
+ "avg_score": 76.44,
+ "submission_count": 2206
+ }
+ },
+ {
+ "group": "Distinction",
+ "student_count": 251,
+ "late_submission_rate": 0.0644,
+ "group_key_values": {
+ "final_outcome": "Distinction",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Distinction | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.4233,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 6.02,
+ "net_submission_delay_avg": -4.74,
+ "punctuality_rate": 0.9356,
+ "avg_score": 93.72,
+ "submission_count": 947
+ }
+ },
+ {
+ "group": "Distinction",
+ "student_count": 306,
+ "late_submission_rate": 0,
+ "group_key_values": {
+ "final_outcome": "Distinction",
+ "assessment_type": "Exam"
+ },
+ "composite_group_label": "final_outcome=Distinction | assessment_type=Exam",
+ "series_value": "Exam",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 0,
+ "net_submission_delay_avg": 0,
+ "punctuality_rate": 0,
+ "avg_score": 94.75,
+ "submission_count": 306
+ }
+ },
+ {
+ "group": "Fail",
+ "student_count": 155,
+ "late_submission_rate": 0,
+ "group_key_values": {
+ "final_outcome": "Fail",
+ "assessment_type": "Exam"
+ },
+ "composite_group_label": "final_outcome=Fail | assessment_type=Exam",
+ "series_value": "Exam",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 0,
+ "net_submission_delay_avg": 0,
+ "punctuality_rate": 0,
+ "avg_score": 31.29,
+ "submission_count": 155
+ }
+ },
+ {
+ "group": "Pass",
+ "student_count": 707,
+ "late_submission_rate": 0,
+ "group_key_values": {
+ "final_outcome": "Pass",
+ "assessment_type": "Exam"
+ },
+ "composite_group_label": "final_outcome=Pass | assessment_type=Exam",
+ "series_value": "Exam",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 0,
+ "net_submission_delay_avg": 0,
+ "punctuality_rate": 0,
+ "avg_score": 64.86,
+ "submission_count": 707
+ }
+ }
+ ],
+ "group_series": [
+ {
+ "group": "Pass",
+ "series_count": 3,
+ "total_count": 2023,
+ "weighted_average_metric": 0.4032,
+ "series": [
+ {
+ "group": "Pass",
+ "student_count": 708,
+ "late_submission_rate": 0.9899,
+ "group_key_values": {
+ "final_outcome": "Pass",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Pass | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.5022,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 3.27,
+ "net_submission_delay_avg": 2.57,
+ "punctuality_rate": 0.0101,
+ "avg_score": 77.49,
+ "submission_count": 2684
+ }
+ },
+ {
+ "group": "Pass",
+ "student_count": 707,
+ "late_submission_rate": 0,
+ "group_key_values": {
+ "final_outcome": "Pass",
+ "assessment_type": "Exam"
+ },
+ "composite_group_label": "final_outcome=Pass | assessment_type=Exam",
+ "series_value": "Exam",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 0,
+ "net_submission_delay_avg": 0,
+ "punctuality_rate": 0,
+ "avg_score": 64.86,
+ "submission_count": 707
+ }
+ },
+ {
+ "group": "Pass",
+ "student_count": 608,
+ "late_submission_rate": 0.189,
+ "group_key_values": {
+ "final_outcome": "Pass",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Pass | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.2987,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 7.79,
+ "net_submission_delay_avg": -0.67,
+ "punctuality_rate": 0.811,
+ "avg_score": 76.44,
+ "submission_count": 2206
+ }
+ }
+ ]
+ },
+ {
+ "group": "Withdrawn",
+ "series_count": 2,
+ "total_count": 960,
+ "weighted_average_metric": 0.7212,
+ "series": [
+ {
+ "group": "Withdrawn",
+ "student_count": 595,
+ "late_submission_rate": 0.9719,
+ "group_key_values": {
+ "final_outcome": "Withdrawn",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Withdrawn | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.4842,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 2.77,
+ "net_submission_delay_avg": 1.51,
+ "punctuality_rate": 0.0281,
+ "avg_score": 62.46,
+ "submission_count": 960
+ }
+ },
+ {
+ "group": "Withdrawn",
+ "student_count": 365,
+ "late_submission_rate": 0.3124,
+ "group_key_values": {
+ "final_outcome": "Withdrawn",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Withdrawn | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.1753,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 9.91,
+ "net_submission_delay_avg": 1.3,
+ "punctuality_rate": 0.6876,
+ "avg_score": 63.74,
+ "submission_count": 525
+ }
+ }
+ ]
+ },
+ {
+ "group": "Distinction",
+ "series_count": 3,
+ "total_count": 863,
+ "weighted_average_metric": 0.3716,
+ "series": [
+ {
+ "group": "Distinction",
+ "student_count": 306,
+ "late_submission_rate": 0.9951,
+ "group_key_values": {
+ "final_outcome": "Distinction",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Distinction | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.5074,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 3.25,
+ "net_submission_delay_avg": 2.85,
+ "punctuality_rate": 0.0049,
+ "avg_score": 93.85,
+ "submission_count": 1217
+ }
+ },
+ {
+ "group": "Distinction",
+ "student_count": 306,
+ "late_submission_rate": 0,
+ "group_key_values": {
+ "final_outcome": "Distinction",
+ "assessment_type": "Exam"
+ },
+ "composite_group_label": "final_outcome=Distinction | assessment_type=Exam",
+ "series_value": "Exam",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 0,
+ "net_submission_delay_avg": 0,
+ "punctuality_rate": 0,
+ "avg_score": 94.75,
+ "submission_count": 306
+ }
+ },
+ {
+ "group": "Distinction",
+ "student_count": 251,
+ "late_submission_rate": 0.0644,
+ "group_key_values": {
+ "final_outcome": "Distinction",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Distinction | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.4233,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 6.02,
+ "net_submission_delay_avg": -4.74,
+ "punctuality_rate": 0.9356,
+ "avg_score": 93.72,
+ "submission_count": 947
+ }
+ }
+ ]
+ },
+ {
+ "group": "Fail",
+ "series_count": 3,
+ "total_count": 806,
+ "weighted_average_metric": 0.5461,
+ "series": [
+ {
+ "group": "Fail",
+ "student_count": 359,
+ "late_submission_rate": 0.9807,
+ "group_key_values": {
+ "final_outcome": "Fail",
+ "assessment_type": "CMA"
+ },
+ "composite_group_label": "final_outcome=Fail | assessment_type=CMA",
+ "series_value": "CMA",
+ "gap": 0.493,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 3.05,
+ "net_submission_delay_avg": 1.55,
+ "punctuality_rate": 0.0193,
+ "avg_score": 60.86,
+ "submission_count": 985
+ }
+ },
+ {
+ "group": "Fail",
+ "student_count": 155,
+ "late_submission_rate": 0,
+ "group_key_values": {
+ "final_outcome": "Fail",
+ "assessment_type": "Exam"
+ },
+ "composite_group_label": "final_outcome=Fail | assessment_type=Exam",
+ "series_value": "Exam",
+ "gap": -0.4877,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 0,
+ "net_submission_delay_avg": 0,
+ "punctuality_rate": 0,
+ "avg_score": 31.29,
+ "submission_count": 155
+ }
+ },
+ {
+ "group": "Fail",
+ "student_count": 292,
+ "late_submission_rate": 0.3017,
+ "group_key_values": {
+ "final_outcome": "Fail",
+ "assessment_type": "TMA"
+ },
+ "composite_group_label": "final_outcome=Fail | assessment_type=TMA",
+ "series_value": "TMA",
+ "gap": -0.186,
+ "gap_basis": "derived_from_weighted_cohort_mean",
+ "secondary_metrics": {
+ "submission_delay_avg": 7.66,
+ "net_submission_delay_avg": 0.02,
+ "punctuality_rate": 0.6983,
+ "avg_score": 57.67,
+ "submission_count": 759
+ }
+ }
+ ]
+ }
+ ],
+ "systemic_lateness_evidence": {
+ "all_groups": [
+ {
+ "final_outcome": "Distinction",
+ "assessment_type": "CMA",
+ "student_count": 306,
+ "submission_delay_avg": 3.25,
+ "late_submission_rate": 0.9951,
+ "punctuality_rate": 0.0049
+ },
+ {
+ "final_outcome": "Pass",
+ "assessment_type": "CMA",
+ "student_count": 708,
+ "submission_delay_avg": 3.27,
+ "late_submission_rate": 0.9899,
+ "punctuality_rate": 0.0101
+ },
+ {
+ "final_outcome": "Fail",
+ "assessment_type": "CMA",
+ "student_count": 359,
+ "submission_delay_avg": 3.05,
+ "late_submission_rate": 0.9807,
+ "punctuality_rate": 0.0193
+ },
+ {
+ "final_outcome": "Withdrawn",
+ "assessment_type": "CMA",
+ "student_count": 595,
+ "submission_delay_avg": 2.77,
+ "late_submission_rate": 0.9719,
+ "punctuality_rate": 0.0281
+ },
+ {
+ "final_outcome": "Withdrawn",
+ "assessment_type": "TMA",
+ "student_count": 365,
+ "submission_delay_avg": 9.91,
+ "late_submission_rate": 0.3124,
+ "punctuality_rate": 0.6876
+ },
+ {
+ "final_outcome": "Fail",
+ "assessment_type": "TMA",
+ "student_count": 292,
+ "submission_delay_avg": 7.66,
+ "late_submission_rate": 0.3017,
+ "punctuality_rate": 0.6983
+ },
+ {
+ "final_outcome": "Pass",
+ "assessment_type": "TMA",
+ "student_count": 608,
+ "submission_delay_avg": 7.79,
+ "late_submission_rate": 0.189,
+ "punctuality_rate": 0.811
+ },
+ {
+ "final_outcome": "Distinction",
+ "assessment_type": "TMA",
+ "student_count": 251,
+ "submission_delay_avg": 6.02,
+ "late_submission_rate": 0.0644,
+ "punctuality_rate": 0.9356
+ },
+ {
+ "final_outcome": "Pass",
+ "assessment_type": "Exam",
+ "student_count": 707,
+ "submission_delay_avg": 0,
+ "late_submission_rate": 0,
+ "punctuality_rate": 0
+ },
+ {
+ "final_outcome": "Distinction",
+ "assessment_type": "Exam",
+ "student_count": 306,
+ "submission_delay_avg": 0,
+ "late_submission_rate": 0,
+ "punctuality_rate": 0
+ },
+ {
+ "final_outcome": "Fail",
+ "assessment_type": "Exam",
+ "student_count": 155,
+ "submission_delay_avg": 0,
+ "late_submission_rate": 0,
+ "punctuality_rate": 0
+ }
+ ],
+ "highest_rate_group": {
+ "final_outcome": "Distinction",
+ "assessment_type": "CMA",
+ "submission_count": 1217,
+ "student_count": 306,
+ "submission_delay_avg": 3.25,
+ "net_submission_delay_avg": 2.85,
+ "late_submission_rate": 0.9951,
+ "punctuality_rate": 0.0049,
+ "avg_score": 93.85,
+ "submission_risk_level": "high_lateness"
+ },
+ "largest_count_among_positive_late_rate": {
+ "final_outcome": "Pass",
+ "assessment_type": "CMA",
+ "submission_count": 2684,
+ "student_count": 708,
+ "submission_delay_avg": 3.27,
+ "net_submission_delay_avg": 2.57,
+ "late_submission_rate": 0.9899,
+ "punctuality_rate": 0.0101,
+ "avg_score": 77.49,
+ "submission_risk_level": "high_lateness"
+ }
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_groups": [],
+ "low_count_warnings": [],
+ "fairness_warnings": [
+ "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+ ],
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "No explicit gap column configured; gaps derived from late_submission_rate relative to weighted cohort mean.",
+ "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+ ]
+ }
+ }
+ ]
+ }
+}

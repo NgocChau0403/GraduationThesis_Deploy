@@ -1,0 +1,403 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G14",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G14",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G14__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "bea80c807f0c08db5a893059be3e7584079bf3b440d808b597eea75681108b2c",
+ "deterministic_summary": {
+ "summary_type": "trend_comparison",
+ "dataset_name": "withdrawal_signal_trend",
+ "row_count": 164,
+ "target_group": "Withdrawn",
+ "comparison_groups": [
+ "Pass",
+ "Distinction"
+ ],
+ "target_trend": {
+ "group": "Withdrawn",
+ "point_count": 38,
+ "first_point": {
+ "week_number": -2,
+ "avg_clicks": 22.63,
+ "student_count": 441
+ },
+ "last_point": {
+ "week_number": 35,
+ "avg_clicks": 323.75,
+ "student_count": 4
+ },
+ "peak": {
+ "week_number": 35,
+ "avg_clicks": 323.75,
+ "student_count": 4
+ },
+ "trough": {
+ "week_number": 32,
+ "avg_clicks": 4.57,
+ "student_count": 7
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 31,
+ "avg_clicks": 116.63,
+ "student_count": 16
+ },
+ "to": {
+ "week_number": 32,
+ "avg_clicks": 4.57,
+ "student_count": 7
+ },
+ "delta": -112.06
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "week_number": 34,
+ "avg_clicks": 9.43,
+ "student_count": 14
+ },
+ "to": {
+ "week_number": 35,
+ "avg_clicks": 323.75,
+ "student_count": 4
+ },
+ "delta": 314.32
+ },
+ "largest_reliable_adjacent_drop": {
+ "from": {
+ "week_number": 21,
+ "avg_clicks": 100.69,
+ "student_count": 130
+ },
+ "to": {
+ "week_number": 22,
+ "avg_clicks": 26.55,
+ "student_count": 77
+ },
+ "delta": -74.14
+ },
+ "reliability_warnings": [
+ {
+ "warning": "3 Withdrawn points have student_count below 10; avoid over-weighting these weeks.",
+ "low_count_points": [
+ {
+ "week_number": 32,
+ "avg_clicks": 4.57,
+ "student_count": 7
+ },
+ {
+ "week_number": 33,
+ "avg_clicks": 17.2,
+ "student_count": 5
+ },
+ {
+ "week_number": 35,
+ "avg_clicks": 323.75,
+ "student_count": 4
+ }
+ ]
+ }
+ ]
+ },
+ "comparison_trends": {
+ "Pass": {
+ "group": "Pass",
+ "point_count": 42,
+ "first_point": {
+ "week_number": -2,
+ "avg_clicks": 32.05,
+ "student_count": 413
+ },
+ "last_point": {
+ "week_number": 39,
+ "avg_clicks": 6.9,
+ "student_count": 174
+ },
+ "peak": {
+ "week_number": 21,
+ "avg_clicks": 127.97,
+ "student_count": 676
+ },
+ "trough": {
+ "week_number": 39,
+ "avg_clicks": 6.9,
+ "student_count": 174
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 35,
+ "avg_clicks": 114.58,
+ "student_count": 647
+ },
+ "to": {
+ "week_number": 36,
+ "avg_clicks": 19.87,
+ "student_count": 327
+ },
+ "delta": -94.71
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "week_number": 20,
+ "avg_clicks": 67.31,
+ "student_count": 572
+ },
+ "to": {
+ "week_number": 21,
+ "avg_clicks": 127.97,
+ "student_count": 676
+ },
+ "delta": 60.66
+ },
+ "largest_reliable_adjacent_drop": {
+ "from": {
+ "week_number": 35,
+ "avg_clicks": 114.58,
+ "student_count": 647
+ },
+ "to": {
+ "week_number": 36,
+ "avg_clicks": 19.87,
+ "student_count": 327
+ },
+ "delta": -94.71
+ }
+ },
+ "Distinction": {
+ "group": "Distinction",
+ "point_count": 42,
+ "first_point": {
+ "week_number": -2,
+ "avg_clicks": 48.4,
+ "student_count": 214
+ },
+ "last_point": {
+ "week_number": 39,
+ "avg_clicks": 7.12,
+ "student_count": 104
+ },
+ "peak": {
+ "week_number": 35,
+ "avg_clicks": 142.03,
+ "student_count": 292
+ },
+ "trough": {
+ "week_number": 39,
+ "avg_clicks": 7.12,
+ "student_count": 104
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 35,
+ "avg_clicks": 142.03,
+ "student_count": 292
+ },
+ "to": {
+ "week_number": 36,
+ "avg_clicks": 21.39,
+ "student_count": 188
+ },
+ "delta": -120.64
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "week_number": 0,
+ "avg_clicks": 69.38,
+ "student_count": 262
+ },
+ "to": {
+ "week_number": 1,
+ "avg_clicks": 138.61,
+ "student_count": 282
+ },
+ "delta": 69.23
+ },
+ "largest_reliable_adjacent_drop": {
+ "from": {
+ "week_number": 35,
+ "avg_clicks": 142.03,
+ "student_count": 292
+ },
+ "to": {
+ "week_number": 36,
+ "avg_clicks": 21.39,
+ "student_count": 188
+ },
+ "delta": -120.64
+ }
+ }
+ },
+ "reliability_warnings": [
+ {
+ "warning": "3 Withdrawn points have student_count below 10; avoid over-weighting these weeks.",
+ "low_count_points": [
+ {
+ "week_number": 32,
+ "avg_clicks": 4.57,
+ "student_count": 7
+ },
+ {
+ "week_number": 33,
+ "avg_clicks": 17.2,
+ "student_count": 5
+ },
+ {
+ "week_number": 35,
+ "avg_clicks": 323.75,
+ "student_count": 4
+ }
+ ]
+ }
+ ],
+ "summarization_warnings": [],
+ "available_groups": [
+ "Distinction",
+ "Fail",
+ "Pass",
+ "Withdrawn"
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "trend_comparison",
+ "task_id": "A-G14",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "withdrawal_signal_trend",
+ "row_count": 164,
+ "target_group": "Withdrawn",
+ "comparison_groups": [
+ "Pass",
+ "Distinction"
+ ],
+ "available_groups": [
+ "Distinction",
+ "Fail",
+ "Pass",
+ "Withdrawn"
+ ]
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "target_trend": {
+ "group": "Withdrawn",
+ "point_count": 38,
+ "first_point": {
+ "week_number": -2,
+ "avg_clicks": 22.63,
+ "student_count": 441
+ },
+ "last_point": {
+ "week_number": 35,
+ "avg_clicks": 323.75,
+ "student_count": 4
+ },
+ "peak": {
+ "week_number": 35,
+ "avg_clicks": 323.75,
+ "student_count": 4
+ },
+ "trough": {
+ "week_number": 32,
+ "avg_clicks": 4.57,
+ "student_count": 7
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 31,
+ "avg_clicks": 116.63,
+ "student_count": 16
+ },
+ "to": {
+ "week_number": 32,
+ "avg_clicks": 4.57,
+ "student_count": 7
+ },
+ "delta": -112.06
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "week_number": 34,
+ "avg_clicks": 9.43,
+ "student_count": 14
+ },
+ "to": {
+ "week_number": 35,
+ "avg_clicks": 323.75,
+ "student_count": 4
+ },
+ "delta": 314.32
+ },
+ "largest_reliable_adjacent_drop": {
+ "from": {
+ "week_number": 21,
+ "avg_clicks": 100.69,
+ "student_count": 130
+ },
+ "to": {
+ "week_number": 22,
+ "avg_clicks": 26.55,
+ "student_count": 77
+ },
+ "delta": -74.14
+ },
+ "reliability_warnings": [
+ {
+ "warning": "3 Withdrawn points have student_count below 10; avoid over-weighting these weeks.",
+ "low_count_points": [
+ {
+ "week_number": 32,
+ "avg_clicks": 4.57,
+ "student_count": 7
+ },
+ {
+ "week_number": 33,
+ "avg_clicks": 17.2,
+ "student_count": 5
+ },
+ {
+ "week_number": 35,
+ "avg_clicks": 323.75,
+ "student_count": 4
+ }
+ ]
+ }
+ ]
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "reliability_warnings": [
+ {
+ "warning": "3 Withdrawn points have student_count below 10; avoid over-weighting these weeks.",
+ "low_count_points": [
+ {
+ "week_number": 32,
+ "avg_clicks": 4.57,
+ "student_count": 7
+ },
+ {
+ "week_number": 33,
+ "avg_clicks": 17.2,
+ "student_count": 5
+ },
+ {
+ "week_number": 35,
+ "avg_clicks": 323.75,
+ "student_count": 4
+ }
+ ]
+ }
+ ],
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

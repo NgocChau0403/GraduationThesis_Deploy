@@ -1,0 +1,466 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-20T14:41:41.098Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-G05__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__A-G05",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G05",
+    "task_name": "Submission behaviour analysis",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G05.json",
+    "full_query_artifact_sha256": "0b9ba8429b564f1c03c6a06d95144cb27e022db9b390353358d6703f83abda19"
+  },
+  "request_payload": {
+    "task_id": "A-G05",
+    "execution_id": "exec_1781847724644_4d32e8e3",
+    "task_name": "Submission behaviour analysis",
+    "analysis_type": "comparison",
+    "explanation_strategy": "behavioral",
+    "explanation_type": "observation, interpretation, recommendation",
+    "ai_prompt_hint": "Use final_outcome, assessment_type, submission_delay_avg, late_submission_rate, and punctuality_rate to decide whether late submission is systemic. Prioritize groups with high late_submission_rate and high student_count. Do not discuss individual students.",
+    "actionable_question": "Are late submissions a systemic problem in this class?",
+    "target_audience": [
+      "instructor"
+    ],
+    "visualization_config": {
+      "x_field": "final_outcome",
+      "y_field": "submission_delay_avg",
+      "series_field": "assessment_type",
+      "color_field": "late_submission_rate",
+      "orientation": "vertical",
+      "variant": "grouped",
+      "x_label": "Final Outcome",
+      "y_label": "Average Late Delay (days)",
+      "semantic_roles": {
+        "x": "category",
+        "y": "behavioral_metric",
+        "series": "assessment_type",
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "per_assessment",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "submission_behaviour": [
+        {
+          "final_outcome": "Distinction",
+          "assessment_type": "CMA",
+          "submission_count": 1217,
+          "student_count": 306,
+          "submission_delay_avg": 3.25,
+          "net_submission_delay_avg": 2.85,
+          "late_submission_rate": 0.9951,
+          "punctuality_rate": 0.0049,
+          "avg_score": 93.85,
+          "submission_risk_level": "high_lateness"
+        },
+        {
+          "final_outcome": "Pass",
+          "assessment_type": "CMA",
+          "submission_count": 2684,
+          "student_count": 708,
+          "submission_delay_avg": 3.27,
+          "net_submission_delay_avg": 2.57,
+          "late_submission_rate": 0.9899,
+          "punctuality_rate": 0.0101,
+          "avg_score": 77.49,
+          "submission_risk_level": "high_lateness"
+        },
+        {
+          "final_outcome": "Fail",
+          "assessment_type": "CMA",
+          "submission_count": 985,
+          "student_count": 359,
+          "submission_delay_avg": 3.05,
+          "net_submission_delay_avg": 1.55,
+          "late_submission_rate": 0.9807,
+          "punctuality_rate": 0.0193,
+          "avg_score": 60.86,
+          "submission_risk_level": "high_lateness"
+        },
+        {
+          "final_outcome": "Withdrawn",
+          "assessment_type": "CMA",
+          "submission_count": 960,
+          "student_count": 595,
+          "submission_delay_avg": 2.77,
+          "net_submission_delay_avg": 1.51,
+          "late_submission_rate": 0.9719,
+          "punctuality_rate": 0.0281,
+          "avg_score": 62.46,
+          "submission_risk_level": "high_lateness"
+        },
+        {
+          "final_outcome": "Withdrawn",
+          "assessment_type": "TMA",
+          "submission_count": 525,
+          "student_count": 365,
+          "submission_delay_avg": 9.91,
+          "net_submission_delay_avg": 1.3,
+          "late_submission_rate": 0.3124,
+          "punctuality_rate": 0.6876,
+          "avg_score": 63.74,
+          "submission_risk_level": "moderate_lateness"
+        },
+        {
+          "final_outcome": "Fail",
+          "assessment_type": "TMA",
+          "submission_count": 759,
+          "student_count": 292,
+          "submission_delay_avg": 7.66,
+          "net_submission_delay_avg": 0.02,
+          "late_submission_rate": 0.3017,
+          "punctuality_rate": 0.6983,
+          "avg_score": 57.67,
+          "submission_risk_level": "moderate_lateness"
+        },
+        {
+          "final_outcome": "Pass",
+          "assessment_type": "TMA",
+          "submission_count": 2206,
+          "student_count": 608,
+          "submission_delay_avg": 7.79,
+          "net_submission_delay_avg": -0.67,
+          "late_submission_rate": 0.189,
+          "punctuality_rate": 0.811,
+          "avg_score": 76.44,
+          "submission_risk_level": "low_lateness"
+        },
+        {
+          "final_outcome": "Distinction",
+          "assessment_type": "TMA",
+          "submission_count": 947,
+          "student_count": 251,
+          "submission_delay_avg": 6.02,
+          "net_submission_delay_avg": -4.74,
+          "late_submission_rate": 0.0644,
+          "punctuality_rate": 0.9356,
+          "avg_score": 93.72,
+          "submission_risk_level": "low_lateness"
+        },
+        {
+          "final_outcome": "Distinction",
+          "assessment_type": "Exam",
+          "submission_count": 306,
+          "student_count": 306,
+          "submission_delay_avg": 0,
+          "net_submission_delay_avg": 0,
+          "late_submission_rate": 0,
+          "punctuality_rate": 0,
+          "avg_score": 94.75,
+          "submission_risk_level": "low_lateness"
+        },
+        {
+          "final_outcome": "Fail",
+          "assessment_type": "Exam",
+          "submission_count": 155,
+          "student_count": 155,
+          "submission_delay_avg": 0,
+          "net_submission_delay_avg": 0,
+          "late_submission_rate": 0,
+          "punctuality_rate": 0,
+          "avg_score": 31.29,
+          "submission_risk_level": "low_lateness"
+        },
+        {
+          "final_outcome": "Pass",
+          "assessment_type": "Exam",
+          "submission_count": 707,
+          "student_count": 707,
+          "submission_delay_avg": 0,
+          "net_submission_delay_avg": 0,
+          "late_submission_rate": 0,
+          "punctuality_rate": 0,
+          "avg_score": 64.86,
+          "submission_risk_level": "low_lateness"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "submission_behaviour"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [
+        "final_outcome",
+        "assessment_type"
+      ],
+      "metric_columns": [
+        "submission_delay_avg",
+        "net_submission_delay_avg",
+        "punctuality_rate",
+        "avg_score",
+        "submission_count"
+      ],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {
+        "late_submission_rate": "higher_is_worse",
+        "punctuality_rate": "higher_is_better",
+        "submission_delay_avg": "higher_is_worse",
+        "net_submission_delay_avg": "higher_is_worse",
+        "avg_score": "higher_is_better",
+        "submission_count": "context_only",
+        "student_count": "context_only"
+      },
+      "metric_units": {
+        "late_submission_rate": "ratio_0_1",
+        "punctuality_rate": "ratio_0_1",
+        "submission_delay_avg": "days_late_average_positive_only",
+        "net_submission_delay_avg": "days_relative_to_due_date",
+        "avg_score": "score_on_runtime_scale",
+        "submission_count": "submission_rows",
+        "student_count": "students"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "group_comparison",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "late_submission_rate",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": "final_outcome",
+      "series_column": "assessment_type",
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": 10,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": "student_count",
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": "late_submission_rate",
+      "sort_direction": "desc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": 8,
+      "bottom_k": 3
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 8574,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1905,
+      "completion_tokens": 539,
+      "total_tokens": 2444
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-G05",
+    "execution_id": "exec_1781847724644_4d32e8e3",
+    "explanation": {
+      "summary": "The analysis reveals a concerning trend of high late submission rates across various assessment types, indicating that late submissions are indeed a systemic issue within the class. The majority of students are submitting their work late, which may negatively impact their overall performance and engagement.",
+      "insights": [
+        {
+          "title": "High Late Submission Rates",
+          "description": "The late submission rates for both CMA and TMA assessments are alarmingly high, with rates of 99.51% and 18.9% respectively for the Pass outcomes. This suggests that a significant majority of students are struggling to submit their work on time.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "late_submission_rate",
+              "value": 0.9951,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "CMA Pass outcomes"
+            },
+            {
+              "metric": "late_submission_rate",
+              "value": 0.189,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "TMA Pass outcomes"
+            }
+          ]
+        },
+        {
+          "title": "Consistent Submission Delays",
+          "description": "The average submission delay across assessments is consistently above 3 days for CMA assessments, indicating a pattern of procrastination or lack of time management among students.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "submission_delay_avg",
+              "value": 3.25,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "CMA assessments"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "High late submission rates may lead to lower overall student performance and engagement, necessitating targeted interventions."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement time management workshops and provide resources for students to improve their submission habits.",
+          "rationale": "Addressing the systemic issue of late submissions can enhance student engagement and performance."
+        },
+        {
+          "priority": "medium",
+          "action": "Increase communication regarding deadlines and the importance of punctuality in submissions.",
+          "rationale": "Reinforcing the significance of timely submissions may help reduce late submission rates."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data is derived from a comprehensive dataset with clear metrics on submission behavior.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "behavioral",
+    "explanation_type": "behavioral",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3-experimental",
+    "baseline_available": true,
+    "input_summary_type": "group_comparison",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 11,
+    "included_row_count": 11,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "submission_behaviour",
+        "row_count": 11,
+        "included_row_count": 11
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 11,
+    "baseline_reference_tokens": 922,
+    "task_aware_prompt_tokens": 1167,
+    "token_ratio": 1.2657,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [
+      "limitations.causal_claim_allowed",
+      "limitations.fairness_warnings",
+      "limitations.low_count_warnings",
+      "limitations.missing_groups",
+      "exceptions.weakest_group",
+      "exceptions.dominant_group",
+      "comparison.gaps",
+      "primary_finding.group_series",
+      "primary_finding.group_metrics"
+    ],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (1.2657 > 1.2)."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 8566,
+      "token_usage": {
+        "prompt_tokens": 1905,
+        "completion_tokens": 539,
+        "total_tokens": 2444
+      },
+      "strategy": "behavioral",
+      "granularity": "per_assessment",
+      "cost_usd": 0.000609
+    }
+  },
+  "raw_text": "Summary: The analysis reveals a concerning trend of high late submission rates across various assessment types, indicating that late submissions are indeed a systemic issue within the class. The majority of students are submitting their work late, which may negatively impact their overall performance and engagement.\n\nInsights: High Late Submission Rates: The late submission rates for both CMA and TMA assessments are alarmingly high, with rates of 99.51% and 18.9% respectively for the Pass outcomes. This suggests that a significant majority of students are struggling to submit their work on time. | Consistent Submission Delays: The average submission delay across assessments is consistently above 3 days for CMA assessments, indicating a pattern of procrastination or lack of time management among students.\n\nEducational implications: High late submission rates may lead to lower overall student performance and engagement, necessitating targeted interventions.\n\nRecommendations: high - Implement time management workshops and provide resources for students to improve their submission habits. - Addressing the systemic issue of late submissions can enhance student engagement and performance. | medium - Increase communication regarding deadlines and the importance of punctuality in submissions. - Reinforcing the significance of timely submissions may help reduce late submission rates."
+}

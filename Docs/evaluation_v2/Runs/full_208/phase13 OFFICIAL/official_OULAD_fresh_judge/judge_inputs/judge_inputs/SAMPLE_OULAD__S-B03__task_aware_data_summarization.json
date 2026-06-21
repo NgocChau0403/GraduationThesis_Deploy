@@ -1,0 +1,704 @@
+{
+ "schema_version": "judge_input_schema_v1",
+ "record_id": "SAMPLE_OULAD__S-B03__task_aware_data_summarization",
+ "evaluation_run_id": "oulad_official_r5",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-B03",
+ "explanation_mode": "task_aware_data_summarization",
+ "prompt_version": "judge_prompt_v2_pilot_v1",
+ "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+ "task_context": {
+ "task_name": "Engagement summary",
+ "scope": "1 student",
+ "actionable_question": "How active am I compared to classmates?",
+ "target_audience": "student",
+ "ai_summary_type": "metric_snapshot",
+ "ai_prompt_hint": "Describe effort level in plain language using study_effort_level, total_engagement_count, active_days, engagement_score, and class_avg_engagement_score. Compare to class averages only from returned fields, and avoid calling missing engagement data low effort.",
+ "query_labels": [
+ "engagement_summary"
+ ],
+ "explanation_strategy": "behavioral"
+ },
+ "schema_context": {
+ "source_tables": [
+ "enrollment",
+ "engagement"
+ ],
+ "key_db_fields": [
+ "total_engagement_count [FE]",
+ "active_days [FE]",
+ "engagement_score [FE]",
+ "class_avg_engagement_score [FE]",
+ "study_effort_level [FE]"
+ ],
+ "output_schema": {
+ "required_columns": [
+ "total_engagement_count",
+ "active_days",
+ "engagement_score",
+ "class_avg_engagement_score",
+ "study_effort_level"
+ ]
+ },
+ "query_labels": [
+ "engagement_summary"
+ ]
+ },
+ "explanation": {
+ "raw_text": "Summary: Exact engagement overview: total_engagement_count=1261; total_clicks=1261; active_days=98; engagement_score=0.2024; class_avg_total_engagement_count=1118.08; class_avg_active_days=52.55; class_avg_engagement_score=0.1177; study_effort_level=medium. Activity counts and engagement score are descriptive; they do not establish interaction quality, understanding, or learning outcomes.\n\nEducational implications: Compare the student's activity values with the returned class averages without inferring academic effects.",
+ "structured_payload": {
+ "task_id": "S-B03",
+ "execution_id": "exec_1781847867283_04dc8c3c",
+ "explanation": {
+ "summary": "Exact engagement overview: total_engagement_count=1261; total_clicks=1261; active_days=98; engagement_score=0.2024; class_avg_total_engagement_count=1118.08; class_avg_active_days=52.55; class_avg_engagement_score=0.1177; study_effort_level=medium. Activity counts and engagement score are descriptive; they do not establish interaction quality, understanding, or learning outcomes.",
+ "insights": [],
+ "educational_implications": [
+ "Compare the student's activity values with the returned class averages without inferring academic effects."
+ ],
+ "recommendations": [],
+ "warnings": []
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "The data provided is sufficient and clearly indicates your engagement metrics.",
+ "based_on": [
+ "sufficient_data"
+ ]
+ },
+ "explanation_strategy": "behavioral",
+ "explanation_type": "behavioral",
+ "ai_summary_method": "task_aware_data_summarization",
+ "ai_summary_version": "v3.1-experimental",
+ "baseline_available": true,
+ "input_summary_type": "metric_snapshot",
+ "ai_summary_method_warning": null,
+ "full_result_row_count": 1,
+ "included_row_count": 1,
+ "small_result_threshold": null,
+ "small_result_full_rows_applied": null,
+ "dataset_row_breakdown": [
+ {
+ "dataset_name": "engagement_summary",
+ "row_count": 1,
+ "included_row_count": 1
+ }
+ ],
+ "raw_row_limit": 15,
+ "included_raw_row_count": 1,
+ "baseline_reference_tokens": 82,
+ "task_aware_prompt_tokens": 877,
+ "token_ratio": 10.6951,
+ "token_count_method": "utf8_bytes_div_4",
+ "evidence_sections_included": [
+ "scope",
+ "primary_finding",
+ "comparison",
+ "exceptions",
+ "limitations"
+ ],
+ "evidence_sections_omitted": [
+ "action_evidence.action_evidence",
+ "exceptions.sensitive_context"
+ ],
+ "task_output_contract": [
+ "State exact clicks, active days, engagement score, all class averages, and study_effort_level.",
+ "Treat activity metrics as descriptive; do not infer engagement quality, understanding, or learning outcomes."
+ ],
+ "must_keep_keys": [
+ "engagement_overview_evidence",
+ "metric_snapshot"
+ ],
+ "v3_warnings": [
+ "Task-aware V3 prompt exceeded the configured soft token ratio (10.6951 > 1.2).",
+ "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+ ],
+ "task_aware_evidence_payload": {
+ "evidence_payload": {
+ "summary_type": "metric_snapshot",
+ "task_id": "S-B03",
+ "task_output_contract": [
+ "State exact clicks, active days, engagement score, all class averages, and study_effort_level.",
+ "Treat activity metrics as descriptive; do not infer engagement quality, understanding, or learning outcomes."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "engagement_summary",
+ "row_count": 1,
+ "entity": null,
+ "evidence_status": "sufficient"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "metric_snapshot": {
+ "total_engagement_count": {
+ "value": 1261,
+ "unit": "count",
+ "available": true
+ },
+ "active_days": {
+ "value": 98,
+ "unit": "day_count",
+ "available": true
+ },
+ "engagement_score": {
+ "value": 0.2024,
+ "unit": "ratio_0_1",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "study_effort_level": "medium"
+ },
+ "label_evidence": {},
+ "engagement_overview_evidence": {
+ "snapshot": {
+ "total_engagement_count": 1261,
+ "total_clicks": 1261,
+ "active_days": 98,
+ "engagement_score": 0.2024,
+ "class_avg_total_engagement_count": 1118.08,
+ "class_avg_active_days": 52.55,
+ "class_avg_engagement_score": 0.1177,
+ "study_effort_level": "medium"
+ },
+ "policy": "activity_metrics_descriptive_only_no_learning_outcome_inference"
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "threshold_evidence": {},
+ "benchmark_evidence": {
+ "class_avg_total_engagement_count": {
+ "value": 1118.08,
+ "unit": "count",
+ "source": "class_cohort"
+ },
+ "class_avg_active_days": {
+ "value": 52.55,
+ "unit": "day_count",
+ "source": "class_cohort"
+ },
+ "class_avg_engagement_score": {
+ "value": 0.1177,
+ "unit": "ratio_0_1",
+ "source": "class_cohort"
+ }
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": {},
+ "sensitive_context_present": false
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_evidence": [],
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "total_engagement_count",
+ "active_days",
+ "engagement_score"
+ ],
+ "configured_status_columns": [
+ "study_effort_level"
+ ],
+ "configured_threshold_columns": [],
+ "configured_benchmark_columns": [
+ "class_avg_total_engagement_count",
+ "class_avg_active_days",
+ "class_avg_engagement_score"
+ ],
+ "configured_sensitive_columns": [],
+ "metric_availability_columns": {},
+ "metric_units": {
+ "total_engagement_count": "count",
+ "active_days": "day_count",
+ "engagement_score": "ratio_0_1",
+ "class_avg_total_engagement_count": "count",
+ "class_avg_active_days": "day_count",
+ "class_avg_engagement_score": "ratio_0_1"
+ },
+ "threshold_sources": {},
+ "benchmark_sources": {
+ "class_avg_total_engagement_count": "class_cohort",
+ "class_avg_active_days": "class_cohort",
+ "class_avg_engagement_score": "class_cohort"
+ },
+ "sensitive_context_policy": null,
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ },
+ "source_evidence_summary": {
+ "summary_type": "metric_snapshot",
+ "dataset_name": "engagement_summary",
+ "row_count": 1,
+ "entity": null,
+ "metric_snapshot": {
+ "total_engagement_count": {
+ "value": 1261,
+ "unit": "count",
+ "available": true
+ },
+ "active_days": {
+ "value": 98,
+ "unit": "day_count",
+ "available": true
+ },
+ "engagement_score": {
+ "value": 0.2024,
+ "unit": "ratio_0_1",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "study_effort_level": "medium"
+ },
+ "threshold_evidence": {},
+ "benchmark_evidence": {
+ "class_avg_total_engagement_count": {
+ "value": 1118.08,
+ "unit": "count",
+ "source": "class_cohort"
+ },
+ "class_avg_active_days": {
+ "value": 52.55,
+ "unit": "day_count",
+ "source": "class_cohort"
+ },
+ "class_avg_engagement_score": {
+ "value": 0.1177,
+ "unit": "ratio_0_1",
+ "source": "class_cohort"
+ }
+ },
+ "label_evidence": {},
+ "flag_evidence": {},
+ "action_evidence": {},
+ "missing_evidence": [],
+ "sensitive_context_present": false,
+ "sensitive_context": {},
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "total_engagement_count",
+ "active_days",
+ "engagement_score"
+ ],
+ "configured_status_columns": [
+ "study_effort_level"
+ ],
+ "configured_threshold_columns": [],
+ "configured_benchmark_columns": [
+ "class_avg_total_engagement_count",
+ "class_avg_active_days",
+ "class_avg_engagement_score"
+ ],
+ "configured_sensitive_columns": [],
+ "metric_availability_columns": {},
+ "metric_units": {
+ "total_engagement_count": "count",
+ "active_days": "day_count",
+ "engagement_score": "ratio_0_1",
+ "class_avg_total_engagement_count": "count",
+ "class_avg_active_days": "day_count",
+ "class_avg_engagement_score": "ratio_0_1"
+ },
+ "threshold_sources": {},
+ "benchmark_sources": {
+ "class_avg_total_engagement_count": "class_cohort",
+ "class_avg_active_days": "class_cohort",
+ "class_avg_engagement_score": "class_cohort"
+ },
+ "sensitive_context_policy": null,
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "evidence_status": "sufficient",
+ "causal_claim_allowed": false,
+ "summarization_warnings": [],
+ "engagement_overview_evidence": {
+ "snapshot": {
+ "total_engagement_count": 1261,
+ "total_clicks": 1261,
+ "active_days": 98,
+ "engagement_score": 0.2024,
+ "class_avg_total_engagement_count": 1118.08,
+ "class_avg_active_days": 52.55,
+ "class_avg_engagement_score": 0.1177,
+ "study_effort_level": "medium"
+ },
+ "policy": "activity_metrics_descriptive_only_no_learning_outcome_inference"
+ }
+ }
+ },
+ "safety_flags": [],
+ "degraded": false,
+ "meta": {
+ "model": "gpt-4o-mini-2024-07-18",
+ "latency_ms": 7718,
+ "token_usage": {
+ "prompt_tokens": 1349,
+ "completion_tokens": 550,
+ "total_tokens": 1899
+ },
+ "strategy": "behavioral",
+ "granularity": "semester",
+ "cost_usd": 0.000532
+ }
+ },
+ "generation_metadata": {
+ "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/explanations/explanation_artifacts/SAMPLE_OULAD__S-B03__task_aware_data_summarization.json",
+ "explanation_artifact_sha256": "8c80aa17b41c7254647f5756448d2fb65394ee6b790dee418c297537fc3e7a97",
+ "ai_service_url": "http://localhost:8000",
+ "expected_ai_summary_method": "task_aware_data_summarization",
+ "observed_ai_summary_method": "task_aware_data_summarization",
+ "degraded": false,
+ "model": "gpt-4o-mini-2024-07-18",
+ "token_usage": {
+ "prompt_tokens": 1349,
+ "completion_tokens": 550,
+ "total_tokens": 1899
+ },
+ "latency_ms": 7739,
+ "attempts_used": 1
+ }
+ },
+ "evidence_access": {
+ "full_result_row_count": 1,
+ "full_query_artifacts": [
+ {
+ "dataset_label": "engagement_summary",
+ "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-B03.json",
+ "artifact_sha256": "b5104893828f131a42c75e77f0b08719e2977a1cfa6822f707f4d5bf3355889f",
+ "row_count": 1,
+ "readable": true
+ }
+ ],
+ "evidence_access_mode": "direct_embedding",
+ "small_result_row_threshold": 20,
+ "direct_embedding_token_budget": 120000,
+ "prompt_embedded_row_count": 1,
+ "retrieved_row_count": 0,
+ "retrieved_row_count_by_dataset": {},
+ "retrieved_row_ranges": [],
+ "retrieved_chunk_ids": [],
+ "retrieval_log_path": null,
+ "retrieval_request_complete": true,
+ "retrieval_coverage_status": "not_applicable",
+ "full_access_available": true,
+ "deterministic_scan_scope": "full_query_artifact_all_rows",
+ "deterministic_scan_row_count_by_dataset": {
+ "engagement_summary": 1
+ },
+ "full_result_sent_to_llm": true,
+ "deterministic_checks": [
+ {
+ "check_type": "task_aware_shared_evidence_contract",
+ "case_id": "SAMPLE_OULAD__S-B03",
+ "task_id": "S-B03",
+ "sidecar_sha256": "ef118faa0c4dc6b3b2e373a5d3cb5be086b7c6ba93b3a661bf7222dfbc0e0c5a",
+ "evidence": {
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__S-B03",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-B03",
+ "source_explanation_record_id": "SAMPLE_OULAD__S-B03__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "8c80aa17b41c7254647f5756448d2fb65394ee6b790dee418c297537fc3e7a97",
+ "deterministic_summary": {
+ "summary_type": "metric_snapshot",
+ "dataset_name": "engagement_summary",
+ "row_count": 1,
+ "entity": null,
+ "metric_snapshot": {
+ "total_engagement_count": {
+ "value": 1261,
+ "unit": "count",
+ "available": true
+ },
+ "active_days": {
+ "value": 98,
+ "unit": "day_count",
+ "available": true
+ },
+ "engagement_score": {
+ "value": 0.2024,
+ "unit": "ratio_0_1",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "study_effort_level": "medium"
+ },
+ "threshold_evidence": {},
+ "benchmark_evidence": {
+ "class_avg_total_engagement_count": {
+ "value": 1118.08,
+ "unit": "count",
+ "source": "class_cohort"
+ },
+ "class_avg_active_days": {
+ "value": 52.55,
+ "unit": "day_count",
+ "source": "class_cohort"
+ },
+ "class_avg_engagement_score": {
+ "value": 0.1177,
+ "unit": "ratio_0_1",
+ "source": "class_cohort"
+ }
+ },
+ "label_evidence": {},
+ "flag_evidence": {},
+ "action_evidence": {},
+ "missing_evidence": [],
+ "sensitive_context_present": false,
+ "sensitive_context": {},
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "total_engagement_count",
+ "active_days",
+ "engagement_score"
+ ],
+ "configured_status_columns": [
+ "study_effort_level"
+ ],
+ "configured_threshold_columns": [],
+ "configured_benchmark_columns": [
+ "class_avg_total_engagement_count",
+ "class_avg_active_days",
+ "class_avg_engagement_score"
+ ],
+ "configured_sensitive_columns": [],
+ "metric_availability_columns": {},
+ "metric_units": {
+ "total_engagement_count": "count",
+ "active_days": "day_count",
+ "engagement_score": "ratio_0_1",
+ "class_avg_total_engagement_count": "count",
+ "class_avg_active_days": "day_count",
+ "class_avg_engagement_score": "ratio_0_1"
+ },
+ "threshold_sources": {},
+ "benchmark_sources": {
+ "class_avg_total_engagement_count": "class_cohort",
+ "class_avg_active_days": "class_cohort",
+ "class_avg_engagement_score": "class_cohort"
+ },
+ "sensitive_context_policy": null,
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "evidence_status": "sufficient",
+ "causal_claim_allowed": false,
+ "summarization_warnings": [],
+ "engagement_overview_evidence": {
+ "snapshot": {
+ "total_engagement_count": 1261,
+ "total_clicks": 1261,
+ "active_days": 98,
+ "engagement_score": 0.2024,
+ "class_avg_total_engagement_count": 1118.08,
+ "class_avg_active_days": 52.55,
+ "class_avg_engagement_score": 0.1177,
+ "study_effort_level": "medium"
+ },
+ "policy": "activity_metrics_descriptive_only_no_learning_outcome_inference"
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "metric_snapshot",
+ "task_id": "S-B03",
+ "task_output_contract": [
+ "State exact clicks, active days, engagement score, all class averages, and study_effort_level.",
+ "Treat activity metrics as descriptive; do not infer engagement quality, understanding, or learning outcomes."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "engagement_summary",
+ "row_count": 1,
+ "entity": null,
+ "evidence_status": "sufficient"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "metric_snapshot": {
+ "total_engagement_count": {
+ "value": 1261,
+ "unit": "count",
+ "available": true
+ },
+ "active_days": {
+ "value": 98,
+ "unit": "day_count",
+ "available": true
+ },
+ "engagement_score": {
+ "value": 0.2024,
+ "unit": "ratio_0_1",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "study_effort_level": "medium"
+ },
+ "label_evidence": {},
+ "engagement_overview_evidence": {
+ "snapshot": {
+ "total_engagement_count": 1261,
+ "total_clicks": 1261,
+ "active_days": 98,
+ "engagement_score": 0.2024,
+ "class_avg_total_engagement_count": 1118.08,
+ "class_avg_active_days": 52.55,
+ "class_avg_engagement_score": 0.1177,
+ "study_effort_level": "medium"
+ },
+ "policy": "activity_metrics_descriptive_only_no_learning_outcome_inference"
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "threshold_evidence": {},
+ "benchmark_evidence": {
+ "class_avg_total_engagement_count": {
+ "value": 1118.08,
+ "unit": "count",
+ "source": "class_cohort"
+ },
+ "class_avg_active_days": {
+ "value": 52.55,
+ "unit": "day_count",
+ "source": "class_cohort"
+ },
+ "class_avg_engagement_score": {
+ "value": 0.1177,
+ "unit": "ratio_0_1",
+ "source": "class_cohort"
+ }
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": {},
+ "sensitive_context_present": false
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_evidence": [],
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "total_engagement_count",
+ "active_days",
+ "engagement_score"
+ ],
+ "configured_status_columns": [
+ "study_effort_level"
+ ],
+ "configured_threshold_columns": [],
+ "configured_benchmark_columns": [
+ "class_avg_total_engagement_count",
+ "class_avg_active_days",
+ "class_avg_engagement_score"
+ ],
+ "configured_sensitive_columns": [],
+ "metric_availability_columns": {},
+ "metric_units": {
+ "total_engagement_count": "count",
+ "active_days": "day_count",
+ "engagement_score": "ratio_0_1",
+ "class_avg_total_engagement_count": "count",
+ "class_avg_active_days": "day_count",
+ "class_avg_engagement_score": "ratio_0_1"
+ },
+ "threshold_sources": {},
+ "benchmark_sources": {
+ "class_avg_total_engagement_count": "class_cohort",
+ "class_avg_active_days": "class_cohort",
+ "class_avg_engagement_score": "class_cohort"
+ },
+ "sensitive_context_policy": null,
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+ }
+ }
+ ],
+ "checked_claim_types": [
+ "task_specific_evidence_contract"
+ ],
+ "unchecked_claim_types": [
+ "semantic_interpretation",
+ "causal_framing",
+ "actionability_quality"
+ ],
+ "judge_evidence_citations": []
+ },
+ "evaluation_requirements": {
+ "required_core_outputs": [
+ {
+ "requirement_id": "S-B03-CORE-01",
+ "description": "Characterise the student's effort level relative to the available class benchmark in plain language."
+ }
+ ],
+ "required_supporting_outputs": [],
+ "evaluation_constraints": [
+ {
+ "constraint_id": "S-B03-CONSTRAINT-01",
+ "description": "Ground the characterisation in study_effort_level, total_engagement_count, active_days, engagement_score, and class_avg_engagement_score when those fields are returned."
+ },
+ {
+ "constraint_id": "S-B03-CONSTRAINT-02",
+ "description": "Do not label missing engagement data as low effort."
+ }
+ ],
+ "safety_fairness_applicability": "applicable",
+ "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+ }
+}

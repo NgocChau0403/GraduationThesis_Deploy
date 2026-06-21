@@ -1,0 +1,231 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__S-T06__task_aware_data_summarization",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "S-T06",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Study consistency check",
+    "scope": "1 student",
+    "actionable_question": "Am I studying steadily or only before exams?",
+    "target_audience": "student",
+    "ai_summary_type": "trend_series",
+    "ai_prompt_hint": "Distinguish 'steady learner' from 'pre-exam crammer'. Recommend a consistent weekly routine.",
+    "query_labels": [
+      "consistency_data"
+    ],
+    "explanation_strategy": "behavioral"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "engagement [OULAD only]"
+    ],
+    "key_db_fields": [
+      "week_number",
+      "engagement_count; consistency_level [FE cross]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "consistency_data"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: Your engagement with the course has shown significant fluctuations over the weeks, indicating that you may not be studying consistently. There have been notable drops in your weekly clicks, especially in weeks 2 and 10, which could suggest periods of lower engagement.\n\nInsights: Sudden Drop in Engagement: In week 2, your weekly clicks dropped to 4 from 98 in the previous week, marking a significant decrease in activity. This pattern suggests a potential lack of study consistency during that time. | Inconsistent Weekly Activity: Your weekly clicks have varied greatly, with some weeks showing high engagement (like week 1 with 98 clicks) and others very low (like week 10 with 3 clicks). This inconsistency may hinder your overall learning.\n\nEducational implications: Inconsistent study habits can lead to gaps in knowledge and understanding, making it harder to retain information over time.\n\nRecommendations: high - Establish a regular study schedule - Creating a consistent weekly routine can help you maintain steady engagement and improve your understanding of the material. | medium - Set specific goals for each study session - Having clear objectives can keep you focused and motivated, making your study time more effective.",
+    "structured_payload": {
+      "task_id": "S-T06",
+      "execution_id": "exec_1781847906109_700e93ce",
+      "explanation": {
+        "summary": "Your engagement with the course has shown significant fluctuations over the weeks, indicating that you may not be studying consistently. There have been notable drops in your weekly clicks, especially in weeks 2 and 10, which could suggest periods of lower engagement.",
+        "insights": [
+          {
+            "title": "Sudden Drop in Engagement",
+            "description": "In week 2, your weekly clicks dropped to 4 from 98 in the previous week, marking a significant decrease in activity. This pattern suggests a potential lack of study consistency during that time.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "weekly_clicks",
+                "value": 4,
+                "comparison": "down_from_previous",
+                "delta": -94,
+                "context": "Dropped from 98 in week 1"
+              }
+            ]
+          },
+          {
+            "title": "Inconsistent Weekly Activity",
+            "description": "Your weekly clicks have varied greatly, with some weeks showing high engagement (like week 1 with 98 clicks) and others very low (like week 10 with 3 clicks). This inconsistency may hinder your overall learning.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "weekly_clicks",
+                "value": 3,
+                "comparison": "down_from_previous",
+                "delta": -45,
+                "context": "Dropped from 48 in week 9"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Inconsistent study habits can lead to gaps in knowledge and understanding, making it harder to retain information over time."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Establish a regular study schedule",
+            "rationale": "Creating a consistent weekly routine can help you maintain steady engagement and improve your understanding of the material."
+          },
+          {
+            "priority": "medium",
+            "action": "Set specific goals for each study session",
+            "rationale": "Having clear objectives can keep you focused and motivated, making your study time more effective."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data shows clear trends in your weekly engagement patterns.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "behavioral",
+      "explanation_type": "behavioral",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3-experimental",
+      "baseline_available": true,
+      "input_summary_type": "trend_series",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 32,
+      "included_row_count": 15,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "consistency_data",
+          "row_count": 32,
+          "included_row_count": 15
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 15,
+      "baseline_reference_tokens": 979,
+      "task_aware_prompt_tokens": 1683,
+      "token_ratio": 1.7191,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "comparison",
+        "trend_relationship",
+        "exceptions",
+        "action_evidence",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (1.7191 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 6186,
+        "token_usage": {
+          "prompt_tokens": 2608,
+          "completion_tokens": 499,
+          "total_tokens": 3107
+        },
+        "strategy": "behavioral",
+        "granularity": "weekly",
+        "cost_usd": 0.000691
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__S-T06__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "bcdc08e99289624b7706ec015c4c59c4ee0fc75a10ff0e9023d8a6191936bebb",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 2608,
+        "completion_tokens": 499,
+        "total_tokens": 3107
+      },
+      "latency_ms": 6190,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 32,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "consistency_data",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T06.json",
+        "artifact_sha256": "b7605ac6cc3732b619dffd19c42f2959bcf09b48013b6b57815400566c9e9914",
+        "row_count": 32,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 32,
+    "retrieved_row_count_by_dataset": {
+      "consistency_data": 32
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "consistency_data",
+        "start": 0,
+        "end": 31
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_OULAD__S-T06__task_aware_data_summarization__consistency_data__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_inputs/retrieval_logs/SAMPLE_OULAD__S-T06__task_aware_data_summarization.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "consistency_data": 32
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "S-T06-CORE-01",
+        "description": "Characterise the observed study pattern as steady or concentrated before assessments when evidence supports that distinction."
+      }
+    ],
+    "required_supporting_outputs": [
+      {
+        "requirement_id": "S-T06-SUPPORT-01",
+        "description": "Recommend a consistent weekly routine grounded in the observed study pattern."
+      }
+    ],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

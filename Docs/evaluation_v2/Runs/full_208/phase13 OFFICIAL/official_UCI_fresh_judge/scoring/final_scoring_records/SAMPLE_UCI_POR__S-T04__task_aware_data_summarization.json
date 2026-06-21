@@ -1,0 +1,101 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__S-T04__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10 reflects The exact returned flag description is paraphrased rather than explicitly stated."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable actionability requirements are strongly satisfied by the supported claims."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Low engagement is triggered at 0 below threshold 0.15 with medium severity.",
+ "claim_type": "risk_flag",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_flags flag_low_engagement row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "Value, threshold, trigger state, and severity are exact."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "The returned action is to set a weekly study routine and use course resources before deadlines.",
+ "claim_type": "recommended_action",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_flags flag_low_engagement row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The action is faithful."
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "description_paraphrase",
+ "claim_ids": [],
+ "severity": "minor",
+ "primary_metric": "completeness",
+ "secondary_metrics": [],
+ "cap_candidate": null,
+ "rationale": "The exact returned flag description is paraphrased rather than explicitly stated.",
+ "evidence_refs": [
+ "risk_flags flag_low_engagement flag_description"
+ ],
+ "requirement_id": "S-T04-CORE-02"
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "minor",
+ "error_count": 1,
+ "count_by_severity": {
+ "minor": 1,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 9.6,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 9.6,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

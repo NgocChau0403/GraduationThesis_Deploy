@@ -1,0 +1,75 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G13__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Grounding and interpretation: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "Values, directions, and comparisons: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Coverage of supplied requirements: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Fit to the stated task and audience: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Usefulness and evidence basis: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Precision and organization: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Fair and non-stigmatizing treatment: The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis reveals a weak negative correlation (coefficient = -0.1041) between Lifestyle Risk Score and Average Score, indicating that as the Lifestyle Risk Score increases, the Average Score tends to decrease slightly. This suggests that students with higher lifestyle risk scores may perform less well academically.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G13__task_aware_data_summarization.json; retrieved evidence for A-G13"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_required_output",
+      "claim_ids": [],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 6,
+      "rationale": "The coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G13__task_aware_data_summarization.json; retrieved evidence for A-G13"
+      ],
+      "requirement_id": "A-G13-CORE-01"
+    }
+  ],
+  "holistic_rationale": "The record is judgeable and addresses the stated task, but the coefficient and direction are accurate, but the required lifestyle-risk ranking is missing and the intervention language overreaches descriptive correlation evidence. The metric pattern reflects that defect without adding an overall score or verdict.",
+  "evidence_usage_notes": "Evidence mode was deterministic_artifact_retrieval. deterministic_artifact_retrieval delivered the manifest-authorized evidence through Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G13__task_aware_data_summarization.json; the full 649-row artifact was not claimed as prompt-embedded. The judgment used the cited artifact or retrieval record plus the packet's deterministic checks; access was not treated as proof that the explanation attended to every row.",
+  "invalid_reason": null
+}

@@ -1,0 +1,540 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G04",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G04",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G04__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "7ed38e48a1def267d4bf17f5835399fa3dc9bb45f370c20e4088cfe6478c58ab",
+ "deterministic_summary": {
+ "summary_type": "ranking",
+ "dataset_name": "assessment_difficulty",
+ "row_count": 112,
+ "entity_column": "assessment_name",
+ "metric_column": "fail_rate_pct",
+ "sort_direction": "desc",
+ "top_items": [
+ {
+ "assessment_name": "24288",
+ "fail_rate_pct": 50,
+ "rank": 1,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24288",
+ "assessment_type": "CMA",
+ "week_of_class": 20,
+ "competency_tag": "24288"
+ },
+ "secondary_metrics": {
+ "total_submissions": 26,
+ "fail_count": 13,
+ "avg_score": 45.04
+ }
+ },
+ {
+ "assessment_name": "24283",
+ "fail_rate_pct": 29.2,
+ "rank": 2,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24283",
+ "assessment_type": "TMA",
+ "week_of_class": 15,
+ "competency_tag": "24283"
+ },
+ "secondary_metrics": {
+ "total_submissions": 24,
+ "fail_count": 7,
+ "avg_score": 56.63
+ }
+ },
+ {
+ "assessment_name": "24289",
+ "fail_rate_pct": 28.6,
+ "rank": 3,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24289",
+ "assessment_type": "CMA",
+ "week_of_class": 30,
+ "competency_tag": "24289"
+ },
+ "secondary_metrics": {
+ "total_submissions": 7,
+ "fail_count": 2,
+ "avg_score": 45
+ }
+ },
+ {
+ "assessment_name": "24286",
+ "fail_rate_pct": 27.6,
+ "rank": 4,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24286",
+ "assessment_type": "CMA",
+ "week_of_class": 3,
+ "competency_tag": "24286"
+ },
+ "secondary_metrics": {
+ "total_submissions": 105,
+ "fail_count": 29,
+ "avg_score": 49.33
+ }
+ },
+ {
+ "assessment_name": "24284",
+ "fail_rate_pct": 25,
+ "rank": 5,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24284",
+ "assessment_type": "TMA",
+ "week_of_class": 22,
+ "competency_tag": "24284"
+ },
+ "secondary_metrics": {
+ "total_submissions": 12,
+ "fail_count": 3,
+ "avg_score": 51.75
+ }
+ },
+ {
+ "assessment_name": "24287",
+ "fail_rate_pct": 23.8,
+ "rank": 6,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24287",
+ "assessment_type": "CMA",
+ "week_of_class": 10,
+ "competency_tag": "24287"
+ },
+ "secondary_metrics": {
+ "total_submissions": 63,
+ "fail_count": 15,
+ "avg_score": 63.25
+ }
+ },
+ {
+ "assessment_name": "25360",
+ "fail_rate_pct": 19.3,
+ "rank": 7,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_25360",
+ "assessment_type": "TMA",
+ "week_of_class": 29,
+ "competency_tag": "25360"
+ },
+ "secondary_metrics": {
+ "total_submissions": 83,
+ "fail_count": 16,
+ "avg_score": 64.36
+ }
+ },
+ {
+ "assessment_name": "25339",
+ "fail_rate_pct": 17.4,
+ "rank": 8,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_25339",
+ "assessment_type": "TMA",
+ "week_of_class": 29,
+ "competency_tag": "25339"
+ },
+ "secondary_metrics": {
+ "total_submissions": 23,
+ "fail_count": 4,
+ "avg_score": 57.52
+ }
+ },
+ {
+ "assessment_name": "25366",
+ "fail_rate_pct": 15.7,
+ "rank": 9,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_25366",
+ "assessment_type": "TMA",
+ "week_of_class": 21,
+ "competency_tag": "25366"
+ },
+ "secondary_metrics": {
+ "total_submissions": 70,
+ "fail_count": 11,
+ "avg_score": 68.13
+ }
+ },
+ {
+ "assessment_name": "25352",
+ "fail_rate_pct": 15.3,
+ "rank": 10,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_25352",
+ "assessment_type": "TMA",
+ "week_of_class": 24,
+ "competency_tag": "25352"
+ },
+ "secondary_metrics": {
+ "total_submissions": 157,
+ "fail_count": 24,
+ "avg_score": 66.87
+ }
+ }
+ ],
+ "bottom_items": [
+ {
+ "assessment_name": "34905",
+ "fail_rate_pct": 0,
+ "rank": 108,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_34905",
+ "assessment_type": "CMA",
+ "week_of_class": 35,
+ "competency_tag": "34905"
+ },
+ "secondary_metrics": {
+ "total_submissions": 60,
+ "fail_count": 0,
+ "avg_score": 92.42
+ }
+ },
+ {
+ "assessment_name": "34906",
+ "fail_rate_pct": 0,
+ "rank": 109,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_34906",
+ "assessment_type": "CMA",
+ "week_of_class": 35,
+ "competency_tag": "34906"
+ },
+ "secondary_metrics": {
+ "total_submissions": 55,
+ "fail_count": 0,
+ "avg_score": 82.38
+ }
+ },
+ {
+ "assessment_name": "34907",
+ "fail_rate_pct": 0,
+ "rank": 110,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_34907",
+ "assessment_type": "CMA",
+ "week_of_class": 35,
+ "competency_tag": "34907"
+ },
+ "secondary_metrics": {
+ "total_submissions": 56,
+ "fail_count": 0,
+ "avg_score": 79.43
+ }
+ },
+ {
+ "assessment_name": "34908",
+ "fail_rate_pct": 0,
+ "rank": 111,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_34908",
+ "assessment_type": "CMA",
+ "week_of_class": 35,
+ "competency_tag": "34908"
+ },
+ "secondary_metrics": {
+ "total_submissions": 56,
+ "fail_count": 0,
+ "avg_score": 80.82
+ }
+ },
+ {
+ "assessment_name": "34909",
+ "fail_rate_pct": 0,
+ "rank": 112,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_34909",
+ "assessment_type": "CMA",
+ "week_of_class": 35,
+ "competency_tag": "34909"
+ },
+ "secondary_metrics": {
+ "total_submissions": 55,
+ "fail_count": 0,
+ "avg_score": 81.87
+ }
+ }
+ ],
+ "median_item": {
+ "assessment_name": "30722",
+ "fail_rate_pct": 2.8,
+ "rank": 57,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_30722",
+ "assessment_type": "TMA",
+ "week_of_class": 24,
+ "competency_tag": "30722"
+ },
+ "secondary_metrics": {
+ "total_submissions": 143,
+ "fail_count": 4,
+ "avg_score": 78.24
+ }
+ },
+ "metric_stats": {
+ "count": 112,
+ "min": 0,
+ "max": 50,
+ "mean": 5.3116,
+ "median": 2.8
+ },
+ "tie_warnings": [
+ "bottom_items boundary has 40 tied items at fail_rate_pct=0.0; only 5 are included."
+ ],
+ "flag_evidence": [],
+ "summarization_warnings": [
+ "Configured optional column 'competency_source' is missing from dataset."
+ ],
+ "assessment_review_evidence": {
+ "explicit_fail_rate_threshold": null,
+ "threshold_status": "not_supplied",
+ "highest_fail_rate_assessment": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24288",
+ "assessment_name": "24288",
+ "assessment_type": "CMA",
+ "assessment_order": 5,
+ "week_of_class": 20,
+ "competency_tag": "24288",
+ "total_submissions": 26,
+ "fail_count": 13,
+ "fail_rate_pct": 50,
+ "avg_score": 45.04
+ },
+ "review_policy": "curriculum_review_signal_not_student_deficiency"
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "ranking",
+ "task_id": "A-G04",
+ "task_output_contract": [
+ "State the ranking/top entities, rank metric value, and why they are prioritized.",
+ "For risk/admin ranking rows, include returned flags or recommended action fields when present.",
+ "Do not generalize beyond returned rows or omit the top ranked examples.",
+ "State that no explicit fail-rate threshold is supplied; preserve the exact highest assessment values and use them only as a curriculum-review signal.",
+ "Do not invent a mean fail rate or attribute the result to student deficiency."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "assessment_difficulty",
+ "row_count": 112,
+ "entity_column": "assessment_name",
+ "metric_column": "fail_rate_pct",
+ "sort_direction": "desc"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "top_items": [
+ {
+ "assessment_name": "24288",
+ "fail_rate_pct": 50,
+ "rank": 1,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24288",
+ "assessment_type": "CMA",
+ "week_of_class": 20,
+ "competency_tag": "24288"
+ },
+ "secondary_metrics": {
+ "total_submissions": 26,
+ "fail_count": 13,
+ "avg_score": 45.04
+ }
+ },
+ {
+ "assessment_name": "24283",
+ "fail_rate_pct": 29.2,
+ "rank": 2,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24283",
+ "assessment_type": "TMA",
+ "week_of_class": 15,
+ "competency_tag": "24283"
+ },
+ "secondary_metrics": {
+ "total_submissions": 24,
+ "fail_count": 7,
+ "avg_score": 56.63
+ }
+ },
+ {
+ "assessment_name": "24289",
+ "fail_rate_pct": 28.6,
+ "rank": 3,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24289",
+ "assessment_type": "CMA",
+ "week_of_class": 30,
+ "competency_tag": "24289"
+ },
+ "secondary_metrics": {
+ "total_submissions": 7,
+ "fail_count": 2,
+ "avg_score": 45
+ }
+ },
+ {
+ "assessment_name": "24286",
+ "fail_rate_pct": 27.6,
+ "rank": 4,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24286",
+ "assessment_type": "CMA",
+ "week_of_class": 3,
+ "competency_tag": "24286"
+ },
+ "secondary_metrics": {
+ "total_submissions": 105,
+ "fail_count": 29,
+ "avg_score": 49.33
+ }
+ },
+ {
+ "assessment_name": "24284",
+ "fail_rate_pct": 25,
+ "rank": 5,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24284",
+ "assessment_type": "TMA",
+ "week_of_class": 22,
+ "competency_tag": "24284"
+ },
+ "secondary_metrics": {
+ "total_submissions": 12,
+ "fail_count": 3,
+ "avg_score": 51.75
+ }
+ },
+ {
+ "assessment_name": "24287",
+ "fail_rate_pct": 23.8,
+ "rank": 6,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24287",
+ "assessment_type": "CMA",
+ "week_of_class": 10,
+ "competency_tag": "24287"
+ },
+ "secondary_metrics": {
+ "total_submissions": 63,
+ "fail_count": 15,
+ "avg_score": 63.25
+ }
+ },
+ {
+ "assessment_name": "25360",
+ "fail_rate_pct": 19.3,
+ "rank": 7,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_25360",
+ "assessment_type": "TMA",
+ "week_of_class": 29,
+ "competency_tag": "25360"
+ },
+ "secondary_metrics": {
+ "total_submissions": 83,
+ "fail_count": 16,
+ "avg_score": 64.36
+ }
+ },
+ {
+ "assessment_name": "25339",
+ "fail_rate_pct": 17.4,
+ "rank": 8,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_25339",
+ "assessment_type": "TMA",
+ "week_of_class": 29,
+ "competency_tag": "25339"
+ },
+ "secondary_metrics": {
+ "total_submissions": 23,
+ "fail_count": 4,
+ "avg_score": 57.52
+ }
+ },
+ {
+ "assessment_name": "25366",
+ "fail_rate_pct": 15.7,
+ "rank": 9,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_25366",
+ "assessment_type": "TMA",
+ "week_of_class": 21,
+ "competency_tag": "25366"
+ },
+ "secondary_metrics": {
+ "total_submissions": 70,
+ "fail_count": 11,
+ "avg_score": 68.13
+ }
+ },
+ {
+ "assessment_name": "25352",
+ "fail_rate_pct": 15.3,
+ "rank": 10,
+ "labels": {
+ "assessment_id": "SAMPLE_OULAD_ASM_25352",
+ "assessment_type": "TMA",
+ "week_of_class": 24,
+ "competency_tag": "25352"
+ },
+ "secondary_metrics": {
+ "total_submissions": 157,
+ "fail_count": 24,
+ "avg_score": 66.87
+ }
+ }
+ ],
+ "assessment_review_evidence": {
+ "explicit_fail_rate_threshold": null,
+ "threshold_status": "not_supplied",
+ "highest_fail_rate_assessment": {
+ "assessment_id": "SAMPLE_OULAD_ASM_24288",
+ "assessment_name": "24288",
+ "assessment_type": "CMA",
+ "assessment_order": 5,
+ "week_of_class": 20,
+ "competency_tag": "24288",
+ "total_submissions": 26,
+ "fail_count": 13,
+ "fail_rate_pct": 50,
+ "avg_score": 45.04
+ },
+ "review_policy": "curriculum_review_signal_not_student_deficiency"
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_stats": {
+ "count": 112,
+ "min": 0,
+ "max": 50,
+ "mean": 5.3116,
+ "median": 2.8
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "summarization_warnings": [
+ "Configured optional column 'competency_source' is missing from dataset."
+ ]
+ }
+ }
+ ]
+ }
+}

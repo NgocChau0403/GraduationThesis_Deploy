@@ -1,0 +1,293 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-S05",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-S05",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-S05__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "273d93df0e818a7037efcbfc429d6b9d2549b6407ad7f7cdaf7a1887dc0dfe34",
+ "deterministic_summary": {
+ "summary_type": "ranking",
+ "dataset_name": "competency_scores",
+ "row_count": 5,
+ "entity_column": "competency_tag",
+ "metric_column": "avg_score",
+ "sort_direction": "asc",
+ "top_items": [
+ {
+ "competency_tag": "CMA 8",
+ "avg_score": 83,
+ "rank": 1,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_order": 8
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "CMA 3",
+ "avg_score": 87,
+ "rank": 2,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_order": 3
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "CMA 5",
+ "avg_score": 90,
+ "rank": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_order": 5
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "Exam 9",
+ "avg_score": 96,
+ "rank": 4,
+ "labels": {
+ "assessment_type": "Exam",
+ "assessment_order": 9
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "CMA 1",
+ "avg_score": 100,
+ "rank": 5,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_order": 1
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ }
+ ],
+ "bottom_items": [
+ {
+ "competency_tag": "CMA 5",
+ "avg_score": 90,
+ "rank": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_order": 5
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "Exam 9",
+ "avg_score": 96,
+ "rank": 4,
+ "labels": {
+ "assessment_type": "Exam",
+ "assessment_order": 9
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "CMA 1",
+ "avg_score": 100,
+ "rank": 5,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_order": 1
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ }
+ ],
+ "median_item": {
+ "competency_tag": "CMA 5",
+ "avg_score": 90,
+ "rank": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_order": 5
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ "metric_stats": {
+ "count": 5,
+ "min": 83,
+ "max": 100,
+ "mean": 91.2,
+ "median": 90
+ },
+ "tie_warnings": [],
+ "flag_evidence": [],
+ "summarization_warnings": [
+ "Configured optional column 'competency_source' is missing from dataset."
+ ],
+ "scope_evidence": {
+ "scope": "one selected student",
+ "student_id": null,
+ "assessment_count_semantics": "count of assessment rows for the selected student, not student count"
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "ranking",
+ "task_id": "A-S05",
+ "task_output_contract": [
+ "State the ranking/top entities, rank metric value, and why they are prioritized.",
+ "For risk/admin ranking rows, include returned flags or recommended action fields when present.",
+ "Do not generalize beyond returned rows or omit the top ranked examples.",
+ "This is one selected student's assessment evidence. Never convert assessment_count or pass_rate into a claim about multiple students or the cohort.",
+ "Name the lowest competency tag, its exact avg_score, and the configured support type."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "competency_scores",
+ "row_count": 5,
+ "entity_column": "competency_tag",
+ "metric_column": "avg_score",
+ "sort_direction": "asc"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "top_items": [
+ {
+ "competency_tag": "CMA 8",
+ "avg_score": 83,
+ "rank": 1,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_order": 8
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "CMA 3",
+ "avg_score": 87,
+ "rank": 2,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_order": 3
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "CMA 5",
+ "avg_score": 90,
+ "rank": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_order": 5
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "Exam 9",
+ "avg_score": 96,
+ "rank": 4,
+ "labels": {
+ "assessment_type": "Exam",
+ "assessment_order": 9
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "CMA 1",
+ "avg_score": 100,
+ "rank": 5,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_order": 1
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ }
+ ],
+ "median_item": {
+ "competency_tag": "CMA 5",
+ "avg_score": 90,
+ "rank": 3,
+ "labels": {
+ "assessment_type": "CMA",
+ "assessment_order": 5
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ "scope_evidence": {
+ "scope": "one selected student",
+ "student_id": null,
+ "assessment_count_semantics": "count of assessment rows for the selected student, not student count"
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_stats": {
+ "count": 5,
+ "min": 83,
+ "max": 100,
+ "mean": 91.2,
+ "median": 90
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "summarization_warnings": [
+ "Configured optional column 'competency_source' is missing from dataset."
+ ]
+ }
+ }
+ ]
+ }
+}

@@ -860,6 +860,20 @@ class ExplainResponse(BaseModel):
     small_result_threshold: int | None = None
     small_result_full_rows_applied: bool | None = None
     dataset_row_breakdown: list[dict] = Field(default_factory=list)
+    raw_row_limit: int | None = None
+    included_raw_row_count: int | None = None
+    baseline_reference_tokens: int | None = None
+    task_aware_prompt_tokens: int | None = None
+    token_ratio: float | None = None
+    token_count_method: str | None = None
+    evidence_sections_included: list[str] = Field(default_factory=list)
+    evidence_sections_omitted: list[str] = Field(default_factory=list)
+    task_output_contract: list[str] = Field(default_factory=list)
+    must_keep_keys: list[str] = Field(default_factory=list)
+    v3_warnings: list[str] = Field(default_factory=list)
+    # Optional deterministic provenance for internal evaluation/logging. It is
+    # intentionally additive so existing clients can ignore it unchanged.
+    task_aware_evidence_payload: dict | None = None
     safety_flags:         list[str] = Field(default_factory=list)
     degraded:             bool = False
     meta:                 AIMeta

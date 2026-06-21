@@ -1,0 +1,529 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-20T14:44:45.872Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__S-T05__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__S-T05",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": "SAMPLE_OULAD_STU_100788",
+    "role": "student",
+    "task_id": "S-T05",
+    "task_name": "Weekly engagement trend",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T05.json",
+    "full_query_artifact_sha256": "2e8eea276cfc460db42374b76912079690f44924314782df5b07b25be39f76ee"
+  },
+  "request_payload": {
+    "task_id": "S-T05",
+    "execution_id": "exec_1781847902976_7737b45f",
+    "task_name": "Weekly engagement trend",
+    "analysis_type": "trend",
+    "explanation_strategy": "behavioral",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Describe engagement pattern. Flag weeks with sharp drops. Note if drop precedes assessment.",
+    "actionable_question": "Which weeks did I disengage and why might that be?",
+    "target_audience": [
+      "student"
+    ],
+    "visualization_config": {
+      "x_field": "week_number",
+      "y_field": "weekly_clicks",
+      "series_field": null,
+      "color_field": "weekly_engagement_drop",
+      "orientation": "vertical",
+      "variant": "categorical",
+      "x_label": "Week",
+      "y_label": "Weekly Clicks",
+      "semantic_roles": {
+        "x": "time",
+        "y": "engagement_metric",
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "weekly",
+      "aggregation_level": "student"
+    },
+    "datasets": {
+      "weekly_engagement": [
+        {
+          "week_number": -2,
+          "weekly_clicks": 86,
+          "rolling_3wk_avg": null,
+          "weekly_engagement_drop": null,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": -1,
+          "weekly_clicks": 94,
+          "rolling_3wk_avg": "86",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 0,
+          "weekly_clicks": 27,
+          "rolling_3wk_avg": "90",
+          "weekly_engagement_drop": true,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 1,
+          "weekly_clicks": 98,
+          "rolling_3wk_avg": "69",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 2,
+          "weekly_clicks": 4,
+          "rolling_3wk_avg": "73",
+          "weekly_engagement_drop": true,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 3,
+          "weekly_clicks": 28,
+          "rolling_3wk_avg": "43",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 4,
+          "weekly_clicks": 7,
+          "rolling_3wk_avg": "43.3333333333333333",
+          "weekly_engagement_drop": true,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 5,
+          "weekly_clicks": 16,
+          "rolling_3wk_avg": "13",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 6,
+          "weekly_clicks": 80,
+          "rolling_3wk_avg": "17",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 8,
+          "weekly_clicks": 2,
+          "rolling_3wk_avg": "34.3333333333333333",
+          "weekly_engagement_drop": true,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 9,
+          "weekly_clicks": 48,
+          "rolling_3wk_avg": "32.6666666666666667",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 10,
+          "weekly_clicks": 3,
+          "rolling_3wk_avg": "43.3333333333333333",
+          "weekly_engagement_drop": true,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 11,
+          "weekly_clicks": 3,
+          "rolling_3wk_avg": "17.6666666666666667",
+          "weekly_engagement_drop": true,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 12,
+          "weekly_clicks": 56,
+          "rolling_3wk_avg": "18",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 13,
+          "weekly_clicks": 53,
+          "rolling_3wk_avg": "20.6666666666666667",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 14,
+          "weekly_clicks": 71,
+          "rolling_3wk_avg": "37.3333333333333333",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 15,
+          "weekly_clicks": 29,
+          "rolling_3wk_avg": "60",
+          "weekly_engagement_drop": true,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 16,
+          "weekly_clicks": 24,
+          "rolling_3wk_avg": "51",
+          "weekly_engagement_drop": true,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 17,
+          "weekly_clicks": 24,
+          "rolling_3wk_avg": "41.3333333333333333",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 18,
+          "weekly_clicks": 1,
+          "rolling_3wk_avg": "25.6666666666666667",
+          "weekly_engagement_drop": true,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 19,
+          "weekly_clicks": 45,
+          "rolling_3wk_avg": "16.3333333333333333",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 20,
+          "weekly_clicks": 101,
+          "rolling_3wk_avg": "23.3333333333333333",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 21,
+          "weekly_clicks": 106,
+          "rolling_3wk_avg": "49",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 22,
+          "weekly_clicks": 78,
+          "rolling_3wk_avg": "84",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 24,
+          "weekly_clicks": 10,
+          "rolling_3wk_avg": "95",
+          "weekly_engagement_drop": true,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 25,
+          "weekly_clicks": 1,
+          "rolling_3wk_avg": "64.6666666666666667",
+          "weekly_engagement_drop": true,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 27,
+          "weekly_clicks": 15,
+          "rolling_3wk_avg": "29.6666666666666667",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 28,
+          "weekly_clicks": 8,
+          "rolling_3wk_avg": "8.6666666666666667",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 29,
+          "weekly_clicks": 41,
+          "rolling_3wk_avg": "8",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 30,
+          "weekly_clicks": 43,
+          "rolling_3wk_avg": "21.3333333333333333",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 31,
+          "weekly_clicks": 54,
+          "rolling_3wk_avg": "30.6666666666666667",
+          "weekly_engagement_drop": false,
+          "early_warning_week": 0
+        },
+        {
+          "week_number": 35,
+          "weekly_clicks": 5,
+          "rolling_3wk_avg": "46",
+          "weekly_engagement_drop": true,
+          "early_warning_week": 0
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": {
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "dataset_id": "SAMPLE_OULAD"
+    },
+    "query_labels": [
+      "weekly_engagement"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [
+        "rolling_3wk_avg",
+        "early_warning_week"
+      ],
+      "flag_columns": [
+        "weekly_engagement_drop"
+      ],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "trend_series",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": "week_number",
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "weekly_clicks",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": "asc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": 40,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 5404,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 2084,
+      "completion_tokens": 432,
+      "total_tokens": 2516
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "S-T05",
+    "execution_id": "exec_1781847902976_7737b45f",
+    "explanation": {
+      "summary": "Your engagement has shown some ups and downs over the weeks, with notable drops in activity that could impact your learning. It's important to recognize these patterns to help you stay on track.",
+      "insights": [
+        {
+          "title": "Significant Drop in Engagement",
+          "description": "You experienced a sharp decline in weekly clicks from 98 in week 1 to just 4 in week 2, indicating a concerning drop in engagement. This drop is significant as it represents a decrease of 94 clicks.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "weekly_clicks",
+              "value": 4,
+              "comparison": "down_from_previous",
+              "delta": -94,
+              "context": "Week 1 to Week 2"
+            }
+          ]
+        },
+        {
+          "title": "Consistent Low Engagement",
+          "description": "In weeks 10 and 11, your engagement remained low with only 3 clicks each week, suggesting a pattern of disengagement that could hinder your progress.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "weekly_clicks",
+              "value": 3,
+              "comparison": "stable",
+              "delta": 0,
+              "context": "Weeks 10 and 11"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Recognizing weeks of low engagement can help you identify when you might need extra support or motivation."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Set specific goals for each week to increase your engagement.",
+          "rationale": "Having clear objectives can help you stay focused and motivated, especially during weeks where you might feel less inclined to participate."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data shows clear trends in your engagement patterns over the weeks.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "behavioral",
+    "explanation_type": "behavioral",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3-experimental",
+    "baseline_available": true,
+    "input_summary_type": "trend_series",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 32,
+    "included_row_count": 15,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "weekly_engagement",
+        "row_count": 32,
+        "included_row_count": 15
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 15,
+    "baseline_reference_tokens": 805,
+    "task_aware_prompt_tokens": 1283,
+    "token_ratio": 1.5938,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "comparison",
+      "trend_relationship",
+      "exceptions",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [
+      "limitations.causal_claim_allowed",
+      "limitations.small_sample_caveats",
+      "action_evidence.action_evidence",
+      "exceptions.flagged_points"
+    ],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (1.5938 > 1.2).",
+      "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 5399,
+      "token_usage": {
+        "prompt_tokens": 2084,
+        "completion_tokens": 432,
+        "total_tokens": 2516
+      },
+      "strategy": "behavioral",
+      "granularity": "weekly",
+      "cost_usd": 0.000572
+    }
+  },
+  "raw_text": "Summary: Your engagement has shown some ups and downs over the weeks, with notable drops in activity that could impact your learning. It's important to recognize these patterns to help you stay on track.\n\nInsights: Significant Drop in Engagement: You experienced a sharp decline in weekly clicks from 98 in week 1 to just 4 in week 2, indicating a concerning drop in engagement. This drop is significant as it represents a decrease of 94 clicks. | Consistent Low Engagement: In weeks 10 and 11, your engagement remained low with only 3 clicks each week, suggesting a pattern of disengagement that could hinder your progress.\n\nEducational implications: Recognizing weeks of low engagement can help you identify when you might need extra support or motivation.\n\nRecommendations: high - Set specific goals for each week to increase your engagement. - Having clear objectives can help you stay focused and motivated, especially during weeks where you might feel less inclined to participate."
+}

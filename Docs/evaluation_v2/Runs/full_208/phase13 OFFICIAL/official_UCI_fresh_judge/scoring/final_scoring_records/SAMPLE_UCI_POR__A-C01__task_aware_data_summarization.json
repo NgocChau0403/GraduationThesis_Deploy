@@ -1,0 +1,86 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-C01__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable actionability requirements are strongly satisfied by the supported claims."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Student 1 improved by 55 points from assessment 1 to 2, while Student 2 improved by 10 points.",
+ "claim_type": "trajectory_change",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "trajectory_comparison assessment orders 1 and 2"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The changes are exactly 55 and 10."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "The students diverged at assessment 1 and converged at assessments 2 and 3.",
+ "claim_type": "divergence",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "trajectory_comparison all six rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The first scores differ by 45 and the later scores are both 55."
+ }
+ ],
+ "errors": [],
+ "error_summary": {
+ "highest_error_severity": null,
+ "error_count": 0,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 9.75,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 9.75,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

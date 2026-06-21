@@ -1,0 +1,745 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-S08",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-S08",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-S08__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "83c9ac258ea68391683477dbc334086a244f65e01d7e17210a6c46063cf0f3a9",
+ "deterministic_summary": {
+ "summary_type": "action_synthesis",
+ "action_rule_set_id": "A-S08.action_synthesis",
+ "action_rule_version": "1.0.0",
+ "source_datasets": [
+ {
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_count": 1,
+ "available": true
+ }
+ ],
+ "evidence_items": [
+ {
+ "evidence_item_id": "ev-synthesis_data-0-avg_score",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "avg_score",
+ "raw_value": 91.2,
+ "parsed_value": 91.2,
+ "unit": "score_runtime_scale",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-performance_trend",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "performance_trend",
+ "raw_value": -0.7187500000000001,
+ "parsed_value": -0.71875,
+ "unit": "score_change_per_assessment_order",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-engagement_score",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "engagement_score",
+ "raw_value": 0.20237855036820618,
+ "parsed_value": 0.2023785504,
+ "unit": "ratio_0_1",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-punctuality_rate",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "punctuality_rate",
+ "raw_value": "0",
+ "parsed_value": 0,
+ "unit": "ratio_0_1",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-early_warning_week",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "early_warning_week",
+ "raw_value": 0,
+ "parsed_value": 0,
+ "unit": "week_number",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-support_score",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "support_score",
+ "raw_value": 0,
+ "parsed_value": 0,
+ "unit": "dataset_specific_score",
+ "available": true,
+ "sensitive": true
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-at_risk_score",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "at_risk_score",
+ "raw_value": 3,
+ "parsed_value": 3,
+ "unit": "flag_count",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-at_risk_label",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "at_risk_label",
+ "raw_value": "high",
+ "parsed_value": "high",
+ "unit": "risk_band",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-final_outcome",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "final_outcome",
+ "raw_value": "Distinction",
+ "parsed_value": "Distinction",
+ "unit": "outcome_category",
+ "available": true,
+ "sensitive": false
+ }
+ ],
+ "prioritized_actions": [
+ {
+ "action_id": "staff_review_student_risk_profile",
+ "action_text": "Assign an academic advisor to review the student's current risk profile and coordinate the next follow-up.",
+ "priority": "high",
+ "owner": "academic_advisor",
+ "time_horizon_days": 2,
+ "support_category": "case_coordination",
+ "claim_limits": [
+ "Treat the composite risk score as a screening signal, not a diagnosis.",
+ "Do not use support_score to justify the action."
+ ],
+ "rule_id": "A-S08-R01",
+ "rule_ids": [
+ "A-S08-R01"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-at_risk_score",
+ "ev-synthesis_data-0-at_risk_label"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "staff_create_submission_support_plan",
+ "action_text": "Ask the tutor to agree a short submission plan with clear upcoming deadlines and one follow-up check.",
+ "priority": "high",
+ "owner": "tutor",
+ "time_horizon_days": 7,
+ "support_category": "submission_support",
+ "claim_limits": [
+ "Do not infer why submissions were late.",
+ "Preserve the raw punctuality value, including numeric strings."
+ ],
+ "rule_id": "A-S08-R02",
+ "rule_ids": [
+ "A-S08-R02"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-punctuality_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "staff_review_recent_assessment_pattern",
+ "action_text": "Review the student's recent assessment sequence and identify one concrete academic follow-up.",
+ "priority": "medium",
+ "owner": "tutor",
+ "time_horizon_days": 7,
+ "support_category": "academic_support",
+ "claim_limits": [
+ "Do not claim the negative slope proves future decline.",
+ "Do not ignore conflicting positive outcome evidence."
+ ],
+ "rule_id": "A-S08-R03",
+ "rule_ids": [
+ "A-S08-R03"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-performance_trend"
+ ],
+ "provenance_status": "complete"
+ }
+ ],
+ "action_evidence_links": [
+ {
+ "action_id": "staff_review_student_risk_profile",
+ "rule_id": "A-S08-R01",
+ "rule_ids": [
+ "A-S08-R01"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-at_risk_score",
+ "ev-synthesis_data-0-at_risk_label"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "staff_create_submission_support_plan",
+ "rule_id": "A-S08-R02",
+ "rule_ids": [
+ "A-S08-R02"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-punctuality_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "staff_review_recent_assessment_pattern",
+ "rule_id": "A-S08-R03",
+ "rule_ids": [
+ "A-S08-R03"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-performance_trend"
+ ],
+ "provenance_status": "complete"
+ }
+ ],
+ "unsupported_actions": [],
+ "conflicting_evidence": [
+ {
+ "conflict_id": "A-S08-C01",
+ "behavior": "preserve_and_warn",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-final_outcome",
+ "ev-synthesis_data-0-at_risk_label",
+ "ev-synthesis_data-0-performance_trend"
+ ],
+ "warning": "Conflicting evidence is preserved; actions must be phrased with uncertainty and must not hide this conflict."
+ }
+ ],
+ "missing_evidence": [],
+ "rule_evaluations": [
+ {
+ "rule_id": "A-S08-R01",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "at_risk_score",
+ "operator": "gte",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-at_risk_score"
+ ],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "evidence_id": "at_risk_label",
+ "operator": "eq",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-at_risk_label"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-at_risk_score",
+ "ev-synthesis_data-0-at_risk_label"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "A-S08-R02",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "punctuality_rate",
+ "operator": "lt",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-punctuality_rate"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-punctuality_rate"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "A-S08-R03",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "performance_trend",
+ "operator": "lt",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-performance_trend"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-performance_trend"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "A-S08-R04",
+ "rule_version": "1.0.0",
+ "matched": false,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "engagement_score",
+ "operator": "lt",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "summarization_warnings": [
+ "Sensitive/background evidence is preserved for audit only and was not used to trigger actions.",
+ "Conflicting evidence was detected and must remain visible in the generated explanation.",
+ "The LLM may paraphrase prioritized_actions but must not invent new actions or rules."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "action_synthesis",
+ "task_id": "A-S08",
+ "task_output_contract": [
+ "Explain only actions already present in prioritized_actions or supported action-rule evidence.",
+ "Do not create duplicate recommendations; explanation.recommendations may be empty by design.",
+ "For every explained action, connect it to rule_evaluations, action_evidence_links, evidence_items, owner, priority, and time horizon when supplied.",
+ "If no supported action exists, say that only when missing_evidence/unsupported_actions/rule output supports it."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "source_datasets": [
+ {
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_count": 1,
+ "available": true
+ }
+ ],
+ "action_rule_set_id": "A-S08.action_synthesis",
+ "action_rule_version": "1.0.0"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "evidence_items": [
+ {
+ "evidence_item_id": "ev-synthesis_data-0-avg_score",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "avg_score",
+ "raw_value": 91.2,
+ "parsed_value": 91.2,
+ "unit": "score_runtime_scale",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-performance_trend",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "performance_trend",
+ "raw_value": -0.7187500000000001,
+ "parsed_value": -0.71875,
+ "unit": "score_change_per_assessment_order",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-engagement_score",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "engagement_score",
+ "raw_value": 0.20237855036820618,
+ "parsed_value": 0.2023785504,
+ "unit": "ratio_0_1",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-punctuality_rate",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "punctuality_rate",
+ "raw_value": "0",
+ "parsed_value": 0,
+ "unit": "ratio_0_1",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-early_warning_week",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "early_warning_week",
+ "raw_value": 0,
+ "parsed_value": 0,
+ "unit": "week_number",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-support_score",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "support_score",
+ "raw_value": 0,
+ "parsed_value": 0,
+ "unit": "dataset_specific_score",
+ "available": true,
+ "sensitive": true
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-at_risk_score",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "at_risk_score",
+ "raw_value": 3,
+ "parsed_value": 3,
+ "unit": "flag_count",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-at_risk_label",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "at_risk_label",
+ "raw_value": "high",
+ "parsed_value": "high",
+ "unit": "risk_band",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-final_outcome",
+ "task_id": "A-S08",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "final_outcome",
+ "raw_value": "Distinction",
+ "parsed_value": "Distinction",
+ "unit": "outcome_category",
+ "available": true,
+ "sensitive": false
+ }
+ ],
+ "rule_evaluations": [
+ {
+ "rule_id": "A-S08-R01",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "at_risk_score",
+ "operator": "gte",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-at_risk_score"
+ ],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "evidence_id": "at_risk_label",
+ "operator": "eq",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-at_risk_label"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-at_risk_score",
+ "ev-synthesis_data-0-at_risk_label"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "A-S08-R02",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "punctuality_rate",
+ "operator": "lt",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-punctuality_rate"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-punctuality_rate"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "A-S08-R03",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "performance_trend",
+ "operator": "lt",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-performance_trend"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-performance_trend"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "A-S08-R04",
+ "rule_version": "1.0.0",
+ "matched": false,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "engagement_score",
+ "operator": "lt",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ }
+ ]
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "prioritized_actions": [
+ {
+ "action_id": "staff_review_student_risk_profile",
+ "action_text": "Assign an academic advisor to review the student's current risk profile and coordinate the next follow-up.",
+ "priority": "high",
+ "owner": "academic_advisor",
+ "time_horizon_days": 2,
+ "support_category": "case_coordination",
+ "claim_limits": [
+ "Treat the composite risk score as a screening signal, not a diagnosis.",
+ "Do not use support_score to justify the action."
+ ],
+ "rule_id": "A-S08-R01",
+ "rule_ids": [
+ "A-S08-R01"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-at_risk_score",
+ "ev-synthesis_data-0-at_risk_label"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "staff_create_submission_support_plan",
+ "action_text": "Ask the tutor to agree a short submission plan with clear upcoming deadlines and one follow-up check.",
+ "priority": "high",
+ "owner": "tutor",
+ "time_horizon_days": 7,
+ "support_category": "submission_support",
+ "claim_limits": [
+ "Do not infer why submissions were late.",
+ "Preserve the raw punctuality value, including numeric strings."
+ ],
+ "rule_id": "A-S08-R02",
+ "rule_ids": [
+ "A-S08-R02"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-punctuality_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "staff_review_recent_assessment_pattern",
+ "action_text": "Review the student's recent assessment sequence and identify one concrete academic follow-up.",
+ "priority": "medium",
+ "owner": "tutor",
+ "time_horizon_days": 7,
+ "support_category": "academic_support",
+ "claim_limits": [
+ "Do not claim the negative slope proves future decline.",
+ "Do not ignore conflicting positive outcome evidence."
+ ],
+ "rule_id": "A-S08-R03",
+ "rule_ids": [
+ "A-S08-R03"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-performance_trend"
+ ],
+ "provenance_status": "complete"
+ }
+ ],
+ "action_evidence_links": [
+ {
+ "action_id": "staff_review_student_risk_profile",
+ "rule_id": "A-S08-R01",
+ "rule_ids": [
+ "A-S08-R01"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-at_risk_score",
+ "ev-synthesis_data-0-at_risk_label"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "staff_create_submission_support_plan",
+ "rule_id": "A-S08-R02",
+ "rule_ids": [
+ "A-S08-R02"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-punctuality_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "staff_review_recent_assessment_pattern",
+ "rule_id": "A-S08-R03",
+ "rule_ids": [
+ "A-S08-R03"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-performance_trend"
+ ],
+ "provenance_status": "complete"
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_evidence": [],
+ "unsupported_actions": [],
+ "summarization_warnings": [
+ "Sensitive/background evidence is preserved for audit only and was not used to trigger actions.",
+ "Conflicting evidence was detected and must remain visible in the generated explanation.",
+ "The LLM may paraphrase prioritized_actions but must not invent new actions or rules."
+ ]
+ }
+ }
+ ]
+ }
+}

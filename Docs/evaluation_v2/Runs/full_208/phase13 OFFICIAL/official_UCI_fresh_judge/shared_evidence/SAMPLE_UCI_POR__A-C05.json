@@ -1,0 +1,506 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__A-C05",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-C05",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__A-C05__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "7725baf627645f1706a6a0db7e7f8ee0d72d76377f2d6b2c72bc770b2e0e4d4d",
+ "deterministic_summary": {
+ "summary_type": "multi_metric_comparison",
+ "dataset_name": "background_comparison",
+ "row_count": 2,
+ "entity_column": "student_id",
+ "metric_key_column": null,
+ "metric_value_column": null,
+ "entities": [
+ "SAMPLE_UCI_POR_STU_000001",
+ "SAMPLE_UCI_POR_STU_000002"
+ ],
+ "metrics": [
+ {
+ "metric": "previous_attempt_count",
+ "unit": "count",
+ "direction": "context_only",
+ "threshold": null
+ },
+ {
+ "metric": "imd_score_numeric",
+ "unit": "dataset_index",
+ "direction": "context_only",
+ "threshold": null
+ },
+ {
+ "metric": "disadvantage_score",
+ "unit": "ratio_or_dataset_score",
+ "direction": "higher_is_disadvantage",
+ "threshold": null
+ },
+ {
+ "metric": "support_score",
+ "unit": "ratio_or_dataset_score",
+ "direction": "higher_is_support",
+ "threshold": null
+ },
+ {
+ "metric": "family_stability_score",
+ "unit": "ratio_or_dataset_score",
+ "direction": "context_only",
+ "threshold": null
+ }
+ ],
+ "metric_keys": [],
+ "comparison_matrix": [
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "metrics": {
+ "previous_attempt_count": 0,
+ "imd_score_numeric": null,
+ "disadvantage_score": 0.2,
+ "support_score": 0.25,
+ "family_stability_score": 0.575
+ },
+ "labels": {
+ "highest_education": "Parent education 4/4"
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000002",
+ "metrics": {
+ "previous_attempt_count": 0,
+ "imd_score_numeric": null,
+ "disadvantage_score": 0.4,
+ "support_score": 0.5,
+ "family_stability_score": 0.85
+ },
+ "labels": {
+ "highest_education": "Parent education 1/4"
+ }
+ }
+ ],
+ "metric_extrema": {
+ "previous_attempt_count": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 0
+ }
+ },
+ "disadvantage_score": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 0.2
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000002",
+ "value": 0.4
+ }
+ },
+ "support_score": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 0.25
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000002",
+ "value": 0.5
+ }
+ },
+ "family_stability_score": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 0.575
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000002",
+ "value": 0.85
+ }
+ }
+ },
+ "pairwise_gaps": [
+ {
+ "metric": "previous_attempt_count",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0,
+ "absolute_gap": 0
+ },
+ {
+ "metric": "disadvantage_score",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0.2,
+ "absolute_gap": 0.2
+ },
+ {
+ "metric": "support_score",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0.25,
+ "absolute_gap": 0.25
+ },
+ {
+ "metric": "family_stability_score",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0.275,
+ "absolute_gap": 0.275
+ }
+ ],
+ "missing_metric_evidence": [
+ {
+ "entity": "SAMPLE_UCI_POR_STU_000001",
+ "metric": "imd_score_numeric",
+ "reason": "imd_score_numeric is missing or non-numeric"
+ },
+ {
+ "entity": "SAMPLE_UCI_POR_STU_000002",
+ "metric": "imd_score_numeric",
+ "reason": "imd_score_numeric is missing or non-numeric"
+ }
+ ],
+ "missing_entity_evidence": [],
+ "missing_expected_entities": [],
+ "selected_entity_evidence": [],
+ "evidence_status": "sufficient",
+ "evidence_requirements": {
+ "minimum_entity_count": 2,
+ "expected_entities": [],
+ "observed_entity_count": 2,
+ "missing_expected_entities": []
+ },
+ "validation_metadata": {
+ "status": "passed",
+ "required": {
+ "metric_units": true,
+ "metric_directions": true,
+ "metric_thresholds": false,
+ "sensitive_context_policy": true
+ },
+ "metric_units": {
+ "previous_attempt_count": "count",
+ "imd_score_numeric": "dataset_index",
+ "disadvantage_score": "ratio_or_dataset_score",
+ "support_score": "ratio_or_dataset_score",
+ "family_stability_score": "ratio_or_dataset_score"
+ },
+ "metric_directions": {
+ "previous_attempt_count": "context_only",
+ "imd_score_numeric": "context_only",
+ "disadvantage_score": "higher_is_disadvantage",
+ "support_score": "higher_is_support",
+ "family_stability_score": "context_only"
+ },
+ "metric_thresholds": {},
+ "sensitive_context_policy": "descriptive_non_causal_no_action"
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Found 2 missing or non-numeric metric values; they remain explicit missing evidence and were not replaced with zero.",
+ "Sensitive/background context is descriptive only under policy 'descriptive_non_causal_no_action'; do not infer causality or prescribe action from it."
+ ],
+ "pairwise_direction_evidence": [
+ {
+ "metric": "previous_attempt_count",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": null,
+ "lower_entity": null,
+ "difference": 0,
+ "direction_note": "entities are tied"
+ },
+ {
+ "metric": "disadvantage_score",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": "SAMPLE_UCI_POR_STU_000002",
+ "lower_entity": "SAMPLE_UCI_POR_STU_000001",
+ "difference": 0.2,
+ "direction_note": "right_entity is higher"
+ },
+ {
+ "metric": "support_score",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": "SAMPLE_UCI_POR_STU_000002",
+ "lower_entity": "SAMPLE_UCI_POR_STU_000001",
+ "difference": 0.25,
+ "direction_note": "right_entity is higher"
+ },
+ {
+ "metric": "family_stability_score",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": "SAMPLE_UCI_POR_STU_000002",
+ "lower_entity": "SAMPLE_UCI_POR_STU_000001",
+ "difference": 0.275,
+ "direction_note": "right_entity is higher"
+ }
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "multi_metric_comparison",
+ "task_id": "A-C05",
+ "task_output_contract": [
+ "Compare the returned entities directly, naming which entity is higher/lower for each key metric.",
+ "Use pairwise_gaps and selected_entity_evidence for direction; do not reverse numeric direction.",
+ "If expected metric/entity evidence is missing, state the limitation rather than guessing."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "background_comparison",
+ "row_count": 2,
+ "entities": [
+ "SAMPLE_UCI_POR_STU_000001",
+ "SAMPLE_UCI_POR_STU_000002"
+ ],
+ "entity_column": "student_id",
+ "metrics": [
+ {
+ "metric": "previous_attempt_count",
+ "unit": "count",
+ "direction": "context_only",
+ "threshold": null
+ },
+ {
+ "metric": "imd_score_numeric",
+ "unit": "dataset_index",
+ "direction": "context_only",
+ "threshold": null
+ },
+ {
+ "metric": "disadvantage_score",
+ "unit": "ratio_or_dataset_score",
+ "direction": "higher_is_disadvantage",
+ "threshold": null
+ },
+ {
+ "metric": "support_score",
+ "unit": "ratio_or_dataset_score",
+ "direction": "higher_is_support",
+ "threshold": null
+ },
+ {
+ "metric": "family_stability_score",
+ "unit": "ratio_or_dataset_score",
+ "direction": "context_only",
+ "threshold": null
+ }
+ ],
+ "metric_keys": [],
+ "metric_key_column": null,
+ "metric_value_column": null,
+ "evidence_status": "sufficient",
+ "evidence_requirements": {
+ "minimum_entity_count": 2,
+ "expected_entities": [],
+ "observed_entity_count": 2,
+ "missing_expected_entities": []
+ }
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "comparison_matrix": [
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "metrics": {
+ "previous_attempt_count": 0,
+ "imd_score_numeric": null,
+ "disadvantage_score": 0.2,
+ "support_score": 0.25,
+ "family_stability_score": 0.575
+ },
+ "labels": {
+ "highest_education": "Parent education 4/4"
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000002",
+ "metrics": {
+ "previous_attempt_count": 0,
+ "imd_score_numeric": null,
+ "disadvantage_score": 0.4,
+ "support_score": 0.5,
+ "family_stability_score": 0.85
+ },
+ "labels": {
+ "highest_education": "Parent education 1/4"
+ }
+ }
+ ],
+ "selected_entity_evidence": []
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "pairwise_gaps": [
+ {
+ "metric": "previous_attempt_count",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0,
+ "absolute_gap": 0
+ },
+ {
+ "metric": "disadvantage_score",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0.2,
+ "absolute_gap": 0.2
+ },
+ {
+ "metric": "support_score",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0.25,
+ "absolute_gap": 0.25
+ },
+ {
+ "metric": "family_stability_score",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0.275,
+ "absolute_gap": 0.275
+ }
+ ],
+ "pairwise_direction_evidence": [
+ {
+ "metric": "previous_attempt_count",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": null,
+ "lower_entity": null,
+ "difference": 0,
+ "direction_note": "entities are tied"
+ },
+ {
+ "metric": "disadvantage_score",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": "SAMPLE_UCI_POR_STU_000002",
+ "lower_entity": "SAMPLE_UCI_POR_STU_000001",
+ "difference": 0.2,
+ "direction_note": "right_entity is higher"
+ },
+ {
+ "metric": "support_score",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": "SAMPLE_UCI_POR_STU_000002",
+ "lower_entity": "SAMPLE_UCI_POR_STU_000001",
+ "difference": 0.25,
+ "direction_note": "right_entity is higher"
+ },
+ {
+ "metric": "family_stability_score",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": "SAMPLE_UCI_POR_STU_000002",
+ "lower_entity": "SAMPLE_UCI_POR_STU_000001",
+ "difference": 0.275,
+ "direction_note": "right_entity is higher"
+ }
+ ],
+ "metric_extrema": {
+ "previous_attempt_count": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 0
+ }
+ },
+ "disadvantage_score": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 0.2
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000002",
+ "value": 0.4
+ }
+ },
+ "support_score": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 0.25
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000002",
+ "value": 0.5
+ }
+ },
+ "family_stability_score": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 0.575
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000002",
+ "value": 0.85
+ }
+ }
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_metric_evidence": [
+ {
+ "entity": "SAMPLE_UCI_POR_STU_000001",
+ "metric": "imd_score_numeric",
+ "reason": "imd_score_numeric is missing or non-numeric"
+ },
+ {
+ "entity": "SAMPLE_UCI_POR_STU_000002",
+ "metric": "imd_score_numeric",
+ "reason": "imd_score_numeric is missing or non-numeric"
+ }
+ ],
+ "missing_entity_evidence": [],
+ "missing_expected_entities": [],
+ "validation_metadata": {
+ "status": "passed",
+ "required": {
+ "metric_units": true,
+ "metric_directions": true,
+ "metric_thresholds": false,
+ "sensitive_context_policy": true
+ },
+ "metric_units": {
+ "previous_attempt_count": "count",
+ "imd_score_numeric": "dataset_index",
+ "disadvantage_score": "ratio_or_dataset_score",
+ "support_score": "ratio_or_dataset_score",
+ "family_stability_score": "ratio_or_dataset_score"
+ },
+ "metric_directions": {
+ "previous_attempt_count": "context_only",
+ "imd_score_numeric": "context_only",
+ "disadvantage_score": "higher_is_disadvantage",
+ "support_score": "higher_is_support",
+ "family_stability_score": "context_only"
+ },
+ "metric_thresholds": {},
+ "sensitive_context_policy": "descriptive_non_causal_no_action"
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Found 2 missing or non-numeric metric values; they remain explicit missing evidence and were not replaced with zero.",
+ "Sensitive/background context is descriptive only under policy 'descriptive_non_causal_no_action'; do not infer causality or prescribe action from it."
+ ]
+ }
+ }
+ ]
+ }
+}

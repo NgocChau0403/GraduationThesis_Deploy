@@ -1,0 +1,202 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-S01__baseline_first_20_rows",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-S01",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Student full profile snapshot",
+    "scope": "1 student",
+    "actionable_question": "Who is this student and what is their current overall situation?",
+    "target_audience": "instructor, academic_advisor",
+    "ai_summary_type": "metric_snapshot",
+    "ai_prompt_hint": "Summarise who this student is and where they stand across all dimensions (score, engagement, risk) in plain language.",
+    "query_labels": [
+      "student_profile"
+    ],
+    "explanation_strategy": "distribution"
+  },
+  "schema_context": {
+    "source_tables": [
+      "student",
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "student_id",
+      "gender",
+      "age_group",
+      "avg_score [FE cross]",
+      "engagement_score [FE cross]",
+      "at_risk_label [FE cross]",
+      "at_risk_score [FE cross]",
+      "study_effort_level [FE cross]",
+      "final_outcome",
+      "previous_attempt_count"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "student_profile"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The student, identified as SAMPLE_OULAD_STU_100788, is a male aged between 0-35 years from Scotland. He has achieved a high average score of 91.2, indicating strong academic performance, but is categorized as high risk due to an at-risk score of 3, suggesting potential challenges in engagement despite a medium study effort level.\n\nInsights: High Academic Achievement: The student has an average score of 91.2, which is significantly above typical passing thresholds, indicating strong academic performance. | High At-Risk Score: Despite the high average score, the student has an at-risk score of 3, categorized as high, which may indicate underlying issues affecting engagement.\n\nEducational implications: The student demonstrates strong academic capabilities but may require interventions to enhance engagement and reduce risk.\n\nRecommendations: high - Implement targeted engagement strategies. - To address the high at-risk score and improve overall student experience and retention.",
+    "structured_payload": {
+      "task_id": "A-S01",
+      "execution_id": "exec_1781847821333_85e5e848",
+      "explanation": {
+        "summary": "The student, identified as SAMPLE_OULAD_STU_100788, is a male aged between 0-35 years from Scotland. He has achieved a high average score of 91.2, indicating strong academic performance, but is categorized as high risk due to an at-risk score of 3, suggesting potential challenges in engagement despite a medium study effort level.",
+        "insights": [
+          {
+            "title": "High Academic Achievement",
+            "description": "The student has an average score of 91.2, which is significantly above typical passing thresholds, indicating strong academic performance.",
+            "severity": "low",
+            "evidence": [
+              {
+                "metric": "avg_score",
+                "value": 91.2,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "This score reflects a high level of understanding of the course material."
+              }
+            ]
+          },
+          {
+            "title": "High At-Risk Score",
+            "description": "Despite the high average score, the student has an at-risk score of 3, categorized as high, which may indicate underlying issues affecting engagement.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "at_risk_score",
+                "value": 3,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "This score suggests the student may need additional support to maintain engagement."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The student demonstrates strong academic capabilities but may require interventions to enhance engagement and reduce risk."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted engagement strategies.",
+            "rationale": "To address the high at-risk score and improve overall student experience and retention."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data provided is complete and reflects a single student's profile accurately.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "distribution",
+      "explanation_type": "distribution",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 7841,
+        "token_usage": {
+          "prompt_tokens": 627,
+          "completion_tokens": 439,
+          "total_tokens": 1066
+        },
+        "strategy": "distribution",
+        "granularity": "semester",
+        "cost_usd": 0.000357
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-S01__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "4743201b7cef6419143ce67c847c7459867c07e6d50c168276602b68a7eaa2f8",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 627,
+        "completion_tokens": 439,
+        "total_tokens": 1066
+      },
+      "latency_ms": 7847,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 1,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "student_profile",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-S01.json",
+        "artifact_sha256": "571fbfd5a5f4b6aadbd2ae06eb63417d65d32d6ecc3ca2592d316fa372796d12",
+        "row_count": 1,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 1,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "student_profile": 1
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-S01-CORE-01",
+        "description": "Summarise who this student is and where they stand across all dimensions (score, engagement, risk) in plain language."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-S01-CONSTRAINT-01",
+        "description": "Do not extrapolate beyond returned score, engagement, and risk dimensions."
+      },
+      {
+        "constraint_id": "A-S01-CONSTRAINT-02",
+        "description": "Avoid holistic judgements about the student when supporting data is absent."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

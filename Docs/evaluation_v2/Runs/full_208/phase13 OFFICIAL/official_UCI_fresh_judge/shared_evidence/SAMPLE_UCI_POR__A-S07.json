@@ -1,0 +1,314 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__A-S07",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-S07",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__A-S07__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "ad3bc64c975543b822f165064a4226f4b043381dec1b0683a35265a82f1ffca2",
+ "deterministic_summary": {
+ "summary_type": "metric_snapshot",
+ "dataset_name": "background_context",
+ "row_count": 1,
+ "entity": null,
+ "metric_snapshot": {
+ "support_score": {
+ "value": 0.25,
+ "unit": "ratio_0_1",
+ "available": true
+ },
+ "lifestyle_risk_score": {
+ "value": 0.47,
+ "unit": "score_0_1",
+ "available": true
+ },
+ "social_balance_score": {
+ "value": 0.03,
+ "unit": "signed_score",
+ "available": true
+ },
+ "family_stability_score": {
+ "value": 0.58,
+ "unit": "score_0_1",
+ "available": true
+ },
+ "previous_attempt_count": {
+ "value": 0,
+ "unit": "count",
+ "available": true
+ },
+ "studytime": {
+ "value": 2,
+ "unit": "ordinal_scale_raw",
+ "available": true
+ },
+ "absences": {
+ "value": 4,
+ "unit": "count",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "school_support_flag": true,
+ "family_support_flag": false,
+ "has_paid_class": false,
+ "internet_access_flag": false
+ },
+ "threshold_evidence": {},
+ "benchmark_evidence": {},
+ "label_evidence": {},
+ "flag_evidence": {},
+ "action_evidence": {},
+ "missing_evidence": [
+ {
+ "role": "sensitive_context",
+ "column": "highest_education",
+ "reason": "configured sensitive context value is null",
+ "value": null
+ }
+ ],
+ "sensitive_context_present": true,
+ "sensitive_context": {
+ "highest_education": null,
+ "school": "GP",
+ "family_size": "GT3",
+ "gender": "F",
+ "age_years": 18,
+ "age_group": "18-20",
+ "school_support_flag": true,
+ "family_support_flag": false,
+ "has_paid_class": false,
+ "internet_access_flag": false,
+ "support_score": 0.25,
+ "lifestyle_risk_score": 0.47,
+ "social_balance_score": 0.03,
+ "family_stability_score": 0.58,
+ "studytime": 2,
+ "absences": 4
+ },
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "support_score",
+ "lifestyle_risk_score",
+ "social_balance_score",
+ "family_stability_score",
+ "previous_attempt_count",
+ "studytime",
+ "absences"
+ ],
+ "configured_status_columns": [
+ "school_support_flag",
+ "family_support_flag",
+ "has_paid_class",
+ "internet_access_flag"
+ ],
+ "configured_threshold_columns": [],
+ "configured_benchmark_columns": [],
+ "configured_sensitive_columns": [
+ "highest_education",
+ "school",
+ "family_size",
+ "gender",
+ "age_years",
+ "age_group",
+ "school_support_flag",
+ "family_support_flag",
+ "has_paid_class",
+ "internet_access_flag",
+ "support_score",
+ "lifestyle_risk_score",
+ "social_balance_score",
+ "family_stability_score",
+ "studytime",
+ "absences"
+ ],
+ "metric_availability_columns": {},
+ "metric_units": {
+ "support_score": "ratio_0_1",
+ "lifestyle_risk_score": "score_0_1",
+ "social_balance_score": "signed_score",
+ "family_stability_score": "score_0_1",
+ "previous_attempt_count": "count",
+ "studytime": "ordinal_scale_raw",
+ "absences": "count"
+ },
+ "threshold_sources": {},
+ "benchmark_sources": {},
+ "sensitive_context_policy": "descriptive_context_only_no_causal_or_prescriptive_inference",
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "evidence_status": "sufficient",
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Sensitive/background context is descriptive only under policy 'descriptive_context_only_no_causal_or_prescriptive_inference'; do not infer causality, risk cause, or recommendations from it."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "metric_snapshot",
+ "task_id": "A-S07",
+ "task_output_contract": [
+ "Describe which support flags are present and absent, including existing school support, without inventing thresholds or causes.",
+ "Treat background metrics as descriptive context only; do not infer that a value is below average unless a benchmark is supplied.",
+ "Do not invent a new intervention such as enhancing support services; if you include an action, frame it as a specific evidence-grounded review/check of the returned support flags and raw context values."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "background_context",
+ "row_count": 1,
+ "entity": null,
+ "evidence_status": "sufficient"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "metric_snapshot": {
+ "support_score": {
+ "value": 0.25,
+ "unit": "ratio_0_1",
+ "available": true
+ },
+ "lifestyle_risk_score": {
+ "value": 0.47,
+ "unit": "score_0_1",
+ "available": true
+ },
+ "social_balance_score": {
+ "value": 0.03,
+ "unit": "signed_score",
+ "available": true
+ },
+ "family_stability_score": {
+ "value": 0.58,
+ "unit": "score_0_1",
+ "available": true
+ },
+ "previous_attempt_count": {
+ "value": 0,
+ "unit": "count",
+ "available": true
+ },
+ "studytime": {
+ "value": 2,
+ "unit": "ordinal_scale_raw",
+ "available": true
+ },
+ "absences": {
+ "value": 4,
+ "unit": "count",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "school_support_flag": true,
+ "family_support_flag": false,
+ "has_paid_class": false,
+ "internet_access_flag": false
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "sensitive_context": {
+ "highest_education": null,
+ "school": "GP",
+ "family_size": "GT3",
+ "gender": "F",
+ "age_years": 18,
+ "age_group": "18-20",
+ "school_support_flag": true,
+ "family_support_flag": false,
+ "has_paid_class": false,
+ "internet_access_flag": false,
+ "support_score": 0.25,
+ "lifestyle_risk_score": 0.47,
+ "social_balance_score": 0.03,
+ "family_stability_score": 0.58,
+ "studytime": 2,
+ "absences": 4
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_evidence": [
+ {
+ "role": "sensitive_context",
+ "column": "highest_education",
+ "reason": "configured sensitive context value is null",
+ "value": null
+ }
+ ],
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "support_score",
+ "lifestyle_risk_score",
+ "social_balance_score",
+ "family_stability_score",
+ "previous_attempt_count",
+ "studytime",
+ "absences"
+ ],
+ "configured_status_columns": [
+ "school_support_flag",
+ "family_support_flag",
+ "has_paid_class",
+ "internet_access_flag"
+ ],
+ "configured_threshold_columns": [],
+ "configured_benchmark_columns": [],
+ "configured_sensitive_columns": [
+ "highest_education",
+ "school",
+ "family_size",
+ "gender",
+ "age_years",
+ "age_group",
+ "school_support_flag",
+ "family_support_flag",
+ "has_paid_class",
+ "internet_access_flag",
+ "support_score",
+ "lifestyle_risk_score",
+ "social_balance_score",
+ "family_stability_score",
+ "studytime",
+ "absences"
+ ],
+ "metric_availability_columns": {},
+ "metric_units": {
+ "support_score": "ratio_0_1",
+ "lifestyle_risk_score": "score_0_1",
+ "social_balance_score": "signed_score",
+ "family_stability_score": "score_0_1",
+ "previous_attempt_count": "count",
+ "studytime": "ordinal_scale_raw",
+ "absences": "count"
+ },
+ "threshold_sources": {},
+ "benchmark_sources": {},
+ "sensitive_context_policy": "descriptive_context_only_no_causal_or_prescriptive_inference",
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Sensitive/background context is descriptive only under policy 'descriptive_context_only_no_causal_or_prescriptive_inference'; do not infer causality, risk cause, or recommendations from it."
+ ]
+ }
+ }
+ ]
+ }
+}

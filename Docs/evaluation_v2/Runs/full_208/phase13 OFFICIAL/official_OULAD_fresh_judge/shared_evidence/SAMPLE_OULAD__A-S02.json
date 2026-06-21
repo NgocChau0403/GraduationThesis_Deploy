@@ -1,0 +1,412 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-S02",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-S02",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-S02__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "9ce4464711a66f78840829c7ab077b8c7cda9f4b0b9d283b7cef97cb2e703556",
+ "deterministic_summary": {
+ "summary_type": "trend_series",
+ "dataset_name": "score_trend",
+ "row_count": 5,
+ "time_column": "assessment_order",
+ "metric_column": "score_normalized",
+ "metric_units": {},
+ "metric_directions": {},
+ "dataset_roles": {},
+ "point_count": 5,
+ "first_point": {
+ "assessment_order": 1,
+ "score_normalized": 100,
+ "labels": {
+ "assessment_name": "24295",
+ "assessment_type": "CMA",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 74.75,
+ "score_vs_class_avg": 25.25,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "last_point": {
+ "assessment_order": 9,
+ "score_normalized": 96,
+ "labels": {
+ "assessment_name": "24299",
+ "assessment_type": "Exam"
+ },
+ "secondary_metrics": {
+ "class_avg_score": 68.23,
+ "score_vs_class_avg": 27.77,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "peak": {
+ "assessment_order": 1,
+ "score_normalized": 100,
+ "labels": {
+ "assessment_name": "24295",
+ "assessment_type": "CMA",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 74.75,
+ "score_vs_class_avg": 25.25,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "trough": {
+ "assessment_order": 8,
+ "score_normalized": 83,
+ "labels": {
+ "assessment_name": "24298",
+ "assessment_type": "CMA",
+ "week_of_class": 31
+ },
+ "secondary_metrics": {
+ "class_avg_score": 73.09,
+ "score_vs_class_avg": 9.91,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "overall_change": {
+ "from": {
+ "assessment_order": 1,
+ "score_normalized": 100,
+ "labels": {
+ "assessment_name": "24295",
+ "assessment_type": "CMA",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 74.75,
+ "score_vs_class_avg": 25.25,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "to": {
+ "assessment_order": 9,
+ "score_normalized": 96,
+ "labels": {
+ "assessment_name": "24299",
+ "assessment_type": "Exam"
+ },
+ "secondary_metrics": {
+ "class_avg_score": 68.23,
+ "score_vs_class_avg": 27.77,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "delta": -4,
+ "percent_change": -4
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "assessment_order": 1,
+ "score_normalized": 100,
+ "labels": {
+ "assessment_name": "24295",
+ "assessment_type": "CMA",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 74.75,
+ "score_vs_class_avg": 25.25,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "to": {
+ "assessment_order": 3,
+ "score_normalized": 87,
+ "labels": {
+ "assessment_name": "24296",
+ "assessment_type": "CMA",
+ "week_of_class": 10
+ },
+ "secondary_metrics": {
+ "class_avg_score": 78.94,
+ "score_vs_class_avg": 8.06,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "delta": -13
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "assessment_order": 8,
+ "score_normalized": 83,
+ "labels": {
+ "assessment_name": "24298",
+ "assessment_type": "CMA",
+ "week_of_class": 31
+ },
+ "secondary_metrics": {
+ "class_avg_score": 73.09,
+ "score_vs_class_avg": 9.91,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "to": {
+ "assessment_order": 9,
+ "score_normalized": 96,
+ "labels": {
+ "assessment_name": "24299",
+ "assessment_type": "Exam"
+ },
+ "secondary_metrics": {
+ "class_avg_score": 68.23,
+ "score_vs_class_avg": 27.77,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "delta": 13
+ },
+ "flagged_points": [],
+ "secondary_metric_evidence": {
+ "class_avg_score": {
+ "count": 5,
+ "min": 68.23,
+ "max": 78.94,
+ "first": 74.75,
+ "last": 68.23
+ },
+ "score_vs_class_avg": {
+ "count": 5,
+ "min": 8.06,
+ "max": 27.77,
+ "first": 25.25,
+ "last": 27.77
+ },
+ "performance_trend": {
+ "count": 5,
+ "min": -0.7188,
+ "max": -0.7188,
+ "first": -0.7188,
+ "last": -0.7188
+ },
+ "pass_flag": {
+ "first": true,
+ "last": true,
+ "distinct_values": [
+ "True"
+ ]
+ }
+ },
+ "secondary_metric_associations": {
+ "class_avg_score": {
+ "paired_point_count": 5,
+ "method": "pearson_on_aligned_points",
+ "correlation": -0.3367,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "score_vs_class_avg": {
+ "paired_point_count": 5,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.9121,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "performance_trend": {
+ "paired_point_count": 5,
+ "method": "pearson_on_aligned_points",
+ "correlation": null,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "pass_flag": {
+ "paired_point_count": 5,
+ "method": "non_numeric_values_preserved",
+ "correlation": null,
+ "claim_limit": "descriptive_context_only"
+ }
+ },
+ "multi_dataset_evidence": [],
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "action_evidence": [
+ {
+ "assessment_order": 9,
+ "action_column": "support_level",
+ "action": "maintain"
+ },
+ {
+ "assessment_order": 9,
+ "action_column": "recommended_action",
+ "action": "Keep the current preparation pattern and use feedback to protect this level."
+ }
+ ],
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "trend_series",
+ "task_id": "A-S02",
+ "task_output_contract": [
+ "Identify timing, first/last points, overall change, and flagged points when supplied.",
+ "For empty or insufficient data, state row count and missing capability/data-quality warnings instead of inferring a trend.",
+ "Only recommend timing when critical weeks or action_evidence are present."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "score_trend",
+ "row_count": 5,
+ "point_count": 5,
+ "time_column": "assessment_order",
+ "metric_column": "score_normalized",
+ "dataset_roles": {},
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "first_point": {
+ "assessment_order": 1,
+ "score_normalized": 100,
+ "labels": {
+ "assessment_name": "24295",
+ "assessment_type": "CMA",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 74.75,
+ "score_vs_class_avg": 25.25,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "last_point": {
+ "assessment_order": 9,
+ "score_normalized": 96,
+ "labels": {
+ "assessment_name": "24299",
+ "assessment_type": "Exam"
+ },
+ "secondary_metrics": {
+ "class_avg_score": 68.23,
+ "score_vs_class_avg": 27.77,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "overall_change": {
+ "from": {
+ "assessment_order": 1,
+ "score_normalized": 100,
+ "labels": {
+ "assessment_name": "24295",
+ "assessment_type": "CMA",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 74.75,
+ "score_vs_class_avg": 25.25,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "to": {
+ "assessment_order": 9,
+ "score_normalized": 96,
+ "labels": {
+ "assessment_name": "24299",
+ "assessment_type": "Exam"
+ },
+ "secondary_metrics": {
+ "class_avg_score": 68.23,
+ "score_vs_class_avg": 27.77,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "delta": -4,
+ "percent_change": -4
+ }
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "largest_adjacent_drop": {
+ "from": {
+ "assessment_order": 1,
+ "score_normalized": 100,
+ "labels": {
+ "assessment_name": "24295",
+ "assessment_type": "CMA",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 74.75,
+ "score_vs_class_avg": 25.25,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "to": {
+ "assessment_order": 3,
+ "score_normalized": 87,
+ "labels": {
+ "assessment_name": "24296",
+ "assessment_type": "CMA",
+ "week_of_class": 10
+ },
+ "secondary_metrics": {
+ "class_avg_score": 78.94,
+ "score_vs_class_avg": 8.06,
+ "performance_trend": -0.7188,
+ "pass_flag": true
+ }
+ },
+ "delta": -13
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flagged_points": []
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "action_evidence": [
+ {
+ "assessment_order": 9,
+ "action_column": "support_level",
+ "action": "maintain"
+ },
+ {
+ "assessment_order": 9,
+ "action_column": "recommended_action",
+ "action": "Keep the current preparation pattern and use feedback to protect this level."
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

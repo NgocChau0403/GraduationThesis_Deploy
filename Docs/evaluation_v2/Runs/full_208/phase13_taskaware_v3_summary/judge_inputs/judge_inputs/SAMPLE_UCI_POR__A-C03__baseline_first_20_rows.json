@@ -1,0 +1,255 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-C03__baseline_first_20_rows",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-C03",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Compare risk profile",
+    "scope": "2 students",
+    "actionable_question": "Who is at higher risk and what are the key differences?",
+    "target_audience": "instructor, academic_advisor",
+    "ai_summary_type": "multi_metric_comparison",
+    "ai_prompt_hint": "Compare the two returned student rows. Use at_risk_score, at_risk_label, and explicit flag_* columns to explain who needs more urgent intervention. If avg_score is null, state that score evidence is missing rather than guessing.",
+    "query_labels": [
+      "risk_comparison"
+    ],
+    "explanation_strategy": "comparison"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "student_id [FE cross]",
+      "at_risk_score [FE cross]",
+      "at_risk_label [FE cross]",
+      "avg_score [FE cross]",
+      "engagement_score [FE cross]",
+      "punctuality_rate [FE cross]",
+      "performance_trend [FE cross]",
+      "flag_low_score",
+      "flag_repeated",
+      "flag_low_engagement",
+      "flag_low_punctuality",
+      "flag_neg_trend",
+      "previous_attempt_count",
+      "final_outcome"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "student_id",
+        "at_risk_score",
+        "at_risk_label"
+      ],
+      "optional_columns": [
+        "avg_score",
+        "performance_trend",
+        "punctuality_rate",
+        "engagement_score",
+        "previous_attempt_count",
+        "flag_low_score",
+        "flag_repeated",
+        "flag_low_engagement",
+        "flag_low_punctuality",
+        "flag_neg_trend",
+        "final_outcome"
+      ]
+    },
+    "query_labels": [
+      "risk_comparison"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The comparison of the two students reveals significant differences in their risk profiles, with one student categorized as high risk and the other as medium risk. The student with the higher average score demonstrates fewer flags indicating potential issues.\n\nInsights: Risk Level Comparison: Student SAMPLE_UCI_POR_STU_000001 is classified as high risk with an at_risk_score of 3, while SAMPLE_UCI_POR_STU_000002 is classified as medium risk with an at_risk_score of 2. This indicates that the first student requires more urgent intervention. | Engagement and Punctuality Flags: Both students exhibit low engagement and punctuality rates, but SAMPLE_UCI_POR_STU_000001 has additional flags for low scores and low punctuality, indicating a more concerning profile.\n\nEducational implications: Students with higher at risk scores and additional flags require targeted interventions to improve their academic performance and engagement.\n\nRecommendations: high - Implement personalized support strategies for SAMPLE_UCI_POR_STU_000001. - This student has a high at risk score and multiple flags indicating low performance and engagement, necessitating immediate attention.",
+    "structured_payload": {
+      "task_id": "A-C03",
+      "execution_id": "exec_1781847231991_2a53a959",
+      "explanation": {
+        "summary": "The comparison of the two students reveals significant differences in their risk profiles, with one student categorized as high risk and the other as medium risk. The student with the higher average score demonstrates fewer flags indicating potential issues.",
+        "insights": [
+          {
+            "title": "Risk Level Comparison",
+            "description": "Student SAMPLE_UCI_POR_STU_000001 is classified as high risk with an at_risk_score of 3, while SAMPLE_UCI_POR_STU_000002 is classified as medium risk with an at_risk_score of 2. This indicates that the first student requires more urgent intervention.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "at_risk_score",
+                "value": 3,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "SAMPLE_UCI_POR_STU_000001"
+              },
+              {
+                "metric": "at_risk_score",
+                "value": 2,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "SAMPLE_UCI_POR_STU_000002"
+              }
+            ]
+          },
+          {
+            "title": "Engagement and Punctuality Flags",
+            "description": "Both students exhibit low engagement and punctuality rates, but SAMPLE_UCI_POR_STU_000001 has additional flags for low scores and low punctuality, indicating a more concerning profile.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "flag_low_engagement",
+                "value": 1,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "SAMPLE_UCI_POR_STU_000001"
+              },
+              {
+                "metric": "flag_low_engagement",
+                "value": 1,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "SAMPLE_UCI_POR_STU_000002"
+              },
+              {
+                "metric": "flag_low_score",
+                "value": 1,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "SAMPLE_UCI_POR_STU_000001"
+              },
+              {
+                "metric": "flag_low_score",
+                "value": 0,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "SAMPLE_UCI_POR_STU_000002"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Students with higher at risk scores and additional flags require targeted interventions to improve their academic performance and engagement."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement personalized support strategies for SAMPLE_UCI_POR_STU_000001.",
+            "rationale": "This student has a high at risk score and multiple flags indicating low performance and engagement, necessitating immediate attention."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data provided is complete and allows for a clear comparison of risk profiles.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "comparison",
+      "explanation_type": "comparison",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 8756,
+        "token_usage": {
+          "prompt_tokens": 857,
+          "completion_tokens": 680,
+          "total_tokens": 1537
+        },
+        "strategy": "comparison",
+        "granularity": "semester",
+        "cost_usd": 0.000537
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-C03__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "bc7d21dbe9baccd0895a1a9f8f60d6d839d7f10b053088cfdb441ab7457f5c33",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 857,
+        "completion_tokens": 680,
+        "total_tokens": 1537
+      },
+      "latency_ms": 8761,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 2,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "risk_comparison",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C03.json",
+        "artifact_sha256": "c69580e2dc2021885655a077aa3a3c8b919df20604218d6eb67be7b50804ec52",
+        "row_count": 2,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 2,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "risk_comparison": 2
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-C03-CORE-01",
+        "description": "Compare the two returned student rows."
+      },
+      {
+        "requirement_id": "A-C03-CORE-02",
+        "description": "Use at_risk_score, at_risk_label, and explicit flag_* columns to explain who needs more urgent intervention."
+      }
+    ],
+    "required_supporting_outputs": [
+      {
+        "requirement_id": "A-C03-SUPPORT-01",
+        "description": "If avg_score is null, state that score evidence is missing rather than guessing."
+      }
+    ],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

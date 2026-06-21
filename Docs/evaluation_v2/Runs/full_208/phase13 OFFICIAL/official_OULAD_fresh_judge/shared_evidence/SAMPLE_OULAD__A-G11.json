@@ -1,0 +1,692 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G11",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G11",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G11__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "1a02eddf72a263e4c9840a24bc7b0a6470f8ea673481308f4c1fee9f2321196a",
+ "deterministic_summary": {
+ "summary_type": "trend_series",
+ "dataset_name": "weekly_drop_detection",
+ "row_count": 42,
+ "time_column": "week_number",
+ "metric_column": "week_total_clicks",
+ "metric_units": {},
+ "metric_directions": {},
+ "dataset_roles": {},
+ "point_count": 42,
+ "first_point": {
+ "week_number": -2,
+ "week_total_clicks": 38370,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333
+ }
+ },
+ "last_point": {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 6890.3333,
+ "drop_pct": -0.6928
+ }
+ },
+ "peak": {
+ "week_number": 3,
+ "week_total_clicks": 228353,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 117237.6667,
+ "drop_pct": 0.9478
+ }
+ },
+ "trough": {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 6890.3333,
+ "drop_pct": -0.6928
+ }
+ },
+ "overall_change": {
+ "from": {
+ "week_number": -2,
+ "week_total_clicks": 38370,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333
+ }
+ },
+ "to": {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 6890.3333,
+ "drop_pct": -0.6928
+ }
+ },
+ "delta": -36253,
+ "percent_change": -94.4827
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 3,
+ "week_total_clicks": 228353,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 117237.6667,
+ "drop_pct": 0.9478
+ }
+ },
+ "to": {
+ "week_number": 4,
+ "week_total_clicks": 90777,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 174198,
+ "drop_pct": -0.4789
+ }
+ },
+ "delta": -137576
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "week_number": 20,
+ "week_total_clicks": 70000,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 49537.6667,
+ "drop_pct": 0.4131
+ }
+ },
+ "to": {
+ "week_number": 21,
+ "week_total_clicks": 164684,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 54705,
+ "drop_pct": 2.0104
+ }
+ },
+ "delta": 94684
+ },
+ "flagged_points": [
+ {
+ "week_number": 6,
+ "week_total_clicks": 62604,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 140243.6667,
+ "drop_pct": -0.5536
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 11,
+ "week_total_clicks": 26756,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 99700.3333,
+ "drop_pct": -0.7316
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 12,
+ "week_total_clicks": 16424,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 88254.3333,
+ "drop_pct": -0.8139
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 13,
+ "week_total_clicks": 24376,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 67785.3333,
+ "drop_pct": -0.6404
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 24,
+ "week_total_clicks": 33900,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 89674.3333,
+ "drop_pct": -0.622
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 36,
+ "week_total_clicks": 11221,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 98530,
+ "drop_pct": -0.8861
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 37,
+ "week_total_clicks": 4778,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 78835.6667,
+ "drop_pct": -0.9394
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ }
+ ],
+ "secondary_metric_evidence": {
+ "cohort_avg_clicks": {
+ "count": 42,
+ "min": 66499.3333,
+ "max": 66499.3333,
+ "first": 66499.3333,
+ "last": 66499.3333
+ },
+ "rolling_3wk_avg": {
+ "count": 41,
+ "min": 6890.3333,
+ "max": 174198,
+ "first": null,
+ "last": 6890.3333
+ },
+ "drop_pct": {
+ "count": 41,
+ "min": -0.9394,
+ "max": 2.0104,
+ "first": null,
+ "last": -0.6928
+ }
+ },
+ "secondary_metric_associations": {
+ "cohort_avg_clicks": {
+ "paired_point_count": 42,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "rolling_3wk_avg": {
+ "paired_point_count": 41,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.247,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "drop_pct": {
+ "paired_point_count": 41,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.7537,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ }
+ },
+ "multi_dataset_evidence": [],
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "action_evidence": [],
+ "summarization_warnings": [
+ "Trend points capped at 40 of 42 rows."
+ ],
+ "critical_week_evidence": {
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 3,
+ "week_total_clicks": 228353,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 117237.6667,
+ "drop_pct": 0.9478
+ }
+ },
+ "to": {
+ "week_number": 4,
+ "week_total_clicks": 90777,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 174198,
+ "drop_pct": -0.4789
+ }
+ },
+ "delta": -137576
+ },
+ "flagged_weeks": [
+ {
+ "week_number": 6,
+ "week_total_clicks": 62604,
+ "previous_week_number": 5,
+ "previous_week_total_clicks": 101601,
+ "adjacent_delta": -38997,
+ "drop_pct": "-0.5536055104092638775"
+ },
+ {
+ "week_number": 11,
+ "week_total_clicks": 26756,
+ "previous_week_number": 10,
+ "previous_week_total_clicks": 160176,
+ "adjacent_delta": -133420,
+ "drop_pct": "-0.73163580195318638096"
+ },
+ {
+ "week_number": 12,
+ "week_total_clicks": 16424,
+ "previous_week_number": 11,
+ "previous_week_total_clicks": 26756,
+ "adjacent_delta": -10332,
+ "drop_pct": "-0.81390148925642933421"
+ },
+ {
+ "week_number": 13,
+ "week_total_clicks": 24376,
+ "previous_week_number": 12,
+ "previous_week_total_clicks": 16424,
+ "adjacent_delta": 7952,
+ "drop_pct": "-0.64039418556619917603"
+ },
+ {
+ "week_number": 24,
+ "week_total_clicks": 33900,
+ "previous_week_number": 23,
+ "previous_week_total_clicks": 57005,
+ "adjacent_delta": -23105,
+ "drop_pct": "-0.62196540816212740034"
+ },
+ {
+ "week_number": 36,
+ "week_total_clicks": 11221,
+ "previous_week_number": 35,
+ "previous_week_total_clicks": 126367,
+ "adjacent_delta": -115146,
+ "drop_pct": "-0.8861159037856490409"
+ },
+ {
+ "week_number": 37,
+ "week_total_clicks": 4778,
+ "previous_week_number": 36,
+ "previous_week_total_clicks": 11221,
+ "adjacent_delta": -6443,
+ "drop_pct": "-0.93939291437462738972"
+ },
+ {
+ "week_number": 38,
+ "week_total_clicks": 4672,
+ "previous_week_number": 37,
+ "previous_week_total_clicks": 4778,
+ "adjacent_delta": -106,
+ "drop_pct": "-0.90154952727477066084"
+ },
+ {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "previous_week_number": 38,
+ "previous_week_total_clicks": 4672,
+ "adjacent_delta": -2555,
+ "drop_pct": "-0.69275797010304291036"
+ }
+ ],
+ "timing_policy": "schedule review before or at returned critical weeks"
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "trend_series",
+ "task_id": "A-G11",
+ "task_output_contract": [
+ "Identify timing, first/last points, overall change, and flagged points when supplied.",
+ "For empty or insufficient data, state row count and missing capability/data-quality warnings instead of inferring a trend.",
+ "Only recommend timing when critical weeks or action_evidence are present.",
+ "Preserve the exact largest adjacent drop, every flagged week, and each flagged week's delta from the immediately preceding returned week.",
+ "Tie action timing to before or at the observed critical weeks; do not infer causes."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "weekly_drop_detection",
+ "row_count": 42,
+ "point_count": 42,
+ "time_column": "week_number",
+ "metric_column": "week_total_clicks",
+ "dataset_roles": {},
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "first_point": {
+ "week_number": -2,
+ "week_total_clicks": 38370,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333
+ }
+ },
+ "last_point": {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 6890.3333,
+ "drop_pct": -0.6928
+ }
+ },
+ "overall_change": {
+ "from": {
+ "week_number": -2,
+ "week_total_clicks": 38370,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333
+ }
+ },
+ "to": {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 6890.3333,
+ "drop_pct": -0.6928
+ }
+ },
+ "delta": -36253,
+ "percent_change": -94.4827
+ },
+ "critical_week_evidence": {
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 3,
+ "week_total_clicks": 228353,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 117237.6667,
+ "drop_pct": 0.9478
+ }
+ },
+ "to": {
+ "week_number": 4,
+ "week_total_clicks": 90777,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 174198,
+ "drop_pct": -0.4789
+ }
+ },
+ "delta": -137576
+ },
+ "flagged_weeks": [
+ {
+ "week_number": 6,
+ "week_total_clicks": 62604,
+ "previous_week_number": 5,
+ "previous_week_total_clicks": 101601,
+ "adjacent_delta": -38997,
+ "drop_pct": "-0.5536055104092638775"
+ },
+ {
+ "week_number": 11,
+ "week_total_clicks": 26756,
+ "previous_week_number": 10,
+ "previous_week_total_clicks": 160176,
+ "adjacent_delta": -133420,
+ "drop_pct": "-0.73163580195318638096"
+ },
+ {
+ "week_number": 12,
+ "week_total_clicks": 16424,
+ "previous_week_number": 11,
+ "previous_week_total_clicks": 26756,
+ "adjacent_delta": -10332,
+ "drop_pct": "-0.81390148925642933421"
+ },
+ {
+ "week_number": 13,
+ "week_total_clicks": 24376,
+ "previous_week_number": 12,
+ "previous_week_total_clicks": 16424,
+ "adjacent_delta": 7952,
+ "drop_pct": "-0.64039418556619917603"
+ },
+ {
+ "week_number": 24,
+ "week_total_clicks": 33900,
+ "previous_week_number": 23,
+ "previous_week_total_clicks": 57005,
+ "adjacent_delta": -23105,
+ "drop_pct": "-0.62196540816212740034"
+ },
+ {
+ "week_number": 36,
+ "week_total_clicks": 11221,
+ "previous_week_number": 35,
+ "previous_week_total_clicks": 126367,
+ "adjacent_delta": -115146,
+ "drop_pct": "-0.8861159037856490409"
+ },
+ {
+ "week_number": 37,
+ "week_total_clicks": 4778,
+ "previous_week_number": 36,
+ "previous_week_total_clicks": 11221,
+ "adjacent_delta": -6443,
+ "drop_pct": "-0.93939291437462738972"
+ },
+ {
+ "week_number": 38,
+ "week_total_clicks": 4672,
+ "previous_week_number": 37,
+ "previous_week_total_clicks": 4778,
+ "adjacent_delta": -106,
+ "drop_pct": "-0.90154952727477066084"
+ },
+ {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "previous_week_number": 38,
+ "previous_week_total_clicks": 4672,
+ "adjacent_delta": -2555,
+ "drop_pct": "-0.69275797010304291036"
+ }
+ ],
+ "timing_policy": "schedule review before or at returned critical weeks"
+ }
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 3,
+ "week_total_clicks": 228353,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 117237.6667,
+ "drop_pct": 0.9478
+ }
+ },
+ "to": {
+ "week_number": 4,
+ "week_total_clicks": 90777,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 174198,
+ "drop_pct": -0.4789
+ }
+ },
+ "delta": -137576
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flagged_points": [
+ {
+ "week_number": 6,
+ "week_total_clicks": 62604,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 140243.6667,
+ "drop_pct": -0.5536
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 11,
+ "week_total_clicks": 26756,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 99700.3333,
+ "drop_pct": -0.7316
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 12,
+ "week_total_clicks": 16424,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 88254.3333,
+ "drop_pct": -0.8139
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 13,
+ "week_total_clicks": 24376,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 67785.3333,
+ "drop_pct": -0.6404
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 24,
+ "week_total_clicks": 33900,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 89674.3333,
+ "drop_pct": -0.622
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 36,
+ "week_total_clicks": 11221,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 98530,
+ "drop_pct": -0.8861
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 37,
+ "week_total_clicks": 4778,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 78835.6667,
+ "drop_pct": -0.9394
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "action_evidence": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Trend points capped at 40 of 42 rows."
+ ]
+ }
+ }
+ ]
+ }
+}

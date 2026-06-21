@@ -1,0 +1,230 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__A-G13",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-G13",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__A-G13__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "0eb0a44eda6775a15aadc78ad5036cafb0b5a22d2549f4df7d0f668519f9b855",
+ "deterministic_summary": {
+ "summary_type": "correlation_evidence",
+ "dataset_name": "lifestyle_risk_scatter",
+ "row_count": 649,
+ "x_column": "lifestyle_risk_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "selected_entity_column": null,
+ "metric_units": {},
+ "metric_directions": {},
+ "coefficient": -0.1041,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 649,
+ "p_value": null,
+ "outliers": [
+ {
+ "lifestyle_risk_score": 1,
+ "avg_score": 33.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000501"
+ },
+ {
+ "lifestyle_risk_score": 1,
+ "avg_score": 33.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000280"
+ },
+ {
+ "lifestyle_risk_score": 0.85,
+ "avg_score": 45,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000448"
+ },
+ {
+ "lifestyle_risk_score": 0.8,
+ "avg_score": 11.67,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000441"
+ },
+ {
+ "lifestyle_risk_score": 0.8,
+ "avg_score": 50,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000231"
+ },
+ {
+ "lifestyle_risk_score": 0.775,
+ "avg_score": 43.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000101"
+ },
+ {
+ "lifestyle_risk_score": 0.775,
+ "avg_score": 43.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000531"
+ },
+ {
+ "lifestyle_risk_score": 0.775,
+ "avg_score": 50,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000648"
+ },
+ {
+ "lifestyle_risk_score": 0.75,
+ "avg_score": 38.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000264"
+ },
+ {
+ "lifestyle_risk_score": 0.75,
+ "avg_score": 45,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000503"
+ }
+ ],
+ "selected_entity_evidence": [],
+ "missing_selected_entity_evidence": [],
+ "selected_entity_count": 0,
+ "sensitive_context_policy": null,
+ "direction": "negative",
+ "strength": "weak",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false,
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "correlation_evidence",
+ "task_id": "A-G13",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "lifestyle_risk_scatter",
+ "row_count": 649,
+ "x_column": "lifestyle_risk_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "sample_size": 649,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "selected_entity_column": null,
+ "selected_entity_count": 0,
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "coefficient": -0.1041,
+ "direction": "negative",
+ "strength": "weak"
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "p_value": null,
+ "selected_entity_evidence": []
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "outliers": [
+ {
+ "lifestyle_risk_score": 1,
+ "avg_score": 33.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000501"
+ },
+ {
+ "lifestyle_risk_score": 1,
+ "avg_score": 33.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000280"
+ },
+ {
+ "lifestyle_risk_score": 0.85,
+ "avg_score": 45,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000448"
+ },
+ {
+ "lifestyle_risk_score": 0.8,
+ "avg_score": 11.67,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000441"
+ },
+ {
+ "lifestyle_risk_score": 0.8,
+ "avg_score": 50,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000231"
+ },
+ {
+ "lifestyle_risk_score": 0.775,
+ "avg_score": 43.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000101"
+ },
+ {
+ "lifestyle_risk_score": 0.775,
+ "avg_score": 43.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000531"
+ },
+ {
+ "lifestyle_risk_score": 0.775,
+ "avg_score": 50,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000648"
+ },
+ {
+ "lifestyle_risk_score": 0.75,
+ "avg_score": 38.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000264"
+ },
+ {
+ "lifestyle_risk_score": 0.75,
+ "avg_score": 45,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000503"
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_selected_entity_evidence": [],
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "sensitive_context_policy": null,
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ }
+ }
+ ]
+ }
+}

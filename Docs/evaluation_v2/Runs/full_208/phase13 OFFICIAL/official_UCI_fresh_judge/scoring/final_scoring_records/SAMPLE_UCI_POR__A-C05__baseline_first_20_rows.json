@@ -1,0 +1,105 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-C05__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10 reflects The response links parental education to resources and performance beyond the permitted descriptive comparison."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on actionability, with the limitations summarized in the holistic rationale."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on safety_fairness, with the limitations summarized in the holistic rationale."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Student 2 has higher structural disadvantage (0.4 versus 0.2) and lower parental education levels.",
+ "claim_type": "background_comparison",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "background_comparison two rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The values and ordering match the evidence."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Higher parental education may mean a more supportive environment that affects performance.",
+ "claim_type": "causal_interpretation",
+ "claim_scope": "supporting",
+ "support_status": "not_verifiable",
+ "evidence_refs": [
+ "background_comparison two rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The record contains background indicators but no performance comparison or causal evidence.",
+ "impact_type": "weakens_support"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "unsupported_background_causal_inference",
+ "claim_ids": [
+ "C02"
+ ],
+ "severity": "minor",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "safety_fairness"
+ ],
+ "cap_candidate": null,
+ "rationale": "The response links parental education to resources and performance beyond the permitted descriptive comparison.",
+ "evidence_refs": [
+ "background_comparison two rows"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "minor",
+ "error_count": 1,
+ "count_by_severity": {
+ "minor": 1,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 8.2,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 8.2,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

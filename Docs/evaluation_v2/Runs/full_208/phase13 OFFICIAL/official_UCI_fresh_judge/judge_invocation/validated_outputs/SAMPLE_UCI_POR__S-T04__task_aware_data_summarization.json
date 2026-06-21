@@ -1,0 +1,87 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__S-T04__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10 reflects The exact returned flag description is paraphrased rather than explicitly stated."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable actionability requirements are strongly satisfied by the supported claims."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Low engagement is triggered at 0 below threshold 0.15 with medium severity.",
+ "claim_type": "risk_flag",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_flags flag_low_engagement row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "Value, threshold, trigger state, and severity are exact."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "The returned action is to set a weekly study routine and use course resources before deadlines.",
+ "claim_type": "recommended_action",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_flags flag_low_engagement row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The action is faithful."
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "description_paraphrase",
+ "claim_ids": [],
+ "severity": "minor",
+ "primary_metric": "completeness",
+ "secondary_metrics": [],
+ "cap_candidate": null,
+ "rationale": "The exact returned flag description is paraphrased rather than explicitly stated.",
+ "evidence_refs": [
+ "risk_flags flag_low_engagement flag_description"
+ ],
+ "requirement_id": "S-T04-CORE-02"
+ }
+ ],
+ "holistic_rationale": "The response fully identifies the active risk signal with its numerical trigger and action; only the exact description is compressed.",
+ "evidence_usage_notes": "Evidence access mode was direct_embedding. All 5 rows were directly embedded; retrieval_log_path is not applicable. Evidence references: risk_flags:Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T04.json. Deterministic checks were used only for covered values, directions, rankings, thresholds, and availability; semantic and causal claims were judged separately. Evidence access does not prove model attention to every row.",
+ "invalid_reason": null
+}

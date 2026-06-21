@@ -1,0 +1,101 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_OULAD",
+ "record_id": "SAMPLE_OULAD__A-G03__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Factual interpretation was judged against the packet evidence, with penalties for unsupported scope, causality, thresholds, or direction."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Numeric values, percentages, rankings, thresholds, and directions were checked against the delivered or retrieved evidence in this packet."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Coverage was scored against the supplied core and supporting requirements for this exact task."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "The score reflects whether the explanation answers the stated actionable question for the correct dataset, entity level, and audience."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Actionability reflects whether advice or interpretation is feasible and grounded in returned evidence or supported action provenance."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Clarity reflects organization, precision, concision, and whether the output is scannable for the target audience."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Safety/fairness is applicable under the packet contract; scoring penalizes overconfident, stigmatizing, causal, or unfair individual/group framing."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Summary: A cohort of students has been identified as high-risk due to multiple simultaneous risk signals, including low average scores, low engagement, and low punctuality.",
+ "claim_type": "task_answer",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G03__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "These indicators suggest a need for immediate academic support to improve their performance and engagement levels.",
+ "claim_type": "numeric_or_status_evidence",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G03__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C03",
+ "claim_text": "Insights: High-Risk Students with Multiple Flags: Students such as SAMPLE_OULAD_STU_624354, SAMPLE_OULAD_STU_548926, and SAMPLE_OULAD_STU_532565 exhibit multiple risk flags including low average scores below the pass threshold, low engagement scores, and low p",
+ "claim_type": "interpretation_or_action",
+ "claim_scope": "supporting",
+ "support_status": "supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G03__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ }
+ ],
+ "errors": [],
+ "error_summary": {
+ "highest_error_severity": null,
+ "error_count": 0,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 7.7,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 7.7,
+ "verdict": "good",
+ "invalid_reason": null
+}

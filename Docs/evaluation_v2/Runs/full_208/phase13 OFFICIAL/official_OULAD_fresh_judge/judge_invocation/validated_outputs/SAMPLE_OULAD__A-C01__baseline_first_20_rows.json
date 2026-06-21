@@ -1,0 +1,110 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_OULAD__A-C01__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Factual interpretation was judged against the packet evidence, with penalties for unsupported scope, causality, thresholds, or direction."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Numeric values, percentages, rankings, thresholds, and directions were checked against the delivered or retrieved evidence in this packet."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 3,
+ "rationale": "Coverage was scored against the supplied core and supporting requirements for this exact task."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 3,
+ "rationale": "The score reflects whether the explanation answers the stated actionable question for the correct dataset, entity level, and audience."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Actionability reflects whether advice or interpretation is feasible and grounded in returned evidence or supported action provenance."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Clarity reflects organization, precision, concision, and whether the output is scannable for the target audience."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Safety/fairness is applicable under the packet contract; scoring penalizes overconfident, stigmatizing, causal, or unfair individual/group framing."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Summary: The analysis of the performance trajectories of the student reveals significant fluctuations in scores across different assessments.",
+ "claim_type": "task_answer",
+ "claim_scope": "core",
+ "support_status": "contradicted",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The packet evidence contradicts the stated direction, target, or threshold.",
+ "impact_type": "wrong_evaluation_target"
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Notably, the student exhibited a decline in performance during the fourth assessment, which marks a divergence point in their trajectory.",
+ "claim_type": "numeric_or_status_evidence",
+ "claim_scope": "core",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The packet supports part of the statement, but the explanation omits a required qualifier, exact field, or full task scope.",
+ "impact_type": "changes_interpretation"
+ },
+ {
+ "claim_id": "C03",
+ "claim_text": "Insights: Divergence in Performance: The student's performance peaked at a normalized score of 100 during the first CMA assessment but experienced a notable decline to 61 in the fourth TMA assessment.",
+ "claim_type": "interpretation_or_action",
+ "claim_scope": "supporting",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The packet supports part of the statement, but the explanation omits a required qualifier, exact field, or full task scope.",
+ "impact_type": "changes_interpretation"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "wrong_evaluation_target",
+ "claim_ids": [
+ "C01"
+ ],
+ "severity": "critical",
+ "primary_metric": "task_relevance",
+ "secondary_metrics": [
+ "completeness",
+ "faithfulness"
+ ],
+ "cap_candidate": 4,
+ "rationale": "The result contains one returned student, but the explanation presents a divergence comparison rather than acknowledging that between-student comparison is not estimable.",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ]
+ }
+ ],
+ "holistic_rationale": "The record is scorable: the explanation addresses Compare performance trajectories for instructor. Stronger elements are the evidence-linked values and task framing; defects, if any, concern missing qualifiers, incomplete required coverage, or over-interpretation beyond the packet. The metric pattern follows those evidence and requirement checks without calculating a final verdict.",
+ "evidence_usage_notes": "evidence_access_mode was direct_embedding; prompt_embedded_row_count=17; retrieval_log_path was not applicable. I used the embedded dataset rows and full-run deterministic checks only.",
+ "invalid_reason": null
+}

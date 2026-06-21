@@ -1,0 +1,91 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__A-C05__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10 reflects The response interprets descriptive support indices as demonstrated mitigation without outcome evidence."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on actionability, with the limitations summarized in the holistic rationale."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on safety_fairness, with the limitations summarized in the holistic rationale."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Student 2 has a higher disadvantage score, support score, and family-stability score.",
+ "claim_type": "background_comparison",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "background_comparison two rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "All three directional comparisons are correct."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "The higher support and family-stability scores mitigate Student 2's disadvantage.",
+ "claim_type": "interpretation",
+ "claim_scope": "supporting",
+ "support_status": "not_verifiable",
+ "evidence_refs": [
+ "background_comparison two rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The returned scores do not prove a mitigating effect on outcomes.",
+ "impact_type": "weakens_support"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "unsupported_mitigation_inference",
+ "claim_ids": [
+ "C02"
+ ],
+ "severity": "minor",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "safety_fairness"
+ ],
+ "cap_candidate": null,
+ "rationale": "The response interprets descriptive support indices as demonstrated mitigation without outcome evidence.",
+ "evidence_refs": [
+ "background_comparison two rows"
+ ]
+ }
+ ],
+ "holistic_rationale": "The structural-disadvantage direction is correct, but the claimed mitigating role of other indices is not established by this record.",
+ "evidence_usage_notes": "Evidence access mode was direct_embedding. All 2 rows were directly embedded; retrieval_log_path is not applicable. Evidence references: background_comparison:Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C05.json. Deterministic checks were used only for covered values, directions, rankings, thresholds, and availability; semantic and causal claims were judged separately. Evidence access does not prove model attention to every row.",
+ "invalid_reason": null
+}

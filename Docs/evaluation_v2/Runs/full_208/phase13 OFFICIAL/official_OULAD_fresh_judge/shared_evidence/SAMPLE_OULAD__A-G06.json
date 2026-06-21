@@ -1,0 +1,229 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G06",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G06",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G06__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "e7b468bebf4eaea2d02a8e29a877645c03371a2bd7a54a94d4be69a9fde9d4a0",
+ "deterministic_summary": {
+ "summary_type": "ranking",
+ "dataset_name": "activity_effectiveness",
+ "row_count": 9,
+ "entity_column": "resource_type",
+ "metric_column": "avg_score_by_resource_type",
+ "sort_direction": "desc",
+ "top_items": [
+ {
+ "resource_type": "page",
+ "avg_score_by_resource_type": 78.9,
+ "rank": 1,
+ "secondary_metrics": {
+ "student_count": 832
+ }
+ },
+ {
+ "resource_type": "oucollaborate",
+ "avg_score_by_resource_type": 74.67,
+ "rank": 2,
+ "secondary_metrics": {
+ "student_count": 733
+ }
+ },
+ {
+ "resource_type": "oucontent",
+ "avg_score_by_resource_type": 71.46,
+ "rank": 3,
+ "secondary_metrics": {
+ "student_count": 1778
+ }
+ },
+ {
+ "resource_type": "url",
+ "avg_score_by_resource_type": 71.04,
+ "rank": 4,
+ "secondary_metrics": {
+ "student_count": 1875
+ }
+ },
+ {
+ "resource_type": "forumng",
+ "avg_score_by_resource_type": 70.98,
+ "rank": 5,
+ "secondary_metrics": {
+ "student_count": 1791
+ }
+ }
+ ],
+ "bottom_items": [
+ {
+ "resource_type": "quiz",
+ "avg_score_by_resource_type": 70.28,
+ "rank": 7,
+ "secondary_metrics": {
+ "student_count": 1982
+ }
+ },
+ {
+ "resource_type": "homepage",
+ "avg_score_by_resource_type": 70.22,
+ "rank": 8,
+ "secondary_metrics": {
+ "student_count": 1995
+ }
+ },
+ {
+ "resource_type": "subpage",
+ "avg_score_by_resource_type": 70.22,
+ "rank": 9,
+ "secondary_metrics": {
+ "student_count": 1989
+ }
+ }
+ ],
+ "median_item": {
+ "resource_type": "forumng",
+ "avg_score_by_resource_type": 70.98,
+ "rank": 5,
+ "secondary_metrics": {
+ "student_count": 1791
+ }
+ },
+ "metric_stats": {
+ "count": 9,
+ "min": 70.22,
+ "max": 78.9,
+ "mean": 72.0078,
+ "median": 70.98
+ },
+ "tie_warnings": [],
+ "flag_evidence": [],
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "ranking",
+ "task_id": "A-G06",
+ "task_output_contract": [
+ "State the ranking/top entities, rank metric value, and why they are prioritized.",
+ "For risk/admin ranking rows, include returned flags or recommended action fields when present.",
+ "Do not generalize beyond returned rows or omit the top ranked examples."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "activity_effectiveness",
+ "row_count": 9,
+ "entity_column": "resource_type",
+ "metric_column": "avg_score_by_resource_type",
+ "sort_direction": "desc"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "top_items": [
+ {
+ "resource_type": "page",
+ "avg_score_by_resource_type": 78.9,
+ "rank": 1,
+ "secondary_metrics": {
+ "student_count": 832
+ }
+ },
+ {
+ "resource_type": "oucollaborate",
+ "avg_score_by_resource_type": 74.67,
+ "rank": 2,
+ "secondary_metrics": {
+ "student_count": 733
+ }
+ },
+ {
+ "resource_type": "oucontent",
+ "avg_score_by_resource_type": 71.46,
+ "rank": 3,
+ "secondary_metrics": {
+ "student_count": 1778
+ }
+ },
+ {
+ "resource_type": "url",
+ "avg_score_by_resource_type": 71.04,
+ "rank": 4,
+ "secondary_metrics": {
+ "student_count": 1875
+ }
+ },
+ {
+ "resource_type": "forumng",
+ "avg_score_by_resource_type": 70.98,
+ "rank": 5,
+ "secondary_metrics": {
+ "student_count": 1791
+ }
+ }
+ ],
+ "median_item": {
+ "resource_type": "forumng",
+ "avg_score_by_resource_type": 70.98,
+ "rank": 5,
+ "secondary_metrics": {
+ "student_count": 1791
+ }
+ },
+ "bottom_items": [
+ {
+ "resource_type": "quiz",
+ "avg_score_by_resource_type": 70.28,
+ "rank": 7,
+ "secondary_metrics": {
+ "student_count": 1982
+ }
+ },
+ {
+ "resource_type": "homepage",
+ "avg_score_by_resource_type": 70.22,
+ "rank": 8,
+ "secondary_metrics": {
+ "student_count": 1995
+ }
+ },
+ {
+ "resource_type": "subpage",
+ "avg_score_by_resource_type": 70.22,
+ "rank": 9,
+ "secondary_metrics": {
+ "student_count": 1989
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_stats": {
+ "count": 9,
+ "min": 70.22,
+ "max": 78.9,
+ "mean": 72.0078,
+ "median": 70.98
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": [],
+ "tie_warnings": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

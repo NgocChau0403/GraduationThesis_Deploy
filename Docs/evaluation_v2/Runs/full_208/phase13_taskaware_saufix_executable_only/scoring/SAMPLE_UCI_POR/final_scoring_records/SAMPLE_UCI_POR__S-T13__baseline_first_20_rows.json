@@ -1,0 +1,104 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T13__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Grounding and interpretation: No supported action is exposed by deterministic action evidence; the response does not say so and treats unavailable engagement as a basis for improvement context."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Values, directions, and comparisons: No supported action is exposed by deterministic action evidence; the response does not say so and treats unavailable engagement as a basis for improvement context."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Coverage of supplied requirements: No supported action is exposed by deterministic action evidence; the response does not say so and treats unavailable engagement as a basis for improvement context."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Fit to the stated task and audience: No supported action is exposed by deterministic action evidence; the response does not say so and treats unavailable engagement as a basis for improvement context."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Usefulness and evidence basis: No supported action is exposed by deterministic action evidence; the response does not say so and treats unavailable engagement as a basis for improvement context."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Precision and organization: No supported action is exposed by deterministic action evidence; the response does not say so and treats unavailable engagement as a basis for improvement context."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Fair and non-stigmatizing treatment: No supported action is exposed by deterministic action evidence; the response does not say so and treats unavailable engagement as a basis for improvement context."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "You are currently showing some signs that may indicate a need for additional support. Your average score is just above the passing threshold, and your engagement score is low, which suggests there are areas to focus on for improvement.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T13.json; dataset synthesis_data"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "No supported action is exposed by deterministic action evidence; the response does not say so and treats unavailable engagement as a basis for improvement context.",
+      "impact_type": "changes_interpretation"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "unsupported_action_context",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "major",
+      "primary_metric": "actionability",
+      "secondary_metrics": [],
+      "cap_candidate": 6,
+      "rationale": "No supported action is exposed by deterministic action evidence; the response does not say so and treats unavailable engagement as a basis for improvement context.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T13.json; dataset synthesis_data"
+      ]
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "major",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 1,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 5.85,
+  "caps_applied": [
+    {
+      "type": "unsupported_action_context",
+      "severity": "major",
+      "cap": 6,
+      "error_id": "E01",
+      "claim_ids": [
+        "C01"
+      ],
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T13.json; dataset synthesis_data"
+      ]
+    }
+  ],
+  "effective_cap": 6,
+  "final_score_after_caps": 5.85,
+  "verdict": "acceptable",
+  "invalid_reason": null
+}

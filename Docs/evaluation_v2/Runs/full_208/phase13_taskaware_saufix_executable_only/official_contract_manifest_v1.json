@@ -1,0 +1,89 @@
+{
+  "manifest_version": "llm_judge_v2_phase13_saufix_executable_only_contract_v1",
+  "status": "FROZEN_FOR_PHASE13_SAUFIX_EXECUTABLE_ONLY_INVOCATION",
+  "dataset_scope": "SAMPLE_UCI_POR",
+  "expected_record_count": 48,
+  "explanation_modes": [
+    "baseline_first_20_rows",
+    "task_aware_data_summarization"
+  ],
+  "judge_execution_policy": "phase13_pointwise_manifest_order_json_only",
+  "contract_artifacts": [
+    {
+      "artifact_id": "judge_prompt_v2_phase13_action_synthesis_correction",
+      "path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2_PHASE13_SAUFIX_EXECUTABLE_ONLY.md",
+      "sha256": "8ae00287d6a8e9c23c769c97b4d11aa90e05e9126f8cd3e71fcef74500d6f48f"
+    },
+    {
+      "artifact_id": "judge_rubric_1_to_10_phase13",
+      "path": "Docs/evaluation_v2/Rubric/JUDGE_RUBRIC_1_TO_10.md",
+      "sha256": "ac141e7148141de0244bf4443ba32aa8e47a08313fdaa1a7bc697a6b9faafcc1"
+    },
+    {
+      "artifact_id": "metric_anchor_spec_phase13",
+      "path": "Docs/evaluation_v2/Rubric/LLM_JUDGE_V2_METRIC_ANCHOR_SPEC.md",
+      "sha256": "a45a3d6b7e0a95f6f804a1739ea3685ec532c132b455ac802fe823cbe400d8fe"
+    },
+    {
+      "artifact_id": "task_evaluation_requirements_phase13",
+      "path": "Docs/evaluation_v2/Rubric/task_evaluation_requirements.json",
+      "sha256": "b4fb8957b33d428bf21807453c2caf72eecb1bda5dfa7a00481292d456a222c0"
+    },
+    {
+      "artifact_id": "action_synthesis_policy_fixture",
+      "path": "Docs/evaluation_v2/Rubric/fixtures/phase13_saufix_action_synthesis_judge_policy.json",
+      "sha256": "dfcf0119438be59771e2826bf4664acf9235caa8e0d40ae3b32c984ad4de8324"
+    },
+    {
+      "artifact_id": "judge_response_schema_v1",
+      "path": "Docs/evaluation_v2/LLM_JUDGE_V2_JUDGE_RESPONSE_SCHEMA_V1.json",
+      "sha256": "b41dcfec162c965b2de222d82294a1cc1dcce367a6d529f99170572e4120d57c"
+    }
+  ],
+  "provenance_artifacts": [
+    {
+      "artifact_id": "availability_gate",
+      "path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/input_slices/availability_gate__SAMPLE_UCI_POR.json",
+      "sha256": "5a0c09bf104bdc67af12376d3b1dad6c7966d5b3cd1f7d7e64069ed89bc83706"
+    },
+    {
+      "artifact_id": "baseline_explanation_manifest_24",
+      "path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/input_slices/explanation_manifest_baseline_uci_executable_24.jsonl",
+      "sha256": "e89ff592fc9d89ec141193ec69461c9bb3b33a4ed0c2b3f9fcdba2c07efff1ec"
+    },
+    {
+      "artifact_id": "task_aware_saufix_manifest_24",
+      "path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/input_slices/explanation_manifest_task_aware_saufix_uci_executable_24.jsonl",
+      "sha256": "cf9dfa94573a05f676597a73d254413d29d14fbd8a599f2f83ea174b8abdd95c"
+    },
+    {
+      "artifact_id": "evidence_manifest_48",
+      "path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/input_slices/evidence_manifest_uci_executable_48.jsonl",
+      "sha256": "90861e50c953dc3b7ba6327a669a14d4859005ce194db4791501093725202170"
+    },
+    {
+      "artifact_id": "judge_input_manifest_48",
+      "path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/judge_input_manifest.jsonl",
+      "sha256": "9e0c815280c48b7cb92fbee48f23fc606b448df0d6f9b1773d61525b40cdb3f1"
+    },
+    {
+      "artifact_id": "judge_context_manifest_48",
+      "path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_contexts/judge_context_manifest.jsonl",
+      "sha256": "d0b1bea44cefd08f52672a7f8525928d6c58d0cd4c8e70ece8e233a81ab4e2c0"
+    },
+    {
+      "artifact_id": "prompt_queue_manifest_48",
+      "path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_queue/judge_prompt_queue_manifest.jsonl",
+      "sha256": "fd52464fb7463ccbae22a612a7cda886b241d1f83b5f4dcf25b2b3125dc6fa16"
+    },
+    {
+      "artifact_id": "token_budget_report_48",
+      "path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_queue/token_budget_report.json",
+      "sha256": "2fadf93bdabc215011a60f216ba81f3f755b43bcd31ae63a7fe52951c6f26404"
+    }
+  ],
+  "gate_decision": {
+    "judge_invocation_allowed": true,
+    "scoring_allowed_before_import": false
+  }
+}

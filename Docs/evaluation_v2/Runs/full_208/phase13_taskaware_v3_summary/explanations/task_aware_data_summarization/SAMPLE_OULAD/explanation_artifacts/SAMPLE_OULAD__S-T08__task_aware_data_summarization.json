@@ -1,0 +1,386 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-20T14:45:04.100Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__S-T08__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__S-T08",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": "SAMPLE_OULAD_STU_100788",
+    "role": "student",
+    "task_id": "S-T08",
+    "task_name": "Assessment lateness impact",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T08.json",
+    "full_query_artifact_sha256": "02a77476593087a352549dbdb2c5098286e2277063652aeec9fd94cb464a5018"
+  },
+  "request_payload": {
+    "task_id": "S-T08",
+    "execution_id": "exec_1781847912365_48ce21c2",
+    "task_name": "Assessment lateness impact",
+    "analysis_type": "correlation",
+    "explanation_strategy": "behavioral",
+    "explanation_type": "observation, interpretation, caution, recommendation",
+    "ai_prompt_hint": "Use submission_delay_avg [FE] and punctuality_rate [FE]. Explain how delay magnitude correlates with score drop.",
+    "actionable_question": "Does submitting late actually lower my score?",
+    "target_audience": [
+      "student"
+    ],
+    "visualization_config": {
+      "x_field": "submission_delay_days",
+      "y_field": "score_normalized",
+      "series_field": null,
+      "color_field": "pass_flag",
+      "orientation": null,
+      "variant": "colored",
+      "x_label": "Submission Delay (days)",
+      "y_label": "Normalized Score",
+      "semantic_roles": {
+        "x": "assessment",
+        "y": "performance_metric",
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "per_assessment",
+      "aggregation_level": "student"
+    },
+    "datasets": {
+      "submission_lateness": [
+        {
+          "assessment_order": 1,
+          "assessment_type": "CMA",
+          "assessment_name": "24295",
+          "submission_delay_days": 3,
+          "score_normalized": 100,
+          "pass_flag": true,
+          "submission_day": 21,
+          "due_day": 18,
+          "submission_delay_avg": "3.25",
+          "punctuality_rate": "0"
+        },
+        {
+          "assessment_order": 3,
+          "assessment_type": "CMA",
+          "assessment_name": "24296",
+          "submission_delay_days": 2,
+          "score_normalized": 87,
+          "pass_flag": true,
+          "submission_day": 69,
+          "due_day": 67,
+          "submission_delay_avg": "3.25",
+          "punctuality_rate": "0"
+        },
+        {
+          "assessment_order": 5,
+          "assessment_type": "CMA",
+          "assessment_name": "24297",
+          "submission_delay_days": 3,
+          "score_normalized": 90,
+          "pass_flag": true,
+          "submission_day": 147,
+          "due_day": 144,
+          "submission_delay_avg": "3.25",
+          "punctuality_rate": "0"
+        },
+        {
+          "assessment_order": 8,
+          "assessment_type": "CMA",
+          "assessment_name": "24298",
+          "submission_delay_days": 5,
+          "score_normalized": 83,
+          "pass_flag": true,
+          "submission_day": 219,
+          "due_day": 214,
+          "submission_delay_avg": "3.25",
+          "punctuality_rate": "0"
+        },
+        {
+          "assessment_order": 9,
+          "assessment_type": "Exam",
+          "assessment_name": "24299",
+          "submission_delay_days": null,
+          "score_normalized": 96,
+          "pass_flag": true,
+          "submission_day": 244,
+          "due_day": null,
+          "submission_delay_avg": "3.25",
+          "punctuality_rate": "0"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": {
+      "student_id": "SAMPLE_OULAD_STU_100788",
+      "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788",
+      "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+      "dataset_id": "SAMPLE_OULAD"
+    },
+    "query_labels": [
+      "submission_lateness"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {
+        "submission_delay_days": "higher_is_worse",
+        "submission_delay_avg": "higher_is_worse",
+        "punctuality_rate": "higher_is_better",
+        "score_normalized": "higher_is_better"
+      },
+      "metric_units": {
+        "submission_delay_days": "days_relative_to_due_date",
+        "submission_delay_avg": "days_late_average_positive_only",
+        "punctuality_rate": "ratio_0_1",
+        "score_normalized": "score_on_runtime_scale"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [
+        "score_normalized",
+        "submission_delay_avg",
+        "punctuality_rate"
+      ],
+      "flag_columns": [
+        "pass_flag"
+      ],
+      "action_columns": [],
+      "label_columns": [
+        "assessment_type",
+        "assessment_name"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "trend_series",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": "assessment_order",
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "submission_delay_days",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": 6,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": 30,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 5545,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1764,
+      "completion_tokens": 462,
+      "total_tokens": 2226
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "S-T08",
+    "execution_id": "exec_1781847912365_48ce21c2",
+    "explanation": {
+      "summary": "You've shown a pattern of submitting assessments late, which seems to correlate with a drop in your scores. While you have passed all assessments, the increase in submission delays may be impacting your overall performance.",
+      "insights": [
+        {
+          "title": "Increasing Submission Delays",
+          "description": "Your submission delays have increased from 3 days to 5 days over the assessments, which is concerning. This trend suggests that you may be struggling to meet deadlines, which could affect your scores.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "submission_delay_days",
+              "value": 5,
+              "comparison": "up_from_previous",
+              "delta": 2,
+              "context": "Increased from 3 days to 5 days over the assessments."
+            }
+          ]
+        },
+        {
+          "title": "Score Drop with Delays",
+          "description": "Your normalized scores have decreased from 100 to 83 as submission delays increased. This indicates a potential link between late submissions and lower scores.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "score_normalized",
+              "value": 83,
+              "comparison": "down_from_previous",
+              "delta": -17,
+              "context": "Score dropped as submission delays increased."
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Timely submissions may enhance your understanding and retention of course material."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Create a study schedule to manage your time better.",
+          "rationale": "This will help you stay on track with your assignments and reduce submission delays."
+        },
+        {
+          "priority": "medium",
+          "action": "Set reminders for due dates.",
+          "rationale": "Reminders can help you submit your work on time, potentially improving your scores."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data shows clear trends in submission delays and corresponding score changes.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "behavioral",
+    "explanation_type": "behavioral",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3-experimental",
+    "baseline_available": true,
+    "input_summary_type": "trend_series",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 5,
+    "included_row_count": 5,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "submission_lateness",
+        "row_count": 5,
+        "included_row_count": 5
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 5,
+    "baseline_reference_tokens": 376,
+    "task_aware_prompt_tokens": 1157,
+    "token_ratio": 3.0771,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "comparison",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [
+      "limitations.causal_claim_allowed",
+      "limitations.small_sample_caveats",
+      "action_evidence.action_evidence",
+      "exceptions.flagged_points",
+      "exceptions.trough",
+      "exceptions.peak",
+      "trend_relationship.largest_adjacent_drop",
+      "trend_relationship.largest_adjacent_rise"
+    ],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (3.0771 > 1.2).",
+      "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 5541,
+      "token_usage": {
+        "prompt_tokens": 1764,
+        "completion_tokens": 462,
+        "total_tokens": 2226
+      },
+      "strategy": "behavioral",
+      "granularity": "per_assessment",
+      "cost_usd": 0.000542
+    }
+  },
+  "raw_text": "Summary: You've shown a pattern of submitting assessments late, which seems to correlate with a drop in your scores. While you have passed all assessments, the increase in submission delays may be impacting your overall performance.\n\nInsights: Increasing Submission Delays: Your submission delays have increased from 3 days to 5 days over the assessments, which is concerning. This trend suggests that you may be struggling to meet deadlines, which could affect your scores. | Score Drop with Delays: Your normalized scores have decreased from 100 to 83 as submission delays increased. This indicates a potential link between late submissions and lower scores.\n\nEducational implications: Timely submissions may enhance your understanding and retention of course material.\n\nRecommendations: high - Create a study schedule to manage your time better. - This will help you stay on track with your assignments and reduce submission delays. | medium - Set reminders for due dates. - Reminders can help you submit your work on time, potentially improving your scores."
+}

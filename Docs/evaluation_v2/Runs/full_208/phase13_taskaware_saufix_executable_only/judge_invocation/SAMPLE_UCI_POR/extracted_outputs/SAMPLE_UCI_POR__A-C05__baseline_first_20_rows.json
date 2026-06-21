@@ -1,0 +1,77 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-C05__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Grounding and interpretation: The comparative values are supported, but claims about a more supportive academic environment and performance impact exceed the non-causal evidence."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Values, directions, and comparisons: The comparative values are supported, but claims about a more supportive academic environment and performance impact exceed the non-causal evidence."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Coverage of supplied requirements: The comparative values are supported, but claims about a more supportive academic environment and performance impact exceed the non-causal evidence."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Fit to the stated task and audience: The comparative values are supported, but claims about a more supportive academic environment and performance impact exceed the non-causal evidence."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Usefulness and evidence basis: The comparative values are supported, but claims about a more supportive academic environment and performance impact exceed the non-causal evidence."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Precision and organization: The comparative values are supported, but claims about a more supportive academic environment and performance impact exceed the non-causal evidence."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Fair and non-stigmatizing treatment: The comparative values are supported, but claims about a more supportive academic environment and performance impact exceed the non-causal evidence."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The comparison of the two students reveals significant differences in their educational backgrounds, particularly in parental education levels and associated disadvantage scores. Student 1 has a higher parental education level and lower disadvantage score compared to Student 2.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C05.json; dataset background_comparison"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The comparative values are supported, but claims about a more supportive academic environment and performance impact exceed the non-causal evidence.",
+      "impact_type": "changes_interpretation"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "unsupported_causal_framing",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "major",
+      "primary_metric": "faithfulness",
+      "secondary_metrics": [],
+      "cap_candidate": 7,
+      "rationale": "The comparative values are supported, but claims about a more supportive academic environment and performance impact exceed the non-causal evidence.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C05.json; dataset background_comparison"
+      ]
+    }
+  ],
+  "holistic_rationale": "The record is judgeable and addresses the stated task, but the comparative values are supported, but claims about a more supportive academic environment and performance impact exceed the non-causal evidence. The metric pattern reflects that defect without adding an overall score or verdict.",
+  "evidence_usage_notes": "Evidence mode was direct_embedding. direct_embedding delivered all 2 rows; retrieval_log_path was not applicable. The judgment used the cited artifact or retrieval record plus the packet's deterministic checks; access was not treated as proof that the explanation attended to every row.",
+  "invalid_reason": null
+}

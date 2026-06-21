@@ -1,0 +1,381 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-20T14:40:37.539Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_OULAD__A-C02__task_aware_data_summarization",
+    "case_id": "SAMPLE_OULAD__A-C02",
+    "dataset_id": "SAMPLE_OULAD",
+    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-C02",
+    "task_name": "Compare engagement patterns",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-C02.json",
+    "full_query_artifact_sha256": "68726384d9ea133f2ddbb3ffd580c7ee18a8ad91280d9c40d955fc6222ed5857"
+  },
+  "request_payload": {
+    "task_id": "A-C02",
+    "execution_id": "exec_1781847642419_5be485d9",
+    "task_name": "Compare engagement patterns",
+    "analysis_type": "comparison",
+    "explanation_strategy": "comparison",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Compare the two students using metric, engagement_score, total_clicks, and active_days. Explain which engagement dimension creates the largest gap. Do not infer academic risk unless risk fields are present.",
+    "actionable_question": "Which student is more engaged across total clicks, active days, and combined engagement score?",
+    "target_audience": [
+      "instructor"
+    ],
+    "visualization_config": {
+      "x_field": "student_id",
+      "y_field": "engagement_score",
+      "series_field": "metric",
+      "color_field": "student_id",
+      "orientation": "vertical",
+      "variant": "grouped",
+      "x_label": "Student",
+      "y_label": "Score (0–1)",
+      "semantic_roles": {
+        "x": "student",
+        "y": "engagement_metric",
+        "series": "metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "comparison"
+    },
+    "datasets": {
+      "engagement_comparison": [
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "metric": "active_days_norm",
+          "engagement_score": 0.35251798561151076,
+          "total_clicks": 1261,
+          "active_days": 98,
+          "study_effort_level": "very_low"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "metric": "engagement_score",
+          "engagement_score": 0.20237855036820618,
+          "total_clicks": 1261,
+          "active_days": 98,
+          "study_effort_level": "very_low"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_100788",
+          "metric": "total_clicks_norm",
+          "engagement_score": 0.05223911512490161,
+          "total_clicks": 1261,
+          "active_days": 98,
+          "study_effort_level": "very_low"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_101700",
+          "metric": "active_days_norm",
+          "engagement_score": 0,
+          "total_clicks": 0,
+          "active_days": 0,
+          "study_effort_level": "very_low"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_101700",
+          "metric": "engagement_score",
+          "engagement_score": 0,
+          "total_clicks": 0,
+          "active_days": 0,
+          "study_effort_level": "very_low"
+        },
+        {
+          "student_id": "SAMPLE_OULAD_STU_101700",
+          "metric": "total_clicks_norm",
+          "engagement_score": 0,
+          "total_clicks": 0,
+          "active_days": 0,
+          "study_effort_level": "very_low"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "engagement_comparison"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {
+        "total_clicks_norm": "higher_is_better",
+        "active_days_norm": "higher_is_better",
+        "engagement_score": "higher_is_better"
+      },
+      "metric_units": {
+        "total_clicks_norm": "ratio_0_1",
+        "active_days_norm": "ratio_0_1",
+        "engagement_score": "ratio_0_1"
+      },
+      "metric_thresholds": {
+        "total_clicks_norm": {
+          "status": "not_applicable",
+          "reason": "descriptive component metric"
+        },
+        "active_days_norm": {
+          "status": "not_applicable",
+          "reason": "descriptive component metric"
+        },
+        "engagement_score": {
+          "very_low_below": 0.25,
+          "low_below": 0.5,
+          "medium_below": 0.75,
+          "high_at_or_above": 0.75
+        }
+      },
+      "minimum_entity_count": 2,
+      "require_metric_directions": true,
+      "require_metric_units": true,
+      "require_metric_thresholds": true,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [
+        "study_effort_level",
+        "total_clicks",
+        "active_days"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "multi_metric_comparison",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": "student_id",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": "metric",
+      "metric_value_column": "engagement_score",
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 9171,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1665,
+      "completion_tokens": 657,
+      "total_tokens": 2322
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-C02",
+    "execution_id": "exec_1781847642419_5be485d9",
+    "explanation": {
+      "summary": "The analysis of engagement patterns reveals a significant disparity between the two students, with SAMPLE_OULAD_STU_100788 demonstrating a higher level of engagement across all metrics compared to SAMPLE_OULAD_STU_101700, who shows no engagement. This gap is most pronounced in the engagement score.",
+      "insights": [
+        {
+          "title": "Engagement Score Disparity",
+          "description": "SAMPLE_OULAD_STU_100788 has an engagement score of 0.2024, while SAMPLE_OULAD_STU_101700 has an engagement score of 0. This indicates a complete lack of engagement for the latter student.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "engagement_score",
+              "value": 0.2024,
+              "comparison": "baseline",
+              "delta": 0.2024,
+              "context": "SAMPLE_OULAD_STU_100788 vs SAMPLE_OULAD_STU_101700"
+            }
+          ]
+        },
+        {
+          "title": "Active Days Engagement",
+          "description": "SAMPLE_OULAD_STU_100788 has 98 active days compared to 0 active days for SAMPLE_OULAD_STU_101700, highlighting a stark contrast in engagement frequency.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "active_days",
+              "value": 98,
+              "comparison": "baseline",
+              "delta": 98,
+              "context": "SAMPLE_OULAD_STU_100788 vs SAMPLE_OULAD_STU_101700"
+            }
+          ]
+        },
+        {
+          "title": "Total Clicks Comparison",
+          "description": "SAMPLE_OULAD_STU_100788 recorded 1261 total clicks, while SAMPLE_OULAD_STU_101700 recorded 0 total clicks, indicating a significant difference in interaction with course materials.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "total_clicks",
+              "value": 1261,
+              "comparison": "baseline",
+              "delta": 1261,
+              "context": "SAMPLE_OULAD_STU_100788 vs SAMPLE_OULAD_STU_101700"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "The lack of engagement from SAMPLE_OULAD_STU_101700 suggests a need for targeted interventions to increase participation and interaction with course materials."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement engagement strategies for SAMPLE_OULAD_STU_101700, such as personalized outreach or incentives for participation.",
+          "rationale": "To address the complete lack of engagement and encourage the student to interact with course content."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data quality is sufficient, with clear metrics and comparisons available for analysis.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "comparison",
+    "explanation_type": "comparison",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3-experimental",
+    "baseline_available": true,
+    "input_summary_type": "multi_metric_comparison",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 6,
+    "included_row_count": 6,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "engagement_comparison",
+        "row_count": 6,
+        "included_row_count": 6
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 6,
+    "baseline_reference_tokens": 323,
+    "task_aware_prompt_tokens": 994,
+    "token_ratio": 3.0774,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [
+      "limitations.causal_claim_allowed",
+      "limitations.missing_expected_entities",
+      "comparison.metric_extrema",
+      "comparison.pairwise_gaps"
+    ],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (3.0774 > 1.2).",
+      "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 9166,
+      "token_usage": {
+        "prompt_tokens": 1665,
+        "completion_tokens": 657,
+        "total_tokens": 2322
+      },
+      "strategy": "comparison",
+      "granularity": "semester",
+      "cost_usd": 0.000644
+    }
+  },
+  "raw_text": "Summary: The analysis of engagement patterns reveals a significant disparity between the two students, with SAMPLE_OULAD_STU_100788 demonstrating a higher level of engagement across all metrics compared to SAMPLE_OULAD_STU_101700, who shows no engagement. This gap is most pronounced in the engagement score.\n\nInsights: Engagement Score Disparity: SAMPLE_OULAD_STU_100788 has an engagement score of 0.2024, while SAMPLE_OULAD_STU_101700 has an engagement score of 0. This indicates a complete lack of engagement for the latter student. | Active Days Engagement: SAMPLE_OULAD_STU_100788 has 98 active days compared to 0 active days for SAMPLE_OULAD_STU_101700, highlighting a stark contrast in engagement frequency. | Total Clicks Comparison: SAMPLE_OULAD_STU_100788 recorded 1261 total clicks, while SAMPLE_OULAD_STU_101700 recorded 0 total clicks, indicating a significant difference in interaction with course materials.\n\nEducational implications: The lack of engagement from SAMPLE_OULAD_STU_101700 suggests a need for targeted interventions to increase participation and interaction with course materials.\n\nRecommendations: high - Implement engagement strategies for SAMPLE_OULAD_STU_101700, such as personalized outreach or incentives for participation. - To address the complete lack of engagement and encourage the student to interact with course content."
+}

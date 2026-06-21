@@ -1,0 +1,102 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__S-B02__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on faithfulness, with the limitations summarized in the holistic rationale."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10 reflects It still recommends increasing engagement even though engagement evidence is unavailable."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on safety_fairness, with the limitations summarized in the holistic rationale."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The student has low risk, at_risk_score 1/5, average score 41.25 above the 40 pass threshold, and punctuality rate 1.",
+ "claim_type": "risk_status",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_summary row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "All stated values and directions are correct."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Engagement cannot be assessed because engagement_score_available is false.",
+ "claim_type": "availability",
+ "claim_scope": "supporting",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_summary engagement_score_available=false"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The response correctly distinguishes the placeholder zero from available evidence."
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "unsupported_engagement_action",
+ "claim_ids": [],
+ "severity": "minor",
+ "primary_metric": "actionability",
+ "secondary_metrics": [
+ "faithfulness"
+ ],
+ "cap_candidate": null,
+ "rationale": "It still recommends increasing engagement even though engagement evidence is unavailable.",
+ "evidence_refs": [
+ "risk_summary engagement_score_available=false"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "minor",
+ "error_count": 1,
+ "count_by_severity": {
+ "minor": 1,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 8.9,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 8.9,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

@@ -1,0 +1,272 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-B03",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-B03",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-B03__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "23820d8c524d45125b5fe641199103e6e76a758e4f22557b1babd46f9de5944b",
+ "deterministic_summary": {
+ "summary_type": "categorical_distribution",
+ "dataset_name": "engagement_distribution",
+ "row_count": 4,
+ "category_column": "study_effort_level",
+ "count_column": "student_count",
+ "percent_column": "pct_of_class",
+ "total_count": 2498,
+ "category_distribution": [
+ {
+ "category": "very_low",
+ "count": 1740,
+ "percent": 69.7,
+ "metrics": {
+ "avg_engagement_score": 0.0516
+ }
+ },
+ {
+ "category": "low",
+ "count": 618,
+ "percent": 24.7,
+ "metrics": {
+ "avg_engagement_score": 0.2272
+ }
+ },
+ {
+ "category": "medium",
+ "count": 127,
+ "percent": 5.1,
+ "metrics": {
+ "avg_engagement_score": 0.4293
+ }
+ },
+ {
+ "category": "high",
+ "count": 13,
+ "percent": 0.5,
+ "metrics": {
+ "avg_engagement_score": 0.707
+ }
+ }
+ ],
+ "largest_category": {
+ "category": "very_low",
+ "count": 1740,
+ "percent": 69.7
+ },
+ "focus_categories": [
+ "very_low",
+ "low"
+ ],
+ "focus_total": {
+ "categories": [
+ "very_low",
+ "low"
+ ],
+ "present_categories": [
+ "very_low",
+ "low"
+ ],
+ "missing_categories": [],
+ "count": 2358,
+ "percent": 94.4
+ },
+ "missing_expected_categories": [],
+ "missing_focus_categories": [],
+ "metric_columns": [
+ "avg_engagement_score"
+ ],
+ "metric_evidence_by_category": {
+ "very_low": {
+ "avg_engagement_score": 0.0516
+ },
+ "low": {
+ "avg_engagement_score": 0.2272
+ },
+ "medium": {
+ "avg_engagement_score": 0.4293
+ },
+ "high": {
+ "avg_engagement_score": 0.707
+ }
+ },
+ "summarization_warnings": [],
+ "percent_total": 100,
+ "engagement_distribution_evidence": {
+ "groups": [
+ {
+ "study_effort_level": "very_low",
+ "student_count": 1740,
+ "pct_of_class": 69.7,
+ "avg_engagement_score": 0.0516
+ },
+ {
+ "study_effort_level": "low",
+ "student_count": 618,
+ "pct_of_class": 24.7,
+ "avg_engagement_score": 0.2272
+ },
+ {
+ "study_effort_level": "medium",
+ "student_count": 127,
+ "pct_of_class": 5.1,
+ "avg_engagement_score": 0.4293
+ },
+ {
+ "study_effort_level": "high",
+ "student_count": 13,
+ "pct_of_class": 0.5,
+ "avg_engagement_score": 0.707
+ }
+ ],
+ "group_count": 4,
+ "policy": "descriptive_distribution_only_no_improvement_promise"
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "categorical_distribution",
+ "task_id": "A-B03",
+ "task_output_contract": [
+ "Preserve all returned study_effort_level groups with exact student_count, pct_of_class, and avg_engagement_score.",
+ "Describe the distribution only; do not claim that an intervention will improve engagement or academic outcomes."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "engagement_distribution",
+ "row_count": 4,
+ "category_column": "study_effort_level",
+ "count_column": "student_count",
+ "percent_column": "pct_of_class",
+ "metric_columns": [
+ "avg_engagement_score"
+ ],
+ "total_count": 2498,
+ "percent_total": 100,
+ "focus_categories": [
+ "very_low",
+ "low"
+ ]
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "category_distribution": [
+ {
+ "category": "very_low",
+ "count": 1740,
+ "percent": 69.7,
+ "metrics": {
+ "avg_engagement_score": 0.0516
+ }
+ },
+ {
+ "category": "low",
+ "count": 618,
+ "percent": 24.7,
+ "metrics": {
+ "avg_engagement_score": 0.2272
+ }
+ },
+ {
+ "category": "medium",
+ "count": 127,
+ "percent": 5.1,
+ "metrics": {
+ "avg_engagement_score": 0.4293
+ }
+ },
+ {
+ "category": "high",
+ "count": 13,
+ "percent": 0.5,
+ "metrics": {
+ "avg_engagement_score": 0.707
+ }
+ }
+ ],
+ "focus_total": {
+ "categories": [
+ "very_low",
+ "low"
+ ],
+ "present_categories": [
+ "very_low",
+ "low"
+ ],
+ "missing_categories": [],
+ "count": 2358,
+ "percent": 94.4
+ },
+ "engagement_distribution_evidence": {
+ "groups": [
+ {
+ "study_effort_level": "very_low",
+ "student_count": 1740,
+ "pct_of_class": 69.7,
+ "avg_engagement_score": 0.0516
+ },
+ {
+ "study_effort_level": "low",
+ "student_count": 618,
+ "pct_of_class": 24.7,
+ "avg_engagement_score": 0.2272
+ },
+ {
+ "study_effort_level": "medium",
+ "student_count": 127,
+ "pct_of_class": 5.1,
+ "avg_engagement_score": 0.4293
+ },
+ {
+ "study_effort_level": "high",
+ "student_count": 13,
+ "pct_of_class": 0.5,
+ "avg_engagement_score": 0.707
+ }
+ ],
+ "group_count": 4,
+ "policy": "descriptive_distribution_only_no_improvement_promise"
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_evidence_by_category": {
+ "very_low": {
+ "avg_engagement_score": 0.0516
+ },
+ "low": {
+ "avg_engagement_score": 0.2272
+ },
+ "medium": {
+ "avg_engagement_score": 0.4293
+ },
+ "high": {
+ "avg_engagement_score": 0.707
+ }
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "largest_category": {
+ "category": "very_low",
+ "count": 1740,
+ "percent": 69.7
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_expected_categories": [],
+ "missing_focus_categories": [],
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

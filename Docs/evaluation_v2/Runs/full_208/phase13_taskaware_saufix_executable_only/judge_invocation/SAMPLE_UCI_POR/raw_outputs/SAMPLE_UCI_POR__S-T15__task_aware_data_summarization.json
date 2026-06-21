@@ -1,0 +1,75 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T15__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Grounding and interpretation: The 0.1442 coefficient is accurate, but the selected student position is omitted and the recommendation violates the task constraint against prescriptive suggestions."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "Values, directions, and comparisons: The 0.1442 coefficient is accurate, but the selected student position is omitted and the recommendation violates the task constraint against prescriptive suggestions."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Coverage of supplied requirements: The 0.1442 coefficient is accurate, but the selected student position is omitted and the recommendation violates the task constraint against prescriptive suggestions."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Fit to the stated task and audience: The 0.1442 coefficient is accurate, but the selected student position is omitted and the recommendation violates the task constraint against prescriptive suggestions."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Usefulness and evidence basis: The 0.1442 coefficient is accurate, but the selected student position is omitted and the recommendation violates the task constraint against prescriptive suggestions."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Precision and organization: The 0.1442 coefficient is accurate, but the selected student position is omitted and the recommendation violates the task constraint against prescriptive suggestions."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Fair and non-stigmatizing treatment: The 0.1442 coefficient is accurate, but the selected student position is omitted and the recommendation violates the task constraint against prescriptive suggestions."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis shows a weak positive correlation between Family Stability Score and Average Score. This suggests that as the Family Stability Score increases, the Average Score tends to increase slightly as well, but the relationship is not very strong.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T15__task_aware_data_summarization.json; retrieved evidence for S-T15"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The 0.1442 coefficient is accurate, but the selected student position is omitted and the recommendation violates the task constraint against prescriptive suggestions."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_required_output",
+      "claim_ids": [],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 6,
+      "rationale": "The 0.1442 coefficient is accurate, but the selected student position is omitted and the recommendation violates the task constraint against prescriptive suggestions.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T15__task_aware_data_summarization.json; retrieved evidence for S-T15"
+      ],
+      "requirement_id": "S-T15-CORE-01"
+    }
+  ],
+  "holistic_rationale": "The record is judgeable and addresses the stated task, but the 0.1442 coefficient is accurate, but the selected student position is omitted and the recommendation violates the task constraint against prescriptive suggestions. The metric pattern reflects that defect without adding an overall score or verdict.",
+  "evidence_usage_notes": "Evidence mode was deterministic_artifact_retrieval. deterministic_artifact_retrieval delivered the manifest-authorized evidence through Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T15__task_aware_data_summarization.json; the full 649-row artifact was not claimed as prompt-embedded. The judgment used the cited artifact or retrieval record plus the packet's deterministic checks; access was not treated as proof that the explanation attended to every row.",
+  "invalid_reason": null
+}

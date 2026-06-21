@@ -1,0 +1,75 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-S04__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Grounding and interpretation: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "Values, directions, and comparisons: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Coverage of supplied requirements: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Fit to the stated task and audience: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Usefulness and evidence basis: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Precision and organization: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Fair and non-stigmatizing treatment: Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis indicates that the student is at risk due to low academic performance and low punctuality in submissions. These factors suggest a need for immediate intervention to support the student's learning trajectory.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S04.json; dataset risk_flags"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated."
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_required_detail",
+      "claim_ids": [],
+      "severity": "minor",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": null,
+      "rationale": "Both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S04.json; dataset risk_flags"
+      ],
+      "requirement_id": "A-S04-CORE-02"
+    }
+  ],
+  "holistic_rationale": "The record is judgeable and addresses the stated task, but both triggered flags, values, thresholds, and actions are covered, but the exact returned severity labels are not clearly stated. The metric pattern reflects that defect without adding an overall score or verdict.",
+  "evidence_usage_notes": "Evidence mode was direct_embedding. direct_embedding delivered all 4 rows; retrieval_log_path was not applicable. The judgment used the cited artifact or retrieval record plus the packet's deterministic checks; access was not treated as proof that the explanation attended to every row.",
+  "invalid_reason": null
+}

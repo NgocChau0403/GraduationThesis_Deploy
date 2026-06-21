@@ -1,0 +1,135 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_OULAD",
+ "record_id": "SAMPLE_OULAD__A-B01__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Factual interpretation was judged against the packet evidence, with penalties for unsupported scope, causality, thresholds, or direction."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Numeric values, percentages, rankings, thresholds, and directions were checked against the delivered or retrieved evidence in this packet."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Coverage was scored against the supplied core and supporting requirements for this exact task."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "The score reflects whether the explanation answers the stated actionable question for the correct dataset, entity level, and audience."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Actionability reflects whether advice or interpretation is feasible and grounded in returned evidence or supported action provenance."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Clarity reflects organization, precision, concision, and whether the output is scannable for the target audience."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Safety/fairness is applicable under the packet contract; scoring penalizes overconfident, stigmatizing, causal, or unfair individual/group framing."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Summary: The overall performance distribution indicates that a significant portion of students are scoring below the passing threshold of 40, with 173 students (6.9% of the class) falling within the lower score buckets.",
+ "claim_type": "task_answer",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "The distribution is heavily skewed towards higher scores, with notable clusters in the 80-100 range.",
+ "claim_type": "numeric_or_status_evidence",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C03",
+ "claim_text": "Insights: High Proportion Below Passing Threshold: A total of 173 students are scoring below the passing threshold of 40, representing 6.9% of the class.",
+ "claim_type": "interpretation_or_action",
+ "claim_scope": "supporting",
+ "support_status": "not_verifiable",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The permitted evidence supports the observed pattern but not the causal or behavioral interpretation as stated.",
+ "impact_type": "weakens_support"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "interpretive_overstatement",
+ "claim_ids": [
+ "C03"
+ ],
+ "severity": "minor",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "safety_fairness"
+ ],
+ "cap_candidate": 8,
+ "rationale": "The explanation calls the below-threshold share significant; the numeric value is correct, but the wording is somewhat stronger than the evidence alone requires.",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "minor",
+ "error_count": 1,
+ "count_by_severity": {
+ "minor": 1,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 8.5,
+ "caps_applied": [
+ {
+ "type": "interpretive_overstatement",
+ "severity": "minor",
+ "cap": 8,
+ "error_id": "E01",
+ "claim_ids": [
+ "C03"
+ ],
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ]
+ }
+ ],
+ "effective_cap": 8,
+ "final_score_after_caps": 8,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

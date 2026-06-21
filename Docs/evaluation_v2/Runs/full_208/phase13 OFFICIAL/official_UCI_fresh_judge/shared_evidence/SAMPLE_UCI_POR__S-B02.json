@@ -1,0 +1,272 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__S-B02",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "S-B02",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__S-B02__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "373c2f8b5aabe0912c065c7843f7c934e0d48dd9e2b7a45992236533533b3849",
+ "deterministic_summary": {
+ "summary_type": "metric_snapshot",
+ "dataset_name": "risk_summary",
+ "row_count": 1,
+ "entity": null,
+ "metric_snapshot": {
+ "avg_score": {
+ "value": 41.25,
+ "unit": "score_on_runtime_scale",
+ "available": true
+ },
+ "engagement_score": {
+ "value": 0,
+ "unit": "ratio_0_1",
+ "available": false,
+ "availability_column": "engagement_score_available",
+ "availability_value": false
+ },
+ "punctuality_rate": {
+ "value": 1,
+ "unit": "ratio_0_1",
+ "available": true
+ },
+ "previous_attempt_count": {
+ "value": 0,
+ "unit": "count",
+ "available": true
+ },
+ "at_risk_score": {
+ "value": 1,
+ "unit": "triggered_flag_count_0_5",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "engagement_score_available": false,
+ "score_strategy": "weighted_by_assessment_weight",
+ "at_risk_label": "low"
+ },
+ "threshold_evidence": {
+ "pass_threshold": {
+ "value": 40,
+ "unit": "score_on_runtime_scale",
+ "source": "runtime_score_context"
+ },
+ "target_threshold": {
+ "value": 70,
+ "unit": "score_on_runtime_scale",
+ "source": "runtime_score_context"
+ }
+ },
+ "benchmark_evidence": {},
+ "label_evidence": {
+ "score_scale": 100
+ },
+ "flag_evidence": {},
+ "action_evidence": {},
+ "missing_evidence": [
+ {
+ "role": "metric",
+ "column": "engagement_score",
+ "reason": "metric is unavailable according to configured availability evidence",
+ "value": 0
+ }
+ ],
+ "sensitive_context_present": false,
+ "sensitive_context": {},
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "avg_score",
+ "engagement_score",
+ "punctuality_rate",
+ "previous_attempt_count",
+ "at_risk_score"
+ ],
+ "configured_status_columns": [
+ "engagement_score_available",
+ "score_strategy",
+ "at_risk_label"
+ ],
+ "configured_threshold_columns": [
+ "pass_threshold",
+ "target_threshold"
+ ],
+ "configured_benchmark_columns": [],
+ "configured_sensitive_columns": [],
+ "metric_availability_columns": {
+ "engagement_score": "engagement_score_available"
+ },
+ "metric_units": {
+ "avg_score": "score_on_runtime_scale",
+ "engagement_score": "ratio_0_1",
+ "punctuality_rate": "ratio_0_1",
+ "previous_attempt_count": "count",
+ "at_risk_score": "triggered_flag_count_0_5",
+ "pass_threshold": "score_on_runtime_scale",
+ "target_threshold": "score_on_runtime_scale"
+ },
+ "threshold_sources": {
+ "pass_threshold": "runtime_score_context",
+ "target_threshold": "runtime_score_context"
+ },
+ "benchmark_sources": {},
+ "sensitive_context_policy": null,
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "evidence_status": "sufficient",
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "metric_snapshot",
+ "task_id": "S-B02",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "risk_summary",
+ "row_count": 1,
+ "entity": null,
+ "evidence_status": "sufficient"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "metric_snapshot": {
+ "avg_score": {
+ "value": 41.25,
+ "unit": "score_on_runtime_scale",
+ "available": true
+ },
+ "engagement_score": {
+ "value": 0,
+ "unit": "ratio_0_1",
+ "available": false,
+ "availability_column": "engagement_score_available",
+ "availability_value": false
+ },
+ "punctuality_rate": {
+ "value": 1,
+ "unit": "ratio_0_1",
+ "available": true
+ },
+ "previous_attempt_count": {
+ "value": 0,
+ "unit": "count",
+ "available": true
+ },
+ "at_risk_score": {
+ "value": 1,
+ "unit": "triggered_flag_count_0_5",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "engagement_score_available": false,
+ "score_strategy": "weighted_by_assessment_weight",
+ "at_risk_label": "low"
+ },
+ "label_evidence": {
+ "score_scale": 100
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "threshold_evidence": {
+ "pass_threshold": {
+ "value": 40,
+ "unit": "score_on_runtime_scale",
+ "source": "runtime_score_context"
+ },
+ "target_threshold": {
+ "value": 70,
+ "unit": "score_on_runtime_scale",
+ "source": "runtime_score_context"
+ }
+ },
+ "benchmark_evidence": {}
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": {},
+ "sensitive_context_present": false,
+ "sensitive_context": {}
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "action_evidence": {}
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_evidence": [
+ {
+ "role": "metric",
+ "column": "engagement_score",
+ "reason": "metric is unavailable according to configured availability evidence",
+ "value": 0
+ }
+ ],
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "avg_score",
+ "engagement_score",
+ "punctuality_rate",
+ "previous_attempt_count",
+ "at_risk_score"
+ ],
+ "configured_status_columns": [
+ "engagement_score_available",
+ "score_strategy",
+ "at_risk_label"
+ ],
+ "configured_threshold_columns": [
+ "pass_threshold",
+ "target_threshold"
+ ],
+ "configured_benchmark_columns": [],
+ "configured_sensitive_columns": [],
+ "metric_availability_columns": {
+ "engagement_score": "engagement_score_available"
+ },
+ "metric_units": {
+ "avg_score": "score_on_runtime_scale",
+ "engagement_score": "ratio_0_1",
+ "punctuality_rate": "ratio_0_1",
+ "previous_attempt_count": "count",
+ "at_risk_score": "triggered_flag_count_0_5",
+ "pass_threshold": "score_on_runtime_scale",
+ "target_threshold": "score_on_runtime_scale"
+ },
+ "threshold_sources": {
+ "pass_threshold": "runtime_score_context",
+ "target_threshold": "runtime_score_context"
+ },
+ "benchmark_sources": {},
+ "sensitive_context_policy": null,
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

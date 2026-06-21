@@ -1,0 +1,101 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_OULAD",
+ "record_id": "SAMPLE_OULAD__A-G08__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Factual interpretation was judged against the packet evidence, with penalties for unsupported scope, causality, thresholds, or direction."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Numeric values, percentages, rankings, thresholds, and directions were checked against the delivered or retrieved evidence in this packet."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Coverage was scored against the supplied core and supporting requirements for this exact task."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "The score reflects whether the explanation answers the stated actionable question for the correct dataset, entity level, and audience."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Actionability reflects whether advice or interpretation is feasible and grounded in returned evidence or supported action provenance."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Clarity reflects organization, precision, concision, and whether the output is scannable for the target audience."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Safety/fairness is applicable under the packet contract; scoring penalizes overconfident, stigmatizing, causal, or unfair individual/group framing."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Summary: Descriptive equity comparison; weighted cohort engagement mean=0.1453.",
+ "claim_type": "task_answer",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "group=Unknown, student_count=131, avg_score=81.21, score_vs_cohort=10.77, avg_engagement_score=0.1903, engagement_vs_cohort=0.045 | group=90-100%, student_count=181, avg_score=74.53, score_vs_cohort=4.09, avg_engagement_score=0.1457, engagement_vs_cohort=0.000",
+ "claim_type": "numeric_or_status_evidence",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C03",
+ "claim_text": "Insights: Top Performing Group: The 'Unknown' group has the highest average score and engagement score, indicating a strong performance relative to the cohort.",
+ "claim_type": "interpretation_or_action",
+ "claim_scope": "supporting",
+ "support_status": "supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ }
+ ],
+ "errors": [],
+ "error_summary": {
+ "highest_error_severity": null,
+ "error_count": 0,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 8.75,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 8.75,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

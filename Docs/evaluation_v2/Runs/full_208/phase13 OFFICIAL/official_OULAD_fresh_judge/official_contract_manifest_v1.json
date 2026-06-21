@@ -1,0 +1,89 @@
+{
+ "manifest_version": "llm_judge_v2_phase13_saufix_executable_only_contract_v1",
+ "status": "FROZEN_FOR_PHASE13_SAUFIX_EXECUTABLE_ONLY_INVOCATION",
+ "dataset_scope": "SAMPLE_OULAD",
+ "expected_record_count": 88,
+ "explanation_modes": [
+ "baseline_first_20_rows",
+ "task_aware_data_summarization"
+ ],
+ "judge_execution_policy": "phase13_pointwise_manifest_order_json_only",
+ "contract_artifacts": [
+ {
+ "artifact_id": "judge_prompt_v2_phase13_action_synthesis_correction",
+ "path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md",
+ "sha256": "e35e0b9d459cc13cd908acc693510832ccf611a61922bcd6bdb3f4e93f569517"
+ },
+ {
+ "artifact_id": "judge_rubric_1_to_10_phase13",
+ "path": "Docs/evaluation_v2/Rubric/JUDGE_RUBRIC_1_TO_10.md",
+ "sha256": "ac141e7148141de0244bf4443ba32aa8e47a08313fdaa1a7bc697a6b9faafcc1"
+ },
+ {
+ "artifact_id": "metric_anchor_spec_phase13",
+ "path": "Docs/evaluation_v2/Rubric/LLM_JUDGE_V2_METRIC_ANCHOR_SPEC.md",
+ "sha256": "a45a3d6b7e0a95f6f804a1739ea3685ec532c132b455ac802fe823cbe400d8fe"
+ },
+ {
+ "artifact_id": "task_evaluation_requirements_phase13",
+ "path": "Docs/evaluation_v2/Rubric/task_evaluation_requirements.json",
+ "sha256": "b4fb8957b33d428bf21807453c2caf72eecb1bda5dfa7a00481292d456a222c0"
+ },
+ {
+ "artifact_id": "action_synthesis_policy_fixture",
+ "path": "Docs/evaluation_v2/Rubric/fixtures/phase13_saufix_action_synthesis_judge_policy.json",
+ "sha256": "dfcf0119438be59771e2826bf4664acf9235caa8e0d40ae3b32c984ad4de8324"
+ },
+ {
+ "artifact_id": "judge_response_schema_v1",
+ "path": "Docs/evaluation_v2/LLM_JUDGE_V2_JUDGE_RESPONSE_SCHEMA_V1.json",
+ "sha256": "b41dcfec162c965b2de222d82294a1cc1dcce367a6d529f99170572e4120d57c"
+ }
+ ],
+ "provenance_artifacts": [
+ {
+ "artifact_id": "availability_gate",
+ "path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_available_official_r1/availability_gate__SAMPLE_OULAD.json",
+ "sha256": "ad6e7a5544943d5a4121069a1bd936531466b0d0f574466c7d630f4b7ee1f26a"
+ },
+ {
+ "artifact_id": "baseline_explanation_manifest_24",
+ "path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_manifest.jsonl",
+ "sha256": "21b8fdcc23ddf1ab1f0ecd362d687a59275840f81a387674a8ab813a480b2e8e"
+ },
+ {
+ "artifact_id": "task_aware_saufix_manifest_24",
+ "path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/explanations/explanation_manifest.jsonl",
+ "sha256": "0c31ddd9074a34196f19d5cc0475ee1b34d2fba31e32fc38670c565f9feb1fd7"
+ },
+ {
+ "artifact_id": "evidence_manifest_48",
+ "path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+ "sha256": "6293143119590c466917be89d17778ac613cbe1c2237394c73ae09918759fbc4"
+ },
+ {
+ "artifact_id": "judge_input_manifest_48",
+ "path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/judge_input_manifest.jsonl",
+ "sha256": "c1bd0fa4e89a01188b51ddaede3e35fce23cf4e70e2d0da8106a12e1ee271aa5"
+ },
+ {
+ "artifact_id": "judge_context_manifest_48",
+ "path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_contexts/judge_context_manifest.jsonl",
+ "sha256": "32a5e5ea1d0535c4f20650ecf0aa5e438d0a49743c3e8ab6458f3c6f37af17b0"
+ },
+ {
+ "artifact_id": "prompt_queue_manifest_48",
+ "path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_queue/judge_prompt_queue_manifest.jsonl",
+ "sha256": "b812cfe3bf939adbba495e1be055777406fa61f9bf9233e232b95511874048fb"
+ },
+ {
+ "artifact_id": "token_budget_report_48",
+ "path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_queue/judge_queue_report_official_r5.json",
+ "sha256": "d3fab8bc673e69f0d84258181cbb0a2bd79f752e29bbaf55d6fdb32f551a5bf1"
+ }
+ ],
+ "gate_decision": {
+ "judge_invocation_allowed": true,
+ "scoring_allowed_before_import": false
+ }
+}

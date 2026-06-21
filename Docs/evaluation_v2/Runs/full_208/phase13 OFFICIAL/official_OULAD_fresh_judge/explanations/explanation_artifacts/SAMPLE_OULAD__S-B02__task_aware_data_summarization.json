@@ -1,0 +1,596 @@
+{
+ "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+ "generated_at": "2026-06-21T20:48:27.080Z",
+ "ai_service_url": "http://localhost:8000",
+ "endpoint": "/explain",
+ "implementation_hash": "777c6eba4996378ede95c2d58d45de08849c8eda377ef26f6da8b05751cf8da8",
+ "record": {
+ "record_id": "SAMPLE_OULAD__S-B02__task_aware_data_summarization",
+ "case_id": "SAMPLE_OULAD__S-B02",
+ "dataset_id": "SAMPLE_OULAD",
+ "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "role": "student",
+ "task_id": "S-B02",
+ "task_name": "Risk status card",
+ "explanation_mode": "task_aware_data_summarization"
+ },
+ "source_evidence": {
+ "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+ "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-B02.json",
+ "full_query_artifact_sha256": "c23bd0d1b26a55e95142a9decd7fe4d429263519bdb5fb7ff689e284a0912f4f"
+ },
+ "request_payload": {
+ "task_id": "S-B02",
+ "execution_id": "exec_1781847857491_7eb409b0",
+ "task_name": "Risk status card",
+ "analysis_type": "aggregation",
+ "explanation_strategy": "risk",
+ "explanation_type": "observation, interpretation",
+ "ai_prompt_hint": "State the risk badge (low/medium/high) and at_risk_score out of 5. Use avg_score, pass_threshold, engagement_score, and punctuality_rate when available. If risk is high, name the top 2 likely triggered factors from returned metrics only.",
+ "actionable_question": "Am I at risk of failing?",
+ "target_audience": [
+ "student"
+ ],
+ "visualization_config": {
+ "x_field": null,
+ "y_field": null,
+ "series_field": null,
+ "color_field": "at_risk_label",
+ "orientation": null,
+ "variant": "risk_status",
+ "x_label": null,
+ "y_label": null,
+ "semantic_roles": {
+ "x": null,
+ "y": null,
+ "color": "risk_metric"
+ }
+ },
+ "analysis_context": {
+ "granularity": "semester",
+ "aggregation_level": "student"
+ },
+ "datasets": {
+ "risk_summary": [
+ {
+ "avg_score": 94.34,
+ "engagement_score": 0.20237855036820618,
+ "engagement_score_available": true,
+ "punctuality_rate": 0,
+ "previous_attempt_count": 1,
+ "score_strategy": "weighted_by_assessment_weight",
+ "score_scale": 100,
+ "pass_threshold": 40,
+ "target_threshold": 70,
+ "at_risk_score": 3,
+ "at_risk_label": "high"
+ }
+ ]
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "1998 students × 9 assessments across 8 weeks — strong statistical basis."
+ },
+ "student_context": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "enrollment_id": "SAMPLE_OULAD_ENR_SAMPLE_OULAD_CLASS_CCC_2014J_SAMPLE_OULAD_STU_100788",
+ "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+ "dataset_id": "SAMPLE_OULAD"
+ },
+ "query_labels": [
+ "risk_summary"
+ ],
+ "semantic_context": null,
+ "ai_summary_config": {
+ "comparison_groups": [],
+ "dynamic_comparison_groups": false,
+ "comparison_alignment_columns": [],
+ "group_key_columns": [],
+ "metric_columns": [
+ "avg_score",
+ "engagement_score",
+ "punctuality_rate",
+ "previous_attempt_count",
+ "at_risk_score"
+ ],
+ "status_columns": [
+ "engagement_score_available",
+ "score_strategy",
+ "at_risk_label"
+ ],
+ "threshold_columns": [
+ "pass_threshold",
+ "target_threshold"
+ ],
+ "benchmark_columns": [],
+ "sensitive_columns": [],
+ "metric_availability_columns": {
+ "engagement_score": "engagement_score_available"
+ },
+ "threshold_sources": {
+ "pass_threshold": "runtime_score_context",
+ "target_threshold": "runtime_score_context"
+ },
+ "benchmark_sources": {},
+ "entity_order": [],
+ "metric_directions": {},
+ "metric_units": {
+ "avg_score": "score_on_runtime_scale",
+ "engagement_score": "ratio_0_1",
+ "punctuality_rate": "ratio_0_1",
+ "previous_attempt_count": "count",
+ "at_risk_score": "triggered_flag_count_0_5",
+ "pass_threshold": "score_on_runtime_scale",
+ "target_threshold": "score_on_runtime_scale"
+ },
+ "metric_thresholds": {},
+ "minimum_entity_count": 2,
+ "require_metric_directions": false,
+ "require_metric_units": true,
+ "require_metric_thresholds": false,
+ "require_sensitive_context_policy": false,
+ "focus_categories": [],
+ "focus_bins": [],
+ "category_order": [],
+ "expected_categories": [],
+ "expected_groups": [],
+ "bin_order": [],
+ "expected_bins": [],
+ "severity_order": [],
+ "flag_order": [],
+ "secondary_metric_columns": [],
+ "flag_columns": [],
+ "action_columns": [],
+ "label_columns": [
+ "score_scale"
+ ],
+ "evidence_columns": [],
+ "evidence_dataset_roles": {},
+ "action_evidence_contract": [],
+ "action_derived_evidence": [],
+ "action_conflict_rules": [],
+ "action_rules": [],
+ "trigger_columns": [],
+ "provenance_required_fields": [],
+ "require_complete_action_provenance": true,
+ "unsupported_action_behavior": "emit_unsupported_actions",
+ "require_sensitive_action_policy": false,
+ "summary_type": "metric_snapshot",
+ "target_group": null,
+ "divergence_threshold": null,
+ "time_column": null,
+ "x_column": null,
+ "y_column": null,
+ "metric_column": null,
+ "entity_column": null,
+ "color_column": null,
+ "coefficient_column": null,
+ "coefficient_method": null,
+ "sample_size_column": null,
+ "p_value_column": null,
+ "outlier_policy": null,
+ "group_column": null,
+ "series_column": null,
+ "gap_column": null,
+ "reliability_column": null,
+ "minimum_reliable_count": null,
+ "minimum_sample_size": null,
+ "category_column": null,
+ "bin_column": null,
+ "count_column": null,
+ "percent_column": null,
+ "metric_key_column": null,
+ "metric_value_column": null,
+ "selected_entity_column": null,
+ "entity_evidence_available_column": null,
+ "sensitive_context_policy": null,
+ "numeric_threshold": null,
+ "threshold_direction": null,
+ "sort_by": null,
+ "sort_direction": null,
+ "flag_name_column": null,
+ "flag_value_column": null,
+ "threshold_column": null,
+ "triggered_column": null,
+ "severity_column": null,
+ "description_column": null,
+ "recommended_action_column": null,
+ "support_category_column": null,
+ "max_flags": null,
+ "action_source": null,
+ "action_rule_set_id": null,
+ "action_rule_version": null,
+ "priority_column": null,
+ "owner_column": null,
+ "time_horizon_column": null,
+ "max_actions": null,
+ "sensitive_action_policy": null,
+ "max_points": null,
+ "top_k": null,
+ "bottom_k": null
+ }
+ },
+ "response_metadata": {
+ "http_status": 200,
+ "latency_ms": 6920,
+ "transport_error": null,
+ "degraded": false,
+ "expected_ai_summary_method": "task_aware_data_summarization",
+ "observed_ai_summary_method": "task_aware_data_summarization",
+ "model": "gpt-4o-mini-2024-07-18",
+ "token_usage": {
+ "prompt_tokens": 1310,
+ "completion_tokens": 453,
+ "total_tokens": 1763
+ },
+ "attempts": 3,
+ "final_attempt": 1
+ },
+ "response_body": {
+ "task_id": "S-B02",
+ "execution_id": "exec_1781847857491_7eb409b0",
+ "explanation": {
+ "summary": "You are currently identified as being at high risk of failing, with an at-risk score of 3 out of 5. This is primarily due to low engagement and punctuality issues.",
+ "insights": [
+ {
+ "title": "Low Engagement Score",
+ "description": "Your engagement score is quite low at 0.20, which indicates that you may not be participating fully in your learning activities. This can significantly impact your understanding and performance.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "engagement_score",
+ "value": 0.20237855036820618,
+ "comparison": "down_from_previous",
+ "delta": null,
+ "context": "Engagement is crucial for success."
+ }
+ ]
+ },
+ {
+ "title": "Punctuality Concerns",
+ "description": "Your punctuality rate is at 0, meaning you may not be submitting assignments or attending classes on time. This can lead to missed opportunities for learning and support.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "punctuality_rate",
+ "value": 0,
+ "comparison": "baseline",
+ "delta": null,
+ "context": "Timeliness is important for academic success."
+ }
+ ]
+ }
+ ],
+ "educational_implications": [
+ "Improving engagement and punctuality can lead to better academic outcomes."
+ ],
+ "recommendations": [
+ {
+ "priority": "high",
+ "action": "Increase participation in class and complete assignments on time.",
+ "rationale": "Active engagement and timely submissions are key to improving your understanding and performance."
+ },
+ {
+ "priority": "medium",
+ "action": "Seek help from teachers or peers if you're struggling.",
+ "rationale": "Getting support can help you overcome challenges and improve your engagement."
+ }
+ ],
+ "warnings": []
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "The data is sufficient and indicates clear risk factors.",
+ "based_on": [
+ "sufficient_data"
+ ]
+ },
+ "explanation_strategy": "risk",
+ "explanation_type": "risk",
+ "ai_summary_method": "task_aware_data_summarization",
+ "ai_summary_version": "v3.1-experimental",
+ "baseline_available": true,
+ "input_summary_type": "metric_snapshot",
+ "ai_summary_method_warning": null,
+ "full_result_row_count": 1,
+ "included_row_count": 1,
+ "small_result_threshold": null,
+ "small_result_full_rows_applied": null,
+ "dataset_row_breakdown": [
+ {
+ "dataset_name": "risk_summary",
+ "row_count": 1,
+ "included_row_count": 1
+ }
+ ],
+ "raw_row_limit": 15,
+ "included_raw_row_count": 1,
+ "baseline_reference_tokens": 99,
+ "task_aware_prompt_tokens": 806,
+ "token_ratio": 8.1414,
+ "token_count_method": "utf8_bytes_div_4",
+ "evidence_sections_included": [
+ "scope",
+ "primary_finding",
+ "comparison",
+ "exceptions",
+ "action_evidence",
+ "limitations"
+ ],
+ "evidence_sections_omitted": [],
+ "task_output_contract": [],
+ "must_keep_keys": [],
+ "v3_warnings": [
+ "Task-aware V3 prompt exceeded the configured soft token ratio (8.1414 > 1.2).",
+ "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+ ],
+ "task_aware_evidence_payload": {
+ "evidence_payload": {
+ "summary_type": "metric_snapshot",
+ "task_id": "S-B02",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "risk_summary",
+ "row_count": 1,
+ "entity": null,
+ "evidence_status": "sufficient"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "metric_snapshot": {
+ "avg_score": {
+ "value": 94.34,
+ "unit": "score_on_runtime_scale",
+ "available": true
+ },
+ "engagement_score": {
+ "value": 0.20237855036820618,
+ "unit": "ratio_0_1",
+ "available": true,
+ "availability_column": "engagement_score_available",
+ "availability_value": true
+ },
+ "punctuality_rate": {
+ "value": 0,
+ "unit": "ratio_0_1",
+ "available": true
+ },
+ "previous_attempt_count": {
+ "value": 1,
+ "unit": "count",
+ "available": true
+ },
+ "at_risk_score": {
+ "value": 3,
+ "unit": "triggered_flag_count_0_5",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "engagement_score_available": true,
+ "score_strategy": "weighted_by_assessment_weight",
+ "at_risk_label": "high"
+ },
+ "label_evidence": {
+ "score_scale": 100
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "threshold_evidence": {
+ "pass_threshold": {
+ "value": 40,
+ "unit": "score_on_runtime_scale",
+ "source": "runtime_score_context"
+ },
+ "target_threshold": {
+ "value": 70,
+ "unit": "score_on_runtime_scale",
+ "source": "runtime_score_context"
+ }
+ },
+ "benchmark_evidence": {}
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": {},
+ "sensitive_context_present": false,
+ "sensitive_context": {}
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "action_evidence": {}
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_evidence": [],
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "avg_score",
+ "engagement_score",
+ "punctuality_rate",
+ "previous_attempt_count",
+ "at_risk_score"
+ ],
+ "configured_status_columns": [
+ "engagement_score_available",
+ "score_strategy",
+ "at_risk_label"
+ ],
+ "configured_threshold_columns": [
+ "pass_threshold",
+ "target_threshold"
+ ],
+ "configured_benchmark_columns": [],
+ "configured_sensitive_columns": [],
+ "metric_availability_columns": {
+ "engagement_score": "engagement_score_available"
+ },
+ "metric_units": {
+ "avg_score": "score_on_runtime_scale",
+ "engagement_score": "ratio_0_1",
+ "punctuality_rate": "ratio_0_1",
+ "previous_attempt_count": "count",
+ "at_risk_score": "triggered_flag_count_0_5",
+ "pass_threshold": "score_on_runtime_scale",
+ "target_threshold": "score_on_runtime_scale"
+ },
+ "threshold_sources": {
+ "pass_threshold": "runtime_score_context",
+ "target_threshold": "runtime_score_context"
+ },
+ "benchmark_sources": {},
+ "sensitive_context_policy": null,
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ },
+ "source_evidence_summary": {
+ "summary_type": "metric_snapshot",
+ "dataset_name": "risk_summary",
+ "row_count": 1,
+ "entity": null,
+ "metric_snapshot": {
+ "avg_score": {
+ "value": 94.34,
+ "unit": "score_on_runtime_scale",
+ "available": true
+ },
+ "engagement_score": {
+ "value": 0.20237855036820618,
+ "unit": "ratio_0_1",
+ "available": true,
+ "availability_column": "engagement_score_available",
+ "availability_value": true
+ },
+ "punctuality_rate": {
+ "value": 0,
+ "unit": "ratio_0_1",
+ "available": true
+ },
+ "previous_attempt_count": {
+ "value": 1,
+ "unit": "count",
+ "available": true
+ },
+ "at_risk_score": {
+ "value": 3,
+ "unit": "triggered_flag_count_0_5",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "engagement_score_available": true,
+ "score_strategy": "weighted_by_assessment_weight",
+ "at_risk_label": "high"
+ },
+ "threshold_evidence": {
+ "pass_threshold": {
+ "value": 40,
+ "unit": "score_on_runtime_scale",
+ "source": "runtime_score_context"
+ },
+ "target_threshold": {
+ "value": 70,
+ "unit": "score_on_runtime_scale",
+ "source": "runtime_score_context"
+ }
+ },
+ "benchmark_evidence": {},
+ "label_evidence": {
+ "score_scale": 100
+ },
+ "flag_evidence": {},
+ "action_evidence": {},
+ "missing_evidence": [],
+ "sensitive_context_present": false,
+ "sensitive_context": {},
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "avg_score",
+ "engagement_score",
+ "punctuality_rate",
+ "previous_attempt_count",
+ "at_risk_score"
+ ],
+ "configured_status_columns": [
+ "engagement_score_available",
+ "score_strategy",
+ "at_risk_label"
+ ],
+ "configured_threshold_columns": [
+ "pass_threshold",
+ "target_threshold"
+ ],
+ "configured_benchmark_columns": [],
+ "configured_sensitive_columns": [],
+ "metric_availability_columns": {
+ "engagement_score": "engagement_score_available"
+ },
+ "metric_units": {
+ "avg_score": "score_on_runtime_scale",
+ "engagement_score": "ratio_0_1",
+ "punctuality_rate": "ratio_0_1",
+ "previous_attempt_count": "count",
+ "at_risk_score": "triggered_flag_count_0_5",
+ "pass_threshold": "score_on_runtime_scale",
+ "target_threshold": "score_on_runtime_scale"
+ },
+ "threshold_sources": {
+ "pass_threshold": "runtime_score_context",
+ "target_threshold": "runtime_score_context"
+ },
+ "benchmark_sources": {},
+ "sensitive_context_policy": null,
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "evidence_status": "sufficient",
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ },
+ "safety_flags": [],
+ "degraded": false,
+ "meta": {
+ "model": "gpt-4o-mini-2024-07-18",
+ "latency_ms": 6915,
+ "token_usage": {
+ "prompt_tokens": 1310,
+ "completion_tokens": 453,
+ "total_tokens": 1763
+ },
+ "strategy": "risk",
+ "granularity": "semester",
+ "cost_usd": 0.000468
+ }
+ },
+ "raw_text": "Summary: You are currently identified as being at high risk of failing, with an at-risk score of 3 out of 5. This is primarily due to low engagement and punctuality issues.\n\nInsights: Low Engagement Score: Your engagement score is quite low at 0.20, which indicates that you may not be participating fully in your learning activities. This can significantly impact your understanding and performance. | Punctuality Concerns: Your punctuality rate is at 0, meaning you may not be submitting assignments or attending classes on time. This can lead to missed opportunities for learning and support.\n\nEducational implications: Improving engagement and punctuality can lead to better academic outcomes.\n\nRecommendations: high - Increase participation in class and complete assignments on time. - Active engagement and timely submissions are key to improving your understanding and performance. | medium - Seek help from teachers or peers if you're struggling. - Getting support can help you overcome challenges and improve your engagement."
+}

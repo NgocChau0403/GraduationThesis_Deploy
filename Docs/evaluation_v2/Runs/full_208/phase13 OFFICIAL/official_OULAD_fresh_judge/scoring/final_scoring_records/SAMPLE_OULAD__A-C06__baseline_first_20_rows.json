@@ -1,0 +1,101 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_OULAD",
+ "record_id": "SAMPLE_OULAD__A-C06__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Factual interpretation was judged against the packet evidence, with penalties for unsupported scope, causality, thresholds, or direction."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Numeric values, percentages, rankings, thresholds, and directions were checked against the delivered or retrieved evidence in this packet."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Coverage was scored against the supplied core and supporting requirements for this exact task."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "The score reflects whether the explanation answers the stated actionable question for the correct dataset, entity level, and audience."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Actionability reflects whether advice or interpretation is feasible and grounded in returned evidence or supported action provenance."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Clarity reflects organization, precision, concision, and whether the output is scannable for the target audience."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Safety/fairness is applicable under the packet contract; scoring penalizes overconfident, stigmatizing, causal, or unfair individual/group framing."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Summary: The analysis reveals a significant disparity in resource usage between the two students, with SAMPLE_OULAD_STU_100788 demonstrating a more strategic and diversified approach to resource engagement compared to SAMPLE_OULAD_STU_101700, who shows no reco",
+ "claim_type": "task_answer",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Insights: High Engagement in Resource Usage: SAMPLE_OULAD_STU_100788 has a total of 1261 clicks across various resource types, indicating a high level of engagement.",
+ "claim_type": "numeric_or_status_evidence",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C03",
+ "claim_text": "In contrast, SAMPLE_OULAD_STU_101700 has zero clicks, suggesting a lack of engagement with available resources.",
+ "claim_type": "interpretation_or_action",
+ "claim_scope": "supporting",
+ "support_status": "supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ }
+ ],
+ "errors": [],
+ "error_summary": {
+ "highest_error_severity": null,
+ "error_count": 0,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 7.7,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 7.7,
+ "verdict": "good",
+ "invalid_reason": null
+}

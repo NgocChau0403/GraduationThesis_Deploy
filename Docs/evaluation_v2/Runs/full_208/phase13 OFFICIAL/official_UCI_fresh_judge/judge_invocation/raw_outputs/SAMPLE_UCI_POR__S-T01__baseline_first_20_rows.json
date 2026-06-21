@@ -1,0 +1,89 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__S-T01__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10 reflects The response gives actions for multiple assessments rather than limiting the supporting action to the weakest recent assessment."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on actionability, with the limitations summarized in the holistic rationale."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Scores improved from 0 to 55 and then plateaued at 55.",
+ "claim_type": "trend",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "score_trend assessment orders 1-3"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The direction and values are exact."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "G1 is below pass and target thresholds; G2 and G3 pass but remain below the target of 70.",
+ "claim_type": "thresholds",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "score_trend all rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The threshold states are correct."
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "support_action_overcoverage",
+ "claim_ids": [],
+ "severity": "minor",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "actionability"
+ ],
+ "cap_candidate": null,
+ "rationale": "The response gives actions for multiple assessments rather than limiting the supporting action to the weakest recent assessment.",
+ "evidence_refs": [
+ "score_trend recommended_action fields"
+ ],
+ "requirement_id": "S-T01-SUPPORT-01"
+ }
+ ],
+ "holistic_rationale": "The trend and threshold analysis are complete and accurate; the only issue is broader-than-requested action coverage.",
+ "evidence_usage_notes": "Evidence access mode was direct_embedding. All 3 rows were directly embedded; retrieval_log_path is not applicable. Evidence references: score_trend:Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T01.json. Deterministic checks were used only for covered values, directions, rankings, thresholds, and availability; semantic and causal claims were judged separately. Evidence access does not prove model attention to every row.",
+ "invalid_reason": null
+}

@@ -1,0 +1,119 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-C01__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10 reflects The response infers confidence and long-term effects from score trajectories without evidence."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10 reflects It does not explicitly state that Student 1 improved faster by 45 points more from assessment 1 to 2."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on task_relevance, with the limitations summarized in the holistic rationale."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material actionability limitations reduce the usefulness of the response. The numerical trajectory is accurate, but the answer only implies who improved faster and adds unsupported psychological consequences."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material safety_fairness limitations reduce the usefulness of the response. The numerical trajectory is accurate, but the answer only implies who improved faster and adds unsupported psychological consequences."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Student 1 started at 0 while Student 2 started at 45, and both reached 55 by assessment 2.",
+ "claim_type": "trajectory",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "trajectory_comparison all six rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The divergence and convergence values are exact."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "The initial gap may have affected confidence and the learning trajectory.",
+ "claim_type": "causal_interpretation",
+ "claim_scope": "incidental",
+ "support_status": "not_verifiable",
+ "evidence_refs": [
+ "trajectory_comparison all six rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "Scores alone cannot establish effects on confidence or long-term engagement.",
+ "impact_type": "weakens_support"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "unsupported_psychological_inference",
+ "claim_ids": [
+ "C02"
+ ],
+ "severity": "major",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "safety_fairness"
+ ],
+ "cap_candidate": null,
+ "rationale": "The response infers confidence and long-term effects from score trajectories without evidence.",
+ "evidence_refs": [
+ "trajectory_comparison all six rows"
+ ]
+ },
+ {
+ "error_id": "E02",
+ "error_type": "partial_core_answer",
+ "claim_ids": [],
+ "severity": "minor",
+ "primary_metric": "completeness",
+ "secondary_metrics": [],
+ "cap_candidate": null,
+ "rationale": "It does not explicitly state that Student 1 improved faster by 45 points more from assessment 1 to 2.",
+ "evidence_refs": [
+ "trajectory_comparison all six rows"
+ ],
+ "requirement_id": "A-C01-CORE-01"
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 2,
+ "count_by_severity": {
+ "minor": 1,
+ "major": 1,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 7.6,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 7.6,
+ "verdict": "good",
+ "invalid_reason": null
+}

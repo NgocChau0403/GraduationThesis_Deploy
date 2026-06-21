@@ -1,0 +1,257 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T03__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v2_phase13_saufix_executable_only__SAMPLE_UCI_POR",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-T03",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_phase13_saufix_action_correction_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Peer comparison",
+    "scope": "1 student",
+    "actionable_question": "Where do I stand compared to my class?",
+    "target_audience": "student",
+    "ai_summary_type": "multi_metric_comparison",
+    "ai_prompt_hint": "Show student's standing (top X%). Explain which metrics are above/below average.",
+    "query_labels": [
+      "peer_comparison"
+    ],
+    "explanation_strategy": "comparison"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "avg_score [FE cross]",
+      "engagement_score [FE cross]",
+      "pass_rate [FE cross]",
+      "performance_trend [FE cross]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "peer_comparison"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: You are currently performing below the cohort benchmark in all key metrics. This indicates areas where you can focus on improving your scores and engagement.\n\nInsights: Average Score Comparison: Your average score is significantly lower than the cohort benchmark, suggesting a need for improvement in your understanding of the material. | Score Percentile Gap: Your score percentile is much lower than the cohort benchmark, indicating that you are in the lower range of performance compared to your peers. | Engagement Percentile Deficit: Your engagement percentile is at zero, which is significantly below the cohort benchmark, suggesting a lack of participation or interaction with the course material.\n\nEducational implications: Improving your scores and engagement can lead to better understanding and retention of the material.\n\nRecommendations: high - Seek additional help or tutoring in subjects where you are struggling. - This can provide you with the support needed to improve your understanding and scores. | high - Increase your engagement with course materials and participate in class discussions. - Active participation can enhance your learning experience and improve your engagement percentile.",
+    "structured_payload": {
+      "task_id": "S-T03",
+      "execution_id": "exec_1781847241833_47e30f50",
+      "explanation": {
+        "summary": "You are currently performing below the cohort benchmark in all key metrics. This indicates areas where you can focus on improving your scores and engagement.",
+        "insights": [
+          {
+            "title": "Average Score Comparison",
+            "description": "Your average score is significantly lower than the cohort benchmark, suggesting a need for improvement in your understanding of the material.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "Average score",
+                "value": 41.25,
+                "comparison": "down_from_previous",
+                "delta": -17.06,
+                "context": "Cohort benchmark average score is 58.31"
+              }
+            ]
+          },
+          {
+            "title": "Score Percentile Gap",
+            "description": "Your score percentile is much lower than the cohort benchmark, indicating that you are in the lower range of performance compared to your peers.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "Score percentile",
+                "value": 8.8,
+                "comparison": "down_from_previous",
+                "delta": -41.2,
+                "context": "Cohort benchmark score percentile is 50"
+              }
+            ]
+          },
+          {
+            "title": "Engagement Percentile Deficit",
+            "description": "Your engagement percentile is at zero, which is significantly below the cohort benchmark, suggesting a lack of participation or interaction with the course material.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "Engagement percentile",
+                "value": 0,
+                "comparison": "down_from_previous",
+                "delta": -50,
+                "context": "Cohort benchmark engagement percentile is 50"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Improving your scores and engagement can lead to better understanding and retention of the material."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Seek additional help or tutoring in subjects where you are struggling.",
+            "rationale": "This can provide you with the support needed to improve your understanding and scores."
+          },
+          {
+            "priority": "high",
+            "action": "Increase your engagement with course materials and participate in class discussions.",
+            "rationale": "Active participation can enhance your learning experience and improve your engagement percentile."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data is sufficient and clearly indicates performance gaps.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "comparison",
+      "explanation_type": "comparison",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3.1-experimental",
+      "baseline_available": true,
+      "input_summary_type": "multi_metric_comparison",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 6,
+      "included_row_count": 6,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "peer_comparison",
+          "row_count": 6,
+          "included_row_count": 6
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 6,
+      "baseline_reference_tokens": 206,
+      "task_aware_prompt_tokens": 1287,
+      "token_ratio": 6.2476,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "comparison",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [],
+      "task_output_contract": [
+        "Compare the returned entities directly, naming which entity is higher/lower for each key metric.",
+        "Use pairwise_gaps and selected_entity_evidence for direction; do not reverse numeric direction.",
+        "If expected metric/entity evidence is missing, state the limitation rather than guessing."
+      ],
+      "must_keep_keys": [
+        "comparison_matrix",
+        "dataset_name",
+        "entities",
+        "entity_column",
+        "metric_extrema",
+        "metrics",
+        "missing_entity_evidence",
+        "missing_expected_entities",
+        "missing_metric_evidence",
+        "pairwise_direction_evidence",
+        "pairwise_gaps",
+        "row_count",
+        "selected_entity_evidence",
+        "summarization_warnings",
+        "validation_metadata"
+      ],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (6.2476 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 5635,
+        "token_usage": {
+          "prompt_tokens": 1746,
+          "completion_tokens": 557,
+          "total_tokens": 2303
+        },
+        "strategy": "comparison",
+        "granularity": "semester",
+        "cost_usd": 0.000596
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations_saufix/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__S-T03__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "f39b6095096d1b7351d6922ab8667c3c61dcbfa5ff7be6637eb1083262104d6b",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1746,
+        "completion_tokens": 557,
+        "total_tokens": 2303
+      },
+      "latency_ms": 5638,
+      "attempts_used": 2
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 6,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "peer_comparison",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T03.json",
+        "artifact_sha256": "7d1e97dd81c83d3348bd288ec9989dde355d96c7b2271bfc1daa35b454a76fe1",
+        "row_count": 6,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 6,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "peer_comparison": 6
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "S-T03-CORE-01",
+        "description": "Show student's standing (top X%)."
+      },
+      {
+        "requirement_id": "S-T03-CORE-02",
+        "description": "Explain which metrics are above/below average."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

@@ -1,0 +1,3432 @@
+{
+ "dataset_scope": "SAMPLE_OULAD",
+ "pair_count": 44,
+ "comparable_pair_count": 44,
+ "non_comparable_pair_count": 0,
+ "average_delta_task_aware_minus_baseline": 1.54,
+ "winner_counts": {
+ "task_aware_data_summarization": 42,
+ "tie": 2
+ },
+ "row_count_context": {
+ "comparable_by_row_count_bucket": {
+ "<=20": 31,
+ ">20": 13
+ },
+ "gt20_pair_count": 13,
+ "gt20_tie_pair_count": 2,
+ "gt20_non_tie_pair_count": 11,
+ "gt20_pairs": [
+ {
+ "task_id": "A-G01",
+ "full_result_row_count": 1544,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 5,
+ "task_aware_final_score": 8,
+ "delta_task_aware_minus_baseline": 3
+ },
+ {
+ "task_id": "A-G02",
+ "full_result_row_count": 1998,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75
+ },
+ {
+ "task_id": "A-G03",
+ "full_result_row_count": 50,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05
+ },
+ {
+ "task_id": "A-G04",
+ "full_result_row_count": 112,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05
+ },
+ {
+ "task_id": "A-G09",
+ "full_result_row_count": 1998,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 5.8,
+ "task_aware_final_score": 6,
+ "delta_task_aware_minus_baseline": 0.2
+ },
+ {
+ "task_id": "A-G11",
+ "full_result_row_count": 42,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.1,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.65
+ },
+ {
+ "task_id": "A-G12",
+ "full_result_row_count": 53,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05
+ },
+ {
+ "task_id": "A-G14",
+ "full_result_row_count": 164,
+ "winner": "tie",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 6,
+ "delta_task_aware_minus_baseline": 0
+ },
+ {
+ "task_id": "A-G15",
+ "full_result_row_count": 50,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.1,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.65
+ },
+ {
+ "task_id": "A-S03",
+ "full_result_row_count": 32,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05
+ },
+ {
+ "task_id": "S-T05",
+ "full_result_row_count": 32,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 7.6,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.15
+ },
+ {
+ "task_id": "S-T06",
+ "full_result_row_count": 32,
+ "winner": "tie",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 6,
+ "delta_task_aware_minus_baseline": 0
+ },
+ {
+ "task_id": "S-T11",
+ "full_result_row_count": 1988,
+ "winner": "task_aware_data_summarization",
+ "baseline_final_score": 4,
+ "task_aware_final_score": 8.75,
+ "delta_task_aware_minus_baseline": 4.75
+ }
+ ]
+ },
+ "non_tie_analysis": {
+ "non_tie_pair_count": 42,
+ "non_tie_by_row_count_bucket": {
+ "<=20": 31,
+ ">20": 11
+ },
+ "non_tie_by_winner_and_row_count_bucket": {
+ "task_aware_data_summarization__<=20": 31,
+ "task_aware_data_summarization__>20": 11
+ },
+ "non_tie_by_evidence_access_mode": {
+ "direct_embedding": 31,
+ "deterministic_artifact_retrieval": 11
+ },
+ "interpretation": "Non-tie outcomes are not determined only by whether full SQL results have <=20 rows. When <=20, rows[:20] already covers the full result; wins usually come from explanation completeness, actionability, unsupported claims, or severity caps. When >20, evidence coverage can matter, but the final winner is still determined by judge metric scores and caps."
+ },
+ "pairs": [
+ {
+ "pair_key": "SAMPLE_OULAD__A-B01",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-B01",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-B01__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-B01__task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8,
+ "baseline_raw_weighted_score": 6.9,
+ "task_aware_raw_weighted_score": 8.5,
+ "delta_task_aware_minus_baseline": 2,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 11,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 6,
+ "task_aware_effective_cap": 8,
+ "baseline_highest_error_severity": "major",
+ "task_aware_highest_error_severity": "minor",
+ "baseline_error_details": [
+ {
+ "severity": "major",
+ "type": "core_requirement_omission",
+ "primary_metric": "completeness",
+ "cap_candidate": 6,
+ "rationale": "The explanation emphasizes high-score and no-score buckets but does not directly flag the below-pass-threshold group required by the task."
+ }
+ ],
+ "task_aware_error_details": [
+ {
+ "severity": "minor",
+ "type": "interpretive_overstatement",
+ "primary_metric": "faithfulness",
+ "cap_candidate": 8,
+ "rationale": "The explanation calls the below-threshold share significant; the numeric value is correct, but the wording is somewhat stronger than the evidence alone requires."
+ }
+ ],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 6,
+ "task_aware": 9,
+ "delta": 3
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 6,
+ "task_aware": 9,
+ "delta": 3
+ },
+ {
+ "metric": "actionability",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major core_requirement_omission."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-B02",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-B02",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-B02__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-B02__task_aware_data_summarization",
+ "baseline_final_score": 7.5,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.5,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.25,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 4,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 8,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "minor",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "minor",
+ "type": "partial_count_reporting",
+ "primary_metric": "completeness",
+ "cap_candidate": 8,
+ "rationale": "The explanation gives outcome percentages but does not state all requested counts as directly as the task asks."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 8 because of minor judge error(s). baseline rows[:20] issue(s): minor partial_count_reporting."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-B03",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-B03",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-B03__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-B03__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 4,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-B04",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-B04",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-B04__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-B04__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 3,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-C01",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-C01",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-C01__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-C01__task_aware_data_summarization",
+ "baseline_final_score": 4,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 4.4,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 4.75,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 17,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 4,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "critical",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "critical",
+ "type": "wrong_evaluation_target",
+ "primary_metric": "task_relevance",
+ "cap_candidate": 4,
+ "rationale": "The result contains one returned student, but the explanation presents a divergence comparison rather than acknowledging that between-student comparison is not estimable."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 4,
+ "task_aware": 9,
+ "delta": 5
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 6,
+ "task_aware": 9,
+ "delta": 3
+ },
+ {
+ "metric": "completeness",
+ "baseline": 3,
+ "task_aware": 9,
+ "delta": 6
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 3,
+ "task_aware": 9,
+ "delta": 6
+ },
+ {
+ "metric": "actionability",
+ "baseline": 4,
+ "task_aware": 8,
+ "delta": 4
+ },
+ {
+ "metric": "clarity",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 4 because of critical judge error(s). baseline rows[:20] issue(s): critical wrong_evaluation_target."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-C02",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-C02",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-C02__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-C02__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 6,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-C03",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-C03",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-C03__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-C03__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 2,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-C05",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-C05",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-C05__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-C05__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 2,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-C06",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-C06",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-C06__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-C06__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 10,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G01",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G01",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G01__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G01__task_aware_data_summarization",
+ "baseline_final_score": 5,
+ "task_aware_final_score": 8,
+ "baseline_raw_weighted_score": 5.3,
+ "task_aware_raw_weighted_score": 8.55,
+ "delta_task_aware_minus_baseline": 3,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 1544,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "compact_retrieval_context",
+ "baseline_effective_cap": 5,
+ "task_aware_effective_cap": 8,
+ "baseline_highest_error_severity": "major",
+ "task_aware_highest_error_severity": "minor",
+ "baseline_error_details": [
+ {
+ "severity": "major",
+ "type": "unsupported_threshold_claim",
+ "primary_metric": "numerical_correctness",
+ "cap_candidate": 5,
+ "rationale": "The explanation states an engagement threshold below 0.002, while the packet evidence defines the low-engagement threshold as engagement_score below 0.15."
+ }
+ ],
+ "task_aware_error_details": [
+ {
+ "severity": "minor",
+ "type": "clarity_overlong_output",
+ "primary_metric": "clarity",
+ "cap_candidate": 8,
+ "rationale": "The explanation is evidence-grounded but includes a very long student-id list that reduces scanability for an admin audience."
+ }
+ ],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 5,
+ "task_aware": 9,
+ "delta": 4
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 4,
+ "task_aware": 9,
+ "delta": 5
+ },
+ {
+ "metric": "completeness",
+ "baseline": 5,
+ "task_aware": 9,
+ "delta": 4
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 6,
+ "task_aware": 9,
+ "delta": 3
+ },
+ {
+ "metric": "actionability",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ },
+ {
+ "metric": "clarity",
+ "baseline": 7,
+ "task_aware": 6,
+ "delta": -1
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ }
+ ],
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 5 because of major judge error(s). baseline rows[:20] issue(s): major unsupported_threshold_claim."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G02",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G02",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G02__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G02__task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 6.35,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 1998,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "compact_retrieval_context",
+ "baseline_effective_cap": 6,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "major",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "major",
+ "type": "numerical_mischaracterization",
+ "primary_metric": "numerical_correctness",
+ "cap_candidate": 6,
+ "rationale": "The explanation describes the relationship as weak without giving the returned moderate correlation coefficient."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 6,
+ "task_aware": 9,
+ "delta": 3
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 5,
+ "task_aware": 9,
+ "delta": 4
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "actionability",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major numerical_mischaracterization."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G03",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G03",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G03__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G03__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 50,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G04",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G04",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G04__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G04__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 112,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G05",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G05",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G05__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G05__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 11,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G06",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G06",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G06__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G06__task_aware_data_summarization",
+ "baseline_final_score": 6.85,
+ "task_aware_final_score": 7.75,
+ "baseline_raw_weighted_score": 6.85,
+ "task_aware_raw_weighted_score": 7.75,
+ "delta_task_aware_minus_baseline": 0.9,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 9,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 8,
+ "task_aware_effective_cap": 8,
+ "baseline_highest_error_severity": "minor",
+ "task_aware_highest_error_severity": "minor",
+ "baseline_error_details": [
+ {
+ "severity": "minor",
+ "type": "unsupported_association_framing",
+ "primary_metric": "faithfulness",
+ "cap_candidate": 8,
+ "rationale": "The explanation uses correlation/effectiveness language for resource categories; the returned evidence supports an association/ranking but not a causal effectiveness claim."
+ }
+ ],
+ "task_aware_error_details": [
+ {
+ "severity": "minor",
+ "type": "unsupported_association_framing",
+ "primary_metric": "faithfulness",
+ "cap_candidate": 8,
+ "rationale": "The explanation uses correlation/effectiveness language for resource categories; the returned evidence supports an association/ranking but not a causal effectiveness claim."
+ }
+ ],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 6,
+ "task_aware": 7,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 8 because of minor judge error(s). baseline rows[:20] issue(s): minor unsupported_association_framing."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G07",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G07",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G07__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G07__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 4,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G08",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G08",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G08__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G08__task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 6.65,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 11,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 6,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "major",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "major",
+ "type": "core_requirement_omission",
+ "primary_metric": "completeness",
+ "cap_candidate": 6,
+ "rationale": "The explanation does not fully enumerate the group-level comparisons required by the task."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "completeness",
+ "baseline": 5,
+ "task_aware": 9,
+ "delta": 4
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "actionability",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major core_requirement_omission."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G09",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G09",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G09__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G09__task_aware_data_summarization",
+ "baseline_final_score": 5.8,
+ "task_aware_final_score": 6,
+ "baseline_raw_weighted_score": 5.8,
+ "task_aware_raw_weighted_score": 7.4,
+ "delta_task_aware_minus_baseline": 0.2,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 1998,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "compact_retrieval_context",
+ "baseline_effective_cap": 6,
+ "task_aware_effective_cap": 6,
+ "baseline_highest_error_severity": "major",
+ "task_aware_highest_error_severity": "major",
+ "baseline_error_details": [
+ {
+ "severity": "major",
+ "type": "core_requirement_omission",
+ "primary_metric": "completeness",
+ "cap_candidate": 6,
+ "rationale": "The explanation does not fully enumerate the group-level comparisons required by the task."
+ }
+ ],
+ "task_aware_error_details": [
+ {
+ "severity": "major",
+ "type": "core_requirement_omission",
+ "primary_metric": "completeness",
+ "cap_candidate": 6,
+ "rationale": "The explanation does not fully enumerate the group-level comparisons required by the task."
+ }
+ ],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ },
+ {
+ "metric": "completeness",
+ "baseline": 4,
+ "task_aware": 6,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 6,
+ "task_aware": 7,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 6,
+ "task_aware": 7,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 6,
+ "task_aware": 7,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major core_requirement_omission."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G10",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G10",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G10__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G10__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 3,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G11",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G11",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G11__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G11__task_aware_data_summarization",
+ "baseline_final_score": 7.1,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.1,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.65,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 42,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 8,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "minor",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "minor",
+ "type": "partial_coverage",
+ "primary_metric": "completeness",
+ "cap_candidate": 8,
+ "rationale": "The explanation identifies important drop weeks but omits or deemphasizes some returned flagged weeks and exact retrieval details."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "completeness",
+ "baseline": 6,
+ "task_aware": 9,
+ "delta": 3
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 8 because of minor judge error(s). baseline rows[:20] issue(s): minor partial_coverage."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G12",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G12",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G12__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G12__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 53,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G14",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G14",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G14__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G14__task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 6,
+ "baseline_raw_weighted_score": 6.8,
+ "task_aware_raw_weighted_score": 7.45,
+ "delta_task_aware_minus_baseline": 0,
+ "winner": "tie",
+ "full_result_row_count": 164,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 6,
+ "task_aware_effective_cap": 6,
+ "baseline_highest_error_severity": "major",
+ "task_aware_highest_error_severity": "major",
+ "baseline_error_details": [
+ {
+ "severity": "major",
+ "type": "core_requirement_omission",
+ "primary_metric": "completeness",
+ "cap_candidate": 6,
+ "rationale": "The explanation discusses withdrawal engagement but does not adequately compare the timing or trajectory with passing students."
+ }
+ ],
+ "task_aware_error_details": [
+ {
+ "severity": "major",
+ "type": "core_requirement_omission",
+ "primary_metric": "completeness",
+ "cap_candidate": 6,
+ "rationale": "The explanation discusses withdrawal engagement but does not adequately compare the timing or trajectory with passing students."
+ }
+ ],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 5,
+ "task_aware": 6,
+ "delta": 1
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 7,
+ "task_aware": 7,
+ "delta": 0
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 7,
+ "delta": 0
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Both modes received the same final score."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G15",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G15",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G15__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G15__task_aware_data_summarization",
+ "baseline_final_score": 7.1,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.1,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.65,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 50,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 8,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "minor",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "minor",
+ "type": "partial_rank_reporting",
+ "primary_metric": "completeness",
+ "cap_candidate": 8,
+ "rationale": "The explanation gives representative high-risk students but does not fully present the top-ten ranking and flags in the compact form requested."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "completeness",
+ "baseline": 6,
+ "task_aware": 9,
+ "delta": 3
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 8 because of minor judge error(s). baseline rows[:20] issue(s): minor partial_rank_reporting."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-G16",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G16",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-G16__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-G16__task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.3,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 6,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "major",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "major",
+ "type": "missing_action_provenance",
+ "primary_metric": "completeness",
+ "cap_candidate": 6,
+ "rationale": "The explanation recommends actions but does not sufficiently expose the supported action rule provenance, owner, priority, or timing requested by the task."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 6,
+ "task_aware": 9,
+ "delta": 3
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major missing_action_provenance."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-S01",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-S01",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-S01__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-S01__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-S02",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-S02",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-S02__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-S02__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-S03",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-S03",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-S03__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-S03__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 32,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-S05",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-S05",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-S05__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-S05__task_aware_data_summarization",
+ "baseline_final_score": 5,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 5.65,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 3.75,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 5,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "major",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "major",
+ "type": "wrong_evaluation_target",
+ "primary_metric": "task_relevance",
+ "cap_candidate": 5,
+ "rationale": "The explanation generalizes to students/cohort when the task is a selected student competency-gap record."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 5,
+ "task_aware": 9,
+ "delta": 4
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "completeness",
+ "baseline": 5,
+ "task_aware": 9,
+ "delta": 4
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 5,
+ "task_aware": 9,
+ "delta": 4
+ },
+ {
+ "metric": "actionability",
+ "baseline": 5,
+ "task_aware": 8,
+ "delta": 3
+ },
+ {
+ "metric": "clarity",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 5 because of major judge error(s). baseline rows[:20] issue(s): major wrong_evaluation_target."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-S06",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-S06",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-S06__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-S06__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__A-S08",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-S08",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__A-S08__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__A-S08__task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 6.9,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 6,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "major",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "major",
+ "type": "missing_action_provenance",
+ "primary_metric": "completeness",
+ "cap_candidate": 6,
+ "rationale": "The explanation recommends actions but does not sufficiently expose the supported action rule provenance, owner, priority, or timing requested by the task."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 5,
+ "task_aware": 9,
+ "delta": 4
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "actionability",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major missing_action_provenance."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-B01",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-B01",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-B01__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-B01__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-B02",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-B02",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-B02__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-B02__task_aware_data_summarization",
+ "baseline_final_score": 7.55,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.55,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.2,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 8,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "minor",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "minor",
+ "type": "unsupported_outcome_claim",
+ "primary_metric": "safety_fairness",
+ "cap_candidate": 8,
+ "rationale": "The explanation implies improvement in outcomes from behavior changes; the permitted evidence supports risk flags but not a guaranteed outcome effect."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 8 because of minor judge error(s). baseline rows[:20] issue(s): minor unsupported_outcome_claim."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-B03",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-B03",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-B03__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-B03__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-T01",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T01",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-T01__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-T01__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-T02",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T02",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-T02__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-T02__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-T03",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T03",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-T03__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-T03__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 6,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-T04",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T04",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-T04__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-T04__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-T05",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T05",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-T05__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-T05__task_aware_data_summarization",
+ "baseline_final_score": 7.6,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.6,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.15,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 32,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 8,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "minor",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "minor",
+ "type": "unsupported_causal_language",
+ "primary_metric": "faithfulness",
+ "cap_candidate": 8,
+ "rationale": "The task asks for observed disengagement weeks; the explanation speculates about why without causal evidence."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 8 because of minor judge error(s). baseline rows[:20] issue(s): minor unsupported_causal_language."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-T06",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T06",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-T06__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-T06__task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 6,
+ "baseline_raw_weighted_score": 7.05,
+ "task_aware_raw_weighted_score": 7.5,
+ "delta_task_aware_minus_baseline": 0,
+ "winner": "tie",
+ "full_result_row_count": 32,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 6,
+ "task_aware_effective_cap": 6,
+ "baseline_highest_error_severity": "major",
+ "task_aware_highest_error_severity": "major",
+ "baseline_error_details": [
+ {
+ "severity": "major",
+ "type": "unsupported_pattern_label",
+ "primary_metric": "faithfulness",
+ "cap_candidate": 6,
+ "rationale": "The explanation labels the pattern as cramming, but the packet evidence mainly proves fluctuating weekly clicks and does not fully establish intent or assessment-driven concentration."
+ }
+ ],
+ "task_aware_error_details": [
+ {
+ "severity": "major",
+ "type": "unsupported_pattern_label",
+ "primary_metric": "faithfulness",
+ "cap_candidate": 6,
+ "rationale": "The explanation labels the pattern as cramming, but the packet evidence mainly proves fluctuating weekly clicks and does not fully establish intent or assessment-driven concentration."
+ }
+ ],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 6,
+ "task_aware": 7,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 7,
+ "delta": 0
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 7,
+ "delta": 0
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Both modes received the same final score."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-T08",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T08",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-T08__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-T08__task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.05,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 5,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 6,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "major",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "major",
+ "type": "unsupported_association_strength",
+ "primary_metric": "faithfulness",
+ "cap_candidate": 6,
+ "rationale": "The explanation implies lateness lowers scores without preserving the small-sample, non-monotonic, descriptive-only limitation."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 6,
+ "task_aware": 9,
+ "delta": 3
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major unsupported_association_strength."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-T10",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T10",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-T10__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-T10__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 9,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-T11",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T11",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-T11__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-T11__task_aware_data_summarization",
+ "baseline_final_score": 4,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 4.8,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 4.75,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 1988,
+ "row_count_bucket": ">20",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "queue_strategy": "compact_retrieval_context",
+ "baseline_effective_cap": 4,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "critical",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "critical",
+ "type": "contradicted_correlation_direction",
+ "primary_metric": "numerical_correctness",
+ "cap_candidate": 4,
+ "rationale": "The explanation states a negative registration-lead-time relationship, while the packet evidence reports a weak positive correlation near zero."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 4,
+ "task_aware": 9,
+ "delta": 5
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 4,
+ "task_aware": 9,
+ "delta": 5
+ },
+ {
+ "metric": "completeness",
+ "baseline": 5,
+ "task_aware": 9,
+ "delta": 4
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 5,
+ "task_aware": 9,
+ "delta": 4
+ },
+ {
+ "metric": "actionability",
+ "baseline": 5,
+ "task_aware": 8,
+ "delta": 3
+ },
+ {
+ "metric": "clarity",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ }
+ ],
+ "interpretation": "Full SQL result has >20 rows; rows[:20] may omit part of the result set, so evidence coverage can matter. task-aware wins mainly because baseline_first_20_rows was capped at 4 because of critical judge error(s). baseline rows[:20] issue(s): critical contradicted_correlation_direction."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-T12",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T12",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-T12__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-T12__task_aware_data_summarization",
+ "baseline_final_score": 7.7,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 7.7,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 1.05,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 6,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": null,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": null,
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "actionability",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins on metric differences: completeness +2, faithfulness +1, numerical_correctness +1."
+ },
+ {
+ "pair_key": "SAMPLE_OULAD__S-T13",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T13",
+ "comparable": true,
+ "reason": null,
+ "baseline_record_id": "SAMPLE_OULAD__S-T13__baseline_first_20_rows",
+ "task_aware_record_id": "SAMPLE_OULAD__S-T13__task_aware_data_summarization",
+ "baseline_final_score": 6,
+ "task_aware_final_score": 8.75,
+ "baseline_raw_weighted_score": 6.9,
+ "task_aware_raw_weighted_score": 8.75,
+ "delta_task_aware_minus_baseline": 2.75,
+ "winner": "task_aware_data_summarization",
+ "full_result_row_count": 1,
+ "row_count_bucket": "<=20",
+ "evidence_access_mode": "direct_embedding",
+ "queue_strategy": "full_context",
+ "baseline_effective_cap": 6,
+ "task_aware_effective_cap": null,
+ "baseline_highest_error_severity": "major",
+ "task_aware_highest_error_severity": null,
+ "baseline_error_details": [
+ {
+ "severity": "major",
+ "type": "missing_action_provenance",
+ "primary_metric": "completeness",
+ "cap_candidate": 6,
+ "rationale": "The explanation recommends actions but does not sufficiently expose the supported action rule provenance, owner, priority, or timing requested by the task."
+ }
+ ],
+ "task_aware_error_details": [],
+ "metric_deltas": [
+ {
+ "metric": "faithfulness",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "numerical_correctness",
+ "baseline": 8,
+ "task_aware": 9,
+ "delta": 1
+ },
+ {
+ "metric": "completeness",
+ "baseline": 5,
+ "task_aware": 9,
+ "delta": 4
+ },
+ {
+ "metric": "task_relevance",
+ "baseline": 7,
+ "task_aware": 9,
+ "delta": 2
+ },
+ {
+ "metric": "actionability",
+ "baseline": 6,
+ "task_aware": 8,
+ "delta": 2
+ },
+ {
+ "metric": "clarity",
+ "baseline": 8,
+ "task_aware": 8,
+ "delta": 0
+ },
+ {
+ "metric": "safety_fairness",
+ "baseline": 7,
+ "task_aware": 8,
+ "delta": 1
+ }
+ ],
+ "interpretation": "Full SQL result has <=20 rows, so rows[:20] already covers the complete result set; the difference is not caused by baseline missing rows. task-aware wins mainly because baseline_first_20_rows was capped at 6 because of major judge error(s). baseline rows[:20] issue(s): major missing_action_provenance."
+ }
+ ]
+}

@@ -1,0 +1,325 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-20T14:36:10.754Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-C06__task_aware_data_summarization",
+    "case_id": "SAMPLE_UCI_POR__A-C06",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-C06",
+    "task_name": "Compare resource usage",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C06.json",
+    "full_query_artifact_sha256": "1217e49edd14b371c1a60fd0a4284900204c346b731579f3dc942372c7df60c1"
+  },
+  "request_payload": {
+    "task_id": "A-C06",
+    "execution_id": "exec_1781847232074_cf418da8",
+    "task_name": "Compare resource usage",
+    "analysis_type": "comparison",
+    "explanation_strategy": "comparison",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Highlight who is more diversified in resource use. Note if one avoids forums/quizzes.",
+    "actionable_question": "Is one student using resources more strategically than the other?",
+    "target_audience": [
+      "instructor"
+    ],
+    "visualization_config": {
+      "x_field": "resource_type",
+      "y_field": "pct_of_total",
+      "series_field": "student_id",
+      "color_field": "student_id",
+      "orientation": "vertical",
+      "variant": "grouped",
+      "x_label": "Resource Type",
+      "y_label": "% of Total Clicks",
+      "semantic_roles": {
+        "x": "category",
+        "y": "engagement_metric",
+        "series": "student_id"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "comparison"
+    },
+    "datasets": {
+      "resource_comparison": [
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "resource_type": null,
+          "clicks": 0,
+          "pct_of_total": null,
+          "vle_diversity_score": 0,
+          "has_engagement_data": false,
+          "total_clicks": 0,
+          "used_resource_types": 0,
+          "evidence_row_type": "no_recorded_resource_usage"
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "resource_type": null,
+          "clicks": 0,
+          "pct_of_total": null,
+          "vle_diversity_score": 0,
+          "has_engagement_data": false,
+          "total_clicks": 0,
+          "used_resource_types": 0,
+          "evidence_row_type": "no_recorded_resource_usage"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "LOW",
+      "reason": "No positive engagement activity found (0 engagement rows)."
+    },
+    "student_context": null,
+    "query_labels": [
+      "resource_comparison"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [
+        "clicks",
+        "pct_of_total",
+        "vle_diversity_score"
+      ],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {
+        "clicks": "context_only",
+        "pct_of_total": "context_only",
+        "vle_diversity_score": "higher_is_more_diverse"
+      },
+      "metric_units": {
+        "clicks": "count",
+        "pct_of_total": "ratio_0_1",
+        "vle_diversity_score": "ratio_0_1"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": true,
+      "require_metric_units": true,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [
+        "has_engagement_data",
+        "total_clicks",
+        "used_resource_types",
+        "evidence_row_type"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "multi_metric_comparison",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": "student_id",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": "resource_type",
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": "has_engagement_data",
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 5773,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1403,
+      "completion_tokens": 394,
+      "total_tokens": 1797
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-C06",
+    "execution_id": "exec_1781847232074_cf418da8",
+    "explanation": {
+      "summary": "Both students in the dataset exhibit no recorded resource usage, indicating a lack of engagement with available learning resources. This suggests a uniform pattern of disengagement across the group.",
+      "insights": [
+        {
+          "title": "No Resource Engagement",
+          "description": "Neither student has recorded any clicks or engagement with resources, resulting in a vle_diversity_score of 0 for both. This indicates a complete absence of resource utilization.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "total_clicks",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": 0,
+              "context": "Both students have not engaged with any resources."
+            },
+            {
+              "metric": "used_resource_types",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": 0,
+              "context": "Both students have not utilized any resource types."
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "The lack of resource engagement suggests a need for interventions to encourage students to utilize available learning materials."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement targeted outreach to both students to understand barriers to resource usage.",
+          "rationale": "Understanding the reasons behind the lack of engagement can help tailor interventions to improve resource utilization."
+        },
+        {
+          "priority": "medium",
+          "action": "Introduce mandatory resource engagement activities.",
+          "rationale": "Encouraging students to interact with resources may enhance their learning experience and improve overall engagement."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The dataset provides sufficient evidence of no recorded resource usage for both students.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "comparison",
+    "explanation_type": "comparison",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3-experimental",
+    "baseline_available": true,
+    "input_summary_type": "multi_metric_comparison",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 2,
+    "included_row_count": 2,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "resource_comparison",
+        "row_count": 2,
+        "included_row_count": 2
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 2,
+    "baseline_reference_tokens": 159,
+    "task_aware_prompt_tokens": 856,
+    "token_ratio": 5.3836,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "comparison",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (5.3836 > 1.2).",
+      "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 5763,
+      "token_usage": {
+        "prompt_tokens": 1403,
+        "completion_tokens": 394,
+        "total_tokens": 1797
+      },
+      "strategy": "comparison",
+      "granularity": "semester",
+      "cost_usd": 0.000447
+    }
+  },
+  "raw_text": "Summary: Both students in the dataset exhibit no recorded resource usage, indicating a lack of engagement with available learning resources. This suggests a uniform pattern of disengagement across the group.\n\nInsights: No Resource Engagement: Neither student has recorded any clicks or engagement with resources, resulting in a vle_diversity_score of 0 for both. This indicates a complete absence of resource utilization.\n\nEducational implications: The lack of resource engagement suggests a need for interventions to encourage students to utilize available learning materials.\n\nRecommendations: high - Implement targeted outreach to both students to understand barriers to resource usage. - Understanding the reasons behind the lack of engagement can help tailor interventions to improve resource utilization. | medium - Introduce mandatory resource engagement activities. - Encouraging students to interact with resources may enhance their learning experience and improve overall engagement."
+}

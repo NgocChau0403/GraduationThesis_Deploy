@@ -1,0 +1,107 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_OULAD__A-G02__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Factual interpretation was judged against the packet evidence, with penalties for unsupported scope, causality, thresholds, or direction."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Numeric values, percentages, rankings, thresholds, and directions were checked against the delivered or retrieved evidence in this packet."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Coverage was scored against the supplied core and supporting requirements for this exact task."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "The score reflects whether the explanation answers the stated actionable question for the correct dataset, entity level, and audience."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Actionability reflects whether advice or interpretation is feasible and grounded in returned evidence or supported action provenance."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Clarity reflects organization, precision, concision, and whether the output is scannable for the target audience."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Safety/fairness is applicable under the packet contract; scoring penalizes overconfident, stigmatizing, causal, or unfair individual/group framing."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Summary: The analysis reveals a weak positive correlation between Engagement Score and Average Score, indicating that higher engagement may be associated with better academic performance.",
+ "claim_type": "task_answer",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G02__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "However, several outliers exist, particularly students with high engagement scores but low average scores, suggesting that engagement alone may not guarantee improved grades.",
+ "claim_type": "numeric_or_status_evidence",
+ "claim_scope": "core",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G02__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The packet supports part of the statement, but the explanation omits a required qualifier, exact field, or full task scope.",
+ "impact_type": "changes_interpretation"
+ },
+ {
+ "claim_id": "C03",
+ "claim_text": "Insights: Weak Positive Correlation: The correlation between Engagement Score and Average Score is weakly positive, suggesting that as engagement increases, average scores tend to increase slightly.",
+ "claim_type": "interpretation_or_action",
+ "claim_scope": "supporting",
+ "support_status": "supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G02__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "numerical_mischaracterization",
+ "claim_ids": [
+ "C02"
+ ],
+ "severity": "major",
+ "primary_metric": "numerical_correctness",
+ "secondary_metrics": [
+ "faithfulness"
+ ],
+ "cap_candidate": 6,
+ "rationale": "The explanation describes the relationship as weak without giving the returned moderate correlation coefficient.",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G02__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ]
+ }
+ ],
+ "holistic_rationale": "The record is scorable: the explanation addresses Engagement–performance relationship for instructor. Stronger elements are the evidence-linked values and task framing; defects, if any, concern missing qualifiers, incomplete required coverage, or over-interpretation beyond the packet. The metric pattern follows those evidence and requirement checks without calculating a final verdict.",
+ "evidence_usage_notes": "evidence_access_mode was deterministic_artifact_retrieval; retrieval_log_path=Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G02__baseline_first_20_rows.json; retrieved_row_count=1998 with coverage=full. I used the compact packet evidence, deterministic scan summary, and retrieval validation only.",
+ "invalid_reason": null
+}

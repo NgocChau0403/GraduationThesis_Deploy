@@ -1,0 +1,252 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-S07__task_aware_data_summarization",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-S07",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Student background context",
+    "scope": "1 student",
+    "actionable_question": "What background factors should admin consider when deciding how to support this student?",
+    "target_audience": "academic_advisor, admin",
+    "ai_summary_type": "metric_snapshot",
+    "ai_prompt_hint": "Frame background factors as context, not judgement. Note which disadvantage dimensions are present and what support is already in place.",
+    "query_labels": [
+      "background_context"
+    ],
+    "explanation_strategy": "distribution"
+  },
+  "schema_context": {
+    "source_tables": [
+      "student",
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "highest_education",
+      "socioeconomic_band",
+      "disadvantage_score [FE single]",
+      "support_score [FE single]",
+      "family_stability_score [FE single]",
+      "disability_flag",
+      "internet_access_flag",
+      "previous_attempt_count"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "school",
+        "family_size",
+        "gender",
+        "age_years",
+        "school_support_flag",
+        "family_support_flag",
+        "has_paid_class",
+        "internet_access_flag",
+        "support_score",
+        "lifestyle_risk_score",
+        "social_balance_score",
+        "family_stability_score"
+      ],
+      "optional_columns": [
+        "highest_education",
+        "mother_education_level",
+        "father_education_level",
+        "age_group",
+        "previous_attempt_count",
+        "studytime",
+        "absences"
+      ]
+    },
+    "query_labels": [
+      "background_context"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The dataset presents a single student's background context, highlighting various educational and social factors. The student exhibits a low support score and limited family support, indicating potential areas for administrative intervention.\n\nInsights: Low Support Score: The student's support score is 0.25, indicating a low level of support which may hinder academic performance. This score is significantly below the average threshold for effective support. | Family Support Absence: The absence of family support (family_support_flag: false) may contribute to the student's challenges, particularly in balancing study and personal life.\n\nEducational implications: The student may require additional institutional support to compensate for low family support and support score.\n\nRecommendations: high - Implement targeted support programs for students with low support scores. - To enhance academic performance and well-being for students lacking family support.",
+    "structured_payload": {
+      "task_id": "A-S07",
+      "execution_id": "exec_1781847238136_ee2bf06a",
+      "explanation": {
+        "summary": "The dataset presents a single student's background context, highlighting various educational and social factors. The student exhibits a low support score and limited family support, indicating potential areas for administrative intervention.",
+        "insights": [
+          {
+            "title": "Low Support Score",
+            "description": "The student's support score is 0.25, indicating a low level of support which may hinder academic performance. This score is significantly below the average threshold for effective support.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "support_score",
+                "value": 0.25,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Indicates low support for academic success."
+              }
+            ]
+          },
+          {
+            "title": "Family Support Absence",
+            "description": "The absence of family support (family_support_flag: false) may contribute to the student's challenges, particularly in balancing study and personal life.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "family_support_flag",
+                "value": 0,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Lack of family support can impact student well-being."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The student may require additional institutional support to compensate for low family support and support score."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted support programs for students with low support scores.",
+            "rationale": "To enhance academic performance and well-being for students lacking family support."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data is derived from a sufficient sample size for the metrics analyzed, although it is based on a single student.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "distribution",
+      "explanation_type": "distribution",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3-experimental",
+      "baseline_available": true,
+      "input_summary_type": "metric_snapshot",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 1,
+      "included_row_count": 1,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "background_context",
+          "row_count": 1,
+          "included_row_count": 1
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 1,
+      "baseline_reference_tokens": 149,
+      "task_aware_prompt_tokens": 882,
+      "token_ratio": 5.9195,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "comparison",
+        "exceptions",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [
+        "limitations.causal_claim_allowed",
+        "action_evidence.action_evidence",
+        "exceptions.sensitive_context"
+      ],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (5.9195 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 5867,
+        "token_usage": {
+          "prompt_tokens": 1345,
+          "completion_tokens": 411,
+          "total_tokens": 1756
+        },
+        "strategy": "distribution",
+        "granularity": "semester",
+        "cost_usd": 0.000448
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-S07__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "d8a1a0d3274b399f9b7455cc87efaa96afe5bd192e9b91f8e6b94b71b993e552",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1345,
+        "completion_tokens": 411,
+        "total_tokens": 1756
+      },
+      "latency_ms": 5877,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 1,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "background_context",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S07.json",
+        "artifact_sha256": "29f492d729f419d9bedc40a295a26cbcdc2437f460b158fda3570fa7c3b00211",
+        "row_count": 1,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 1,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "background_context": 1
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-S07-CORE-01",
+        "description": "Note which disadvantage dimensions are present and what support is already in place."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-S07-CONSTRAINT-01",
+        "description": "Frame background factors as context, not judgement."
+      },
+      {
+        "constraint_id": "A-S07-CONSTRAINT-02",
+        "description": "Treat the output as professional advisor/admin context; do not expose raw disadvantage scores in student-facing wording."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

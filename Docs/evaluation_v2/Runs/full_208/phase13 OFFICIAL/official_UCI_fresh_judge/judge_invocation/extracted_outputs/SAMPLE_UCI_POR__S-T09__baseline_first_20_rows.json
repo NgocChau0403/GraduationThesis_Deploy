@@ -1,0 +1,110 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__S-T09__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10 reflects A weak non-significant association is presented as evidence that healthier choices improve results."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material numerical_correctness limitations reduce the usefulness of the response. The response misses the selected student's position and turns a weak descriptive cohort association into an unsupported lifestyle prescription."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10 reflects The selected student's position (lifestyle_risk_score 0.375, avg_score 36.67) is not stated or compared with the class scatter."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10: material task_relevance limitations reduce the usefulness of the response. The response misses the selected student's position and turns a weak descriptive cohort association into an unsupported lifestyle prescription."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10: material actionability limitations reduce the usefulness of the response. The response misses the selected student's position and turns a weak descriptive cohort association into an unsupported lifestyle prescription."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10: material safety_fairness limitations reduce the usefulness of the response. The response misses the selected student's position and turns a weak descriptive cohort association into an unsupported lifestyle prescription."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The cohort correlation between lifestyle risk and average score is negative.",
+ "claim_type": "correlation",
+ "claim_scope": "core",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "derived correlation evidence coefficient=-0.1041"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The direction is correct, but weakness, coefficient, and non-significance limits are omitted.",
+ "impact_type": "changes_interpretation"
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Healthier lifestyle choices may improve academic performance.",
+ "claim_type": "causal_interpretation",
+ "claim_scope": "incidental",
+ "support_status": "unsupported",
+ "evidence_refs": [
+ "derived correlation evidence causal_claim_allowed=false and descriptive_only policy"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The evidence does not permit causal or prescriptive inference.",
+ "impact_type": "changes_interpretation"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "selected_student_position_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "task_relevance"
+ ],
+ "cap_candidate": null,
+ "rationale": "The selected student's position (lifestyle_risk_score 0.375, avg_score 36.67) is not stated or compared with the class scatter.",
+ "evidence_refs": [
+ "derived selected_entity_evidence"
+ ],
+ "requirement_id": "S-T09-CORE-01"
+ },
+ {
+ "error_id": "E02",
+ "error_type": "association_overstatement",
+ "claim_ids": [
+ "C01",
+ "C02"
+ ],
+ "severity": "major",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "safety_fairness",
+ "actionability"
+ ],
+ "cap_candidate": 5,
+ "rationale": "A weak non-significant association is presented as evidence that healthier choices improve results.",
+ "evidence_refs": [
+ "derived correlation evidence coefficient=-0.1041"
+ ]
+ }
+ ],
+ "holistic_rationale": "The response misses the selected student's position and turns a weak descriptive cohort association into an unsupported lifestyle prescription.",
+ "evidence_usage_notes": "Evidence access mode was deterministic_artifact_retrieval. The retrieval log Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/official_r4_fresh_judge/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T09__baseline_first_20_rows.json reports complete retrieval of 649 rows; deterministic summaries and retrieved ranges materially informed the judgment. Evidence references: lifestyle_risk_scatter:Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T09.json. Deterministic checks were used only for covered values, directions, rankings, thresholds, and availability; semantic and causal claims were judged separately. Evidence access does not prove model attention to every row.",
+ "invalid_reason": null
+}

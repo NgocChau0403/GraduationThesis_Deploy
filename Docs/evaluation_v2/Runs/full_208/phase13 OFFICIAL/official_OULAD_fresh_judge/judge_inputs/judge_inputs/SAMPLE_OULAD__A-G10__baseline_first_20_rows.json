@@ -1,0 +1,439 @@
+{
+ "schema_version": "judge_input_schema_v1",
+ "record_id": "SAMPLE_OULAD__A-G10__baseline_first_20_rows",
+ "evaluation_run_id": "oulad_official_r5",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G10",
+ "explanation_mode": "baseline_first_20_rows",
+ "prompt_version": "judge_prompt_v2_pilot_v1",
+ "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+ "task_context": {
+ "task_name": "Consistency analysis across cohort",
+ "scope": "Many students",
+ "actionable_question": "How many students are cramming instead of studying consistently?",
+ "target_audience": "instructor",
+ "ai_summary_type": "categorical_distribution",
+ "ai_prompt_hint": "Describe the distribution of students across high, medium, and low consistency using student_count and pct_students. Use avg_weekly_stddev and avg_active_weeks to explain what low consistency means, then recommend study-routine interventions for the low group.",
+ "query_labels": [
+ "consistency_distribution"
+ ],
+ "explanation_strategy": "distribution"
+ },
+ "schema_context": {
+ "source_tables": [
+ "enrollment",
+ "engagement [OULAD only]"
+ ],
+ "key_db_fields": [
+ "consistency_level [FE cross]",
+ "student_count [FE cross]",
+ "pct_students [FE cross]",
+ "avg_weekly_stddev",
+ "avg_weekly_clicks",
+ "avg_active_weeks"
+ ],
+ "output_schema": {
+ "required_columns": [
+ "consistency_level",
+ "student_count"
+ ],
+ "optional_columns": [
+ "pct_students",
+ "avg_weekly_stddev",
+ "avg_weekly_clicks",
+ "avg_active_weeks"
+ ]
+ },
+ "query_labels": [
+ "consistency_distribution"
+ ]
+ },
+ "explanation": {
+ "raw_text": "Summary: The distribution of students across consistency levels reveals a significant concentration in the low consistency category, indicating a potential issue with study habits. Most students are not engaging consistently, as evidenced by the high average weekly standard deviation and lower average active weeks.\n\nInsights: High Concentration of Low Consistency Students: The low consistency group comprises 979 students, representing 39.19% of the cohort, which is the largest segment. This group exhibits an average weekly standard deviation of 88.2, indicating erratic study patterns. | Average Weekly Engagement: Students in the low consistency category have an average of 21.8 active weeks, which is comparable to the medium group but significantly lower than the high consistency group with 12.43 active weeks. This suggests that while they are active, their engagement is inconsistent.\n\nEducational implications: A significant number of students are likely cramming rather than engaging in consistent study practices, which may hinder long-term retention and understanding.\n\nRecommendations: high - Implement structured study schedules for low consistency students. - Providing a clear framework for study routines can help students develop better habits and reduce the tendency to cram.",
+ "structured_payload": {
+ "task_id": "A-G10",
+ "execution_id": "exec_1781847762536_110a89af",
+ "explanation": {
+ "summary": "The distribution of students across consistency levels reveals a significant concentration in the low consistency category, indicating a potential issue with study habits. Most students are not engaging consistently, as evidenced by the high average weekly standard deviation and lower average active weeks.",
+ "insights": [
+ {
+ "title": "High Concentration of Low Consistency Students",
+ "description": "The low consistency group comprises 979 students, representing 39.19% of the cohort, which is the largest segment. This group exhibits an average weekly standard deviation of 88.2, indicating erratic study patterns.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "student_count",
+ "value": 979,
+ "comparison": "baseline",
+ "delta": null,
+ "context": "Largest group in the cohort"
+ }
+ ]
+ },
+ {
+ "title": "Average Weekly Engagement",
+ "description": "Students in the low consistency category have an average of 21.8 active weeks, which is comparable to the medium group but significantly lower than the high consistency group with 12.43 active weeks. This suggests that while they are active, their engagement is inconsistent.",
+ "severity": "medium",
+ "evidence": [
+ {
+ "metric": "avg_active_weeks",
+ "value": 21.8,
+ "comparison": "up_from_previous",
+ "delta": 0.68,
+ "context": "Indicates potential for improvement in study habits"
+ }
+ ]
+ }
+ ],
+ "educational_implications": [
+ "A significant number of students are likely cramming rather than engaging in consistent study practices, which may hinder long-term retention and understanding."
+ ],
+ "recommendations": [
+ {
+ "priority": "high",
+ "action": "Implement structured study schedules for low consistency students.",
+ "rationale": "Providing a clear framework for study routines can help students develop better habits and reduce the tendency to cram."
+ }
+ ],
+ "warnings": []
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "Data is complete and accurately reflects the distribution of student consistency levels.",
+ "based_on": [
+ "sufficient_data"
+ ]
+ },
+ "explanation_strategy": "distribution",
+ "explanation_type": "distribution",
+ "ai_summary_method": "baseline_first_20_rows",
+ "ai_summary_version": "baseline",
+ "baseline_available": true,
+ "input_summary_type": "raw_first_20_rows",
+ "ai_summary_method_warning": null,
+ "full_result_row_count": null,
+ "included_row_count": null,
+ "small_result_threshold": null,
+ "small_result_full_rows_applied": null,
+ "dataset_row_breakdown": [],
+ "safety_flags": [],
+ "degraded": false,
+ "meta": {
+ "model": "gpt-4o-mini-2024-07-18",
+ "latency_ms": 11137,
+ "token_usage": {
+ "prompt_tokens": 744,
+ "completion_tokens": 471,
+ "total_tokens": 1215
+ },
+ "strategy": "distribution",
+ "granularity": "weekly",
+ "cost_usd": 0.000394
+ }
+ },
+ "generation_metadata": {
+ "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-G10__baseline_first_20_rows.json",
+ "explanation_artifact_sha256": "21fc937f741109d1e6fd2e977bb0db7e13e9df7e0f299220ce00486202f3ef2e",
+ "ai_service_url": "http://localhost:8000",
+ "expected_ai_summary_method": "baseline_first_20_rows",
+ "observed_ai_summary_method": "baseline_first_20_rows",
+ "degraded": false,
+ "model": "gpt-4o-mini-2024-07-18",
+ "token_usage": {
+ "prompt_tokens": 744,
+ "completion_tokens": 471,
+ "total_tokens": 1215
+ },
+ "latency_ms": 11140,
+ "attempts_used": 1
+ }
+ },
+ "evidence_access": {
+ "full_result_row_count": 3,
+ "full_query_artifacts": [
+ {
+ "dataset_label": "consistency_distribution",
+ "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G10.json",
+ "artifact_sha256": "b1ae43be27511d13b998754ae5363baea6e1ec9aec7d0011932b6180dec172cf",
+ "row_count": 3,
+ "readable": true
+ }
+ ],
+ "evidence_access_mode": "direct_embedding",
+ "small_result_row_threshold": 20,
+ "direct_embedding_token_budget": 120000,
+ "prompt_embedded_row_count": 3,
+ "retrieved_row_count": 0,
+ "retrieved_row_count_by_dataset": {},
+ "retrieved_row_ranges": [],
+ "retrieved_chunk_ids": [],
+ "retrieval_log_path": null,
+ "retrieval_request_complete": true,
+ "retrieval_coverage_status": "not_applicable",
+ "full_access_available": true,
+ "deterministic_scan_scope": "full_query_artifact_all_rows",
+ "deterministic_scan_row_count_by_dataset": {
+ "consistency_distribution": 3
+ },
+ "full_result_sent_to_llm": true,
+ "deterministic_checks": [
+ {
+ "check_type": "task_aware_shared_evidence_contract",
+ "case_id": "SAMPLE_OULAD__A-G10",
+ "task_id": "A-G10",
+ "sidecar_sha256": "b1c174042b2888eb9ad116491d5b2d0b7122e9502541133c08b98204054b73fb",
+ "evidence": {
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G10",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G10",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G10__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "92c8a4e34a10a8e0ee7f29104d9da388dff5456710aeae5522c9f93221a0e301",
+ "deterministic_summary": {
+ "summary_type": "categorical_distribution",
+ "dataset_name": "consistency_distribution",
+ "row_count": 3,
+ "category_column": "consistency_level",
+ "count_column": "student_count",
+ "percent_column": "pct_students",
+ "total_count": 2498,
+ "category_distribution": [
+ {
+ "category": "high",
+ "count": 760,
+ "percent": 0.3042,
+ "metrics": {
+ "avg_weekly_stddev": 18.59,
+ "avg_weekly_clicks": 19.34,
+ "avg_active_weeks": 12.43
+ }
+ },
+ {
+ "category": "medium",
+ "count": 759,
+ "percent": 0.3038,
+ "metrics": {
+ "avg_weekly_stddev": 45.68,
+ "avg_weekly_clicks": 38.26,
+ "avg_active_weeks": 22.12
+ }
+ },
+ {
+ "category": "low",
+ "count": 979,
+ "percent": 0.3919,
+ "metrics": {
+ "avg_weekly_stddev": 88.2,
+ "avg_weekly_clicks": 68.81,
+ "avg_active_weeks": 21.8
+ }
+ }
+ ],
+ "largest_category": {
+ "category": "low",
+ "count": 979,
+ "percent": 0.3919
+ },
+ "focus_categories": [
+ "low"
+ ],
+ "focus_total": {
+ "categories": [
+ "low"
+ ],
+ "present_categories": [
+ "low"
+ ],
+ "missing_categories": [],
+ "count": 979,
+ "percent": 0.3919
+ },
+ "missing_expected_categories": [],
+ "missing_focus_categories": [],
+ "metric_columns": [
+ "avg_weekly_stddev",
+ "avg_weekly_clicks",
+ "avg_active_weeks"
+ ],
+ "metric_evidence_by_category": {
+ "high": {
+ "avg_weekly_stddev": 18.59,
+ "avg_weekly_clicks": 19.34,
+ "avg_active_weeks": 12.43
+ },
+ "medium": {
+ "avg_weekly_stddev": 45.68,
+ "avg_weekly_clicks": 38.26,
+ "avg_active_weeks": 22.12
+ },
+ "low": {
+ "avg_weekly_stddev": 88.2,
+ "avg_weekly_clicks": 68.81,
+ "avg_active_weeks": 21.8
+ }
+ },
+ "summarization_warnings": [
+ "Percent total for pct_students is 0.9999, outside expected 99-101 range."
+ ],
+ "percent_total": 0.9999
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "categorical_distribution",
+ "task_id": "A-G10",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "consistency_distribution",
+ "row_count": 3,
+ "category_column": "consistency_level",
+ "count_column": "student_count",
+ "percent_column": "pct_students",
+ "metric_columns": [
+ "avg_weekly_stddev",
+ "avg_weekly_clicks",
+ "avg_active_weeks"
+ ],
+ "total_count": 2498,
+ "percent_total": 0.9999,
+ "focus_categories": [
+ "low"
+ ]
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "category_distribution": [
+ {
+ "category": "high",
+ "count": 760,
+ "percent": 0.3042,
+ "metrics": {
+ "avg_weekly_stddev": 18.59,
+ "avg_weekly_clicks": 19.34,
+ "avg_active_weeks": 12.43
+ }
+ },
+ {
+ "category": "medium",
+ "count": 759,
+ "percent": 0.3038,
+ "metrics": {
+ "avg_weekly_stddev": 45.68,
+ "avg_weekly_clicks": 38.26,
+ "avg_active_weeks": 22.12
+ }
+ },
+ {
+ "category": "low",
+ "count": 979,
+ "percent": 0.3919,
+ "metrics": {
+ "avg_weekly_stddev": 88.2,
+ "avg_weekly_clicks": 68.81,
+ "avg_active_weeks": 21.8
+ }
+ }
+ ],
+ "focus_total": {
+ "categories": [
+ "low"
+ ],
+ "present_categories": [
+ "low"
+ ],
+ "missing_categories": [],
+ "count": 979,
+ "percent": 0.3919
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_evidence_by_category": {
+ "high": {
+ "avg_weekly_stddev": 18.59,
+ "avg_weekly_clicks": 19.34,
+ "avg_active_weeks": 12.43
+ },
+ "medium": {
+ "avg_weekly_stddev": 45.68,
+ "avg_weekly_clicks": 38.26,
+ "avg_active_weeks": 22.12
+ },
+ "low": {
+ "avg_weekly_stddev": 88.2,
+ "avg_weekly_clicks": 68.81,
+ "avg_active_weeks": 21.8
+ }
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "largest_category": {
+ "category": "low",
+ "count": 979,
+ "percent": 0.3919
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_expected_categories": [],
+ "missing_focus_categories": [],
+ "summarization_warnings": [
+ "Percent total for pct_students is 0.9999, outside expected 99-101 range."
+ ]
+ }
+ }
+ ]
+ }
+ }
+ }
+ ],
+ "checked_claim_types": [
+ "task_specific_evidence_contract"
+ ],
+ "unchecked_claim_types": [
+ "semantic_interpretation",
+ "causal_framing",
+ "actionability_quality"
+ ],
+ "judge_evidence_citations": []
+ },
+ "evaluation_requirements": {
+ "required_core_outputs": [
+ {
+ "requirement_id": "A-G10-CORE-01",
+ "description": "Describe the distribution of students across high, medium, and low consistency using returned cohort counts or percentages."
+ },
+ {
+ "requirement_id": "A-G10-CORE-02",
+ "description": "Explain what low consistency means by reference to returned spread and active-week metrics."
+ },
+ {
+ "requirement_id": "A-G10-CORE-03",
+ "description": "Recommend study-routine interventions targeted at the low-consistency group."
+ }
+ ],
+ "required_supporting_outputs": [],
+ "evaluation_constraints": [
+ {
+ "constraint_id": "A-G10-CONSTRAINT-01",
+ "description": "Do not conflate low consistency with low effort."
+ },
+ {
+ "constraint_id": "A-G10-CONSTRAINT-02",
+ "description": "Acknowledge that observed study patterns may reflect employment, health, accessibility, or family obligations when making recommendations."
+ }
+ ],
+ "safety_fairness_applicability": "applicable",
+ "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+ }
+}

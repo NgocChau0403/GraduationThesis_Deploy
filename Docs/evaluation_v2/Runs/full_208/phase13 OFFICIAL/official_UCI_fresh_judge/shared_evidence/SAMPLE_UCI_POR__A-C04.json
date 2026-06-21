@@ -1,0 +1,550 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__A-C04",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-C04",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__A-C04__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "eaf812a2a66ed9a6e584245205f28cb24bbd40841399c01c710908bf9cb25f94",
+ "deterministic_summary": {
+ "summary_type": "multi_metric_comparison",
+ "dataset_name": "lifestyle_comparison",
+ "row_count": 10,
+ "entity_column": "student_id",
+ "metric_key_column": "lifestyle_dimension",
+ "metric_value_column": "lifestyle_risk_score",
+ "entities": [
+ "SAMPLE_UCI_POR_STU_000001",
+ "SAMPLE_UCI_POR_STU_000002"
+ ],
+ "metrics": [
+ {
+ "metric": "weekday_alcohol",
+ "unit": "ordinal_1_5",
+ "direction": "context_only",
+ "threshold": null
+ },
+ {
+ "metric": "weekend_alcohol",
+ "unit": "ordinal_1_5",
+ "direction": "context_only",
+ "threshold": null
+ },
+ {
+ "metric": "go_out_frequency",
+ "unit": "ordinal_1_5",
+ "direction": "context_only",
+ "threshold": null
+ },
+ {
+ "metric": "health_status",
+ "unit": "ordinal_1_5",
+ "direction": "context_only",
+ "threshold": null
+ },
+ {
+ "metric": "free_time",
+ "unit": "ordinal_1_5",
+ "direction": "context_only",
+ "threshold": null
+ }
+ ],
+ "metric_keys": [
+ "weekday_alcohol",
+ "weekend_alcohol",
+ "go_out_frequency",
+ "health_status",
+ "free_time"
+ ],
+ "comparison_matrix": [
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "metrics": {
+ "weekday_alcohol": 1,
+ "weekend_alcohol": 1,
+ "go_out_frequency": 4,
+ "health_status": 3,
+ "free_time": 3
+ },
+ "labels": {
+ "composite_lifestyle_risk_score": 0.375,
+ "social_balance_score": 0.025000000000000022
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000002",
+ "metrics": {
+ "weekday_alcohol": 1,
+ "weekend_alcohol": 1,
+ "go_out_frequency": 3,
+ "health_status": 3,
+ "free_time": 3
+ },
+ "labels": {
+ "composite_lifestyle_risk_score": 0.3,
+ "social_balance_score": 0.1
+ }
+ }
+ ],
+ "metric_extrema": {
+ "weekday_alcohol": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 1
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 1
+ }
+ },
+ "weekend_alcohol": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 1
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 1
+ }
+ },
+ "go_out_frequency": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000002",
+ "value": 3
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 4
+ }
+ },
+ "health_status": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 3
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 3
+ }
+ },
+ "free_time": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 3
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 3
+ }
+ }
+ },
+ "pairwise_gaps": [
+ {
+ "metric": "weekday_alcohol",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0,
+ "absolute_gap": 0
+ },
+ {
+ "metric": "weekend_alcohol",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0,
+ "absolute_gap": 0
+ },
+ {
+ "metric": "go_out_frequency",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": -1,
+ "absolute_gap": 1
+ },
+ {
+ "metric": "health_status",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0,
+ "absolute_gap": 0
+ },
+ {
+ "metric": "free_time",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0,
+ "absolute_gap": 0
+ }
+ ],
+ "missing_metric_evidence": [],
+ "missing_entity_evidence": [],
+ "missing_expected_entities": [],
+ "selected_entity_evidence": [],
+ "evidence_status": "sufficient",
+ "evidence_requirements": {
+ "minimum_entity_count": 2,
+ "expected_entities": [],
+ "observed_entity_count": 2,
+ "missing_expected_entities": []
+ },
+ "validation_metadata": {
+ "status": "passed",
+ "required": {
+ "metric_units": true,
+ "metric_directions": true,
+ "metric_thresholds": false,
+ "sensitive_context_policy": true
+ },
+ "metric_units": {
+ "weekday_alcohol": "ordinal_1_5",
+ "weekend_alcohol": "ordinal_1_5",
+ "go_out_frequency": "ordinal_1_5",
+ "health_status": "ordinal_1_5",
+ "free_time": "ordinal_1_5"
+ },
+ "metric_directions": {
+ "weekday_alcohol": "context_only",
+ "weekend_alcohol": "context_only",
+ "go_out_frequency": "context_only",
+ "health_status": "context_only",
+ "free_time": "context_only"
+ },
+ "metric_thresholds": {},
+ "sensitive_context_policy": "descriptive_non_causal"
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Sensitive/background context is descriptive only under policy 'descriptive_non_causal'; do not infer causality or prescribe action from it."
+ ],
+ "pairwise_direction_evidence": [
+ {
+ "metric": "weekday_alcohol",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": null,
+ "lower_entity": null,
+ "difference": 0,
+ "direction_note": "entities are tied"
+ },
+ {
+ "metric": "weekend_alcohol",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": null,
+ "lower_entity": null,
+ "difference": 0,
+ "direction_note": "entities are tied"
+ },
+ {
+ "metric": "go_out_frequency",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": "SAMPLE_UCI_POR_STU_000001",
+ "lower_entity": "SAMPLE_UCI_POR_STU_000002",
+ "difference": 1,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "health_status",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": null,
+ "lower_entity": null,
+ "difference": 0,
+ "direction_note": "entities are tied"
+ },
+ {
+ "metric": "free_time",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": null,
+ "lower_entity": null,
+ "difference": 0,
+ "direction_note": "entities are tied"
+ }
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "multi_metric_comparison",
+ "task_id": "A-C04",
+ "task_output_contract": [
+ "Compare the returned entities directly, naming which entity is higher/lower for each key metric.",
+ "Use pairwise_gaps and selected_entity_evidence for direction; do not reverse numeric direction.",
+ "If expected metric/entity evidence is missing, state the limitation rather than guessing."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "lifestyle_comparison",
+ "row_count": 10,
+ "entities": [
+ "SAMPLE_UCI_POR_STU_000001",
+ "SAMPLE_UCI_POR_STU_000002"
+ ],
+ "entity_column": "student_id",
+ "metrics": [
+ {
+ "metric": "weekday_alcohol",
+ "unit": "ordinal_1_5",
+ "direction": "context_only",
+ "threshold": null
+ },
+ {
+ "metric": "weekend_alcohol",
+ "unit": "ordinal_1_5",
+ "direction": "context_only",
+ "threshold": null
+ },
+ {
+ "metric": "go_out_frequency",
+ "unit": "ordinal_1_5",
+ "direction": "context_only",
+ "threshold": null
+ },
+ {
+ "metric": "health_status",
+ "unit": "ordinal_1_5",
+ "direction": "context_only",
+ "threshold": null
+ },
+ {
+ "metric": "free_time",
+ "unit": "ordinal_1_5",
+ "direction": "context_only",
+ "threshold": null
+ }
+ ],
+ "metric_keys": [
+ "weekday_alcohol",
+ "weekend_alcohol",
+ "go_out_frequency",
+ "health_status",
+ "free_time"
+ ],
+ "metric_key_column": "lifestyle_dimension",
+ "metric_value_column": "lifestyle_risk_score",
+ "evidence_status": "sufficient",
+ "evidence_requirements": {
+ "minimum_entity_count": 2,
+ "expected_entities": [],
+ "observed_entity_count": 2,
+ "missing_expected_entities": []
+ }
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "comparison_matrix": [
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "metrics": {
+ "weekday_alcohol": 1,
+ "weekend_alcohol": 1,
+ "go_out_frequency": 4,
+ "health_status": 3,
+ "free_time": 3
+ },
+ "labels": {
+ "composite_lifestyle_risk_score": 0.375,
+ "social_balance_score": 0.025000000000000022
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000002",
+ "metrics": {
+ "weekday_alcohol": 1,
+ "weekend_alcohol": 1,
+ "go_out_frequency": 3,
+ "health_status": 3,
+ "free_time": 3
+ },
+ "labels": {
+ "composite_lifestyle_risk_score": 0.3,
+ "social_balance_score": 0.1
+ }
+ }
+ ],
+ "selected_entity_evidence": []
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "pairwise_gaps": [
+ {
+ "metric": "weekday_alcohol",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0,
+ "absolute_gap": 0
+ },
+ {
+ "metric": "weekend_alcohol",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0,
+ "absolute_gap": 0
+ },
+ {
+ "metric": "go_out_frequency",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": -1,
+ "absolute_gap": 1
+ },
+ {
+ "metric": "health_status",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0,
+ "absolute_gap": 0
+ },
+ {
+ "metric": "free_time",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "gap_right_minus_left": 0,
+ "absolute_gap": 0
+ }
+ ],
+ "pairwise_direction_evidence": [
+ {
+ "metric": "weekday_alcohol",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": null,
+ "lower_entity": null,
+ "difference": 0,
+ "direction_note": "entities are tied"
+ },
+ {
+ "metric": "weekend_alcohol",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": null,
+ "lower_entity": null,
+ "difference": 0,
+ "direction_note": "entities are tied"
+ },
+ {
+ "metric": "go_out_frequency",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": "SAMPLE_UCI_POR_STU_000001",
+ "lower_entity": "SAMPLE_UCI_POR_STU_000002",
+ "difference": 1,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "health_status",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": null,
+ "lower_entity": null,
+ "difference": 0,
+ "direction_note": "entities are tied"
+ },
+ {
+ "metric": "free_time",
+ "left_entity": "SAMPLE_UCI_POR_STU_000001",
+ "right_entity": "SAMPLE_UCI_POR_STU_000002",
+ "higher_entity": null,
+ "lower_entity": null,
+ "difference": 0,
+ "direction_note": "entities are tied"
+ }
+ ],
+ "metric_extrema": {
+ "weekday_alcohol": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 1
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 1
+ }
+ },
+ "weekend_alcohol": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 1
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 1
+ }
+ },
+ "go_out_frequency": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000002",
+ "value": 3
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 4
+ }
+ },
+ "health_status": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 3
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 3
+ }
+ },
+ "free_time": {
+ "min": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 3
+ },
+ "max": {
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "value": 3
+ }
+ }
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_metric_evidence": [],
+ "missing_entity_evidence": [],
+ "missing_expected_entities": [],
+ "validation_metadata": {
+ "status": "passed",
+ "required": {
+ "metric_units": true,
+ "metric_directions": true,
+ "metric_thresholds": false,
+ "sensitive_context_policy": true
+ },
+ "metric_units": {
+ "weekday_alcohol": "ordinal_1_5",
+ "weekend_alcohol": "ordinal_1_5",
+ "go_out_frequency": "ordinal_1_5",
+ "health_status": "ordinal_1_5",
+ "free_time": "ordinal_1_5"
+ },
+ "metric_directions": {
+ "weekday_alcohol": "context_only",
+ "weekend_alcohol": "context_only",
+ "go_out_frequency": "context_only",
+ "health_status": "context_only",
+ "free_time": "context_only"
+ },
+ "metric_thresholds": {},
+ "sensitive_context_policy": "descriptive_non_causal"
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Sensitive/background context is descriptive only under policy 'descriptive_non_causal'; do not infer causality or prescribe action from it."
+ ]
+ }
+ }
+ ]
+ }
+}

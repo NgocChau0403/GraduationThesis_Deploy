@@ -1,0 +1,312 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-20T14:35:30.953Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-B04__task_aware_data_summarization",
+    "case_id": "SAMPLE_UCI_POR__A-B04",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-B04",
+    "task_name": "At-risk overview",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-B04.json",
+    "full_query_artifact_sha256": "dbff2289fd184dfe8aa5e15da291ca6740e8f8a49e3c6a46d1026f020b4fc367"
+  },
+  "request_payload": {
+    "task_id": "A-B04",
+    "execution_id": "exec_1781847231795_24cc83c5",
+    "task_name": "At-risk overview",
+    "analysis_type": "aggregation",
+    "explanation_strategy": "risk",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "State number of high/medium/low risk students. Recommend immediate review of high group.",
+    "actionable_question": "How many students need urgent intervention?",
+    "target_audience": [
+      "instructor",
+      "admin"
+    ],
+    "visualization_config": {
+      "x_field": "at_risk_label",
+      "y_field": "student_count",
+      "series_field": null,
+      "color_field": "at_risk_label",
+      "orientation": "vertical",
+      "variant": "categorical",
+      "x_label": "Risk Level",
+      "y_label": "Number of Students",
+      "semantic_roles": {
+        "x": "category",
+        "y": "count_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "risk_overview": [
+        {
+          "at_risk_label": "high",
+          "student_count": 50
+        },
+        {
+          "at_risk_label": "medium",
+          "student_count": 155
+        },
+        {
+          "at_risk_label": "low",
+          "student_count": 444
+        }
+      ]
+    },
+    "confidence": {
+      "level": "LOW",
+      "reason": "No positive engagement activity found (0 engagement rows)."
+    },
+    "student_context": null,
+    "query_labels": [
+      "risk_overview"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {},
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [
+        "high",
+        "medium"
+      ],
+      "focus_bins": [],
+      "category_order": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "expected_categories": [
+        "high",
+        "medium",
+        "low"
+      ],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "categorical_distribution",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": "at_risk_label",
+      "bin_column": null,
+      "count_column": "student_count",
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 4896,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 863,
+      "completion_tokens": 396,
+      "total_tokens": 1259
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-B04",
+    "execution_id": "exec_1781847231795_24cc83c5",
+    "explanation": {
+      "summary": "A total of 205 students are identified as at risk, with 50 categorized as high risk and 155 as medium risk. Immediate attention is recommended for the high-risk group to address their needs effectively.",
+      "insights": [
+        {
+          "title": "High-Risk Student Count",
+          "description": "There are 50 students classified as high risk, indicating a significant need for urgent intervention to support their academic success.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "student_count",
+              "value": 50,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "High-risk category"
+            }
+          ]
+        },
+        {
+          "title": "Medium-Risk Student Count",
+          "description": "An additional 155 students fall into the medium-risk category, suggesting a need for monitoring and potential support strategies.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "student_count",
+              "value": 155,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Medium-risk category"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "The presence of a substantial number of at-risk students necessitates targeted interventions to enhance their learning outcomes."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Conduct an immediate review of the high-risk group to identify specific needs and tailor interventions.",
+          "rationale": "Addressing the needs of high-risk students promptly can prevent further academic decline and improve overall student performance."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "Data is derived from a comprehensive overview of student risk categories.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "risk",
+    "explanation_type": "risk",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3-experimental",
+    "baseline_available": true,
+    "input_summary_type": "categorical_distribution",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 3,
+    "included_row_count": 3,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "risk_overview",
+        "row_count": 3,
+        "included_row_count": 3
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 3,
+    "baseline_reference_tokens": 56,
+    "task_aware_prompt_tokens": 359,
+    "token_ratio": 6.4107,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "comparison",
+      "exceptions",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (6.4107 > 1.2).",
+      "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 4888,
+      "token_usage": {
+        "prompt_tokens": 863,
+        "completion_tokens": 396,
+        "total_tokens": 1259
+      },
+      "strategy": "risk",
+      "granularity": "semester",
+      "cost_usd": 0.000367
+    }
+  },
+  "raw_text": "Summary: A total of 205 students are identified as at risk, with 50 categorized as high risk and 155 as medium risk. Immediate attention is recommended for the high-risk group to address their needs effectively.\n\nInsights: High-Risk Student Count: There are 50 students classified as high risk, indicating a significant need for urgent intervention to support their academic success. | Medium-Risk Student Count: An additional 155 students fall into the medium-risk category, suggesting a need for monitoring and potential support strategies.\n\nEducational implications: The presence of a substantial number of at-risk students necessitates targeted interventions to enhance their learning outcomes.\n\nRecommendations: high - Conduct an immediate review of the high-risk group to identify specific needs and tailor interventions. - Addressing the needs of high-risk students promptly can prevent further academic decline and improve overall student performance."
+}

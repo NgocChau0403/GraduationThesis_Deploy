@@ -1,0 +1,213 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-C06__task_aware_data_summarization",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-C06",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Compare resource usage",
+    "scope": "2 students",
+    "actionable_question": "Is one student using resources more strategically than the other?",
+    "target_audience": "instructor",
+    "ai_summary_type": "multi_metric_comparison",
+    "ai_prompt_hint": "Highlight who is more diversified in resource use. Note if one avoids forums/quizzes.",
+    "query_labels": [
+      "resource_comparison"
+    ],
+    "explanation_strategy": "comparison"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "engagement",
+      "event [OULAD only]"
+    ],
+    "key_db_fields": [
+      "resource_type",
+      "engagement_count; vle_diversity_score [FE cross]",
+      "forum_engagement_rate [FE cross]",
+      "quiz_engagement_rate [FE cross]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "resource_comparison"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: Both students in the dataset exhibit no recorded resource usage, indicating a lack of engagement with available learning resources. This suggests a uniform pattern of disengagement across the group.\n\nInsights: No Resource Engagement: Neither student has recorded any clicks or engagement with resources, resulting in a vle_diversity_score of 0 for both. This indicates a complete absence of resource utilization.\n\nEducational implications: The lack of resource engagement suggests a need for interventions to encourage students to utilize available learning materials.\n\nRecommendations: high - Implement targeted outreach to both students to understand barriers to resource usage. - Understanding the reasons behind the lack of engagement can help tailor interventions to improve resource utilization. | medium - Introduce mandatory resource engagement activities. - Encouraging students to interact with resources may enhance their learning experience and improve overall engagement.",
+    "structured_payload": {
+      "task_id": "A-C06",
+      "execution_id": "exec_1781847232074_cf418da8",
+      "explanation": {
+        "summary": "Both students in the dataset exhibit no recorded resource usage, indicating a lack of engagement with available learning resources. This suggests a uniform pattern of disengagement across the group.",
+        "insights": [
+          {
+            "title": "No Resource Engagement",
+            "description": "Neither student has recorded any clicks or engagement with resources, resulting in a vle_diversity_score of 0 for both. This indicates a complete absence of resource utilization.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "total_clicks",
+                "value": 0,
+                "comparison": "baseline",
+                "delta": 0,
+                "context": "Both students have not engaged with any resources."
+              },
+              {
+                "metric": "used_resource_types",
+                "value": 0,
+                "comparison": "baseline",
+                "delta": 0,
+                "context": "Both students have not utilized any resource types."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The lack of resource engagement suggests a need for interventions to encourage students to utilize available learning materials."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted outreach to both students to understand barriers to resource usage.",
+            "rationale": "Understanding the reasons behind the lack of engagement can help tailor interventions to improve resource utilization."
+          },
+          {
+            "priority": "medium",
+            "action": "Introduce mandatory resource engagement activities.",
+            "rationale": "Encouraging students to interact with resources may enhance their learning experience and improve overall engagement."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset provides sufficient evidence of no recorded resource usage for both students.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "comparison",
+      "explanation_type": "comparison",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3-experimental",
+      "baseline_available": true,
+      "input_summary_type": "multi_metric_comparison",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 2,
+      "included_row_count": 2,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "resource_comparison",
+          "row_count": 2,
+          "included_row_count": 2
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 2,
+      "baseline_reference_tokens": 159,
+      "task_aware_prompt_tokens": 856,
+      "token_ratio": 5.3836,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "comparison",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (5.3836 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 5763,
+        "token_usage": {
+          "prompt_tokens": 1403,
+          "completion_tokens": 394,
+          "total_tokens": 1797
+        },
+        "strategy": "comparison",
+        "granularity": "semester",
+        "cost_usd": 0.000447
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-C06__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "adf25a943b4e70683bdc6e833461955cd9814a3293ecb8783bad18d5b2788c7c",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1403,
+        "completion_tokens": 394,
+        "total_tokens": 1797
+      },
+      "latency_ms": 5773,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 2,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "resource_comparison",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C06.json",
+        "artifact_sha256": "1217e49edd14b371c1a60fd0a4284900204c346b731579f3dc942372c7df60c1",
+        "row_count": 2,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 2,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "resource_comparison": 2
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-C06-CORE-01",
+        "description": "Highlight who is more diversified in resource use."
+      },
+      {
+        "requirement_id": "A-C06-CORE-02",
+        "description": "Note if one avoids forums/quizzes."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Retained as applicable because it compares two identifiable students; risk is lower than lifestyle/background tasks but not absent."
+  }
+}

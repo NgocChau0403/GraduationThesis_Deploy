@@ -1,0 +1,119 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__S-B02__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 3,
+ "rationale": "Score 3/10 reflects The response treats an unavailable engagement placeholder as observed evidence and reverses the meaning of punctuality_rate=1."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10: material numerical_correctness limitations reduce the usefulness of the response. The core low-risk badge is correct, but both supporting interpretations are materially wrong and drive inappropriate advice."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on task_relevance, with the limitations summarized in the holistic rationale."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 3,
+ "rationale": "Score 3/10: material actionability limitations reduce the usefulness of the response. The core low-risk badge is correct, but both supporting interpretations are materially wrong and drive inappropriate advice."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material safety_fairness limitations reduce the usefulness of the response. The core low-risk badge is correct, but both supporting interpretations are materially wrong and drive inappropriate advice."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The risk badge is low with at_risk_score 1 out of 5, and average score 41.25 is above the pass threshold 40.",
+ "claim_type": "risk_status",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_summary row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The core risk statement is exact."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Engagement score 0 proves low participation, and punctuality rate 1 indicates punctuality problems.",
+ "claim_type": "supporting_metrics",
+ "claim_scope": "supporting",
+ "support_status": "contradicted",
+ "evidence_refs": [
+ "risk_summary engagement_score_available=false and punctuality_rate=1"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "Engagement is unavailable, and punctuality 1 indicates full punctuality rather than a problem.",
+ "impact_type": "changes_interpretation"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "availability_and_direction_misread",
+ "claim_ids": [
+ "C02"
+ ],
+ "severity": "major",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "numerical_correctness",
+ "actionability"
+ ],
+ "cap_candidate": 5,
+ "rationale": "The response treats an unavailable engagement placeholder as observed evidence and reverses the meaning of punctuality_rate=1.",
+ "evidence_refs": [
+ "risk_summary row"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 1,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 1,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 5.7,
+ "caps_applied": [
+ {
+ "type": "availability_and_direction_misread",
+ "severity": "major",
+ "cap": 5,
+ "error_id": "E01",
+ "claim_ids": [
+ "C02"
+ ],
+ "evidence_refs": [
+ "risk_summary row"
+ ]
+ }
+ ],
+ "effective_cap": 5,
+ "final_score_after_caps": 5,
+ "verdict": "acceptable",
+ "invalid_reason": null
+}

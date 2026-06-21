@@ -13,6 +13,12 @@ const DEFAULT_EVIDENCE_MANIFEST_PATH = path.join(
 const DEFAULT_OUTPUT_DIR = path.join(RUNS_ROOT, "phase6_explanations");
 const EXPLANATION_ARTIFACTS_DIRNAME = "explanation_artifacts";
 const TASK_REGISTRY_PATH = path.join(PROJECT_ROOT, "Backend/src/config/taskRegistry.json");
+const IMPLEMENTATION_INPUT_PATHS = [
+  path.join(PROJECT_ROOT, "AIService/strategies/base.py"),
+  path.join(PROJECT_ROOT, "AIService/strategies/task_aware_v3.py"),
+  TASK_REGISTRY_PATH,
+  fileURLToPath(import.meta.url),
+];
 
 const DEFAULT_MODE_ENDPOINTS = {
   baseline_first_20_rows: "http://localhost:8001",
@@ -28,6 +34,7 @@ function parseArgs(argv) {
     modeEndpoints: { ...DEFAULT_MODE_ENDPOINTS },
     modes: null,
     datasets: null,
+    tasks: null,
     limit: null,
     resume: false,
     reportBasename: "phase6_explanation_report",
@@ -44,6 +51,7 @@ function parseArgs(argv) {
     else if (arg === "--task-aware-url") args.modeEndpoints.task_aware_data_summarization = next.replace(/\/+$/, ""), i += 1;
     else if (arg === "--modes") args.modes = splitList(next), i += 1;
     else if (arg === "--datasets") args.datasets = splitList(next), i += 1;
+    else if (arg === "--tasks") args.tasks = splitList(next), i += 1;
     else if (arg === "--limit") args.limit = Number(next), i += 1;
     else if (arg === "--resume") args.resume = next === "true", i += 1;
     else if (arg === "--report-basename") args.reportBasename = next, i += 1;
@@ -72,6 +80,17 @@ function toRepoPath(filePath) {
 
 function repoPathToAbsolute(repoPath) {
   return path.join(PROJECT_ROOT, ...String(repoPath).split("/"));
+}
+
+async function computeImplementationHash() {
+  const hash = createHash("sha256");
+  for (const filePath of [...IMPLEMENTATION_INPUT_PATHS].sort()) {
+    hash.update(toRepoPath(filePath));
+    hash.update("\0");
+    hash.update(await readFile(filePath));
+    hash.update("\0");
+  }
+  return hash.digest("hex");
 }
 
 async function readJson(filePath) {
@@ -407,6 +426,562 @@ function validateExplanation({ record, aiRes }) {
   return issues;
 }
 
+function normalizedText(value) {
+  return String(value ?? "")
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[^a-z0-9.]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function taskContractIssue(code, message, details = {}) {
+  return { severity: "error", code, message, details };
+}
+
+function taskSpecificPromptRequirement(record, payload) {
+  if (record.explanation_mode !== "task_aware_data_summarization") return null;
+
+  if (record.task_id === "A-S04") {
+    const actions = (payload.datasets?.risk_flags ?? [])
+      .filter((row) => row?.triggered === true && row?.recommended_action)
+      .map((row) => String(row.recommended_action));
+    if (actions.length > 0) {
+      return [
+        "OUTPUT CONTRACT — A-S04:",
+        "In explanation.summary or explanation.insights, quote every action below verbatim and explain its matching triggered flag.",
+        "Do not replace, merge, or invent actions. This requirement applies even when explanation.recommendations is empty.",
+        ...actions.map((action) => `- ${action}`),
+      ].join("\n");
+    }
+  }
+  if (record.task_id === "S-T07") {
+    return [
+      "OUTPUT CONTRACT — S-T07:",
+      "Start explanation.summary with this exact evidence statement: absence_rate=0.125 (12.5%); association_status=not_estimable; with one absence snapshot, the evidence cannot quantify how much absences are hurting grades.",
+      "State the exact absence_rate=0.125 (12.5%).",
+      "Use the exact machine-readable status association_status=not_estimable for the absence-score relationship: there is only one absence snapshot and three score points.",
+      "Answer the student question directly: the supplied evidence cannot quantify how much absences are hurting grades.",
+      "Describe the assessment-order score trend separately only as score history; do not call it a correlation and do not present it as absence impact, absence-score association, or absence-score correlation.",
+      "Do not make an attendance recommendation or claim that attendance would improve scores beyond supplied action evidence.",
+    ].join("\n");
+  }
+  if (record.task_id === "A-S07") {
+    return [
+      "OUTPUT CONTRACT — A-S07:",
+      "Preserve all support-status evidence exactly: school_support_flag=true, family_support_flag=false, has_paid_class=false, internet_access_flag=false.",
+      "Treat background metrics as descriptive context only; do not infer causes, thresholds, or below/above-average status without supplied benchmarks.",
+      "Do not invent a new intervention such as enhancing support services. If giving a next step, make it a specific evidence-grounded review/check of the returned support flags and raw context values.",
+    ].join("\n");
+  }
+  if (record.task_id === "S-T13") {
+    return [
+      "OUTPUT CONTRACT — S-T13:",
+      "For every triggered prioritized action, include its exact rule ID, action ID, owner, priority, and time horizon, and ground it in its linked evidence.",
+      "Explain only actions whose rule evaluation is triggered=true. Do not invent or add actions.",
+    ].join("\n");
+  }
+  return null;
+}
+
+function hasActionCoverage(text, action) {
+  const ignored = new Set(["the", "and", "with", "before", "next", "that", "this", "from", "into", "your", "their", "they", "then", "schedule", "review", "reduce"]);
+  const terms = normalizedText(action)
+    .split(" ")
+    .filter((term) => term.length >= 4 && !ignored.has(term));
+  const matched = terms.filter((term) => text.includes(term));
+  return matched.length >= Math.min(2, terms.length);
+}
+
+function validateTaskSpecificExplanation({ record, payload, aiRes }) {
+  if (record.explanation_mode !== "task_aware_data_summarization" || !aiRes.body?.explanation) return [];
+  const taskId = record.task_id;
+  const rawText = compactRawText(aiRes.body);
+  const text = normalizedText(rawText);
+  const explanationText = normalizedText(JSON.stringify(aiRes.body.explanation));
+  const issues = [];
+
+  if (taskId === "A-C05") {
+    const rows = (payload.datasets?.background_comparison ?? []).filter((row) => row && typeof row === "object");
+    for (const row of rows) {
+      for (const value of Object.values(row)) {
+        if (value !== null && !text.includes(normalizedText(value))) {
+          issues.push(taskContractIssue("task_contract_background_value_omission", "Preserve every returned background value for both students.", { student_id: row.student_id, missing_value: value }));
+        }
+      }
+    }
+    if (!text.includes("performance metric present false") || !text.includes("background driven performance difference not estimable")) {
+      issues.push(taskContractIssue("task_contract_background_performance_scope", "State that no performance metric is supplied and background-driven performance difference is not estimable."));
+    }
+    if ((aiRes.body.explanation.recommendations ?? []).length > 0 || /indicat(?:e|es|ing) more experience|may have better academic outcomes|requires? additional support|background causes (better|worse) (performance|outcomes?)/.test(explanationText)) {
+      issues.push(taskContractIssue("task_contract_background_causal_inference", "Keep background fields descriptive; do not infer experience, outcomes, causes, or support needs."));
+    }
+  } else if (taskId === "A-G01") {
+    const rows = (payload.datasets?.low_engagement_group ?? []).filter((row) => row && typeof row === "object");
+    if (!text.includes("low engagement threshold engagement score 0.15") || !text.includes(`returned student count ${rows.length}`)) {
+      issues.push(taskContractIssue("task_contract_low_engagement_threshold", "State engagement_score<0.15 and the exact returned student count."));
+    }
+    for (const row of rows) {
+      if (!text.includes(normalizedText(row.student_id))) {
+        issues.push(taskContractIssue("task_contract_low_engagement_identifier_omission", "List every returned low-engagement student identifier.", { student_id: row.student_id }));
+      }
+    }
+    const recs = normalizedText(JSON.stringify(aiRes.body.explanation.recommendations ?? []));
+    if (!/(email|directly contact)/.test(recs)) issues.push(taskContractIssue("task_contract_admin_outreach_omission", "Recommend internal admin email/contact for the returned identifiers."));
+  } else if (taskId === "A-G04") {
+    const rows = [...(payload.datasets?.assessment_difficulty ?? [])].filter((row) => row && typeof row === "object").sort((a, b) => Number(b.fail_rate_pct) - Number(a.fail_rate_pct));
+    const top = rows[0] ?? {};
+    if (!text.includes("explicit fail rate threshold not supplied") || [top.assessment_id, top.assessment_name, top.total_submissions, top.fail_count, top.fail_rate_pct, top.avg_score].some((value) => !text.includes(normalizedText(value)))) {
+      issues.push(taskContractIssue("task_contract_assessment_review_evidence", "State threshold not supplied and preserve exact highest-fail-rate assessment evidence."));
+    }
+    if (/mean fail rate|average fail rate/.test(text)) issues.push(taskContractIssue("task_contract_unsupported_fail_rate_mean", "Do not invent or add an unsupported cohort mean fail rate."));
+  } else if (taskId === "A-G07") {
+    const rows = (payload.datasets?.factor_correlation_matrix ?? []).filter((row) => row && typeof row === "object");
+    for (const row of rows) {
+      if ([row.feature_name, row.correlation_with_avg_score, row.n_samples, row.abs_correlation_rank].some((value) => !text.includes(normalizedText(value)))) {
+        issues.push(taskContractIssue("task_contract_correlation_ranking_omission", "Rank every returned feature with exact coefficient, sample count, and rank.", { feature_name: row.feature_name }));
+      }
+    }
+    if (!text.includes(`returned feature count ${rows.length}`) || (rows.length < 5 && !text.includes("fifth feature status unavailable"))) {
+      issues.push(taskContractIssue("task_contract_fifth_feature_state", "State the exact returned feature count and that the fifth feature is unavailable when only four are returned."));
+    }
+    if (/0.4181.{0,30}strong|causes|causal importance/.test(text)) issues.push(taskContractIssue("task_contract_correlation_overstatement", "Use deterministic strength labels and do not frame correlation causally."));
+  } else if (taskId === "A-G12") {
+    const rows = (payload.datasets?.outcome_by_group ?? []).filter((row) => row && typeof row === "object");
+    const groups = new Map(); let total = 0; let adverse = 0;
+    for (const row of rows) { const group = String(row.group_value); if (!groups.has(group)) groups.set(group, {}); groups.get(group)[row.final_outcome] = Number(row.pct_within_group); total += Number(row.student_count); if (["Fail", "Withdrawn"].includes(row.final_outcome)) adverse += Number(row.student_count); }
+    const threshold = Math.round((adverse * 100 / total) * 10000) / 10000;
+    if (!text.includes(normalizedText(threshold))) issues.push(taskContractIssue("task_contract_cohort_outcome_threshold", "State the deterministic cohort fail+withdrawal threshold."));
+    for (const [group, values] of groups) {
+      const fail = values.Fail ?? 0; const withdrawn = values.Withdrawn ?? 0; const combined = Math.round((fail + withdrawn) * 10) / 10;
+      if ([group, fail, withdrawn, combined].some((value) => !text.includes(normalizedText(value)))) issues.push(taskContractIssue("task_contract_group_outcome_rate_omission", "State fail, withdrawal, and combined percentages for every group.", { group }));
+    }
+  } else if (taskId === "A-C02") {
+    const rows = (payload.datasets?.engagement_comparison ?? []).filter((row) => row && typeof row === "object");
+    for (const row of rows) {
+      for (const value of [row.student_id, row.metric, row.engagement_score, row.total_clicks, row.active_days]) {
+        if (!text.includes(normalizedText(value))) {
+          issues.push(taskContractIssue(
+            "task_contract_engagement_comparison_omission",
+            "Preserve both students' exact dimension values, total_clicks, and active_days.",
+            { student_id: row.student_id, metric: row.metric, missing_value: value },
+          ));
+          break;
+        }
+      }
+    }
+    if (!text.includes("active days norm") || !text.includes("0.3525")) {
+      issues.push(taskContractIssue(
+        "task_contract_largest_engagement_gap_omission",
+        "Identify active_days_norm as the largest absolute gap and state exact gap=0.3525.",
+      ));
+    }
+  } else if (taskId === "A-G05") {
+    const rows = (payload.datasets?.submission_behaviour ?? []).filter((row) => row && typeof row === "object");
+    for (const row of rows) {
+      const signature = [row.final_outcome, row.assessment_type, row.student_count, row.submission_delay_avg, row.late_submission_rate, row.punctuality_rate];
+      if (signature.some((value) => !text.includes(normalizedText(value)))) {
+        issues.push(taskContractIssue(
+          "task_contract_submission_group_omission",
+          "Preserve every outcome-assessment group's count, delay, late rate, and punctuality.",
+          { final_outcome: row.final_outcome, assessment_type: row.assessment_type },
+        ));
+      }
+    }
+    if (/caused by (motivation|time management|lack of engagement)|(lateness|late submission).{0,80}(impacts?|affects?|causes?|leads? to|hinders?).{0,50}(score|performance|engagement)/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_unsupported_lateness_cause",
+        "Do not infer motivation, time-management causes, engagement, or score effects from grouped lateness evidence.",
+      ));
+    }
+  } else if (taskId === "A-G08") {
+    const rows = (payload.datasets?.demographic_performance ?? []).filter((row) => row && typeof row === "object");
+    for (const row of rows) {
+      const signature = [row.group_value, row.student_count, row.avg_score, row.score_vs_cohort, row.avg_engagement_score];
+      if (signature.some((value) => !text.includes(normalizedText(value)))) {
+        issues.push(taskContractIssue(
+          "task_contract_equity_group_value_omission",
+          "Preserve exact score and engagement comparisons for every demographic group.",
+          { group_value: row.group_value },
+        ));
+      }
+    }
+    if (!text.includes("weighted cohort engagement mean") || !text.includes("engagement vs cohort")) {
+      issues.push(taskContractIssue(
+        "task_contract_engagement_benchmark_omission",
+        "State the deterministic weighted cohort engagement mean and every group's engagement deviation.",
+      ));
+    }
+    if ((aiRes.body.explanation.recommendations ?? []).length > 0 || /targeted intervention|targeted support|support program|differentiated instruction/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_equity_sensitive_prescription",
+        "Keep A-G08 descriptive; do not prescribe interventions by demographic group.",
+      ));
+    }
+  } else if (taskId === "A-G11") {
+    if (!text.includes("week 3 to week 4") || !text.includes("137576")) {
+      issues.push(taskContractIssue(
+        "task_contract_largest_weekly_drop_omission",
+        "State the exact largest adjacent drop: week 3 to week 4, delta=-137576.",
+      ));
+    }
+    const rows = [...(payload.datasets?.weekly_drop_detection ?? [])]
+      .filter((row) => row && typeof row === "object")
+      .sort((a, b) => Number(a.week_number) - Number(b.week_number));
+    for (let index = 0; index < rows.length; index += 1) {
+      const row = rows[index];
+      if (!row.is_drop_week) continue;
+      const previous = index > 0 ? rows[index - 1] : null;
+      const delta = previous ? Number(row.week_total_clicks) - Number(previous.week_total_clicks) : null;
+      if (!text.includes(`week ${normalizedText(row.week_number)}`) || !text.includes(normalizedText(row.week_total_clicks)) || (delta !== null && !text.includes(normalizedText(delta)))) {
+        issues.push(taskContractIssue(
+          "task_contract_flagged_week_omission",
+          "List every flagged week with exact clicks and adjacent delta from the immediately preceding returned week.",
+          { week_number: row.week_number, adjacent_delta: delta },
+        ));
+      }
+    }
+  } else if (taskId === "A-G15") {
+    const rows = [...(payload.datasets?.intervention_priority_list ?? [])]
+      .filter((row) => row && typeof row === "object")
+      .sort((a, b) => (Number(b.at_risk_score) - Number(a.at_risk_score)) || (Number(a.avg_score) - Number(b.avg_score)))
+      .slice(0, 10);
+    for (const [index, row] of rows.entries()) {
+      const trueFlags = ["flag_low_score", "flag_repeated", "flag_low_engagement", "flag_low_punctuality", "flag_neg_trend"].filter((name) => row[name] === 1 || row[name] === true);
+      if (!text.includes(normalizedText(row.student_id)) || !text.includes(`rank ${index + 1}`) || !text.includes(normalizedText(row.at_risk_score)) || !text.includes(normalizedText(row.final_outcome)) || trueFlags.some((flag) => !text.includes(normalizedText(flag)))) {
+        issues.push(taskContractIssue(
+          "task_contract_top_ten_risk_ranking_omission",
+          "List all top-ten identifiers in rank order with risk score, exact triggered flags, and final outcome.",
+          { rank: index + 1, student_id: row.student_id },
+        ));
+      }
+    }
+    if (!text.includes("oulad admin review v1") || !text.includes("score 5 action") || !text.includes("score 4 action")) {
+      issues.push(taskContractIssue(
+        "task_contract_priority_group_action_omission",
+        "Use the versioned score-5 and score-4 internal admin-review mapping.",
+      ));
+    }
+  } else if (taskId === "A-S01") {
+    const row = (payload.datasets?.student_profile ?? [])[0] ?? {};
+    for (const field of ["avg_score", "final_outcome", "at_risk_score", "at_risk_label", "engagement_score", "study_effort_level", "previous_attempt_count"]) {
+      if (!text.includes(normalizedText(row[field]))) {
+        issues.push(taskContractIssue(
+          "task_contract_profile_dimension_omission",
+          `Preserve the returned ${field} value.`,
+          { field, missing_value: row[field] },
+        ));
+      }
+    }
+    if ((aiRes.body.explanation.recommendations ?? []).length > 0 || /check in|check-in|monitoring|underlying issue/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_unsupported_profile_action",
+        "A-S01 is descriptive only; do not invent monitoring, check-ins, or underlying causes.",
+      ));
+    }
+  } else if (taskId === "A-S03") {
+    for (const required of ["early warning week 0", "previous week clicks 94", "warning week clicks 27", "pre warning average 90", "post warning average 36.0333"]) {
+      if (!text.includes(required)) {
+        issues.push(taskContractIssue(
+          "task_contract_early_warning_evidence_omission",
+          `Preserve primary early-warning timing and pre/post evidence; missing ${required}.`,
+          { missing_value: required },
+        ));
+      }
+    }
+    if (/starting from week 2|primary (timing|warning timing|early warning).{0,20}week 2|week 2.{0,20}(is|as) (the )?primary/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_primary_timing_reversal",
+        "early_warning_week=0 is primary; week 1-to-2 is secondary largest-drop evidence only.",
+      ));
+    }
+    if (/\b\d+(?:\.\d+)?\s*(?:%|percent)/i.test(rawText)) {
+      issues.push(taskContractIssue(
+        "task_contract_unsupported_percentage_derivation",
+        "Use the exact clicks, deltas, and pre/post averages only; do not add a derived percentage with an ambiguous denominator.",
+      ));
+    }
+    const recommendationsText = normalizedText(JSON.stringify(aiRes.body.explanation.recommendations ?? []));
+    if (!recommendationsText.includes("outreach") || !recommendationsText.includes("early warning week 0") || !/(before|at)/.test(recommendationsText)) {
+      issues.push(taskContractIssue(
+        "task_contract_outreach_timing_omission",
+        "Explicitly recommend outreach before or at early_warning_week=0 without promising a causal or re-engagement effect.",
+      ));
+    }
+  } else if (taskId === "A-S06") {
+    for (const required of ["submission delay avg 3.25", "punctuality rate 0", "valid delay count 4", "null delay count 1", "descriptive only not statistically reliable"]) {
+      if (!text.includes(required)) {
+        issues.push(taskContractIssue(
+          "task_contract_lateness_evidence_omission",
+          `Preserve exact lateness evidence and small-sample status; missing ${required}.`,
+          { missing_value: required },
+        ));
+      }
+    }
+    if (/(delay|late submission).{0,80}(impacts?|affects?|correlates?|causes?|leads? to|hinders?).{0,50}(score|performance|engagement)/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_unsupported_delay_inference",
+        "Do not infer score, engagement, motivation, or time-management effects from four valid delay points.",
+      ));
+    }
+  } else if (taskId === "A-B02") {
+    const outcomeRows = (payload.datasets?.outcome_counts ?? [])
+      .filter((row) => row && typeof row === "object");
+    const outcomeCounts = new Map(
+      outcomeRows.map((row) => [normalizedText(row.final_outcome), row.student_count]),
+    );
+    for (const label of ["pass", "fail", "withdrawn"]) {
+      const requiredValue = `${label} count ${outcomeCounts.get(label) ?? 0}`;
+      if (!text.includes(requiredValue)) {
+        issues.push(taskContractIssue(
+          "task_contract_exact_outcome_count_omission",
+          `Preserve exact pass, fail, and zero-withdrawn counts; missing ${requiredValue}.`,
+          { missing_value: requiredValue },
+        ));
+      }
+    }
+    if (/data collection gap|gap in data collection|improved tracking/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_unsupported_withdrawal_data_gap",
+        "Zero returned withdrawal rows means withdrawn_count=0 for this result; do not infer a data-collection gap.",
+      ));
+    }
+  } else if (taskId === "A-C01") {
+    const trajectoryRows = [...(payload.datasets?.trajectory_comparison ?? [])]
+      .filter((row) => row && typeof row === "object");
+    const studentIds = [...new Set(trajectoryRows.map((row) => String(row.student_id)))];
+    if (studentIds.length < 2) {
+      if (!/only one returned student|one student only/.test(text) || !/not estimable/.test(text)) {
+        issues.push(taskContractIssue(
+          "task_contract_single_trajectory_scope_omission",
+          "Only one student is returned for this OULAD record; state that between-student divergence is not estimable.",
+        ));
+      }
+    } else {
+      const firstRows = trajectoryRows
+        .sort((a, b) => Number(a.assessment_order) - Number(b.assessment_order))
+        .filter((row, index, rows) => rows.findIndex((candidate) => candidate.student_id === row.student_id) === index);
+      for (const row of firstRows) {
+        const requiredValue = `assessment order ${row.assessment_order} score normalized ${row.score_normalized}`;
+        if (!text.includes(requiredValue)) {
+          issues.push(taskContractIssue(
+            "task_contract_trajectory_value_omission",
+            `Preserve exact divergence evidence; missing ${requiredValue}.`,
+            { missing_value: requiredValue },
+          ));
+        }
+      }
+    }
+    if (/confidence|long term effect|long-term effect|slower improvement/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_unsupported_trajectory_inference",
+        "Describe only the observed assessment-1 divergence and later convergence; do not infer confidence, long-term effects, or a contradictory slower-improvement target.",
+      ));
+    }
+  } else if (taskId === "A-G03") {
+    const topRows = [...(payload.datasets?.at_risk_cohort ?? [])]
+      .filter((row) => row && typeof row === "object")
+      .sort((a, b) => (Number(b.at_risk_score) - Number(a.at_risk_score)) || (Number(a.avg_score) - Number(b.avg_score)))
+      .slice(0, 5);
+    for (const row of topRows) {
+      const studentId = normalizedText(row.student_id);
+      const score = normalizedText(row.avg_score);
+      if (!text.includes(studentId) || !text.includes(score) || !hasActionCoverage(text, row.recommended_admin_action)) {
+        issues.push(taskContractIssue(
+          "task_contract_ranked_risk_evidence_omission",
+          "Preserve each of the top five ranked student IDs, exact avg_score, triggered_flags_summary, and existing recommended_admin_action.",
+          { student_id: row.student_id, avg_score: row.avg_score },
+        ));
+      }
+    }
+  } else if (taskId === "S-T02") {
+    if (/\bstudents (are|may|might|could|will)\b|\bmost students\b|\bcohort\b/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_scope_generalization",
+        "S-T02 contains one selected student's assessment rows; do not generalize to students or the cohort.",
+      ));
+    }
+    if (!/one selected student|selected student's/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_single_student_scope_omission",
+        "State that S-T02 is one selected student's assessment evidence.",
+      ));
+    }
+    for (const row of (payload.datasets?.competency_scores ?? [])) {
+      if (!row || typeof row !== "object") continue;
+      const requiredValue = `${normalizedText(row.competency_tag)} avg score ${normalizedText(row.avg_score)}`;
+      if (!text.includes(requiredValue)) {
+        issues.push(taskContractIssue(
+          "task_contract_competency_value_omission",
+          `Preserve exact competency comparisons; missing ${requiredValue}.`,
+          { missing_value: requiredValue },
+        ));
+      }
+    }
+  } else if (taskId === "A-S04") {
+    const actions = (payload.datasets?.risk_flags ?? [])
+      .filter((row) => row?.triggered === true && row?.recommended_action)
+      .map((row) => String(row.recommended_action));
+    for (const action of actions) {
+      if (!hasActionCoverage(text, action)) {
+        issues.push(taskContractIssue(
+          "task_contract_missing_existing_action",
+          "Explain every existing recommended_action for triggered flags; do not replace it with a new action.",
+          { missing_action: action },
+        ));
+      }
+    }
+  } else if (taskId === "A-S05") {
+    if (/\b(no|all|many|several) students\b|\bstudents (are|may|might|could|will)\b|\bmultiple students\b|\bcohort\b/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_scope_generalization",
+        "This record is one selected student. Do not describe pass_rate or assessment_count as evidence about multiple students or the cohort.",
+      ));
+    }
+    if (!/one selected student|selected student's/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_single_student_scope_omission",
+        "State that A-S05 is one selected student's assessment evidence.",
+      ));
+    }
+  } else if (taskId === "A-S07") {
+    if (!text.includes("school support") || !text.includes("family support")) {
+      issues.push(taskContractIssue(
+        "task_contract_support_status_omission",
+        "State both existing school support and family-support status from the returned row.",
+      ));
+    }
+    if (/average threshold|below average|above average/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_invented_background_benchmark",
+        "No population benchmark is supplied for background scores; remove average or threshold comparisons.",
+      ));
+    }
+    if (/(enhance|strengthen|increase|add|expand).{0,40}(support service|school support|support services)/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_unsupported_support_intervention",
+        "Do not invent a new support-service intervention for A-S07; use only evidence-grounded review/check wording tied to returned support flags.",
+      ));
+    }
+  } else if (taskId === "S-T03") {
+    const comparisonRows = (payload.datasets?.peer_comparison ?? [])
+      .filter((row) => row && typeof row === "object");
+    for (const row of comparisonRows) {
+      const requiredValue = normalizedText(row.metric_value);
+      if (!text.includes(requiredValue)) {
+        issues.push(taskContractIssue(
+          "task_contract_exact_value_omission",
+          `Preserve exact student and cohort comparison values; missing ${requiredValue}.`,
+          { missing_value: requiredValue },
+        ));
+      }
+    }
+    if (!text.includes("percentile")) {
+      issues.push(taskContractIssue(
+        "task_contract_standing_omission",
+        "State the student's score percentile and explain the standing without reversing direction.",
+      ));
+    }
+    if (!text.includes("engagement percentile 75") || !text.includes("higher than about 75") || !text.includes("top 25")) {
+      issues.push(taskContractIssue(
+        "task_contract_engagement_percentile_direction",
+        "Interpret engagement percentile 75 as higher than about 75% of peers, equivalent to top 25%; do not reverse it.",
+      ));
+    }
+  } else if (taskId === "S-T07") {
+    if (!text.includes("0.125") && !text.includes("12.5")) {
+      issues.push(taskContractIssue(
+        "task_contract_absence_rate_omission",
+        "State absence_rate=0.125 (12.5%).",
+      ));
+    }
+    if (!/(association_status\s*=?\s*not_estimable|not estimable|cannot quantify|cannot estimate|can t estimate|insufficient.*association|insufficient.*correlation)/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_non_estimability_omission",
+        "State association_status=not_estimable and explain that one absence snapshot cannot quantify absence-score impact.",
+      ));
+    }
+    if (!/cannot quantify|not quantify|not enough evidence to quantify|unable to quantify/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_absence_impact_quantification_omission",
+        "Answer the student question directly: the evidence cannot quantify how much absences are hurting grades.",
+      ));
+    }
+    if (/(attendance|attending|absences).{0,80}(improve|lead to better|boost|raise).{0,40}(score|grade|performance)/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_unsupported_attendance_recommendation",
+        "Do not claim attendance would improve scores or make attendance recommendations without supplied action evidence.",
+      ));
+    }
+    if (/continued engagement.*(better performance|improve|lead to better)|engagement.*(better performance|improve scores|lead to better)/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_unsupported_engagement_outcome_claim",
+        "Do not claim engagement will improve performance for S-T07 without action evidence; keep next steps to collecting more absence-score evidence.",
+      ));
+    }
+    if (/correlation between assessment order|assessment order.*correlation|as assessments progress.*scores tend to improve/.test(text)) {
+      issues.push(taskContractIssue(
+        "task_contract_assessment_order_correlation_substitution",
+        "Do not describe assessment-order score history as a correlation; keep it separate from absence-score association.",
+      ));
+    }
+  } else if (taskId === "S-T08" || taskId === "S-T12") {
+    for (const required of ["submission delay avg 3.25", "punctuality rate 0", "valid pair count 4", "null delay count 1", "pearson correlation 0.4015", "association status descriptive only not statistically reliable", "non monotonic"]) {
+      if (!text.includes(required)) issues.push(taskContractIssue("task_contract_delay_score_evidence_omission", `Preserve exact systematic-lateness and small-sample association evidence; missing ${required}.`, { missing_value: required }));
+    }
+    const rows = taskId === "S-T08" ? (payload.datasets?.submission_lateness ?? []) : (payload.datasets?.submission_series ?? []);
+    for (const row of rows.filter((item) => item?.submission_delay_days !== null && item?.submission_delay_days !== undefined)) {
+      if (![row.assessment_order, row.submission_delay_days, row.score_normalized].every((value) => text.includes(normalizedText(value)))) {
+        issues.push(taskContractIssue("task_contract_delay_score_pair_omission", "Preserve every valid assessment delay-score pair.", { assessment_order: row.assessment_order }));
+      }
+    }
+    if (/suggests? procrastination|tendency to procrastinate|harms? learning|delay.{0,60}(causes?|impacts?|affects?|leads? to).{0,40}(score|performance)/.test(explanationText)) {
+      issues.push(taskContractIssue("task_contract_delay_score_causal_inference", "Do not infer procrastination, learning harm, causality, or score improvement from four pairs."));
+    }
+  } else if (taskId === "S-T13" || taskId === "A-G16") {
+    const evidence = (
+      aiRes.body?.task_aware_evidence_payload
+      ?? aiRes.body?.meta?.task_aware_evidence_payload
+    )?.source_evidence_summary;
+    const prioritized = Array.isArray(evidence?.prioritized_actions) ? evidence.prioritized_actions : [];
+    if (!evidence) {
+      issues.push(taskContractIssue(
+        "task_contract_action_evidence_metadata_missing",
+        "Return deterministic action-rule evidence in meta.task_aware_evidence_payload.",
+      ));
+    } else if (prioritized.length === 0) {
+      if (!/(no supported action|no action.*triggered)/.test(text)) {
+        issues.push(taskContractIssue(
+          "task_contract_empty_action_state_omission",
+          "No supported action is triggered; say so explicitly and do not invent an action.",
+        ));
+      }
+    } else {
+      const explanationJson = JSON.stringify(aiRes.body.explanation);
+      for (const action of prioritized) {
+        const ruleId = String(action.rule_id ?? action.triggered_by_rule_id ?? "");
+        const requiredActionValues = [
+          ruleId,
+          action.action_id,
+          action.owner,
+          action.priority,
+          action.time_horizon_days,
+          ...(Array.isArray(action.evidence_item_ids) ? action.evidence_item_ids : []),
+        ].filter((value) => value !== null && value !== undefined && String(value) !== "");
+        const missingValues = requiredActionValues.filter((value) => !explanationJson.includes(String(value)));
+        if (missingValues.length > 0) {
+          issues.push(taskContractIssue(
+            "task_contract_action_rule_omission",
+            `Explain every supported action with action/rule ID, owner, priority, horizon, and evidence links; missing ${missingValues.join(", ")}.`,
+            { rule_id: ruleId, action_id: action.action_id, missing_values: missingValues },
+          ));
+        }
+      }
+    }
+  }
+  return issues;
+}
+
 function safeFileStem(value) {
   return String(value).replace(/[^A-Za-z0-9_.-]+/g, "_");
 }
@@ -439,6 +1014,11 @@ async function buildExplanationForRecord({ evidenceEntry, registry, args }) {
   };
   const payload = buildExplainPayload({ evidenceArtifact, evidenceEntry: hydratedEntry, task });
   const endpoint = args.modeEndpoints[evidenceEntry.explanation_mode];
+  const basePromptHint = [
+    payload.ai_prompt_hint,
+    taskSpecificPromptRequirement(hydratedEntry, payload),
+  ].filter(Boolean).join("\n\n");
+  payload.ai_prompt_hint = basePromptHint || null;
   let aiRes = null;
   let issues = [];
   let attempt = 0;
@@ -450,8 +1030,20 @@ async function buildExplanationForRecord({ evidenceEntry, registry, args }) {
       body: JSON.stringify(payload),
       timeoutMs: args.requestTimeoutMs,
     });
-    issues = validateExplanation({ record: evidenceEntry, aiRes });
+    issues = [
+      ...validateExplanation({ record: evidenceEntry, aiRes }),
+      ...validateTaskSpecificExplanation({ record: evidenceEntry, payload, aiRes }),
+    ];
     if (!issues.some((issue) => issue.severity === "error")) break;
+    const remediation = issues
+      .filter((issue) => issue.severity === "error")
+      .map((issue) => `- ${issue.message}`)
+      .join("\n");
+    payload.ai_prompt_hint = [
+      basePromptHint,
+      "Previous response failed deterministic output-contract validation. Correct every item below:",
+      remediation,
+    ].filter(Boolean).join("\n\n");
   }
 
   const artifact = {
@@ -459,6 +1051,7 @@ async function buildExplanationForRecord({ evidenceEntry, registry, args }) {
     generated_at: new Date().toISOString(),
     ai_service_url: endpoint,
     endpoint: "/explain",
+    implementation_hash: args.implementationHash,
     record: {
       record_id: hydratedEntry.record_id,
       case_id: hydratedEntry.case_id,
@@ -512,6 +1105,7 @@ async function buildExplanationForRecord({ evidenceEntry, registry, args }) {
     task_name: hydratedEntry.task_name,
     explanation_mode: hydratedEntry.explanation_mode,
     status,
+    implementation_hash: args.implementationHash,
     ai_service_url: endpoint,
     explanation_artifact: {
       path: toRepoPath(artifactPath),
@@ -566,6 +1160,7 @@ function summarize({ generatedAt, evidenceEntries, explanationEntries, issues, a
     status: errors.length === 0 && ready.length === evidenceEntries.length ? "PASS" : "FAIL",
     phase_scope: ["6.3b explanation builder"],
     mode_endpoints: args.modeEndpoints,
+    implementation_hash: args.implementationHash,
     inputs: {
       evidence_manifest_jsonl: toRepoPath(args.evidenceManifestPath),
       task_registry_path: "Backend/src/config/taskRegistry.json",
@@ -689,6 +1284,7 @@ async function verifyModeEndpoints(args) {
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   const generatedAt = new Date().toISOString();
+  args.implementationHash = await computeImplementationHash();
 
   await mkdir(args.outputDir, { recursive: true });
   await mkdir(args.explanationArtifactsDir, { recursive: true });
@@ -699,6 +1295,7 @@ async function main() {
     .filter((entry) => entry.status === "evidence_ready")
     .filter((entry) => !args.modes || args.modes.includes(entry.explanation_mode))
     .filter((entry) => !args.datasets || args.datasets.includes(entry.dataset_id))
+    .filter((entry) => !args.tasks || args.tasks.includes(entry.task_id))
     .slice(0, Number.isInteger(args.limit) && args.limit > 0 ? args.limit : undefined);
 
   args.otherDatasetComplete = false;

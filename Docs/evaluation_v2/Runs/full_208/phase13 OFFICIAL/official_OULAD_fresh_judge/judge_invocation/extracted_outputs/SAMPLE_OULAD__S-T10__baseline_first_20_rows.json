@@ -1,0 +1,87 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_OULAD__S-T10__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Factual interpretation was judged against the packet evidence, with penalties for unsupported scope, causality, thresholds, or direction."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Numeric values, percentages, rankings, thresholds, and directions were checked against the delivered or retrieved evidence in this packet."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Coverage was scored against the supplied core and supporting requirements for this exact task."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "The score reflects whether the explanation answers the stated actionable question for the correct dataset, entity level, and audience."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Actionability reflects whether advice or interpretation is feasible and grounded in returned evidence or supported action provenance."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Clarity reflects organization, precision, concision, and whether the output is scannable for the target audience."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Safety/fairness is applicable under the packet contract; scoring penalizes overconfident, stigmatizing, causal, or unfair individual/group framing."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Summary: Your engagement with various learning resources shows a strong preference for quizzes, while other resources like forums and pages are underutilized.",
+ "claim_type": "task_answer",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "This suggests that you might benefit from exploring a wider range of materials to enhance your learning experience.",
+ "claim_type": "numeric_or_status_evidence",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C03",
+ "claim_text": "Insights: High Quiz Engagement: You have clicked on quizzes 623 times, which accounts for nearly half of your total resource engagement.",
+ "claim_type": "interpretation_or_action",
+ "claim_scope": "supporting",
+ "support_status": "supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ }
+ ],
+ "errors": [],
+ "holistic_rationale": "The record is scorable: the explanation addresses Resource engagement breakdown for student. Stronger elements are the evidence-linked values and task framing; defects, if any, concern missing qualifiers, incomplete required coverage, or over-interpretation beyond the packet. The metric pattern follows those evidence and requirement checks without calculating a final verdict.",
+ "evidence_usage_notes": "evidence_access_mode was direct_embedding; prompt_embedded_row_count=9; retrieval_log_path was not applicable. I used the embedded dataset rows and full-run deterministic checks only.",
+ "invalid_reason": null
+}

@@ -1,0 +1,106 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-G13__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10 reflects The response does not rank or name students by lifestyle_risk_score as required."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on task_relevance, with the limitations summarized in the holistic rationale."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material actionability limitations reduce the usefulness of the response. The association is stated accurately and cautiously, but the required student ranking is missing and the intervention is stronger than the evidence warrants."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10 reflects The intervention recommendation goes beyond a weak non-significant association and the descriptive-only evidence."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The Pearson coefficient is -0.1041, a weak negative association between lifestyle risk and average score.",
+ "claim_type": "correlation",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "derived correlation evidence coefficient=-0.1041, n=649"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The coefficient, direction, and strength are exactly represented."
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "ranking_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "task_relevance"
+ ],
+ "cap_candidate": null,
+ "rationale": "The response does not rank or name students by lifestyle_risk_score as required.",
+ "evidence_refs": [
+ "retrieval log lifestyle_risk_scatter rows 0-648"
+ ],
+ "requirement_id": "A-G13-CORE-01"
+ },
+ {
+ "error_id": "E02",
+ "error_type": "causal_action_overreach",
+ "claim_ids": [],
+ "severity": "minor",
+ "primary_metric": "safety_fairness",
+ "secondary_metrics": [
+ "actionability"
+ ],
+ "cap_candidate": null,
+ "rationale": "The intervention recommendation goes beyond a weak non-significant association and the descriptive-only evidence.",
+ "evidence_refs": [
+ "derived correlation evidence causal_claim_allowed=false"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 2,
+ "count_by_severity": {
+ "minor": 1,
+ "major": 1,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 7.9,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 7.9,
+ "verdict": "good",
+ "invalid_reason": null
+}

@@ -1,0 +1,194 @@
+{
+  "manifest_version": "llm_judge_v2_phase13_taskaware_v3_official_contract_manifest_v1",
+  "status": "FROZEN_FOR_PHASE13_TASKAWARE_V3_OFFICIAL_JUDGE_INVOCATION",
+  "frozen_at_local_date": "2026-06-21",
+  "timezone": "Asia/Saigon",
+  "scope": {
+    "evaluation_method": "Phase 13 baseline versus Task-Aware Summary V3 using frozen LLM Judge V2",
+    "pilot_only": false,
+    "official_full_run_allowed": "approved_for_dataset_scoped_phase13_invocation",
+    "datasets": [
+      "SAMPLE_UCI_POR",
+      "SAMPLE_OULAD"
+    ],
+    "task_scope_count_per_dataset": 52,
+    "explanation_modes": [
+      "baseline_first_20_rows",
+      "task_aware_data_summarization"
+    ],
+    "expected_dataset_task_cases": 104,
+    "expected_full_evaluation_record_count": 208
+  },
+  "versions": {
+    "prompt_version": "judge_prompt_v2_full_208_v1",
+    "rubric_version": "judge_rubric_1_to_10_full_208_v1",
+    "metric_anchor_version": "metric_anchor_full_208_v1",
+    "scoring_formula_version": "d3_pre_pilot_v1_frozen_for_full_208"
+  },
+  "freeze_policy": {
+    "purpose": "Pin the exact official full_208 contract artifacts before Codex judge invocation.",
+    "hash_algorithm": "SHA-256",
+    "runner_requirement": "Before official judge invocation, recompute SHA-256 for each listed artifact and fail closed if any hash differs.",
+    "mutation_policy": "If any listed artifact changes after this freeze, create a new manifest version and regenerate prompt queue packets before judging continues.",
+    "interpretation_limit": "This is an auditable procedural freeze for the thesis evaluation. It is not a claim of bit-for-bit model reproducibility or external benchmark validation."
+  },
+  "session_policy": {
+    "source_decision": "Docs/evaluation_v2/LLM_JUDGE_V2_D4_REPRODUCIBILITY_EXECUTION_DECISIONS.md",
+    "codex_project_strategy": "new_codex_project_and_chat_session_per_dataset_run",
+    "dataset_runs": [
+      {
+        "dataset_id": "SAMPLE_UCI_POR",
+        "expected_records": 104,
+        "session_boundary": "one_new_codex_project_and_one_new_chat_session"
+      },
+      {
+        "dataset_id": "SAMPLE_OULAD",
+        "expected_records": 104,
+        "session_boundary": "one_new_codex_project_and_one_new_chat_session"
+      }
+    ],
+    "forbidden": [
+      "Do not evaluate SAMPLE_UCI_POR and SAMPLE_OULAD in the same Codex session.",
+      "Do not change prompt, rubric, schema, model selection or procedure between dataset runs.",
+      "Do not split official runs by explanation mode unless a deterministic chunking policy is frozen before invocation.",
+      "Do not expose one dataset run's outputs or aggregates to the other dataset run."
+    ]
+  },
+  "evidence_access_policy": {
+    "source_decision": "Docs/evaluation_v2/LLM_JUDGE_V2_D2_FULL_EVIDENCE_ACCESS_DECISION.md",
+    "small_result_policy": "For row_count <= 20, the complete query result is directly embedded in the judge context.",
+    "large_result_policy": "For row_count > 20, the complete result is stored as hashed full-query artifacts with verified retrieval/provenance and deterministic scan metadata.",
+    "reporting_rule": "Do not write that the judge saw every row in prompt for compact_retrieval_context records. Report availability, retrieval/provenance and deterministic scan scope separately."
+  },
+  "contract_artifacts": [
+    {
+      "artifact_id": "judge_prompt_v2_full_208",
+      "path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md",
+      "sha256": "e35e0b9d459cc13cd908acc693510832ccf611a61922bcd6bdb3f4e93f569517"
+    },
+    {
+      "artifact_id": "judge_rubric_1_to_10_full_208",
+      "path": "Docs/evaluation_v2/Rubric/JUDGE_RUBRIC_1_TO_10.md",
+      "sha256": "ac141e7148141de0244bf4443ba32aa8e47a08313fdaa1a7bc697a6b9faafcc1"
+    },
+    {
+      "artifact_id": "metric_anchor_spec_full_208",
+      "path": "Docs/evaluation_v2/Rubric/LLM_JUDGE_V2_METRIC_ANCHOR_SPEC.md",
+      "sha256": "a45a3d6b7e0a95f6f804a1739ea3685ec532c132b455ac802fe823cbe400d8fe"
+    },
+    {
+      "artifact_id": "task_evaluation_requirements",
+      "path": "Docs/evaluation_v2/Rubric/task_evaluation_requirements.json",
+      "sha256": "b4fb8957b33d428bf21807453c2caf72eecb1bda5dfa7a00481292d456a222c0"
+    },
+    {
+      "artifact_id": "judge_input_schema_json",
+      "path": "Docs/evaluation_v2/Input_AI/judge_input_schema.json",
+      "sha256": "463e909b3bfe303741e513161776d484b9194714ea212b4f7ff953d260ca72d5"
+    },
+    {
+      "artifact_id": "judge_input_schema_docs",
+      "path": "Docs/evaluation_v2/Input_AI/judge_input_schema.md",
+      "sha256": "9b1884a8636dbf05b9e320ba5dd950c311f4fc29bf89e2eb4312310c6d234404"
+    },
+    {
+      "artifact_id": "judge_input_example",
+      "path": "Docs/evaluation_v2/Input_AI/judge_input_example.json",
+      "sha256": "de7ab6b1d8f0458bf56295e886ba6410a1af645006df3497336e889c841a8aeb"
+    },
+    {
+      "artifact_id": "judge_response_schema",
+      "path": "Docs/evaluation_v2/LLM_JUDGE_V2_JUDGE_RESPONSE_SCHEMA_V1.json",
+      "sha256": "b41dcfec162c965b2de222d82294a1cc1dcce367a6d529f99170572e4120d57c"
+    },
+    {
+      "artifact_id": "execution_attempt_wrapper_schema",
+      "path": "Docs/evaluation_v2/LLM_JUDGE_V2_EXECUTION_ATTEMPT_WRAPPER_SCHEMA_V1.json",
+      "sha256": "ecc3bc8115a81a859d2fd346928b49c2eca46030f0c0317d2cfad1f247756ab7"
+    },
+    {
+      "artifact_id": "record_execution_status_schema",
+      "path": "Docs/evaluation_v2/LLM_JUDGE_V2_RECORD_EXECUTION_STATUS_SCHEMA_V1.json",
+      "sha256": "fbb1f41922b16ef7121518c73b9b724454e3e82b86818b3588913284ef9af552"
+    },
+    {
+      "artifact_id": "final_scoring_record_schema",
+      "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D3_OUTPUT_SCHEMA_V1.json",
+      "sha256": "3be08fba9693f4a663fc10e2a20d3a82efb843e53087706b4f1a8ba4764847c1"
+    },
+    {
+      "artifact_id": "pre_phase5_decisions",
+      "path": "Docs/evaluation_v2/LLM_JUDGE_V2_PRE_PHASE5_DECISIONS.md",
+      "sha256": "496e9ba512c48c4bb2481242dd9db2074b7d8d8d0ece152c149fa9ed3bc25a6f"
+    },
+    {
+      "artifact_id": "d1_dataset_separated_evaluation_decision",
+      "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D1_DATASET_SEPARATED_EVALUATION_DECISION.md",
+      "sha256": "8e344839c364ba9264f94ba31c3c7dac7a82463bb5df216d3e0e31927533c074"
+    },
+    {
+      "artifact_id": "d2_full_evidence_access_decision",
+      "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D2_FULL_EVIDENCE_ACCESS_DECISION.md",
+      "sha256": "88e29b41bd9b82c62945cdc924713c2c78249fefa8cd5ff95c1ea58680c5a9d1"
+    },
+    {
+      "artifact_id": "d3_rubric_scoring_decision",
+      "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D3_RUBRIC_SCORING_DECISIONS.md",
+      "sha256": "a9988230d5976c026b9019dfbc22263927a7b42e99b9947b9082f3ce6eff65cf"
+    },
+    {
+      "artifact_id": "d4_reproducibility_execution_decision",
+      "path": "Docs/evaluation_v2/LLM_JUDGE_V2_D4_REPRODUCIBILITY_EXECUTION_DECISIONS.md",
+      "sha256": "e5e1c243708bd40a34a02076f30e2d992aff1e53ccc9202aa6d6913b468b4256"
+    }
+  ],
+  "provenance_artifacts": [
+    {
+      "artifact_id": "task_registry_source",
+      "path": "Backend/src/config/taskRegistry.json",
+      "sha256": "32b5225d70ad34e2f84f14fb12073af9a6f07e58a871044553168af477d5877c",
+      "reason": "Source registry used to derive task-level evaluation requirements."
+    },
+    {
+      "artifact_id": "task_requirements_materializer",
+      "path": "Docs/evaluation_v2/Rubric/scripts/materializeTaskEvaluationRequirements.mjs",
+      "sha256": "8c686d6d1c6aa32614baef6b95a7437d1b3391b7db02da1baa85d2b27a8948d9",
+      "reason": "Generator script used to materialize task_evaluation_requirements.json."
+    },
+    {
+      "artifact_id": "full_case_run_manifest",
+      "path": "Docs/evaluation_v2/Runs/full_208/full_case_run_manifest_v1.json",
+      "sha256": "d6584d7ad682805893619c17d2ac80edf7d4db2c9363f4aae0efc3cd52f42849",
+      "reason": "Freeze the 104 dataset-task cases and 208 mode-level records planned for the full run."
+    },
+    {
+      "artifact_id": "phase_f7_prompt_queue_manifest",
+      "path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_queue/judge_prompt_queue_manifest.jsonl",
+      "sha256": "4b2e72739b06c1731d1a08c965bff5a90c3d8d1df0fd37a2ff1cd0cf984a6000",
+      "reason": "Phase 13 prompt queue for the baseline versus Task-Aware Summary V3 comparison."
+    },
+    {
+      "artifact_id": "phase_f7_token_budget_report",
+      "path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_queue/token_budget_report.json",
+      "sha256": "e78d83198006d70cedaf65e380508260a9fad50e7273987f18b82f9e20a96126",
+      "reason": "Phase 13 token-budget report confirming all 208 prompt packets are ready."
+    }
+  ],
+  "counts": {
+    "contract_artifact_count": 16,
+    "provenance_artifact_count": 5,
+    "total_hashed_artifact_count": 21
+  },
+  "gate_decision": {
+    "prompt_rubric_manifest_frozen": true,
+    "prompt_queue_regenerated_after_freeze": true,
+    "judge_invocation_started": false,
+    "judge_invocation_allowed": true,
+    "next_required_step": "Run SAMPLE_UCI_POR in a new Codex session, then import and validate its 104 raw outputs."
+  },
+  "notes": [
+    "This Phase 13 manifest preserves the frozen LLM Judge V2 prompt, rubric and schemas for fair comparison.",
+    "It refreshes task-requirement provenance and pins the Phase 13 Task-Aware Summary V3 prompt queue.",
+    "The Phase 8 official contract remains immutable historical evidence."
+  ]
+}

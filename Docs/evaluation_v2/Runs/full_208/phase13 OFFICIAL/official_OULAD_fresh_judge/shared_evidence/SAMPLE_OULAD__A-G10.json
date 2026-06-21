@@ -1,0 +1,213 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G10",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G10",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G10__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "92c8a4e34a10a8e0ee7f29104d9da388dff5456710aeae5522c9f93221a0e301",
+ "deterministic_summary": {
+ "summary_type": "categorical_distribution",
+ "dataset_name": "consistency_distribution",
+ "row_count": 3,
+ "category_column": "consistency_level",
+ "count_column": "student_count",
+ "percent_column": "pct_students",
+ "total_count": 2498,
+ "category_distribution": [
+ {
+ "category": "high",
+ "count": 760,
+ "percent": 0.3042,
+ "metrics": {
+ "avg_weekly_stddev": 18.59,
+ "avg_weekly_clicks": 19.34,
+ "avg_active_weeks": 12.43
+ }
+ },
+ {
+ "category": "medium",
+ "count": 759,
+ "percent": 0.3038,
+ "metrics": {
+ "avg_weekly_stddev": 45.68,
+ "avg_weekly_clicks": 38.26,
+ "avg_active_weeks": 22.12
+ }
+ },
+ {
+ "category": "low",
+ "count": 979,
+ "percent": 0.3919,
+ "metrics": {
+ "avg_weekly_stddev": 88.2,
+ "avg_weekly_clicks": 68.81,
+ "avg_active_weeks": 21.8
+ }
+ }
+ ],
+ "largest_category": {
+ "category": "low",
+ "count": 979,
+ "percent": 0.3919
+ },
+ "focus_categories": [
+ "low"
+ ],
+ "focus_total": {
+ "categories": [
+ "low"
+ ],
+ "present_categories": [
+ "low"
+ ],
+ "missing_categories": [],
+ "count": 979,
+ "percent": 0.3919
+ },
+ "missing_expected_categories": [],
+ "missing_focus_categories": [],
+ "metric_columns": [
+ "avg_weekly_stddev",
+ "avg_weekly_clicks",
+ "avg_active_weeks"
+ ],
+ "metric_evidence_by_category": {
+ "high": {
+ "avg_weekly_stddev": 18.59,
+ "avg_weekly_clicks": 19.34,
+ "avg_active_weeks": 12.43
+ },
+ "medium": {
+ "avg_weekly_stddev": 45.68,
+ "avg_weekly_clicks": 38.26,
+ "avg_active_weeks": 22.12
+ },
+ "low": {
+ "avg_weekly_stddev": 88.2,
+ "avg_weekly_clicks": 68.81,
+ "avg_active_weeks": 21.8
+ }
+ },
+ "summarization_warnings": [
+ "Percent total for pct_students is 0.9999, outside expected 99-101 range."
+ ],
+ "percent_total": 0.9999
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "categorical_distribution",
+ "task_id": "A-G10",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "consistency_distribution",
+ "row_count": 3,
+ "category_column": "consistency_level",
+ "count_column": "student_count",
+ "percent_column": "pct_students",
+ "metric_columns": [
+ "avg_weekly_stddev",
+ "avg_weekly_clicks",
+ "avg_active_weeks"
+ ],
+ "total_count": 2498,
+ "percent_total": 0.9999,
+ "focus_categories": [
+ "low"
+ ]
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "category_distribution": [
+ {
+ "category": "high",
+ "count": 760,
+ "percent": 0.3042,
+ "metrics": {
+ "avg_weekly_stddev": 18.59,
+ "avg_weekly_clicks": 19.34,
+ "avg_active_weeks": 12.43
+ }
+ },
+ {
+ "category": "medium",
+ "count": 759,
+ "percent": 0.3038,
+ "metrics": {
+ "avg_weekly_stddev": 45.68,
+ "avg_weekly_clicks": 38.26,
+ "avg_active_weeks": 22.12
+ }
+ },
+ {
+ "category": "low",
+ "count": 979,
+ "percent": 0.3919,
+ "metrics": {
+ "avg_weekly_stddev": 88.2,
+ "avg_weekly_clicks": 68.81,
+ "avg_active_weeks": 21.8
+ }
+ }
+ ],
+ "focus_total": {
+ "categories": [
+ "low"
+ ],
+ "present_categories": [
+ "low"
+ ],
+ "missing_categories": [],
+ "count": 979,
+ "percent": 0.3919
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_evidence_by_category": {
+ "high": {
+ "avg_weekly_stddev": 18.59,
+ "avg_weekly_clicks": 19.34,
+ "avg_active_weeks": 12.43
+ },
+ "medium": {
+ "avg_weekly_stddev": 45.68,
+ "avg_weekly_clicks": 38.26,
+ "avg_active_weeks": 22.12
+ },
+ "low": {
+ "avg_weekly_stddev": 88.2,
+ "avg_weekly_clicks": 68.81,
+ "avg_active_weeks": 21.8
+ }
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "largest_category": {
+ "category": "low",
+ "count": 979,
+ "percent": 0.3919
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_expected_categories": [],
+ "missing_focus_categories": [],
+ "summarization_warnings": [
+ "Percent total for pct_students is 0.9999, outside expected 99-101 range."
+ ]
+ }
+ }
+ ]
+ }
+}

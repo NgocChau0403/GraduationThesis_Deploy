@@ -1,0 +1,102 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-S07__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on faithfulness, with the limitations summarized in the holistic rationale."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10 reflects The answer focuses on support flags and does not discuss other returned background dimensions that may be relevant to the administrative review."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on actionability, with the limitations summarized in the holistic rationale."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on safety_fairness, with the limitations summarized in the holistic rationale."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "School support is present, while family support, paid classes, and internet access are absent; support_score is 0.25.",
+ "claim_type": "background_context",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "background_context row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "All stated flags and the score match the evidence."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "These absences may limit the student's support system.",
+ "claim_type": "interpretation",
+ "claim_scope": "supporting",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "background_context row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The statement is a cautious interpretation but outcome effects are not demonstrated.",
+ "impact_type": "weakens_support"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "background_dimension_partial_coverage",
+ "claim_ids": [],
+ "severity": "minor",
+ "primary_metric": "completeness",
+ "secondary_metrics": [],
+ "cap_candidate": null,
+ "rationale": "The answer focuses on support flags and does not discuss other returned background dimensions that may be relevant to the administrative review.",
+ "evidence_refs": [
+ "background_context row"
+ ],
+ "requirement_id": "A-S07-CORE-01"
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "minor",
+ "error_count": 1,
+ "count_by_severity": {
+ "minor": 1,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 8.55,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 8.55,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

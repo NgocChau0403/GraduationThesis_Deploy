@@ -1,0 +1,105 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__A-B01__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10 reflects The explanation labels the dominant 50-70 region as lower performance without sufficient qualification."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10 reflects The explanation does not calculate or flag the 49 students (7.6%) below the pass threshold of 40."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on task_relevance, with the limitations summarized in the holistic rationale."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on actionability, with the limitations summarized in the holistic rationale."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on safety_fairness, with the limitations summarized in the holistic rationale."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The 50-60 bucket is largest at 28.8%, followed by 60-70 at 25.9%.",
+ "claim_type": "distribution",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "score_distribution rows for 50-60 and 60-70"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The cited percentages and ordering match the embedded rows."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Students are concentrated in lower performance tiers and need intervention.",
+ "claim_type": "interpretation",
+ "claim_scope": "supporting",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "score_distribution all 10 rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The middle buckets are large, but describing 50-70 as lower tiers overstates the distribution.",
+ "impact_type": "changes_interpretation"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "required_output_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "task_relevance"
+ ],
+ "cap_candidate": null,
+ "rationale": "The explanation does not calculate or flag the 49 students (7.6%) below the pass threshold of 40.",
+ "evidence_refs": [
+ "score_distribution rows 0-10 through 30-40"
+ ],
+ "requirement_id": "A-B01-CORE-02"
+ },
+ {
+ "error_id": "E02",
+ "error_type": "distribution_overstatement",
+ "claim_ids": [
+ "C02"
+ ],
+ "severity": "minor",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [],
+ "cap_candidate": null,
+ "rationale": "The explanation labels the dominant 50-70 region as lower performance without sufficient qualification.",
+ "evidence_refs": [
+ "score_distribution all 10 rows"
+ ]
+ }
+ ],
+ "holistic_rationale": "The score spread is described with correct headline values, but a required below-pass finding is absent and the middle of the distribution is framed too negatively.",
+ "evidence_usage_notes": "Evidence access mode was direct_embedding. All 10 rows were directly embedded; retrieval_log_path is not applicable. Evidence references: score_distribution:Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-B01.json. Deterministic checks were used only for covered values, directions, rankings, thresholds, and availability; semantic and causal claims were judged separately. Evidence access does not prove model attention to every row.",
+ "invalid_reason": null
+}

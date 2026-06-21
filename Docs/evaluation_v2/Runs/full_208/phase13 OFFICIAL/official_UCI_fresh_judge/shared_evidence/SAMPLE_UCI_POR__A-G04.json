@@ -1,0 +1,262 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__A-G04",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-G04",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__A-G04__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "09af128dd1d2a14913b9f5ea269b57a413b6abe8a6c2cb10274ef1065ec93742",
+ "deterministic_summary": {
+ "summary_type": "ranking",
+ "dataset_name": "assessment_difficulty",
+ "row_count": 3,
+ "entity_column": "assessment_name",
+ "metric_column": "fail_rate_pct",
+ "sort_direction": "desc",
+ "top_items": [
+ {
+ "assessment_name": "G1",
+ "fail_rate_pct": 7.7,
+ "rank": 1,
+ "labels": {
+ "assessment_id": "SAMPLE_UCI_POR_ASM_G1",
+ "assessment_type": "quiz",
+ "week_of_class": 3,
+ "competency_tag": "G1"
+ },
+ "secondary_metrics": {
+ "total_submissions": 649,
+ "fail_count": 50,
+ "avg_score": 57
+ }
+ },
+ {
+ "assessment_name": "G2",
+ "fail_rate_pct": 5.1,
+ "rank": 2,
+ "labels": {
+ "assessment_id": "SAMPLE_UCI_POR_ASM_G2",
+ "assessment_type": "quiz",
+ "week_of_class": 8,
+ "competency_tag": "G2"
+ },
+ "secondary_metrics": {
+ "total_submissions": 649,
+ "fail_count": 33,
+ "avg_score": 57.85
+ }
+ },
+ {
+ "assessment_name": "G3",
+ "fail_rate_pct": 4.6,
+ "rank": 3,
+ "labels": {
+ "assessment_id": "SAMPLE_UCI_POR_ASM_G3",
+ "assessment_type": "exam",
+ "week_of_class": 14,
+ "competency_tag": "G3"
+ },
+ "secondary_metrics": {
+ "total_submissions": 649,
+ "fail_count": 30,
+ "avg_score": 59.53
+ }
+ }
+ ],
+ "bottom_items": [
+ {
+ "assessment_name": "G1",
+ "fail_rate_pct": 7.7,
+ "rank": 1,
+ "labels": {
+ "assessment_id": "SAMPLE_UCI_POR_ASM_G1",
+ "assessment_type": "quiz",
+ "week_of_class": 3,
+ "competency_tag": "G1"
+ },
+ "secondary_metrics": {
+ "total_submissions": 649,
+ "fail_count": 50,
+ "avg_score": 57
+ }
+ },
+ {
+ "assessment_name": "G2",
+ "fail_rate_pct": 5.1,
+ "rank": 2,
+ "labels": {
+ "assessment_id": "SAMPLE_UCI_POR_ASM_G2",
+ "assessment_type": "quiz",
+ "week_of_class": 8,
+ "competency_tag": "G2"
+ },
+ "secondary_metrics": {
+ "total_submissions": 649,
+ "fail_count": 33,
+ "avg_score": 57.85
+ }
+ },
+ {
+ "assessment_name": "G3",
+ "fail_rate_pct": 4.6,
+ "rank": 3,
+ "labels": {
+ "assessment_id": "SAMPLE_UCI_POR_ASM_G3",
+ "assessment_type": "exam",
+ "week_of_class": 14,
+ "competency_tag": "G3"
+ },
+ "secondary_metrics": {
+ "total_submissions": 649,
+ "fail_count": 30,
+ "avg_score": 59.53
+ }
+ }
+ ],
+ "median_item": {
+ "assessment_name": "G2",
+ "fail_rate_pct": 5.1,
+ "rank": 2,
+ "labels": {
+ "assessment_id": "SAMPLE_UCI_POR_ASM_G2",
+ "assessment_type": "quiz",
+ "week_of_class": 8,
+ "competency_tag": "G2"
+ },
+ "secondary_metrics": {
+ "total_submissions": 649,
+ "fail_count": 33,
+ "avg_score": 57.85
+ }
+ },
+ "metric_stats": {
+ "count": 3,
+ "min": 4.6,
+ "max": 7.7,
+ "mean": 5.8,
+ "median": 5.1
+ },
+ "tie_warnings": [],
+ "flag_evidence": [],
+ "summarization_warnings": [
+ "Configured optional column 'competency_source' is missing from dataset."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "ranking",
+ "task_id": "A-G04",
+ "task_output_contract": [
+ "State the ranking/top entities, rank metric value, and why they are prioritized.",
+ "For risk/admin ranking rows, include returned flags or recommended action fields when present.",
+ "Do not generalize beyond returned rows or omit the top ranked examples."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "assessment_difficulty",
+ "row_count": 3,
+ "entity_column": "assessment_name",
+ "metric_column": "fail_rate_pct",
+ "sort_direction": "desc"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "top_items": [
+ {
+ "assessment_name": "G1",
+ "fail_rate_pct": 7.7,
+ "rank": 1,
+ "labels": {
+ "assessment_id": "SAMPLE_UCI_POR_ASM_G1",
+ "assessment_type": "quiz",
+ "week_of_class": 3,
+ "competency_tag": "G1"
+ },
+ "secondary_metrics": {
+ "total_submissions": 649,
+ "fail_count": 50,
+ "avg_score": 57
+ }
+ },
+ {
+ "assessment_name": "G2",
+ "fail_rate_pct": 5.1,
+ "rank": 2,
+ "labels": {
+ "assessment_id": "SAMPLE_UCI_POR_ASM_G2",
+ "assessment_type": "quiz",
+ "week_of_class": 8,
+ "competency_tag": "G2"
+ },
+ "secondary_metrics": {
+ "total_submissions": 649,
+ "fail_count": 33,
+ "avg_score": 57.85
+ }
+ },
+ {
+ "assessment_name": "G3",
+ "fail_rate_pct": 4.6,
+ "rank": 3,
+ "labels": {
+ "assessment_id": "SAMPLE_UCI_POR_ASM_G3",
+ "assessment_type": "exam",
+ "week_of_class": 14,
+ "competency_tag": "G3"
+ },
+ "secondary_metrics": {
+ "total_submissions": 649,
+ "fail_count": 30,
+ "avg_score": 59.53
+ }
+ }
+ ],
+ "median_item": {
+ "assessment_name": "G2",
+ "fail_rate_pct": 5.1,
+ "rank": 2,
+ "labels": {
+ "assessment_id": "SAMPLE_UCI_POR_ASM_G2",
+ "assessment_type": "quiz",
+ "week_of_class": 8,
+ "competency_tag": "G2"
+ },
+ "secondary_metrics": {
+ "total_submissions": 649,
+ "fail_count": 33,
+ "avg_score": 57.85
+ }
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_stats": {
+ "count": 3,
+ "min": 4.6,
+ "max": 7.7,
+ "mean": 5.8,
+ "median": 5.1
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "summarization_warnings": [
+ "Configured optional column 'competency_source' is missing from dataset."
+ ]
+ }
+ }
+ ]
+ }
+}

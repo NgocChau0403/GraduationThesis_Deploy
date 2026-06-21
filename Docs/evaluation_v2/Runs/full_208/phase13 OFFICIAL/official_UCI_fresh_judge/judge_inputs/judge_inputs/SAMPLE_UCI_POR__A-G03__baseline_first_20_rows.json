@@ -1,0 +1,2022 @@
+{
+ "schema_version": "judge_input_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__A-G03__baseline_first_20_rows",
+ "evaluation_run_id": "phase13_local_taskaware_official_r4_fresh_judge",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-G03",
+ "explanation_mode": "baseline_first_20_rows",
+ "prompt_version": "judge_prompt_v2_pilot_v1",
+ "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+ "task_context": {
+ "task_name": "Identify at-risk cohort",
+ "scope": "Many students",
+ "actionable_question": "Who should the admin contact first this week?",
+ "target_audience": "instructor, admin",
+ "ai_summary_type": "ranking",
+ "ai_prompt_hint": "Rank at-risk students by at_risk_score. For each high-risk student, explain triggered_flags_summary and recommend the recommended_admin_action. Do not invent reasons outside triggered_flags.",
+ "query_labels": [
+ "at_risk_cohort"
+ ],
+ "explanation_strategy": "risk"
+ },
+ "schema_context": {
+ "source_tables": [
+ "enrollment",
+ "assessment_result",
+ "assessment",
+ "engagement"
+ ],
+ "key_db_fields": [
+ "at_risk_score [FE cross]",
+ "at_risk_label [FE cross]",
+ "avg_score [FE cross]",
+ "final_outcome"
+ ],
+ "output_schema": {
+ "required_columns": [
+ "student_id",
+ "avg_score",
+ "at_risk_score",
+ "at_risk_label",
+ "triggered_flags"
+ ],
+ "optional_columns": [
+ "enrollment_id",
+ "score_strategy",
+ "score_scale",
+ "pass_threshold",
+ "target_threshold",
+ "engagement_score",
+ "engagement_score_available",
+ "punctuality_rate",
+ "previous_attempt_count",
+ "triggered_flags_summary",
+ "primary_support_category",
+ "recommended_admin_action",
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend",
+ "final_outcome"
+ ]
+ },
+ "query_labels": [
+ "at_risk_cohort"
+ ]
+ },
+ "explanation": {
+ "raw_text": "Summary: A cohort of students has been identified as high-risk due to multiple simultaneous risk signals, including low average scores, repeated attempts, low engagement, and negative performance trends. These indicators suggest a need for immediate academic support to enhance their chances of success.\n\nInsights: Students with Low Average Scores and Engagement: Students such as SAMPLE_UCI_POR_STU_000568, SAMPLE_UCI_POR_STU_000606, and SAMPLE_UCI_POR_STU_000564 exhibit low average scores (5, 6.25, and 8.75 respectively) and have low engagement scores (0). They have also repeated attempts, indicating a struggle with the material. | Negative Performance Trends: Students like SAMPLE_UCI_POR_STU_000611 and SAMPLE_UCI_POR_STU_000598 show a negative trend in performance, with average scores of 10 and 11.25 respectively. Their repeated attempts and low engagement further compound their risk status.\n\nEducational implications: Students exhibiting multiple risk signals require targeted academic interventions to improve their performance and engagement.\n\nRecommendations: high - Prioritise academic support for low average score. - This action addresses the immediate need for academic assistance to help students improve their understanding and performance in the subject.",
+ "structured_payload": {
+ "task_id": "A-G03",
+ "execution_id": "exec_1781847232196_a9b57bec",
+ "explanation": {
+ "summary": "A cohort of students has been identified as high-risk due to multiple simultaneous risk signals, including low average scores, repeated attempts, low engagement, and negative performance trends. These indicators suggest a need for immediate academic support to enhance their chances of success.",
+ "insights": [
+ {
+ "title": "Students with Low Average Scores and Engagement",
+ "description": "Students such as SAMPLE_UCI_POR_STU_000568, SAMPLE_UCI_POR_STU_000606, and SAMPLE_UCI_POR_STU_000564 exhibit low average scores (5, 6.25, and 8.75 respectively) and have low engagement scores (0). They have also repeated attempts, indicating a struggle with the material.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "avg_score",
+ "value": 5,
+ "comparison": "down_from_previous",
+ "delta": -35,
+ "context": "Below pass threshold of 40"
+ },
+ {
+ "metric": "engagement_score",
+ "value": 0,
+ "comparison": "down_from_previous",
+ "delta": null,
+ "context": "No engagement"
+ },
+ {
+ "metric": "previous_attempt_count",
+ "value": 1,
+ "comparison": "baseline",
+ "delta": null,
+ "context": "First attempt"
+ }
+ ]
+ },
+ {
+ "title": "Negative Performance Trends",
+ "description": "Students like SAMPLE_UCI_POR_STU_000611 and SAMPLE_UCI_POR_STU_000598 show a negative trend in performance, with average scores of 10 and 11.25 respectively. Their repeated attempts and low engagement further compound their risk status.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "avg_score",
+ "value": 10,
+ "comparison": "down_from_previous",
+ "delta": -30,
+ "context": "Below pass threshold of 40"
+ },
+ {
+ "metric": "engagement_score",
+ "value": 0,
+ "comparison": "down_from_previous",
+ "delta": null,
+ "context": "No engagement"
+ },
+ {
+ "metric": "previous_attempt_count",
+ "value": 3,
+ "comparison": "baseline",
+ "delta": null,
+ "context": "Multiple attempts"
+ }
+ ]
+ }
+ ],
+ "educational_implications": [
+ "Students exhibiting multiple risk signals require targeted academic interventions to improve their performance and engagement."
+ ],
+ "recommendations": [
+ {
+ "priority": "high",
+ "action": "Prioritise academic support for low average score.",
+ "rationale": "This action addresses the immediate need for academic assistance to help students improve their understanding and performance in the subject."
+ }
+ ],
+ "warnings": []
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "Data is consistent and reflects multiple indicators of student performance and engagement.",
+ "based_on": [
+ "sufficient_data"
+ ]
+ },
+ "explanation_strategy": "risk",
+ "explanation_type": "risk",
+ "ai_summary_method": "baseline_first_20_rows",
+ "ai_summary_version": "baseline",
+ "baseline_available": true,
+ "input_summary_type": "raw_first_20_rows",
+ "ai_summary_method_warning": null,
+ "full_result_row_count": null,
+ "included_row_count": null,
+ "small_result_threshold": null,
+ "small_result_full_rows_applied": null,
+ "dataset_row_breakdown": [],
+ "safety_flags": [],
+ "degraded": false,
+ "meta": {
+ "model": "gpt-4o-mini-2024-07-18",
+ "latency_ms": 30313,
+ "token_usage": {
+ "prompt_tokens": 7397,
+ "completion_tokens": 661,
+ "total_tokens": 8058
+ },
+ "strategy": "risk",
+ "granularity": "semester",
+ "cost_usd": 0.001506
+ }
+ },
+ "generation_metadata": {
+ "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G03__baseline_first_20_rows.json",
+ "explanation_artifact_sha256": "8c6b103b0ac7b336aa9cc93e33d99be828da7f8c2f396a017130744be08fc4d5",
+ "ai_service_url": "http://localhost:8000",
+ "expected_ai_summary_method": "baseline_first_20_rows",
+ "observed_ai_summary_method": "baseline_first_20_rows",
+ "degraded": false,
+ "model": "gpt-4o-mini-2024-07-18",
+ "token_usage": {
+ "prompt_tokens": 7397,
+ "completion_tokens": 661,
+ "total_tokens": 8058
+ },
+ "latency_ms": 30318,
+ "attempts_used": 1
+ }
+ },
+ "evidence_access": {
+ "full_result_row_count": 50,
+ "full_query_artifacts": [
+ {
+ "dataset_label": "at_risk_cohort",
+ "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G03.json",
+ "artifact_sha256": "5ffbfda51d48e1b2ced0234d1b63c1abc449384091a7498a5237ed9522ad74ac",
+ "row_count": 50,
+ "readable": true
+ }
+ ],
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "small_result_row_threshold": 20,
+ "direct_embedding_token_budget": 120000,
+ "prompt_embedded_row_count": 0,
+ "retrieved_row_count": 50,
+ "retrieved_row_count_by_dataset": {
+ "at_risk_cohort": 50
+ },
+ "retrieved_row_ranges": [
+ {
+ "dataset_label": "at_risk_cohort",
+ "start": 0,
+ "end": 49
+ }
+ ],
+ "retrieved_chunk_ids": [
+ "SAMPLE_UCI_POR__A-G03__baseline_first_20_rows__at_risk_cohort__chunk_1"
+ ],
+ "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/official_r4_fresh_judge/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G03__baseline_first_20_rows.json",
+ "retrieval_request_complete": true,
+ "retrieval_coverage_status": "full",
+ "full_access_available": true,
+ "deterministic_scan_scope": "full_query_artifact_all_rows",
+ "deterministic_scan_row_count_by_dataset": {
+ "at_risk_cohort": 50
+ },
+ "full_result_sent_to_llm": false,
+ "deterministic_checks": [
+ {
+ "check_type": "task_aware_shared_evidence_contract",
+ "case_id": "SAMPLE_UCI_POR__A-G03",
+ "task_id": "A-G03",
+ "sidecar_sha256": "da7132d504ff4920f4be34fa62978ebd85ef61073b4c1009bf7507fd0c6c4890",
+ "evidence": {
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__A-G03",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-G03",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__A-G03__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "c8ab51646fd3aaae91c3fa1d5e1de2803f81a653ceec135f834bea1bdc5dee6c",
+ "deterministic_summary": {
+ "summary_type": "ranking",
+ "dataset_name": "at_risk_cohort",
+ "row_count": 50,
+ "entity_column": "student_id",
+ "metric_column": "at_risk_score",
+ "sort_direction": "desc",
+ "top_items": [
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000568",
+ "at_risk_score": 4,
+ "rank": 1,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 5 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 5 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 5,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000606",
+ "at_risk_score": 4,
+ "rank": 2,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 6.25 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 6.25 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 6.25,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000564",
+ "at_risk_score": 4,
+ "rank": 3,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 8.75 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 8.75 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 8.75,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000611",
+ "at_risk_score": 4,
+ "rank": 4,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 10 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 3",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 10 < pass_threshold 40; repeated_attempt: previous_attempt_count 3; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 10,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 3
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000598",
+ "at_risk_score": 4,
+ "rank": 5,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 11.25 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 11.25 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 11.25,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000640",
+ "at_risk_score": 4,
+ "rank": 6,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 20.25 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 20.25 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 20.25,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000584",
+ "at_risk_score": 4,
+ "rank": 7,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 20.5 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 20.5 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 20.5,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000641",
+ "at_risk_score": 4,
+ "rank": 8,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 21 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 21 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 21,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000164",
+ "at_risk_score": 4,
+ "rank": 9,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 29.5 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 2",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 29.5 < pass_threshold 40; repeated_attempt: previous_attempt_count 2; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 29.5,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 2
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000173",
+ "at_risk_score": 4,
+ "rank": 10,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 32 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 32 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 32,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ }
+ ],
+ "bottom_items": [
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000265",
+ "at_risk_score": 3,
+ "rank": 46,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "engagement",
+ "recommended_admin_action": "Contact student and set a weekly engagement routine.",
+ "final_outcome": "Pass"
+ },
+ "secondary_metrics": {
+ "avg_score": 49.5,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000507",
+ "at_risk_score": 3,
+ "rank": 47,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "engagement",
+ "recommended_admin_action": "Contact student and set a weekly engagement routine.",
+ "final_outcome": "Pass"
+ },
+ "secondary_metrics": {
+ "avg_score": 49.5,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000119",
+ "at_risk_score": 3,
+ "rank": 48,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "engagement",
+ "recommended_admin_action": "Contact student and set a weekly engagement routine.",
+ "final_outcome": "Pass"
+ },
+ "secondary_metrics": {
+ "avg_score": 56.25,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000138",
+ "at_risk_score": 3,
+ "rank": 49,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "engagement",
+ "recommended_admin_action": "Contact student and set a weekly engagement routine.",
+ "final_outcome": "Pass"
+ },
+ "secondary_metrics": {
+ "avg_score": 57.5,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000321",
+ "at_risk_score": 3,
+ "rank": 50,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "engagement",
+ "recommended_admin_action": "Contact student and set a weekly engagement routine.",
+ "final_outcome": "Pass"
+ },
+ "secondary_metrics": {
+ "avg_score": 64.5,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ }
+ ],
+ "median_item": {
+ "student_id": "SAMPLE_UCI_POR_STU_000513",
+ "at_risk_score": 3,
+ "rank": 26,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 35 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 35 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 35,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": false
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": false
+ }
+ },
+ "metric_stats": {
+ "count": 50,
+ "min": 3,
+ "max": 4,
+ "mean": 3.28,
+ "median": 3
+ },
+ "tie_warnings": [
+ "top_items boundary has 14 tied items at at_risk_score=4.0; only 10 are included.",
+ "bottom_items boundary has 36 tied items at at_risk_score=3.0; only 5 are included."
+ ],
+ "flag_evidence": [
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000568",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000606",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000564",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000611",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000598",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000640",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000584",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000641",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000164",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000173",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000265",
+ "true_flags": [
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000507",
+ "true_flags": [
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000119",
+ "true_flags": [
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000138",
+ "true_flags": [
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000321",
+ "true_flags": [
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ }
+ ],
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "ranking",
+ "task_id": "A-G03",
+ "task_output_contract": [
+ "State the ranking/top entities, rank metric value, and why they are prioritized.",
+ "For risk/admin ranking rows, include returned flags or recommended action fields when present.",
+ "Do not generalize beyond returned rows or omit the top ranked examples."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "at_risk_cohort",
+ "row_count": 50,
+ "entity_column": "student_id",
+ "metric_column": "at_risk_score",
+ "sort_direction": "desc"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "top_items": [
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000568",
+ "at_risk_score": 4,
+ "rank": 1,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 5 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 5 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 5,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000606",
+ "at_risk_score": 4,
+ "rank": 2,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 6.25 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 6.25 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 6.25,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000564",
+ "at_risk_score": 4,
+ "rank": 3,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 8.75 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 8.75 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 8.75,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000611",
+ "at_risk_score": 4,
+ "rank": 4,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 10 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 3",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 10 < pass_threshold 40; repeated_attempt: previous_attempt_count 3; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 10,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 3
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000598",
+ "at_risk_score": 4,
+ "rank": 5,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 11.25 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 11.25 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 11.25,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000640",
+ "at_risk_score": 4,
+ "rank": 6,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 20.25 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 20.25 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 20.25,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000584",
+ "at_risk_score": 4,
+ "rank": 7,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 20.5 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 20.5 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 20.5,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000641",
+ "at_risk_score": 4,
+ "rank": 8,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 21 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 21 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 21,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000164",
+ "at_risk_score": 4,
+ "rank": 9,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 29.5 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 2",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 29.5 < pass_threshold 40; repeated_attempt: previous_attempt_count 2; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 29.5,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 2
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000173",
+ "at_risk_score": 4,
+ "rank": 10,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 32 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.000 < 0.15",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 32 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.000 < 0.15; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 32,
+ "engagement_score": 0,
+ "punctuality_rate": 1,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_stats": {
+ "count": 50,
+ "min": 3,
+ "max": 4,
+ "mean": 3.28,
+ "median": 3
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": [
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000568",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000606",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000564",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000611",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000598",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000640",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000584",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000641",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000164",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000173",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000265",
+ "true_flags": [
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000507",
+ "true_flags": [
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000119",
+ "true_flags": [
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000138",
+ "true_flags": [
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_UCI_POR_STU_000321",
+ "true_flags": [
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": true
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+ }
+ }
+ ],
+ "checked_claim_types": [
+ "task_specific_evidence_contract"
+ ],
+ "unchecked_claim_types": [
+ "semantic_interpretation",
+ "causal_framing",
+ "actionability_quality"
+ ],
+ "judge_evidence_citations": []
+ },
+ "evaluation_requirements": {
+ "required_core_outputs": [
+ {
+ "requirement_id": "A-G03-CORE-01",
+ "description": "Rank at-risk students by at_risk_score."
+ },
+ {
+ "requirement_id": "A-G03-CORE-02",
+ "description": "For each high-risk student, explain triggered_flags_summary and recommend the recommended_admin_action."
+ }
+ ],
+ "required_supporting_outputs": [],
+ "evaluation_constraints": [
+ {
+ "constraint_id": "A-G03-CONSTRAINT-01",
+ "description": "Do not invent reasons outside triggered_flags."
+ }
+ ],
+ "safety_fairness_applicability": "applicable",
+ "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+ }
+}

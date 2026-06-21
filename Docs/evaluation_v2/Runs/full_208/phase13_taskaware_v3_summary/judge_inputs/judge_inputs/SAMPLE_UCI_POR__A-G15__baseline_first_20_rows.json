@@ -1,0 +1,178 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G15__baseline_first_20_rows",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G15",
+  "explanation_mode": "baseline_first_20_rows",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Intervention priority ranking",
+    "scope": "Many students",
+    "actionable_question": "Who are the top 10 students most in need of intervention right now?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "ranking",
+    "ai_prompt_hint": "Rank by at_risk_score [FE] descending. List triggered flags per student. Provide action per priority group.",
+    "query_labels": [
+      "intervention_priority_list"
+    ],
+    "explanation_strategy": "ranking"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "assessment_result",
+      "assessment",
+      "engagement",
+      "student"
+    ],
+    "key_db_fields": [
+      "student_id",
+      "gender",
+      "age_group",
+      "region; at_risk_score [FE cross]",
+      "at_risk_label [FE cross]",
+      "avg_score [FE cross]",
+      "all 5 flags",
+      "final_outcome"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "intervention_priority_list"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis reveals that there are currently no students listed in the intervention priority dataset, indicating a lack of available data to assess student performance or risk. Consequently, no actionable insights or recommendations can be derived from this empty dataset.\n\nEducational implications: The absence of data may hinder the ability to identify students in need of intervention.\n\nWarnings: Data is missing; no students are available for analysis.",
+    "structured_payload": {
+      "task_id": "A-G15",
+      "execution_id": "exec_1781847232839_85d4fee6",
+      "explanation": {
+        "summary": "The analysis reveals that there are currently no students listed in the intervention priority dataset, indicating a lack of available data to assess student performance or risk. Consequently, no actionable insights or recommendations can be derived from this empty dataset.",
+        "insights": [],
+        "educational_implications": [
+          "The absence of data may hinder the ability to identify students in need of intervention."
+        ],
+        "recommendations": [],
+        "warnings": [
+          "Data is missing; no students are available for analysis."
+        ]
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The dataset is confirmed to be empty, leading to a definitive conclusion regarding the lack of students for intervention.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "ranking",
+      "explanation_type": "ranking",
+      "ai_summary_method": "baseline_first_20_rows",
+      "ai_summary_version": "baseline",
+      "baseline_available": true,
+      "input_summary_type": "raw_first_20_rows",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": null,
+      "included_row_count": null,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 3808,
+        "token_usage": {
+          "prompt_tokens": 508,
+          "completion_tokens": 152,
+          "total_tokens": 660
+        },
+        "strategy": "ranking",
+        "granularity": "semester",
+        "cost_usd": 0.000167
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G15__baseline_first_20_rows.json",
+      "explanation_artifact_sha256": "537b112f3bd6831d8e1905a24243682032515016fca66aa8eeb16a71f3998e4d",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "baseline_first_20_rows",
+      "observed_ai_summary_method": "baseline_first_20_rows",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 508,
+        "completion_tokens": 152,
+        "total_tokens": 660
+      },
+      "latency_ms": 3821,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 0,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "intervention_priority_list",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G15.json",
+        "artifact_sha256": "c56af860460e9e47da7f7a28d754718d067c231a4ec88124a3e298d89f9caee7",
+        "row_count": 0,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "intervention_priority_list": 0
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G15-CORE-01",
+        "description": "Rank by at_risk_score [FE] descending."
+      },
+      {
+        "requirement_id": "A-G15-CORE-02",
+        "description": "List triggered flags per student."
+      },
+      {
+        "requirement_id": "A-G15-CORE-03",
+        "description": "Provide action per priority group."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G15-CONSTRAINT-01",
+        "description": "Treat the output as internal admin use only."
+      },
+      {
+        "constraint_id": "A-G15-CONSTRAINT-02",
+        "description": "Do not include personally identifying information beyond identifiers already present in returned data."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

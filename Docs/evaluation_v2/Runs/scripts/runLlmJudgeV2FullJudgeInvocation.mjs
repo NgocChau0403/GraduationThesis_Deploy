@@ -12,7 +12,7 @@ const DEFAULT_QUEUE_MANIFEST_PATH = path.join(
   "phase8_judge_queue/judge_prompt_queue_manifest.jsonl",
 );
 const DEFAULT_OUTPUT_DIR = path.join(RUN_ROOT, "phase8_judge_invocation");
-const PROMPT_PATH = path.join(PROJECT_ROOT, "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md");
+const DEFAULT_PROMPT_PATH = path.join(PROJECT_ROOT, "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md");
 const OFFICIAL_CONTRACT_MANIFEST_PATH = path.join(
   RUN_ROOT,
   "official_contract_manifest_v1.json",
@@ -42,6 +42,12 @@ function parseArgs(argv) {
     expectedCount: DEFAULT_EXPECTED_COUNT,
     queueManifestPath: DEFAULT_QUEUE_MANIFEST_PATH,
     outputDir: DEFAULT_OUTPUT_DIR,
+    promptPath: DEFAULT_PROMPT_PATH,
+    expectedPromptSha256: OFFICIAL_PROMPT_SHA256,
+    contractManifestPath: OFFICIAL_CONTRACT_MANIFEST_PATH,
+    expectedContractSha256: OFFICIAL_CONTRACT_MANIFEST_SHA256,
+    evaluationRunId: null,
+    sessionSegmentId: null,
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -52,6 +58,12 @@ function parseArgs(argv) {
     else if (arg === "--expected-count") args.expectedCount = Number(next), i += 1;
     else if (arg === "--queue-manifest") args.queueManifestPath = path.resolve(next), i += 1;
     else if (arg === "--output-dir") args.outputDir = path.resolve(next), i += 1;
+    else if (arg === "--prompt") args.promptPath = path.resolve(next), i += 1;
+    else if (arg === "--prompt-sha256") args.expectedPromptSha256 = next, i += 1;
+    else if (arg === "--contract-manifest") args.contractManifestPath = path.resolve(next), i += 1;
+    else if (arg === "--contract-manifest-sha256") args.expectedContractSha256 = next, i += 1;
+    else if (arg === "--evaluation-run-id") args.evaluationRunId = next, i += 1;
+    else if (arg === "--session-segment-id") args.sessionSegmentId = next, i += 1;
     else throw new Error(`Unknown argument: ${arg}`);
   }
 
@@ -65,8 +77,8 @@ function parseArgs(argv) {
   const datasetStem = safeFileStem(args.datasetId);
   return {
     ...args,
-    evaluationRunId: `llm_judge_v2_full_208__${datasetStem}`,
-    sessionSegmentId: `full_208__${datasetStem}__segment_001`,
+    evaluationRunId: args.evaluationRunId ?? `llm_judge_v2_full_208__${datasetStem}`,
+    sessionSegmentId: args.sessionSegmentId ?? `full_208__${datasetStem}__segment_001`,
     promptQueueDir: path.join(args.outputDir, "prompt_queue"),
     rawOutputsDir: path.join(args.outputDir, "raw_outputs"),
     extractedOutputsDir: path.join(args.outputDir, "extracted_outputs"),
@@ -150,19 +162,19 @@ function judgeInputRepoPathFor(entry) {
     ?? `Docs/evaluation_v2/Runs/full_208/phase8_judge_inputs/judge_inputs/${safeFileStem(entry.record_id)}.json`;
 }
 
-async function verifyOfficialFreeze() {
+async function verifyOfficialFreeze(args) {
   await readJson(JUDGE_RESPONSE_SCHEMA_PATH);
   await readJson(ATTEMPT_WRAPPER_SCHEMA_PATH);
   await readJson(RECORD_STATUS_SCHEMA_PATH);
 
-  const promptSha256 = await sha256File(PROMPT_PATH);
-  if (promptSha256 !== OFFICIAL_PROMPT_SHA256) {
-    throw new Error(`Frozen prompt hash mismatch: expected ${OFFICIAL_PROMPT_SHA256}, observed ${promptSha256}`);
+  const promptSha256 = await sha256File(args.promptPath);
+  if (promptSha256 !== args.expectedPromptSha256) {
+    throw new Error(`Frozen prompt hash mismatch: expected ${args.expectedPromptSha256}, observed ${promptSha256}`);
   }
 
-  const contractSha256 = await sha256File(OFFICIAL_CONTRACT_MANIFEST_PATH);
-  if (contractSha256 !== OFFICIAL_CONTRACT_MANIFEST_SHA256) {
-    throw new Error(`Official contract manifest hash mismatch: expected ${OFFICIAL_CONTRACT_MANIFEST_SHA256}, observed ${contractSha256}`);
+  const contractSha256 = await sha256File(args.contractManifestPath);
+  if (contractSha256 !== args.expectedContractSha256) {
+    throw new Error(`Official contract manifest hash mismatch: expected ${args.expectedContractSha256}, observed ${contractSha256}`);
   }
 
   return { promptSha256, contractSha256 };
@@ -233,9 +245,9 @@ async function prepareInvocation({ args, freeze, generatedAt }) {
       manifest_version: "llm_judge_v2_full_208_judge_invocation_manifest_v1",
       evaluation_run_id: args.evaluationRunId,
       dataset_run_scope: args.datasetId,
-      official_contract_manifest_path: toRepoPath(OFFICIAL_CONTRACT_MANIFEST_PATH),
+      official_contract_manifest_path: toRepoPath(args.contractManifestPath),
       official_contract_manifest_sha256: freeze.contractSha256,
-      prompt_path: toRepoPath(PROMPT_PATH),
+      prompt_path: toRepoPath(args.promptPath),
       prompt_sha256: freeze.promptSha256,
       record_id: entry.record_id,
       dataset_id: entry.dataset_id,
@@ -261,6 +273,14 @@ async function prepareInvocation({ args, freeze, generatedAt }) {
       token_risk_bucket: entry.token_risk_bucket,
       context_token_count: entry.context_token_count,
       prompt_packet_token_count: entry.prompt_packet_token_count,
+      packet_layout: entry.packet_layout ?? "embedded_prompt_full_context",
+      static_prompt_path: entry.static_prompt_path ?? toRepoPath(args.promptPath),
+      static_prompt_sha256: entry.static_prompt_sha256 ?? freeze.promptSha256,
+      static_prompt_token_count: entry.static_prompt_token_count ?? null,
+      record_context_path: toRepoPath(invocationPromptPath),
+      record_context_sha256: invocationPromptSha256,
+      record_context_token_count: entry.record_context_token_count ?? entry.prompt_packet_token_count,
+      first_record_combined_token_count: entry.first_record_combined_token_count ?? entry.prompt_packet_token_count,
       full_context_token_cap: entry.full_context_token_cap,
       official_session_boundary: {
         codex_project_and_chat_session_must_be_new: true,
@@ -589,9 +609,9 @@ function summarize({ args, mode, generatedAt, invocationEntries, attempts, statu
     session_segment_id: args.sessionSegmentId,
     inputs: {
       prompt_queue_manifest_jsonl: toRepoPath(args.queueManifestPath),
-      prompt_path: toRepoPath(PROMPT_PATH),
+      prompt_path: toRepoPath(args.promptPath),
       prompt_sha256: freeze.promptSha256,
-      official_contract_manifest_path: toRepoPath(OFFICIAL_CONTRACT_MANIFEST_PATH),
+      official_contract_manifest_path: toRepoPath(args.contractManifestPath),
       official_contract_manifest_sha256: freeze.contractSha256,
       judge_response_schema_path: toRepoPath(JUDGE_RESPONSE_SCHEMA_PATH),
       attempt_wrapper_schema_path: toRepoPath(ATTEMPT_WRAPPER_SCHEMA_PATH),
@@ -742,7 +762,7 @@ async function main() {
   const args = parseArgs(process.argv.slice(2));
   const generatedAt = new Date().toISOString();
   await ensureOutputDirs(args);
-  const freeze = await verifyOfficialFreeze();
+const freeze = await verifyOfficialFreeze(args);
 
   let invocationEntries = [];
   let attempts = [];

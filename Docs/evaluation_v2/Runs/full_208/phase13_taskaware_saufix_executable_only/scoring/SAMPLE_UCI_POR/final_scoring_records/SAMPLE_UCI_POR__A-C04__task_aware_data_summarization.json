@@ -1,0 +1,101 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-C04__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Grounding and interpretation: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Values, directions, and comparisons: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Coverage of supplied requirements: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Fit to the stated task and audience: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "Usefulness and evidence basis: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Precision and organization: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Fair and non-stigmatizing treatment: The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The comparison of lifestyle dimensions between two students reveals notable differences in their go-out frequency, while other dimensions remain consistent. Student SAMPLE_UCI_POR_STU_000001 exhibits a higher go-out frequency, which may indicate a more active social lifestyle.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C04.json; dataset lifestyle_comparison"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target.",
+      "impact_type": "changes_interpretation"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_required_output",
+      "claim_ids": [],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 6,
+      "rationale": "The go-out-frequency gap is correct, but the supporting composite scores are omitted and the recommendation treats a contextual lifestyle difference as an intervention target.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C04.json; dataset lifestyle_comparison"
+      ],
+      "requirement_id": "A-C04-SUPPORT-01"
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "major",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 1,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 6.55,
+  "caps_applied": [
+    {
+      "type": "missing_required_output",
+      "severity": "major",
+      "cap": 6,
+      "error_id": "E01",
+      "claim_ids": [],
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C04.json; dataset lifestyle_comparison"
+      ]
+    }
+  ],
+  "effective_cap": 6,
+  "final_score_after_caps": 6,
+  "verdict": "acceptable",
+  "invalid_reason": null
+}

@@ -1,0 +1,136 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_OULAD",
+ "record_id": "SAMPLE_OULAD__A-S08__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Factual interpretation was judged against the packet evidence, with penalties for unsupported scope, causality, thresholds, or direction."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Numeric values, percentages, rankings, thresholds, and directions were checked against the delivered or retrieved evidence in this packet."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Coverage was scored against the supplied core and supporting requirements for this exact task."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "The score reflects whether the explanation answers the stated actionable question for the correct dataset, entity level, and audience."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Actionability reflects whether advice or interpretation is feasible and grounded in returned evidence or supported action provenance."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Clarity reflects organization, precision, concision, and whether the output is scannable for the target audience."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Safety/fairness is applicable under the packet contract; scoring penalizes overconfident, stigmatizing, causal, or unfair individual/group framing."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Summary: The student exhibits a high at-risk score despite achieving a distinction, indicating potential underlying issues.",
+ "claim_type": "task_answer",
+ "claim_scope": "core",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The packet supports part of the statement, but the explanation omits a required qualifier, exact field, or full task scope.",
+ "impact_type": "weakens_support"
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Key risk indicators include a declining performance trend and low engagement score, suggesting a need for immediate support.",
+ "claim_type": "numeric_or_status_evidence",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C03",
+ "claim_text": "Insights: Declining Performance Trend: The performance trend shows a significant decline of -0.71875, indicating that the student's academic performance is worsening over time.",
+ "claim_type": "interpretation_or_action",
+ "claim_scope": "supporting",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The packet supports part of the statement, but the explanation omits a required qualifier, exact field, or full task scope.",
+ "impact_type": "weakens_support"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "missing_action_provenance",
+ "claim_ids": [
+ "C03"
+ ],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "actionability"
+ ],
+ "cap_candidate": 6,
+ "rationale": "The explanation recommends actions but does not sufficiently expose the supported action rule provenance, owner, priority, or timing requested by the task.",
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 1,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 1,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 6.9,
+ "caps_applied": [
+ {
+ "type": "missing_action_provenance",
+ "severity": "major",
+ "cap": 6,
+ "error_id": "E01",
+ "claim_ids": [
+ "C03"
+ ],
+ "evidence_refs": [
+ "packet.direct_embedded_full_query_result.datasets",
+ "packet.full_run_deterministic_checks"
+ ]
+ }
+ ],
+ "effective_cap": 6,
+ "final_score_after_caps": 6,
+ "verdict": "acceptable",
+ "invalid_reason": null
+}

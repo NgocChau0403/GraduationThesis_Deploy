@@ -1,0 +1,262 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G04__task_aware_data_summarization",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G04",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Assessment difficulty analysis",
+    "scope": "Many students",
+    "actionable_question": "Which assessment is causing the most students to fail?",
+    "target_audience": "instructor",
+    "ai_summary_type": "ranking",
+    "ai_prompt_hint": "Flag assessments with pass_flag=False rate above threshold. Suggest curriculum review.",
+    "query_labels": [
+      "assessment_difficulty"
+    ],
+    "explanation_strategy": "distribution"
+  },
+  "schema_context": {
+    "source_tables": [
+      "assessment_result",
+      "assessment",
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "assessment_name",
+      "assessment_type",
+      "week_of_class",
+      "competency_tag",
+      "score_normalized",
+      "pass_flag"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "assessment_name",
+        "fail_rate_pct"
+      ],
+      "optional_columns": [
+        "assessment_id",
+        "assessment_order",
+        "assessment_type",
+        "week_of_class",
+        "competency_tag",
+        "competency_source",
+        "total_submissions",
+        "fail_count",
+        "avg_score"
+      ]
+    },
+    "query_labels": [
+      "assessment_difficulty"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis of assessment difficulty reveals significant variability in student performance across different assessments. Notably, the assessment '24288' exhibits the highest failure rate, indicating a critical area for intervention.\n\nInsights: High Failure Rate in Assessment 24288: The assessment '24288' has a fail rate of 50%, the highest among the cohort, with an average score of 45.04. This suggests that a substantial number of students are struggling with this assessment. | Moderate Failure Rates in Other Assessments: Assessments '24283' and '24289' also show notable failure rates of 29.2% and 28.6%, respectively, indicating that these areas may also require attention.\n\nEducational implications: The high failure rate in assessment '24288' suggests a need for curriculum review and targeted support for students.\n\nRecommendations: high - Conduct a curriculum review for assessment 24288. - Given the high failure rate, it is essential to identify potential gaps in content delivery or assessment design that may be contributing to student difficulties.",
+    "structured_payload": {
+      "task_id": "A-G04",
+      "execution_id": "exec_1781847724478_910d0c3f",
+      "explanation": {
+        "summary": "The analysis of assessment difficulty reveals significant variability in student performance across different assessments. Notably, the assessment '24288' exhibits the highest failure rate, indicating a critical area for intervention.",
+        "insights": [
+          {
+            "title": "High Failure Rate in Assessment 24288",
+            "description": "The assessment '24288' has a fail rate of 50%, the highest among the cohort, with an average score of 45.04. This suggests that a substantial number of students are struggling with this assessment.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "fail_rate_pct",
+                "value": 50,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Assessment 24288"
+              }
+            ]
+          },
+          {
+            "title": "Moderate Failure Rates in Other Assessments",
+            "description": "Assessments '24283' and '24289' also show notable failure rates of 29.2% and 28.6%, respectively, indicating that these areas may also require attention.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "fail_rate_pct",
+                "value": 29.2,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Assessment 24283"
+              },
+              {
+                "metric": "fail_rate_pct",
+                "value": 28.6,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Assessment 24289"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The high failure rate in assessment '24288' suggests a need for curriculum review and targeted support for students."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Conduct a curriculum review for assessment 24288.",
+            "rationale": "Given the high failure rate, it is essential to identify potential gaps in content delivery or assessment design that may be contributing to student difficulties."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The analysis is based on a comprehensive dataset with clear metrics on student performance.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "distribution",
+      "explanation_type": "distribution",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3-experimental",
+      "baseline_available": true,
+      "input_summary_type": "ranking",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 112,
+      "included_row_count": 15,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "assessment_difficulty",
+          "row_count": 112,
+          "included_row_count": 15
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 15,
+      "baseline_reference_tokens": 1529,
+      "task_aware_prompt_tokens": 2040,
+      "token_ratio": 1.3342,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [
+        "exceptions.tie_warnings",
+        "exceptions.flag_evidence",
+        "comparison.metric_stats",
+        "primary_finding.bottom_items"
+      ],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (1.3342 > 1.2)."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 6819,
+        "token_usage": {
+          "prompt_tokens": 3197,
+          "completion_tokens": 492,
+          "total_tokens": 3689
+        },
+        "strategy": "distribution",
+        "granularity": "per_assessment",
+        "cost_usd": 0.000775
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-G04__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "33d22218029739c0211cfc0d444d3ea80693191ce32d2336aba6ee6916f867fb",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 3197,
+        "completion_tokens": 492,
+        "total_tokens": 3689
+      },
+      "latency_ms": 6825,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 112,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "assessment_difficulty",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G04.json",
+        "artifact_sha256": "5e7ad0aed9bd168ad71c11d6586e0c16c11ff0bb584b6d7c9c58d50d72771fae",
+        "row_count": 112,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 112,
+    "retrieved_row_count_by_dataset": {
+      "assessment_difficulty": 112
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "assessment_difficulty",
+        "start": 0,
+        "end": 111
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_OULAD__A-G04__task_aware_data_summarization__assessment_difficulty__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G04__task_aware_data_summarization.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "assessment_difficulty": 112
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G04-CORE-01",
+        "description": "Flag assessments with pass_flag=False rate above threshold."
+      },
+      {
+        "requirement_id": "A-G04-CORE-02",
+        "description": "Suggest curriculum review."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G04-CONSTRAINT-01",
+        "description": "Frame a high fail rate as a signal for assessment or curriculum review, not as evidence of student deficiency."
+      },
+      {
+        "constraint_id": "A-G04-CONSTRAINT-02",
+        "description": "Avoid causal claims about student quality."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Retained as applicable because curriculum recommendations can affect learners; candidate for human review rather than automatic exclusion."
+  }
+}

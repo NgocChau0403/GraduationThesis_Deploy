@@ -1,0 +1,257 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__S-T02",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "S-T02",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__S-T02__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "d559b498d23f5fc96018460a9a7b32a76025dc78fd40a28d3ab4d90f9c80c4d7",
+ "deterministic_summary": {
+ "summary_type": "ranking",
+ "dataset_name": "competency_scores",
+ "row_count": 3,
+ "entity_column": "competency_tag",
+ "metric_column": "avg_score",
+ "sort_direction": "asc",
+ "top_items": [
+ {
+ "competency_tag": "G1",
+ "avg_score": 0,
+ "rank": 1,
+ "labels": {
+ "assessment_type": "quiz"
+ },
+ "secondary_metrics": {
+ "pass_rate": 0,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "G2",
+ "avg_score": 55,
+ "rank": 2,
+ "labels": {
+ "assessment_type": "quiz"
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "G3",
+ "avg_score": 55,
+ "rank": 3,
+ "labels": {
+ "assessment_type": "exam"
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ }
+ ],
+ "bottom_items": [
+ {
+ "competency_tag": "G1",
+ "avg_score": 0,
+ "rank": 1,
+ "labels": {
+ "assessment_type": "quiz"
+ },
+ "secondary_metrics": {
+ "pass_rate": 0,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "G2",
+ "avg_score": 55,
+ "rank": 2,
+ "labels": {
+ "assessment_type": "quiz"
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "G3",
+ "avg_score": 55,
+ "rank": 3,
+ "labels": {
+ "assessment_type": "exam"
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ }
+ ],
+ "median_item": {
+ "competency_tag": "G2",
+ "avg_score": 55,
+ "rank": 2,
+ "labels": {
+ "assessment_type": "quiz"
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ "metric_stats": {
+ "count": 3,
+ "min": 0,
+ "max": 55,
+ "mean": 36.6667,
+ "median": 55
+ },
+ "tie_warnings": [],
+ "flag_evidence": [],
+ "summarization_warnings": [
+ "Configured optional column 'competency_source' is missing from dataset."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "ranking",
+ "task_id": "S-T02",
+ "task_output_contract": [
+ "State the ranking/top entities, rank metric value, and why they are prioritized.",
+ "For risk/admin ranking rows, include returned flags or recommended action fields when present.",
+ "Do not generalize beyond returned rows or omit the top ranked examples."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "competency_scores",
+ "row_count": 3,
+ "entity_column": "competency_tag",
+ "metric_column": "avg_score",
+ "sort_direction": "asc"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "top_items": [
+ {
+ "competency_tag": "G1",
+ "avg_score": 0,
+ "rank": 1,
+ "labels": {
+ "assessment_type": "quiz"
+ },
+ "secondary_metrics": {
+ "pass_rate": 0,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "G2",
+ "avg_score": 55,
+ "rank": 2,
+ "labels": {
+ "assessment_type": "quiz"
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "G3",
+ "avg_score": 55,
+ "rank": 3,
+ "labels": {
+ "assessment_type": "exam"
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ }
+ ],
+ "median_item": {
+ "competency_tag": "G2",
+ "avg_score": 55,
+ "rank": 2,
+ "labels": {
+ "assessment_type": "quiz"
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ "bottom_items": [
+ {
+ "competency_tag": "G1",
+ "avg_score": 0,
+ "rank": 1,
+ "labels": {
+ "assessment_type": "quiz"
+ },
+ "secondary_metrics": {
+ "pass_rate": 0,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "G2",
+ "avg_score": 55,
+ "rank": 2,
+ "labels": {
+ "assessment_type": "quiz"
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ },
+ {
+ "competency_tag": "G3",
+ "avg_score": 55,
+ "rank": 3,
+ "labels": {
+ "assessment_type": "exam"
+ },
+ "secondary_metrics": {
+ "pass_rate": 1,
+ "assessment_count": 1
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_stats": {
+ "count": 3,
+ "min": 0,
+ "max": 55,
+ "mean": 36.6667,
+ "median": 55
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": [],
+ "tie_warnings": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "summarization_warnings": [
+ "Configured optional column 'competency_source' is missing from dataset."
+ ]
+ }
+ }
+ ]
+ }
+}

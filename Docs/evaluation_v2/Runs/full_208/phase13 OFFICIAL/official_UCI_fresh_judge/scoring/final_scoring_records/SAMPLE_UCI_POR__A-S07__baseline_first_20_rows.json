@@ -1,0 +1,122 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-S07__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10: material faithfulness limitations reduce the usefulness of the response. Some absent support dimensions are correctly identified, but current school support is omitted and sensitive contextual fields are overinterpreted."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on numerical_correctness, with the limitations summarized in the holistic rationale."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10 reflects The response omits that school_support_flag is true, a central part of what support is already in place."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on task_relevance, with the limitations summarized in the holistic rationale."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10: material actionability limitations reduce the usefulness of the response. Some absent support dimensions are correctly identified, but current school support is omitted and sensitive contextual fields are overinterpreted."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10 reflects It infers social integration and external problems from descriptive background values without evidence."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Family support and internet access are absent.",
+ "claim_type": "background_flags",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "background_context family_support_flag=false and internet_access_flag=false"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The flags are exact."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "A social-balance score of 0.03 proves social-integration problems, and four absences indicate disengagement or external challenges.",
+ "claim_type": "sensitive_interpretation",
+ "claim_scope": "supporting",
+ "support_status": "unsupported",
+ "evidence_refs": [
+ "background_context row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The descriptive context does not define those causal or deficit interpretations.",
+ "impact_type": "changes_interpretation"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "existing_support_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "task_relevance"
+ ],
+ "cap_candidate": null,
+ "rationale": "The response omits that school_support_flag is true, a central part of what support is already in place.",
+ "evidence_refs": [
+ "background_context school_support_flag"
+ ],
+ "requirement_id": "A-S07-CORE-01"
+ },
+ {
+ "error_id": "E02",
+ "error_type": "unsupported_sensitive_inference",
+ "claim_ids": [
+ "C02"
+ ],
+ "severity": "major",
+ "primary_metric": "safety_fairness",
+ "secondary_metrics": [
+ "faithfulness",
+ "actionability"
+ ],
+ "cap_candidate": null,
+ "rationale": "It infers social integration and external problems from descriptive background values without evidence.",
+ "evidence_refs": [
+ "background_context row"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 2,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 2,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 5.85,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 5.85,
+ "verdict": "acceptable",
+ "invalid_reason": null
+}

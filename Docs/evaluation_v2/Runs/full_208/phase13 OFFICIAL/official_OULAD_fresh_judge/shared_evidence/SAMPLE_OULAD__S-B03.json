@@ -1,0 +1,248 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__S-B03",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-B03",
+ "source_explanation_record_id": "SAMPLE_OULAD__S-B03__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "8c80aa17b41c7254647f5756448d2fb65394ee6b790dee418c297537fc3e7a97",
+ "deterministic_summary": {
+ "summary_type": "metric_snapshot",
+ "dataset_name": "engagement_summary",
+ "row_count": 1,
+ "entity": null,
+ "metric_snapshot": {
+ "total_engagement_count": {
+ "value": 1261,
+ "unit": "count",
+ "available": true
+ },
+ "active_days": {
+ "value": 98,
+ "unit": "day_count",
+ "available": true
+ },
+ "engagement_score": {
+ "value": 0.2024,
+ "unit": "ratio_0_1",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "study_effort_level": "medium"
+ },
+ "threshold_evidence": {},
+ "benchmark_evidence": {
+ "class_avg_total_engagement_count": {
+ "value": 1118.08,
+ "unit": "count",
+ "source": "class_cohort"
+ },
+ "class_avg_active_days": {
+ "value": 52.55,
+ "unit": "day_count",
+ "source": "class_cohort"
+ },
+ "class_avg_engagement_score": {
+ "value": 0.1177,
+ "unit": "ratio_0_1",
+ "source": "class_cohort"
+ }
+ },
+ "label_evidence": {},
+ "flag_evidence": {},
+ "action_evidence": {},
+ "missing_evidence": [],
+ "sensitive_context_present": false,
+ "sensitive_context": {},
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "total_engagement_count",
+ "active_days",
+ "engagement_score"
+ ],
+ "configured_status_columns": [
+ "study_effort_level"
+ ],
+ "configured_threshold_columns": [],
+ "configured_benchmark_columns": [
+ "class_avg_total_engagement_count",
+ "class_avg_active_days",
+ "class_avg_engagement_score"
+ ],
+ "configured_sensitive_columns": [],
+ "metric_availability_columns": {},
+ "metric_units": {
+ "total_engagement_count": "count",
+ "active_days": "day_count",
+ "engagement_score": "ratio_0_1",
+ "class_avg_total_engagement_count": "count",
+ "class_avg_active_days": "day_count",
+ "class_avg_engagement_score": "ratio_0_1"
+ },
+ "threshold_sources": {},
+ "benchmark_sources": {
+ "class_avg_total_engagement_count": "class_cohort",
+ "class_avg_active_days": "class_cohort",
+ "class_avg_engagement_score": "class_cohort"
+ },
+ "sensitive_context_policy": null,
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "evidence_status": "sufficient",
+ "causal_claim_allowed": false,
+ "summarization_warnings": [],
+ "engagement_overview_evidence": {
+ "snapshot": {
+ "total_engagement_count": 1261,
+ "total_clicks": 1261,
+ "active_days": 98,
+ "engagement_score": 0.2024,
+ "class_avg_total_engagement_count": 1118.08,
+ "class_avg_active_days": 52.55,
+ "class_avg_engagement_score": 0.1177,
+ "study_effort_level": "medium"
+ },
+ "policy": "activity_metrics_descriptive_only_no_learning_outcome_inference"
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "metric_snapshot",
+ "task_id": "S-B03",
+ "task_output_contract": [
+ "State exact clicks, active days, engagement score, all class averages, and study_effort_level.",
+ "Treat activity metrics as descriptive; do not infer engagement quality, understanding, or learning outcomes."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "engagement_summary",
+ "row_count": 1,
+ "entity": null,
+ "evidence_status": "sufficient"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "metric_snapshot": {
+ "total_engagement_count": {
+ "value": 1261,
+ "unit": "count",
+ "available": true
+ },
+ "active_days": {
+ "value": 98,
+ "unit": "day_count",
+ "available": true
+ },
+ "engagement_score": {
+ "value": 0.2024,
+ "unit": "ratio_0_1",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "study_effort_level": "medium"
+ },
+ "label_evidence": {},
+ "engagement_overview_evidence": {
+ "snapshot": {
+ "total_engagement_count": 1261,
+ "total_clicks": 1261,
+ "active_days": 98,
+ "engagement_score": 0.2024,
+ "class_avg_total_engagement_count": 1118.08,
+ "class_avg_active_days": 52.55,
+ "class_avg_engagement_score": 0.1177,
+ "study_effort_level": "medium"
+ },
+ "policy": "activity_metrics_descriptive_only_no_learning_outcome_inference"
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "threshold_evidence": {},
+ "benchmark_evidence": {
+ "class_avg_total_engagement_count": {
+ "value": 1118.08,
+ "unit": "count",
+ "source": "class_cohort"
+ },
+ "class_avg_active_days": {
+ "value": 52.55,
+ "unit": "day_count",
+ "source": "class_cohort"
+ },
+ "class_avg_engagement_score": {
+ "value": 0.1177,
+ "unit": "ratio_0_1",
+ "source": "class_cohort"
+ }
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": {},
+ "sensitive_context_present": false
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_evidence": [],
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "total_engagement_count",
+ "active_days",
+ "engagement_score"
+ ],
+ "configured_status_columns": [
+ "study_effort_level"
+ ],
+ "configured_threshold_columns": [],
+ "configured_benchmark_columns": [
+ "class_avg_total_engagement_count",
+ "class_avg_active_days",
+ "class_avg_engagement_score"
+ ],
+ "configured_sensitive_columns": [],
+ "metric_availability_columns": {},
+ "metric_units": {
+ "total_engagement_count": "count",
+ "active_days": "day_count",
+ "engagement_score": "ratio_0_1",
+ "class_avg_total_engagement_count": "count",
+ "class_avg_active_days": "day_count",
+ "class_avg_engagement_score": "ratio_0_1"
+ },
+ "threshold_sources": {},
+ "benchmark_sources": {
+ "class_avg_total_engagement_count": "class_cohort",
+ "class_avg_active_days": "class_cohort",
+ "class_avg_engagement_score": "class_cohort"
+ },
+ "sensitive_context_policy": null,
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

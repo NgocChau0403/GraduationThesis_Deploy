@@ -1,0 +1,267 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__S-T04",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "S-T04",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__S-T04__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "59a662902799015b5696c606a840556512fde2da189e5685ec4b18d1e9e39f61",
+ "deterministic_summary": {
+ "summary_type": "risk_flags",
+ "dataset_name": "risk_flags",
+ "row_count": 5,
+ "total_flags": 5,
+ "triggered_count": 1,
+ "non_triggered_count": 4,
+ "unknown_triggered_count": 0,
+ "severity_available": true,
+ "severity_counts": {
+ "info": 4,
+ "medium": 1
+ },
+ "triggered_flags": [
+ {
+ "flag_name": "flag_low_engagement",
+ "triggered": true,
+ "severity": "medium",
+ "flag_description": "Engagement score is below the low-engagement threshold.",
+ "recommended_action": "Set a weekly study routine and interact with course resources before assessment deadlines.",
+ "support_category": "engagement"
+ }
+ ],
+ "non_triggered_flags": [
+ {
+ "flag_name": "flag_low_score",
+ "triggered": false,
+ "severity": "info",
+ "flag_description": "Average score is below the pass threshold for this dataset scale.",
+ "recommended_action": "Review the weakest assessment topics and schedule tutor support before the next assessment.",
+ "support_category": "academic_performance"
+ },
+ {
+ "flag_name": "flag_repeated",
+ "triggered": false,
+ "severity": "info",
+ "flag_description": "This student has previous attempts, which can indicate accumulated difficulty or re-enrolment risk.",
+ "recommended_action": "Check prior attempt context and confirm whether the student needs a catch-up plan.",
+ "support_category": "academic_history"
+ },
+ {
+ "flag_name": "flag_low_punctuality",
+ "triggered": false,
+ "severity": "info",
+ "flag_description": "Submission punctuality is below the expected threshold.",
+ "recommended_action": "Use deadline reminders and submit drafts earlier to reduce late-submission risk.",
+ "support_category": "time_management"
+ },
+ {
+ "flag_name": "flag_neg_trend",
+ "triggered": false,
+ "severity": "info",
+ "flag_description": "Scores are maintaining an upward or stable trend across assessments.",
+ "recommended_action": "Compare recent feedback with earlier stronger work and intervene before the next assessment.",
+ "support_category": "trend_monitoring"
+ }
+ ],
+ "highest_severity_triggered": "medium",
+ "threshold_evidence": [
+ {
+ "flag_name": "flag_low_engagement",
+ "flag_value": 0,
+ "flag_value_raw": 0,
+ "threshold": 0.15,
+ "threshold_raw": 0.15,
+ "triggered": true,
+ "triggered_raw": true
+ },
+ {
+ "flag_name": "flag_low_score",
+ "flag_value": 41.25,
+ "flag_value_raw": 41.25,
+ "threshold": 40,
+ "threshold_raw": 40,
+ "triggered": false,
+ "triggered_raw": false
+ },
+ {
+ "flag_name": "flag_repeated",
+ "flag_value": 0,
+ "flag_value_raw": 0,
+ "threshold": 0,
+ "threshold_raw": 0,
+ "triggered": false,
+ "triggered_raw": false
+ },
+ {
+ "flag_name": "flag_low_punctuality",
+ "flag_value": 1,
+ "flag_value_raw": 1,
+ "threshold": 0.7,
+ "threshold_raw": 0.7,
+ "triggered": false,
+ "triggered_raw": false
+ },
+ {
+ "flag_name": "flag_neg_trend",
+ "flag_value": 27.5,
+ "flag_value_raw": 27.5,
+ "threshold": 0,
+ "threshold_raw": 0,
+ "triggered": false,
+ "triggered_raw": false
+ }
+ ],
+ "recommended_actions": [
+ {
+ "flag_name": "flag_low_engagement",
+ "recommended_action": "Set a weekly study routine and interact with course resources before assessment deadlines."
+ }
+ ],
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "risk_flags",
+ "task_id": "S-T04",
+ "task_output_contract": [
+ "Use checklist style: triggered flags first, then non-triggered flags briefly.",
+ "For triggered flags, state flag_value versus threshold plus severity, description, support category, and existing recommended_action when supplied.",
+ "Do not invent new risk flags or new recommendations outside returned flag evidence."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "risk_flags",
+ "row_count": 5,
+ "total_flags": 5,
+ "triggered_count": 1,
+ "non_triggered_count": 4,
+ "unknown_triggered_count": 0,
+ "severity_available": true
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "highest_severity_triggered": "medium",
+ "triggered_flags": [
+ {
+ "flag_name": "flag_low_engagement",
+ "triggered": true,
+ "severity": "medium",
+ "flag_description": "Engagement score is below the low-engagement threshold.",
+ "recommended_action": "Set a weekly study routine and interact with course resources before assessment deadlines.",
+ "support_category": "engagement"
+ }
+ ],
+ "non_triggered_flags": [
+ {
+ "flag_name": "flag_low_score",
+ "triggered": false,
+ "severity": "info",
+ "flag_description": "Average score is below the pass threshold for this dataset scale.",
+ "recommended_action": "Review the weakest assessment topics and schedule tutor support before the next assessment.",
+ "support_category": "academic_performance"
+ },
+ {
+ "flag_name": "flag_repeated",
+ "triggered": false,
+ "severity": "info",
+ "flag_description": "This student has previous attempts, which can indicate accumulated difficulty or re-enrolment risk.",
+ "recommended_action": "Check prior attempt context and confirm whether the student needs a catch-up plan.",
+ "support_category": "academic_history"
+ },
+ {
+ "flag_name": "flag_low_punctuality",
+ "triggered": false,
+ "severity": "info",
+ "flag_description": "Submission punctuality is below the expected threshold.",
+ "recommended_action": "Use deadline reminders and submit drafts earlier to reduce late-submission risk.",
+ "support_category": "time_management"
+ },
+ {
+ "flag_name": "flag_neg_trend",
+ "triggered": false,
+ "severity": "info",
+ "flag_description": "Scores are maintaining an upward or stable trend across assessments.",
+ "recommended_action": "Compare recent feedback with earlier stronger work and intervene before the next assessment.",
+ "support_category": "trend_monitoring"
+ }
+ ]
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "threshold_evidence": [
+ {
+ "flag_name": "flag_low_engagement",
+ "flag_value": 0,
+ "flag_value_raw": 0,
+ "threshold": 0.15,
+ "threshold_raw": 0.15,
+ "triggered": true,
+ "triggered_raw": true
+ },
+ {
+ "flag_name": "flag_low_score",
+ "flag_value": 41.25,
+ "flag_value_raw": 41.25,
+ "threshold": 40,
+ "threshold_raw": 40,
+ "triggered": false,
+ "triggered_raw": false
+ },
+ {
+ "flag_name": "flag_repeated",
+ "flag_value": 0,
+ "flag_value_raw": 0,
+ "threshold": 0,
+ "threshold_raw": 0,
+ "triggered": false,
+ "triggered_raw": false
+ },
+ {
+ "flag_name": "flag_low_punctuality",
+ "flag_value": 1,
+ "flag_value_raw": 1,
+ "threshold": 0.7,
+ "threshold_raw": 0.7,
+ "triggered": false,
+ "triggered_raw": false
+ },
+ {
+ "flag_name": "flag_neg_trend",
+ "flag_value": 27.5,
+ "flag_value_raw": 27.5,
+ "threshold": 0,
+ "threshold_raw": 0,
+ "triggered": false,
+ "triggered_raw": false
+ }
+ ],
+ "severity_counts": {
+ "info": 4,
+ "medium": 1
+ }
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "recommended_actions": [
+ {
+ "flag_name": "flag_low_engagement",
+ "recommended_action": "Set a weekly study routine and interact with course resources before assessment deadlines."
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

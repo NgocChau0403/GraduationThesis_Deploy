@@ -1,0 +1,372 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-21T02:26:12.618Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-C05__task_aware_data_summarization",
+    "case_id": "SAMPLE_UCI_POR__A-C05",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-C05",
+    "task_name": "Compare academic background",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-C05.json",
+    "full_query_artifact_sha256": "255d44b8db1c6f7c9f3050f88ca33b6dbf8e435493d83a871ffaf61513400e7c"
+  },
+  "request_payload": {
+    "task_id": "A-C05",
+    "execution_id": "exec_1781847232057_25cc847c",
+    "task_name": "Compare academic background",
+    "analysis_type": "comparison",
+    "explanation_strategy": "comparison",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Identify background-driven performance differences. Avoid causal claims.",
+    "actionable_question": "Does one student face more structural disadvantage than the other?",
+    "target_audience": [
+      "academic_advisor"
+    ],
+    "visualization_config": {
+      "x_field": "student_id",
+      "y_field": "disadvantage_score",
+      "series_field": null,
+      "color_field": "disadvantage_score",
+      "orientation": null,
+      "variant": "default",
+      "x_label": "Student",
+      "y_label": "Disadvantage Score",
+      "semantic_roles": {
+        "x": "student",
+        "y": "risk_metric",
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "comparison"
+    },
+    "datasets": {
+      "background_comparison": [
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000001",
+          "highest_education": "Parent education 4/4",
+          "previous_attempt_count": 0,
+          "imd_score_numeric": null,
+          "socioeconomic_band": null,
+          "disability_flag": null,
+          "disadvantage_score": 0.2,
+          "support_score": 0.25,
+          "family_stability_score": 0.575,
+          "mother_education_level": "4",
+          "father_education_level": "4"
+        },
+        {
+          "student_id": "SAMPLE_UCI_POR_STU_000002",
+          "highest_education": "Parent education 1/4",
+          "previous_attempt_count": 0,
+          "imd_score_numeric": null,
+          "socioeconomic_band": null,
+          "disability_flag": null,
+          "disadvantage_score": 0.4,
+          "support_score": 0.5,
+          "family_stability_score": 0.8500000000000001,
+          "mother_education_level": "1",
+          "father_education_level": "1"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "background_comparison"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [
+        "previous_attempt_count",
+        "imd_score_numeric",
+        "disadvantage_score",
+        "support_score",
+        "family_stability_score"
+      ],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {
+        "previous_attempt_count": "context_only",
+        "imd_score_numeric": "context_only",
+        "disadvantage_score": "higher_is_disadvantage",
+        "support_score": "higher_is_support",
+        "family_stability_score": "context_only"
+      },
+      "metric_units": {
+        "previous_attempt_count": "count",
+        "imd_score_numeric": "dataset_index",
+        "disadvantage_score": "ratio_or_dataset_score",
+        "support_score": "ratio_or_dataset_score",
+        "family_stability_score": "ratio_or_dataset_score"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": true,
+      "require_metric_units": true,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": true,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [
+        "highest_education",
+        "socioeconomic_band",
+        "disability_flag"
+      ],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "multi_metric_comparison",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": "student_id",
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": "descriptive_non_causal_no_action",
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 8595,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 2374,
+      "completion_tokens": 615,
+      "total_tokens": 2989
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-C05",
+    "execution_id": "exec_1781847232057_25cc847c",
+    "explanation": {
+      "summary": "The comparison of two students reveals significant differences in their structural disadvantages and support systems. Student SAMPLE_UCI_POR_STU_000002 exhibits higher disadvantage and support scores, indicating a more challenging background compared to SAMPLE_UCI_POR_STU_000001.",
+      "insights": [
+        {
+          "title": "Disadvantage Score Comparison",
+          "description": "SAMPLE_UCI_POR_STU_000002 has a higher disadvantage score than SAMPLE_UCI_POR_STU_000001, indicating a greater structural disadvantage.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "disadvantage_score",
+              "value": 0.4,
+              "comparison": "baseline",
+              "delta": 0.2,
+              "context": "SAMPLE_UCI_POR_STU_000002 is at a disadvantage compared to SAMPLE_UCI_POR_STU_000001"
+            }
+          ]
+        },
+        {
+          "title": "Support Score Comparison",
+          "description": "SAMPLE_UCI_POR_STU_000002 also has a higher support score, suggesting that despite facing more disadvantages, there may be more support available.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "support_score",
+              "value": 0.5,
+              "comparison": "baseline",
+              "delta": 0.25,
+              "context": "SAMPLE_UCI_POR_STU_000002 has more support compared to SAMPLE_UCI_POR_STU_000001"
+            }
+          ]
+        },
+        {
+          "title": "Family Stability Score Comparison",
+          "description": "SAMPLE_UCI_POR_STU_000002 has a higher family stability score, which may contribute positively to their overall support despite the higher disadvantage score.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "family_stability_score",
+              "value": 0.85,
+              "comparison": "baseline",
+              "delta": 0.275,
+              "context": "SAMPLE_UCI_POR_STU_000002 has better family stability compared to SAMPLE_UCI_POR_STU_000001"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Students with higher disadvantage scores may require additional resources and support to succeed academically."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement targeted support programs for students with higher disadvantage scores.",
+          "rationale": "To address the structural disadvantages faced by students like SAMPLE_UCI_POR_STU_000002."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data quality is sufficient for comparison, with clear metrics available for analysis.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "comparison",
+    "explanation_type": "comparison",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3.1-experimental",
+    "baseline_available": true,
+    "input_summary_type": "multi_metric_comparison",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 2,
+    "included_row_count": 2,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "background_comparison",
+        "row_count": 2,
+        "included_row_count": 2
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 2,
+    "baseline_reference_tokens": 211,
+    "task_aware_prompt_tokens": 1777,
+    "token_ratio": 8.4218,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "comparison",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [],
+    "task_output_contract": [
+      "Compare the returned entities directly, naming which entity is higher/lower for each key metric.",
+      "Use pairwise_gaps and selected_entity_evidence for direction; do not reverse numeric direction.",
+      "If expected metric/entity evidence is missing, state the limitation rather than guessing."
+    ],
+    "must_keep_keys": [
+      "comparison_matrix",
+      "dataset_name",
+      "entities",
+      "entity_column",
+      "metric_extrema",
+      "metrics",
+      "missing_entity_evidence",
+      "missing_expected_entities",
+      "missing_metric_evidence",
+      "pairwise_direction_evidence",
+      "pairwise_gaps",
+      "row_count",
+      "selected_entity_evidence",
+      "summarization_warnings",
+      "validation_metadata"
+    ],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (8.4218 > 1.2).",
+      "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 8590,
+      "token_usage": {
+        "prompt_tokens": 2374,
+        "completion_tokens": 615,
+        "total_tokens": 2989
+      },
+      "strategy": "comparison",
+      "granularity": "semester",
+      "cost_usd": 0.000725
+    }
+  },
+  "raw_text": "Summary: The comparison of two students reveals significant differences in their structural disadvantages and support systems. Student SAMPLE_UCI_POR_STU_000002 exhibits higher disadvantage and support scores, indicating a more challenging background compared to SAMPLE_UCI_POR_STU_000001.\n\nInsights: Disadvantage Score Comparison: SAMPLE_UCI_POR_STU_000002 has a higher disadvantage score than SAMPLE_UCI_POR_STU_000001, indicating a greater structural disadvantage. | Support Score Comparison: SAMPLE_UCI_POR_STU_000002 also has a higher support score, suggesting that despite facing more disadvantages, there may be more support available. | Family Stability Score Comparison: SAMPLE_UCI_POR_STU_000002 has a higher family stability score, which may contribute positively to their overall support despite the higher disadvantage score.\n\nEducational implications: Students with higher disadvantage scores may require additional resources and support to succeed academically.\n\nRecommendations: high - Implement targeted support programs for students with higher disadvantage scores. - To address the structural disadvantages faced by students like SAMPLE_UCI_POR_STU_000002."
+}

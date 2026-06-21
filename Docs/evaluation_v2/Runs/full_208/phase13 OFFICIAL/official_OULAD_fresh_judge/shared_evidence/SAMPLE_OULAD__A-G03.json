@@ -1,0 +1,1805 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G03",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G03",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G03__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "4bd06103e15de9996b377b45fdf9ae585fd101d9c4afa7a01cb14834da2998d8",
+ "deterministic_summary": {
+ "summary_type": "ranking",
+ "dataset_name": "at_risk_cohort",
+ "row_count": 50,
+ "entity_column": "student_id",
+ "metric_column": "at_risk_score",
+ "sort_direction": "desc",
+ "top_items": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_624354",
+ "at_risk_score": 5,
+ "rank": 1,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 21.81 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.047 < 0.15",
+ "low_punctuality: punctuality_rate 0.167 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 21.81 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.047 < 0.15; low_punctuality: punctuality_rate 0.167 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 21.81,
+ "engagement_score": 0.0467,
+ "punctuality_rate": 0.1667,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_548926",
+ "at_risk_score": 5,
+ "rank": 2,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 26.53 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.018 < 0.15",
+ "low_punctuality: punctuality_rate 0.500 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 26.53 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.018 < 0.15; low_punctuality: punctuality_rate 0.500 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 26.53,
+ "engagement_score": 0.0179,
+ "punctuality_rate": 0.5,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_532565",
+ "at_risk_score": 5,
+ "rank": 3,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 30.73 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.098 < 0.15",
+ "low_punctuality: punctuality_rate 0.333 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 30.73 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.098 < 0.15; low_punctuality: punctuality_rate 0.333 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 30.73,
+ "engagement_score": 0.0984,
+ "punctuality_rate": 0.3333,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_586526",
+ "at_risk_score": 5,
+ "rank": 4,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 31 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.065 < 0.15",
+ "low_punctuality: punctuality_rate 0.333 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 31 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.065 < 0.15; low_punctuality: punctuality_rate 0.333 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 31,
+ "engagement_score": 0.0653,
+ "punctuality_rate": 0.3333,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_165733",
+ "at_risk_score": 5,
+ "rank": 5,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 32.67 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.073 < 0.15",
+ "low_punctuality: punctuality_rate 0.250 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 32.67 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.073 < 0.15; low_punctuality: punctuality_rate 0.250 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 32.67,
+ "engagement_score": 0.0731,
+ "punctuality_rate": 0.25,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_630200",
+ "at_risk_score": 5,
+ "rank": 6,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 33.35 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.034 < 0.15",
+ "low_punctuality: punctuality_rate 0.571 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 33.35 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.034 < 0.15; low_punctuality: punctuality_rate 0.571 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 33.35,
+ "engagement_score": 0.0339,
+ "punctuality_rate": 0.5714,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_171896",
+ "at_risk_score": 5,
+ "rank": 7,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 33.67 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.086 < 0.15",
+ "low_punctuality: punctuality_rate 0.000 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 33.67 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.086 < 0.15; low_punctuality: punctuality_rate 0.000 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 33.67,
+ "engagement_score": 0.0859,
+ "punctuality_rate": 0,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_515734",
+ "at_risk_score": 5,
+ "rank": 8,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 34.6 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.138 < 0.15",
+ "low_punctuality: punctuality_rate 0.500 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 34.6 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.138 < 0.15; low_punctuality: punctuality_rate 0.500 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 34.6,
+ "engagement_score": 0.1376,
+ "punctuality_rate": 0.5,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_465619",
+ "at_risk_score": 5,
+ "rank": 9,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 35.27 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.040 < 0.15",
+ "low_punctuality: punctuality_rate 0.000 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 35.27 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.040 < 0.15; low_punctuality: punctuality_rate 0.000 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 35.27,
+ "engagement_score": 0.0396,
+ "punctuality_rate": 0,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_416860",
+ "at_risk_score": 5,
+ "rank": 10,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 35.9 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.138 < 0.15",
+ "low_punctuality: punctuality_rate 0.200 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 35.9 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.138 < 0.15; low_punctuality: punctuality_rate 0.200 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 35.9,
+ "engagement_score": 0.1375,
+ "punctuality_rate": 0.2,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ }
+ ],
+ "bottom_items": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_546139",
+ "at_risk_score": 4,
+ "rank": 46,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 27.5 < pass_threshold 40",
+ "low_engagement: engagement_score 0.046 < 0.15",
+ "low_punctuality: punctuality_rate 0.000 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 27.5 < pass_threshold 40; low_engagement: engagement_score 0.046 < 0.15; low_punctuality: punctuality_rate 0.000 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 27.5,
+ "engagement_score": 0.0461,
+ "punctuality_rate": 0,
+ "previous_attempt_count": 0
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_634721",
+ "at_risk_score": 4,
+ "rank": 47,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 27.82 < pass_threshold 40",
+ "low_engagement: engagement_score 0.123 < 0.15",
+ "low_punctuality: punctuality_rate 0.000 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 27.82 < pass_threshold 40; low_engagement: engagement_score 0.123 < 0.15; low_punctuality: punctuality_rate 0.000 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 27.82,
+ "engagement_score": 0.1225,
+ "punctuality_rate": 0,
+ "previous_attempt_count": 0
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_145490",
+ "at_risk_score": 4,
+ "rank": 48,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 27.87 < pass_threshold 40",
+ "low_engagement: engagement_score 0.129 < 0.15",
+ "low_punctuality: punctuality_rate 0.000 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 27.87 < pass_threshold 40; low_engagement: engagement_score 0.129 < 0.15; low_punctuality: punctuality_rate 0.000 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 27.87,
+ "engagement_score": 0.1293,
+ "punctuality_rate": 0,
+ "previous_attempt_count": 0
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_145114",
+ "at_risk_score": 4,
+ "rank": 49,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 28.18 < pass_threshold 40",
+ "low_engagement: engagement_score 0.094 < 0.15",
+ "low_punctuality: punctuality_rate 0.000 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 28.18 < pass_threshold 40; low_engagement: engagement_score 0.094 < 0.15; low_punctuality: punctuality_rate 0.000 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 28.18,
+ "engagement_score": 0.094,
+ "punctuality_rate": 0,
+ "previous_attempt_count": 0
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_633334",
+ "at_risk_score": 4,
+ "rank": 50,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 28.58 < pass_threshold 40",
+ "low_engagement: engagement_score 0.032 < 0.15",
+ "low_punctuality: punctuality_rate 0.500 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 28.58 < pass_threshold 40; low_engagement: engagement_score 0.032 < 0.15; low_punctuality: punctuality_rate 0.500 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 28.58,
+ "engagement_score": 0.032,
+ "punctuality_rate": 0.5,
+ "previous_attempt_count": 0
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ }
+ ],
+ "median_item": {
+ "student_id": "SAMPLE_OULAD_STU_649607",
+ "at_risk_score": 4,
+ "rank": 26,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 20.2 < pass_threshold 40",
+ "low_engagement: engagement_score 0.029 < 0.15",
+ "low_punctuality: punctuality_rate 0.000 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 20.2 < pass_threshold 40; low_engagement: engagement_score 0.029 < 0.15; low_punctuality: punctuality_rate 0.000 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 20.2,
+ "engagement_score": 0.0286,
+ "punctuality_rate": 0,
+ "previous_attempt_count": 0
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ "metric_stats": {
+ "count": 50,
+ "min": 4,
+ "max": 5,
+ "mean": 4.26,
+ "median": 4
+ },
+ "tie_warnings": [
+ "top_items boundary has 13 tied items at at_risk_score=5.0; only 10 are included.",
+ "bottom_items boundary has 37 tied items at at_risk_score=4.0; only 5 are included."
+ ],
+ "flag_evidence": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_624354",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_548926",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_532565",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_586526",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_165733",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_630200",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_171896",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_515734",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_465619",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_416860",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_546139",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_634721",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_145490",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_145114",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_633334",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ }
+ ],
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "ranking",
+ "task_id": "A-G03",
+ "task_output_contract": [
+ "State the ranking/top entities, rank metric value, and why they are prioritized.",
+ "For risk/admin ranking rows, include returned flags or recommended action fields when present.",
+ "Do not generalize beyond returned rows or omit the top ranked examples."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "at_risk_cohort",
+ "row_count": 50,
+ "entity_column": "student_id",
+ "metric_column": "at_risk_score",
+ "sort_direction": "desc"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "top_items": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_624354",
+ "at_risk_score": 5,
+ "rank": 1,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 21.81 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.047 < 0.15",
+ "low_punctuality: punctuality_rate 0.167 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 21.81 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.047 < 0.15; low_punctuality: punctuality_rate 0.167 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 21.81,
+ "engagement_score": 0.0467,
+ "punctuality_rate": 0.1667,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_548926",
+ "at_risk_score": 5,
+ "rank": 2,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 26.53 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.018 < 0.15",
+ "low_punctuality: punctuality_rate 0.500 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 26.53 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.018 < 0.15; low_punctuality: punctuality_rate 0.500 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 26.53,
+ "engagement_score": 0.0179,
+ "punctuality_rate": 0.5,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_532565",
+ "at_risk_score": 5,
+ "rank": 3,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 30.73 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.098 < 0.15",
+ "low_punctuality: punctuality_rate 0.333 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 30.73 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.098 < 0.15; low_punctuality: punctuality_rate 0.333 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 30.73,
+ "engagement_score": 0.0984,
+ "punctuality_rate": 0.3333,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_586526",
+ "at_risk_score": 5,
+ "rank": 4,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 31 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.065 < 0.15",
+ "low_punctuality: punctuality_rate 0.333 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 31 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.065 < 0.15; low_punctuality: punctuality_rate 0.333 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 31,
+ "engagement_score": 0.0653,
+ "punctuality_rate": 0.3333,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_165733",
+ "at_risk_score": 5,
+ "rank": 5,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 32.67 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.073 < 0.15",
+ "low_punctuality: punctuality_rate 0.250 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 32.67 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.073 < 0.15; low_punctuality: punctuality_rate 0.250 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 32.67,
+ "engagement_score": 0.0731,
+ "punctuality_rate": 0.25,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_630200",
+ "at_risk_score": 5,
+ "rank": 6,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 33.35 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.034 < 0.15",
+ "low_punctuality: punctuality_rate 0.571 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 33.35 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.034 < 0.15; low_punctuality: punctuality_rate 0.571 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 33.35,
+ "engagement_score": 0.0339,
+ "punctuality_rate": 0.5714,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_171896",
+ "at_risk_score": 5,
+ "rank": 7,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 33.67 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.086 < 0.15",
+ "low_punctuality: punctuality_rate 0.000 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 33.67 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.086 < 0.15; low_punctuality: punctuality_rate 0.000 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 33.67,
+ "engagement_score": 0.0859,
+ "punctuality_rate": 0,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_515734",
+ "at_risk_score": 5,
+ "rank": 8,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 34.6 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.138 < 0.15",
+ "low_punctuality: punctuality_rate 0.500 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 34.6 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.138 < 0.15; low_punctuality: punctuality_rate 0.500 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Fail"
+ },
+ "secondary_metrics": {
+ "avg_score": 34.6,
+ "engagement_score": 0.1376,
+ "punctuality_rate": 0.5,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_465619",
+ "at_risk_score": 5,
+ "rank": 9,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 35.27 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.040 < 0.15",
+ "low_punctuality: punctuality_rate 0.000 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 35.27 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.040 < 0.15; low_punctuality: punctuality_rate 0.000 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 35.27,
+ "engagement_score": 0.0396,
+ "punctuality_rate": 0,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_416860",
+ "at_risk_score": 5,
+ "rank": 10,
+ "labels": {
+ "at_risk_label": "high",
+ "triggered_flags": [
+ "low_score: avg_score 35.9 < pass_threshold 40",
+ "repeated_attempt: previous_attempt_count 1",
+ "low_engagement: engagement_score 0.138 < 0.15",
+ "low_punctuality: punctuality_rate 0.200 < 0.7",
+ "negative_trend: performance trend is declining"
+ ],
+ "triggered_flags_summary": "low_score: avg_score 35.9 < pass_threshold 40; repeated_attempt: previous_attempt_count 1; low_engagement: engagement_score 0.138 < 0.15; low_punctuality: punctuality_rate 0.200 < 0.7; negative_trend: performance trend is declining",
+ "primary_support_category": "academic_performance",
+ "recommended_admin_action": "Prioritise academic support for low average score.",
+ "final_outcome": "Withdrawn"
+ },
+ "secondary_metrics": {
+ "avg_score": 35.9,
+ "engagement_score": 0.1375,
+ "punctuality_rate": 0.2,
+ "previous_attempt_count": 1
+ },
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_stats": {
+ "count": 50,
+ "min": 4,
+ "max": 5,
+ "mean": 4.26,
+ "median": 4
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flag_evidence": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_624354",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_548926",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_532565",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_586526",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_165733",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_630200",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_171896",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_515734",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_465619",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_416860",
+ "true_flags": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": true,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_546139",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_634721",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_145490",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_145114",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_633334",
+ "true_flags": [
+ "flag_low_score",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "flags": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": true,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

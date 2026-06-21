@@ -1,0 +1,120 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-C04__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material faithfulness limitations reduce the usefulness of the response. The largest dimension gap is correctly found, but the response omits requested composite context and turns a descriptive sensitive attribute into an unsupported prescription."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on numerical_correctness, with the limitations summarized in the holistic rationale."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10 reflects Composite lifestyle-risk and social-balance values are not used as requested supporting context."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on task_relevance, with the limitations summarized in the holistic rationale."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10: material actionability limitations reduce the usefulness of the response. The largest dimension gap is correctly found, but the response omits requested composite context and turns a descriptive sensitive attribute into an unsupported prescription."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10 reflects The recommendation prescribes more social activity from a one-point descriptive difference without a validated beneficial direction."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The only dimension-level difference is go-out frequency: 4 for Student 1 and 3 for Student 2.",
+ "claim_type": "dimension_comparison",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "lifestyle_comparison go_out_frequency rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The values match and all other dimension risk scores are equal."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "The higher go-out frequency indicates a more active social lifestyle and lower frequency should be increased.",
+ "claim_type": "sensitive_interpretation",
+ "claim_scope": "incidental",
+ "support_status": "not_verifiable",
+ "evidence_refs": [
+ "lifestyle_comparison rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The descriptive lifestyle fields do not establish that more going out is healthier or should be encouraged.",
+ "impact_type": "changes_interpretation"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "unsupported_lifestyle_prescription",
+ "claim_ids": [
+ "C02"
+ ],
+ "severity": "major",
+ "primary_metric": "safety_fairness",
+ "secondary_metrics": [
+ "faithfulness",
+ "actionability"
+ ],
+ "cap_candidate": null,
+ "rationale": "The recommendation prescribes more social activity from a one-point descriptive difference without a validated beneficial direction.",
+ "evidence_refs": [
+ "lifestyle_comparison rows"
+ ]
+ },
+ {
+ "error_id": "E02",
+ "error_type": "supporting_context_omission",
+ "claim_ids": [],
+ "severity": "minor",
+ "primary_metric": "completeness",
+ "secondary_metrics": [],
+ "cap_candidate": null,
+ "rationale": "Composite lifestyle-risk and social-balance values are not used as requested supporting context.",
+ "evidence_refs": [
+ "lifestyle_comparison composite_lifestyle_risk_score and social_balance_score"
+ ],
+ "requirement_id": "A-C04-SUPPORT-01"
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 2,
+ "count_by_severity": {
+ "minor": 1,
+ "major": 1,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 6.95,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 6.95,
+ "verdict": "good",
+ "invalid_reason": null
+}

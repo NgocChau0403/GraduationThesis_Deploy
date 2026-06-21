@@ -1,0 +1,220 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-B02",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-B02",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-B02__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "f68a4bed6b4287243d186edfc49159f9d8e4cd93054a209e88dff5c84bda6ad1",
+ "deterministic_summary": {
+ "summary_type": "categorical_distribution",
+ "dataset_name": "outcome_counts",
+ "row_count": 4,
+ "category_column": "final_outcome",
+ "count_column": "student_count",
+ "percent_column": "pct_of_class",
+ "total_count": 2498,
+ "category_distribution": [
+ {
+ "category": "Withdrawn",
+ "count": 1077,
+ "percent": 43.1
+ },
+ {
+ "category": "Pass",
+ "count": 709,
+ "percent": 28.4
+ },
+ {
+ "category": "Fail",
+ "count": 406,
+ "percent": 16.3
+ },
+ {
+ "category": "Distinction",
+ "count": 306,
+ "percent": 12.2
+ }
+ ],
+ "largest_category": {
+ "category": "Withdrawn",
+ "count": 1077,
+ "percent": 43.1
+ },
+ "focus_categories": [
+ "Fail",
+ "Withdrawn"
+ ],
+ "focus_total": {
+ "categories": [
+ "Fail",
+ "Withdrawn"
+ ],
+ "present_categories": [
+ "Withdrawn",
+ "Fail"
+ ],
+ "missing_categories": [],
+ "count": 1483,
+ "percent": 59.4
+ },
+ "missing_expected_categories": [],
+ "missing_focus_categories": [],
+ "metric_columns": [],
+ "metric_evidence_by_category": {},
+ "summarization_warnings": [],
+ "percent_total": 100,
+ "outcome_distribution_evidence": {
+ "categories": [
+ {
+ "final_outcome": "Withdrawn",
+ "student_count": 1077,
+ "pct_of_class": "43.1"
+ },
+ {
+ "final_outcome": "Pass",
+ "student_count": 709,
+ "pct_of_class": "28.4"
+ },
+ {
+ "final_outcome": "Fail",
+ "student_count": 406,
+ "pct_of_class": "16.3"
+ },
+ {
+ "final_outcome": "Distinction",
+ "student_count": 306,
+ "pct_of_class": "12.2"
+ }
+ ],
+ "largest_category": {
+ "final_outcome": "Withdrawn",
+ "student_count": 1077,
+ "pct_of_class": "43.1"
+ },
+ "majority_status": "no_category_exceeds_50_percent",
+ "causal_claim_allowed": false
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "categorical_distribution",
+ "task_id": "A-B02",
+ "task_output_contract": [
+ "Preserve every returned outcome category with exact student_count and pct_of_class; never replace a present category with zero.",
+ "Use 'largest category' rather than 'majority' unless its returned percentage exceeds 50%. Do not infer causes of outcomes."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "outcome_counts",
+ "row_count": 4,
+ "category_column": "final_outcome",
+ "count_column": "student_count",
+ "percent_column": "pct_of_class",
+ "metric_columns": [],
+ "total_count": 2498,
+ "percent_total": 100,
+ "focus_categories": [
+ "Fail",
+ "Withdrawn"
+ ]
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "category_distribution": [
+ {
+ "category": "Withdrawn",
+ "count": 1077,
+ "percent": 43.1
+ },
+ {
+ "category": "Pass",
+ "count": 709,
+ "percent": 28.4
+ },
+ {
+ "category": "Fail",
+ "count": 406,
+ "percent": 16.3
+ },
+ {
+ "category": "Distinction",
+ "count": 306,
+ "percent": 12.2
+ }
+ ],
+ "focus_total": {
+ "categories": [
+ "Fail",
+ "Withdrawn"
+ ],
+ "present_categories": [
+ "Withdrawn",
+ "Fail"
+ ],
+ "missing_categories": [],
+ "count": 1483,
+ "percent": 59.4
+ },
+ "outcome_distribution_evidence": {
+ "categories": [
+ {
+ "final_outcome": "Withdrawn",
+ "student_count": 1077,
+ "pct_of_class": "43.1"
+ },
+ {
+ "final_outcome": "Pass",
+ "student_count": 709,
+ "pct_of_class": "28.4"
+ },
+ {
+ "final_outcome": "Fail",
+ "student_count": 406,
+ "pct_of_class": "16.3"
+ },
+ {
+ "final_outcome": "Distinction",
+ "student_count": 306,
+ "pct_of_class": "12.2"
+ }
+ ],
+ "largest_category": {
+ "final_outcome": "Withdrawn",
+ "student_count": 1077,
+ "pct_of_class": "43.1"
+ },
+ "majority_status": "no_category_exceeds_50_percent",
+ "causal_claim_allowed": false
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_evidence_by_category": {}
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "largest_category": {
+ "category": "Withdrawn",
+ "count": 1077,
+ "percent": 43.1
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_expected_categories": [],
+ "missing_focus_categories": [],
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

@@ -1,0 +1,514 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__S-T01",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "S-T01",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__S-T01__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "ecc667d99a24fffd2e87eb22afa9947158026515b8de402097d69dda11ade67b",
+ "deterministic_summary": {
+ "summary_type": "trend_series",
+ "dataset_name": "score_trend",
+ "row_count": 3,
+ "time_column": "assessment_order",
+ "metric_column": "score_normalized",
+ "metric_units": {},
+ "metric_directions": {},
+ "dataset_roles": {},
+ "point_count": 3,
+ "first_point": {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "labels": {
+ "assessment_name": "G1",
+ "assessment_type": "quiz",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 57,
+ "score_vs_class_avg": -57,
+ "performance_trend": 27.5,
+ "pass_flag": false
+ }
+ },
+ "last_point": {
+ "assessment_order": 3,
+ "score_normalized": 55,
+ "labels": {
+ "assessment_name": "G3",
+ "assessment_type": "exam",
+ "week_of_class": 14
+ },
+ "secondary_metrics": {
+ "class_avg_score": 59.53,
+ "score_vs_class_avg": -4.53,
+ "performance_trend": 27.5,
+ "pass_flag": true
+ }
+ },
+ "peak": {
+ "assessment_order": 2,
+ "score_normalized": 55,
+ "labels": {
+ "assessment_name": "G2",
+ "assessment_type": "quiz",
+ "week_of_class": 8
+ },
+ "secondary_metrics": {
+ "class_avg_score": 57.85,
+ "score_vs_class_avg": -2.85,
+ "performance_trend": 27.5,
+ "pass_flag": true
+ }
+ },
+ "trough": {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "labels": {
+ "assessment_name": "G1",
+ "assessment_type": "quiz",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 57,
+ "score_vs_class_avg": -57,
+ "performance_trend": 27.5,
+ "pass_flag": false
+ }
+ },
+ "overall_change": {
+ "from": {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "labels": {
+ "assessment_name": "G1",
+ "assessment_type": "quiz",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 57,
+ "score_vs_class_avg": -57,
+ "performance_trend": 27.5,
+ "pass_flag": false
+ }
+ },
+ "to": {
+ "assessment_order": 3,
+ "score_normalized": 55,
+ "labels": {
+ "assessment_name": "G3",
+ "assessment_type": "exam",
+ "week_of_class": 14
+ },
+ "secondary_metrics": {
+ "class_avg_score": 59.53,
+ "score_vs_class_avg": -4.53,
+ "performance_trend": 27.5,
+ "pass_flag": true
+ }
+ },
+ "delta": 55,
+ "percent_change": null
+ },
+ "largest_adjacent_drop": null,
+ "largest_adjacent_rise": {
+ "from": {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "labels": {
+ "assessment_name": "G1",
+ "assessment_type": "quiz",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 57,
+ "score_vs_class_avg": -57,
+ "performance_trend": 27.5,
+ "pass_flag": false
+ }
+ },
+ "to": {
+ "assessment_order": 2,
+ "score_normalized": 55,
+ "labels": {
+ "assessment_name": "G2",
+ "assessment_type": "quiz",
+ "week_of_class": 8
+ },
+ "secondary_metrics": {
+ "class_avg_score": 57.85,
+ "score_vs_class_avg": -2.85,
+ "performance_trend": 27.5,
+ "pass_flag": true
+ }
+ },
+ "delta": 55
+ },
+ "flagged_points": [
+ {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "labels": {
+ "assessment_name": "G1",
+ "assessment_type": "quiz",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 57,
+ "score_vs_class_avg": -57,
+ "performance_trend": 27.5,
+ "pass_flag": false
+ },
+ "flags": {
+ "below_pass_threshold": true,
+ "below_target_threshold": true
+ },
+ "flag_raw_values": {
+ "below_pass_threshold": true,
+ "below_target_threshold": true
+ }
+ },
+ {
+ "assessment_order": 2,
+ "score_normalized": 55,
+ "labels": {
+ "assessment_name": "G2",
+ "assessment_type": "quiz",
+ "week_of_class": 8
+ },
+ "secondary_metrics": {
+ "class_avg_score": 57.85,
+ "score_vs_class_avg": -2.85,
+ "performance_trend": 27.5,
+ "pass_flag": true
+ },
+ "flags": {
+ "below_pass_threshold": false,
+ "below_target_threshold": true
+ },
+ "flag_raw_values": {
+ "below_pass_threshold": false,
+ "below_target_threshold": true
+ }
+ },
+ {
+ "assessment_order": 3,
+ "score_normalized": 55,
+ "labels": {
+ "assessment_name": "G3",
+ "assessment_type": "exam",
+ "week_of_class": 14
+ },
+ "secondary_metrics": {
+ "class_avg_score": 59.53,
+ "score_vs_class_avg": -4.53,
+ "performance_trend": 27.5,
+ "pass_flag": true
+ },
+ "flags": {
+ "below_pass_threshold": false,
+ "below_target_threshold": true
+ },
+ "flag_raw_values": {
+ "below_pass_threshold": false,
+ "below_target_threshold": true
+ }
+ }
+ ],
+ "secondary_metric_evidence": {
+ "class_avg_score": {
+ "count": 3,
+ "min": 57,
+ "max": 59.53,
+ "first": 57,
+ "last": 59.53
+ },
+ "score_vs_class_avg": {
+ "count": 3,
+ "min": -57,
+ "max": -2.85,
+ "first": -57,
+ "last": -4.53
+ },
+ "performance_trend": {
+ "count": 3,
+ "min": 27.5,
+ "max": 27.5,
+ "first": 27.5,
+ "last": 27.5
+ },
+ "pass_flag": {
+ "first": false,
+ "last": true,
+ "distinct_values": [
+ "False",
+ "True"
+ ]
+ }
+ },
+ "secondary_metric_associations": {
+ "class_avg_score": {
+ "paired_point_count": 3,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.7578,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "score_vs_class_avg": {
+ "paired_point_count": 3,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.9996,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "performance_trend": {
+ "paired_point_count": 3,
+ "method": "pearson_on_aligned_points",
+ "correlation": null,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "pass_flag": {
+ "paired_point_count": 3,
+ "method": "non_numeric_values_preserved",
+ "correlation": null,
+ "claim_limit": "descriptive_context_only"
+ }
+ },
+ "multi_dataset_evidence": [],
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "action_evidence": [
+ {
+ "assessment_order": 1,
+ "action_column": "support_level",
+ "action": "urgent_support"
+ },
+ {
+ "assessment_order": 1,
+ "action_column": "recommended_action",
+ "action": "Review this assessment with tutor support; focus on missed core concepts before the next assessment."
+ },
+ {
+ "assessment_order": 2,
+ "action_column": "support_level",
+ "action": "targeted_practice"
+ },
+ {
+ "assessment_order": 2,
+ "action_column": "recommended_action",
+ "action": "Practice similar questions and review feedback to move from pass-level to target-level performance."
+ }
+ ],
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "trend_series",
+ "task_id": "S-T01",
+ "task_output_contract": [
+ "Identify timing, first/last points, overall change, and flagged points when supplied.",
+ "For empty or insufficient data, state row count and missing capability/data-quality warnings instead of inferring a trend.",
+ "Only recommend timing when critical weeks or action_evidence are present."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "score_trend",
+ "row_count": 3,
+ "point_count": 3,
+ "time_column": "assessment_order",
+ "metric_column": "score_normalized",
+ "dataset_roles": {},
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "first_point": {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "labels": {
+ "assessment_name": "G1",
+ "assessment_type": "quiz",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 57,
+ "score_vs_class_avg": -57,
+ "performance_trend": 27.5,
+ "pass_flag": false
+ }
+ },
+ "last_point": {
+ "assessment_order": 3,
+ "score_normalized": 55,
+ "labels": {
+ "assessment_name": "G3",
+ "assessment_type": "exam",
+ "week_of_class": 14
+ },
+ "secondary_metrics": {
+ "class_avg_score": 59.53,
+ "score_vs_class_avg": -4.53,
+ "performance_trend": 27.5,
+ "pass_flag": true
+ }
+ },
+ "overall_change": {
+ "from": {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "labels": {
+ "assessment_name": "G1",
+ "assessment_type": "quiz",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 57,
+ "score_vs_class_avg": -57,
+ "performance_trend": 27.5,
+ "pass_flag": false
+ }
+ },
+ "to": {
+ "assessment_order": 3,
+ "score_normalized": 55,
+ "labels": {
+ "assessment_name": "G3",
+ "assessment_type": "exam",
+ "week_of_class": 14
+ },
+ "secondary_metrics": {
+ "class_avg_score": 59.53,
+ "score_vs_class_avg": -4.53,
+ "performance_trend": 27.5,
+ "pass_flag": true
+ }
+ },
+ "delta": 55,
+ "percent_change": null
+ }
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "largest_adjacent_drop": null
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flagged_points": [
+ {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "labels": {
+ "assessment_name": "G1",
+ "assessment_type": "quiz",
+ "week_of_class": 3
+ },
+ "secondary_metrics": {
+ "class_avg_score": 57,
+ "score_vs_class_avg": -57,
+ "performance_trend": 27.5,
+ "pass_flag": false
+ },
+ "flags": {
+ "below_pass_threshold": true,
+ "below_target_threshold": true
+ },
+ "flag_raw_values": {
+ "below_pass_threshold": true,
+ "below_target_threshold": true
+ }
+ },
+ {
+ "assessment_order": 2,
+ "score_normalized": 55,
+ "labels": {
+ "assessment_name": "G2",
+ "assessment_type": "quiz",
+ "week_of_class": 8
+ },
+ "secondary_metrics": {
+ "class_avg_score": 57.85,
+ "score_vs_class_avg": -2.85,
+ "performance_trend": 27.5,
+ "pass_flag": true
+ },
+ "flags": {
+ "below_pass_threshold": false,
+ "below_target_threshold": true
+ },
+ "flag_raw_values": {
+ "below_pass_threshold": false,
+ "below_target_threshold": true
+ }
+ },
+ {
+ "assessment_order": 3,
+ "score_normalized": 55,
+ "labels": {
+ "assessment_name": "G3",
+ "assessment_type": "exam",
+ "week_of_class": 14
+ },
+ "secondary_metrics": {
+ "class_avg_score": 59.53,
+ "score_vs_class_avg": -4.53,
+ "performance_trend": 27.5,
+ "pass_flag": true
+ },
+ "flags": {
+ "below_pass_threshold": false,
+ "below_target_threshold": true
+ },
+ "flag_raw_values": {
+ "below_pass_threshold": false,
+ "below_target_threshold": true
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "action_evidence": [
+ {
+ "assessment_order": 1,
+ "action_column": "support_level",
+ "action": "urgent_support"
+ },
+ {
+ "assessment_order": 1,
+ "action_column": "recommended_action",
+ "action": "Review this assessment with tutor support; focus on missed core concepts before the next assessment."
+ },
+ {
+ "assessment_order": 2,
+ "action_column": "support_level",
+ "action": "targeted_practice"
+ },
+ {
+ "assessment_order": 2,
+ "action_column": "recommended_action",
+ "action": "Practice similar questions and review feedback to move from pass-level to target-level performance."
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

@@ -1,0 +1,368 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-21T02:26:57.063Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__A-G05__task_aware_data_summarization",
+    "case_id": "SAMPLE_UCI_POR__A-G05",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": null,
+    "role": "admin",
+    "task_id": "A-G05",
+    "task_name": "Submission behaviour analysis",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G05.json",
+    "full_query_artifact_sha256": "f3d0c30306a5895a2f9161612693fc4bc0d68f85a22919ba2895d161f217c1ab"
+  },
+  "request_payload": {
+    "task_id": "A-G05",
+    "execution_id": "exec_1781847232447_366211a6",
+    "task_name": "Submission behaviour analysis",
+    "analysis_type": "comparison",
+    "explanation_strategy": "behavioral",
+    "explanation_type": "observation, interpretation, recommendation",
+    "ai_prompt_hint": "Use final_outcome, assessment_type, submission_delay_avg, late_submission_rate, and punctuality_rate to decide whether late submission is systemic. Prioritize groups with high late_submission_rate and high student_count. Do not discuss individual students.",
+    "actionable_question": "Are late submissions a systemic problem in this class?",
+    "target_audience": [
+      "instructor"
+    ],
+    "visualization_config": {
+      "x_field": "final_outcome",
+      "y_field": "submission_delay_avg",
+      "series_field": "assessment_type",
+      "color_field": "late_submission_rate",
+      "orientation": "vertical",
+      "variant": "grouped",
+      "x_label": "Final Outcome",
+      "y_label": "Average Late Delay (days)",
+      "semantic_roles": {
+        "x": "category",
+        "y": "behavioral_metric",
+        "series": "assessment_type",
+        "color": "risk_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "per_assessment",
+      "aggregation_level": "cohort"
+    },
+    "datasets": {
+      "submission_behaviour": [
+        {
+          "final_outcome": "Fail",
+          "assessment_type": "exam",
+          "submission_count": 100,
+          "student_count": 100,
+          "submission_delay_avg": 0,
+          "net_submission_delay_avg": 0,
+          "late_submission_rate": 0,
+          "punctuality_rate": 0,
+          "avg_score": 34.45,
+          "submission_risk_level": "low_lateness"
+        },
+        {
+          "final_outcome": "Fail",
+          "assessment_type": "quiz",
+          "submission_count": 200,
+          "student_count": 100,
+          "submission_delay_avg": 0,
+          "net_submission_delay_avg": 0,
+          "late_submission_rate": 0,
+          "punctuality_rate": 0,
+          "avg_score": 38.28,
+          "submission_risk_level": "low_lateness"
+        },
+        {
+          "final_outcome": "Pass",
+          "assessment_type": "exam",
+          "submission_count": 549,
+          "student_count": 549,
+          "submission_delay_avg": 0,
+          "net_submission_delay_avg": 0,
+          "late_submission_rate": 0,
+          "punctuality_rate": 0,
+          "avg_score": 64.1,
+          "submission_risk_level": "low_lateness"
+        },
+        {
+          "final_outcome": "Pass",
+          "assessment_type": "quiz",
+          "submission_count": 1098,
+          "student_count": 549,
+          "submission_delay_avg": 0,
+          "net_submission_delay_avg": 0,
+          "late_submission_rate": 0,
+          "punctuality_rate": 0,
+          "avg_score": 60.91,
+          "submission_risk_level": "low_lateness"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "649 students × 3 assessments across 3 weeks — strong statistical basis."
+    },
+    "student_context": null,
+    "query_labels": [
+      "submission_behaviour"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [
+        "final_outcome",
+        "assessment_type"
+      ],
+      "metric_columns": [
+        "submission_delay_avg",
+        "net_submission_delay_avg",
+        "punctuality_rate",
+        "avg_score",
+        "submission_count"
+      ],
+      "status_columns": [],
+      "threshold_columns": [],
+      "benchmark_columns": [],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {},
+      "entity_order": [],
+      "metric_directions": {
+        "late_submission_rate": "higher_is_worse",
+        "punctuality_rate": "higher_is_better",
+        "submission_delay_avg": "higher_is_worse",
+        "net_submission_delay_avg": "higher_is_worse",
+        "avg_score": "higher_is_better",
+        "submission_count": "context_only",
+        "student_count": "context_only"
+      },
+      "metric_units": {
+        "late_submission_rate": "ratio_0_1",
+        "punctuality_rate": "ratio_0_1",
+        "submission_delay_avg": "days_late_average_positive_only",
+        "net_submission_delay_avg": "days_relative_to_due_date",
+        "avg_score": "score_on_runtime_scale",
+        "submission_count": "submission_rows",
+        "student_count": "students"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": false,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "group_comparison",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": "late_submission_rate",
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": "final_outcome",
+      "series_column": "assessment_type",
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": 10,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": "student_count",
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": "late_submission_rate",
+      "sort_direction": "desc",
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": 8,
+      "bottom_k": 3
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 8891,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1657,
+      "completion_tokens": 467,
+      "total_tokens": 2124
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "A-G05",
+    "execution_id": "exec_1781847232447_366211a6",
+    "explanation": {
+      "summary": "The analysis of submission behavior reveals that late submissions are not a systemic issue within the class, as all groups exhibit a late submission rate of 0%. However, the average scores for students who failed are significantly lower than those who passed, indicating potential engagement issues. ",
+      "insights": [
+        {
+          "title": "Consistent Punctuality Across Assessments",
+          "description": "Both failing and passing groups demonstrate a late submission rate of 0%, indicating that late submissions are not a systemic problem in this class.",
+          "severity": "low",
+          "evidence": [
+            {
+              "metric": "late_submission_rate",
+              "value": 0,
+              "comparison": "stable",
+              "delta": null,
+              "context": "All groups (Fail and Pass) show a late submission rate of 0%."
+            }
+          ]
+        },
+        {
+          "title": "Disparity in Average Scores",
+          "description": "Students who failed scored significantly lower on assessments compared to those who passed, suggesting a need for targeted interventions to improve understanding and engagement.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "avg_score",
+              "value": 34.45,
+              "comparison": "down_from_previous",
+              "delta": -29.65,
+              "context": "Failing students' average score compared to passing students' average score of 64.1."
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "The lack of late submissions suggests that time management is not an issue; however, the low average scores for failing students indicate a need for enhanced instructional support."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Implement targeted support sessions for students who are failing to address knowledge gaps.",
+          "rationale": "Providing additional resources and support can help improve understanding and potentially raise average scores."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data is complete for the metrics analyzed, and the patterns observed are consistent across the dataset.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "behavioral",
+    "explanation_type": "behavioral",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3.1-experimental",
+    "baseline_available": true,
+    "input_summary_type": "group_comparison",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 4,
+    "included_row_count": 4,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "submission_behaviour",
+        "row_count": 4,
+        "included_row_count": 4
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 4,
+    "baseline_reference_tokens": 327,
+    "task_aware_prompt_tokens": 1080,
+    "token_ratio": 3.3028,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [
+      "exceptions.weakest_group",
+      "exceptions.dominant_group",
+      "comparison.gaps",
+      "primary_finding.group_series"
+    ],
+    "task_output_contract": [],
+    "must_keep_keys": [],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (3.3028 > 1.2).",
+      "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 8888,
+      "token_usage": {
+        "prompt_tokens": 1657,
+        "completion_tokens": 467,
+        "total_tokens": 2124
+      },
+      "strategy": "behavioral",
+      "granularity": "per_assessment",
+      "cost_usd": 0.000529
+    }
+  },
+  "raw_text": "Summary: The analysis of submission behavior reveals that late submissions are not a systemic issue within the class, as all groups exhibit a late submission rate of 0%. However, the average scores for students who failed are significantly lower than those who passed, indicating potential engagement issues. \n\nInsights: Consistent Punctuality Across Assessments: Both failing and passing groups demonstrate a late submission rate of 0%, indicating that late submissions are not a systemic problem in this class. | Disparity in Average Scores: Students who failed scored significantly lower on assessments compared to those who passed, suggesting a need for targeted interventions to improve understanding and engagement.\n\nEducational implications: The lack of late submissions suggests that time management is not an issue; however, the low average scores for failing students indicate a need for enhanced instructional support.\n\nRecommendations: high - Implement targeted support sessions for students who are failing to address knowledge gaps. - Providing additional resources and support can help improve understanding and potentially raise average scores."
+}

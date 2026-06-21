@@ -1,0 +1,104 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__S-T15__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 2,
+      "rationale": "Grounding and interpretation: The central relationship has the wrong sign: verified evidence supports a weak positive coefficient near 0.1442, not the claimed negative association; the selected student is also omitted and advice violates the non-prescriptive constraint."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 2,
+      "rationale": "Values, directions, and comparisons: The central relationship has the wrong sign: verified evidence supports a weak positive coefficient near 0.1442, not the claimed negative association; the selected student is also omitted and advice violates the non-prescriptive constraint."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 3,
+      "rationale": "Coverage of supplied requirements: The central relationship has the wrong sign: verified evidence supports a weak positive coefficient near 0.1442, not the claimed negative association; the selected student is also omitted and advice violates the non-prescriptive constraint."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "Fit to the stated task and audience: The central relationship has the wrong sign: verified evidence supports a weak positive coefficient near 0.1442, not the claimed negative association; the selected student is also omitted and advice violates the non-prescriptive constraint."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 2,
+      "rationale": "Usefulness and evidence basis: The central relationship has the wrong sign: verified evidence supports a weak positive coefficient near 0.1442, not the claimed negative association; the selected student is also omitted and advice violates the non-prescriptive constraint."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Precision and organization: The central relationship has the wrong sign: verified evidence supports a weak positive coefficient near 0.1442, not the claimed negative association; the selected student is also omitted and advice violates the non-prescriptive constraint."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "Fair and non-stigmatizing treatment: The central relationship has the wrong sign: verified evidence supports a weak positive coefficient near 0.1442, not the claimed negative association; the selected student is also omitted and advice violates the non-prescriptive constraint."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis shows a negative correlation between Family Stability Score and Average Score, indicating that as the Family Stability Score decreases, the Average Score tends to increase. This suggests that students with lower family stability may be performing better academically, which is an interesting pattern to consider.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "contradicted",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T15__baseline_first_20_rows.json; retrieved evidence for S-T15"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The central relationship has the wrong sign: verified evidence supports a weak positive coefficient near 0.1442, not the claimed negative association; the selected student is also omitted and advice violates the non-prescriptive constraint.",
+      "impact_type": "reverses_main_finding"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "contradictory_core_numerical_claim",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "critical",
+      "primary_metric": "numerical_correctness",
+      "secondary_metrics": [],
+      "cap_candidate": 3,
+      "rationale": "The central relationship has the wrong sign: verified evidence supports a weak positive coefficient near 0.1442, not the claimed negative association; the selected student is also omitted and advice violates the non-prescriptive constraint.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T15__baseline_first_20_rows.json; retrieved evidence for S-T15"
+      ]
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "critical",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 1
+    }
+  },
+  "raw_weighted_score": 3.05,
+  "caps_applied": [
+    {
+      "type": "contradictory_core_numerical_claim",
+      "severity": "critical",
+      "cap": 3,
+      "error_id": "E01",
+      "claim_ids": [
+        "C01"
+      ],
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_saufix_executable_only/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T15__baseline_first_20_rows.json; retrieved evidence for S-T15"
+      ]
+    }
+  ],
+  "effective_cap": 3,
+  "final_score_after_caps": 3,
+  "verdict": "poor",
+  "invalid_reason": null
+}

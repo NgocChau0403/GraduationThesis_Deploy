@@ -1,0 +1,224 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-G01__task_aware_data_summarization",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-G01",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Identify low-engagement group",
+    "scope": "Many students",
+    "actionable_question": "Which students are dangerously disengaged and need outreach?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "ranking",
+    "ai_prompt_hint": "Define 'low engagement' threshold. List students below it. Recommend admin action (email/contact).",
+    "query_labels": [
+      "low_engagement_group"
+    ],
+    "explanation_strategy": "behavioral"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "engagement_score [FE cross]",
+      "study_effort_level [FE cross]",
+      "total_clicks (engagement)",
+      "active_days"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "low_engagement_group"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The analysis identifies a significant group of students exhibiting dangerously low engagement levels, characterized by minimal interaction with the course platform. With an engagement score consistently at 0.0018, these students demonstrate a lack of active participation, indicating a critical need for outreach.\n\nInsights: Consistent Low Engagement: A total of 1544 students fall into the low engagement group, all sharing an engagement score of 0.0018, total clicks of 1, and active days of 1. This uniformity suggests a systemic issue affecting this cohort's interaction with course materials.\n\nEducational implications: Students in this group are at risk of falling behind academically due to insufficient engagement with course content.\n\nRecommendations: high - Initiate outreach to all students in the low engagement group via email or direct contact. - Proactive communication may help identify barriers to engagement and encourage students to participate more actively in the course.",
+    "structured_payload": {
+      "task_id": "A-G01",
+      "execution_id": "exec_1781847673084_be8daf4d",
+      "explanation": {
+        "summary": "The analysis identifies a significant group of students exhibiting dangerously low engagement levels, characterized by minimal interaction with the course platform. With an engagement score consistently at 0.0018, these students demonstrate a lack of active participation, indicating a critical need for outreach.",
+        "insights": [
+          {
+            "title": "Consistent Low Engagement",
+            "description": "A total of 1544 students fall into the low engagement group, all sharing an engagement score of 0.0018, total clicks of 1, and active days of 1. This uniformity suggests a systemic issue affecting this cohort's interaction with course materials.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "engagement_score",
+                "value": 0.0018,
+                "comparison": "stable",
+                "delta": null,
+                "context": "All students in the low engagement group share this score."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Students in this group are at risk of falling behind academically due to insufficient engagement with course content."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Initiate outreach to all students in the low engagement group via email or direct contact.",
+            "rationale": "Proactive communication may help identify barriers to engagement and encourage students to participate more actively in the course."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data is consistent and clearly indicates a low engagement threshold across the identified cohort.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "behavioral",
+      "explanation_type": "behavioral",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3-experimental",
+      "baseline_available": true,
+      "input_summary_type": "ranking",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 1544,
+      "included_row_count": 15,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "low_engagement_group",
+          "row_count": 1544,
+          "included_row_count": 15
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 15,
+      "baseline_reference_tokens": 935,
+      "task_aware_prompt_tokens": 1649,
+      "token_ratio": 1.7636,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "comparison",
+        "exceptions",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (1.7636 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 4562,
+        "token_usage": {
+          "prompt_tokens": 2646,
+          "completion_tokens": 353,
+          "total_tokens": 2999
+        },
+        "strategy": "behavioral",
+        "granularity": "semester",
+        "cost_usd": 0.000609
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-G01__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "931654069eb037f657e709ec29a83ec6a534e72a5700d7742f63c4e279774197",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 2646,
+        "completion_tokens": 353,
+        "total_tokens": 2999
+      },
+      "latency_ms": 4574,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 1544,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "low_engagement_group",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G01.json",
+        "artifact_sha256": "1561e97d242b1221e6702d8486ef8b4e04e20c8666661b54a458f5e5076509fb",
+        "row_count": 1544,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 0,
+    "retrieved_row_count": 1544,
+    "retrieved_row_count_by_dataset": {
+      "low_engagement_group": 1544
+    },
+    "retrieved_row_ranges": [
+      {
+        "dataset_label": "low_engagement_group",
+        "start": 0,
+        "end": 1543
+      }
+    ],
+    "retrieved_chunk_ids": [
+      "SAMPLE_OULAD__A-G01__task_aware_data_summarization__low_engagement_group__chunk_1"
+    ],
+    "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G01__task_aware_data_summarization.json",
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "full",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "low_engagement_group": 1544
+    },
+    "full_result_sent_to_llm": false,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G01-CORE-01",
+        "description": "Define 'low engagement' threshold."
+      },
+      {
+        "requirement_id": "A-G01-CORE-02",
+        "description": "List students below it."
+      },
+      {
+        "requirement_id": "A-G01-CORE-03",
+        "description": "Recommend admin action (email/contact)."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G01-CONSTRAINT-01",
+        "description": "Do not name individual students beyond identifiers already present in returned data."
+      },
+      {
+        "constraint_id": "A-G01-CONSTRAINT-02",
+        "description": "Treat the output as internal admin use when individual identifiers are listed."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

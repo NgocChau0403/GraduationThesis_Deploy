@@ -1,0 +1,365 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__S-T07",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "S-T07",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__S-T07__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "cff89cbd3a6d42993b80891bd1cb50f1591ea13d043f101f4b530592b3d916c3",
+ "deterministic_summary": {
+ "summary_type": "trend_series",
+ "dataset_name": "score_series",
+ "row_count": 3,
+ "time_column": "assessment_order",
+ "metric_column": "score_normalized",
+ "metric_units": {
+ "score_normalized": "score_on_runtime_scale",
+ "week_of_class": "course_week"
+ },
+ "metric_directions": {
+ "score_normalized": "higher_is_better",
+ "week_of_class": "time_index"
+ },
+ "dataset_roles": {
+ "absence_data": "context_snapshot",
+ "score_series": "primary_series"
+ },
+ "point_count": 3,
+ "first_point": {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "secondary_metrics": {
+ "week_of_class": 3
+ }
+ },
+ "last_point": {
+ "assessment_order": 3,
+ "score_normalized": 55,
+ "secondary_metrics": {
+ "week_of_class": 14
+ }
+ },
+ "peak": {
+ "assessment_order": 2,
+ "score_normalized": 55,
+ "secondary_metrics": {
+ "week_of_class": 8
+ }
+ },
+ "trough": {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "secondary_metrics": {
+ "week_of_class": 3
+ }
+ },
+ "overall_change": {
+ "from": {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "secondary_metrics": {
+ "week_of_class": 3
+ }
+ },
+ "to": {
+ "assessment_order": 3,
+ "score_normalized": 55,
+ "secondary_metrics": {
+ "week_of_class": 14
+ }
+ },
+ "delta": 55,
+ "percent_change": null
+ },
+ "largest_adjacent_drop": null,
+ "largest_adjacent_rise": {
+ "from": {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "secondary_metrics": {
+ "week_of_class": 3
+ }
+ },
+ "to": {
+ "assessment_order": 2,
+ "score_normalized": 55,
+ "secondary_metrics": {
+ "week_of_class": 8
+ }
+ },
+ "delta": 55
+ },
+ "flagged_points": [
+ {
+ "assessment_order": 2,
+ "score_normalized": 55,
+ "secondary_metrics": {
+ "week_of_class": 8
+ },
+ "flags": {
+ "pass_flag": true
+ },
+ "flag_raw_values": {
+ "pass_flag": true
+ }
+ },
+ {
+ "assessment_order": 3,
+ "score_normalized": 55,
+ "secondary_metrics": {
+ "week_of_class": 14
+ },
+ "flags": {
+ "pass_flag": true
+ },
+ "flag_raw_values": {
+ "pass_flag": true
+ }
+ }
+ ],
+ "secondary_metric_evidence": {
+ "week_of_class": {
+ "count": 3,
+ "min": 3,
+ "max": 14,
+ "first": 3,
+ "last": 14
+ }
+ },
+ "secondary_metric_associations": {
+ "week_of_class": {
+ "paired_point_count": 3,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.8386,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": true
+ }
+ },
+ "multi_dataset_evidence": [
+ {
+ "dataset_name": "absence_data",
+ "role": "context_snapshot",
+ "row_count": 1,
+ "columns": [
+ "absences",
+ "absence_rate"
+ ],
+ "first_row": {
+ "absences": 4,
+ "absence_rate": "0.125"
+ },
+ "numeric_stats": {
+ "absences": {
+ "count": 1,
+ "min": 4,
+ "max": 4,
+ "avg": 4
+ },
+ "absence_rate": {
+ "count": 1,
+ "min": 0.125,
+ "max": 0.125,
+ "avg": 0.125
+ }
+ }
+ }
+ ],
+ "small_sample_caveats": [
+ {
+ "point_count": 3,
+ "minimum_sample_size": 6,
+ "warning": "Only 3 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+ }
+ ],
+ "causal_claim_allowed": false,
+ "action_evidence": [],
+ "summarization_warnings": [
+ "Only 3 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+ ],
+ "association_evidence": {
+ "absence_rate": "0.125",
+ "absence_observation_count": 1,
+ "score_observation_count": 3,
+ "association_status": "not_estimable",
+ "reason": "Only one student-level absence snapshot is supplied; assessment-order score variation cannot estimate absence-score association."
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "trend_series",
+ "task_id": "S-T07",
+ "task_output_contract": [
+ "Identify timing, first/last points, overall change, and flagged points when supplied.",
+ "For empty or insufficient data, state row count and missing capability/data-quality warnings instead of inferring a trend.",
+ "Only recommend timing when critical weeks or action_evidence are present.",
+ "Start the summary with this exact evidence statement: absence_rate=0.125 (12.5%); association_status=not_estimable; with one absence snapshot, the evidence cannot quantify how much absences are hurting grades.",
+ "State the exact absence_rate and the exact association_status=not_estimable for the absence-score relationship.",
+ "Answer the student question directly: from one absence snapshot, the evidence cannot quantify how much absences are hurting grades.",
+ "A single absence snapshot paired with a score series cannot estimate an absence-score correlation; describe the assessment-order score trend separately and do not call it a correlation or use it as evidence of absence impact.",
+ "Do not make an attendance recommendation or claim that attendance would improve scores unless supplied action_evidence explicitly supports it."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "score_series",
+ "row_count": 3,
+ "point_count": 3,
+ "time_column": "assessment_order",
+ "metric_column": "score_normalized",
+ "dataset_roles": {
+ "absence_data": "context_snapshot",
+ "score_series": "primary_series"
+ },
+ "metric_units": {
+ "score_normalized": "score_on_runtime_scale",
+ "week_of_class": "course_week"
+ },
+ "metric_directions": {
+ "score_normalized": "higher_is_better",
+ "week_of_class": "time_index"
+ }
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "first_point": {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "secondary_metrics": {
+ "week_of_class": 3
+ }
+ },
+ "last_point": {
+ "assessment_order": 3,
+ "score_normalized": 55,
+ "secondary_metrics": {
+ "week_of_class": 14
+ }
+ },
+ "overall_change": {
+ "from": {
+ "assessment_order": 1,
+ "score_normalized": 0,
+ "secondary_metrics": {
+ "week_of_class": 3
+ }
+ },
+ "to": {
+ "assessment_order": 3,
+ "score_normalized": 55,
+ "secondary_metrics": {
+ "week_of_class": 14
+ }
+ },
+ "delta": 55,
+ "percent_change": null
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "secondary_metric_associations": {
+ "week_of_class": {
+ "paired_point_count": 3,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.8386,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": true
+ }
+ },
+ "multi_dataset_evidence": [
+ {
+ "dataset_name": "absence_data",
+ "role": "context_snapshot",
+ "row_count": 1,
+ "columns": [
+ "absences",
+ "absence_rate"
+ ],
+ "first_row": {
+ "absences": 4,
+ "absence_rate": "0.125"
+ },
+ "numeric_stats": {
+ "absences": {
+ "count": 1,
+ "min": 4,
+ "max": 4,
+ "avg": 4
+ },
+ "absence_rate": {
+ "count": 1,
+ "min": 0.125,
+ "max": 0.125,
+ "avg": 0.125
+ }
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "largest_adjacent_drop": null
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flagged_points": [
+ {
+ "assessment_order": 2,
+ "score_normalized": 55,
+ "secondary_metrics": {
+ "week_of_class": 8
+ },
+ "flags": {
+ "pass_flag": true
+ },
+ "flag_raw_values": {
+ "pass_flag": true
+ }
+ },
+ {
+ "assessment_order": 3,
+ "score_normalized": 55,
+ "secondary_metrics": {
+ "week_of_class": 14
+ },
+ "flags": {
+ "pass_flag": true
+ },
+ "flag_raw_values": {
+ "pass_flag": true
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "action_evidence": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "small_sample_caveats": [
+ {
+ "point_count": 3,
+ "minimum_sample_size": 6,
+ "warning": "Only 3 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+ }
+ ],
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Only 3 trend points are available; treat secondary associations as descriptive, not causal or statistically reliable."
+ ]
+ }
+ }
+ ]
+ }
+}

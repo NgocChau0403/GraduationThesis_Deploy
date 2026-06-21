@@ -1,0 +1,921 @@
+{
+ "schema_version": "judge_input_schema_v1",
+ "record_id": "SAMPLE_OULAD__A-G11__baseline_first_20_rows",
+ "evaluation_run_id": "oulad_official_r5",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G11",
+ "explanation_mode": "baseline_first_20_rows",
+ "prompt_version": "judge_prompt_v2_pilot_v1",
+ "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+ "task_context": {
+ "task_name": "Weekly engagement drop detection",
+ "scope": "Many students",
+ "actionable_question": "Which weeks should the admin schedule check-ins or motivational nudges?",
+ "target_audience": "instructor, admin",
+ "ai_summary_type": "trend_series",
+ "ai_prompt_hint": "Use early_warning_week [FE] to pinpoint critical weeks. Recommend admin action timing (e.g. week 5 intervention).",
+ "query_labels": [
+ "weekly_drop_detection"
+ ],
+ "explanation_strategy": "trend"
+ },
+ "schema_context": {
+ "source_tables": [
+ "enrollment",
+ "engagement [OULAD only]"
+ ],
+ "key_db_fields": [
+ "week_number",
+ "engagement_count; is_drop_week [FE cross]",
+ "rolling_3wk_avg",
+ "drop_pct"
+ ],
+ "output_schema": {},
+ "query_labels": [
+ "weekly_drop_detection"
+ ]
+ },
+ "explanation": {
+ "raw_text": "Summary: The engagement trend exhibits significant volatility, with notable peaks and sharp declines. The most critical weeks for intervention are identified as weeks 6, 11, and 12, where substantial drops in engagement occurred.\n\nInsights: Sharp Drop in Week 6: In week 6, there was a sudden decline in total clicks, dropping to 62604 from 101601 in week 5, marking a decrease of 39097 clicks. | Significant Decline in Week 11: Week 11 saw a drastic drop to 26756 clicks, down from 160176 in week 10, representing a decline of 133420 clicks. | Continued Decline in Week 12: The trend continued to decline in week 12, with total clicks falling to 16424, a decrease of 10332 from week 11.\n\nEducational implications: The significant drops in engagement during weeks 6, 11, and 12 suggest a need for timely interventions to support student motivation and participation.\n\nRecommendations: high - Schedule check-ins or motivational nudges during weeks 6, 11, and 12. - These weeks experienced the most substantial declines in engagement, indicating a critical need for support to re-engage students.",
+ "structured_payload": {
+ "task_id": "A-G11",
+ "execution_id": "exec_1781847770008_241f6ec9",
+ "explanation": {
+ "summary": "The engagement trend exhibits significant volatility, with notable peaks and sharp declines. The most critical weeks for intervention are identified as weeks 6, 11, and 12, where substantial drops in engagement occurred.",
+ "insights": [
+ {
+ "title": "Sharp Drop in Week 6",
+ "description": "In week 6, there was a sudden decline in total clicks, dropping to 62604 from 101601 in week 5, marking a decrease of 39097 clicks.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "week_total_clicks",
+ "value": 62604,
+ "comparison": "down_from_previous",
+ "delta": -39097,
+ "context": "Week 5 total clicks were 101601."
+ }
+ ]
+ },
+ {
+ "title": "Significant Decline in Week 11",
+ "description": "Week 11 saw a drastic drop to 26756 clicks, down from 160176 in week 10, representing a decline of 133420 clicks.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "week_total_clicks",
+ "value": 26756,
+ "comparison": "down_from_previous",
+ "delta": -133420,
+ "context": "Week 10 total clicks were 160176."
+ }
+ ]
+ },
+ {
+ "title": "Continued Decline in Week 12",
+ "description": "The trend continued to decline in week 12, with total clicks falling to 16424, a decrease of 10332 from week 11.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "week_total_clicks",
+ "value": 16424,
+ "comparison": "down_from_previous",
+ "delta": -10332,
+ "context": "Week 11 total clicks were 26756."
+ }
+ ]
+ }
+ ],
+ "educational_implications": [
+ "The significant drops in engagement during weeks 6, 11, and 12 suggest a need for timely interventions to support student motivation and participation."
+ ],
+ "recommendations": [
+ {
+ "priority": "high",
+ "action": "Schedule check-ins or motivational nudges during weeks 6, 11, and 12.",
+ "rationale": "These weeks experienced the most substantial declines in engagement, indicating a critical need for support to re-engage students."
+ }
+ ],
+ "warnings": []
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "The data quality signal is high, with a robust sample size of 1998 students across 9 assessments over 8 weeks.",
+ "based_on": [
+ "sufficient_data"
+ ]
+ },
+ "explanation_strategy": "trend",
+ "explanation_type": "trend",
+ "ai_summary_method": "baseline_first_20_rows",
+ "ai_summary_version": "baseline",
+ "baseline_available": true,
+ "input_summary_type": "raw_first_20_rows",
+ "ai_summary_method_warning": null,
+ "full_result_row_count": null,
+ "included_row_count": null,
+ "small_result_threshold": null,
+ "small_result_full_rows_applied": null,
+ "dataset_row_breakdown": [],
+ "safety_flags": [],
+ "degraded": false,
+ "meta": {
+ "model": "gpt-4o-mini-2024-07-18",
+ "latency_ms": 11397,
+ "token_usage": {
+ "prompt_tokens": 2433,
+ "completion_tokens": 599,
+ "total_tokens": 3032
+ },
+ "strategy": "trend",
+ "granularity": "weekly",
+ "cost_usd": 0.000724
+ }
+ },
+ "generation_metadata": {
+ "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-G11__baseline_first_20_rows.json",
+ "explanation_artifact_sha256": "3139650c8bf00c02976a140168d6545ba790b9678e28271c8e17b76a7b9c640b",
+ "ai_service_url": "http://localhost:8000",
+ "expected_ai_summary_method": "baseline_first_20_rows",
+ "observed_ai_summary_method": "baseline_first_20_rows",
+ "degraded": false,
+ "model": "gpt-4o-mini-2024-07-18",
+ "token_usage": {
+ "prompt_tokens": 2433,
+ "completion_tokens": 599,
+ "total_tokens": 3032
+ },
+ "latency_ms": 11400,
+ "attempts_used": 1
+ }
+ },
+ "evidence_access": {
+ "full_result_row_count": 42,
+ "full_query_artifacts": [
+ {
+ "dataset_label": "weekly_drop_detection",
+ "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G11.json",
+ "artifact_sha256": "80f171509717c4af5f1cf76142d71941c9827438aba30514b434ddce5d3c5703",
+ "row_count": 42,
+ "readable": true
+ }
+ ],
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "small_result_row_threshold": 20,
+ "direct_embedding_token_budget": 120000,
+ "prompt_embedded_row_count": 0,
+ "retrieved_row_count": 42,
+ "retrieved_row_count_by_dataset": {
+ "weekly_drop_detection": 42
+ },
+ "retrieved_row_ranges": [
+ {
+ "dataset_label": "weekly_drop_detection",
+ "start": 0,
+ "end": 41
+ }
+ ],
+ "retrieved_chunk_ids": [
+ "SAMPLE_OULAD__A-G11__baseline_first_20_rows__weekly_drop_detection__chunk_1"
+ ],
+ "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G11__baseline_first_20_rows.json",
+ "retrieval_request_complete": true,
+ "retrieval_coverage_status": "full",
+ "full_access_available": true,
+ "deterministic_scan_scope": "full_query_artifact_all_rows",
+ "deterministic_scan_row_count_by_dataset": {
+ "weekly_drop_detection": 42
+ },
+ "full_result_sent_to_llm": false,
+ "deterministic_checks": [
+ {
+ "check_type": "task_aware_shared_evidence_contract",
+ "case_id": "SAMPLE_OULAD__A-G11",
+ "task_id": "A-G11",
+ "sidecar_sha256": "0f876e159d25aa774a1b0bcf0fab482e0a280d78a33376873dcc9a607871ba3c",
+ "evidence": {
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G11",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G11",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G11__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "1a02eddf72a263e4c9840a24bc7b0a6470f8ea673481308f4c1fee9f2321196a",
+ "deterministic_summary": {
+ "summary_type": "trend_series",
+ "dataset_name": "weekly_drop_detection",
+ "row_count": 42,
+ "time_column": "week_number",
+ "metric_column": "week_total_clicks",
+ "metric_units": {},
+ "metric_directions": {},
+ "dataset_roles": {},
+ "point_count": 42,
+ "first_point": {
+ "week_number": -2,
+ "week_total_clicks": 38370,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333
+ }
+ },
+ "last_point": {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 6890.3333,
+ "drop_pct": -0.6928
+ }
+ },
+ "peak": {
+ "week_number": 3,
+ "week_total_clicks": 228353,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 117237.6667,
+ "drop_pct": 0.9478
+ }
+ },
+ "trough": {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 6890.3333,
+ "drop_pct": -0.6928
+ }
+ },
+ "overall_change": {
+ "from": {
+ "week_number": -2,
+ "week_total_clicks": 38370,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333
+ }
+ },
+ "to": {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 6890.3333,
+ "drop_pct": -0.6928
+ }
+ },
+ "delta": -36253,
+ "percent_change": -94.4827
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 3,
+ "week_total_clicks": 228353,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 117237.6667,
+ "drop_pct": 0.9478
+ }
+ },
+ "to": {
+ "week_number": 4,
+ "week_total_clicks": 90777,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 174198,
+ "drop_pct": -0.4789
+ }
+ },
+ "delta": -137576
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "week_number": 20,
+ "week_total_clicks": 70000,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 49537.6667,
+ "drop_pct": 0.4131
+ }
+ },
+ "to": {
+ "week_number": 21,
+ "week_total_clicks": 164684,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 54705,
+ "drop_pct": 2.0104
+ }
+ },
+ "delta": 94684
+ },
+ "flagged_points": [
+ {
+ "week_number": 6,
+ "week_total_clicks": 62604,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 140243.6667,
+ "drop_pct": -0.5536
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 11,
+ "week_total_clicks": 26756,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 99700.3333,
+ "drop_pct": -0.7316
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 12,
+ "week_total_clicks": 16424,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 88254.3333,
+ "drop_pct": -0.8139
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 13,
+ "week_total_clicks": 24376,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 67785.3333,
+ "drop_pct": -0.6404
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 24,
+ "week_total_clicks": 33900,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 89674.3333,
+ "drop_pct": -0.622
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 36,
+ "week_total_clicks": 11221,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 98530,
+ "drop_pct": -0.8861
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 37,
+ "week_total_clicks": 4778,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 78835.6667,
+ "drop_pct": -0.9394
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ }
+ ],
+ "secondary_metric_evidence": {
+ "cohort_avg_clicks": {
+ "count": 42,
+ "min": 66499.3333,
+ "max": 66499.3333,
+ "first": 66499.3333,
+ "last": 66499.3333
+ },
+ "rolling_3wk_avg": {
+ "count": 41,
+ "min": 6890.3333,
+ "max": 174198,
+ "first": null,
+ "last": 6890.3333
+ },
+ "drop_pct": {
+ "count": 41,
+ "min": -0.9394,
+ "max": 2.0104,
+ "first": null,
+ "last": -0.6928
+ }
+ },
+ "secondary_metric_associations": {
+ "cohort_avg_clicks": {
+ "paired_point_count": 42,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "rolling_3wk_avg": {
+ "paired_point_count": 41,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.247,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "drop_pct": {
+ "paired_point_count": 41,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0.7537,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ }
+ },
+ "multi_dataset_evidence": [],
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "action_evidence": [],
+ "summarization_warnings": [
+ "Trend points capped at 40 of 42 rows."
+ ],
+ "critical_week_evidence": {
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 3,
+ "week_total_clicks": 228353,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 117237.6667,
+ "drop_pct": 0.9478
+ }
+ },
+ "to": {
+ "week_number": 4,
+ "week_total_clicks": 90777,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 174198,
+ "drop_pct": -0.4789
+ }
+ },
+ "delta": -137576
+ },
+ "flagged_weeks": [
+ {
+ "week_number": 6,
+ "week_total_clicks": 62604,
+ "previous_week_number": 5,
+ "previous_week_total_clicks": 101601,
+ "adjacent_delta": -38997,
+ "drop_pct": "-0.5536055104092638775"
+ },
+ {
+ "week_number": 11,
+ "week_total_clicks": 26756,
+ "previous_week_number": 10,
+ "previous_week_total_clicks": 160176,
+ "adjacent_delta": -133420,
+ "drop_pct": "-0.73163580195318638096"
+ },
+ {
+ "week_number": 12,
+ "week_total_clicks": 16424,
+ "previous_week_number": 11,
+ "previous_week_total_clicks": 26756,
+ "adjacent_delta": -10332,
+ "drop_pct": "-0.81390148925642933421"
+ },
+ {
+ "week_number": 13,
+ "week_total_clicks": 24376,
+ "previous_week_number": 12,
+ "previous_week_total_clicks": 16424,
+ "adjacent_delta": 7952,
+ "drop_pct": "-0.64039418556619917603"
+ },
+ {
+ "week_number": 24,
+ "week_total_clicks": 33900,
+ "previous_week_number": 23,
+ "previous_week_total_clicks": 57005,
+ "adjacent_delta": -23105,
+ "drop_pct": "-0.62196540816212740034"
+ },
+ {
+ "week_number": 36,
+ "week_total_clicks": 11221,
+ "previous_week_number": 35,
+ "previous_week_total_clicks": 126367,
+ "adjacent_delta": -115146,
+ "drop_pct": "-0.8861159037856490409"
+ },
+ {
+ "week_number": 37,
+ "week_total_clicks": 4778,
+ "previous_week_number": 36,
+ "previous_week_total_clicks": 11221,
+ "adjacent_delta": -6443,
+ "drop_pct": "-0.93939291437462738972"
+ },
+ {
+ "week_number": 38,
+ "week_total_clicks": 4672,
+ "previous_week_number": 37,
+ "previous_week_total_clicks": 4778,
+ "adjacent_delta": -106,
+ "drop_pct": "-0.90154952727477066084"
+ },
+ {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "previous_week_number": 38,
+ "previous_week_total_clicks": 4672,
+ "adjacent_delta": -2555,
+ "drop_pct": "-0.69275797010304291036"
+ }
+ ],
+ "timing_policy": "schedule review before or at returned critical weeks"
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "trend_series",
+ "task_id": "A-G11",
+ "task_output_contract": [
+ "Identify timing, first/last points, overall change, and flagged points when supplied.",
+ "For empty or insufficient data, state row count and missing capability/data-quality warnings instead of inferring a trend.",
+ "Only recommend timing when critical weeks or action_evidence are present.",
+ "Preserve the exact largest adjacent drop, every flagged week, and each flagged week's delta from the immediately preceding returned week.",
+ "Tie action timing to before or at the observed critical weeks; do not infer causes."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "weekly_drop_detection",
+ "row_count": 42,
+ "point_count": 42,
+ "time_column": "week_number",
+ "metric_column": "week_total_clicks",
+ "dataset_roles": {},
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "first_point": {
+ "week_number": -2,
+ "week_total_clicks": 38370,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333
+ }
+ },
+ "last_point": {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 6890.3333,
+ "drop_pct": -0.6928
+ }
+ },
+ "overall_change": {
+ "from": {
+ "week_number": -2,
+ "week_total_clicks": 38370,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333
+ }
+ },
+ "to": {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 6890.3333,
+ "drop_pct": -0.6928
+ }
+ },
+ "delta": -36253,
+ "percent_change": -94.4827
+ },
+ "critical_week_evidence": {
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 3,
+ "week_total_clicks": 228353,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 117237.6667,
+ "drop_pct": 0.9478
+ }
+ },
+ "to": {
+ "week_number": 4,
+ "week_total_clicks": 90777,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 174198,
+ "drop_pct": -0.4789
+ }
+ },
+ "delta": -137576
+ },
+ "flagged_weeks": [
+ {
+ "week_number": 6,
+ "week_total_clicks": 62604,
+ "previous_week_number": 5,
+ "previous_week_total_clicks": 101601,
+ "adjacent_delta": -38997,
+ "drop_pct": "-0.5536055104092638775"
+ },
+ {
+ "week_number": 11,
+ "week_total_clicks": 26756,
+ "previous_week_number": 10,
+ "previous_week_total_clicks": 160176,
+ "adjacent_delta": -133420,
+ "drop_pct": "-0.73163580195318638096"
+ },
+ {
+ "week_number": 12,
+ "week_total_clicks": 16424,
+ "previous_week_number": 11,
+ "previous_week_total_clicks": 26756,
+ "adjacent_delta": -10332,
+ "drop_pct": "-0.81390148925642933421"
+ },
+ {
+ "week_number": 13,
+ "week_total_clicks": 24376,
+ "previous_week_number": 12,
+ "previous_week_total_clicks": 16424,
+ "adjacent_delta": 7952,
+ "drop_pct": "-0.64039418556619917603"
+ },
+ {
+ "week_number": 24,
+ "week_total_clicks": 33900,
+ "previous_week_number": 23,
+ "previous_week_total_clicks": 57005,
+ "adjacent_delta": -23105,
+ "drop_pct": "-0.62196540816212740034"
+ },
+ {
+ "week_number": 36,
+ "week_total_clicks": 11221,
+ "previous_week_number": 35,
+ "previous_week_total_clicks": 126367,
+ "adjacent_delta": -115146,
+ "drop_pct": "-0.8861159037856490409"
+ },
+ {
+ "week_number": 37,
+ "week_total_clicks": 4778,
+ "previous_week_number": 36,
+ "previous_week_total_clicks": 11221,
+ "adjacent_delta": -6443,
+ "drop_pct": "-0.93939291437462738972"
+ },
+ {
+ "week_number": 38,
+ "week_total_clicks": 4672,
+ "previous_week_number": 37,
+ "previous_week_total_clicks": 4778,
+ "adjacent_delta": -106,
+ "drop_pct": "-0.90154952727477066084"
+ },
+ {
+ "week_number": 39,
+ "week_total_clicks": 2117,
+ "previous_week_number": 38,
+ "previous_week_total_clicks": 4672,
+ "adjacent_delta": -2555,
+ "drop_pct": "-0.69275797010304291036"
+ }
+ ],
+ "timing_policy": "schedule review before or at returned critical weeks"
+ }
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 3,
+ "week_total_clicks": 228353,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 117237.6667,
+ "drop_pct": 0.9478
+ }
+ },
+ "to": {
+ "week_number": 4,
+ "week_total_clicks": 90777,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 174198,
+ "drop_pct": -0.4789
+ }
+ },
+ "delta": -137576
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flagged_points": [
+ {
+ "week_number": 6,
+ "week_total_clicks": 62604,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 140243.6667,
+ "drop_pct": -0.5536
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 11,
+ "week_total_clicks": 26756,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 99700.3333,
+ "drop_pct": -0.7316
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 12,
+ "week_total_clicks": 16424,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 88254.3333,
+ "drop_pct": -0.8139
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 13,
+ "week_total_clicks": 24376,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 67785.3333,
+ "drop_pct": -0.6404
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 24,
+ "week_total_clicks": 33900,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 89674.3333,
+ "drop_pct": -0.622
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 36,
+ "week_total_clicks": 11221,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 98530,
+ "drop_pct": -0.8861
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ },
+ {
+ "week_number": 37,
+ "week_total_clicks": 4778,
+ "secondary_metrics": {
+ "cohort_avg_clicks": 66499.3333,
+ "rolling_3wk_avg": 78835.6667,
+ "drop_pct": -0.9394
+ },
+ "flags": {
+ "is_drop_week": true
+ },
+ "flag_raw_values": {
+ "is_drop_week": true
+ }
+ }
+ ]
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "action_evidence": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Trend points capped at 40 of 42 rows."
+ ]
+ }
+ }
+ ]
+ }
+ }
+ }
+ ],
+ "checked_claim_types": [
+ "task_specific_evidence_contract"
+ ],
+ "unchecked_claim_types": [
+ "semantic_interpretation",
+ "causal_framing",
+ "actionability_quality"
+ ],
+ "judge_evidence_citations": []
+ },
+ "evaluation_requirements": {
+ "required_core_outputs": [
+ {
+ "requirement_id": "A-G11-CORE-01",
+ "description": "Identify the critical weeks in which cohort-level engagement declined."
+ },
+ {
+ "requirement_id": "A-G11-CORE-02",
+ "description": "Recommend admin action timing relative to the identified critical weeks."
+ }
+ ],
+ "required_supporting_outputs": [],
+ "evaluation_constraints": [
+ {
+ "constraint_id": "A-G11-CONSTRAINT-01",
+ "description": "Use early_warning_week as the primary timing field when returned."
+ }
+ ],
+ "safety_fairness_applicability": "applicable",
+ "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+ }
+}

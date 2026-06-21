@@ -1,0 +1,100 @@
+{
+ "report_version": "llm_judge_v2_phase_f7_preflight_token_budget_v1",
+ "generated_at": "2026-06-21T20:50:32.095Z",
+ "status": "PASS",
+ "phase_scope": [
+ "F7-preflight token budget audit and prompt queue strategy"
+ ],
+ "inputs": {
+ "judge_context_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_contexts/judge_context_manifest.jsonl",
+ "prompt_path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md",
+ "prompt_sha256": "e35e0b9d459cc13cd908acc693510832ccf611a61922bcd6bdb3f4e93f569517",
+ "packet_layout": "embedded_prompt_full_context"
+ },
+ "configuration": {
+ "full_context_token_cap": 32000,
+ "tokenizer_method": "heuristic_chars_div_4_ceiling",
+ "thresholds": [
+ 32000,
+ 64000,
+ 128000,
+ 190000
+ ],
+ "static_prompt_loaded_once_per_session": false
+ },
+ "counts": {
+ "prompt_queue_ready_records": 88,
+ "total_records": 88,
+ "unique_record_ids": 88,
+ "full_context_records": 76,
+ "compact_retrieval_context_records": 12,
+ "oversized_full_context_records": 0,
+ "threshold_counts": {
+ ">32000": 12,
+ ">64000": 9,
+ ">128000": 5,
+ ">190000": 2
+ }
+ },
+ "token_savings": {
+ "static_prompt_token_count": 3501,
+ "record_context_token_count_total": 1358595,
+ "embedded_prompt_equivalent_token_count": 1358595,
+ "session_static_total_token_count": 1358595,
+ "repeated_static_tokens_avoided": 0,
+ "estimated_savings_ratio": 0,
+ "estimated_savings_percent": 0
+ },
+ "coverage_summary": {
+ "datasets": {
+ "SAMPLE_OULAD": 88
+ },
+ "explanation_modes": {
+ "baseline_first_20_rows": 44,
+ "task_aware_data_summarization": 44
+ },
+ "evidence_access_modes": {
+ "direct_embedding": 62,
+ "deterministic_artifact_retrieval": 26
+ },
+ "queue_strategies": {
+ "full_context": 76,
+ "compact_retrieval_context": 12
+ },
+ "token_risk_buckets": {
+ "<=32k": 76,
+ ">64k": 4,
+ ">128k": 3,
+ ">32k": 3,
+ ">190k": 2
+ }
+ },
+ "max_context_record": {
+ "record_id": "SAMPLE_OULAD__S-T11__task_aware_data_summarization",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T11",
+ "explanation_mode": "task_aware_data_summarization",
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "context_token_count": 197991,
+ "prompt_packet_token_count": 10398,
+ "packet_layout": "embedded_prompt_full_context",
+ "queue_strategy": "compact_retrieval_context",
+ "final_context_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_contexts/final_contexts/SAMPLE_OULAD__S-T11__task_aware_data_summarization.md",
+ "prompt_packet_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_queue/prompt_queue/SAMPLE_OULAD__S-T11__task_aware_data_summarization.md"
+ },
+ "outputs": {
+ "prompt_queue_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_queue/judge_prompt_queue_manifest.jsonl",
+ "prompt_queue_dir": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_queue/prompt_queue",
+ "report_json": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_queue/judge_queue_report_official_r5.json",
+ "report_md": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_queue/judge_queue_report_official_r5.md"
+ },
+ "gate_decision": {
+ "prompt_queue_preflight_status": "PASS",
+ "prompt_queue_ready": true,
+ "judge_invocation_started": false,
+ "judge_invocation_allowed": false,
+ "official_full_evaluation_allowed": "pending_user_approval",
+ "reason": "Prompt queue packets are generated with token-budget strategy. Judge invocation was not started and still requires explicit user approval."
+ },
+ "issues": []
+}

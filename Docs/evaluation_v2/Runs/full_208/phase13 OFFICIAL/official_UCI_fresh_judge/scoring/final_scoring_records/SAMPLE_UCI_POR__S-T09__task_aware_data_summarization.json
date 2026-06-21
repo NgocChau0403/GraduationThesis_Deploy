@@ -1,0 +1,107 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__S-T09__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on faithfulness, with the limitations summarized in the holistic rationale."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10 reflects The response does not state the selected student's lifestyle-risk score 0.375 and average score 36.67."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on task_relevance, with the limitations summarized in the holistic rationale."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10: material actionability limitations reduce the usefulness of the response. The cohort statistic is accurately reported, but the selected-student comparison is absent and the lifestyle advice exceeds the permitted evidence."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10 reflects It recommends healthier habits despite a descriptive-only policy, no p-value, and no causal permission."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The cohort coefficient is -0.1041, indicating a weak negative association.",
+ "claim_type": "correlation",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "derived correlation evidence coefficient=-0.1041, n=649"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "Coefficient, direction, and strength are exact."
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "selected_student_position_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "task_relevance"
+ ],
+ "cap_candidate": null,
+ "rationale": "The response does not state the selected student's lifestyle-risk score 0.375 and average score 36.67.",
+ "evidence_refs": [
+ "derived selected_entity_evidence"
+ ],
+ "requirement_id": "S-T09-CORE-01"
+ },
+ {
+ "error_id": "E02",
+ "error_type": "sensitive_action_overreach",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "safety_fairness",
+ "secondary_metrics": [
+ "faithfulness",
+ "actionability"
+ ],
+ "cap_candidate": null,
+ "rationale": "It recommends healthier habits despite a descriptive-only policy, no p-value, and no causal permission.",
+ "evidence_refs": [
+ "derived correlation evidence claim_limit and causal_claim_allowed=false"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 2,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 2,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 7.25,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 7.25,
+ "verdict": "good",
+ "invalid_reason": null
+}

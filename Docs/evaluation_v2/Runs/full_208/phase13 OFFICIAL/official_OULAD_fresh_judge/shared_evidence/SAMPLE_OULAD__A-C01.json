@@ -1,0 +1,416 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-C01",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-C01",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-C01__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "9a722a33d01bb3d4a897407c56d4c045e785b4362e132e752f4af12f316ab517",
+ "deterministic_summary": {
+ "summary_type": "trend_comparison",
+ "dataset_name": "trajectory_comparison",
+ "row_count": 17,
+ "dynamic_comparison_groups": true,
+ "group_column": "student_id",
+ "time_column": "assessment_order",
+ "metric_column": "score_normalized",
+ "alignment_columns": [
+ "assessment_order",
+ "assessment_type"
+ ],
+ "divergence_threshold": 5,
+ "available_groups": [
+ "SAMPLE_OULAD_STU_100788"
+ ],
+ "evidence_status": "insufficient_evidence",
+ "group_trends": {
+ "SAMPLE_OULAD_STU_100788": {
+ "group": "SAMPLE_OULAD_STU_100788",
+ "point_count": 17,
+ "series_points": [
+ {
+ "assessment_order": 1,
+ "assessment_type": "CMA",
+ "score_normalized": 100,
+ "source_row_index": 1
+ },
+ {
+ "assessment_order": 1,
+ "assessment_type": "TMA",
+ "score_normalized": 92,
+ "source_row_index": 0
+ },
+ {
+ "assessment_order": 2,
+ "assessment_type": "TMA",
+ "score_normalized": 90,
+ "source_row_index": 2
+ },
+ {
+ "assessment_order": 3,
+ "assessment_type": "CMA",
+ "score_normalized": 87,
+ "source_row_index": 3
+ },
+ {
+ "assessment_order": 3,
+ "assessment_type": "TMA",
+ "score_normalized": 89,
+ "source_row_index": 4
+ },
+ {
+ "assessment_order": 4,
+ "assessment_type": "TMA",
+ "score_normalized": 61,
+ "source_row_index": 5
+ },
+ {
+ "assessment_order": 5,
+ "assessment_type": "CMA",
+ "score_normalized": 90,
+ "source_row_index": 6
+ },
+ {
+ "assessment_order": 5,
+ "assessment_type": "TMA",
+ "score_normalized": 87,
+ "source_row_index": 7
+ },
+ {
+ "assessment_order": 6,
+ "assessment_type": "CMA",
+ "score_normalized": 90,
+ "source_row_index": 8
+ },
+ {
+ "assessment_order": 7,
+ "assessment_type": "CMA",
+ "score_normalized": 92,
+ "source_row_index": 9
+ },
+ {
+ "assessment_order": 8,
+ "assessment_type": "CMA",
+ "score_normalized": 97,
+ "source_row_index": 10
+ },
+ {
+ "assessment_order": 8,
+ "assessment_type": "CMA",
+ "score_normalized": 83,
+ "source_row_index": 11
+ },
+ {
+ "assessment_order": 9,
+ "assessment_type": "CMA",
+ "score_normalized": 85,
+ "source_row_index": 13
+ },
+ {
+ "assessment_order": 9,
+ "assessment_type": "Exam",
+ "score_normalized": 96,
+ "source_row_index": 12
+ },
+ {
+ "assessment_order": 10,
+ "assessment_type": "CMA",
+ "score_normalized": 88,
+ "source_row_index": 14
+ },
+ {
+ "assessment_order": 11,
+ "assessment_type": "CMA",
+ "score_normalized": 93,
+ "source_row_index": 15
+ },
+ {
+ "assessment_order": 12,
+ "assessment_type": "CMA",
+ "score_normalized": 99,
+ "source_row_index": 16
+ }
+ ],
+ "first_point": {
+ "assessment_order": 1,
+ "assessment_type": "CMA",
+ "score_normalized": 100,
+ "source_row_index": 1
+ },
+ "last_point": {
+ "assessment_order": 12,
+ "assessment_type": "CMA",
+ "score_normalized": 99,
+ "source_row_index": 16
+ },
+ "net_change": -1,
+ "peak": {
+ "assessment_order": 1,
+ "assessment_type": "CMA",
+ "score_normalized": 100,
+ "source_row_index": 1
+ },
+ "trough": {
+ "assessment_order": 4,
+ "assessment_type": "TMA",
+ "score_normalized": 61,
+ "source_row_index": 5
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "assessment_order": 3,
+ "assessment_type": "TMA",
+ "score_normalized": 89,
+ "source_row_index": 4
+ },
+ "to": {
+ "assessment_order": 4,
+ "assessment_type": "TMA",
+ "score_normalized": 61,
+ "source_row_index": 5
+ },
+ "delta": -28
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "assessment_order": 4,
+ "assessment_type": "TMA",
+ "score_normalized": 61,
+ "source_row_index": 5
+ },
+ "to": {
+ "assessment_order": 5,
+ "assessment_type": "CMA",
+ "score_normalized": 90,
+ "source_row_index": 6
+ },
+ "delta": 29
+ }
+ }
+ },
+ "pairwise_comparison": null,
+ "missing_group_evidence": [
+ {
+ "required_group_count": 2,
+ "observed_group_count": 1,
+ "observed_groups": [
+ "SAMPLE_OULAD_STU_100788"
+ ]
+ }
+ ],
+ "summarization_warnings": [
+ "Dynamic trend comparison requires at least two observed groups; do not infer a pairwise trajectory difference."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "trend_comparison",
+ "task_id": "A-C01",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "trajectory_comparison",
+ "row_count": 17,
+ "group_column": "student_id",
+ "time_column": "assessment_order",
+ "metric_column": "score_normalized",
+ "available_groups": [
+ "SAMPLE_OULAD_STU_100788"
+ ],
+ "dynamic_comparison_groups": true,
+ "alignment_columns": [
+ "assessment_order",
+ "assessment_type"
+ ]
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "group_trends": {
+ "SAMPLE_OULAD_STU_100788": {
+ "group": "SAMPLE_OULAD_STU_100788",
+ "point_count": 17,
+ "series_points": [
+ {
+ "assessment_order": 1,
+ "assessment_type": "CMA",
+ "score_normalized": 100,
+ "source_row_index": 1
+ },
+ {
+ "assessment_order": 1,
+ "assessment_type": "TMA",
+ "score_normalized": 92,
+ "source_row_index": 0
+ },
+ {
+ "assessment_order": 2,
+ "assessment_type": "TMA",
+ "score_normalized": 90,
+ "source_row_index": 2
+ },
+ {
+ "assessment_order": 3,
+ "assessment_type": "CMA",
+ "score_normalized": 87,
+ "source_row_index": 3
+ },
+ {
+ "assessment_order": 3,
+ "assessment_type": "TMA",
+ "score_normalized": 89,
+ "source_row_index": 4
+ },
+ {
+ "assessment_order": 4,
+ "assessment_type": "TMA",
+ "score_normalized": 61,
+ "source_row_index": 5
+ },
+ {
+ "assessment_order": 5,
+ "assessment_type": "CMA",
+ "score_normalized": 90,
+ "source_row_index": 6
+ },
+ {
+ "assessment_order": 5,
+ "assessment_type": "TMA",
+ "score_normalized": 87,
+ "source_row_index": 7
+ },
+ {
+ "assessment_order": 6,
+ "assessment_type": "CMA",
+ "score_normalized": 90,
+ "source_row_index": 8
+ },
+ {
+ "assessment_order": 7,
+ "assessment_type": "CMA",
+ "score_normalized": 92,
+ "source_row_index": 9
+ },
+ {
+ "assessment_order": 8,
+ "assessment_type": "CMA",
+ "score_normalized": 97,
+ "source_row_index": 10
+ },
+ {
+ "assessment_order": 8,
+ "assessment_type": "CMA",
+ "score_normalized": 83,
+ "source_row_index": 11
+ },
+ {
+ "assessment_order": 9,
+ "assessment_type": "CMA",
+ "score_normalized": 85,
+ "source_row_index": 13
+ },
+ {
+ "assessment_order": 9,
+ "assessment_type": "Exam",
+ "score_normalized": 96,
+ "source_row_index": 12
+ },
+ {
+ "assessment_order": 10,
+ "assessment_type": "CMA",
+ "score_normalized": 88,
+ "source_row_index": 14
+ },
+ {
+ "assessment_order": 11,
+ "assessment_type": "CMA",
+ "score_normalized": 93,
+ "source_row_index": 15
+ },
+ {
+ "assessment_order": 12,
+ "assessment_type": "CMA",
+ "score_normalized": 99,
+ "source_row_index": 16
+ }
+ ],
+ "first_point": {
+ "assessment_order": 1,
+ "assessment_type": "CMA",
+ "score_normalized": 100,
+ "source_row_index": 1
+ },
+ "last_point": {
+ "assessment_order": 12,
+ "assessment_type": "CMA",
+ "score_normalized": 99,
+ "source_row_index": 16
+ },
+ "net_change": -1,
+ "peak": {
+ "assessment_order": 1,
+ "assessment_type": "CMA",
+ "score_normalized": 100,
+ "source_row_index": 1
+ },
+ "trough": {
+ "assessment_order": 4,
+ "assessment_type": "TMA",
+ "score_normalized": 61,
+ "source_row_index": 5
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "assessment_order": 3,
+ "assessment_type": "TMA",
+ "score_normalized": 89,
+ "source_row_index": 4
+ },
+ "to": {
+ "assessment_order": 4,
+ "assessment_type": "TMA",
+ "score_normalized": 61,
+ "source_row_index": 5
+ },
+ "delta": -28
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "assessment_order": 4,
+ "assessment_type": "TMA",
+ "score_normalized": 61,
+ "source_row_index": 5
+ },
+ "to": {
+ "assessment_order": 5,
+ "assessment_type": "CMA",
+ "score_normalized": 90,
+ "source_row_index": 6
+ },
+ "delta": 29
+ }
+ }
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_group_evidence": [
+ {
+ "required_group_count": 2,
+ "observed_group_count": 1,
+ "observed_groups": [
+ "SAMPLE_OULAD_STU_100788"
+ ]
+ }
+ ],
+ "summarization_warnings": [
+ "Dynamic trend comparison requires at least two observed groups; do not infer a pairwise trajectory difference."
+ ]
+ }
+ }
+ ]
+ }
+}

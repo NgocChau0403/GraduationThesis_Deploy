@@ -1,0 +1,194 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__S-T15",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "S-T15",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__S-T15__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "fc54e755bfa2c94bec69f543ab194441a5e0d2805fa924cfc65680a9a6567a27",
+ "deterministic_summary": {
+ "summary_type": "correlation_evidence",
+ "dataset_name": "family_context_scatter",
+ "row_count": 649,
+ "x_column": "family_stability_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "selected_entity_column": "is_current_student",
+ "metric_units": {
+ "family_stability_score": "index_0_1",
+ "avg_score": "score_on_runtime_scale"
+ },
+ "metric_directions": {
+ "family_stability_score": "context_metric",
+ "avg_score": "higher_is_better"
+ },
+ "coefficient": 0.1442,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 649,
+ "p_value": null,
+ "outliers": [],
+ "selected_entity_evidence": [
+ {
+ "row_index": 648,
+ "selected_column": "is_current_student",
+ "selected_value": true,
+ "is_valid_pair": true,
+ "raw_values": {
+ "family_stability_score": 0.575,
+ "avg_score": 36.67
+ },
+ "family_stability_score": 0.575,
+ "avg_score": 36.67,
+ "cohort_context": {
+ "coefficient": 0.1442,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 649,
+ "direction": "positive",
+ "strength": "weak",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ },
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "point_role": "Selected student",
+ "label_context": {
+ "point_role": "Selected student"
+ },
+ "sensitive_context": {
+ "family_relation": 4,
+ "parent_cohabitation_status": "A",
+ "mother_education_level": "4",
+ "father_education_level": "4"
+ },
+ "sensitive_context_policy": "descriptive_only",
+ "claim_limit": "Sensitive/background context is descriptive only; do not infer causality or prescribe actions from it."
+ }
+ ],
+ "missing_selected_entity_evidence": [],
+ "selected_entity_count": 1,
+ "sensitive_context_policy": "descriptive_only",
+ "direction": "positive",
+ "strength": "weak",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false,
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "correlation_evidence",
+ "task_id": "S-T15",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "family_context_scatter",
+ "row_count": 649,
+ "x_column": "family_stability_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "sample_size": 649,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "selected_entity_column": "is_current_student",
+ "selected_entity_count": 1,
+ "metric_units": {
+ "family_stability_score": "index_0_1",
+ "avg_score": "score_on_runtime_scale"
+ },
+ "metric_directions": {
+ "family_stability_score": "context_metric",
+ "avg_score": "higher_is_better"
+ }
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "coefficient": 0.1442,
+ "direction": "positive",
+ "strength": "weak"
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "p_value": null,
+ "selected_entity_evidence": [
+ {
+ "row_index": 648,
+ "selected_column": "is_current_student",
+ "selected_value": true,
+ "is_valid_pair": true,
+ "raw_values": {
+ "family_stability_score": 0.575,
+ "avg_score": 36.67
+ },
+ "family_stability_score": 0.575,
+ "avg_score": 36.67,
+ "cohort_context": {
+ "coefficient": 0.1442,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 649,
+ "direction": "positive",
+ "strength": "weak",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ },
+ "student_id": "SAMPLE_UCI_POR_STU_000001",
+ "point_role": "Selected student",
+ "label_context": {
+ "point_role": "Selected student"
+ },
+ "sensitive_context": {
+ "family_relation": 4,
+ "parent_cohabitation_status": "A",
+ "mother_education_level": "4",
+ "father_education_level": "4"
+ },
+ "sensitive_context_policy": "descriptive_only",
+ "claim_limit": "Sensitive/background context is descriptive only; do not infer causality or prescribe actions from it."
+ }
+ ]
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "outliers": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_selected_entity_evidence": [],
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "sensitive_context_policy": "descriptive_only",
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ }
+ }
+ ]
+ }
+}

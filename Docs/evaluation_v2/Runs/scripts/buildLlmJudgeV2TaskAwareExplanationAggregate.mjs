@@ -6,14 +6,37 @@ import { fileURLToPath } from "node:url";
 const SCRIPT_DIR = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(SCRIPT_DIR, "../../../..");
 const ROOT = path.join(PROJECT_ROOT, "Docs/evaluation_v2/Runs/full_208");
-const TASK_AWARE_ROOT = path.join(ROOT, "phase8_explanations/task_aware_data_summarization");
-const OUTPUT_MANIFEST_PATH = path.join(TASK_AWARE_ROOT, "explanation_manifest_task_aware_104.jsonl");
-const OUTPUT_REPORT_JSON_PATH = path.join(TASK_AWARE_ROOT, "explanation_aggregate_report.json");
-const OUTPUT_REPORT_MD_PATH = path.join(TASK_AWARE_ROOT, "explanation_aggregate_report.md");
+const DEFAULT_TASK_AWARE_ROOT = path.join(ROOT, "phase8_explanations/task_aware_data_summarization");
 const DATASETS = ["SAMPLE_UCI_POR", "SAMPLE_OULAD"];
 const EXPECTED_MODE = "task_aware_data_summarization";
 const EXPECTED_PER_DATASET = 52;
 const EXPECTED_TOTAL = 104;
+
+function parseArgs(argv) {
+  const args = {
+    taskAwareRoot: DEFAULT_TASK_AWARE_ROOT,
+    outputManifestPath: null,
+    outputReportJsonPath: null,
+    outputReportMdPath: null,
+  };
+
+  for (let i = 0; i < argv.length; i += 1) {
+    const arg = argv[i];
+    const next = argv[i + 1];
+    if (arg === "--task-aware-root") args.taskAwareRoot = path.resolve(next), i += 1;
+    else if (arg === "--output-manifest") args.outputManifestPath = path.resolve(next), i += 1;
+    else if (arg === "--output-report-json") args.outputReportJsonPath = path.resolve(next), i += 1;
+    else if (arg === "--output-report-md") args.outputReportMdPath = path.resolve(next), i += 1;
+    else throw new Error(`Unknown argument: ${arg}`);
+  }
+
+  return {
+    ...args,
+    outputManifestPath: args.outputManifestPath ?? path.join(args.taskAwareRoot, "explanation_manifest_task_aware_104.jsonl"),
+    outputReportJsonPath: args.outputReportJsonPath ?? path.join(args.taskAwareRoot, "explanation_aggregate_report.json"),
+    outputReportMdPath: args.outputReportMdPath ?? path.join(args.taskAwareRoot, "explanation_aggregate_report.md"),
+  };
+}
 
 function toRepoPath(filePath) {
   return path.relative(PROJECT_ROOT, filePath).replaceAll(path.sep, "/");
@@ -47,8 +70,8 @@ function issue(severity, code, message, details = {}) {
   return { severity, code, message, details };
 }
 
-async function verifyDataset(datasetId) {
-  const datasetDir = path.join(TASK_AWARE_ROOT, datasetId);
+async function verifyDataset(datasetId, args) {
+  const datasetDir = path.join(args.taskAwareRoot, datasetId);
   const manifestPath = path.join(datasetDir, "explanation_manifest.jsonl");
   const reportJsonPath = path.join(datasetDir, "explanation_report.json");
   const manifestRecords = await readJsonl(manifestPath);
@@ -138,8 +161,9 @@ async function verifyDataset(datasetId) {
 }
 
 async function main() {
+  const args = parseArgs(process.argv.slice(2));
   const datasetResults = [];
-  for (const datasetId of DATASETS) datasetResults.push(await verifyDataset(datasetId));
+  for (const datasetId of DATASETS) datasetResults.push(await verifyDataset(datasetId, args));
 
   const records = datasetResults.flatMap((result) => result.manifestRecords);
   const recordIds = records.map((record) => record.record_id);
@@ -196,9 +220,9 @@ async function main() {
     },
     by_dataset: byDataset,
     outputs: {
-      explanation_manifest_task_aware_104_jsonl: toRepoPath(OUTPUT_MANIFEST_PATH),
-      explanation_aggregate_report_json: toRepoPath(OUTPUT_REPORT_JSON_PATH),
-      explanation_aggregate_report_md: toRepoPath(OUTPUT_REPORT_MD_PATH),
+      explanation_manifest_task_aware_104_jsonl: toRepoPath(args.outputManifestPath),
+      explanation_aggregate_report_json: toRepoPath(args.outputReportJsonPath),
+      explanation_aggregate_report_md: toRepoPath(args.outputReportMdPath),
     },
     gate_decision: {
       task_aware_aggregate_complete: status === "PASS",
@@ -212,9 +236,9 @@ async function main() {
     issues,
   };
 
-  await writeFile(OUTPUT_MANIFEST_PATH, jsonl(records), "utf8");
-  await writeFile(OUTPUT_REPORT_JSON_PATH, `${JSON.stringify(report, null, 2)}\n`, "utf8");
-  await writeFile(OUTPUT_REPORT_MD_PATH, [
+  await writeFile(args.outputManifestPath, jsonl(records), "utf8");
+  await writeFile(args.outputReportJsonPath, `${JSON.stringify(report, null, 2)}\n`, "utf8");
+  await writeFile(args.outputReportMdPath, [
     "# LLM Judge V2 Phase F4 Task-aware Explanation Aggregate Report",
     "",
     `- Generated at: ${report.generated_at}`,

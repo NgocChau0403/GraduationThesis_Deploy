@@ -1,0 +1,634 @@
+{
+ "schema_version": "judge_input_schema_v1",
+ "record_id": "SAMPLE_OULAD__S-T03__baseline_first_20_rows",
+ "evaluation_run_id": "oulad_official_r5",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T03",
+ "explanation_mode": "baseline_first_20_rows",
+ "prompt_version": "judge_prompt_v2_pilot_v1",
+ "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+ "task_context": {
+ "task_name": "Peer comparison",
+ "scope": "1 student",
+ "actionable_question": "Where do I stand compared to my class?",
+ "target_audience": "student",
+ "ai_summary_type": "multi_metric_comparison",
+ "ai_prompt_hint": "Show student's standing (top X%). Explain which metrics are above/below average.",
+ "query_labels": [
+ "peer_comparison"
+ ],
+ "explanation_strategy": "comparison"
+ },
+ "schema_context": {
+ "source_tables": [
+ "enrollment",
+ "assessment_result",
+ "assessment",
+ "engagement"
+ ],
+ "key_db_fields": [
+ "avg_score [FE cross]",
+ "engagement_score [FE cross]",
+ "pass_rate [FE cross]",
+ "performance_trend [FE cross]"
+ ],
+ "output_schema": {},
+ "query_labels": [
+ "peer_comparison"
+ ]
+ },
+ "explanation": {
+ "raw_text": "Summary: You are performing exceptionally well compared to your cohort. Your average score, score percentile, and engagement percentile are all significantly higher than the cohort benchmark, indicating strong academic performance and engagement.\n\nInsights: Outstanding Average Score: Your average score of 94.34 is well above the cohort benchmark of 66.68, showcasing your strong academic abilities. | High Score Percentile: With a score percentile of 89.8, you are in the top 10% of your class, while the cohort benchmark is at 50, indicating you are performing significantly better than average. | Strong Engagement: Your engagement percentile of 75 is also above the cohort benchmark of 50, suggesting that you are actively participating and involved in your studies.\n\nEducational implications: Your high performance indicates effective study habits and engagement strategies.\n\nRecommendations: medium - Continue to challenge yourself with advanced materials or projects. - This will help you maintain your high performance and further develop your skills.",
+ "structured_payload": {
+ "task_id": "S-T03",
+ "execution_id": "exec_1781847881232_997b11bc",
+ "explanation": {
+ "summary": "You are performing exceptionally well compared to your cohort. Your average score, score percentile, and engagement percentile are all significantly higher than the cohort benchmark, indicating strong academic performance and engagement.",
+ "insights": [
+ {
+ "title": "Outstanding Average Score",
+ "description": "Your average score of 94.34 is well above the cohort benchmark of 66.68, showcasing your strong academic abilities.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "Average score",
+ "value": 94.34,
+ "comparison": "up_from_previous",
+ "delta": 27.66,
+ "context": "Compared to cohort benchmark"
+ }
+ ]
+ },
+ {
+ "title": "High Score Percentile",
+ "description": "With a score percentile of 89.8, you are in the top 10% of your class, while the cohort benchmark is at 50, indicating you are performing significantly better than average.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "Score percentile",
+ "value": 89.8,
+ "comparison": "up_from_previous",
+ "delta": 39.8,
+ "context": "Compared to cohort benchmark"
+ }
+ ]
+ },
+ {
+ "title": "Strong Engagement",
+ "description": "Your engagement percentile of 75 is also above the cohort benchmark of 50, suggesting that you are actively participating and involved in your studies.",
+ "severity": "medium",
+ "evidence": [
+ {
+ "metric": "Engagement percentile",
+ "value": 75,
+ "comparison": "up_from_previous",
+ "delta": 25,
+ "context": "Compared to cohort benchmark"
+ }
+ ]
+ }
+ ],
+ "educational_implications": [
+ "Your high performance indicates effective study habits and engagement strategies."
+ ],
+ "recommendations": [
+ {
+ "priority": "medium",
+ "action": "Continue to challenge yourself with advanced materials or projects.",
+ "rationale": "This will help you maintain your high performance and further develop your skills."
+ }
+ ],
+ "warnings": []
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "Data is clear and shows a strong comparison between your performance and the cohort benchmark.",
+ "based_on": [
+ "sufficient_data"
+ ]
+ },
+ "explanation_strategy": "comparison",
+ "explanation_type": "comparison",
+ "ai_summary_method": "baseline_first_20_rows",
+ "ai_summary_version": "baseline",
+ "baseline_available": true,
+ "input_summary_type": "raw_first_20_rows",
+ "ai_summary_method_warning": null,
+ "full_result_row_count": null,
+ "included_row_count": null,
+ "small_result_threshold": null,
+ "small_result_full_rows_applied": null,
+ "dataset_row_breakdown": [],
+ "safety_flags": [],
+ "degraded": false,
+ "meta": {
+ "model": "gpt-4o-mini-2024-07-18",
+ "latency_ms": 7986,
+ "token_usage": {
+ "prompt_tokens": 759,
+ "completion_tokens": 510,
+ "total_tokens": 1269
+ },
+ "strategy": "comparison",
+ "granularity": "semester",
+ "cost_usd": 0.00042
+ }
+ },
+ "generation_metadata": {
+ "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__S-T03__baseline_first_20_rows.json",
+ "explanation_artifact_sha256": "5100a9724ece5c1f15fd23059b2a045a571006877fdaeb50bffa706cb65a9f5c",
+ "ai_service_url": "http://localhost:8000",
+ "expected_ai_summary_method": "baseline_first_20_rows",
+ "observed_ai_summary_method": "baseline_first_20_rows",
+ "degraded": false,
+ "model": "gpt-4o-mini-2024-07-18",
+ "token_usage": {
+ "prompt_tokens": 759,
+ "completion_tokens": 510,
+ "total_tokens": 1269
+ },
+ "latency_ms": 7988,
+ "attempts_used": 1
+ }
+ },
+ "evidence_access": {
+ "full_result_row_count": 6,
+ "full_query_artifacts": [
+ {
+ "dataset_label": "peer_comparison",
+ "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__S-T03.json",
+ "artifact_sha256": "fe610876e89ca66eba912e2edc06e235347cbdec54f8c8c0f344e278d45741b0",
+ "row_count": 6,
+ "readable": true
+ }
+ ],
+ "evidence_access_mode": "direct_embedding",
+ "small_result_row_threshold": 20,
+ "direct_embedding_token_budget": 120000,
+ "prompt_embedded_row_count": 6,
+ "retrieved_row_count": 0,
+ "retrieved_row_count_by_dataset": {},
+ "retrieved_row_ranges": [],
+ "retrieved_chunk_ids": [],
+ "retrieval_log_path": null,
+ "retrieval_request_complete": true,
+ "retrieval_coverage_status": "not_applicable",
+ "full_access_available": true,
+ "deterministic_scan_scope": "full_query_artifact_all_rows",
+ "deterministic_scan_row_count_by_dataset": {
+ "peer_comparison": 6
+ },
+ "full_result_sent_to_llm": true,
+ "deterministic_checks": [
+ {
+ "check_type": "task_aware_shared_evidence_contract",
+ "case_id": "SAMPLE_OULAD__S-T03",
+ "task_id": "S-T03",
+ "sidecar_sha256": "c1b723a256c9ea107e288b87473b823b781b443f9b6571aebccdc65828f19b0f",
+ "evidence": {
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__S-T03",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T03",
+ "source_explanation_record_id": "SAMPLE_OULAD__S-T03__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "9e5b358510a04cda204ff245061b74e797b4d4a7d858ef641c2aa0f3ce779260",
+ "deterministic_summary": {
+ "summary_type": "multi_metric_comparison",
+ "dataset_name": "peer_comparison",
+ "row_count": 6,
+ "entity_column": "comparison_group",
+ "metric_key_column": "metric_name",
+ "metric_value_column": "metric_value",
+ "entities": [
+ "You",
+ "Cohort benchmark"
+ ],
+ "metrics": [
+ {
+ "metric": "Average score",
+ "unit": "score_0_100",
+ "direction": "higher_is_better",
+ "threshold": null
+ },
+ {
+ "metric": "Score percentile",
+ "unit": "percent_0_100",
+ "direction": "higher_is_better",
+ "threshold": null
+ },
+ {
+ "metric": "Engagement percentile",
+ "unit": "percent_0_100",
+ "direction": "higher_is_better",
+ "threshold": null
+ }
+ ],
+ "metric_keys": [
+ "Average score",
+ "Score percentile",
+ "Engagement percentile"
+ ],
+ "comparison_matrix": [
+ {
+ "comparison_group": "You",
+ "metrics": {
+ "Average score": 94.34,
+ "Score percentile": 89.8,
+ "Engagement percentile": 75
+ },
+ "labels": {
+ "sort_order": 3
+ }
+ },
+ {
+ "comparison_group": "Cohort benchmark",
+ "metrics": {
+ "Average score": 66.68,
+ "Score percentile": 50,
+ "Engagement percentile": 50
+ },
+ "labels": {
+ "sort_order": 3
+ }
+ }
+ ],
+ "metric_extrema": {
+ "Average score": {
+ "min": {
+ "comparison_group": "Cohort benchmark",
+ "value": 66.68
+ },
+ "max": {
+ "comparison_group": "You",
+ "value": 94.34
+ }
+ },
+ "Score percentile": {
+ "min": {
+ "comparison_group": "Cohort benchmark",
+ "value": 50
+ },
+ "max": {
+ "comparison_group": "You",
+ "value": 89.8
+ }
+ },
+ "Engagement percentile": {
+ "min": {
+ "comparison_group": "Cohort benchmark",
+ "value": 50
+ },
+ "max": {
+ "comparison_group": "You",
+ "value": 75
+ }
+ }
+ },
+ "pairwise_gaps": [
+ {
+ "metric": "Average score",
+ "left_entity": "You",
+ "right_entity": "Cohort benchmark",
+ "gap_right_minus_left": -27.66,
+ "absolute_gap": 27.66
+ },
+ {
+ "metric": "Score percentile",
+ "left_entity": "You",
+ "right_entity": "Cohort benchmark",
+ "gap_right_minus_left": -39.8,
+ "absolute_gap": 39.8
+ },
+ {
+ "metric": "Engagement percentile",
+ "left_entity": "You",
+ "right_entity": "Cohort benchmark",
+ "gap_right_minus_left": -25,
+ "absolute_gap": 25
+ }
+ ],
+ "missing_metric_evidence": [],
+ "missing_entity_evidence": [],
+ "missing_expected_entities": [],
+ "selected_entity_evidence": [],
+ "evidence_status": "sufficient",
+ "evidence_requirements": {
+ "minimum_entity_count": 2,
+ "expected_entities": [
+ "You",
+ "Cohort benchmark"
+ ],
+ "observed_entity_count": 2,
+ "missing_expected_entities": []
+ },
+ "validation_metadata": {
+ "status": "passed",
+ "required": {
+ "metric_units": true,
+ "metric_directions": true,
+ "metric_thresholds": false,
+ "sensitive_context_policy": false
+ },
+ "metric_units": {
+ "Average score": "score_0_100",
+ "Score percentile": "percent_0_100",
+ "Engagement percentile": "percent_0_100"
+ },
+ "metric_directions": {
+ "Average score": "higher_is_better",
+ "Score percentile": "higher_is_better",
+ "Engagement percentile": "higher_is_better"
+ },
+ "metric_thresholds": {},
+ "sensitive_context_policy": null
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": [],
+ "pairwise_direction_evidence": [
+ {
+ "metric": "Average score",
+ "left_entity": "You",
+ "right_entity": "Cohort benchmark",
+ "higher_entity": "You",
+ "lower_entity": "Cohort benchmark",
+ "difference": 27.66,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "Score percentile",
+ "left_entity": "You",
+ "right_entity": "Cohort benchmark",
+ "higher_entity": "You",
+ "lower_entity": "Cohort benchmark",
+ "difference": 39.8,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "Engagement percentile",
+ "left_entity": "You",
+ "right_entity": "Cohort benchmark",
+ "higher_entity": "You",
+ "lower_entity": "Cohort benchmark",
+ "difference": 25,
+ "direction_note": "left_entity is higher"
+ }
+ ],
+ "standing_evidence": {
+ "score_percentile": 89.8,
+ "percent_at_or_below": 89.8,
+ "percent_above": 10.2,
+ "engagement_percentile": 75,
+ "engagement_percent_above": 25,
+ "wording_guard": "Preserve the percentile and avoid reversing rank direction."
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "multi_metric_comparison",
+ "task_id": "S-T03",
+ "task_output_contract": [
+ "Compare the returned entities directly, naming which entity is higher/lower for each key metric.",
+ "Use pairwise_gaps and selected_entity_evidence for direction; do not reverse numeric direction.",
+ "If expected metric/entity evidence is missing, state the limitation rather than guessing.",
+ "State the exact student and cohort values for every returned metric, including score percentile and engagement percentile.",
+ "Translate the returned score percentile into an explicit standing without hiding the numeric percentile."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "peer_comparison",
+ "row_count": 6,
+ "entities": [
+ "You",
+ "Cohort benchmark"
+ ],
+ "entity_column": "comparison_group",
+ "metrics": [
+ {
+ "metric": "Average score",
+ "unit": "score_0_100",
+ "direction": "higher_is_better",
+ "threshold": null
+ },
+ {
+ "metric": "Score percentile",
+ "unit": "percent_0_100",
+ "direction": "higher_is_better",
+ "threshold": null
+ },
+ {
+ "metric": "Engagement percentile",
+ "unit": "percent_0_100",
+ "direction": "higher_is_better",
+ "threshold": null
+ }
+ ],
+ "metric_keys": [
+ "Average score",
+ "Score percentile",
+ "Engagement percentile"
+ ],
+ "metric_key_column": "metric_name",
+ "metric_value_column": "metric_value",
+ "evidence_status": "sufficient",
+ "evidence_requirements": {
+ "minimum_entity_count": 2,
+ "expected_entities": [
+ "You",
+ "Cohort benchmark"
+ ],
+ "observed_entity_count": 2,
+ "missing_expected_entities": []
+ }
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "comparison_matrix": [
+ {
+ "comparison_group": "You",
+ "metrics": {
+ "Average score": 94.34,
+ "Score percentile": 89.8,
+ "Engagement percentile": 75
+ },
+ "labels": {
+ "sort_order": 3
+ }
+ },
+ {
+ "comparison_group": "Cohort benchmark",
+ "metrics": {
+ "Average score": 66.68,
+ "Score percentile": 50,
+ "Engagement percentile": 50
+ },
+ "labels": {
+ "sort_order": 3
+ }
+ }
+ ],
+ "selected_entity_evidence": [],
+ "standing_evidence": {
+ "score_percentile": 89.8,
+ "percent_at_or_below": 89.8,
+ "percent_above": 10.2,
+ "engagement_percentile": 75,
+ "engagement_percent_above": 25,
+ "wording_guard": "Preserve the percentile and avoid reversing rank direction."
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "pairwise_gaps": [
+ {
+ "metric": "Average score",
+ "left_entity": "You",
+ "right_entity": "Cohort benchmark",
+ "gap_right_minus_left": -27.66,
+ "absolute_gap": 27.66
+ },
+ {
+ "metric": "Score percentile",
+ "left_entity": "You",
+ "right_entity": "Cohort benchmark",
+ "gap_right_minus_left": -39.8,
+ "absolute_gap": 39.8
+ },
+ {
+ "metric": "Engagement percentile",
+ "left_entity": "You",
+ "right_entity": "Cohort benchmark",
+ "gap_right_minus_left": -25,
+ "absolute_gap": 25
+ }
+ ],
+ "pairwise_direction_evidence": [
+ {
+ "metric": "Average score",
+ "left_entity": "You",
+ "right_entity": "Cohort benchmark",
+ "higher_entity": "You",
+ "lower_entity": "Cohort benchmark",
+ "difference": 27.66,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "Score percentile",
+ "left_entity": "You",
+ "right_entity": "Cohort benchmark",
+ "higher_entity": "You",
+ "lower_entity": "Cohort benchmark",
+ "difference": 39.8,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "Engagement percentile",
+ "left_entity": "You",
+ "right_entity": "Cohort benchmark",
+ "higher_entity": "You",
+ "lower_entity": "Cohort benchmark",
+ "difference": 25,
+ "direction_note": "left_entity is higher"
+ }
+ ],
+ "metric_extrema": {
+ "Average score": {
+ "min": {
+ "comparison_group": "Cohort benchmark",
+ "value": 66.68
+ },
+ "max": {
+ "comparison_group": "You",
+ "value": 94.34
+ }
+ },
+ "Score percentile": {
+ "min": {
+ "comparison_group": "Cohort benchmark",
+ "value": 50
+ },
+ "max": {
+ "comparison_group": "You",
+ "value": 89.8
+ }
+ },
+ "Engagement percentile": {
+ "min": {
+ "comparison_group": "Cohort benchmark",
+ "value": 50
+ },
+ "max": {
+ "comparison_group": "You",
+ "value": 75
+ }
+ }
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_metric_evidence": [],
+ "missing_entity_evidence": [],
+ "missing_expected_entities": [],
+ "validation_metadata": {
+ "status": "passed",
+ "required": {
+ "metric_units": true,
+ "metric_directions": true,
+ "metric_thresholds": false,
+ "sensitive_context_policy": false
+ },
+ "metric_units": {
+ "Average score": "score_0_100",
+ "Score percentile": "percent_0_100",
+ "Engagement percentile": "percent_0_100"
+ },
+ "metric_directions": {
+ "Average score": "higher_is_better",
+ "Score percentile": "higher_is_better",
+ "Engagement percentile": "higher_is_better"
+ },
+ "metric_thresholds": {},
+ "sensitive_context_policy": null
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+ }
+ }
+ ],
+ "checked_claim_types": [
+ "task_specific_evidence_contract"
+ ],
+ "unchecked_claim_types": [
+ "semantic_interpretation",
+ "causal_framing",
+ "actionability_quality"
+ ],
+ "judge_evidence_citations": []
+ },
+ "evaluation_requirements": {
+ "required_core_outputs": [
+ {
+ "requirement_id": "S-T03-CORE-01",
+ "description": "Show student's standing (top X%)."
+ },
+ {
+ "requirement_id": "S-T03-CORE-02",
+ "description": "Explain which metrics are above/below average."
+ }
+ ],
+ "required_supporting_outputs": [],
+ "evaluation_constraints": [],
+ "safety_fairness_applicability": "applicable",
+ "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+ }
+}

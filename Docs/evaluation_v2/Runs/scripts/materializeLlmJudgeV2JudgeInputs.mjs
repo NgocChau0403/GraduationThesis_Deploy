@@ -40,6 +40,9 @@ function parseArgs(argv) {
     rubricVersion: DEFAULT_RUBRIC_VERSION,
     evaluationRunId: DEFAULT_EVALUATION_RUN_ID,
     reportBasename: "phase6_judge_input_validation_report",
+    sharedEvidenceManifestPath: null,
+    tasks: null,
+    datasets: null,
   };
 
   for (let i = 0; i < argv.length; i += 1) {
@@ -54,6 +57,9 @@ function parseArgs(argv) {
     else if (arg === "--rubric-version") args.rubricVersion = next, i += 1;
     else if (arg === "--evaluation-run-id") args.evaluationRunId = next, i += 1;
     else if (arg === "--report-basename") args.reportBasename = next, i += 1;
+    else if (arg === "--shared-evidence-manifest") args.sharedEvidenceManifestPath = path.resolve(next), i += 1;
+    else if (arg === "--tasks") args.tasks = splitList(next), i += 1;
+    else if (arg === "--datasets") args.datasets = splitList(next), i += 1;
     else throw new Error(`Unknown argument: ${arg}`);
   }
 
@@ -215,7 +221,7 @@ async function buildRetrievalLog({ evidenceEntry, evidenceArtifact, retrievalLog
   };
 }
 
-async function buildEvidenceAccess({ evidenceEntry, evidenceArtifact, retrievalLogsDir }) {
+async function buildEvidenceAccess({ evidenceEntry, evidenceArtifact, retrievalLogsDir, sharedEvidence }) {
   const mode = evidenceEntry.expected_evidence_access_path;
   const retrieval = await buildRetrievalLog({ evidenceEntry, evidenceArtifact, retrievalLogsDir });
   const rowCountsByDataset = buildRetrievedRowCountByDataset(evidenceEntry, evidenceArtifact);
@@ -239,8 +245,14 @@ async function buildEvidenceAccess({ evidenceEntry, evidenceArtifact, retrievalL
     deterministic_scan_scope: "full_query_artifact_all_rows",
     deterministic_scan_row_count_by_dataset: rowCountsByDataset,
     full_result_sent_to_llm: isDirect,
-    deterministic_checks: [],
-    checked_claim_types: [],
+    deterministic_checks: sharedEvidence ? [{
+      check_type: "task_aware_shared_evidence_contract",
+      case_id: sharedEvidence.case_id,
+      task_id: sharedEvidence.task_id,
+      sidecar_sha256: sharedEvidence.sidecar_sha256,
+      evidence: sharedEvidence.payload,
+    }] : [],
+    checked_claim_types: sharedEvidence ? ["task_specific_evidence_contract"] : [],
     unchecked_claim_types: [
       "semantic_interpretation",
       "causal_framing",
@@ -303,7 +315,7 @@ function buildEvaluationRequirements(requirementTask) {
   };
 }
 
-async function materializeJudgeInput({ evidenceEntry, explanationEntry, registry, requirements, outputPaths }) {
+async function materializeJudgeInput({ evidenceEntry, explanationEntry, registry, requirements, outputPaths, sharedEvidence }) {
   const task = getTask(registry, evidenceEntry.task_id);
   const requirementTask = getRequirement(requirements, evidenceEntry.task_id);
   const evidenceArtifact = await readJson(repoPathToAbsolute(evidenceEntry.full_query_artifact.path));
@@ -325,6 +337,7 @@ async function materializeJudgeInput({ evidenceEntry, explanationEntry, registry
       evidenceEntry,
       evidenceArtifact,
       retrievalLogsDir: outputPaths.retrievalLogsDir,
+      sharedEvidence,
     }),
     evaluation_requirements: buildEvaluationRequirements(requirementTask),
   };
@@ -615,12 +628,21 @@ async function main() {
   const registry = await readJson(TASK_REGISTRY_PATH);
   const requirements = await readJson(TASK_REQUIREMENTS_PATH);
   const evidenceEntries = (await readJsonl(args.evidenceManifestPath))
-    .filter((entry) => entry.status === "evidence_ready");
+    .filter((entry) => entry.status === "evidence_ready")
+    .filter((entry) => !args.datasets || args.datasets.includes(entry.dataset_id))
+    .filter((entry) => !args.tasks || args.tasks.includes(entry.task_id));
   const explanationEntries = [];
   for (const manifestPath of args.explanationManifestPaths) {
     explanationEntries.push(...(await readJsonl(manifestPath)).filter((entry) => entry.status === "explanation_ready"));
   }
   const explanationByRecordId = new Map(explanationEntries.map((entry) => [entry.record_id, entry]));
+  const sharedEvidenceByCaseId = new Map();
+  if (args.sharedEvidenceManifestPath) {
+    for (const entry of await readJsonl(args.sharedEvidenceManifestPath)) {
+      const payload = await readJson(repoPathToAbsolute(entry.sidecar_path));
+      sharedEvidenceByCaseId.set(entry.case_id, { ...entry, payload });
+    }
+  }
 
   const manifestEntries = [];
   const issues = [];
@@ -652,6 +674,9 @@ async function main() {
         registry,
         requirements,
         outputPaths: args,
+        sharedEvidence: sharedEvidenceByCaseId.get(
+          evidenceEntry.case_id ?? evidenceEntry.evidence_id ?? `${evidenceEntry.dataset_id}__${evidenceEntry.task_id}`,
+        ),
       });
       const validationErrors = validateJudgeInput(judgeInput);
       const status = validationErrors.length === 0 ? "judge_input_ready" : "failed";

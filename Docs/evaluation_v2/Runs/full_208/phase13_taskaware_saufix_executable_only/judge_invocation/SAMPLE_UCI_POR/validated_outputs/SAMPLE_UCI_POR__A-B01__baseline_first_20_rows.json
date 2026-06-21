@@ -1,0 +1,76 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-B01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Grounding and interpretation: The score-bucket values are accurate, but the response does not quantify or clearly flag the 7.6% below the pass threshold and overstates the lower-range concentration."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "Values, directions, and comparisons: The score-bucket values are accurate, but the response does not quantify or clearly flag the 7.6% below the pass threshold and overstates the lower-range concentration."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Coverage of supplied requirements: The score-bucket values are accurate, but the response does not quantify or clearly flag the 7.6% below the pass threshold and overstates the lower-range concentration."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Fit to the stated task and audience: The score-bucket values are accurate, but the response does not quantify or clearly flag the 7.6% below the pass threshold and overstates the lower-range concentration."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Usefulness and evidence basis: The score-bucket values are accurate, but the response does not quantify or clearly flag the 7.6% below the pass threshold and overstates the lower-range concentration."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Precision and organization: The score-bucket values are accurate, but the response does not quantify or clearly flag the 7.6% below the pass threshold and overstates the lower-range concentration."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Fair and non-stigmatizing treatment: The score-bucket values are accurate, but the response does not quantify or clearly flag the 7.6% below the pass threshold and overstates the lower-range concentration."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The overall performance distribution indicates that a significant majority of students are clustered in the lower to mid-range score buckets, with a notable drop-off in higher score ranges. The largest group of students, comprising 28.8% of the class, falls within the 50-60 score bucket, suggesting a need for targeted interventions to elevate overall performance.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-B01.json; dataset score_distribution"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The score-bucket values are accurate, but the response does not quantify or clearly flag the 7.6% below the pass threshold and overstates the lower-range concentration.",
+      "impact_type": "changes_interpretation"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "missing_required_output",
+      "claim_ids": [],
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [],
+      "cap_candidate": 7,
+      "rationale": "The score-bucket values are accurate, but the response does not quantify or clearly flag the 7.6% below the pass threshold and overstates the lower-range concentration.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-B01.json; dataset score_distribution"
+      ],
+      "requirement_id": "A-B01-CORE-02"
+    }
+  ],
+  "holistic_rationale": "The record is judgeable and addresses the stated task, but the score-bucket values are accurate, but the response does not quantify or clearly flag the 7.6% below the pass threshold and overstates the lower-range concentration. The metric pattern reflects that defect without adding an overall score or verdict.",
+  "evidence_usage_notes": "Evidence mode was direct_embedding. direct_embedding delivered all 10 rows; retrieval_log_path was not applicable. The judgment used the cited artifact or retrieval record plus the packet's deterministic checks; access was not treated as proof that the explanation attended to every row.",
+  "invalid_reason": null
+}

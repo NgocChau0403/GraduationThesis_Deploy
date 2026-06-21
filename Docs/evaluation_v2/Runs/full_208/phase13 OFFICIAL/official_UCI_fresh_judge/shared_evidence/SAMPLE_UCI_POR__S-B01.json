@@ -1,0 +1,301 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__S-B01",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "S-B01",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__S-B01__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "b5295a84f939d13dabd654ea6e0fb5666f42a557859ab2ba4c26861041d05d0e",
+ "deterministic_summary": {
+ "summary_type": "metric_snapshot",
+ "dataset_name": "performance_summary",
+ "row_count": 1,
+ "entity": null,
+ "metric_snapshot": {
+ "avg_score": {
+ "value": 41.25,
+ "unit": "score_on_runtime_scale",
+ "available": true
+ },
+ "pass_rate": {
+ "value": 0.6667,
+ "unit": "ratio_0_1",
+ "available": true
+ },
+ "performance_trend": {
+ "value": 27.5,
+ "unit": "score_change_per_assessment_order",
+ "available": true
+ },
+ "score_vs_class_avg": {
+ "value": -17.06,
+ "unit": "score_point_difference",
+ "available": true
+ },
+ "score_percentile": {
+ "value": 8.8,
+ "unit": "percentile_0_100",
+ "available": true
+ },
+ "unweighted_avg_score": {
+ "value": 36.67,
+ "unit": "score_on_runtime_scale",
+ "available": true
+ },
+ "weighted_avg_score": {
+ "value": 41.25,
+ "unit": "score_on_runtime_scale",
+ "available": true
+ },
+ "assessment_count": {
+ "value": 3,
+ "unit": "count",
+ "available": true
+ },
+ "cohort_size": {
+ "value": 649,
+ "unit": "count",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "final_outcome": "Pass",
+ "score_strategy": "weighted_by_assessment_weight",
+ "performance_band": "passing_but_below_target"
+ },
+ "threshold_evidence": {
+ "pass_threshold": {
+ "value": 40,
+ "unit": "score_on_runtime_scale",
+ "source": "runtime_score_context"
+ },
+ "target_threshold": {
+ "value": 70,
+ "unit": "score_on_runtime_scale",
+ "source": "runtime_score_context"
+ }
+ },
+ "benchmark_evidence": {
+ "class_avg_score": {
+ "value": 58.31,
+ "unit": "score_on_runtime_scale",
+ "source": "class_cohort"
+ },
+ "class_median_score": {
+ "value": 58.25,
+ "unit": "score_on_runtime_scale",
+ "source": "class_cohort"
+ }
+ },
+ "label_evidence": {
+ "score_scale": 100
+ },
+ "flag_evidence": {},
+ "action_evidence": {},
+ "missing_evidence": [],
+ "sensitive_context_present": false,
+ "sensitive_context": {},
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "avg_score",
+ "pass_rate",
+ "performance_trend",
+ "score_vs_class_avg",
+ "score_percentile",
+ "unweighted_avg_score",
+ "weighted_avg_score",
+ "assessment_count",
+ "cohort_size"
+ ],
+ "configured_status_columns": [
+ "final_outcome",
+ "score_strategy",
+ "performance_band"
+ ],
+ "configured_threshold_columns": [
+ "pass_threshold",
+ "target_threshold"
+ ],
+ "configured_benchmark_columns": [
+ "class_avg_score",
+ "class_median_score"
+ ],
+ "configured_sensitive_columns": [],
+ "metric_availability_columns": {},
+ "metric_units": {
+ "avg_score": "score_on_runtime_scale",
+ "pass_rate": "ratio_0_1",
+ "performance_trend": "score_change_per_assessment_order",
+ "score_vs_class_avg": "score_point_difference",
+ "score_percentile": "percentile_0_100",
+ "unweighted_avg_score": "score_on_runtime_scale",
+ "weighted_avg_score": "score_on_runtime_scale",
+ "assessment_count": "count",
+ "cohort_size": "count",
+ "pass_threshold": "score_on_runtime_scale",
+ "target_threshold": "score_on_runtime_scale",
+ "class_avg_score": "score_on_runtime_scale",
+ "class_median_score": "score_on_runtime_scale"
+ },
+ "threshold_sources": {
+ "pass_threshold": "runtime_score_context",
+ "target_threshold": "runtime_score_context"
+ },
+ "benchmark_sources": {
+ "class_avg_score": "class_cohort",
+ "class_median_score": "class_cohort"
+ },
+ "sensitive_context_policy": null,
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "evidence_status": "sufficient",
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "metric_snapshot",
+ "task_id": "S-B01",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "performance_summary",
+ "row_count": 1,
+ "entity": null,
+ "evidence_status": "sufficient"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "metric_snapshot": {
+ "avg_score": {
+ "value": 41.25,
+ "unit": "score_on_runtime_scale",
+ "available": true
+ },
+ "pass_rate": {
+ "value": 0.6667,
+ "unit": "ratio_0_1",
+ "available": true
+ },
+ "performance_trend": {
+ "value": 27.5,
+ "unit": "score_change_per_assessment_order",
+ "available": true
+ },
+ "score_vs_class_avg": {
+ "value": -17.06,
+ "unit": "score_point_difference",
+ "available": true
+ },
+ "score_percentile": {
+ "value": 8.8,
+ "unit": "percentile_0_100",
+ "available": true
+ },
+ "unweighted_avg_score": {
+ "value": 36.67,
+ "unit": "score_on_runtime_scale",
+ "available": true
+ },
+ "weighted_avg_score": {
+ "value": 41.25,
+ "unit": "score_on_runtime_scale",
+ "available": true
+ },
+ "assessment_count": {
+ "value": 3,
+ "unit": "count",
+ "available": true
+ },
+ "cohort_size": {
+ "value": 649,
+ "unit": "count",
+ "available": true
+ }
+ },
+ "status_evidence": {
+ "final_outcome": "Pass",
+ "score_strategy": "weighted_by_assessment_weight",
+ "performance_band": "passing_but_below_target"
+ },
+ "label_evidence": {
+ "score_scale": 100
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_evidence": [],
+ "validation_metadata": {
+ "status": "passed",
+ "configured_metric_columns": [
+ "avg_score",
+ "pass_rate",
+ "performance_trend",
+ "score_vs_class_avg",
+ "score_percentile",
+ "unweighted_avg_score",
+ "weighted_avg_score",
+ "assessment_count",
+ "cohort_size"
+ ],
+ "configured_status_columns": [
+ "final_outcome",
+ "score_strategy",
+ "performance_band"
+ ],
+ "configured_threshold_columns": [
+ "pass_threshold",
+ "target_threshold"
+ ],
+ "configured_benchmark_columns": [
+ "class_avg_score",
+ "class_median_score"
+ ],
+ "configured_sensitive_columns": [],
+ "metric_availability_columns": {},
+ "metric_units": {
+ "avg_score": "score_on_runtime_scale",
+ "pass_rate": "ratio_0_1",
+ "performance_trend": "score_change_per_assessment_order",
+ "score_vs_class_avg": "score_point_difference",
+ "score_percentile": "percentile_0_100",
+ "unweighted_avg_score": "score_on_runtime_scale",
+ "weighted_avg_score": "score_on_runtime_scale",
+ "assessment_count": "count",
+ "cohort_size": "count",
+ "pass_threshold": "score_on_runtime_scale",
+ "target_threshold": "score_on_runtime_scale",
+ "class_avg_score": "score_on_runtime_scale",
+ "class_median_score": "score_on_runtime_scale"
+ },
+ "threshold_sources": {
+ "pass_threshold": "runtime_score_context",
+ "target_threshold": "runtime_score_context"
+ },
+ "benchmark_sources": {
+ "class_avg_score": "class_cohort",
+ "class_median_score": "class_cohort"
+ },
+ "sensitive_context_policy": null,
+ "missing_required_columns": [],
+ "missing_unit_metadata": [],
+ "missing_threshold_sources": [],
+ "missing_benchmark_sources": [],
+ "errors": []
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

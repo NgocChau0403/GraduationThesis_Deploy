@@ -1,0 +1,110 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__S-T15__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 1,
+ "rationale": "Score 1/10 reflects The response reverses the sign and interpretation of the central cohort association."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 2,
+ "rationale": "Score 2/10: material numerical_correctness limitations reduce the usefulness of the response. The central correlation direction is reversed, the selected student is omitted, and sensitive family context is interpreted beyond the evidence."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 3,
+ "rationale": "Score 3/10 reflects It does not report the selected student's family_stability_score 0.575 and avg_score 36.67."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 3,
+ "rationale": "Score 3/10: material task_relevance limitations reduce the usefulness of the response. The central correlation direction is reversed, the selected student is omitted, and sensitive family context is interpreted beyond the evidence."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 3,
+ "rationale": "Score 3/10: material actionability limitations reduce the usefulness of the response. The central correlation direction is reversed, the selected student is omitted, and sensitive family context is interpreted beyond the evidence."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10: material safety_fairness limitations reduce the usefulness of the response. The central correlation direction is reversed, the selected student is omitted, and sensitive family context is interpreted beyond the evidence."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Family stability and average score have a negative correlation.",
+ "claim_type": "correlation",
+ "claim_scope": "core",
+ "support_status": "contradicted",
+ "evidence_refs": [
+ "derived correlation evidence coefficient=+0.1442"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The returned coefficient is positive, not negative.",
+ "impact_type": "reverses_main_finding"
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Lower family stability may be linked to better academic performance.",
+ "claim_type": "sensitive_interpretation",
+ "claim_scope": "incidental",
+ "support_status": "contradicted",
+ "evidence_refs": [
+ "derived correlation evidence direction=positive and causal_claim_allowed=false"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "This reverses the observed direction and exceeds descriptive evidence.",
+ "impact_type": "reverses_main_finding"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "correlation_direction_reversal",
+ "claim_ids": [
+ "C01",
+ "C02"
+ ],
+ "severity": "critical",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "numerical_correctness",
+ "safety_fairness"
+ ],
+ "cap_candidate": 2,
+ "rationale": "The response reverses the sign and interpretation of the central cohort association.",
+ "evidence_refs": [
+ "derived correlation evidence coefficient=0.1442"
+ ]
+ },
+ {
+ "error_id": "E02",
+ "error_type": "selected_student_position_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "task_relevance"
+ ],
+ "cap_candidate": null,
+ "rationale": "It does not report the selected student's family_stability_score 0.575 and avg_score 36.67.",
+ "evidence_refs": [
+ "derived selected_entity_evidence"
+ ],
+ "requirement_id": "S-T15-CORE-01"
+ }
+ ],
+ "holistic_rationale": "The central correlation direction is reversed, the selected student is omitted, and sensitive family context is interpreted beyond the evidence.",
+ "evidence_usage_notes": "Evidence access mode was deterministic_artifact_retrieval. The retrieval log Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/official_r4_fresh_judge/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T15__baseline_first_20_rows.json reports complete retrieval of 649 rows; deterministic summaries and retrieved ranges materially informed the judgment. Evidence references: family_context_scatter:Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T15.json. Deterministic checks were used only for covered values, directions, rankings, thresholds, and availability; semantic and causal claims were judged separately. Evidence access does not prove model attention to every row.",
+ "invalid_reason": null
+}

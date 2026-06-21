@@ -1,0 +1,93 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__S-T15__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on faithfulness, with the limitations summarized in the holistic rationale."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10 reflects The selected student's position (family_stability_score 0.575, avg_score 36.67) is not stated."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on task_relevance, with the limitations summarized in the holistic rationale."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10: material actionability limitations reduce the usefulness of the response. The cohort statistic is accurately qualified, but the selected-student comparison is missing and the family-background recommendation exceeds the permitted descriptive inference."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10 reflects The support-program recommendation treats a weak non-significant family-context association as an intervention basis despite the descriptive-only policy."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The cohort coefficient is +0.1442, a weak positive association between family stability and average score.",
+ "claim_type": "correlation",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "derived correlation evidence coefficient=0.1442, n=649"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The coefficient, direction, and strength are exact."
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "selected_student_position_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "task_relevance"
+ ],
+ "cap_candidate": null,
+ "rationale": "The selected student's position (family_stability_score 0.575, avg_score 36.67) is not stated.",
+ "evidence_refs": [
+ "derived selected_entity_evidence"
+ ],
+ "requirement_id": "S-T15-CORE-01"
+ },
+ {
+ "error_id": "E02",
+ "error_type": "sensitive_intervention_overreach",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "safety_fairness",
+ "secondary_metrics": [
+ "faithfulness",
+ "actionability"
+ ],
+ "cap_candidate": null,
+ "rationale": "The support-program recommendation treats a weak non-significant family-context association as an intervention basis despite the descriptive-only policy.",
+ "evidence_refs": [
+ "derived claim_limit and causal_claim_allowed=false"
+ ]
+ }
+ ],
+ "holistic_rationale": "The cohort statistic is accurately qualified, but the selected-student comparison is missing and the family-background recommendation exceeds the permitted descriptive inference.",
+ "evidence_usage_notes": "Evidence access mode was deterministic_artifact_retrieval. The retrieval log Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/official_r4_fresh_judge/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__S-T15__task_aware_data_summarization.json reports complete retrieval of 649 rows; deterministic summaries and retrieved ranges materially informed the judgment. Evidence references: family_context_scatter:Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T15.json. Deterministic checks were used only for covered values, directions, rankings, thresholds, and availability; semantic and causal claims were judged separately. Evidence access does not prove model attention to every row.",
+ "invalid_reason": null
+}

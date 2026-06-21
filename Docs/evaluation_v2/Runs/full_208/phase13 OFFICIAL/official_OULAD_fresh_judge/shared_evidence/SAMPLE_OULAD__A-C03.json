@@ -1,0 +1,780 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-C03",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-C03",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-C03__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "3ed4a173209aadfa3c9b9faa2525d0cb2621bed2f9afb2a5472faf54c1cb0382",
+ "deterministic_summary": {
+ "summary_type": "multi_metric_comparison",
+ "dataset_name": "risk_comparison",
+ "row_count": 2,
+ "entity_column": "student_id",
+ "metric_key_column": null,
+ "metric_value_column": null,
+ "entities": [
+ "SAMPLE_OULAD_STU_100788",
+ "SAMPLE_OULAD_STU_101700"
+ ],
+ "metrics": [
+ {
+ "metric": "avg_score",
+ "unit": "score_0_100",
+ "direction": "higher_is_better",
+ "threshold": {
+ "low_score_below": 40
+ }
+ },
+ {
+ "metric": "performance_trend",
+ "unit": "score_change_per_assessment",
+ "direction": "higher_is_better",
+ "threshold": {
+ "negative_trend_below": 0
+ }
+ },
+ {
+ "metric": "punctuality_rate",
+ "unit": "ratio_0_1",
+ "direction": "higher_is_better",
+ "threshold": {
+ "low_punctuality_below": 0.7
+ }
+ },
+ {
+ "metric": "engagement_score",
+ "unit": "ratio_0_1",
+ "direction": "higher_is_better",
+ "threshold": {
+ "low_engagement_below": 0.15
+ }
+ },
+ {
+ "metric": "previous_attempt_count",
+ "unit": "count",
+ "direction": "higher_is_risk",
+ "threshold": {
+ "repeated_attempt_above": 0
+ }
+ },
+ {
+ "metric": "at_risk_score",
+ "unit": "flag_count_0_5",
+ "direction": "higher_is_risk",
+ "threshold": {
+ "medium_at": 2,
+ "high_at_or_above": 3
+ }
+ }
+ ],
+ "metric_keys": [],
+ "comparison_matrix": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "metrics": {
+ "avg_score": 91.2,
+ "performance_trend": -0.7188,
+ "punctuality_rate": 0,
+ "engagement_score": 0.2024,
+ "previous_attempt_count": 1,
+ "at_risk_score": 3
+ },
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Distinction"
+ },
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": false,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 0,
+ "flag_repeated": 1,
+ "flag_low_engagement": 0,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "metrics": {
+ "avg_score": null,
+ "performance_trend": null,
+ "punctuality_rate": 1,
+ "engagement_score": 0,
+ "previous_attempt_count": 0,
+ "at_risk_score": 1
+ },
+ "labels": {
+ "at_risk_label": "low",
+ "final_outcome": "Withdrawn"
+ },
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": false
+ },
+ "flag_raw_values": {
+ "flag_low_score": 0,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 0,
+ "flag_neg_trend": 0
+ }
+ }
+ ],
+ "metric_extrema": {
+ "avg_score": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 91.2
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 91.2
+ }
+ },
+ "performance_trend": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": -0.7188
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": -0.7188
+ }
+ },
+ "punctuality_rate": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 1
+ }
+ },
+ "engagement_score": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 0.2024
+ }
+ },
+ "previous_attempt_count": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 1
+ }
+ },
+ "at_risk_score": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 1
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 3
+ }
+ }
+ },
+ "pairwise_gaps": [
+ {
+ "metric": "punctuality_rate",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": 1,
+ "absolute_gap": 1
+ },
+ {
+ "metric": "engagement_score",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -0.2024,
+ "absolute_gap": 0.2024
+ },
+ {
+ "metric": "previous_attempt_count",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -1,
+ "absolute_gap": 1
+ },
+ {
+ "metric": "at_risk_score",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -2,
+ "absolute_gap": 2
+ }
+ ],
+ "missing_metric_evidence": [
+ {
+ "entity": "SAMPLE_OULAD_STU_101700",
+ "metric": "avg_score",
+ "reason": "avg_score is missing or non-numeric"
+ },
+ {
+ "entity": "SAMPLE_OULAD_STU_101700",
+ "metric": "performance_trend",
+ "reason": "performance_trend is missing or non-numeric"
+ }
+ ],
+ "missing_entity_evidence": [],
+ "missing_expected_entities": [],
+ "selected_entity_evidence": [],
+ "evidence_status": "sufficient",
+ "evidence_requirements": {
+ "minimum_entity_count": 2,
+ "expected_entities": [],
+ "observed_entity_count": 2,
+ "missing_expected_entities": []
+ },
+ "validation_metadata": {
+ "status": "passed",
+ "required": {
+ "metric_units": true,
+ "metric_directions": true,
+ "metric_thresholds": true,
+ "sensitive_context_policy": false
+ },
+ "metric_units": {
+ "avg_score": "score_0_100",
+ "performance_trend": "score_change_per_assessment",
+ "punctuality_rate": "ratio_0_1",
+ "engagement_score": "ratio_0_1",
+ "previous_attempt_count": "count",
+ "at_risk_score": "flag_count_0_5"
+ },
+ "metric_directions": {
+ "avg_score": "higher_is_better",
+ "performance_trend": "higher_is_better",
+ "punctuality_rate": "higher_is_better",
+ "engagement_score": "higher_is_better",
+ "previous_attempt_count": "higher_is_risk",
+ "at_risk_score": "higher_is_risk"
+ },
+ "metric_thresholds": {
+ "avg_score": {
+ "low_score_below": 40
+ },
+ "performance_trend": {
+ "negative_trend_below": 0
+ },
+ "punctuality_rate": {
+ "low_punctuality_below": 0.7
+ },
+ "engagement_score": {
+ "low_engagement_below": 0.15
+ },
+ "previous_attempt_count": {
+ "repeated_attempt_above": 0
+ },
+ "at_risk_score": {
+ "medium_at": 2,
+ "high_at_or_above": 3
+ }
+ },
+ "sensitive_context_policy": null
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Found 2 missing or non-numeric metric values; they remain explicit missing evidence and were not replaced with zero."
+ ],
+ "pairwise_direction_evidence": [
+ {
+ "metric": "punctuality_rate",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_101700",
+ "lower_entity": "SAMPLE_OULAD_STU_100788",
+ "difference": 1,
+ "direction_note": "right_entity is higher"
+ },
+ {
+ "metric": "engagement_score",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_100788",
+ "lower_entity": "SAMPLE_OULAD_STU_101700",
+ "difference": 0.2024,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "previous_attempt_count",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_100788",
+ "lower_entity": "SAMPLE_OULAD_STU_101700",
+ "difference": 1,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "at_risk_score",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_100788",
+ "lower_entity": "SAMPLE_OULAD_STU_101700",
+ "difference": 2,
+ "direction_note": "left_entity is higher"
+ }
+ ],
+ "risk_profile_evidence": {
+ "students": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "avg_score": 91.2,
+ "performance_trend": -0.7187500000000001,
+ "punctuality_rate": 0,
+ "engagement_score": 0.20237855036820618,
+ "previous_attempt_count": 1,
+ "flag_low_score": 0,
+ "flag_repeated": 1,
+ "flag_low_engagement": 0,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1,
+ "at_risk_score": 3,
+ "at_risk_label": "high",
+ "final_outcome": "Distinction"
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "avg_score": null,
+ "performance_trend": null,
+ "punctuality_rate": 1,
+ "engagement_score": 0,
+ "previous_attempt_count": 0,
+ "flag_low_score": 0,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 0,
+ "flag_neg_trend": 0,
+ "at_risk_score": 1,
+ "at_risk_label": "low",
+ "final_outcome": "Withdrawn"
+ }
+ ],
+ "required_flag_fields": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "policy": "explain risk only from explicit triggered flags; preserve null score evidence"
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "multi_metric_comparison",
+ "task_id": "A-C03",
+ "task_output_contract": [
+ "Compare the returned entities directly, naming which entity is higher/lower for each key metric.",
+ "Use pairwise_gaps and selected_entity_evidence for direction; do not reverse numeric direction.",
+ "If expected metric/entity evidence is missing, state the limitation rather than guessing.",
+ "For both students, preserve avg_score including null, at_risk_score, at_risk_label, final_outcome, and every explicit flag_* value.",
+ "Explain risk only from triggered flags. Do not call engagement a driver when flag_low_engagement=0 and do not invent missing score evidence."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "risk_comparison",
+ "row_count": 2,
+ "entities": [
+ "SAMPLE_OULAD_STU_100788",
+ "SAMPLE_OULAD_STU_101700"
+ ],
+ "entity_column": "student_id",
+ "metrics": [
+ {
+ "metric": "avg_score",
+ "unit": "score_0_100",
+ "direction": "higher_is_better",
+ "threshold": {
+ "low_score_below": 40
+ }
+ },
+ {
+ "metric": "performance_trend",
+ "unit": "score_change_per_assessment",
+ "direction": "higher_is_better",
+ "threshold": {
+ "negative_trend_below": 0
+ }
+ },
+ {
+ "metric": "punctuality_rate",
+ "unit": "ratio_0_1",
+ "direction": "higher_is_better",
+ "threshold": {
+ "low_punctuality_below": 0.7
+ }
+ },
+ {
+ "metric": "engagement_score",
+ "unit": "ratio_0_1",
+ "direction": "higher_is_better",
+ "threshold": {
+ "low_engagement_below": 0.15
+ }
+ },
+ {
+ "metric": "previous_attempt_count",
+ "unit": "count",
+ "direction": "higher_is_risk",
+ "threshold": {
+ "repeated_attempt_above": 0
+ }
+ },
+ {
+ "metric": "at_risk_score",
+ "unit": "flag_count_0_5",
+ "direction": "higher_is_risk",
+ "threshold": {
+ "medium_at": 2,
+ "high_at_or_above": 3
+ }
+ }
+ ],
+ "metric_keys": [],
+ "metric_key_column": null,
+ "metric_value_column": null,
+ "evidence_status": "sufficient",
+ "evidence_requirements": {
+ "minimum_entity_count": 2,
+ "expected_entities": [],
+ "observed_entity_count": 2,
+ "missing_expected_entities": []
+ }
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "comparison_matrix": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "metrics": {
+ "avg_score": 91.2,
+ "performance_trend": -0.7188,
+ "punctuality_rate": 0,
+ "engagement_score": 0.2024,
+ "previous_attempt_count": 1,
+ "at_risk_score": 3
+ },
+ "labels": {
+ "at_risk_label": "high",
+ "final_outcome": "Distinction"
+ },
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": true,
+ "flag_low_engagement": false,
+ "flag_low_punctuality": true,
+ "flag_neg_trend": true
+ },
+ "flag_raw_values": {
+ "flag_low_score": 0,
+ "flag_repeated": 1,
+ "flag_low_engagement": 0,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "metrics": {
+ "avg_score": null,
+ "performance_trend": null,
+ "punctuality_rate": 1,
+ "engagement_score": 0,
+ "previous_attempt_count": 0,
+ "at_risk_score": 1
+ },
+ "labels": {
+ "at_risk_label": "low",
+ "final_outcome": "Withdrawn"
+ },
+ "flags": {
+ "flag_low_score": false,
+ "flag_repeated": false,
+ "flag_low_engagement": true,
+ "flag_low_punctuality": false,
+ "flag_neg_trend": false
+ },
+ "flag_raw_values": {
+ "flag_low_score": 0,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 0,
+ "flag_neg_trend": 0
+ }
+ }
+ ],
+ "selected_entity_evidence": [],
+ "risk_profile_evidence": {
+ "students": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "avg_score": 91.2,
+ "performance_trend": -0.7187500000000001,
+ "punctuality_rate": 0,
+ "engagement_score": 0.20237855036820618,
+ "previous_attempt_count": 1,
+ "flag_low_score": 0,
+ "flag_repeated": 1,
+ "flag_low_engagement": 0,
+ "flag_low_punctuality": 1,
+ "flag_neg_trend": 1,
+ "at_risk_score": 3,
+ "at_risk_label": "high",
+ "final_outcome": "Distinction"
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "avg_score": null,
+ "performance_trend": null,
+ "punctuality_rate": 1,
+ "engagement_score": 0,
+ "previous_attempt_count": 0,
+ "flag_low_score": 0,
+ "flag_repeated": 0,
+ "flag_low_engagement": 1,
+ "flag_low_punctuality": 0,
+ "flag_neg_trend": 0,
+ "at_risk_score": 1,
+ "at_risk_label": "low",
+ "final_outcome": "Withdrawn"
+ }
+ ],
+ "required_flag_fields": [
+ "flag_low_score",
+ "flag_repeated",
+ "flag_low_engagement",
+ "flag_low_punctuality",
+ "flag_neg_trend"
+ ],
+ "policy": "explain risk only from explicit triggered flags; preserve null score evidence"
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "pairwise_gaps": [
+ {
+ "metric": "punctuality_rate",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": 1,
+ "absolute_gap": 1
+ },
+ {
+ "metric": "engagement_score",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -0.2024,
+ "absolute_gap": 0.2024
+ },
+ {
+ "metric": "previous_attempt_count",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -1,
+ "absolute_gap": 1
+ },
+ {
+ "metric": "at_risk_score",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -2,
+ "absolute_gap": 2
+ }
+ ],
+ "pairwise_direction_evidence": [
+ {
+ "metric": "punctuality_rate",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_101700",
+ "lower_entity": "SAMPLE_OULAD_STU_100788",
+ "difference": 1,
+ "direction_note": "right_entity is higher"
+ },
+ {
+ "metric": "engagement_score",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_100788",
+ "lower_entity": "SAMPLE_OULAD_STU_101700",
+ "difference": 0.2024,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "previous_attempt_count",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_100788",
+ "lower_entity": "SAMPLE_OULAD_STU_101700",
+ "difference": 1,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "at_risk_score",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_100788",
+ "lower_entity": "SAMPLE_OULAD_STU_101700",
+ "difference": 2,
+ "direction_note": "left_entity is higher"
+ }
+ ],
+ "metric_extrema": {
+ "avg_score": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 91.2
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 91.2
+ }
+ },
+ "performance_trend": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": -0.7188
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": -0.7188
+ }
+ },
+ "punctuality_rate": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 1
+ }
+ },
+ "engagement_score": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 0.2024
+ }
+ },
+ "previous_attempt_count": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 1
+ }
+ },
+ "at_risk_score": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 1
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 3
+ }
+ }
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_metric_evidence": [
+ {
+ "entity": "SAMPLE_OULAD_STU_101700",
+ "metric": "avg_score",
+ "reason": "avg_score is missing or non-numeric"
+ },
+ {
+ "entity": "SAMPLE_OULAD_STU_101700",
+ "metric": "performance_trend",
+ "reason": "performance_trend is missing or non-numeric"
+ }
+ ],
+ "missing_entity_evidence": [],
+ "missing_expected_entities": [],
+ "validation_metadata": {
+ "status": "passed",
+ "required": {
+ "metric_units": true,
+ "metric_directions": true,
+ "metric_thresholds": true,
+ "sensitive_context_policy": false
+ },
+ "metric_units": {
+ "avg_score": "score_0_100",
+ "performance_trend": "score_change_per_assessment",
+ "punctuality_rate": "ratio_0_1",
+ "engagement_score": "ratio_0_1",
+ "previous_attempt_count": "count",
+ "at_risk_score": "flag_count_0_5"
+ },
+ "metric_directions": {
+ "avg_score": "higher_is_better",
+ "performance_trend": "higher_is_better",
+ "punctuality_rate": "higher_is_better",
+ "engagement_score": "higher_is_better",
+ "previous_attempt_count": "higher_is_risk",
+ "at_risk_score": "higher_is_risk"
+ },
+ "metric_thresholds": {
+ "avg_score": {
+ "low_score_below": 40
+ },
+ "performance_trend": {
+ "negative_trend_below": 0
+ },
+ "punctuality_rate": {
+ "low_punctuality_below": 0.7
+ },
+ "engagement_score": {
+ "low_engagement_below": 0.15
+ },
+ "previous_attempt_count": {
+ "repeated_attempt_above": 0
+ },
+ "at_risk_score": {
+ "medium_at": 2,
+ "high_at_or_above": 3
+ }
+ },
+ "sensitive_context_policy": null
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Found 2 missing or non-numeric metric values; they remain explicit missing evidence and were not replaced with zero."
+ ]
+ }
+ }
+ ]
+ }
+}

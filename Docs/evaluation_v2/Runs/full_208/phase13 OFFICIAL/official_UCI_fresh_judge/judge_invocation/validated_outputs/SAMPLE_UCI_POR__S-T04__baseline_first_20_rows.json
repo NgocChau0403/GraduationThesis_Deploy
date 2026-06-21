@@ -1,0 +1,89 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__S-T04__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10: the response is useful on numerical_correctness, with the limitations summarized in the holistic rationale."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10 reflects The explanation omits the exact value 0, threshold 0.15, medium severity, and returned flag description."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on actionability, with the limitations summarized in the holistic rationale."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Low engagement is the only triggered risk signal.",
+ "claim_type": "risk_flag",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_flags all five rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "Only flag_low_engagement is triggered."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "The low-engagement flag should be addressed with the returned weekly study routine.",
+ "claim_type": "recommended_action",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "risk_flags flag_low_engagement row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The action matches the returned recommendation."
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "trigger_metadata_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "numerical_correctness"
+ ],
+ "cap_candidate": null,
+ "rationale": "The explanation omits the exact value 0, threshold 0.15, medium severity, and returned flag description.",
+ "evidence_refs": [
+ "risk_flags flag_low_engagement row"
+ ],
+ "requirement_id": "S-T04-CORE-02"
+ }
+ ],
+ "holistic_rationale": "The active signal and action are correct, but most of the required explanatory metadata is missing.",
+ "evidence_usage_notes": "Evidence access mode was direct_embedding. All 5 rows were directly embedded; retrieval_log_path is not applicable. Evidence references: risk_flags:Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T04.json. Deterministic checks were used only for covered values, directions, rankings, thresholds, and availability; semantic and causal claims were judged separately. Evidence access does not prove model attention to every row.",
+ "invalid_reason": null
+}

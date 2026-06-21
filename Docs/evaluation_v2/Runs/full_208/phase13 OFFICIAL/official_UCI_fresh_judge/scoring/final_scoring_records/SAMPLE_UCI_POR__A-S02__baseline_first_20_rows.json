@@ -1,0 +1,104 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-S02__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on faithfulness, with the limitations summarized in the holistic rationale."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on numerical_correctness, with the limitations summarized in the holistic rationale."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10 reflects The response does not reference the returned performance_trend magnitude of +27.5 per assessment order."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on task_relevance, with the limitations summarized in the holistic rationale."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on actionability, with the limitations summarized in the holistic rationale."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The student's scores increased from 0 to 55 and then remained at 55.",
+ "claim_type": "trend",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "score_trend assessment orders 1-3"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The score sequence is exact."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "The performance showed only slight improvement.",
+ "claim_type": "trend_magnitude",
+ "claim_scope": "supporting",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "score_trend performance_trend=27.5"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "Improvement is real, but 'slight' understates the returned positive slope and 55-point gain.",
+ "impact_type": "changes_interpretation"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "required_slope_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "numerical_correctness"
+ ],
+ "cap_candidate": null,
+ "rationale": "The response does not reference the returned performance_trend magnitude of +27.5 per assessment order.",
+ "evidence_refs": [
+ "score_trend performance_trend field"
+ ],
+ "requirement_id": "A-S02-CORE-02"
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 1,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 1,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 7.7,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 7.7,
+ "verdict": "good",
+ "invalid_reason": null
+}

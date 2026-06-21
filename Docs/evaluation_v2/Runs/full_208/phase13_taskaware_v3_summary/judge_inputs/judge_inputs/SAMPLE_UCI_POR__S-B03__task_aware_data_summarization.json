@@ -1,0 +1,216 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-B03__task_aware_data_summarization",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-B03",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Engagement summary",
+    "scope": "1 student",
+    "actionable_question": "How active am I compared to classmates?",
+    "target_audience": "student",
+    "ai_summary_type": "metric_snapshot",
+    "ai_prompt_hint": "Describe effort level in plain language using study_effort_level, total_engagement_count, active_days, engagement_score, and class_avg_engagement_score. Compare to class averages only from returned fields, and avoid calling missing engagement data low effort.",
+    "query_labels": [
+      "engagement_summary"
+    ],
+    "explanation_strategy": "behavioral"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "total_engagement_count [FE]",
+      "active_days [FE]",
+      "engagement_score [FE]",
+      "class_avg_engagement_score [FE]",
+      "study_effort_level [FE]"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "total_engagement_count",
+        "active_days",
+        "engagement_score",
+        "class_avg_engagement_score",
+        "study_effort_level"
+      ]
+    },
+    "query_labels": [
+      "engagement_summary"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: It looks like you haven't engaged with the course materials yet this semester. Your total engagement count, active days, and engagement score are all at zero, which indicates that you haven't participated in any activities so far.\n\nInsights: Lack of Engagement: You have a total engagement count of 0 and have not logged any active days. This means you haven't interacted with the course content at all.\n\nEducational implications: Not engaging with course materials can lead to difficulties in understanding the content and performing well in assessments.\n\nRecommendations: high - Start participating in course activities - Engaging with the course materials will help you understand the content better and improve your overall performance.",
+    "structured_payload": {
+      "task_id": "S-B03",
+      "execution_id": "exec_1781847241745_1841e4ae",
+      "explanation": {
+        "summary": "It looks like you haven't engaged with the course materials yet this semester. Your total engagement count, active days, and engagement score are all at zero, which indicates that you haven't participated in any activities so far.",
+        "insights": [
+          {
+            "title": "Lack of Engagement",
+            "description": "You have a total engagement count of 0 and have not logged any active days. This means you haven't interacted with the course content at all.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "total_engagement_count",
+                "value": 0,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "No engagement recorded"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "Not engaging with course materials can lead to difficulties in understanding the content and performing well in assessments."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Start participating in course activities",
+            "rationale": "Engaging with the course materials will help you understand the content better and improve your overall performance."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data clearly shows no engagement activity.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "behavioral",
+      "explanation_type": "behavioral",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3-experimental",
+      "baseline_available": true,
+      "input_summary_type": "metric_snapshot",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 1,
+      "included_row_count": 1,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "engagement_summary",
+          "row_count": 1,
+          "included_row_count": 1
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 1,
+      "baseline_reference_tokens": 76,
+      "task_aware_prompt_tokens": 665,
+      "token_ratio": 8.75,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "comparison",
+        "exceptions",
+        "action_evidence",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (8.75 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 3995,
+        "token_usage": {
+          "prompt_tokens": 1153,
+          "completion_tokens": 289,
+          "total_tokens": 1442
+        },
+        "strategy": "behavioral",
+        "granularity": "semester",
+        "cost_usd": 0.000346
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__S-B03__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "fccb0b8c9edd40a570d475fa8e86d89f83c594c4888524ff1acbed9e1a8cd8ff",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1153,
+        "completion_tokens": 289,
+        "total_tokens": 1442
+      },
+      "latency_ms": 4013,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 1,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "engagement_summary",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-B03.json",
+        "artifact_sha256": "4f8fa95bbb81166a8489e820ce7a090e1bb452648f25347f4e54381b074aef05",
+        "row_count": 1,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 1,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "engagement_summary": 1
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "S-B03-CORE-01",
+        "description": "Characterise the student's effort level relative to the available class benchmark in plain language."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "S-B03-CONSTRAINT-01",
+        "description": "Ground the characterisation in study_effort_level, total_engagement_count, active_days, engagement_score, and class_avg_engagement_score when those fields are returned."
+      },
+      {
+        "constraint_id": "S-B03-CONSTRAINT-02",
+        "description": "Do not label missing engagement data as low effort."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

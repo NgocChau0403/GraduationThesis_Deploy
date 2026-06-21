@@ -1,0 +1,327 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_3b_ai_explanation",
+  "generated_at": "2026-06-21T02:28:29.512Z",
+  "ai_service_url": "http://localhost:8000",
+  "endpoint": "/explain",
+  "record": {
+    "record_id": "SAMPLE_UCI_POR__S-B03__task_aware_data_summarization",
+    "case_id": "SAMPLE_UCI_POR__S-B03",
+    "dataset_id": "SAMPLE_UCI_POR",
+    "class_id": "SAMPLE_UCI_POR_CLASS",
+    "student_id": "SAMPLE_UCI_POR_STU_000001",
+    "role": "student",
+    "task_id": "S-B03",
+    "task_name": "Engagement summary",
+    "explanation_mode": "task_aware_data_summarization"
+  },
+  "source_evidence": {
+    "evidence_manifest_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/evidence_manifest_208_mode_records.jsonl",
+    "full_query_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-B03.json",
+    "full_query_artifact_sha256": "4f8fa95bbb81166a8489e820ce7a090e1bb452648f25347f4e54381b074aef05"
+  },
+  "request_payload": {
+    "task_id": "S-B03",
+    "execution_id": "exec_1781847241745_1841e4ae",
+    "task_name": "Engagement summary",
+    "analysis_type": "aggregation",
+    "explanation_strategy": "behavioral",
+    "explanation_type": "observation, interpretation",
+    "ai_prompt_hint": "Describe effort level in plain language using study_effort_level, total_engagement_count, active_days, engagement_score, and class_avg_engagement_score. Compare to class averages only from returned fields, and avoid calling missing engagement data low effort.",
+    "actionable_question": "How active am I compared to classmates?",
+    "target_audience": [
+      "student"
+    ],
+    "visualization_config": {
+      "x_field": "study_effort_level",
+      "y_field": "engagement_score",
+      "series_field": null,
+      "color_field": "study_effort_level",
+      "orientation": "vertical",
+      "variant": "categorical",
+      "x_label": "Effort Level",
+      "y_label": "Engagement Score",
+      "semantic_roles": {
+        "x": "category",
+        "y": "engagement_metric"
+      }
+    },
+    "analysis_context": {
+      "granularity": "semester",
+      "aggregation_level": "student"
+    },
+    "datasets": {
+      "engagement_summary": [
+        {
+          "total_engagement_count": 0,
+          "total_clicks": 0,
+          "active_days": 0,
+          "engagement_score": 0,
+          "class_avg_total_engagement_count": 0,
+          "class_avg_active_days": 0,
+          "class_avg_engagement_score": 0,
+          "study_effort_level": "very_low"
+        }
+      ]
+    },
+    "confidence": {
+      "level": "LOW",
+      "reason": "No positive engagement activity found (0 engagement rows)."
+    },
+    "student_context": {
+      "student_id": "SAMPLE_UCI_POR_STU_000001",
+      "enrollment_id": "SAMPLE_UCI_POR_ENR_000001",
+      "class_id": "SAMPLE_UCI_POR_CLASS",
+      "dataset_id": "SAMPLE_UCI_POR"
+    },
+    "query_labels": [
+      "engagement_summary"
+    ],
+    "semantic_context": null,
+    "ai_summary_config": {
+      "comparison_groups": [],
+      "dynamic_comparison_groups": false,
+      "comparison_alignment_columns": [],
+      "group_key_columns": [],
+      "metric_columns": [
+        "total_engagement_count",
+        "active_days",
+        "engagement_score"
+      ],
+      "status_columns": [
+        "study_effort_level"
+      ],
+      "threshold_columns": [],
+      "benchmark_columns": [
+        "class_avg_total_engagement_count",
+        "class_avg_active_days",
+        "class_avg_engagement_score"
+      ],
+      "sensitive_columns": [],
+      "metric_availability_columns": {},
+      "threshold_sources": {},
+      "benchmark_sources": {
+        "class_avg_total_engagement_count": "class_cohort",
+        "class_avg_active_days": "class_cohort",
+        "class_avg_engagement_score": "class_cohort"
+      },
+      "entity_order": [],
+      "metric_directions": {},
+      "metric_units": {
+        "total_engagement_count": "count",
+        "active_days": "day_count",
+        "engagement_score": "ratio_0_1",
+        "class_avg_total_engagement_count": "count",
+        "class_avg_active_days": "day_count",
+        "class_avg_engagement_score": "ratio_0_1"
+      },
+      "metric_thresholds": {},
+      "minimum_entity_count": 2,
+      "require_metric_directions": false,
+      "require_metric_units": true,
+      "require_metric_thresholds": false,
+      "require_sensitive_context_policy": false,
+      "focus_categories": [],
+      "focus_bins": [],
+      "category_order": [],
+      "expected_categories": [],
+      "expected_groups": [],
+      "bin_order": [],
+      "expected_bins": [],
+      "severity_order": [],
+      "flag_order": [],
+      "secondary_metric_columns": [],
+      "flag_columns": [],
+      "action_columns": [],
+      "label_columns": [],
+      "evidence_columns": [],
+      "evidence_dataset_roles": {},
+      "action_evidence_contract": [],
+      "action_derived_evidence": [],
+      "action_conflict_rules": [],
+      "action_rules": [],
+      "trigger_columns": [],
+      "provenance_required_fields": [],
+      "require_complete_action_provenance": true,
+      "unsupported_action_behavior": "emit_unsupported_actions",
+      "require_sensitive_action_policy": false,
+      "summary_type": "metric_snapshot",
+      "target_group": null,
+      "divergence_threshold": null,
+      "time_column": null,
+      "x_column": null,
+      "y_column": null,
+      "metric_column": null,
+      "entity_column": null,
+      "color_column": null,
+      "coefficient_column": null,
+      "coefficient_method": null,
+      "sample_size_column": null,
+      "p_value_column": null,
+      "outlier_policy": null,
+      "group_column": null,
+      "series_column": null,
+      "gap_column": null,
+      "reliability_column": null,
+      "minimum_reliable_count": null,
+      "minimum_sample_size": null,
+      "category_column": null,
+      "bin_column": null,
+      "count_column": null,
+      "percent_column": null,
+      "metric_key_column": null,
+      "metric_value_column": null,
+      "selected_entity_column": null,
+      "entity_evidence_available_column": null,
+      "sensitive_context_policy": null,
+      "numeric_threshold": null,
+      "threshold_direction": null,
+      "sort_by": null,
+      "sort_direction": null,
+      "flag_name_column": null,
+      "flag_value_column": null,
+      "threshold_column": null,
+      "triggered_column": null,
+      "severity_column": null,
+      "description_column": null,
+      "recommended_action_column": null,
+      "support_category_column": null,
+      "max_flags": null,
+      "action_source": null,
+      "action_rule_set_id": null,
+      "action_rule_version": null,
+      "priority_column": null,
+      "owner_column": null,
+      "time_horizon_column": null,
+      "max_actions": null,
+      "sensitive_action_policy": null,
+      "max_points": null,
+      "top_k": null,
+      "bottom_k": null
+    }
+  },
+  "response_metadata": {
+    "http_status": 200,
+    "latency_ms": 5457,
+    "transport_error": null,
+    "degraded": false,
+    "expected_ai_summary_method": "task_aware_data_summarization",
+    "observed_ai_summary_method": "task_aware_data_summarization",
+    "model": "gpt-4o-mini-2024-07-18",
+    "token_usage": {
+      "prompt_tokens": 1170,
+      "completion_tokens": 401,
+      "total_tokens": 1571
+    },
+    "attempts": 2,
+    "final_attempt": 1
+  },
+  "response_body": {
+    "task_id": "S-B03",
+    "execution_id": "exec_1781847241745_1841e4ae",
+    "explanation": {
+      "summary": "It looks like you haven't engaged with the course materials yet this semester. Your total engagement count, active days, and engagement score are all at zero, which indicates that there hasn't been any activity on your part.",
+      "insights": [
+        {
+          "title": "Lack of Engagement",
+          "description": "You have a total engagement count of 0 and have not logged any active days. This means you haven't interacted with the course content at all.",
+          "severity": "high",
+          "evidence": [
+            {
+              "metric": "total_engagement_count",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "No engagement recorded"
+            }
+          ]
+        },
+        {
+          "title": "Comparison to Class Averages",
+          "description": "Your engagement metrics are below the class averages, which are also at 0. This indicates that you are currently not participating in the course alongside your peers.",
+          "severity": "medium",
+          "evidence": [
+            {
+              "metric": "class_avg_total_engagement_count",
+              "value": 0,
+              "comparison": "baseline",
+              "delta": null,
+              "context": "Class average engagement is also zero"
+            }
+          ]
+        }
+      ],
+      "educational_implications": [
+        "Engagement is crucial for your learning and success in the course."
+      ],
+      "recommendations": [
+        {
+          "priority": "high",
+          "action": "Start interacting with course materials regularly.",
+          "rationale": "Engaging with the content will help you understand the material better and improve your overall performance."
+        }
+      ],
+      "warnings": []
+    },
+    "confidence": {
+      "level": "HIGH",
+      "reason": "The data shows clear engagement metrics, all indicating no activity.",
+      "based_on": [
+        "sufficient_data"
+      ]
+    },
+    "explanation_strategy": "behavioral",
+    "explanation_type": "behavioral",
+    "ai_summary_method": "task_aware_data_summarization",
+    "ai_summary_version": "v3.1-experimental",
+    "baseline_available": true,
+    "input_summary_type": "metric_snapshot",
+    "ai_summary_method_warning": null,
+    "full_result_row_count": 1,
+    "included_row_count": 1,
+    "small_result_threshold": null,
+    "small_result_full_rows_applied": null,
+    "dataset_row_breakdown": [
+      {
+        "dataset_name": "engagement_summary",
+        "row_count": 1,
+        "included_row_count": 1
+      }
+    ],
+    "raw_row_limit": 15,
+    "included_raw_row_count": 1,
+    "baseline_reference_tokens": 76,
+    "task_aware_prompt_tokens": 689,
+    "token_ratio": 9.0658,
+    "token_count_method": "utf8_bytes_div_4",
+    "evidence_sections_included": [
+      "scope",
+      "primary_finding",
+      "comparison",
+      "exceptions",
+      "action_evidence",
+      "limitations"
+    ],
+    "evidence_sections_omitted": [],
+    "task_output_contract": [],
+    "must_keep_keys": [],
+    "v3_warnings": [
+      "Task-aware V3 prompt exceeded the configured soft token ratio (9.0658 > 1.2).",
+      "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+    ],
+    "safety_flags": [],
+    "degraded": false,
+    "meta": {
+      "model": "gpt-4o-mini-2024-07-18",
+      "latency_ms": 5453,
+      "token_usage": {
+        "prompt_tokens": 1170,
+        "completion_tokens": 401,
+        "total_tokens": 1571
+      },
+      "strategy": "behavioral",
+      "granularity": "semester",
+      "cost_usd": 0.000416
+    }
+  },
+  "raw_text": "Summary: It looks like you haven't engaged with the course materials yet this semester. Your total engagement count, active days, and engagement score are all at zero, which indicates that there hasn't been any activity on your part.\n\nInsights: Lack of Engagement: You have a total engagement count of 0 and have not logged any active days. This means you haven't interacted with the course content at all. | Comparison to Class Averages: Your engagement metrics are below the class averages, which are also at 0. This indicates that you are currently not participating in the course alongside your peers.\n\nEducational implications: Engagement is crucial for your learning and success in the course.\n\nRecommendations: high - Start interacting with course materials regularly. - Engaging with the content will help you understand the material better and improve your overall performance."
+}

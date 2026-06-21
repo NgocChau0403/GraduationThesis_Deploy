@@ -1,0 +1,72 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__A-S05__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable actionability requirements are strongly satisfied by the supported claims."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "For the selected student, quiz 1 is the lowest returned competency proxy at average score 0.",
+ "claim_type": "competency_ranking",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "competency_scores quiz 1 row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The scope, tag, and value are exact."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Knowledge-recall support using flashcards is recommended for quiz 1.",
+ "claim_type": "support_action",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "A-S05 support-type contract and competency_scores quiz 1 row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The action follows the required knowledge-recall mapping."
+ }
+ ],
+ "errors": [],
+ "holistic_rationale": "The response is fully scoped to the selected student, identifies the exact weakest competency, and provides the required support type.",
+ "evidence_usage_notes": "Evidence access mode was direct_embedding. All 3 rows were directly embedded; retrieval_log_path is not applicable. Evidence references: competency_scores:Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S05.json. Deterministic checks were used only for covered values, directions, rankings, thresholds, and availability; semantic and causal claims were judged separately. Evidence access does not prove model attention to every row.",
+ "invalid_reason": null
+}

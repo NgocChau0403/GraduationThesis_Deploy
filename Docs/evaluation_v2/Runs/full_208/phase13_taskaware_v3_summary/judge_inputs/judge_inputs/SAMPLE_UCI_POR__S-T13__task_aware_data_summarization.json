@@ -1,0 +1,226 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T13__task_aware_data_summarization",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "S-T13",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Action plan generation",
+    "scope": "1 student",
+    "actionable_question": "What should I do differently starting next week?",
+    "target_audience": "student",
+    "ai_summary_type": "action_synthesis",
+    "ai_prompt_hint": "Synthesise all [FE] risk signals into 3–5 prioritised actions. Reference which FE feature triggered each item.",
+    "query_labels": [
+      "synthesis_data"
+    ],
+    "explanation_strategy": "risk"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "student"
+    ],
+    "key_db_fields": [
+      "[AI_SYNTHESIS] avg_score [FE cross]",
+      "at_risk_score [FE cross]",
+      "engagement_score [FE cross]",
+      "absence_rate [FE single]",
+      "performance_trend [FE cross]",
+      "lifestyle_risk_score [FE single]"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "synthesis_data"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: You have two important actions to focus on in the coming week to enhance your attendance and study planning. These actions are designed to help you stay organized and set clear goals.\n\nInsights: Attendance Planning: Planning next week's attendance in advance and setting reminders can help you manage your learning sessions effectively. Your current absence rate is 1.0, indicating a need for improved attendance. | Score Target Setting: Choosing an upcoming assessment goal and scheduling focused study sessions can help you aim for improvement. Your average score is currently 41.25, with a target threshold of 70.",
+    "structured_payload": {
+      "task_id": "S-T13",
+      "execution_id": "exec_1781847244412_fccd48cb",
+      "explanation": {
+        "summary": "You have two important actions to focus on in the coming week to enhance your attendance and study planning. These actions are designed to help you stay organized and set clear goals.",
+        "insights": [
+          {
+            "title": "Attendance Planning",
+            "description": "Planning next week's attendance in advance and setting reminders can help you manage your learning sessions effectively. Your current absence rate is 1.0, indicating a need for improved attendance.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "absence_rate",
+                "value": 1,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "This indicates a high absence rate."
+              }
+            ]
+          },
+          {
+            "title": "Score Target Setting",
+            "description": "Choosing an upcoming assessment goal and scheduling focused study sessions can help you aim for improvement. Your average score is currently 41.25, with a target threshold of 70.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "avg_score",
+                "value": 41.25,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "This shows room for improvement towards the target threshold."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [],
+        "recommendations": [],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data used to generate these actions is complete and reliable.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "risk",
+      "explanation_type": "risk",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3-experimental",
+      "baseline_available": true,
+      "input_summary_type": "action_synthesis",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 1,
+      "included_row_count": 1,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "synthesis_data",
+          "row_count": 1,
+          "included_row_count": 1
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 1,
+      "baseline_reference_tokens": 103,
+      "task_aware_prompt_tokens": 1259,
+      "token_ratio": 12.2233,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [
+        "limitations.unsupported_actions",
+        "action_evidence.action_evidence_links",
+        "action_evidence.prioritized_actions",
+        "comparison.conflicting_evidence",
+        "primary_finding.rule_evaluations"
+      ],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (12.2233 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 4218,
+        "token_usage": {
+          "prompt_tokens": 2823,
+          "completion_tokens": 335,
+          "total_tokens": 3158
+        },
+        "strategy": "risk",
+        "granularity": "semester",
+        "cost_usd": 0.000624
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__S-T13__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "36e6c5eb318ca1c2d03a003272358bc6efa021d1fc6df13bd519ec23d5a1c77d",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 2823,
+        "completion_tokens": 335,
+        "total_tokens": 3158
+      },
+      "latency_ms": 4262,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 1,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "synthesis_data",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T13.json",
+        "artifact_sha256": "2a08d11768009472115b7a9a214f6b1876c84e1de53b92b868f70b36c8338d67",
+        "row_count": 1,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 1,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "synthesis_data": 1
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "S-T13-CORE-01",
+        "description": "Explain the supported actions already generated or exposed by the action_synthesis rule contract; do not require the explanation model to invent actions outside the returned or triggered action set."
+      },
+      {
+        "requirement_id": "S-T13-CORE-02",
+        "description": "For each supported action that is present, explain the triggering FE feature, threshold or rule evidence when available."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "S-T13-CONSTRAINT-01",
+        "description": "Do not include or endorse actions that reference signals not present in returned data or the supplied action-rule contract."
+      },
+      {
+        "constraint_id": "S-T13-CONSTRAINT-02",
+        "description": "Do not invent risk context, urgency, priority, or additional actions unsupported by returned feature-engineered signals or supported action evidence."
+      },
+      {
+        "constraint_id": "S-T13-CONSTRAINT-03",
+        "description": "If no supported action is returned or triggered, saying no supported action is available is acceptable; penalize that only when deterministic action evidence shows at least one supported action exists."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

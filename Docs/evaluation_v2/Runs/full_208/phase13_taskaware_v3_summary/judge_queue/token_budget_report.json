@@ -1,0 +1,89 @@
+{
+  "report_version": "llm_judge_v2_phase_f7_preflight_token_budget_v1",
+  "generated_at": "2026-06-20T16:54:54.505Z",
+  "status": "PASS",
+  "phase_scope": [
+    "F7-preflight token budget audit and prompt queue strategy"
+  ],
+  "inputs": {
+    "judge_context_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_contexts/judge_context_manifest.jsonl",
+    "prompt_path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md",
+    "prompt_sha256": "e35e0b9d459cc13cd908acc693510832ccf611a61922bcd6bdb3f4e93f569517"
+  },
+  "configuration": {
+    "full_context_token_cap": 32000,
+    "tokenizer_method": "heuristic_chars_div_4_ceiling",
+    "thresholds": [
+      32000,
+      64000,
+      128000,
+      190000
+    ]
+  },
+  "counts": {
+    "prompt_queue_ready_records": 208,
+    "total_records": 208,
+    "unique_record_ids": 208,
+    "full_context_records": 190,
+    "compact_retrieval_context_records": 18,
+    "oversized_full_context_records": 0,
+    "threshold_counts": {
+      ">32000": 18,
+      ">64000": 12,
+      ">128000": 4,
+      ">190000": 2
+    }
+  },
+  "coverage_summary": {
+    "datasets": {
+      "SAMPLE_UCI_POR": 104,
+      "SAMPLE_OULAD": 104
+    },
+    "explanation_modes": {
+      "baseline_first_20_rows": 104,
+      "task_aware_data_summarization": 104
+    },
+    "evidence_access_modes": {
+      "direct_embedding": 170,
+      "deterministic_artifact_retrieval": 38
+    },
+    "queue_strategies": {
+      "full_context": 190,
+      "compact_retrieval_context": 18
+    },
+    "token_risk_buckets": {
+      "<=32k": 190,
+      ">32k": 6,
+      ">64k": 8,
+      ">128k": 2,
+      ">190k": 2
+    }
+  },
+  "max_context_record": {
+    "record_id": "SAMPLE_OULAD__S-T11__task_aware_data_summarization",
+    "dataset_id": "SAMPLE_OULAD",
+    "task_id": "S-T11",
+    "explanation_mode": "task_aware_data_summarization",
+    "evidence_access_mode": "deterministic_artifact_retrieval",
+    "context_token_count": 194446,
+    "prompt_packet_token_count": 6497,
+    "queue_strategy": "compact_retrieval_context",
+    "final_context_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_contexts/final_contexts/SAMPLE_OULAD__S-T11__task_aware_data_summarization.md",
+    "prompt_packet_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_queue/prompt_queue/SAMPLE_OULAD__S-T11__task_aware_data_summarization.md"
+  },
+  "outputs": {
+    "prompt_queue_manifest_jsonl": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_queue/judge_prompt_queue_manifest.jsonl",
+    "prompt_queue_dir": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_queue/prompt_queue",
+    "report_json": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_queue/token_budget_report.json",
+    "report_md": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/judge_queue/token_budget_report.md"
+  },
+  "gate_decision": {
+    "prompt_queue_preflight_status": "PASS",
+    "prompt_queue_ready": true,
+    "judge_invocation_started": false,
+    "judge_invocation_allowed": false,
+    "official_full_evaluation_allowed": "pending_user_approval",
+    "reason": "Prompt queue packets are generated with token-budget strategy. Judge invocation was not started and still requires explicit user approval."
+  },
+  "issues": []
+}

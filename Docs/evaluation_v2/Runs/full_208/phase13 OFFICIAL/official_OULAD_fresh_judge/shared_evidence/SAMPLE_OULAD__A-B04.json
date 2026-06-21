@@ -1,0 +1,143 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-B04",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-B04",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-B04__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "7cf9f7657d7e735cffe09448bfb39e3f89a2c8b34acb3c5f876855bf2c12b40a",
+ "deterministic_summary": {
+ "summary_type": "categorical_distribution",
+ "dataset_name": "risk_overview",
+ "row_count": 3,
+ "category_column": "at_risk_label",
+ "count_column": "student_count",
+ "percent_column": null,
+ "total_count": 1998,
+ "category_distribution": [
+ {
+ "category": "high",
+ "count": 915,
+ "percent": null
+ },
+ {
+ "category": "medium",
+ "count": 927,
+ "percent": null
+ },
+ {
+ "category": "low",
+ "count": 156,
+ "percent": null
+ }
+ ],
+ "largest_category": {
+ "category": "medium",
+ "count": 927,
+ "percent": null
+ },
+ "focus_categories": [
+ "high",
+ "medium"
+ ],
+ "focus_total": {
+ "categories": [
+ "high",
+ "medium"
+ ],
+ "present_categories": [
+ "high",
+ "medium"
+ ],
+ "missing_categories": [],
+ "count": 1842,
+ "percent": null
+ },
+ "missing_expected_categories": [],
+ "missing_focus_categories": [],
+ "metric_columns": [],
+ "metric_evidence_by_category": {},
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "categorical_distribution",
+ "task_id": "A-B04",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "risk_overview",
+ "row_count": 3,
+ "category_column": "at_risk_label",
+ "count_column": "student_count",
+ "percent_column": null,
+ "metric_columns": [],
+ "total_count": 1998,
+ "focus_categories": [
+ "high",
+ "medium"
+ ]
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "category_distribution": [
+ {
+ "category": "high",
+ "count": 915,
+ "percent": null
+ },
+ {
+ "category": "medium",
+ "count": 927,
+ "percent": null
+ },
+ {
+ "category": "low",
+ "count": 156,
+ "percent": null
+ }
+ ],
+ "focus_total": {
+ "categories": [
+ "high",
+ "medium"
+ ],
+ "present_categories": [
+ "high",
+ "medium"
+ ],
+ "missing_categories": [],
+ "count": 1842,
+ "percent": null
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_evidence_by_category": {}
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "largest_category": {
+ "category": "medium",
+ "count": 927,
+ "percent": null
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_expected_categories": [],
+ "missing_focus_categories": [],
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

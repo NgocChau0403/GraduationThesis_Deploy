@@ -1,0 +1,153 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__A-B02",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-B02",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__A-B02__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "d2149a2b7d03fffeeb0a04eb76c0e3ea46deb5517267dde94671b16342d30200",
+ "deterministic_summary": {
+ "summary_type": "categorical_distribution",
+ "dataset_name": "outcome_counts",
+ "row_count": 2,
+ "category_column": "final_outcome",
+ "count_column": "student_count",
+ "percent_column": "pct_of_class",
+ "total_count": 649,
+ "category_distribution": [
+ {
+ "category": "Pass",
+ "count": 549,
+ "percent": 84.6
+ },
+ {
+ "category": "Fail",
+ "count": 100,
+ "percent": 15.4
+ }
+ ],
+ "largest_category": {
+ "category": "Pass",
+ "count": 549,
+ "percent": 84.6
+ },
+ "focus_categories": [
+ "Fail",
+ "Withdrawn"
+ ],
+ "focus_total": {
+ "categories": [
+ "Fail",
+ "Withdrawn"
+ ],
+ "present_categories": [
+ "Fail"
+ ],
+ "missing_categories": [
+ "Withdrawn"
+ ],
+ "count": 100,
+ "percent": 15.4
+ },
+ "missing_expected_categories": [
+ "Distinction",
+ "Withdrawn"
+ ],
+ "missing_focus_categories": [
+ "Withdrawn"
+ ],
+ "metric_columns": [],
+ "metric_evidence_by_category": {},
+ "summarization_warnings": [
+ "Expected categories missing from dataset: Distinction, Withdrawn",
+ "Focus categories missing from dataset: Withdrawn"
+ ],
+ "percent_total": 100
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "categorical_distribution",
+ "task_id": "A-B02",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "outcome_counts",
+ "row_count": 2,
+ "category_column": "final_outcome",
+ "count_column": "student_count",
+ "percent_column": "pct_of_class",
+ "metric_columns": [],
+ "total_count": 649,
+ "percent_total": 100,
+ "focus_categories": [
+ "Fail",
+ "Withdrawn"
+ ]
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "category_distribution": [
+ {
+ "category": "Pass",
+ "count": 549,
+ "percent": 84.6
+ },
+ {
+ "category": "Fail",
+ "count": 100,
+ "percent": 15.4
+ }
+ ],
+ "focus_total": {
+ "categories": [
+ "Fail",
+ "Withdrawn"
+ ],
+ "present_categories": [
+ "Fail"
+ ],
+ "missing_categories": [
+ "Withdrawn"
+ ],
+ "count": 100,
+ "percent": 15.4
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "metric_evidence_by_category": {}
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "largest_category": {
+ "category": "Pass",
+ "count": 549,
+ "percent": 84.6
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_expected_categories": [
+ "Distinction",
+ "Withdrawn"
+ ],
+ "missing_focus_categories": [
+ "Withdrawn"
+ ],
+ "summarization_warnings": [
+ "Expected categories missing from dataset: Distinction, Withdrawn",
+ "Focus categories missing from dataset: Withdrawn"
+ ]
+ }
+ }
+ ]
+ }
+}

@@ -1,0 +1,226 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-B01__task_aware_data_summarization",
+  "evaluation_run_id": "llm_judge_v2_phase13_saufix_executable_only__SAMPLE_UCI_POR",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-B01",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_phase13_saufix_action_correction_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Overall performance distribution",
+    "scope": "Cohort",
+    "actionable_question": "How is the class performing overall?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "numeric_distribution",
+    "ai_prompt_hint": "Describe score spread. Flag if large proportion below pass threshold.",
+    "query_labels": [
+      "score_distribution"
+    ],
+    "explanation_strategy": "distribution"
+  },
+  "schema_context": {
+    "source_tables": [
+      "assessment_result",
+      "assessment",
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "score_normalized",
+      "assessment_type"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "score_bucket",
+        "student_count"
+      ],
+      "optional_columns": [
+        "pct_of_class",
+        "dataset_source",
+        "avg_score_in_bucket"
+      ]
+    },
+    "query_labels": [
+      "score_distribution"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The overall performance distribution indicates that a significant portion of students are clustered in the mid-range score buckets, particularly between 50-60 and 60-70. However, there is a concerning number of students scoring below the passing threshold of 40, which may require targeted interventions.\n\nInsights: Concentration in Mid-Range Scores: The dominant score bucket is 50-60, comprising 28.8% of the class, followed closely by 60-70 at 25.9%. This suggests that most students are performing at a moderate level, but there is a lack of high achievers in the upper score ranges. | Significant Below-Pass Threshold: A total of 49 students, or 7.6% of the class, are scoring below the passing threshold of 40. This indicates a need for immediate attention to support these students.\n\nEducational implications: The concentration of students in the mid-range suggests a need for differentiated instruction to elevate performance in higher score buckets.\n\nRecommendations: high - Implement targeted support programs for students scoring below 40. - Addressing the needs of students who are struggling will help improve overall class performance and ensure that more students meet the passing threshold.",
+    "structured_payload": {
+      "task_id": "A-B01",
+      "execution_id": "exec_1781847231655_3078f027",
+      "explanation": {
+        "summary": "The overall performance distribution indicates that a significant portion of students are clustered in the mid-range score buckets, particularly between 50-60 and 60-70. However, there is a concerning number of students scoring below the passing threshold of 40, which may require targeted interventions.",
+        "insights": [
+          {
+            "title": "Concentration in Mid-Range Scores",
+            "description": "The dominant score bucket is 50-60, comprising 28.8% of the class, followed closely by 60-70 at 25.9%. This suggests that most students are performing at a moderate level, but there is a lack of high achievers in the upper score ranges.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "student_count",
+                "value": 187,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Dominant bucket 50-60"
+              }
+            ]
+          },
+          {
+            "title": "Significant Below-Pass Threshold",
+            "description": "A total of 49 students, or 7.6% of the class, are scoring below the passing threshold of 40. This indicates a need for immediate attention to support these students.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "student_count",
+                "value": 49,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Students below passing threshold"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The concentration of students in the mid-range suggests a need for differentiated instruction to elevate performance in higher score buckets."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted support programs for students scoring below 40.",
+            "rationale": "Addressing the needs of students who are struggling will help improve overall class performance and ensure that more students meet the passing threshold."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data is derived from a complete dataset of score distributions, providing a reliable overview of student performance.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "distribution",
+      "explanation_type": "distribution",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3.1-experimental",
+      "baseline_available": true,
+      "input_summary_type": "numeric_distribution",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 10,
+      "included_row_count": 10,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "score_distribution",
+          "row_count": 10,
+          "included_row_count": 10
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 10,
+      "baseline_reference_tokens": 313,
+      "task_aware_prompt_tokens": 938,
+      "token_ratio": 2.9968,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "comparison",
+        "exceptions",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [],
+      "task_output_contract": [],
+      "must_keep_keys": [],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (2.9968 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 7484,
+        "token_usage": {
+          "prompt_tokens": 1717,
+          "completion_tokens": 482,
+          "total_tokens": 2199
+        },
+        "strategy": "distribution",
+        "granularity": "per_assessment",
+        "cost_usd": 0.000547
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations_saufix/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-B01__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "026f35010400908532980b606d4d7a6a09b38bc58a071222353e586f1e9a0e9f",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1717,
+        "completion_tokens": 482,
+        "total_tokens": 2199
+      },
+      "latency_ms": 7496,
+      "attempts_used": 2
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 10,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "score_distribution",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-B01.json",
+        "artifact_sha256": "c6f52e5d026054892d52e98d1e9d748ac2e6f00ffff32d6820c814970c855f80",
+        "row_count": 10,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 10,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "score_distribution": 10
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-B01-CORE-01",
+        "description": "Describe score spread."
+      },
+      {
+        "requirement_id": "A-B01-CORE-02",
+        "description": "Flag if large proportion below pass threshold."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

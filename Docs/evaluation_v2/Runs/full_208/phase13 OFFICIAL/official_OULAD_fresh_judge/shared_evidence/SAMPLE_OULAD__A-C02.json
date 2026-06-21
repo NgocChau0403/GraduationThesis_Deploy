@@ -1,0 +1,470 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-C02",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-C02",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-C02__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "25e810fd0a0eb6995961a87b15dcc87e4974561d50f2622d9865aeb543dc352d",
+ "deterministic_summary": {
+ "summary_type": "multi_metric_comparison",
+ "dataset_name": "engagement_comparison",
+ "row_count": 6,
+ "entity_column": "student_id",
+ "metric_key_column": "metric",
+ "metric_value_column": "engagement_score",
+ "entities": [
+ "SAMPLE_OULAD_STU_100788",
+ "SAMPLE_OULAD_STU_101700"
+ ],
+ "metrics": [
+ {
+ "metric": "active_days_norm",
+ "unit": "ratio_0_1",
+ "direction": "higher_is_better",
+ "threshold": {
+ "status": "not_applicable",
+ "reason": "descriptive component metric"
+ }
+ },
+ {
+ "metric": "engagement_score",
+ "unit": "ratio_0_1",
+ "direction": "higher_is_better",
+ "threshold": {
+ "very_low_below": 0.25,
+ "low_below": 0.5,
+ "medium_below": 0.75,
+ "high_at_or_above": 0.75
+ }
+ },
+ {
+ "metric": "total_clicks_norm",
+ "unit": "ratio_0_1",
+ "direction": "higher_is_better",
+ "threshold": {
+ "status": "not_applicable",
+ "reason": "descriptive component metric"
+ }
+ }
+ ],
+ "metric_keys": [
+ "active_days_norm",
+ "engagement_score",
+ "total_clicks_norm"
+ ],
+ "comparison_matrix": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "metrics": {
+ "active_days_norm": 0.3525,
+ "engagement_score": 0.2024,
+ "total_clicks_norm": 0.0522
+ },
+ "labels": {
+ "study_effort_level": "very_low",
+ "total_clicks": 1261,
+ "active_days": 98
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "metrics": {
+ "active_days_norm": 0,
+ "engagement_score": 0,
+ "total_clicks_norm": 0
+ },
+ "labels": {
+ "study_effort_level": "very_low",
+ "total_clicks": 0,
+ "active_days": 0
+ }
+ }
+ ],
+ "metric_extrema": {
+ "active_days_norm": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 0.3525
+ }
+ },
+ "engagement_score": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 0.2024
+ }
+ },
+ "total_clicks_norm": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 0.0522
+ }
+ }
+ },
+ "pairwise_gaps": [
+ {
+ "metric": "active_days_norm",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -0.3525,
+ "absolute_gap": 0.3525
+ },
+ {
+ "metric": "engagement_score",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -0.2024,
+ "absolute_gap": 0.2024
+ },
+ {
+ "metric": "total_clicks_norm",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -0.0522,
+ "absolute_gap": 0.0522
+ }
+ ],
+ "missing_metric_evidence": [],
+ "missing_entity_evidence": [],
+ "missing_expected_entities": [],
+ "selected_entity_evidence": [],
+ "evidence_status": "sufficient",
+ "evidence_requirements": {
+ "minimum_entity_count": 2,
+ "expected_entities": [],
+ "observed_entity_count": 2,
+ "missing_expected_entities": []
+ },
+ "validation_metadata": {
+ "status": "passed",
+ "required": {
+ "metric_units": true,
+ "metric_directions": true,
+ "metric_thresholds": true,
+ "sensitive_context_policy": false
+ },
+ "metric_units": {
+ "total_clicks_norm": "ratio_0_1",
+ "active_days_norm": "ratio_0_1",
+ "engagement_score": "ratio_0_1"
+ },
+ "metric_directions": {
+ "total_clicks_norm": "higher_is_better",
+ "active_days_norm": "higher_is_better",
+ "engagement_score": "higher_is_better"
+ },
+ "metric_thresholds": {
+ "total_clicks_norm": {
+ "status": "not_applicable",
+ "reason": "descriptive component metric"
+ },
+ "active_days_norm": {
+ "status": "not_applicable",
+ "reason": "descriptive component metric"
+ },
+ "engagement_score": {
+ "very_low_below": 0.25,
+ "low_below": 0.5,
+ "medium_below": 0.75,
+ "high_at_or_above": 0.75
+ }
+ },
+ "sensitive_context_policy": null
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": [],
+ "pairwise_direction_evidence": [
+ {
+ "metric": "active_days_norm",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_100788",
+ "lower_entity": "SAMPLE_OULAD_STU_101700",
+ "difference": 0.3525,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "engagement_score",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_100788",
+ "lower_entity": "SAMPLE_OULAD_STU_101700",
+ "difference": 0.2024,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "total_clicks_norm",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_100788",
+ "lower_entity": "SAMPLE_OULAD_STU_101700",
+ "difference": 0.0522,
+ "direction_note": "left_entity is higher"
+ }
+ ],
+ "largest_gap_evidence": {
+ "metric": "active_days_norm",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -0.3525,
+ "absolute_gap": 0.3525
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "multi_metric_comparison",
+ "task_id": "A-C02",
+ "task_output_contract": [
+ "Compare the returned entities directly, naming which entity is higher/lower for each key metric.",
+ "Use pairwise_gaps and selected_entity_evidence for direction; do not reverse numeric direction.",
+ "If expected metric/entity evidence is missing, state the limitation rather than guessing.",
+ "State the exact values for active_days_norm, engagement_score, and total_clicks_norm for both returned students, and identify the largest absolute gap.",
+ "Do not infer academic performance or prescribe an intervention from engagement-only evidence."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "engagement_comparison",
+ "row_count": 6,
+ "entities": [
+ "SAMPLE_OULAD_STU_100788",
+ "SAMPLE_OULAD_STU_101700"
+ ],
+ "entity_column": "student_id",
+ "metrics": [
+ {
+ "metric": "active_days_norm",
+ "unit": "ratio_0_1",
+ "direction": "higher_is_better",
+ "threshold": {
+ "status": "not_applicable",
+ "reason": "descriptive component metric"
+ }
+ },
+ {
+ "metric": "engagement_score",
+ "unit": "ratio_0_1",
+ "direction": "higher_is_better",
+ "threshold": {
+ "very_low_below": 0.25,
+ "low_below": 0.5,
+ "medium_below": 0.75,
+ "high_at_or_above": 0.75
+ }
+ },
+ {
+ "metric": "total_clicks_norm",
+ "unit": "ratio_0_1",
+ "direction": "higher_is_better",
+ "threshold": {
+ "status": "not_applicable",
+ "reason": "descriptive component metric"
+ }
+ }
+ ],
+ "metric_keys": [
+ "active_days_norm",
+ "engagement_score",
+ "total_clicks_norm"
+ ],
+ "metric_key_column": "metric",
+ "metric_value_column": "engagement_score",
+ "evidence_status": "sufficient",
+ "evidence_requirements": {
+ "minimum_entity_count": 2,
+ "expected_entities": [],
+ "observed_entity_count": 2,
+ "missing_expected_entities": []
+ }
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "comparison_matrix": [
+ {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "metrics": {
+ "active_days_norm": 0.3525,
+ "engagement_score": 0.2024,
+ "total_clicks_norm": 0.0522
+ },
+ "labels": {
+ "study_effort_level": "very_low",
+ "total_clicks": 1261,
+ "active_days": 98
+ }
+ },
+ {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "metrics": {
+ "active_days_norm": 0,
+ "engagement_score": 0,
+ "total_clicks_norm": 0
+ },
+ "labels": {
+ "study_effort_level": "very_low",
+ "total_clicks": 0,
+ "active_days": 0
+ }
+ }
+ ],
+ "selected_entity_evidence": [],
+ "largest_gap_evidence": {
+ "metric": "active_days_norm",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -0.3525,
+ "absolute_gap": 0.3525
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "pairwise_gaps": [
+ {
+ "metric": "active_days_norm",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -0.3525,
+ "absolute_gap": 0.3525
+ },
+ {
+ "metric": "engagement_score",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -0.2024,
+ "absolute_gap": 0.2024
+ },
+ {
+ "metric": "total_clicks_norm",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "gap_right_minus_left": -0.0522,
+ "absolute_gap": 0.0522
+ }
+ ],
+ "pairwise_direction_evidence": [
+ {
+ "metric": "active_days_norm",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_100788",
+ "lower_entity": "SAMPLE_OULAD_STU_101700",
+ "difference": 0.3525,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "engagement_score",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_100788",
+ "lower_entity": "SAMPLE_OULAD_STU_101700",
+ "difference": 0.2024,
+ "direction_note": "left_entity is higher"
+ },
+ {
+ "metric": "total_clicks_norm",
+ "left_entity": "SAMPLE_OULAD_STU_100788",
+ "right_entity": "SAMPLE_OULAD_STU_101700",
+ "higher_entity": "SAMPLE_OULAD_STU_100788",
+ "lower_entity": "SAMPLE_OULAD_STU_101700",
+ "difference": 0.0522,
+ "direction_note": "left_entity is higher"
+ }
+ ],
+ "metric_extrema": {
+ "active_days_norm": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 0.3525
+ }
+ },
+ "engagement_score": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 0.2024
+ }
+ },
+ "total_clicks_norm": {
+ "min": {
+ "student_id": "SAMPLE_OULAD_STU_101700",
+ "value": 0
+ },
+ "max": {
+ "student_id": "SAMPLE_OULAD_STU_100788",
+ "value": 0.0522
+ }
+ }
+ }
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_metric_evidence": [],
+ "missing_entity_evidence": [],
+ "missing_expected_entities": [],
+ "validation_metadata": {
+ "status": "passed",
+ "required": {
+ "metric_units": true,
+ "metric_directions": true,
+ "metric_thresholds": true,
+ "sensitive_context_policy": false
+ },
+ "metric_units": {
+ "total_clicks_norm": "ratio_0_1",
+ "active_days_norm": "ratio_0_1",
+ "engagement_score": "ratio_0_1"
+ },
+ "metric_directions": {
+ "total_clicks_norm": "higher_is_better",
+ "active_days_norm": "higher_is_better",
+ "engagement_score": "higher_is_better"
+ },
+ "metric_thresholds": {
+ "total_clicks_norm": {
+ "status": "not_applicable",
+ "reason": "descriptive component metric"
+ },
+ "active_days_norm": {
+ "status": "not_applicable",
+ "reason": "descriptive component metric"
+ },
+ "engagement_score": {
+ "very_low_below": 0.25,
+ "low_below": 0.5,
+ "medium_below": 0.75,
+ "high_at_or_above": 0.75
+ }
+ },
+ "sensitive_context_policy": null
+ },
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

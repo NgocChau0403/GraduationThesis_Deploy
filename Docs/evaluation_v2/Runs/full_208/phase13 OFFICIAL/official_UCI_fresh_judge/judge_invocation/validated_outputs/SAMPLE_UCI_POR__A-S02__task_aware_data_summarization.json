@@ -1,0 +1,77 @@
+{
+ "schema_version": "judge_response_schema_v1",
+ "record_id": "SAMPLE_UCI_POR__A-S02__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 5,
+ "rationale": "Score 5/10 reflects The returned performance_trend direction and magnitude (+27.5 per assessment order) are not explicitly reported."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on task_relevance, with the limitations summarized in the holistic rationale."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable actionability requirements are strongly satisfied by the supported claims."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The student improved from 0 to 55 and then plateaued.",
+ "claim_type": "trend",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "score_trend assessment orders 1-3"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "This exactly matches the score sequence."
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "required_slope_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "numerical_correctness"
+ ],
+ "cap_candidate": null,
+ "rationale": "The returned performance_trend direction and magnitude (+27.5 per assessment order) are not explicitly reported.",
+ "evidence_refs": [
+ "score_trend performance_trend field"
+ ],
+ "requirement_id": "A-S02-CORE-02"
+ }
+ ],
+ "holistic_rationale": "The explanation accurately describes improvement and plateau, but it does not fulfill the explicit slope-magnitude requirement.",
+ "evidence_usage_notes": "Evidence access mode was direct_embedding. All 3 rows were directly embedded; retrieval_log_path is not applicable. Evidence references: score_trend:Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-S02.json. Deterministic checks were used only for covered values, directions, rankings, thresholds, and availability; semantic and causal claims were judged separately. Evidence access does not prove model attention to every row.",
+ "invalid_reason": null
+}

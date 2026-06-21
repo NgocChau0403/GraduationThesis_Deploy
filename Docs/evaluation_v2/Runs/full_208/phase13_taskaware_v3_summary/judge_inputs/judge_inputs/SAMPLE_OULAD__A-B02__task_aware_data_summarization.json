@@ -1,0 +1,217 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-B02__task_aware_data_summarization",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-B02",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Completion / outcome summary",
+    "scope": "Cohort",
+    "actionable_question": "How many students passed, failed, or withdrew?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "categorical_distribution",
+    "ai_prompt_hint": "State pass/fail/withdrawal counts. Highlight proportion at-risk.",
+    "query_labels": [
+      "outcome_counts"
+    ],
+    "explanation_strategy": "distribution"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "final_outcome",
+      "class_id"
+    ],
+    "output_schema": {},
+    "query_labels": [
+      "outcome_counts"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The distribution of final outcomes reveals that a significant portion of students, 43.1%, withdrew from the course, while 28.4% passed. The failure rate stands at 16.3%, indicating a concerning number of students at risk of not completing the course successfully.\n\nInsights: High Withdrawal Rate: The majority of students, 43.1%, have withdrawn from the course, which is the largest category in the outcome distribution. This suggests a critical need for interventions to support student retention. | Significant Failure Rate: With 16.3% of students failing, this outcome indicates a substantial number of students struggling with course material, necessitating targeted academic support.\n\nEducational implications: The high withdrawal and failure rates suggest that many students may be facing challenges that require immediate attention and support.\n\nRecommendations: high - Implement early intervention strategies for at-risk students, particularly those showing signs of disengagement. - Addressing the high withdrawal rate can help retain students and improve overall course completion rates. | medium - Provide additional academic resources and support for students who are failing. - Targeted support can help improve understanding of course material and reduce the failure rate.",
+    "structured_payload": {
+      "task_id": "A-B02",
+      "execution_id": "exec_1781847624955_4df8c593",
+      "explanation": {
+        "summary": "The distribution of final outcomes reveals that a significant portion of students, 43.1%, withdrew from the course, while 28.4% passed. The failure rate stands at 16.3%, indicating a concerning number of students at risk of not completing the course successfully.",
+        "insights": [
+          {
+            "title": "High Withdrawal Rate",
+            "description": "The majority of students, 43.1%, have withdrawn from the course, which is the largest category in the outcome distribution. This suggests a critical need for interventions to support student retention.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "student_count",
+                "value": 1077,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Withdrawn students represent the largest group."
+              }
+            ]
+          },
+          {
+            "title": "Significant Failure Rate",
+            "description": "With 16.3% of students failing, this outcome indicates a substantial number of students struggling with course material, necessitating targeted academic support.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "student_count",
+                "value": 406,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "Failing students represent a notable portion of the cohort."
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The high withdrawal and failure rates suggest that many students may be facing challenges that require immediate attention and support."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement early intervention strategies for at-risk students, particularly those showing signs of disengagement.",
+            "rationale": "Addressing the high withdrawal rate can help retain students and improve overall course completion rates."
+          },
+          {
+            "priority": "medium",
+            "action": "Provide additional academic resources and support for students who are failing.",
+            "rationale": "Targeted support can help improve understanding of course material and reduce the failure rate."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data is derived from a complete dataset of outcomes, ensuring a reliable analysis of student performance.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "distribution",
+      "explanation_type": "distribution",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3-experimental",
+      "baseline_available": true,
+      "input_summary_type": "categorical_distribution",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 4,
+      "included_row_count": 4,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "outcome_counts",
+          "row_count": 4,
+          "included_row_count": 4
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 4,
+      "baseline_reference_tokens": 103,
+      "task_aware_prompt_tokens": 434,
+      "token_ratio": 4.2136,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "comparison",
+        "exceptions",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (4.2136 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 8203,
+        "token_usage": {
+          "prompt_tokens": 954,
+          "completion_tokens": 497,
+          "total_tokens": 1451
+        },
+        "strategy": "distribution",
+        "granularity": "semester",
+        "cost_usd": 0.000441
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-B02__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "522cacc50ceff1fad8c529586f1d8d21a53138db78ebed6bc436e81ad47aca22",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 954,
+        "completion_tokens": 497,
+        "total_tokens": 1451
+      },
+      "latency_ms": 8210,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 4,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "outcome_counts",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-B02.json",
+        "artifact_sha256": "16185befb0c971718a221fc280a3c728b331cee25aae70ba22548114a9f4a3e2",
+        "row_count": 4,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 4,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "outcome_counts": 4
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-B02-CORE-01",
+        "description": "State pass/fail/withdrawal counts."
+      },
+      {
+        "requirement_id": "A-B02-CORE-02",
+        "description": "Highlight proportion at-risk."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

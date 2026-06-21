@@ -1,0 +1,18 @@
+{
+  "artifact_type": "llm_judge_v2_phase6_4_deterministic_retrieval_log",
+  "generated_at": "2026-06-20T16:29:36.997Z",
+  "record_id": "SAMPLE_OULAD__A-G03__baseline_first_20_rows",
+  "retrieval_request_complete": true,
+  "retrieval_coverage_status": "full",
+  "chunks": [
+    {
+      "chunk_id": "SAMPLE_OULAD__A-G03__baseline_first_20_rows__at_risk_cohort__chunk_1",
+      "dataset_label": "at_risk_cohort",
+      "row_start_inclusive": 0,
+      "row_end_inclusive": 49,
+      "row_count": 50,
+      "source_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-G03.json",
+      "source_artifact_sha256": "bf3c4b346f04ad4be918669370ed792533f943aa3a643588deba688cb7f693f2"
+    }
+  ]
+}

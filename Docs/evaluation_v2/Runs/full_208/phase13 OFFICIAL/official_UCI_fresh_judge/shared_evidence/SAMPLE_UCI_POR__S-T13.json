@@ -1,0 +1,896 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__S-T13",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "S-T13",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__S-T13__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "5a0db96a8caf74c74f325c405d4dbfe6f2b4b4a2f143186d748873d41c603df3",
+ "deterministic_summary": {
+ "summary_type": "action_synthesis",
+ "action_rule_set_id": "S-T13.action_synthesis",
+ "action_rule_version": "1.0.0",
+ "source_datasets": [
+ {
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_count": 1,
+ "available": true
+ }
+ ],
+ "evidence_items": [
+ {
+ "evidence_item_id": "ev-synthesis_data-0-avg_score",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "avg_score",
+ "raw_value": 41.25,
+ "parsed_value": 41.25,
+ "unit": "score_runtime_scale",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-performance_trend",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "performance_trend",
+ "raw_value": 27.5,
+ "parsed_value": 27.5,
+ "unit": "score_change_per_assessment_order",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-engagement_score",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "engagement_score",
+ "raw_value": 0,
+ "parsed_value": 0,
+ "unit": "ratio_0_1",
+ "available": false,
+ "sensitive": false,
+ "availability_column": "engagement_score_available",
+ "availability_raw_value": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-engagement_score_available",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "engagement_score_available",
+ "raw_value": false,
+ "parsed_value": false,
+ "unit": "boolean",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-absence_rate",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "absence_rate",
+ "raw_value": 1,
+ "parsed_value": 1,
+ "unit": "ratio_0_1",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-lifestyle_risk_score",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "lifestyle_risk_score",
+ "raw_value": 0.375,
+ "parsed_value": 0.375,
+ "unit": "ratio_0_1",
+ "available": true,
+ "sensitive": true
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-score_strategy",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "score_strategy",
+ "raw_value": "weighted_by_assessment_weight",
+ "parsed_value": "weighted_by_assessment_weight",
+ "unit": "strategy_identifier",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-score_scale",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "score_scale",
+ "raw_value": 100,
+ "parsed_value": 100,
+ "unit": "score_scale",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-pass_threshold",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "pass_threshold",
+ "raw_value": 40,
+ "parsed_value": 40,
+ "unit": "score_runtime_scale",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-target_threshold",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "target_threshold",
+ "raw_value": 70,
+ "parsed_value": 70,
+ "unit": "score_runtime_scale",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-at_risk_score",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "at_risk_score",
+ "raw_value": 1,
+ "parsed_value": 1,
+ "unit": "flag_count",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-at_risk_label",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "at_risk_label",
+ "raw_value": "low",
+ "parsed_value": "low",
+ "unit": "risk_band",
+ "available": true,
+ "sensitive": false
+ }
+ ],
+ "prioritized_actions": [
+ {
+ "action_id": "student_create_attendance_routine",
+ "action_text": "Plan next week's attendance in advance and set a reminder for each scheduled learning session.",
+ "priority": "medium",
+ "owner": "student",
+ "time_horizon_days": 7,
+ "support_category": "attendance",
+ "claim_limits": [
+ "Do not infer the reason for absence.",
+ "Do not trigger when absence_rate is null."
+ ],
+ "rule_id": "S-T13-R05",
+ "rule_ids": [
+ "S-T13-R05"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-absence_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "student_set_next_score_target",
+ "action_text": "Choose one upcoming assessment goal and schedule two focused study sessions toward the stated target threshold.",
+ "priority": "medium",
+ "owner": "student",
+ "time_horizon_days": 7,
+ "support_category": "study_planning",
+ "claim_limits": [
+ "Do not promise that the action will achieve the target.",
+ "Preserve the runtime threshold values and score scale."
+ ],
+ "rule_id": "S-T13-R02",
+ "rule_ids": [
+ "S-T13-R02"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-avg_score",
+ "ev-synthesis_data-0-pass_threshold",
+ "ev-synthesis_data-0-target_threshold"
+ ],
+ "provenance_status": "complete"
+ }
+ ],
+ "action_evidence_links": [
+ {
+ "action_id": "student_create_attendance_routine",
+ "rule_id": "S-T13-R05",
+ "rule_ids": [
+ "S-T13-R05"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-absence_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "student_set_next_score_target",
+ "rule_id": "S-T13-R02",
+ "rule_ids": [
+ "S-T13-R02"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-avg_score",
+ "ev-synthesis_data-0-pass_threshold",
+ "ev-synthesis_data-0-target_threshold"
+ ],
+ "provenance_status": "complete"
+ }
+ ],
+ "unsupported_actions": [],
+ "conflicting_evidence": [],
+ "missing_evidence": [
+ {
+ "evidence_id": "engagement_score",
+ "reason": "evidence is unavailable according to availability column",
+ "dataset_label": "synthesis_data",
+ "row_index": 0,
+ "raw_value": 0,
+ "availability_column": "engagement_score_available",
+ "availability_raw_value": false
+ }
+ ],
+ "rule_evaluations": [
+ {
+ "rule_id": "S-T13-R01",
+ "rule_version": "1.0.0",
+ "matched": false,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "avg_score",
+ "operator": "lt",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": false,
+ "compare_to_evidence_id": "pass_threshold"
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "S-T13-R02",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "avg_score",
+ "operator": "gte",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-avg_score",
+ "ev-synthesis_data-0-pass_threshold"
+ ],
+ "blocked_by_unavailable_evidence": false,
+ "compare_to_evidence_id": "pass_threshold"
+ },
+ {
+ "evidence_id": "avg_score",
+ "operator": "lt",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-avg_score",
+ "ev-synthesis_data-0-target_threshold"
+ ],
+ "blocked_by_unavailable_evidence": false,
+ "compare_to_evidence_id": "target_threshold"
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-avg_score",
+ "ev-synthesis_data-0-pass_threshold",
+ "ev-synthesis_data-0-target_threshold"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "S-T13-R03",
+ "rule_version": "1.0.0",
+ "matched": false,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "performance_trend",
+ "operator": "lt",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "S-T13-R04",
+ "rule_version": "1.0.0",
+ "matched": false,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "engagement_score_available",
+ "operator": "is_true",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "evidence_id": "engagement_score",
+ "operator": "lt",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": true,
+ "missing_evidence": [
+ "engagement_score"
+ ]
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [],
+ "missing_evidence": [
+ "engagement_score"
+ ],
+ "blocked_by_unavailable_evidence": true
+ },
+ {
+ "rule_id": "S-T13-R05",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "absence_rate",
+ "operator": "gte",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-absence_rate"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-absence_rate"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "S-T13-R06",
+ "rule_version": "1.0.0",
+ "matched": false,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "at_risk_score",
+ "operator": "gte",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "evidence_id": "at_risk_label",
+ "operator": "eq",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "summarization_warnings": [
+ "Sensitive/background evidence is preserved for audit only and was not used to trigger actions.",
+ "The LLM may paraphrase prioritized_actions but must not invent new actions or rules."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "action_synthesis",
+ "task_id": "S-T13",
+ "task_output_contract": [
+ "Explain only actions already present in prioritized_actions or supported action-rule evidence.",
+ "Do not create duplicate recommendations; explanation.recommendations may be empty by design.",
+ "For every explained action, connect it to rule_evaluations, action_evidence_links, evidence_items, owner, priority, and time horizon when supplied.",
+ "If no supported action exists, say that only when missing_evidence/unsupported_actions/rule output supports it.",
+ "Explain only prioritized_actions whose rule_evaluation is triggered, preserving action and rule provenance.",
+ "If prioritized_actions is empty, explicitly state that no supported action was triggered."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "source_datasets": [
+ {
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_count": 1,
+ "available": true
+ }
+ ],
+ "action_rule_set_id": "S-T13.action_synthesis",
+ "action_rule_version": "1.0.0"
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "evidence_items": [
+ {
+ "evidence_item_id": "ev-synthesis_data-0-avg_score",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "avg_score",
+ "raw_value": 41.25,
+ "parsed_value": 41.25,
+ "unit": "score_runtime_scale",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-performance_trend",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "performance_trend",
+ "raw_value": 27.5,
+ "parsed_value": 27.5,
+ "unit": "score_change_per_assessment_order",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-engagement_score",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "engagement_score",
+ "raw_value": 0,
+ "parsed_value": 0,
+ "unit": "ratio_0_1",
+ "available": false,
+ "sensitive": false,
+ "availability_column": "engagement_score_available",
+ "availability_raw_value": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-engagement_score_available",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "engagement_score_available",
+ "raw_value": false,
+ "parsed_value": false,
+ "unit": "boolean",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-absence_rate",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "absence_rate",
+ "raw_value": 1,
+ "parsed_value": 1,
+ "unit": "ratio_0_1",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-lifestyle_risk_score",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "lifestyle_risk_score",
+ "raw_value": 0.375,
+ "parsed_value": 0.375,
+ "unit": "ratio_0_1",
+ "available": true,
+ "sensitive": true
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-score_strategy",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "score_strategy",
+ "raw_value": "weighted_by_assessment_weight",
+ "parsed_value": "weighted_by_assessment_weight",
+ "unit": "strategy_identifier",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-score_scale",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "score_scale",
+ "raw_value": 100,
+ "parsed_value": 100,
+ "unit": "score_scale",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-pass_threshold",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "pass_threshold",
+ "raw_value": 40,
+ "parsed_value": 40,
+ "unit": "score_runtime_scale",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-target_threshold",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "target_threshold",
+ "raw_value": 70,
+ "parsed_value": 70,
+ "unit": "score_runtime_scale",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-at_risk_score",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "at_risk_score",
+ "raw_value": 1,
+ "parsed_value": 1,
+ "unit": "flag_count",
+ "available": true,
+ "sensitive": false
+ },
+ {
+ "evidence_item_id": "ev-synthesis_data-0-at_risk_label",
+ "task_id": "S-T13",
+ "dataset_label": "synthesis_data",
+ "dataset_role": "primary_evidence",
+ "row_index": 0,
+ "column": "at_risk_label",
+ "raw_value": "low",
+ "parsed_value": "low",
+ "unit": "risk_band",
+ "available": true,
+ "sensitive": false
+ }
+ ],
+ "rule_evaluations": [
+ {
+ "rule_id": "S-T13-R01",
+ "rule_version": "1.0.0",
+ "matched": false,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "avg_score",
+ "operator": "lt",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": false,
+ "compare_to_evidence_id": "pass_threshold"
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "S-T13-R02",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "avg_score",
+ "operator": "gte",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-avg_score",
+ "ev-synthesis_data-0-pass_threshold"
+ ],
+ "blocked_by_unavailable_evidence": false,
+ "compare_to_evidence_id": "pass_threshold"
+ },
+ {
+ "evidence_id": "avg_score",
+ "operator": "lt",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-avg_score",
+ "ev-synthesis_data-0-target_threshold"
+ ],
+ "blocked_by_unavailable_evidence": false,
+ "compare_to_evidence_id": "target_threshold"
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-avg_score",
+ "ev-synthesis_data-0-pass_threshold",
+ "ev-synthesis_data-0-target_threshold"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "S-T13-R03",
+ "rule_version": "1.0.0",
+ "matched": false,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "performance_trend",
+ "operator": "lt",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "S-T13-R04",
+ "rule_version": "1.0.0",
+ "matched": false,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "engagement_score_available",
+ "operator": "is_true",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "evidence_id": "engagement_score",
+ "operator": "lt",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": true,
+ "missing_evidence": [
+ "engagement_score"
+ ]
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [],
+ "missing_evidence": [
+ "engagement_score"
+ ],
+ "blocked_by_unavailable_evidence": true
+ },
+ {
+ "rule_id": "S-T13-R05",
+ "rule_version": "1.0.0",
+ "matched": true,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "absence_rate",
+ "operator": "gte",
+ "matched": true,
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-absence_rate"
+ ],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-absence_rate"
+ ],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "rule_id": "S-T13-R06",
+ "rule_version": "1.0.0",
+ "matched": false,
+ "condition_results": {
+ "all": [
+ {
+ "evidence_id": "at_risk_score",
+ "operator": "gte",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": false
+ },
+ {
+ "evidence_id": "at_risk_label",
+ "operator": "eq",
+ "matched": false,
+ "evidence_item_ids": [],
+ "blocked_by_unavailable_evidence": false
+ }
+ ],
+ "any": []
+ },
+ "evidence_item_ids": [],
+ "missing_evidence": [],
+ "blocked_by_unavailable_evidence": false
+ }
+ ]
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "prioritized_actions": [
+ {
+ "action_id": "student_create_attendance_routine",
+ "action_text": "Plan next week's attendance in advance and set a reminder for each scheduled learning session.",
+ "priority": "medium",
+ "owner": "student",
+ "time_horizon_days": 7,
+ "support_category": "attendance",
+ "claim_limits": [
+ "Do not infer the reason for absence.",
+ "Do not trigger when absence_rate is null."
+ ],
+ "rule_id": "S-T13-R05",
+ "rule_ids": [
+ "S-T13-R05"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-absence_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "student_set_next_score_target",
+ "action_text": "Choose one upcoming assessment goal and schedule two focused study sessions toward the stated target threshold.",
+ "priority": "medium",
+ "owner": "student",
+ "time_horizon_days": 7,
+ "support_category": "study_planning",
+ "claim_limits": [
+ "Do not promise that the action will achieve the target.",
+ "Preserve the runtime threshold values and score scale."
+ ],
+ "rule_id": "S-T13-R02",
+ "rule_ids": [
+ "S-T13-R02"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-avg_score",
+ "ev-synthesis_data-0-pass_threshold",
+ "ev-synthesis_data-0-target_threshold"
+ ],
+ "provenance_status": "complete"
+ }
+ ],
+ "action_evidence_links": [
+ {
+ "action_id": "student_create_attendance_routine",
+ "rule_id": "S-T13-R05",
+ "rule_ids": [
+ "S-T13-R05"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-absence_rate"
+ ],
+ "provenance_status": "complete"
+ },
+ {
+ "action_id": "student_set_next_score_target",
+ "rule_id": "S-T13-R02",
+ "rule_ids": [
+ "S-T13-R02"
+ ],
+ "rule_version": "1.0.0",
+ "evidence_item_ids": [
+ "ev-synthesis_data-0-avg_score",
+ "ev-synthesis_data-0-pass_threshold",
+ "ev-synthesis_data-0-target_threshold"
+ ],
+ "provenance_status": "complete"
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_evidence": [
+ {
+ "evidence_id": "engagement_score",
+ "reason": "evidence is unavailable according to availability column",
+ "dataset_label": "synthesis_data",
+ "row_index": 0,
+ "raw_value": 0,
+ "availability_column": "engagement_score_available",
+ "availability_raw_value": false
+ }
+ ],
+ "unsupported_actions": [],
+ "summarization_warnings": [
+ "Sensitive/background evidence is preserved for audit only and was not used to trigger actions.",
+ "The LLM may paraphrase prioritized_actions but must not invent new actions or rules."
+ ]
+ }
+ }
+ ]
+ }
+}

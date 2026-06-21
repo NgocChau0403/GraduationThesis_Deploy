@@ -1,0 +1,86 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-B02__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable actionability requirements are strongly satisfied by the supported claims."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Pass, fail, and withdrawn counts are 549, 100, and 0, with shares 84.6%, 15.4%, and 0%.",
+ "claim_type": "outcome_counts",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "outcome_counts embedded rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The two returned categories total 649; the explanation correctly treats the absent withdrawn category as zero for this result."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "The 15.4% fail share is the returned at-risk outcome proportion.",
+ "claim_type": "risk_proportion",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "outcome_counts Fail row"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The statement accurately uses the fail share without inventing another risk definition."
+ }
+ ],
+ "errors": [],
+ "error_summary": {
+ "highest_error_severity": null,
+ "error_count": 0,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 9.75,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 9.75,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

@@ -1,0 +1,223 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_OULAD__A-B03__task_aware_data_summarization",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_OULAD",
+  "task_id": "A-B03",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Engagement distribution",
+    "scope": "Cohort",
+    "actionable_question": "What proportion of the class is disengaged?",
+    "target_audience": "instructor, admin",
+    "ai_summary_type": "categorical_distribution",
+    "ai_prompt_hint": "Describe proportion of low/medium/high effort students. Flag the low tail.",
+    "query_labels": [
+      "engagement_distribution"
+    ],
+    "explanation_strategy": "distribution"
+  },
+  "schema_context": {
+    "source_tables": [
+      "enrollment",
+      "engagement"
+    ],
+    "key_db_fields": [
+      "engagement_score [FE]",
+      "study_effort_level [FE]",
+      "total_engagement_count"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "study_effort_level",
+        "student_count"
+      ],
+      "optional_columns": [
+        "pct_of_class",
+        "avg_engagement_score"
+      ]
+    },
+    "query_labels": [
+      "engagement_distribution"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The engagement distribution reveals that a significant majority of students, 94.4%, fall within the 'very_low' and 'low' study effort levels, indicating a concerning trend of disengagement. The 'high' engagement category is notably sparse, with only 0.5% of students demonstrating high effort.\n\nInsights: High Disengagement Levels: The majority of students (69.7%) are categorized as 'very_low' in study effort, which correlates with a very low average engagement score of 0.0516. This suggests a critical need for interventions aimed at increasing student engagement. | Limited High Engagement: Only 0.5% of students are in the 'high' engagement category, with an average engagement score of 0.707. This stark contrast highlights a significant gap in student effort and engagement.\n\nEducational implications: The high proportion of students in the 'very_low' and 'low' categories indicates a need for targeted strategies to enhance engagement and study effort.\n\nRecommendations: high - Implement engagement-focused interventions such as interactive learning activities and personalized feedback. - These strategies can help motivate students and increase their study effort levels, addressing the high disengagement observed.",
+    "structured_payload": {
+      "task_id": "A-B03",
+      "execution_id": "exec_1781847625023_5b8a2d71",
+      "explanation": {
+        "summary": "The engagement distribution reveals that a significant majority of students, 94.4%, fall within the 'very_low' and 'low' study effort levels, indicating a concerning trend of disengagement. The 'high' engagement category is notably sparse, with only 0.5% of students demonstrating high effort.",
+        "insights": [
+          {
+            "title": "High Disengagement Levels",
+            "description": "The majority of students (69.7%) are categorized as 'very_low' in study effort, which correlates with a very low average engagement score of 0.0516. This suggests a critical need for interventions aimed at increasing student engagement.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "student_count",
+                "value": 1740,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "69.7% of the class"
+              }
+            ]
+          },
+          {
+            "title": "Limited High Engagement",
+            "description": "Only 0.5% of students are in the 'high' engagement category, with an average engagement score of 0.707. This stark contrast highlights a significant gap in student effort and engagement.",
+            "severity": "medium",
+            "evidence": [
+              {
+                "metric": "student_count",
+                "value": 13,
+                "comparison": "baseline",
+                "delta": null,
+                "context": "0.5% of the class"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The high proportion of students in the 'very_low' and 'low' categories indicates a need for targeted strategies to enhance engagement and study effort."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement engagement-focused interventions such as interactive learning activities and personalized feedback.",
+            "rationale": "These strategies can help motivate students and increase their study effort levels, addressing the high disengagement observed."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "The data is derived from a comprehensive engagement distribution dataset, providing a reliable overview of student effort levels.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "distribution",
+      "explanation_type": "distribution",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3-experimental",
+      "baseline_available": true,
+      "input_summary_type": "categorical_distribution",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 4,
+      "included_row_count": 4,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "engagement_distribution",
+          "row_count": 4,
+          "included_row_count": 4
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 4,
+      "baseline_reference_tokens": 142,
+      "task_aware_prompt_tokens": 559,
+      "token_ratio": 3.9366,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "comparison",
+        "exceptions",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (3.9366 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 7860,
+        "token_usage": {
+          "prompt_tokens": 1108,
+          "completion_tokens": 483,
+          "total_tokens": 1591
+        },
+        "strategy": "distribution",
+        "granularity": "semester",
+        "cost_usd": 0.000456
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations/task_aware_data_summarization/SAMPLE_OULAD/explanation_artifacts/SAMPLE_OULAD__A-B03__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "751c45701a1a8df67fdbe1af73ca8fd463675c52b46100ac43a9086a55e14c0f",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1108,
+        "completion_tokens": 483,
+        "total_tokens": 1591
+      },
+      "latency_ms": 7864,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 4,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "engagement_distribution",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_OULAD/full_query_artifacts/SAMPLE_OULAD__A-B03.json",
+        "artifact_sha256": "c20cfd3d2f05f90d06deb04b341e58678453779d5d3f7533154cedcb111762cb",
+        "row_count": 4,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 4,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "engagement_distribution": 4
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-B03-CORE-01",
+        "description": "Describe proportion of low/medium/high effort students."
+      },
+      {
+        "requirement_id": "A-B03-CORE-02",
+        "description": "Flag the low tail."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Conservative pilot default; human review is required before any not_applicable exception."
+  }
+}

@@ -1,0 +1,413 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__S-T06",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "S-T06",
+ "source_explanation_record_id": "SAMPLE_OULAD__S-T06__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "e040f9255e7745251ddd0f15bd43e01dde5fd75c46f5845189bc1a05c05c4d8b",
+ "deterministic_summary": {
+ "summary_type": "trend_series",
+ "dataset_name": "consistency_data",
+ "row_count": 32,
+ "time_column": "week_number",
+ "metric_column": "weekly_clicks",
+ "metric_units": {},
+ "metric_directions": {},
+ "dataset_roles": {},
+ "point_count": 32,
+ "first_point": {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "last_point": {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "peak": {
+ "week_number": 21,
+ "weekly_clicks": 106,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "trough": {
+ "week_number": 18,
+ "weekly_clicks": 1,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "overall_change": {
+ "from": {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "to": {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "delta": -81,
+ "percent_change": -94.186
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "to": {
+ "week_number": 2,
+ "weekly_clicks": 4,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "delta": -94
+ },
+ "largest_adjacent_rise": {
+ "from": {
+ "week_number": 0,
+ "weekly_clicks": 27,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "to": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "delta": 71
+ },
+ "flagged_points": [],
+ "secondary_metric_evidence": {
+ "weekly_stddev": {
+ "count": 32,
+ "min": 34.1211,
+ "max": 34.1211,
+ "first": 34.1211,
+ "last": 34.1211
+ },
+ "weekly_avg": {
+ "count": 32,
+ "min": 39.4062,
+ "max": 39.4062,
+ "first": 39.4062,
+ "last": 39.4062
+ },
+ "total_clicks": {
+ "count": 32,
+ "min": 1261,
+ "max": 1261,
+ "first": 1261,
+ "last": 1261
+ }
+ },
+ "secondary_metric_associations": {
+ "weekly_stddev": {
+ "paired_point_count": 32,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "weekly_avg": {
+ "paired_point_count": 32,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "total_clicks": {
+ "paired_point_count": 32,
+ "method": "pearson_on_aligned_points",
+ "correlation": null,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ }
+ },
+ "multi_dataset_evidence": [],
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "action_evidence": [],
+ "summarization_warnings": []
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "trend_series",
+ "task_id": "S-T06",
+ "task_output_contract": [
+ "Identify timing, first/last points, overall change, and flagged points when supplied.",
+ "For empty or insufficient data, state row count and missing capability/data-quality warnings instead of inferring a trend.",
+ "Only recommend timing when critical weeks or action_evidence are present."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "consistency_data",
+ "row_count": 32,
+ "point_count": 32,
+ "time_column": "week_number",
+ "metric_column": "weekly_clicks",
+ "dataset_roles": {},
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "first_point": {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "last_point": {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "overall_change": {
+ "from": {
+ "week_number": -2,
+ "weekly_clicks": 86,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "to": {
+ "week_number": 35,
+ "weekly_clicks": 5,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "delta": -81,
+ "percent_change": -94.186
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "secondary_metric_evidence": {
+ "weekly_stddev": {
+ "count": 32,
+ "min": 34.1211,
+ "max": 34.1211,
+ "first": 34.1211,
+ "last": 34.1211
+ },
+ "weekly_avg": {
+ "count": 32,
+ "min": 39.4062,
+ "max": 39.4062,
+ "first": 39.4062,
+ "last": 39.4062
+ },
+ "total_clicks": {
+ "count": 32,
+ "min": 1261,
+ "max": 1261,
+ "first": 1261,
+ "last": 1261
+ }
+ },
+ "secondary_metric_associations": {
+ "weekly_stddev": {
+ "paired_point_count": 32,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "weekly_avg": {
+ "paired_point_count": 32,
+ "method": "pearson_on_aligned_points",
+ "correlation": 0,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ },
+ "total_clicks": {
+ "paired_point_count": 32,
+ "method": "pearson_on_aligned_points",
+ "correlation": null,
+ "claim_limit": "descriptive_association_only; do not infer causality or statistical significance",
+ "small_sample": false
+ }
+ },
+ "multi_dataset_evidence": []
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "largest_adjacent_rise": {
+ "from": {
+ "week_number": 0,
+ "weekly_clicks": 27,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "to": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "delta": 71
+ },
+ "largest_adjacent_drop": {
+ "from": {
+ "week_number": 1,
+ "weekly_clicks": 98,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "to": {
+ "week_number": 2,
+ "weekly_clicks": 4,
+ "labels": {
+ "consistency_level": "medium"
+ },
+ "secondary_metrics": {
+ "weekly_stddev": 34.1211,
+ "weekly_avg": 39.4062,
+ "total_clicks": 1261
+ }
+ },
+ "delta": -94
+ }
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "flagged_points": []
+ }
+ },
+ {
+ "name": "action_evidence",
+ "facts": {
+ "action_evidence": []
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "small_sample_caveats": [],
+ "causal_claim_allowed": false,
+ "summarization_warnings": []
+ }
+ }
+ ]
+ }
+}

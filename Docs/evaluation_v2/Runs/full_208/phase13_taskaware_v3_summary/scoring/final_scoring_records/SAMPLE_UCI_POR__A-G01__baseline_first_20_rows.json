@@ -1,0 +1,122 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-G01__baseline_first_20_rows",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The explanation is judged against the supplied evidence contract and avoids unsupported facts except where noted."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Numeric claims are evaluated from the permitted embedded or retrieved evidence metadata; exact row-level recomputation is not added beyond the provided context."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Completeness reflects coverage of the required core/supporting outputs for this task."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "The explanation is relevant when it addresses the task question, audience, schema fields, and expected analytic intent."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 7,
+      "rationale": "Actionability reflects whether the response gives usable next steps tied to the analytic finding."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "The response is assessed for readable organization and specificity."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Safety/fairness is applicable under the frozen conservative default and checks for overclaiming or stigmatizing language."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C1",
+      "claim_text": "Evidence access for this record is direct_embedding with full_result_row_count=0.",
+      "claim_type": "evidence_access",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G01.json"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "The judge input provides readable artifact references and completed delivery/retrieval metadata for the current record."
+    },
+    {
+      "claim_id": "C2",
+      "claim_text": "The explanation addresses the required task outputs.",
+      "claim_type": "requirement_coverage",
+      "claim_scope": "core",
+      "support_status": "partially_supported",
+      "evidence_refs": [
+        "evaluation_requirements",
+        "explanation.raw_text"
+      ],
+      "checker_source": "llm_judge",
+      "rationale": "Covered 1 of 3 required outputs by textual alignment with the supplied explanation.",
+      "impact_type": "weakens_support"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E1",
+      "error_type": "missing_required_output",
+      "claim_ids": [
+        "C2"
+      ],
+      "requirement_id": "A-G01-CORE-02,A-G01-CORE-03",
+      "severity": "major",
+      "primary_metric": "completeness",
+      "secondary_metrics": [
+        "task_relevance"
+      ],
+      "cap_candidate": 6,
+      "rationale": "One or more required task outputs were absent or only weakly addressed.",
+      "evidence_refs": [
+        "evaluation_requirements",
+        "explanation.raw_text"
+      ]
+    }
+  ],
+  "error_summary": {
+    "highest_error_severity": "major",
+    "error_count": 1,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 1,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 6.55,
+  "caps_applied": [
+    {
+      "type": "missing_required_output",
+      "severity": "major",
+      "cap": 6,
+      "error_id": "E1",
+      "claim_ids": [
+        "C2"
+      ],
+      "evidence_refs": [
+        "evaluation_requirements",
+        "explanation.raw_text"
+      ]
+    }
+  ],
+  "effective_cap": 6,
+  "final_score_after_caps": 6,
+  "verdict": "acceptable",
+  "invalid_reason": null
+}

@@ -1,0 +1,107 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-G03__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on faithfulness, with the limitations summarized in the holistic rationale."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 4,
+ "rationale": "Score 4/10 reflects The response does not present a clear rank by at_risk_score or explain tie ordering. It does not give each high-risk student's triggered_flags_summary and returned recommended_admin_action."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material task_relevance limitations reduce the usefulness of the response. The cited risk factors are grounded, but the response fails the task's ranking and per-student action contract."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Score 6/10: material actionability limitations reduce the usefulness of the response. The cited risk factors are grounded, but the response fails the task's ranking and per-student action contract."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on safety_fairness, with the limitations summarized in the holistic rationale."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The named students have low scores, repeated attempts, low engagement, and negative trends.",
+ "claim_type": "risk_flags",
+ "claim_scope": "supporting",
+ "support_status": "supported",
+ "evidence_refs": [
+ "retrieval log at_risk_cohort rows 0-49"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The listed top students have the described returned flags."
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "ranking_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "task_relevance"
+ ],
+ "cap_candidate": null,
+ "rationale": "The response does not present a clear rank by at_risk_score or explain tie ordering.",
+ "evidence_refs": [
+ "retrieval log at_risk_cohort rows 0-49"
+ ],
+ "requirement_id": "A-G03-CORE-01"
+ },
+ {
+ "error_id": "E02",
+ "error_type": "per_student_action_omission",
+ "claim_ids": [],
+ "severity": "major",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "actionability"
+ ],
+ "cap_candidate": null,
+ "rationale": "It does not give each high-risk student's triggered_flags_summary and returned recommended_admin_action.",
+ "evidence_refs": [
+ "retrieval log at_risk_cohort rows 0-49"
+ ],
+ "requirement_id": "A-G03-CORE-02"
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 2,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 2,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 7.1,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 7.1,
+ "verdict": "good",
+ "invalid_reason": null
+}

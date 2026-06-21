@@ -1,0 +1,74 @@
+{
+  "schema_version": "d3_schema_v1",
+  "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+  "record_id": "SAMPLE_UCI_POR__A-B02__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Grounding and interpretation: the response is well aligned with the permitted evidence and supplied requirements."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "Values, directions, and comparisons: the response is well aligned with the permitted evidence and supplied requirements."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Coverage of supplied requirements: the response is well aligned with the permitted evidence and supplied requirements."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 10,
+      "rationale": "Fit to the stated task and audience: the response is well aligned with the permitted evidence and supplied requirements."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Usefulness and evidence basis: the response is well aligned with the permitted evidence and supplied requirements."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Precision and organization: the response is well aligned with the permitted evidence and supplied requirements."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 9,
+      "rationale": "Fair and non-stigmatizing treatment: the response is well aligned with the permitted evidence and supplied requirements."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The distribution of final outcomes reveals that a significant majority of students, 84.6%, passed the course, while 15.4% failed. The absence of any students categorized as withdrawn indicates a potential gap in tracking this outcome.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "supported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-B02.json; dataset outcome_counts"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The central interpretation is directly supported by the delivered evidence and satisfies the main task."
+    }
+  ],
+  "errors": [],
+  "error_summary": {
+    "highest_error_severity": null,
+    "error_count": 0,
+    "count_by_severity": {
+      "minor": 0,
+      "major": 0,
+      "critical": 0
+    }
+  },
+  "raw_weighted_score": 9.25,
+  "caps_applied": [],
+  "effective_cap": null,
+  "final_score_after_caps": 9.25,
+  "verdict": "excellent",
+  "invalid_reason": null
+}

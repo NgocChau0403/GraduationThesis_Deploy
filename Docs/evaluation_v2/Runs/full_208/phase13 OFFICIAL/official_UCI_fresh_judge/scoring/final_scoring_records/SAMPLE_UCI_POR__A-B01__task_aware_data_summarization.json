@@ -1,0 +1,86 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-B01__task_aware_data_summarization",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable faithfulness requirements are strongly satisfied by the supported claims."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable task_relevance requirements are strongly satisfied by the supported claims."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable actionability requirements are strongly satisfied by the supported claims."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable clarity requirements are strongly satisfied by the supported claims."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable safety_fairness requirements are strongly satisfied by the supported claims."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "The dominant buckets are 50-60 at 28.8% and 60-70 at 25.9%.",
+ "claim_type": "distribution",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "score_distribution rows for 50-60 and 60-70"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "Both percentages match the embedded evidence."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Forty-nine students, or 7.6%, scored below the pass threshold of 40.",
+ "claim_type": "threshold",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "score_distribution rows 0-10 through 30-40"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "Counts 3+4+9+33 equal 49 and percentages sum to 7.6%."
+ }
+ ],
+ "errors": [],
+ "error_summary": {
+ "highest_error_severity": null,
+ "error_count": 0,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 9.5,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 9.5,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

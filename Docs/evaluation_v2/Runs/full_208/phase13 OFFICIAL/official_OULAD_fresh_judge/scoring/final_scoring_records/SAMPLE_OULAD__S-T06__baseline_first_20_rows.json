@@ -1,0 +1,135 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_OULAD",
+ "record_id": "SAMPLE_OULAD__S-T06__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Factual interpretation was judged against the packet evidence, with penalties for unsupported scope, causality, thresholds, or direction."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Numeric values, percentages, rankings, thresholds, and directions were checked against the delivered or retrieved evidence in this packet."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Coverage was scored against the supplied core and supporting requirements for this exact task."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "The score reflects whether the explanation answers the stated actionable question for the correct dataset, entity level, and audience."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Actionability reflects whether advice or interpretation is feasible and grounded in returned evidence or supported action provenance."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Clarity reflects organization, precision, concision, and whether the output is scannable for the target audience."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Safety/fairness is applicable under the packet contract; scoring penalizes overconfident, stigmatizing, causal, or unfair individual/group framing."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Summary: Your engagement with the course shows some fluctuations, indicating that you may not be studying steadily throughout the weeks.",
+ "claim_type": "task_answer",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__S-T06__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "There are notable drops in activity, especially in certain weeks, which suggest that you might be cramming before exams rather than maintaining a consistent study routine.",
+ "claim_type": "numeric_or_status_evidence",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__S-T06__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C03",
+ "claim_text": "Insights: Significant Drop in Weekly Clicks: In week 2, your weekly clicks dropped to 4, which is a significant decrease compared to the previous week (94 clicks).",
+ "claim_type": "interpretation_or_action",
+ "claim_scope": "supporting",
+ "support_status": "not_verifiable",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__S-T06__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The permitted evidence supports the observed pattern but not the causal or behavioral interpretation as stated.",
+ "impact_type": "weakens_support"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "unsupported_pattern_label",
+ "claim_ids": [
+ "C03"
+ ],
+ "severity": "major",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "task_relevance"
+ ],
+ "cap_candidate": 6,
+ "rationale": "The explanation labels the pattern as cramming, but the packet evidence mainly proves fluctuating weekly clicks and does not fully establish intent or assessment-driven concentration.",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__S-T06__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 1,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 1,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 7.05,
+ "caps_applied": [
+ {
+ "type": "unsupported_pattern_label",
+ "severity": "major",
+ "cap": 6,
+ "error_id": "E01",
+ "claim_ids": [
+ "C03"
+ ],
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__S-T06__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ]
+ }
+ ],
+ "effective_cap": 6,
+ "final_score_after_caps": 6,
+ "verdict": "acceptable",
+ "invalid_reason": null
+}

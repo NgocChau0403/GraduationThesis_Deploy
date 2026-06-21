@@ -1,0 +1,136 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_OULAD",
+ "record_id": "SAMPLE_OULAD__A-G15__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Factual interpretation was judged against the packet evidence, with penalties for unsupported scope, causality, thresholds, or direction."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Numeric values, percentages, rankings, thresholds, and directions were checked against the delivered or retrieved evidence in this packet."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 6,
+ "rationale": "Coverage was scored against the supplied core and supporting requirements for this exact task."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "The score reflects whether the explanation answers the stated actionable question for the correct dataset, entity level, and audience."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Actionability reflects whether advice or interpretation is feasible and grounded in returned evidence or supported action provenance."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Clarity reflects organization, precision, concision, and whether the output is scannable for the target audience."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Safety/fairness is applicable under the packet contract; scoring penalizes overconfident, stigmatizing, causal, or unfair individual/group framing."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Summary: The analysis of the intervention priority list reveals that the top-ranked students, who are most in need of intervention, exhibit consistently low average scores and high at-risk scores.",
+ "claim_type": "task_answer",
+ "claim_scope": "core",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G15__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The packet supports part of the statement, but the explanation omits a required qualifier, exact field, or full task scope.",
+ "impact_type": "weakens_support"
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "In contrast, the bottom-ranked students show slightly better performance metrics but still require attention due to their flagged issues.",
+ "claim_type": "numeric_or_status_evidence",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G15__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The claim is consistent with the supplied packet evidence and task context."
+ },
+ {
+ "claim_id": "C03",
+ "claim_text": "Insights: High At-Risk Scores and Low Engagement: The top students, such as SAMPLE_OULAD_STU_69494 and SAMPLE_OULAD_STU_338731, have an at-risk score of 5, indicating a critical need for intervention.",
+ "claim_type": "interpretation_or_action",
+ "claim_scope": "supporting",
+ "support_status": "partially_supported",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G15__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ],
+ "checker_source": "hybrid",
+ "rationale": "The packet supports part of the statement, but the explanation omits a required qualifier, exact field, or full task scope.",
+ "impact_type": "weakens_support"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "partial_rank_reporting",
+ "claim_ids": [
+ "C01"
+ ],
+ "severity": "minor",
+ "primary_metric": "completeness",
+ "secondary_metrics": [
+ "actionability"
+ ],
+ "cap_candidate": 8,
+ "rationale": "The explanation gives representative high-risk students but does not fully present the top-ten ranking and flags in the compact form requested.",
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G15__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "minor",
+ "error_count": 1,
+ "count_by_severity": {
+ "minor": 1,
+ "major": 0,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 7.1,
+ "caps_applied": [
+ {
+ "type": "partial_rank_reporting",
+ "severity": "minor",
+ "cap": 8,
+ "error_id": "E01",
+ "claim_ids": [
+ "C01"
+ ],
+ "evidence_refs": [
+ "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/oulad_official_r5/judge_inputs/retrieval_logs/SAMPLE_OULAD__A-G15__baseline_first_20_rows.json",
+ "packet.evidence_access_summary.retrieval_validation"
+ ]
+ }
+ ],
+ "effective_cap": 8,
+ "final_score_after_caps": 7.1,
+ "verdict": "good",
+ "invalid_reason": null
+}

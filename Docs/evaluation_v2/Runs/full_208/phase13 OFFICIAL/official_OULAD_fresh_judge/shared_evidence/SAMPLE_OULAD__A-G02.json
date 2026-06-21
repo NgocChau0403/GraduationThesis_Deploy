@@ -1,0 +1,250 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G02",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G02",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G02__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "8dc6c8829934f4ae94a09bb25fef631b570d2dd4f2084754bf064d1b99ad6592",
+ "deterministic_summary": {
+ "summary_type": "correlation_evidence",
+ "dataset_name": "engagement_performance_scatter",
+ "row_count": 1998,
+ "x_column": "engagement_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "selected_entity_column": null,
+ "metric_units": {},
+ "metric_directions": {},
+ "coefficient": 0.4086,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 1998,
+ "p_value": null,
+ "outliers": [
+ {
+ "engagement_score": 0.5062,
+ "avg_score": 51,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_72609",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3976,
+ "avg_score": 56.3333,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2458925",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3832,
+ "avg_score": 51.6,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_669530",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.367,
+ "avg_score": 54.4444,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_492357",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.365,
+ "avg_score": 50.25,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_586750",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3351,
+ "avg_score": 19.25,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3348,
+ "avg_score": 51,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_685950",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.3288,
+ "avg_score": 54.8,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2396985",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3266,
+ "avg_score": 52.4444,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_586762",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.316,
+ "avg_score": 46.2222,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_647479",
+ "final_outcome": "Fail"
+ }
+ ],
+ "selected_entity_evidence": [],
+ "missing_selected_entity_evidence": [],
+ "selected_entity_count": 0,
+ "sensitive_context_policy": null,
+ "direction": "positive",
+ "strength": "moderate",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false,
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "correlation_evidence",
+ "task_id": "A-G02",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "engagement_performance_scatter",
+ "row_count": 1998,
+ "x_column": "engagement_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "sample_size": 1998,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "selected_entity_column": null,
+ "selected_entity_count": 0,
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "coefficient": 0.4086,
+ "direction": "positive",
+ "strength": "moderate"
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "p_value": null,
+ "selected_entity_evidence": []
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "outliers": [
+ {
+ "engagement_score": 0.5062,
+ "avg_score": 51,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_72609",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3976,
+ "avg_score": 56.3333,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2458925",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3832,
+ "avg_score": 51.6,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_669530",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.367,
+ "avg_score": 54.4444,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_492357",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.365,
+ "avg_score": 50.25,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_586750",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3351,
+ "avg_score": 19.25,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_338731",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3348,
+ "avg_score": 51,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_685950",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.3288,
+ "avg_score": 54.8,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2396985",
+ "final_outcome": "Fail"
+ },
+ {
+ "engagement_score": 0.3266,
+ "avg_score": 52.4444,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_586762",
+ "final_outcome": "Pass"
+ },
+ {
+ "engagement_score": 0.316,
+ "avg_score": 46.2222,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_647479",
+ "final_outcome": "Fail"
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_selected_entity_evidence": [],
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "sensitive_context_policy": null,
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ }
+ }
+ ]
+ }
+}

@@ -1,0 +1,105 @@
+{
+ "schema_version": "d3_schema_v1",
+ "evaluation_run_id": "llm_judge_v2_full_208_scoring__SAMPLE_UCI_POR",
+ "record_id": "SAMPLE_UCI_POR__A-S05__baseline_first_20_rows",
+ "scoring_status": "scored",
+ "scoring_formula_version": "d3_pre_pilot_weighted_mean_v1_decimal_half_up",
+ "subscores": {
+ "faithfulness": {
+ "applicability": "applicable",
+ "score": 7,
+ "rationale": "Score 7/10 reflects The response repeatedly generalizes one student's evidence to students as a group."
+ },
+ "numerical_correctness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable numerical_correctness requirements are strongly satisfied by the supported claims."
+ },
+ "completeness": {
+ "applicability": "applicable",
+ "score": 10,
+ "rationale": "Score 10/10: the applicable completeness requirements are strongly satisfied by the supported claims."
+ },
+ "task_relevance": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on task_relevance, with the limitations summarized in the holistic rationale."
+ },
+ "actionability": {
+ "applicability": "applicable",
+ "score": 9,
+ "rationale": "Score 9/10: the applicable actionability requirements are strongly satisfied by the supported claims."
+ },
+ "clarity": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on clarity, with the limitations summarized in the holistic rationale."
+ },
+ "safety_fairness": {
+ "applicability": "applicable",
+ "score": 8,
+ "rationale": "Score 8/10: the response is useful on safety_fairness, with the limitations summarized in the holistic rationale."
+ }
+ },
+ "claim_checks": [
+ {
+ "claim_id": "C01",
+ "claim_text": "Quiz 1 is the weakest competency proxy with average score 0; exam 3 and quiz 2 are both 55.",
+ "claim_type": "competency_ranking",
+ "claim_scope": "core",
+ "support_status": "supported",
+ "evidence_refs": [
+ "competency_scores three rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The ordering and values are exact."
+ },
+ {
+ "claim_id": "C02",
+ "claim_text": "Students generally struggle with quiz 1.",
+ "claim_type": "scope_generalization",
+ "claim_scope": "incidental",
+ "support_status": "unsupported",
+ "evidence_refs": [
+ "competency_scores selected-student rows"
+ ],
+ "checker_source": "llm_judge",
+ "rationale": "The evidence belongs to one selected student and cannot support a cohort claim.",
+ "impact_type": "wrong_evaluation_target"
+ }
+ ],
+ "errors": [
+ {
+ "error_id": "E01",
+ "error_type": "selected_student_scope_error",
+ "claim_ids": [
+ "C02"
+ ],
+ "severity": "major",
+ "primary_metric": "faithfulness",
+ "secondary_metrics": [
+ "task_relevance"
+ ],
+ "cap_candidate": null,
+ "rationale": "The response repeatedly generalizes one student's evidence to students as a group.",
+ "evidence_refs": [
+ "competency_scores three selected-student rows"
+ ]
+ }
+ ],
+ "error_summary": {
+ "highest_error_severity": "major",
+ "error_count": 1,
+ "count_by_severity": {
+ "minor": 0,
+ "major": 1,
+ "critical": 0
+ }
+ },
+ "raw_weighted_score": 8.55,
+ "caps_applied": [],
+ "effective_cap": null,
+ "final_score_after_caps": 8.55,
+ "verdict": "excellent",
+ "invalid_reason": null
+}

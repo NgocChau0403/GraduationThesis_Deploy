@@ -1,0 +1,256 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G09",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G09",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G09__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "6d7f411724ee16a6f16ae48d715736cccedc1bbf2db2a95bc05dcfbf43504116",
+ "deterministic_summary": {
+ "summary_type": "correlation_evidence",
+ "dataset_name": "disadvantage_impact",
+ "row_count": 1998,
+ "x_column": "disadvantage_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "selected_entity_column": null,
+ "metric_units": {},
+ "metric_directions": {},
+ "coefficient": -0.1353,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 1875,
+ "p_value": null,
+ "outliers": [
+ {
+ "disadvantage_score": 0.775,
+ "avg_score": 35,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_629056",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.775,
+ "avg_score": 44.6667,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_643434",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.775,
+ "avg_score": 52,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_370839",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.775,
+ "avg_score": 52.6667,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2564333",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.775,
+ "avg_score": 53.5714,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_685619",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.775,
+ "avg_score": 54.875,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_522754",
+ "final_outcome": "Pass"
+ },
+ {
+ "disadvantage_score": 0.725,
+ "avg_score": 1,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_627581",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.725,
+ "avg_score": 7.5,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2470326",
+ "final_outcome": "Fail"
+ },
+ {
+ "disadvantage_score": 0.725,
+ "avg_score": 8,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_401011",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.725,
+ "avg_score": 16,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_556476",
+ "final_outcome": "Fail"
+ }
+ ],
+ "selected_entity_evidence": [],
+ "missing_selected_entity_evidence": [],
+ "selected_entity_count": 0,
+ "sensitive_context_policy": null,
+ "direction": "negative",
+ "strength": "weak",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false,
+ "parse_warnings": [
+ "Skipped 123 rows with invalid disadvantage_score."
+ ],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "summarization_warnings": [
+ "Skipped 123 rows with invalid disadvantage_score.",
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "correlation_evidence",
+ "task_id": "A-G09",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "disadvantage_impact",
+ "row_count": 1998,
+ "x_column": "disadvantage_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "sample_size": 1875,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "selected_entity_column": null,
+ "selected_entity_count": 0,
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "coefficient": -0.1353,
+ "direction": "negative",
+ "strength": "weak"
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "p_value": null,
+ "selected_entity_evidence": []
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "outliers": [
+ {
+ "disadvantage_score": 0.775,
+ "avg_score": 35,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_629056",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.775,
+ "avg_score": 44.6667,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_643434",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.775,
+ "avg_score": 52,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_370839",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.775,
+ "avg_score": 52.6667,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2564333",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.775,
+ "avg_score": 53.5714,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_685619",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.775,
+ "avg_score": 54.875,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_522754",
+ "final_outcome": "Pass"
+ },
+ {
+ "disadvantage_score": 0.725,
+ "avg_score": 1,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_627581",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.725,
+ "avg_score": 7.5,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_2470326",
+ "final_outcome": "Fail"
+ },
+ {
+ "disadvantage_score": 0.725,
+ "avg_score": 8,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_401011",
+ "final_outcome": "Withdrawn"
+ },
+ {
+ "disadvantage_score": 0.725,
+ "avg_score": 16,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_OULAD_STU_556476",
+ "final_outcome": "Fail"
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_selected_entity_evidence": [],
+ "parse_warnings": [
+ "Skipped 123 rows with invalid disadvantage_score."
+ ],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "sensitive_context_policy": null,
+ "summarization_warnings": [
+ "Skipped 123 rows with invalid disadvantage_score.",
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ }
+ }
+ ]
+ }
+}

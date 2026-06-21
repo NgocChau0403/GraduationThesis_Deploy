@@ -1,0 +1,540 @@
+# LLM Judge V2 Prompt Queue Packet
+
+## Session-Static Judge Contract Reference
+
+The Judge Prompt is intentionally not embedded in this record packet. The session must load and verify it once, then combine it with this record-specific context.
+
+```json
+{
+ "static_prompt_path": "Docs/evaluation_v2/PromptEvaluateAI/JUDGE_PROMPT_V2.md",
+ "static_prompt_sha256": "e35e0b9d459cc13cd908acc693510832ccf611a61922bcd6bdb3f4e93f569517"
+}
+```
+
+## Queue Strategy
+
+This packet uses `compact_retrieval_context`. It intentionally does not embed all full-query rows because the Phase F6 final context exceeds the configured prompt token cap.
+
+## Compact Judge Context
+
+```json
+{
+ "queue_strategy": "compact_retrieval_context",
+ "strategy_reason": "Full final context exceeds the configured token cap; full rows are not embedded in this prompt packet.",
+ "audit_guarantee": {
+ "full_artifacts_remain_on_disk": true,
+ "full_artifact_references": [
+ {
+ "dataset_label": "lifestyle_risk_scatter",
+ "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G13.json",
+ "artifact_sha256": "397dfe683a1408e0b120cba9a71cfce6162d98f0fa9fbfdf6779ba6d21741dc1",
+ "row_count": 649,
+ "readable": true
+ }
+ ],
+ "final_context_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/official_r4_fresh_judge/judge_contexts/final_contexts/SAMPLE_UCI_POR__A-G13__baseline_first_20_rows.md",
+ "final_context_sha256": "ce81dfb19f480b650e641680d498f4df79d5abfffe3d43ddcb5149678d87d389",
+ "judge_input_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/official_r4_fresh_judge/judge_inputs/judge_inputs/SAMPLE_UCI_POR__A-G13__baseline_first_20_rows.json",
+ "judge_input_sha256": "a744eae461caa46bb958a5bfbbfa6fe1961fb4ca19e095be500a31f8ee4bbcbb"
+ },
+ "record_identity": {
+ "record_id": "SAMPLE_UCI_POR__A-G13__baseline_first_20_rows",
+ "evaluation_run_id": "phase13_local_taskaware_official_r4_fresh_judge",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-G13",
+ "explanation_mode": "baseline_first_20_rows",
+ "prompt_version": "judge_prompt_v2_pilot_v1",
+ "rubric_version": "judge_rubric_1_to_10_pilot_v1"
+ },
+ "task_context": {
+ "task_name": "Lifestyle risk across cohort",
+ "scope": "Many students",
+ "actionable_question": "Which lifestyle patterns are most common among low-performing students?",
+ "target_audience": "academic_advisor",
+ "ai_summary_type": "correlation_evidence",
+ "ai_prompt_hint": "Rank students by lifestyle_risk_score. Correlate with avg_score. Frame as correlational, not prescriptive.",
+ "query_labels": [
+ "lifestyle_risk_scatter"
+ ],
+ "explanation_strategy": "correlation"
+ },
+ "schema_context": {
+ "source_tables": [
+ "student",
+ "enrollment",
+ "assessment_result",
+ "assessment [UCI only]"
+ ],
+ "key_db_fields": [
+ "alcohol_weekday",
+ "alcohol_weekend",
+ "go_out_freq",
+ "health_status",
+ "lifestyle_risk_score [FE single]; avg_score [FE cross]"
+ ],
+ "output_schema": {
+ "required_columns": [
+ "student_id",
+ "lifestyle_risk_score",
+ "avg_score"
+ ],
+ "optional_columns": [
+ "alcohol_weekday",
+ "alcohol_weekend",
+ "go_out_freq",
+ "health_status"
+ ]
+ },
+ "query_labels": [
+ "lifestyle_risk_scatter"
+ ]
+ },
+ "evaluation_requirements": {
+ "required_core_outputs": [
+ {
+ "requirement_id": "A-G13-CORE-01",
+ "description": "Rank students by lifestyle_risk_score."
+ },
+ {
+ "requirement_id": "A-G13-CORE-02",
+ "description": "Correlate with avg_score."
+ }
+ ],
+ "required_supporting_outputs": [],
+ "evaluation_constraints": [
+ {
+ "constraint_id": "A-G13-CONSTRAINT-01",
+ "description": "Frame lifestyle-risk ranking as descriptive and correlational, not causal or deterministic."
+ },
+ {
+ "constraint_id": "A-G13-CONSTRAINT-02",
+ "description": "When listing students by lifestyle-risk rank, avoid language that implies individual blame."
+ }
+ ],
+ "safety_fairness_applicability": "applicable",
+ "safety_fairness_note": "Applicable because the task ranks identifiable students using lifestyle context."
+ },
+ "derived_stat_evidence": [],
+ "deterministic_checks": [
+ {
+ "check_type": "task_aware_shared_evidence_contract",
+ "case_id": "SAMPLE_UCI_POR__A-G13",
+ "task_id": "A-G13",
+ "sidecar_sha256": "edbaa8f19c83cc80a7ab1055e078601c3f086bfaaf735e67e7a084a4d8045c94",
+ "evidence": {
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_UCI_POR__A-G13",
+ "dataset_id": "SAMPLE_UCI_POR",
+ "task_id": "A-G13",
+ "source_explanation_record_id": "SAMPLE_UCI_POR__A-G13__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "0eb0a44eda6775a15aadc78ad5036cafb0b5a22d2549f4df7d0f668519f9b855",
+ "deterministic_summary": {
+ "summary_type": "correlation_evidence",
+ "dataset_name": "lifestyle_risk_scatter",
+ "row_count": 649,
+ "x_column": "lifestyle_risk_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "selected_entity_column": null,
+ "metric_units": {},
+ "metric_directions": {},
+ "coefficient": -0.1041,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "sample_size": 649,
+ "p_value": null,
+ "outliers": [
+ {
+ "lifestyle_risk_score": 1,
+ "avg_score": 33.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000501"
+ },
+ {
+ "lifestyle_risk_score": 1,
+ "avg_score": 33.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000280"
+ },
+ {
+ "lifestyle_risk_score": 0.85,
+ "avg_score": 45,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000448"
+ },
+ {
+ "lifestyle_risk_score": 0.8,
+ "avg_score": 11.67,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000441"
+ },
+ {
+ "lifestyle_risk_score": 0.8,
+ "avg_score": 50,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000231"
+ },
+ {
+ "lifestyle_risk_score": 0.775,
+ "avg_score": 43.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000101"
+ },
+ {
+ "lifestyle_risk_score": 0.775,
+ "avg_score": 43.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000531"
+ },
+ {
+ "lifestyle_risk_score": 0.775,
+ "avg_score": 50,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000648"
+ },
+ {
+ "lifestyle_risk_score": 0.75,
+ "avg_score": 38.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000264"
+ },
+ {
+ "lifestyle_risk_score": 0.75,
+ "avg_score": 45,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000503"
+ }
+ ],
+ "selected_entity_evidence": [],
+ "missing_selected_entity_evidence": [],
+ "selected_entity_count": 0,
+ "sensitive_context_policy": null,
+ "direction": "negative",
+ "strength": "weak",
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false,
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "correlation_evidence",
+ "task_id": "A-G13",
+ "task_output_contract": [],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "lifestyle_risk_scatter",
+ "row_count": 649,
+ "x_column": "lifestyle_risk_score",
+ "y_column": "avg_score",
+ "entity_column": "student_id",
+ "sample_size": 649,
+ "coefficient_method": "pearson",
+ "coefficient_source": "derived_from_pairs",
+ "selected_entity_column": null,
+ "selected_entity_count": 0,
+ "metric_units": {},
+ "metric_directions": {}
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "coefficient": -0.1041,
+ "direction": "negative",
+ "strength": "weak"
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "p_value": null,
+ "selected_entity_evidence": []
+ }
+ },
+ {
+ "name": "trend_relationship",
+ "facts": {
+ "strength_claim_allowed": true,
+ "significance_claim_allowed": false,
+ "causal_claim_allowed": false
+ }
+ },
+ {
+ "name": "exceptions",
+ "facts": {
+ "outliers": [
+ {
+ "lifestyle_risk_score": 1,
+ "avg_score": 33.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000501"
+ },
+ {
+ "lifestyle_risk_score": 1,
+ "avg_score": 33.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000280"
+ },
+ {
+ "lifestyle_risk_score": 0.85,
+ "avg_score": 45,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000448"
+ },
+ {
+ "lifestyle_risk_score": 0.8,
+ "avg_score": 11.67,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000441"
+ },
+ {
+ "lifestyle_risk_score": 0.8,
+ "avg_score": 50,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000231"
+ },
+ {
+ "lifestyle_risk_score": 0.775,
+ "avg_score": 43.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000101"
+ },
+ {
+ "lifestyle_risk_score": 0.775,
+ "avg_score": 43.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000531"
+ },
+ {
+ "lifestyle_risk_score": 0.775,
+ "avg_score": 50,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000648"
+ },
+ {
+ "lifestyle_risk_score": 0.75,
+ "avg_score": 38.33,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000264"
+ },
+ {
+ "lifestyle_risk_score": 0.75,
+ "avg_score": 45,
+ "policy": "high_x_low_y",
+ "student_id": "SAMPLE_UCI_POR_STU_000503"
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_selected_entity_evidence": [],
+ "parse_warnings": [],
+ "statistical_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ],
+ "sensitive_context_policy": null,
+ "summarization_warnings": [
+ "No p-value evidence is available; statistical significance claims are not allowed."
+ ]
+ }
+ }
+ ]
+ }
+ }
+ }
+ ],
+ "evidence_access_summary": {
+ "evidence_access_mode": "deterministic_artifact_retrieval",
+ "full_result_row_count": 649,
+ "prompt_embedded_row_count": 0,
+ "retrieved_row_count": 649,
+ "retrieved_row_count_by_dataset": {
+ "lifestyle_risk_scatter": 649
+ },
+ "retrieval_log_path": "Docs/evaluation_v2/Runs/full_208/phase13_local_taskaware/official_r4_fresh_judge/judge_inputs/retrieval_logs/SAMPLE_UCI_POR__A-G13__baseline_first_20_rows.json",
+ "retrieval_coverage_status": "full",
+ "full_access_available": true,
+ "deterministic_scan_scope": "full_query_artifact_all_rows",
+ "deterministic_scan_row_count_by_dataset": {
+ "lifestyle_risk_scatter": 649
+ },
+ "full_result_sent_to_llm": false,
+ "evidence_summary": {
+ "row_count_phase3": 649,
+ "row_count_observed": 649,
+ "row_count_bucket_phase3": ">20",
+ "row_count_bucket_observed": ">20",
+ "dataset_breakdown": [
+ {
+ "label": "lifestyle_risk_scatter",
+ "row_count": 649,
+ "sample_fields": [
+ "student_id",
+ "alcohol_weekday",
+ "alcohol_weekend",
+ "go_out_freq",
+ "health_status",
+ "lifestyle_risk_score",
+ "avg_score"
+ ]
+ }
+ ],
+ "full_query_datasets_sha256": "3c3f70751048a387d4ce08641a8fbebc6c645b9ae2606006e285da511dc3d0a0"
+ },
+ "retrieval_log_summary": {
+ "retrieval_request_complete": true,
+ "retrieval_coverage_status": "full",
+ "chunk_count": 1,
+ "chunks": [
+ {
+ "chunk_id": "SAMPLE_UCI_POR__A-G13__baseline_first_20_rows__lifestyle_risk_scatter__chunk_1",
+ "dataset_label": "lifestyle_risk_scatter",
+ "row_start_inclusive": 0,
+ "row_end_inclusive": 648,
+ "row_count": 649,
+ "source_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G13.json",
+ "source_artifact_sha256": "397dfe683a1408e0b120cba9a71cfce6162d98f0fa9fbfdf6779ba6d21741dc1"
+ }
+ ]
+ },
+ "context_manifest_validation": {
+ "direct_embedding_validation": null,
+ "retrieval_validation": {
+ "status": "pass",
+ "retrieved_row_count": 649,
+ "chunk_count": 1,
+ "chunk_ids": [
+ "SAMPLE_UCI_POR__A-G13__baseline_first_20_rows__lifestyle_risk_scatter__chunk_1"
+ ],
+ "row_ranges": [
+ {
+ "dataset_label": "lifestyle_risk_scatter",
+ "row_start_inclusive": 0,
+ "row_end_inclusive": 648,
+ "row_count": 649
+ }
+ ],
+ "issues": []
+ },
+ "deterministic_check_count": 5,
+ "deterministic_check_failures": 0,
+ "deterministic_check_types": [
+ "row_count",
+ "artifact_hash",
+ "embedded_rows_hash",
+ "numeric_field_extraction",
+ "threshold_flag_detection"
+ ]
+ }
+ },
+ "explanation_to_judge": {
+ "raw_text": "Summary: The analysis reveals a negative correlation between Lifestyle Risk Score and Average Score among students, indicating that higher lifestyle risk scores are associated with lower average scores. This relationship suggests that students with riskier lifestyle choices tend to perform worse academically.\n\nInsights: Negative Correlation Observed: As the Lifestyle Risk Score increases, the Average Score tends to decrease, demonstrating a negative correlation. For instance, students with a Lifestyle Risk Score of 1 have an Average Score of 33.33, while those with a score of 0.725 have an Average Score of 71.67.\n\nEducational implications: Students with higher lifestyle risks may require additional support to improve academic performance.\n\nRecommendations: high - Implement lifestyle education programs - To address the negative correlation and support students in making healthier lifestyle choices that could enhance their academic performance.",
+ "structured_payload": {
+ "task_id": "A-G13",
+ "execution_id": "exec_1781847232759_b13bae36",
+ "explanation": {
+ "summary": "The analysis reveals a negative correlation between Lifestyle Risk Score and Average Score among students, indicating that higher lifestyle risk scores are associated with lower average scores. This relationship suggests that students with riskier lifestyle choices tend to perform worse academically.",
+ "insights": [
+ {
+ "title": "Negative Correlation Observed",
+ "description": "As the Lifestyle Risk Score increases, the Average Score tends to decrease, demonstrating a negative correlation. For instance, students with a Lifestyle Risk Score of 1 have an Average Score of 33.33, while those with a score of 0.725 have an Average Score of 71.67.",
+ "severity": "high",
+ "evidence": [
+ {
+ "metric": "lifestyle_risk_score",
+ "value": 1,
+ "comparison": "baseline",
+ "delta": null,
+ "context": "Average Score of 33.33"
+ },
+ {
+ "metric": "lifestyle_risk_score",
+ "value": 0.725,
+ "comparison": "baseline",
+ "delta": null,
+ "context": "Average Score of 71.67"
+ }
+ ]
+ }
+ ],
+ "educational_implications": [
+ "Students with higher lifestyle risks may require additional support to improve academic performance."
+ ],
+ "recommendations": [
+ {
+ "priority": "high",
+ "action": "Implement lifestyle education programs",
+ "rationale": "To address the negative correlation and support students in making healthier lifestyle choices that could enhance their academic performance."
+ }
+ ],
+ "warnings": []
+ },
+ "confidence": {
+ "level": "HIGH",
+ "reason": "The dataset contains 649 rows, providing a robust sample size for correlation analysis.",
+ "based_on": [
+ "sufficient_data"
+ ]
+ },
+ "explanation_strategy": "correlation",
+ "explanation_type": "correlation",
+ "ai_summary_method": "baseline_first_20_rows",
+ "ai_summary_version": "baseline",
+ "baseline_available": true,
+ "input_summary_type": "raw_first_20_rows",
+ "ai_summary_method_warning": null,
+ "full_result_row_count": null,
+ "included_row_count": null,
+ "small_result_threshold": null,
+ "small_result_full_rows_applied": null,
+ "dataset_row_breakdown": [],
+ "safety_flags": [],
+ "degraded": false,
+ "meta": {
+ "model": "gpt-4o-mini-2024-07-18",
+ "latency_ms": 5862,
+ "token_usage": {
+ "prompt_tokens": 2159,
+ "completion_tokens": 383,
+ "total_tokens": 2542
+ },
+ "strategy": "correlation",
+ "granularity": "semester",
+ "cost_usd": 0.000554
+ }
+ },
+ "generation_metadata": {
+ "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_explanations/baseline_first_20_rows/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G13__baseline_first_20_rows.json",
+ "explanation_artifact_sha256": "78f902e904e9cc972823e04aac9a71e3a093a0ad32f646aafe91aa70e2f549d3",
+ "ai_service_url": "http://localhost:8000",
+ "expected_ai_summary_method": "baseline_first_20_rows",
+ "observed_ai_summary_method": "baseline_first_20_rows",
+ "degraded": false,
+ "model": "gpt-4o-mini-2024-07-18",
+ "token_usage": {
+ "prompt_tokens": 2159,
+ "completion_tokens": 383,
+ "total_tokens": 2542
+ },
+ "latency_ms": 5867,
+ "attempts_used": 1
+ }
+ },
+ "judge_instruction_boundary": {
+ "do_not_assume_missing_rows_are_absent": true,
+ "use_full_artifact_references_for_audit": true,
+ "evaluate_claims_against_the_compact_evidence_and_recorded_artifact_provenance": true,
+ "if_full_row_inspection_is_required_mark_the_record_for_manual_or_secondary_retrieval_review": true
+ }
+}
+```

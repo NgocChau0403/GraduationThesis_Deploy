@@ -1,0 +1,77 @@
+{
+  "schema_version": "judge_response_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__S-T07__task_aware_data_summarization",
+  "scoring_status": "scored",
+  "subscores": {
+    "faithfulness": {
+      "applicability": "applicable",
+      "score": 2,
+      "rationale": "Grounding and interpretation: The response analyzes assessment order versus score instead of absence rate versus performance, omitting both required absence outputs."
+    },
+    "numerical_correctness": {
+      "applicability": "applicable",
+      "score": 5,
+      "rationale": "Values, directions, and comparisons: The response analyzes assessment order versus score instead of absence rate versus performance, omitting both required absence outputs."
+    },
+    "completeness": {
+      "applicability": "applicable",
+      "score": 2,
+      "rationale": "Coverage of supplied requirements: The response analyzes assessment order versus score instead of absence rate versus performance, omitting both required absence outputs."
+    },
+    "task_relevance": {
+      "applicability": "applicable",
+      "score": 2,
+      "rationale": "Fit to the stated task and audience: The response analyzes assessment order versus score instead of absence rate versus performance, omitting both required absence outputs."
+    },
+    "actionability": {
+      "applicability": "applicable",
+      "score": 4,
+      "rationale": "Usefulness and evidence basis: The response analyzes assessment order versus score instead of absence rate versus performance, omitting both required absence outputs."
+    },
+    "clarity": {
+      "applicability": "applicable",
+      "score": 8,
+      "rationale": "Precision and organization: The response analyzes assessment order versus score instead of absence rate versus performance, omitting both required absence outputs."
+    },
+    "safety_fairness": {
+      "applicability": "applicable",
+      "score": 6,
+      "rationale": "Fair and non-stigmatizing treatment: The response analyzes assessment order versus score instead of absence rate versus performance, omitting both required absence outputs."
+    }
+  },
+  "claim_checks": [
+    {
+      "claim_id": "C01",
+      "claim_text": "The analysis shows a moderate positive correlation between Assessment Order and Normalized Score, indicating that as assessments progress, scores tend to improve. However, with only three data points, this trend should be interpreted cautiously.",
+      "claim_type": "central_task_interpretation",
+      "claim_scope": "core",
+      "support_status": "unsupported",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T07.json; dataset absence_data"
+      ],
+      "checker_source": "hybrid",
+      "rationale": "The response analyzes assessment order versus score instead of absence rate versus performance, omitting both required absence outputs.",
+      "impact_type": "wrong_evaluation_target"
+    }
+  ],
+  "errors": [
+    {
+      "error_id": "E01",
+      "error_type": "wrong_evaluation_target",
+      "claim_ids": [
+        "C01"
+      ],
+      "severity": "critical",
+      "primary_metric": "task_relevance",
+      "secondary_metrics": [],
+      "cap_candidate": 3,
+      "rationale": "The response analyzes assessment order versus score instead of absence rate versus performance, omitting both required absence outputs.",
+      "evidence_refs": [
+        "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__S-T07.json; dataset absence_data"
+      ]
+    }
+  ],
+  "holistic_rationale": "The record is judgeable and addresses the stated task, but the response analyzes assessment order versus score instead of absence rate versus performance, omitting both required absence outputs. The metric pattern reflects that defect without adding an overall score or verdict.",
+  "evidence_usage_notes": "Evidence mode was direct_embedding. direct_embedding delivered all 4 rows; retrieval_log_path was not applicable. The judgment used the cited artifact or retrieval record plus the packet's deterministic checks; access was not treated as proof that the explanation attended to every row.",
+  "invalid_reason": null
+}

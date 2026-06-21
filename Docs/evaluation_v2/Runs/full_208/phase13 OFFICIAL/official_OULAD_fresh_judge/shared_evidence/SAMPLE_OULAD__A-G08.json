@@ -1,0 +1,684 @@
+{
+ "schema_version": "task_aware_shared_evidence_v1",
+ "case_id": "SAMPLE_OULAD__A-G08",
+ "dataset_id": "SAMPLE_OULAD",
+ "task_id": "A-G08",
+ "source_explanation_record_id": "SAMPLE_OULAD__A-G08__task_aware_data_summarization",
+ "source_explanation_artifact_sha256": "1cc7204e7c06cf9a34103f277fac52bc2f072714bac0d4d039baaccf6f5614a8",
+ "deterministic_summary": {
+ "summary_type": "group_comparison",
+ "dataset_name": "demographic_performance",
+ "row_count": 11,
+ "group_column": "group_value",
+ "group_key_columns": [],
+ "series_column": null,
+ "composite_group_keys": false,
+ "metric_column": "avg_score",
+ "count_column": "student_count",
+ "gap_column": "score_vs_cohort",
+ "group_metrics": [
+ {
+ "group": "Unknown",
+ "student_count": 131,
+ "avg_score": 81.21,
+ "gap": 10.77,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": 10.77,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1903
+ }
+ },
+ {
+ "group": "90-100%",
+ "student_count": 181,
+ "avg_score": 74.53,
+ "gap": 4.09,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": 4.09,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1457
+ }
+ },
+ {
+ "group": "80-90%",
+ "student_count": 201,
+ "avg_score": 72.35,
+ "gap": 1.92,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": 1.92,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1668
+ }
+ },
+ {
+ "group": "60-70%",
+ "student_count": 193,
+ "avg_score": 71.85,
+ "gap": 1.42,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": 1.42,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1414
+ }
+ },
+ {
+ "group": "70-80%",
+ "student_count": 194,
+ "avg_score": 71.33,
+ "gap": 0.89,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": 0.89,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.138
+ }
+ },
+ {
+ "group": "50-60%",
+ "student_count": 191,
+ "avg_score": 70.27,
+ "gap": -0.17,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": -0.17,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1484
+ }
+ },
+ {
+ "group": "30-40%",
+ "student_count": 206,
+ "avg_score": 68.5,
+ "gap": -1.94,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": -1.94,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1392
+ }
+ },
+ {
+ "group": "0-10%",
+ "student_count": 152,
+ "avg_score": 68.05,
+ "gap": -2.39,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": -2.39,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1463
+ }
+ },
+ {
+ "group": "40-50%",
+ "student_count": 185,
+ "avg_score": 67.76,
+ "gap": -2.67,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": -2.67,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1312
+ }
+ },
+ {
+ "group": "20-30%",
+ "student_count": 196,
+ "avg_score": 65.99,
+ "gap": -4.45,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": -4.45,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1318
+ }
+ },
+ {
+ "group": "10-20",
+ "student_count": 168,
+ "avg_score": 62.96,
+ "gap": -7.48,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": -7.48,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1312
+ }
+ }
+ ],
+ "group_series": [],
+ "focus_summary": [],
+ "gaps": [
+ {
+ "group": "10-20",
+ "gap": -7.48,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 62.96,
+ "student_count": 168
+ },
+ {
+ "group": "20-30%",
+ "gap": -4.45,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 65.99,
+ "student_count": 196
+ },
+ {
+ "group": "40-50%",
+ "gap": -2.67,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 67.76,
+ "student_count": 185
+ },
+ {
+ "group": "0-10%",
+ "gap": -2.39,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 68.05,
+ "student_count": 152
+ },
+ {
+ "group": "30-40%",
+ "gap": -1.94,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 68.5,
+ "student_count": 206
+ },
+ {
+ "group": "50-60%",
+ "gap": -0.17,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 70.27,
+ "student_count": 191
+ },
+ {
+ "group": "70-80%",
+ "gap": 0.89,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 71.33,
+ "student_count": 194
+ },
+ {
+ "group": "60-70%",
+ "gap": 1.42,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 71.85,
+ "student_count": 193
+ },
+ {
+ "group": "80-90%",
+ "gap": 1.92,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 72.35,
+ "student_count": 201
+ },
+ {
+ "group": "90-100%",
+ "gap": 4.09,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 74.53,
+ "student_count": 181
+ },
+ {
+ "group": "Unknown",
+ "gap": 10.77,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 81.21,
+ "student_count": 131
+ }
+ ],
+ "dominant_group": {
+ "group": "30-40%",
+ "student_count": 206,
+ "basis": "largest_count"
+ },
+ "weakest_group": {
+ "group": "10-20",
+ "avg_score": 62.96,
+ "basis": "most_negative_gap",
+ "gap": -7.48,
+ "gap_basis": "explicit_gap_column"
+ },
+ "missing_groups": [],
+ "low_count_warnings": [],
+ "fairness_warnings": [
+ "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+ ],
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+ ],
+ "engagement_cohort_comparison": {
+ "weighted_cohort_engagement_mean": 0.1453,
+ "groups": [
+ {
+ "group_value": "Unknown",
+ "student_count": 131,
+ "avg_score": 81.21,
+ "score_vs_cohort": 10.77,
+ "avg_engagement_score": 0.1903,
+ "engagement_vs_cohort": 0.045
+ },
+ {
+ "group_value": "90-100%",
+ "student_count": 181,
+ "avg_score": 74.53,
+ "score_vs_cohort": 4.09,
+ "avg_engagement_score": 0.1457,
+ "engagement_vs_cohort": 0.0004
+ },
+ {
+ "group_value": "80-90%",
+ "student_count": 201,
+ "avg_score": 72.35,
+ "score_vs_cohort": 1.92,
+ "avg_engagement_score": 0.1668,
+ "engagement_vs_cohort": 0.0215
+ },
+ {
+ "group_value": "60-70%",
+ "student_count": 193,
+ "avg_score": 71.85,
+ "score_vs_cohort": 1.42,
+ "avg_engagement_score": 0.1414,
+ "engagement_vs_cohort": -0.0039
+ },
+ {
+ "group_value": "70-80%",
+ "student_count": 194,
+ "avg_score": 71.33,
+ "score_vs_cohort": 0.89,
+ "avg_engagement_score": 0.138,
+ "engagement_vs_cohort": -0.0073
+ },
+ {
+ "group_value": "50-60%",
+ "student_count": 191,
+ "avg_score": 70.27,
+ "score_vs_cohort": -0.17,
+ "avg_engagement_score": 0.1484,
+ "engagement_vs_cohort": 0.0031
+ },
+ {
+ "group_value": "30-40%",
+ "student_count": 206,
+ "avg_score": 68.5,
+ "score_vs_cohort": -1.94,
+ "avg_engagement_score": 0.1392,
+ "engagement_vs_cohort": -0.0061
+ },
+ {
+ "group_value": "0-10%",
+ "student_count": 152,
+ "avg_score": 68.05,
+ "score_vs_cohort": -2.39,
+ "avg_engagement_score": 0.1463,
+ "engagement_vs_cohort": 0.001
+ },
+ {
+ "group_value": "40-50%",
+ "student_count": 185,
+ "avg_score": 67.76,
+ "score_vs_cohort": -2.67,
+ "avg_engagement_score": 0.1312,
+ "engagement_vs_cohort": -0.0141
+ },
+ {
+ "group_value": "20-30%",
+ "student_count": 196,
+ "avg_score": 65.99,
+ "score_vs_cohort": -4.45,
+ "avg_engagement_score": 0.1318,
+ "engagement_vs_cohort": -0.0135
+ },
+ {
+ "group_value": "10-20",
+ "student_count": 168,
+ "avg_score": 62.96,
+ "score_vs_cohort": -7.48,
+ "avg_engagement_score": 0.1312,
+ "engagement_vs_cohort": -0.0141
+ }
+ ],
+ "policy": "descriptive_equity_comparison_only_no_group_prescription"
+ }
+ },
+ "prompt_evidence_payload": {
+ "summary_type": "group_comparison",
+ "task_id": "A-G08",
+ "task_output_contract": [
+ "For every returned demographic group, state avg_score, score_vs_cohort, avg_engagement_score, and engagement deviation from the weighted cohort mean.",
+ "This is descriptive equity evidence only; do not prescribe interventions by demographic group or infer causality."
+ ],
+ "sections": [
+ {
+ "name": "scope",
+ "facts": {
+ "dataset_name": "demographic_performance",
+ "row_count": 11,
+ "group_column": "group_value",
+ "group_key_columns": [],
+ "series_column": null,
+ "metric_column": "avg_score",
+ "count_column": "student_count",
+ "gap_column": "score_vs_cohort",
+ "composite_group_keys": false
+ }
+ },
+ {
+ "name": "primary_finding",
+ "facts": {
+ "focus_summary": [],
+ "group_metrics": [
+ {
+ "group": "Unknown",
+ "student_count": 131,
+ "avg_score": 81.21,
+ "gap": 10.77,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": 10.77,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1903
+ }
+ },
+ {
+ "group": "90-100%",
+ "student_count": 181,
+ "avg_score": 74.53,
+ "gap": 4.09,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": 4.09,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1457
+ }
+ },
+ {
+ "group": "80-90%",
+ "student_count": 201,
+ "avg_score": 72.35,
+ "gap": 1.92,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": 1.92,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1668
+ }
+ },
+ {
+ "group": "60-70%",
+ "student_count": 193,
+ "avg_score": 71.85,
+ "gap": 1.42,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": 1.42,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1414
+ }
+ },
+ {
+ "group": "70-80%",
+ "student_count": 194,
+ "avg_score": 71.33,
+ "gap": 0.89,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": 0.89,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.138
+ }
+ },
+ {
+ "group": "50-60%",
+ "student_count": 191,
+ "avg_score": 70.27,
+ "gap": -0.17,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": -0.17,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1484
+ }
+ },
+ {
+ "group": "30-40%",
+ "student_count": 206,
+ "avg_score": 68.5,
+ "gap": -1.94,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": -1.94,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1392
+ }
+ },
+ {
+ "group": "0-10%",
+ "student_count": 152,
+ "avg_score": 68.05,
+ "gap": -2.39,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": -2.39,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1463
+ }
+ },
+ {
+ "group": "40-50%",
+ "student_count": 185,
+ "avg_score": 67.76,
+ "gap": -2.67,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": -2.67,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1312
+ }
+ },
+ {
+ "group": "20-30%",
+ "student_count": 196,
+ "avg_score": 65.99,
+ "gap": -4.45,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": -4.45,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1318
+ }
+ },
+ {
+ "group": "10-20",
+ "student_count": 168,
+ "avg_score": 62.96,
+ "gap": -7.48,
+ "gap_basis": "explicit_gap_column",
+ "score_vs_cohort": -7.48,
+ "secondary_metrics": {
+ "avg_engagement_score": 0.1312
+ }
+ }
+ ],
+ "engagement_cohort_comparison": {
+ "weighted_cohort_engagement_mean": 0.1453,
+ "groups": [
+ {
+ "group_value": "Unknown",
+ "student_count": 131,
+ "avg_score": 81.21,
+ "score_vs_cohort": 10.77,
+ "avg_engagement_score": 0.1903,
+ "engagement_vs_cohort": 0.045
+ },
+ {
+ "group_value": "90-100%",
+ "student_count": 181,
+ "avg_score": 74.53,
+ "score_vs_cohort": 4.09,
+ "avg_engagement_score": 0.1457,
+ "engagement_vs_cohort": 0.0004
+ },
+ {
+ "group_value": "80-90%",
+ "student_count": 201,
+ "avg_score": 72.35,
+ "score_vs_cohort": 1.92,
+ "avg_engagement_score": 0.1668,
+ "engagement_vs_cohort": 0.0215
+ },
+ {
+ "group_value": "60-70%",
+ "student_count": 193,
+ "avg_score": 71.85,
+ "score_vs_cohort": 1.42,
+ "avg_engagement_score": 0.1414,
+ "engagement_vs_cohort": -0.0039
+ },
+ {
+ "group_value": "70-80%",
+ "student_count": 194,
+ "avg_score": 71.33,
+ "score_vs_cohort": 0.89,
+ "avg_engagement_score": 0.138,
+ "engagement_vs_cohort": -0.0073
+ },
+ {
+ "group_value": "50-60%",
+ "student_count": 191,
+ "avg_score": 70.27,
+ "score_vs_cohort": -0.17,
+ "avg_engagement_score": 0.1484,
+ "engagement_vs_cohort": 0.0031
+ },
+ {
+ "group_value": "30-40%",
+ "student_count": 206,
+ "avg_score": 68.5,
+ "score_vs_cohort": -1.94,
+ "avg_engagement_score": 0.1392,
+ "engagement_vs_cohort": -0.0061
+ },
+ {
+ "group_value": "0-10%",
+ "student_count": 152,
+ "avg_score": 68.05,
+ "score_vs_cohort": -2.39,
+ "avg_engagement_score": 0.1463,
+ "engagement_vs_cohort": 0.001
+ },
+ {
+ "group_value": "40-50%",
+ "student_count": 185,
+ "avg_score": 67.76,
+ "score_vs_cohort": -2.67,
+ "avg_engagement_score": 0.1312,
+ "engagement_vs_cohort": -0.0141
+ },
+ {
+ "group_value": "20-30%",
+ "student_count": 196,
+ "avg_score": 65.99,
+ "score_vs_cohort": -4.45,
+ "avg_engagement_score": 0.1318,
+ "engagement_vs_cohort": -0.0135
+ },
+ {
+ "group_value": "10-20",
+ "student_count": 168,
+ "avg_score": 62.96,
+ "score_vs_cohort": -7.48,
+ "avg_engagement_score": 0.1312,
+ "engagement_vs_cohort": -0.0141
+ }
+ ],
+ "policy": "descriptive_equity_comparison_only_no_group_prescription"
+ }
+ }
+ },
+ {
+ "name": "comparison",
+ "facts": {
+ "gaps": [
+ {
+ "group": "10-20",
+ "gap": -7.48,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 62.96,
+ "student_count": 168
+ },
+ {
+ "group": "20-30%",
+ "gap": -4.45,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 65.99,
+ "student_count": 196
+ },
+ {
+ "group": "40-50%",
+ "gap": -2.67,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 67.76,
+ "student_count": 185
+ },
+ {
+ "group": "0-10%",
+ "gap": -2.39,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 68.05,
+ "student_count": 152
+ },
+ {
+ "group": "30-40%",
+ "gap": -1.94,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 68.5,
+ "student_count": 206
+ },
+ {
+ "group": "50-60%",
+ "gap": -0.17,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 70.27,
+ "student_count": 191
+ },
+ {
+ "group": "70-80%",
+ "gap": 0.89,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 71.33,
+ "student_count": 194
+ },
+ {
+ "group": "60-70%",
+ "gap": 1.42,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 71.85,
+ "student_count": 193
+ },
+ {
+ "group": "80-90%",
+ "gap": 1.92,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 72.35,
+ "student_count": 201
+ },
+ {
+ "group": "90-100%",
+ "gap": 4.09,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 74.53,
+ "student_count": 181
+ },
+ {
+ "group": "Unknown",
+ "gap": 10.77,
+ "gap_basis": "explicit_gap_column",
+ "avg_score": 81.21,
+ "student_count": 131
+ }
+ ]
+ }
+ },
+ {
+ "name": "limitations",
+ "facts": {
+ "missing_groups": [],
+ "low_count_warnings": [],
+ "fairness_warnings": [
+ "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+ ],
+ "causal_claim_allowed": false,
+ "summarization_warnings": [
+ "Group comparison is descriptive only; do not infer that group membership causes performance differences."
+ ]
+ }
+ }
+ ]
+ }
+}

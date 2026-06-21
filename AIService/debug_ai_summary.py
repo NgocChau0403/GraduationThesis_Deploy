@@ -17,6 +17,7 @@ Usage:
   python debug_ai_summary.py --self-test-multi-metric-comparison
   python debug_ai_summary.py --self-test-metric-snapshot
   python debug_ai_summary.py --self-test-action-synthesis
+  python debug_ai_summary.py --self-test-v3
   python debug_ai_summary.py --task A-G14 --input-json path/to/datasets.json
 
 The optional input JSON can be either:
@@ -459,8 +460,9 @@ def run_self_test() -> None:
     os.environ["AI_SUMMARY_METHOD"] = "task_aware_data_summarization"
     generic_req = build_request("A-G14", {"empty": []})
     generic_req.ai_summary_config = None
-    generic_summary = BaseExplanationStrategy.summarize_datasets(generic_req)
-    assert "Dataset is empty" in generic_summary
+    generic_summary = json.loads(BaseExplanationStrategy.summarize_datasets(generic_req))
+    assert generic_summary["summary_type"] == "full_rows_due_to_small_result"
+    assert generic_summary["datasets"][0]["row_count"] == 0
 
     rows = [{"idx": i, "score": str(i), "group": "A" if i % 2 else "B"} for i in range(25)]
     fallback_req = build_request("A-G14", {"generic": rows})
@@ -473,7 +475,7 @@ def run_self_test() -> None:
     assert fallback_summary["datasets"][0]["numeric_stats"]["score"]["max"] == 24
 
     trend_req = build_request("A-G14", {"withdrawal_signal_trend": sample_a_g14_rows()})
-    trend_summary = json.loads(BaseExplanationStrategy.summarize_datasets(trend_req))
+    trend_summary = BaseExplanationStrategy._build_task_aware_summary(trend_req)
     assert trend_summary["target_group"] == "Withdrawn"
     assert trend_summary["target_trend"]["group"] == "Withdrawn"
     reliable_drop = trend_summary["target_trend"]["largest_reliable_adjacent_drop"]
@@ -486,7 +488,7 @@ def run_self_test() -> None:
         "A-G14",
         {"withdrawal_signal_trend": [row for row in sample_a_g14_rows() if row["final_outcome"] != "Withdrawn"]},
     )
-    missing_summary = json.loads(BaseExplanationStrategy.summarize_datasets(missing_req))
+    missing_summary = BaseExplanationStrategy._build_task_aware_summary(missing_req)
     assert missing_summary["target_group_missing"] is True
     assert "Withdrawn" in missing_summary["summarization_warnings"][0]
 
@@ -552,9 +554,7 @@ def run_self_test() -> None:
         minimum_entity_count=2,
         max_points=50,
     )
-    dynamic_summary = json.loads(
-        BaseExplanationStrategy.summarize_datasets(dynamic_req)
-    )
+    dynamic_summary = BaseExplanationStrategy._build_task_aware_summary(dynamic_req)
     assert dynamic_summary["available_groups"] == ["S001", "S002"]
     pairwise = dynamic_summary["pairwise_comparison"]
     assert pairwise["shared_point_count"] == 3
@@ -574,9 +574,7 @@ def run_self_test() -> None:
         },
     )
     one_group_req.ai_summary_config = dynamic_req.ai_summary_config
-    one_group_summary = json.loads(
-        BaseExplanationStrategy.summarize_datasets(one_group_req)
-    )
+    one_group_summary = BaseExplanationStrategy._build_task_aware_summary(one_group_req)
     assert one_group_summary["evidence_status"] == "insufficient_evidence"
     assert one_group_summary["pairwise_comparison"] is None
     assert one_group_summary["missing_group_evidence"]
@@ -2318,6 +2316,133 @@ def run_self_test_action_synthesis() -> None:
     print("debug_ai_summary action_synthesis self-test passed")
 
 
+def run_self_test_v3() -> None:
+    previous = {
+        key: os.environ.get(key)
+        for key in (
+            "AI_TASK_AWARE_VERSION",
+            "AI_TASK_AWARE_TOP_K",
+            "AI_TASK_AWARE_SOFT_TOKEN_RATIO",
+            "AI_TASK_AWARE_MAX_TOKEN_RATIO",
+            "AI_TASK_AWARE_MAX_EXTRA_TOKENS",
+        )
+    }
+    try:
+        os.environ["AI_TASK_AWARE_VERSION"] = "v3"
+        os.environ["AI_TASK_AWARE_TOP_K"] = "15"
+        os.environ["AI_TASK_AWARE_SOFT_TOKEN_RATIO"] = "1.2"
+        os.environ["AI_TASK_AWARE_MAX_TOKEN_RATIO"] = "5.0"
+        os.environ["AI_TASK_AWARE_MAX_EXTRA_TOKENS"] = "800"
+
+        rows = [
+            {"idx": index, "score": str(index), "group": "A" if index % 2 else "B"}
+            for index in range(25)
+        ]
+        req = build_request("A-G14", {"generic": rows})
+        req.ai_summary_config = None
+        result = BaseExplanationStrategy.build_summary_result(
+            req,
+            method_override="task_aware_data_summarization",
+            include_debug_payload=True,
+        )
+        repeated = BaseExplanationStrategy.build_summary_result(
+            req,
+            method_override="task_aware_data_summarization",
+            include_debug_payload=True,
+        )
+        text = result["summary_text"]
+        metadata = result["metadata"]
+        debug = metadata["summary_debug_payload"]
+
+        assert text == repeated["summary_text"]
+        assert metadata["ai_summary_version"] == "v3-experimental"
+        assert metadata["raw_row_limit"] == 15
+        assert metadata["included_raw_row_count"] == 15
+        assert metadata["full_result_row_count"] == 25
+        assert text.index("RAW ROWS") < text.index("TASK-AWARE EVIDENCE")
+        assert text.index("TASK-AWARE EVIDENCE") < text.index("LIMITATIONS")
+        assert json.dumps(
+            rows[:15], indent=2, ensure_ascii=False, default=str
+        ) in text
+        assert rows[15]["idx"] == 15 and '"idx": 15' not in text.split(
+            "TASK-AWARE EVIDENCE", 1
+        )[0]
+
+        evidence_text = text.split(
+            "TASK-AWARE EVIDENCE (derived from the full result; ordered by meaning):\n",
+            1,
+        )[1].split("\n\nLIMITATIONS:", 1)[0]
+        evidence = json.loads(evidence_text)
+        names = [section["name"] for section in evidence["sections"]]
+        canonical = [
+            "scope", "primary_finding", "comparison", "trend_relationship",
+            "exceptions", "action_evidence", "limitations",
+        ]
+        assert names == sorted(names, key=canonical.index)
+
+        multi_req = build_request(
+            "A-G14",
+            {
+                "first": [{"idx": "first"}],
+                "second": [{"idx": "second"}],
+            },
+        )
+        multi_req.ai_summary_config = None
+        multi_req.query_labels = ["second", "first"]
+        multi_text = BaseExplanationStrategy.build_summary_result(
+            multi_req,
+            method_override="task_aware_data_summarization",
+        )["summary_text"]
+        assert multi_text.index("Dataset: second") < multi_text.index("Dataset: first")
+
+        os.environ["AI_TASK_AWARE_TOP_K"] = "20"
+        os.environ["AI_TASK_AWARE_MAX_TOKEN_RATIO"] = "1.01"
+        os.environ["AI_TASK_AWARE_MAX_EXTRA_TOKENS"] = "0"
+        guard_rows = sample_a_g14_rows() * 3
+        guard_req = build_request(
+            "A-G14",
+            {"withdrawal_signal_trend": guard_rows},
+        )
+        guarded = BaseExplanationStrategy.build_summary_result(
+            guard_req,
+            method_override="task_aware_data_summarization",
+            include_debug_payload=True,
+        )
+        guarded_debug = guarded["metadata"]["summary_debug_payload"]
+        assert json.dumps(
+            guard_rows[:20], indent=2, ensure_ascii=False, default=str
+        ) in guarded["summary_text"]
+        assert guarded_debug["evidence_sections_omitted"]
+
+        action_req = build_request(
+            "A-G16",
+            {
+                "synthesis_data": [{
+                    "class_id": "SAMPLE_OULAD_CLASS_CCC_2014J",
+                    "low_engagement_count": 1240,
+                    "high_risk_count": 906,
+                    "total_students": 1998,
+                    "hardest_assessment": "24299",
+                    "best_resource_type": "quiz",
+                }]
+            },
+        )
+        _system_prompt, action_prompt = (
+            BaseExplanationStrategy._build_action_synthesis_llm_prompts(action_req)
+        )
+        assert "admin_review_high_risk_caseload" in action_prompt
+        assert '"prioritized_actions": []' not in action_prompt
+
+        assert debug["token_count_method"]
+        print("debug_ai_summary V3 self-test passed")
+    finally:
+        for key, value in previous.items():
+            if value is None:
+                os.environ.pop(key, None)
+            else:
+                os.environ[key] = value
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--task", default="A-G14")
@@ -2336,7 +2461,24 @@ def main() -> None:
     parser.add_argument("--self-test-multi-metric-comparison", action="store_true")
     parser.add_argument("--self-test-metric-snapshot", action="store_true")
     parser.add_argument("--self-test-action-synthesis", action="store_true")
+    parser.add_argument("--self-test-v3", action="store_true")
     args = parser.parse_args()
+
+    legacy_self_test = any((
+        args.self_test,
+        args.self_test_categorical,
+        args.self_test_risk_flags,
+        args.self_test_trend_series,
+        args.self_test_ranking,
+        args.self_test_numeric_distribution,
+        args.self_test_group_comparison,
+        args.self_test_correlation_evidence,
+        args.self_test_multi_metric_comparison,
+        args.self_test_metric_snapshot,
+        args.self_test_action_synthesis,
+    ))
+    if legacy_self_test:
+        os.environ["AI_TASK_AWARE_VERSION"] = "v1"
 
     if args.self_test:
         run_self_test()
@@ -2370,6 +2512,9 @@ def main() -> None:
         return
     if args.self_test_action_synthesis:
         run_self_test_action_synthesis()
+        return
+    if args.self_test_v3:
+        run_self_test_v3()
         return
 
     req = build_request(args.task, load_datasets(args.input_json, args.task))

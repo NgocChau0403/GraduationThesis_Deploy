@@ -1,0 +1,233 @@
+{
+  "schema_version": "judge_input_schema_v1",
+  "record_id": "SAMPLE_UCI_POR__A-G12__task_aware_data_summarization",
+  "evaluation_run_id": "full_208_taskaware_v3_summary",
+  "dataset_id": "SAMPLE_UCI_POR",
+  "task_id": "A-G12",
+  "explanation_mode": "task_aware_data_summarization",
+  "prompt_version": "judge_prompt_v2_pilot_v1",
+  "rubric_version": "judge_rubric_1_to_10_pilot_v1",
+  "task_context": {
+    "task_name": "Background group pass/fail/withdrawal rate",
+    "scope": "Many students",
+    "actionable_question": "Which demographic groups have the highest failure or dropout rate?",
+    "target_audience": "academic_advisor, admin",
+    "ai_summary_type": "group_comparison",
+    "ai_prompt_hint": "For each demographic group, state fail rate and withdrawal rate as percentages. Flag groups where fail+withdrawn > cohort threshold. Note: output is categorical final_outcome — distinct from A-G08 which uses continuous avg_score.",
+    "query_labels": [
+      "outcome_by_group"
+    ],
+    "explanation_strategy": "comparison"
+  },
+  "schema_context": {
+    "source_tables": [
+      "student",
+      "enrollment"
+    ],
+    "key_db_fields": [
+      "socioeconomic_band / gender / age_group / highest_education; final_outcome"
+    ],
+    "output_schema": {
+      "required_columns": [
+        "group_value",
+        "final_outcome",
+        "pct_within_group"
+      ],
+      "optional_columns": [
+        "student_count"
+      ]
+    },
+    "query_labels": [
+      "outcome_by_group"
+    ]
+  },
+  "explanation": {
+    "raw_text": "Summary: The comparison of pass and fail rates between the GP and MS groups reveals significant disparities in performance. The MS group exhibits a notably higher failure rate compared to the GP group, indicating potential areas for intervention.\n\nInsights: Higher Failure Rate in MS Group: The MS group has a failure rate of 30.1%, which is significantly higher than the GP group's failure rate of 7.6%. This indicates that students in the MS group are more likely to fail compared to their GP counterparts. | Pass Rate Discrepancy: The pass rate for the GP group is 92.4%, while the MS group has a pass rate of 69.9%. This further emphasizes the performance gap, with GP students showing a much higher likelihood of passing.\n\nEducational implications: The significant difference in failure rates suggests that targeted support and resources may be necessary for the MS group to improve their outcomes.\n\nRecommendations: high - Implement targeted intervention programs for the MS group. - To address the high failure rate and improve overall student success, focused support strategies should be developed for the MS demographic.",
+    "structured_payload": {
+      "task_id": "A-G12",
+      "execution_id": "exec_1781847232738_44f516ee",
+      "explanation": {
+        "summary": "The comparison of pass and fail rates between the GP and MS groups reveals significant disparities in performance. The MS group exhibits a notably higher failure rate compared to the GP group, indicating potential areas for intervention.",
+        "insights": [
+          {
+            "title": "Higher Failure Rate in MS Group",
+            "description": "The MS group has a failure rate of 30.1%, which is significantly higher than the GP group's failure rate of 7.6%. This indicates that students in the MS group are more likely to fail compared to their GP counterparts.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "pct_within_group",
+                "value": "30.1",
+                "comparison": "baseline",
+                "delta": 22.5,
+                "context": "Comparison of failure rates between MS and GP groups"
+              }
+            ]
+          },
+          {
+            "title": "Pass Rate Discrepancy",
+            "description": "The pass rate for the GP group is 92.4%, while the MS group has a pass rate of 69.9%. This further emphasizes the performance gap, with GP students showing a much higher likelihood of passing.",
+            "severity": "high",
+            "evidence": [
+              {
+                "metric": "pct_within_group",
+                "value": "92.4",
+                "comparison": "baseline",
+                "delta": 22.5,
+                "context": "Comparison of pass rates between GP and MS groups"
+              }
+            ]
+          }
+        ],
+        "educational_implications": [
+          "The significant difference in failure rates suggests that targeted support and resources may be necessary for the MS group to improve their outcomes."
+        ],
+        "recommendations": [
+          {
+            "priority": "high",
+            "action": "Implement targeted intervention programs for the MS group.",
+            "rationale": "To address the high failure rate and improve overall student success, focused support strategies should be developed for the MS demographic."
+          }
+        ],
+        "warnings": []
+      },
+      "confidence": {
+        "level": "HIGH",
+        "reason": "Data is derived from a complete dataset with clear metrics and comparisons.",
+        "based_on": [
+          "sufficient_data"
+        ]
+      },
+      "explanation_strategy": "comparison",
+      "explanation_type": "comparison",
+      "ai_summary_method": "task_aware_data_summarization",
+      "ai_summary_version": "v3-experimental",
+      "baseline_available": true,
+      "input_summary_type": "group_comparison",
+      "ai_summary_method_warning": null,
+      "full_result_row_count": 4,
+      "included_row_count": 4,
+      "small_result_threshold": null,
+      "small_result_full_rows_applied": null,
+      "dataset_row_breakdown": [
+        {
+          "dataset_name": "outcome_by_group",
+          "row_count": 4,
+          "included_row_count": 4
+        }
+      ],
+      "raw_row_limit": 15,
+      "included_raw_row_count": 4,
+      "baseline_reference_tokens": 129,
+      "task_aware_prompt_tokens": 728,
+      "token_ratio": 5.6434,
+      "token_count_method": "utf8_bytes_div_4",
+      "evidence_sections_included": [
+        "scope",
+        "primary_finding",
+        "limitations"
+      ],
+      "evidence_sections_omitted": [
+        "limitations.causal_claim_allowed",
+        "limitations.fairness_warnings",
+        "limitations.low_count_warnings",
+        "limitations.missing_groups",
+        "exceptions.weakest_group",
+        "exceptions.dominant_group",
+        "comparison.gaps",
+        "primary_finding.group_series"
+      ],
+      "v3_warnings": [
+        "Task-aware V3 prompt exceeded the configured soft token ratio (5.6434 > 1.2).",
+        "Task-aware V3 prompt remained above the experimental safety ratio after optional evidence trimming; raw rows were preserved."
+      ],
+      "safety_flags": [],
+      "degraded": false,
+      "meta": {
+        "model": "gpt-4o-mini-2024-07-18",
+        "latency_ms": 7010,
+        "token_usage": {
+          "prompt_tokens": 1319,
+          "completion_tokens": 471,
+          "total_tokens": 1790
+        },
+        "strategy": "comparison",
+        "granularity": "cohort_aggregate",
+        "cost_usd": 0.00048
+      }
+    },
+    "generation_metadata": {
+      "explanation_artifact_path": "Docs/evaluation_v2/Runs/full_208/phase13_taskaware_v3_summary/explanations/task_aware_data_summarization/SAMPLE_UCI_POR/explanation_artifacts/SAMPLE_UCI_POR__A-G12__task_aware_data_summarization.json",
+      "explanation_artifact_sha256": "0005d599d3e3b87a38587943451a9c7dff89d0205be857fb405318ce72179212",
+      "ai_service_url": "http://localhost:8000",
+      "expected_ai_summary_method": "task_aware_data_summarization",
+      "observed_ai_summary_method": "task_aware_data_summarization",
+      "degraded": false,
+      "model": "gpt-4o-mini-2024-07-18",
+      "token_usage": {
+        "prompt_tokens": 1319,
+        "completion_tokens": 471,
+        "total_tokens": 1790
+      },
+      "latency_ms": 7026,
+      "attempts_used": 1
+    }
+  },
+  "evidence_access": {
+    "full_result_row_count": 4,
+    "full_query_artifacts": [
+      {
+        "dataset_label": "outcome_by_group",
+        "artifact_path": "Docs/evaluation_v2/Runs/full_208/phase8_evidence_sql/SAMPLE_UCI_POR/full_query_artifacts/SAMPLE_UCI_POR__A-G12.json",
+        "artifact_sha256": "e89d1a5fe07f67b8ce1c2004da0666644c2384146933a343edb249a7f1ca7f8c",
+        "row_count": 4,
+        "readable": true
+      }
+    ],
+    "evidence_access_mode": "direct_embedding",
+    "small_result_row_threshold": 20,
+    "direct_embedding_token_budget": 120000,
+    "prompt_embedded_row_count": 4,
+    "retrieved_row_count": 0,
+    "retrieved_row_count_by_dataset": {},
+    "retrieved_row_ranges": [],
+    "retrieved_chunk_ids": [],
+    "retrieval_log_path": null,
+    "retrieval_request_complete": true,
+    "retrieval_coverage_status": "not_applicable",
+    "full_access_available": true,
+    "deterministic_scan_scope": "full_query_artifact_all_rows",
+    "deterministic_scan_row_count_by_dataset": {
+      "outcome_by_group": 4
+    },
+    "full_result_sent_to_llm": true,
+    "deterministic_checks": [],
+    "checked_claim_types": [],
+    "unchecked_claim_types": [
+      "semantic_interpretation",
+      "causal_framing",
+      "actionability_quality"
+    ],
+    "judge_evidence_citations": []
+  },
+  "evaluation_requirements": {
+    "required_core_outputs": [
+      {
+        "requirement_id": "A-G12-CORE-01",
+        "description": "For each demographic group, state fail rate and withdrawal rate as percentages."
+      },
+      {
+        "requirement_id": "A-G12-CORE-02",
+        "description": "Flag groups where fail+withdrawn > cohort threshold."
+      }
+    ],
+    "required_supporting_outputs": [],
+    "evaluation_constraints": [
+      {
+        "constraint_id": "A-G12-CONSTRAINT-01",
+        "description": "Do not conflate categorical pass, fail, or withdrawal outcomes with continuous score metrics when interpreting group results."
+      }
+    ],
+    "safety_fairness_applicability": "applicable",
+    "safety_fairness_note": "Applicable because the task compares failure and withdrawal rates across demographic groups."
+  }
+}
