@@ -37,6 +37,7 @@ function FileMetaPill({ children, isActive }) {
 
 export default function FileSelector({
   files,
+  datasetName,
   selectedFileId,
   onSelect
 }) {
@@ -49,7 +50,7 @@ export default function FileSelector({
       <div className="mb-6">
         <h2 className="text-xl font-black text-slate-900">3. Uploaded Files</h2>
         <p className="mt-1 text-sm text-slate-500">
-          Select a specific file to review automated mapping results.
+          Dataset: <span className="font-bold text-slate-700">{datasetName || "Untitled Dataset"}</span>
         </p>
       </div>
 
@@ -68,6 +69,9 @@ export default function FileSelector({
       <div className="space-y-3">
         {files.map((file) => {
           const isActive = file.fileId === selectedFileId;
+          const displayName = files.length === 1 && datasetName
+            ? datasetName
+            : file.fileName;
 
           return (
             <button
@@ -84,8 +88,13 @@ export default function FileSelector({
                 <div className="flex items-start justify-between gap-3">
                   <div className="min-w-0 flex-1">
                     <div className={`truncate text-sm font-black tracking-tight ${isActive ? "text-white" : "text-slate-900"}`}>
-                      {file.fileName}
+                      {displayName}
                     </div>
+                    {displayName !== file.fileName && (
+                      <div className={`mt-1 truncate text-[10px] font-bold ${isActive ? "text-emerald-50" : "text-slate-400"}`}>
+                        Source file: {file.fileName}
+                      </div>
+                    )}
                   </div>
                   <span className={`shrink-0 rounded-full border px-2.5 py-1 text-[10px] font-black uppercase tracking-widest transition-colors ${
                     isActive ? "border-white/30 bg-white/20 text-white" : statusTone(file)

@@ -265,7 +265,93 @@ function applyBatchScopeGuard(sql, params) {
  * Task-specific SQL optimizations for known heavy analytical queries.
  * Keeps registry SQL readable while allowing targeted runtime hardening.
  */
-function applyTaskSpecificSqlOptimizations(sql, taskId) {
+function applyTaskSpecificSqlOptimizations(sql, taskId, params = {}) {
+  if (taskId === "S-T03") {
+    const classEnrollmentFilter = params?.batch_id
+      ? "WHERE e.class_id = :class_id AND e.batch_id = :batch_id"
+      : "WHERE e.class_id = :class_id";
+
+    return `WITH class_enrollments AS MATERIALIZED (
+  SELECT e.student_id,
+         e.enrollment_id,
+         e.batch_id
+  FROM enrollment e
+  ${classEnrollmentFilter}
+),
+cohort_scores AS MATERIALIZED (
+  SELECT ce.student_id,
+         ROUND((
+           CASE
+             WHEN SUM(a.weight_pct) FILTER (
+                    WHERE a.weight_pct IS NOT NULL
+                      AND ar.score_normalized IS NOT NULL
+                  ) > 0
+               THEN SUM(ar.score_normalized * a.weight_pct) FILTER (
+                      WHERE a.weight_pct IS NOT NULL
+                        AND ar.score_normalized IS NOT NULL
+                    ) / NULLIF(SUM(a.weight_pct) FILTER (
+                      WHERE a.weight_pct IS NOT NULL
+                        AND ar.score_normalized IS NOT NULL
+                    ), 0)
+             ELSE AVG(ar.score_normalized)
+           END
+         )::numeric, 2)::float8 AS avg_score
+  FROM class_enrollments ce
+  JOIN assessment_result ar ON ar.enrollment_id = ce.enrollment_id
+                           AND ar.batch_id = ce.batch_id
+  JOIN assessment a ON ar.assessment_id = a.assessment_id
+                   AND a.batch_id = ce.batch_id
+                   AND a.class_id = :class_id
+  GROUP BY ce.student_id
+),
+eng_agg AS MATERIALIZED (
+  SELECT ce.student_id,
+         COALESCE(SUM(eng.engagement_count), 0)::float8 AS total_clicks,
+         COUNT(DISTINCT eng.event_day)::float8 AS active_days
+  FROM class_enrollments ce
+  LEFT JOIN engagement eng ON eng.enrollment_id = ce.enrollment_id
+                          AND eng.batch_id = ce.batch_id
+  GROUP BY ce.student_id
+),
+class_max AS MATERIALIZED (
+  SELECT NULLIF(MAX(total_clicks), 0)::float8 AS mc,
+         NULLIF(MAX(active_days), 0)::float8 AS ma
+  FROM eng_agg
+),
+cohort_eng AS MATERIALIZED (
+  SELECT ea.student_id,
+         ROUND((COALESCE(ea.total_clicks / cm.mc, 0) * 0.5
+              + COALESCE(ea.active_days / cm.ma, 0) * 0.5)::numeric, 4)::float8 AS engagement_score
+  FROM eng_agg ea
+  CROSS JOIN class_max cm
+),
+ranked AS (
+  SELECT cs.student_id,
+         cs.avg_score AS student_avg_score,
+         COALESCE(ce.engagement_score, 0)::float8 AS engagement_score,
+         ROUND(AVG(cs.avg_score) OVER ()::numeric, 2)::float8 AS cohort_avg_score,
+         ROUND((PERCENT_RANK() OVER (ORDER BY cs.avg_score) * 100)::numeric, 1)::float8 AS score_percentile,
+         ROUND((PERCENT_RANK() OVER (ORDER BY COALESCE(ce.engagement_score, 0)) * 100)::numeric, 1)::float8 AS engagement_percentile
+  FROM cohort_scores cs
+  LEFT JOIN cohort_eng ce ON cs.student_id = ce.student_id
+),
+selected AS (
+  SELECT * FROM ranked WHERE student_id = :student_id
+)
+SELECT 'Average score' AS metric_name, 'You' AS comparison_group, student_avg_score AS metric_value, 1 AS sort_order FROM selected
+UNION ALL
+SELECT 'Average score', 'Cohort benchmark', cohort_avg_score, 1 FROM selected
+UNION ALL
+SELECT 'Score percentile', 'You', score_percentile, 2 FROM selected
+UNION ALL
+SELECT 'Score percentile', 'Cohort benchmark', 50::float8, 2 FROM selected
+UNION ALL
+SELECT 'Engagement percentile', 'You', engagement_percentile, 3 FROM selected
+UNION ALL
+SELECT 'Engagement percentile', 'Cohort benchmark', 50::float8, 3 FROM selected
+ORDER BY sort_order, comparison_group DESC`;
+  }
+
   if (taskId !== "A-B04") return sql;
 
   let optimized = sql;
@@ -388,7 +474,7 @@ async function executeOne(sqlTemplate, params, options = {}) {
   const { bigintMode = "number", limitGuardrail = true, taskId = "unknown" } = options;
 
   const batchScopedTemplate = applyBatchScopeGuard(sqlTemplate, params);
-  const optimizedTemplate = applyTaskSpecificSqlOptimizations(batchScopedTemplate, taskId);
+  const optimizedTemplate = applyTaskSpecificSqlOptimizations(batchScopedTemplate, taskId, params);
   const { sql: rawSql, values } = buildPositionalQuery(optimizedTemplate, params);
   const guardedSql = limitGuardrail ? applyLimitGuardrail(rawSql) : rawSql;
   const sql = fixRoundCast(guardedSql);

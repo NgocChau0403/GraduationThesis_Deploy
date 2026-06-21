@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useOutletContext } from "react-router-dom";
-import { Select } from "antd";
 import UploadPanel from "../../components/import/UploadPanel";
 
 /**
@@ -14,9 +13,7 @@ export default function UploadStep() {
     loadingStates, 
     uploadProgress,
     datasetName, 
-    setDatasetName, 
-    sourceDataset, 
-    setSourceDataset 
+    setDatasetName
   } = useOutletContext();
 
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -44,8 +41,7 @@ export default function UploadStep() {
     
     handleUpload({
       files: selectedFiles,
-      datasetName,
-      sourceDataset
+      datasetName
     });
   };
 
@@ -87,27 +83,6 @@ export default function UploadStep() {
               />
             </div>
 
-            {/* Source Origin for Data Lineage */}
-            <div className="space-y-2">
-              <label className="text-[13px] font-semibold text-slate-600">
-                Dataset Schema (Source)
-              </label>
-              <Select
-                value={sourceDataset || ""}
-                onChange={(value) => setSourceDataset(value)}
-                className="w-full text-sm font-medium custom-source-select"
-                size="large"
-                options={[
-                  { value: "", label: "Auto-detect (Recommended)" },
-                  { value: "OULAD", label: "OULAD (Open University)" },
-                  { value: "UCI", label: "UCI (Portuguese/Math)" },
-                  { value: "CUSTOM", label: "CUSTOM (Unknown Schema)" }
-                ]}
-              />
-              <p className="px-1 text-[11px] leading-relaxed text-slate-400 italic mt-1">
-                System will use these values to override automated detection if provided.
-              </p>
-            </div>
           </div>
 
           {/* MAIN EXECUTION BUTTON */}

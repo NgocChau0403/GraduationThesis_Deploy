@@ -180,7 +180,10 @@ export async function runImportPipeline({
     // Row-level FE fields (registration_lead_time, pass_flag, log_click_score,
     // week_of_class) are already computed during Phase 1 transform, inline,
     // because their raw inputs are immediately available at shatter time.
-    transformResult.output.student = computeStudentFeatures(transformResult.output.student);
+    transformResult.output.student = computeStudentFeatures(
+      transformResult.output.student,
+      transformResult.output.enrollment
+    );
 
     let saveResult = null;
 

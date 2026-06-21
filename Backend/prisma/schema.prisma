@@ -73,7 +73,7 @@ model Student {
   support_score          Float? // UCI only. (school_sup + fam_sup + paid + internet) / 4
   social_balance_score   Float? // UCI only. norm(free_time)×0.5 - norm(go_out)×0.3 - norm(alc_weekday)×0.2
   family_stability_score Float? // UCI only. norm(fam_rel)×0.5 + (cohabitation=T)×0.3 + norm(max_parent_edu)×0.2
-  disadvantage_score     Float? // OULAD only. norm(100-imd)×0.5 + disability×0.3 + (no_formal_edu)×0.2
+  disadvantage_score     Float? // Dataset-specific socioeconomic disadvantage score normalized to 0..1
 
   created_at DateTime  @default(now())
   updated_at DateTime?

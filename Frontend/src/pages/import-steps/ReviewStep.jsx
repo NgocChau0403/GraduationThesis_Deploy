@@ -89,6 +89,7 @@ export default function ReviewStep() {
         <aside className="xl:sticky xl:top-8 xl:self-start">
           <FileSelector
             files={uploadedFiles}
+            datasetName={datasetName}
             selectedFileId={selectedFileId}
             onSelect={setSelectedFileId}
           />

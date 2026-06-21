@@ -220,13 +220,17 @@ export async function loadSampleBatchFromCsv(batchId, options = {}) {
       sourceFileName: fileDef.name,
     });
     dataset = built.dataset;
-    if (dataset?.students) {
-      dataset.students = computeStudentFeatures(dataset.students);
-    }
     warnings.push(...(built.warnings || []));
     errors.push(...(built.errors || []));
   } else {
     errors.push(`Unsupported batch id: ${batchId}`);
+  }
+
+  if (dataset?.students) {
+    dataset.students = computeStudentFeatures(
+      dataset.students,
+      dataset.enrollments
+    );
   }
 
   const canonicalCounts = canonicalEntityCounts(dataset);

@@ -1,0 +1,883 @@
+{
+  "paragraphs": 646,
+  "tables": 45,
+  "headings": [
+    {
+      "style": "Heading 1",
+      "text": "ACKNOWLEDGMENTS"
+    },
+    {
+      "style": "Heading 1",
+      "text": "LIST OF FIGURES"
+    },
+    {
+      "style": "Heading 1",
+      "text": "LIST OF TABLES"
+    },
+    {
+      "style": "Heading 1",
+      "text": "LIST OF ABBREVIATIONS"
+    },
+    {
+      "style": "Heading 1",
+      "text": "ABSTRACT"
+    },
+    {
+      "style": "Heading 1",
+      "text": "Chapter 1: INTRODUCTION"
+    },
+    {
+      "style": "Heading 2",
+      "text": "1.1 Research Motivation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.1.1 Thesis Perspective"
+    },
+    {
+      "style": "Heading 2",
+      "text": "1.2 Problem Statement"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.2.1 Connected Subproblems"
+    },
+    {
+      "style": "Heading 2",
+      "text": "1.3 Research and Practical Gap"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.3.1 Dataset Coupling"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.3.2 Task Validity Gap"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.3.3 AI Grounding and Evaluation Gap"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.3.4 Positioning of the Proposed Work"
+    },
+    {
+      "style": "Heading 2",
+      "text": "1.4 Objectives and Scope"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.4.1 General Objective"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.4.2 Specific Objectives"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.4.3 Research Scope"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.4.4 Delimitations"
+    },
+    {
+      "style": "Heading 2",
+      "text": "1.5 Research Questions"
+    },
+    {
+      "style": "Heading 2",
+      "text": "1.6 Main Contributions"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.6.1 Contribution 1: Canonical Educational Schema"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.6.2 Contribution 2: Task Taxonomy and Availability Mechanism"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.6.3 Contribution 3: Evidence-Grounded AI Explanation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "1.6.4 Evaluation as Supporting Evidence"
+    },
+    {
+      "style": "Heading 2",
+      "text": "1.7 Thesis Structure"
+    },
+    {
+      "style": "Heading 1",
+      "text": "Chapter 2: BACKGROUND AND RELATED WORK"
+    },
+    {
+      "style": "Heading 2",
+      "text": "2.1 Learning Analytics and Educational Data Mining"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.1.1 Analytical Levels"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.1.2 Implications for System Design"
+    },
+    {
+      "style": "Heading 2",
+      "text": "2.2 Educational Dashboards and Data Sources"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.2.1 Heterogeneous Educational Sources"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.2.2 UCI Student Performance and OULAD"
+    },
+    {
+      "style": "Heading 2",
+      "text": "2.3 ETL, Schema Mapping, and Canonical Data Models"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.3.1 Canonicalization versus Source-Specific Modeling"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.3.2 Human-in-the-Loop Mapping"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.3.3 Raw Fields, Features, Metrics, and Interpretations"
+    },
+    {
+      "style": "Heading 2",
+      "text": "2.4 Analytical Task Taxonomies and Metadata-Driven Systems"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.4.1 Task as a Declarative Specification"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.4.2 Benefits and Risks"
+    },
+    {
+      "style": "Heading 2",
+      "text": "2.5 Task Availability and Data-Sufficiency Validation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.5.1 Levels of Readiness"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.5.2 Missing Data versus Unsupported Concepts"
+    },
+    {
+      "style": "Heading 2",
+      "text": "2.6 Visualization, Feedback, and Human Interpretation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.6.1 Metadata-Driven Rendering"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.6.2 Human Utility Claims"
+    },
+    {
+      "style": "Heading 2",
+      "text": "2.7 AI Explanation, Grounding, and Evaluation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.7.1 Evidence Grounding"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.7.2 Educational Safety and Ethics"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.7.3 Evaluating Generated Explanations"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.7.4 Baseline versus Task-Aware Evidence"
+    },
+    {
+      "style": "Heading 2",
+      "text": "2.8 Prior-Work Comparison and Research Gap"
+    },
+    {
+      "style": "Heading 3",
+      "text": "2.8.1 Positioning of This Thesis"
+    },
+    {
+      "style": "Heading 2",
+      "text": "2.9 Chapter Summary"
+    },
+    {
+      "style": "Heading 1",
+      "text": "Chapter 3: PROPOSED METHODOLOGY"
+    },
+    {
+      "style": "Heading 2",
+      "text": "3.1 Overall Research Approach"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.1.1 Methodological Principles"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.1.2 End-to-End Research Workflow"
+    },
+    {
+      "style": "Heading 2",
+      "text": "3.2 Canonical Educational Data Schema"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.2.1 Design Principles and Entity Grain"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.2.2 Cross-Dataset Normalization"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.2.3 Field and Feature Taxonomy"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.2.4 Partial Coverage and Missing Data"
+    },
+    {
+      "style": "Heading 2",
+      "text": "3.3 Import and Mapping Method"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.3.1 Source Profiling and Dataset Detection"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.3.2 Mapping and Human Confirmation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.3.3 Transformation, Feature Engineering, and Persistence"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.3.4 Import Quality Criteria"
+    },
+    {
+      "style": "Heading 2",
+      "text": "3.4 Educational Analytics Task Taxonomy"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.4.1 Taxonomy Dimensions"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.4.2 Student and Administrative Analytical Scopes"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.4.3 Operationalization through the Task Registry"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.4.4 Deterministic Execution and Presentation"
+    },
+    {
+      "style": "Heading 2",
+      "text": "3.5 Task Availability Method"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.5.1 Dataset Capability Snapshot"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.5.2 Four Validation Layers"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.5.3 Status Decision Policy"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.5.4 Ground-Truth Construction for Availability"
+    },
+    {
+      "style": "Heading 2",
+      "text": "3.6 AI Explanation Method"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.6.1 Evidence Preparation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.6.2 Baseline and Task-Aware Evidence Modes"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.6.3 Strategy-Based Prompting"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.6.4 Structured Output, Safety, and Traceability"
+    },
+    {
+      "style": "Heading 2",
+      "text": "3.7 Evaluation Protocol"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.7.1 Datasets and Fixed Task Scope"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.7.2 Automated Runners and Reproducibility"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.7.3 Task-Availability Comparison Procedure"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.7.4 AI Explanation Scoring Procedure"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.7.5 Coverage, Human Utility, and Performance"
+    },
+    {
+      "style": "Heading 3",
+      "text": "3.7.6 Validity and Ethical Controls"
+    },
+    {
+      "style": "Heading 2",
+      "text": "3.8 Chapter Summary"
+    },
+    {
+      "style": "Heading 1",
+      "text": "Chapter 4: SYSTEM DESIGN AND IMPLEMENTATION"
+    },
+    {
+      "style": "Heading 2",
+      "text": "4.1 Overall Architecture"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.1.1 Component Boundaries"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.1.2 End-to-End Runtime Sequence"
+    },
+    {
+      "style": "Heading 2",
+      "text": "4.2 Functional and Non-Functional Requirements"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.2.1 Functional Requirements"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.2.2 Non-Functional Requirements"
+    },
+    {
+      "style": "Heading 2",
+      "text": "4.3 Canonical Database Implementation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.3.1 Canonical Relationships"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.3.2 Operational and Provenance Tables"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.3.3 Feature Persistence and Runtime Metrics"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.3.4 Batch Isolation and Deletion"
+    },
+    {
+      "style": "Heading 2",
+      "text": "4.4 Import Pipeline Implementation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.4.1 Profiling and Source Detection"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.4.2 Mapping Suggestion, Confirmation, and Preview"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.4.3 Transformation and Identifier Construction"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.4.4 Persistence and Large-File Handling"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.4.5 Import Diagnostics"
+    },
+    {
+      "style": "Heading 2",
+      "text": "4.5 Task Registry and Availability Validator"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.5.1 Registry Loading and Public Views"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.5.2 Capability Snapshot"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.5.3 Layer A-D Validation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.5.4 Execution Policy and UI Communication"
+    },
+    {
+      "style": "Heading 2",
+      "text": "4.6 SQL Analytics Execution"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.6.1 Parameter Resolution and Guardrails"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.6.2 Single- and Multi-Query Tasks"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.6.3 Result Normalization and Diagnostics"
+    },
+    {
+      "style": "Heading 2",
+      "text": "4.7 Frontend and Visualization Layer"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.7.1 Role-Based Workspaces"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.7.2 Metadata-Driven Chart Rendering"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.7.3 Missing-Data and Diagnostic Policy"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.7.4 Task Availability in the Interface"
+    },
+    {
+      "style": "Heading 2",
+      "text": "4.8 AI Explanation Service"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.8.1 Strategy Factory and Evidence Summarization"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.8.2 Action and Derived Evidence"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.8.3 Structured Response and Safety Screening"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.8.4 Graceful Degradation and Logging"
+    },
+    {
+      "style": "Heading 2",
+      "text": "4.9 API and Output Contracts"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.9.1 Analytics Response Contract"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.9.2 Error and Degraded Contracts"
+    },
+    {
+      "style": "Heading 2",
+      "text": "4.10 Evaluation and Logging Tooling"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.10.1 Evaluation Artifact Structure"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.10.2 Performance Instrumentation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "4.10.3 Debug Agent"
+    },
+    {
+      "style": "Heading 2",
+      "text": "4.11 Implementation Trade-offs and Limitations"
+    },
+    {
+      "style": "Heading 2",
+      "text": "4.12 Chapter Summary"
+    },
+    {
+      "style": "Heading 1",
+      "text": "Chapter 5: EXPERIMENTS AND RESULTS"
+    },
+    {
+      "style": "Heading 2",
+      "text": "5.1 Experimental Setup"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.1.1 Evaluation Questions and Evidence"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.1.2 Datasets"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.1.3 Frozen Scope and Environment"
+    },
+    {
+      "style": "Heading 2",
+      "text": "5.2 Supporting System Verification"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.2.1 Profiling and Mapping"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.2.2 Import and Canonical Conversion"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.2.3 SQL, API, and Visualization Checks"
+    },
+    {
+      "style": "Heading 2",
+      "text": "5.3 Evaluation 3: Task Availability"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.3.1 Capability Evidence"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.3.2 Status Results"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.3.3 Layer and Confidence Results"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.3.4 Interpretation"
+    },
+    {
+      "style": "Heading 2",
+      "text": "5.4 Evaluation 7: AI Explanation Quality"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.4.1 Aggregate and Mode-Level Results"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.4.2 Paired Comparison"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.4.3 Result-Size Analysis"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.4.4 Representative Cases"
+    },
+    {
+      "style": "Heading 2",
+      "text": "5.5 Evaluation 10: Coverage and Human Utility"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.5.1 Coverage"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.5.2 User-Facing Transparency"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.5.3 Limit of the Utility Claim"
+    },
+    {
+      "style": "Heading 2",
+      "text": "5.6 Evaluation 11: System Performance"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.6.1 Backend and Analytics"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.6.2 AI Latency and Cost"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.6.3 Import Performance"
+    },
+    {
+      "style": "Heading 3",
+      "text": "5.6.4 Stability and Resources"
+    },
+    {
+      "style": "Heading 2",
+      "text": "5.7 Threats to Result Validity"
+    },
+    {
+      "style": "Heading 2",
+      "text": "5.8 Summary of Experimental Findings"
+    },
+    {
+      "style": "Heading 1",
+      "text": "Chapter 6: DISCUSSION"
+    },
+    {
+      "style": "Heading 2",
+      "text": "6.1 Interpretation of the Results"
+    },
+    {
+      "style": "Heading 2",
+      "text": "6.2 Answers to the Research Questions"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.2.1 RQ1: Normalizing Heterogeneous Educational Data"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.2.2 RQ2: Determining Meaningful Task Availability"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.2.3 RQ3: Effectiveness of Evidence-Grounded AI Explanation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.2.4 RQ4: Coverage, Utility, and Performance"
+    },
+    {
+      "style": "Heading 2",
+      "text": "6.3 Discussion of the Three Contributions"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.3.1 Contribution 1: Canonical Educational Schema"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.3.2 Contribution 2: Task Taxonomy and Availability Mechanism"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.3.3 Contribution 3: Evidence-Grounded AI Explanation"
+    },
+    {
+      "style": "Heading 2",
+      "text": "6.4 Cross-Cutting Architectural Trade-offs"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.4.1 Reuse versus Source Fidelity"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.4.2 Determinism versus Generative Flexibility"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.4.3 Transparency versus Interface Simplicity"
+    },
+    {
+      "style": "Heading 2",
+      "text": "6.5 Practical Implications"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.5.1 Implications for Learners and Educators"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.5.2 Implications for System Designers"
+    },
+    {
+      "style": "Heading 2",
+      "text": "6.6 Reproducibility and Evidence Boundaries"
+    },
+    {
+      "style": "Heading 2",
+      "text": "6.7 Threats to Validity"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.7.1 Construct Validity"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.7.2 Internal Validity"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.7.3 External Validity"
+    },
+    {
+      "style": "Heading 3",
+      "text": "6.7.4 Conclusion Validity and Unfinished Evaluations"
+    },
+    {
+      "style": "Heading 2",
+      "text": "6.8 Chapter Summary"
+    },
+    {
+      "style": "Heading 1",
+      "text": "Chapter 7: CONCLUSION AND FUTURE WORK"
+    },
+    {
+      "style": "Heading 2",
+      "text": "7.1 Thesis Summary"
+    },
+    {
+      "style": "Heading 2",
+      "text": "7.2 Summary of the Three Contributions"
+    },
+    {
+      "style": "Heading 3",
+      "text": "7.2.1 Canonical Educational Schema"
+    },
+    {
+      "style": "Heading 3",
+      "text": "7.2.2 Task Taxonomy and Availability Mechanism"
+    },
+    {
+      "style": "Heading 3",
+      "text": "7.2.3 Evidence-Grounded AI Explanation"
+    },
+    {
+      "style": "Heading 2",
+      "text": "7.3 Main Findings"
+    },
+    {
+      "style": "Heading 2",
+      "text": "7.4 Limitations"
+    },
+    {
+      "style": "Heading 2",
+      "text": "7.5 Future Work"
+    },
+    {
+      "style": "Heading 3",
+      "text": "7.5.1 Broader Data and Schema Validation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "7.5.2 Stronger Task and Statistical Validation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "7.5.3 Early-Warning and Intervention Evaluation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "7.5.4 Human-Centered Evaluation"
+    },
+    {
+      "style": "Heading 3",
+      "text": "7.5.5 AI Reliability and Governance"
+    },
+    {
+      "style": "Heading 3",
+      "text": "7.5.6 Performance and Deployment"
+    },
+    {
+      "style": "Heading 2",
+      "text": "7.6 Concluding Statement"
+    },
+    {
+      "style": "Heading 1",
+      "text": "References"
+    },
+    {
+      "style": "Heading 2",
+      "text": "Academic References"
+    },
+    {
+      "style": "Heading 2",
+      "text": "Project Technical Artifacts"
+    },
+    {
+      "style": "Heading 1",
+      "text": "Appendices"
+    },
+    {
+      "style": "Heading 2",
+      "text": "Appendix A: Canonical Schema and Mapping Specifications"
+    },
+    {
+      "style": "Heading 2",
+      "text": "Appendix B: Full Task Taxonomy and Registry"
+    },
+    {
+      "style": "Heading 2",
+      "text": "Appendix C: Task Availability Ground Truth"
+    },
+    {
+      "style": "Heading 2",
+      "text": "Appendix D: AI Explanation Rubric and Examples"
+    },
+    {
+      "style": "Heading 2",
+      "text": "Appendix E: Coverage and Human-Utility Review Artifacts"
+    },
+    {
+      "style": "Heading 2",
+      "text": "Appendix F: Performance Logs and Reproducibility Instructions"
+    }
+  ],
+  "issues": []
+}

@@ -38,7 +38,7 @@ export default function AIInsightPanel({
   const explanation = aiOutput?.explanation;
   const confidence = aiOutput?.confidence;
   const confStyle = CONFIDENCE[confidence?.level] || {};
-  const hideActionCardDuplicateSections = taskId === "A-G16";
+  const hideActionCardDuplicateSections = ["A-G03", "A-G16"].includes(taskId);
   const educationalImplications = hideActionCardDuplicateSections
     ? []
     : explanation?.educational_implications;

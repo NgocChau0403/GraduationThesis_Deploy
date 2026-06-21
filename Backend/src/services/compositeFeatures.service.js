@@ -76,14 +76,16 @@ function computeLifestyleFeatures(studentRecord) {
   const fatherEdu = toNumber(studentRecord?.father_education_level);
   const maxParentEducation = motherEdu !== null || fatherEdu !== null ? Math.max(firstNonNull(motherEdu, 0), firstNonNull(fatherEdu, 0)) : null;
 
-  const supportScoreComponents = [
-    toBoolean(studentRecord?.school_support_flag) ? 1 : 0,
-    toBoolean(studentRecord?.family_support_flag) ? 1 : 0,
-    toBoolean(studentRecord?.has_paid_class) ? 1 : 0,
-    toBoolean(studentRecord?.internet_access_flag) ? 1 : 0
+  const supportSignals = [
+    toBoolean(studentRecord?.school_support_flag),
+    toBoolean(studentRecord?.family_support_flag),
+    toBoolean(studentRecord?.has_paid_class),
+    toBoolean(studentRecord?.internet_access_flag)
   ];
-
-  const supportScore = supportScoreComponents.length > 0 ? supportScoreComponents.reduce((sum, value) => sum + value, 0) / 4 : null;
+  const hasSupportSignal = supportSignals.some((value) => value !== null);
+  const supportScore = hasSupportSignal
+    ? supportSignals.reduce((sum, value) => sum + (value === true ? 1 : 0), 0) / 4
+    : null;
 
   const lifestyleRiskScore = alcoholWeekday !== null && alcoholWeekend !== null && goOutFreq !== null && healthStatus !== null
       ? normalize01(alcoholWeekday + alcoholWeekend, FEATURE_RULES.ordinal_scales.alcohol_combined_min, FEATURE_RULES.ordinal_scales.alcohol_combined_max) * 0.4 +
@@ -111,7 +113,39 @@ function computeLifestyleFeatures(studentRecord) {
   };
 }
 
-function computeSocioeconomicFeatures(studentRecord) {
+function computeSocioeconomicFeatures(studentRecord, enrollmentRecord = null) {
+  const sourceDataset = normalizeText(studentRecord?.source_dataset);
+  if (sourceDataset.includes("uci")) {
+    const motherEducation = toNumber(studentRecord?.mother_education_level);
+    const fatherEducation = toNumber(studentRecord?.father_education_level);
+    const hasParentEducation =
+      motherEducation !== null || fatherEducation !== null;
+    const maxParentEducation = hasParentEducation
+      ? Math.max(firstNonNull(motherEducation, 0), firstNonNull(fatherEducation, 0))
+      : null;
+    const previousAttempts = toNumber(enrollmentRecord?.previous_attempt_count);
+    const internetAccess = toBoolean(studentRecord?.internet_access_flag);
+    const paidClass = toBoolean(studentRecord?.has_paid_class);
+    const hasAnySignal =
+      previousAttempts !== null ||
+      maxParentEducation !== null ||
+      internetAccess !== null ||
+      paidClass !== null;
+
+    const disadvantageScore =
+      (Math.min(Math.max(firstNonNull(previousAttempts, 0), 0), 4) / 4) * 0.4 +
+      ((4 - Math.min(Math.max(firstNonNull(maxParentEducation, 4), 0), 4)) / 4) * 0.4 +
+      (internetAccess === false ? 0.1 : 0) +
+      (paidClass === false ? 0.1 : 0);
+
+    return {
+      imd_score_numeric: null,
+      disadvantage_score: hasAnySignal
+        ? Math.round(disadvantageScore * 100) / 100
+        : null
+    };
+  }
+
   const parsedImdScore = parseImdBandMidpoint(studentRecord?.socioeconomic_band);
   const imdScore = toNumber(studentRecord?.imd_score_numeric) ?? parsedImdScore;
   const disabilityFlag = toBoolean(studentRecord?.disability_flag);
@@ -141,11 +175,20 @@ function computeSocioeconomicFeatures(studentRecord) {
  * @param {Object[]} students - Array of student objects from transform output
  * @returns {Object[]} - Same array with FE fields merged in
  */
-export function computeStudentFeatures(students) {
+export function computeStudentFeatures(students, enrollments = []) {
   if (!Array.isArray(students)) return [];
+  const enrollmentByStudent = new Map(
+    (Array.isArray(enrollments) ? enrollments : [])
+      .filter((item) => item?.student_id)
+      .map((item) => [item.student_id, item])
+  );
+
   return students.map(student => ({
     ...student,
     ...computeLifestyleFeatures(student),
-    ...computeSocioeconomicFeatures(student)
+    ...computeSocioeconomicFeatures(
+      student,
+      enrollmentByStudent.get(student?.student_id) || null
+    )
   }));
 }

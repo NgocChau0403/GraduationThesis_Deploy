@@ -25,6 +25,9 @@ function toInt(value) {
 }
 
 function makeTableCountQuery(table) {
+  if (table === "engagement") {
+    return `SELECT CASE WHEN EXISTS (SELECT 1 FROM "engagement" WHERE batch_id = $1) THEN 1 ELSE 0 END::int AS c`;
+  }
   return `SELECT COUNT(*)::int AS c FROM "${table}" WHERE batch_id = $1`;
 }
 
@@ -136,24 +139,121 @@ export async function buildCanonicalCapabilitySnapshot({ batchId, classId = null
       )
   `;
 
-  const engagementRows = await prisma.$queryRaw`
-    SELECT
-      COUNT(*)::int AS engagement_rows,
-      COUNT(*) FILTER (WHERE COALESCE(engagement_count, 0) > 0)::int AS positive_engagement_rows,
-      COUNT(DISTINCT week_number)::int AS distinct_engagement_weeks,
-      COUNT(DISTINCT event_day)::int AS distinct_engagement_days
-    FROM engagement eng
-    WHERE eng.batch_id = ${batchId}
-      AND (
-        ${classId}::text IS NULL
-        OR EXISTS (
-          SELECT 1
-          FROM enrollment e
-          WHERE e.enrollment_id = eng.enrollment_id
+  const engagementRows = classId
+    ? await prisma.$queryRaw`
+        WITH first_week AS (
+          SELECT eng.week_number
+          FROM engagement eng
+          JOIN enrollment e ON e.enrollment_id = eng.enrollment_id
+          WHERE eng.batch_id = ${batchId}
             AND e.class_id = ${classId}
+            AND eng.week_number IS NOT NULL
+          LIMIT 1
+        ),
+        first_day AS (
+          SELECT eng.event_day
+          FROM engagement eng
+          JOIN enrollment e ON e.enrollment_id = eng.enrollment_id
+          WHERE eng.batch_id = ${batchId}
+            AND e.class_id = ${classId}
+            AND eng.event_day IS NOT NULL
+          LIMIT 1
         )
-      )
-  `;
+        SELECT
+          CASE WHEN EXISTS (
+            SELECT 1
+            FROM engagement eng
+            JOIN enrollment e ON e.enrollment_id = eng.enrollment_id
+            WHERE eng.batch_id = ${batchId}
+              AND e.class_id = ${classId}
+          ) THEN 1 ELSE 0 END::int AS engagement_rows,
+          CASE WHEN EXISTS (
+            SELECT 1
+            FROM engagement eng
+            JOIN enrollment e ON e.enrollment_id = eng.enrollment_id
+            WHERE eng.batch_id = ${batchId}
+              AND e.class_id = ${classId}
+              AND COALESCE(eng.engagement_count, 0) > 0
+          ) THEN 1 ELSE 0 END::int AS positive_engagement_rows,
+          CASE
+            WHEN EXISTS (
+              SELECT 1
+              FROM engagement eng
+              JOIN enrollment e ON e.enrollment_id = eng.enrollment_id
+              CROSS JOIN first_week fw
+              WHERE eng.batch_id = ${batchId}
+                AND e.class_id = ${classId}
+                AND eng.week_number IS NOT NULL
+                AND eng.week_number <> fw.week_number
+            ) THEN 2
+            WHEN EXISTS (SELECT 1 FROM first_week) THEN 1
+            ELSE 0
+          END::int AS distinct_engagement_weeks,
+          CASE
+            WHEN EXISTS (
+              SELECT 1
+              FROM engagement eng
+              JOIN enrollment e ON e.enrollment_id = eng.enrollment_id
+              CROSS JOIN first_day fd
+              WHERE eng.batch_id = ${batchId}
+                AND e.class_id = ${classId}
+                AND eng.event_day IS NOT NULL
+                AND eng.event_day <> fd.event_day
+            ) THEN 2
+            WHEN EXISTS (SELECT 1 FROM first_day) THEN 1
+            ELSE 0
+          END::int AS distinct_engagement_days
+      `
+    : await prisma.$queryRaw`
+        WITH first_week AS (
+          SELECT week_number
+          FROM engagement
+          WHERE batch_id = ${batchId}
+            AND week_number IS NOT NULL
+          LIMIT 1
+        ),
+        first_day AS (
+          SELECT event_day
+          FROM engagement
+          WHERE batch_id = ${batchId}
+            AND event_day IS NOT NULL
+          LIMIT 1
+        )
+        SELECT
+          CASE WHEN EXISTS (
+            SELECT 1 FROM engagement WHERE batch_id = ${batchId}
+          ) THEN 1 ELSE 0 END::int AS engagement_rows,
+          CASE WHEN EXISTS (
+            SELECT 1
+            FROM engagement
+            WHERE batch_id = ${batchId}
+              AND COALESCE(engagement_count, 0) > 0
+          ) THEN 1 ELSE 0 END::int AS positive_engagement_rows,
+          CASE
+            WHEN EXISTS (
+              SELECT 1
+              FROM engagement eng
+              CROSS JOIN first_week fw
+              WHERE eng.batch_id = ${batchId}
+                AND eng.week_number IS NOT NULL
+                AND eng.week_number <> fw.week_number
+            ) THEN 2
+            WHEN EXISTS (SELECT 1 FROM first_week) THEN 1
+            ELSE 0
+          END::int AS distinct_engagement_weeks,
+          CASE
+            WHEN EXISTS (
+              SELECT 1
+              FROM engagement eng
+              CROSS JOIN first_day fd
+              WHERE eng.batch_id = ${batchId}
+                AND eng.event_day IS NOT NULL
+                AND eng.event_day <> fd.event_day
+            ) THEN 2
+            WHEN EXISTS (SELECT 1 FROM first_day) THEN 1
+            ELSE 0
+          END::int AS distinct_engagement_days
+      `;
 
   const eventRows = await prisma.$queryRaw`
     SELECT

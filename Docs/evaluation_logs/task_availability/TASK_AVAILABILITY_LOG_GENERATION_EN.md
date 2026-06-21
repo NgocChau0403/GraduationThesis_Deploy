@@ -65,7 +65,7 @@ GET http://localhost:4000/api/tasks/available?datasetId=SAMPLE_UCI_POR&classId=S
 Generated log:
 
 ```text
-task_availability_20260619T042411Z_265c90.json
+task_availability_20260621T171519Z_5d42a4.json
 ```
 
 ### 3.2. OULAD
@@ -77,7 +77,7 @@ GET http://localhost:4000/api/tasks/available?datasetId=SAMPLE_OULAD&classId=SAM
 Generated log:
 
 ```text
-task_availability_20260619T042455Z_0ef6b3.json
+task_availability_20260621T171533Z_33c53a.json
 ```
 
 ## 4. Why `/api/tasks/available` Is Used
@@ -335,8 +335,8 @@ UCI:
 ```json
 {
   "total": 52,
-  "executable": 24,
-  "partial": 6,
+  "executable": 25,
+  "partial": 5,
   "insufficient_data": 22,
   "unsupported": 0
 }

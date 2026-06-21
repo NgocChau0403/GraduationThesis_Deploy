@@ -1,5 +1,5 @@
-import { useMemo } from "react";
-import { Select } from "antd";
+import { useMemo, useState } from "react";
+import { Drawer, Select } from "antd";
 import {
   CANONICAL_FIELD_OPTIONS,
   TRANSFORM_OPTIONS,
@@ -52,9 +52,126 @@ function ValidationPanel({ validation }) {
   );
 }
 
+const GUIDE_COLUMNS = [
+  ["Raw Attribute", "The original column in your uploaded CSV."],
+  ["Canonical Field", "The standard field used by the analytics system."],
+  ["Scope", "The unified-schema entity where the value will be stored."],
+  ["Transformation", "The conversion applied before the value is saved."],
+  ["Status", "Confirm the suggestion, review it, or exclude the column."],
+  ["Match Accuracy", "How confident the automatic mapping suggestion is."]
+];
+
+const GUIDE_ENTITIES = [
+  ["student", "Learner profile", "gender, age_years, region"],
+  ["course", "Course information", "course_id, course_name"],
+  ["enrollment", "Learner-course relationship", "final_outcome, previous_attempt_count"],
+  ["assessment", "Assessments and results", "assessment_name, score_normalized"],
+  ["engagement", "Learning activity", "resource_type, engagement_count"]
+];
+
+const GUIDE_TRANSFORMS = [
+  ["direct_copy", "The source value already has the expected format."],
+  ["normalize_score", "Convert a source score to the canonical 0–100 scale."],
+  ["normalize_gender", "Standardize values such as Male/Female or M/F."],
+  ["cast_int / cast_float", "Convert a numeric-looking value to a number."],
+  ["cast_boolean", "Convert Yes/No, True/False, or 1/0 to a boolean."],
+  ["ignore", "Do not import this source column."]
+];
+
+function GuideTable({ headers, rows }) {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-slate-200">
+      <table className="w-full border-collapse text-left text-xs">
+        <thead className="bg-slate-50 text-[10px] font-black uppercase tracking-wider text-slate-500">
+          <tr>
+            {headers.map((header) => (
+              <th key={header} className="px-4 py-3">{header}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-slate-100 bg-white">
+          {rows.map((row) => (
+            <tr key={row.join("-")}>
+              {row.map((cell, index) => (
+                <td
+                  key={`${cell}-${index}`}
+                  className={`px-4 py-3 align-top ${index === 0 ? "font-bold text-slate-800" : "text-slate-600"}`}
+                >
+                  {cell}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function MappingGuide({ open, onClose, file }) {
+  const isUci = String(file?.inferredDatasetType || "").toUpperCase().includes("UCI");
+  const scoreExample = isUci
+    ? "UCI example: G1 = 7 → score_normalized = 35/100"
+    : "Score example: score = 73 → score_normalized = 73/100";
+
+  return (
+    <Drawer
+      title="Mapping Guide"
+      placement="right"
+      width="min(620px, 100vw)"
+      open={open}
+      onClose={onClose}
+      styles={{ body: { padding: 24 } }}
+    >
+      <div className="space-y-7 pb-8">
+        <div className="rounded-2xl border border-emerald-100 bg-emerald-50 p-5">
+          <div className="text-xs font-black uppercase tracking-widest text-emerald-700">Quick workflow</div>
+          <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm leading-6 text-slate-700">
+            <li>Review rows marked <strong>Needs Review</strong>.</li>
+            <li>Check that the canonical field and scope describe the source column.</li>
+            <li>Confirm correct rows or choose <strong>Ignored</strong> for fields you do not need.</li>
+          </ol>
+        </div>
+
+        <section className="space-y-3">
+          <h3 className="text-base font-black text-slate-900">What each column means</h3>
+          <GuideTable headers={["Column", "Meaning"]} rows={GUIDE_COLUMNS} />
+        </section>
+
+        <section className="space-y-3">
+          <h3 className="text-base font-black text-slate-900">Unified schema scopes</h3>
+          <p className="text-sm leading-6 text-slate-500">
+            Scope determines which logical entity owns the mapped value.
+          </p>
+          <GuideTable headers={["Scope", "Purpose", "Examples"]} rows={GUIDE_ENTITIES} />
+        </section>
+
+        <section className="space-y-3">
+          <h3 className="text-base font-black text-slate-900">Transformations</h3>
+          <GuideTable headers={["Transformation", "Use it when"]} rows={GUIDE_TRANSFORMS} />
+        </section>
+
+        <section className="rounded-2xl border border-blue-100 bg-blue-50 p-5">
+          <h3 className="text-sm font-black text-blue-900">Score normalization preview</h3>
+          <p className="mt-2 font-mono text-xs font-bold text-blue-700">{scoreExample}</p>
+          <p className="mt-2 text-xs leading-5 text-blue-800/70">
+            The canonical field <strong>score_normalized</strong> is stored on a 0–100 scale.
+          </p>
+        </section>
+
+        <section className="rounded-2xl border border-amber-200 bg-amber-50 p-5 text-sm leading-6 text-amber-900">
+          <strong>Before confirming:</strong> verify low-confidence mappings, identifiers, score columns,
+          and any transformation that changes the original value.
+        </section>
+      </div>
+    </Drawer>
+  );
+}
+
 // --- MAIN COMPONENT ---
 // ✅ Nhận thêm prop onClearRowError từ parent
 export default function MappingEditor({ file, onChangeEditableConfig, onClearRowError }) {
+  const [guideOpen, setGuideOpen] = useState(false);
   const searchTerm = "";
   const statusFilter = "all";
 
@@ -159,11 +276,22 @@ export default function MappingEditor({ file, onChangeEditableConfig, onClearRow
           <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tight">
             4. Mapping Editor
           </h2>
-          <span className="rounded-full bg-emerald-600 px-4 py-1.5 text-[10px] font-black uppercase text-white tracking-widest shadow-sm">
-            Source: {file.fileName}
-          </span>
+          <div className="flex flex-wrap items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setGuideOpen(true)}
+              className="rounded-full border border-emerald-200 bg-white px-4 py-2 text-[10px] font-black uppercase tracking-widest text-emerald-700 shadow-sm transition hover:border-emerald-400 hover:bg-emerald-50"
+            >
+              ? Mapping Guide
+            </button>
+            <span className="rounded-full bg-emerald-600 px-4 py-1.5 text-[10px] font-black uppercase text-white tracking-widest shadow-sm">
+              Source: {file.fileName}
+            </span>
+          </div>
         </div>
       </div>
+
+      <MappingGuide open={guideOpen} onClose={() => setGuideOpen(false)} file={file} />
 
       <div className="space-y-8 p-8">
         <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">

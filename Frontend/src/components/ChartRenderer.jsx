@@ -617,6 +617,7 @@ function buildAbsenceImpactRows(datasets) {
   return [{
     absences: absenceRow.absences,
     absence_rate: absenceRow.absence_rate,
+    class_max_absences: deriveClassMaxAbsences(absenceRow.absences, absenceRow.absence_rate),
     avg_score: avgScore,
     latest_score: latestScore,
     min_score: minScore,
@@ -624,6 +625,15 @@ function buildAbsenceImpactRows(datasets) {
     performance_trend: performanceTrend,
     assessment_count: scored.length,
   }];
+}
+
+function deriveClassMaxAbsences(absences, absenceRate) {
+  const numericAbsences = Number(absences);
+  const numericRate = Number(absenceRate);
+  if (!Number.isFinite(numericAbsences) || !Number.isFinite(numericRate) || numericRate <= 0) {
+    return null;
+  }
+  return Math.round(numericAbsences / numericRate);
 }
 
 function calculateSimpleSlope(rows) {

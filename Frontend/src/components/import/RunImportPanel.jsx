@@ -1,108 +1,141 @@
 import { useMemo, useState } from "react";
 
-export default function RunImportPanel({ sessionId, files, selectedFile, onRun, loading }) {
-  const [importBatchId, setImportBatchId] = useState(`Import_${new Date().toISOString().split('T')[0]}`);
+export default function RunImportPanel({
+  sessionId,
+  files,
+  selectedFile,
+  onRun,
+  loading,
+  disabled = false,
+}) {
+  const [importBatchId, setImportBatchId] = useState(`Import_${new Date().toISOString().split("T")[0]}`);
   const [chunkSize, setChunkSize] = useState(500);
   const [replaceIfExists, setReplaceIfExists] = useState(true);
   const [showAdvanced, setShowAdvanced] = useState(false);
 
-  const confirmedFiles = useMemo(() => files.filter((file) => !!file.confirmedMappingConfig), [files]);
+  const confirmedFiles = useMemo(
+    () => files.filter((file) => !!file.confirmedMappingConfig),
+    [files]
+  );
   const selectedIsConfirmed = !!selectedFile && !!selectedFile.confirmedMappingConfig;
+  const readyRatio = files.length > 0 ? confirmedFiles.length / files.length : 0;
+  const runDisabled = disabled || loading || confirmedFiles.length === 0;
+
+  const runOptions = { importBatchId, chunkSize: Number(chunkSize), replaceIfExists };
 
   return (
-    <section className="rounded-[32px] border border-emerald-100 bg-white p-8 shadow-xl shadow-emerald-900/5">
-      <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+    <section className="rounded-3xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <h2 className="text-2xl font-black text-slate-900">6. Execute Pipeline</h2>
-          <p className="mt-1 text-sm font-medium text-slate-500">
-            Push confirmed data into the production database.
+          <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-700">
+            Execute pipeline
+          </div>
+          <h3 className="mt-1 text-xl font-black tracking-tight text-slate-950">
+            Push confirmed data to the database
+          </h3>
+          <p className="mt-1 text-sm leading-6 text-slate-500">
+            Review the batch settings below, then run the import when everything is ready.
           </p>
         </div>
 
-        <div className="flex items-center gap-3 rounded-2xl bg-emerald-50 px-4 py-2 border border-emerald-100">
-          <div className="text-[10px] font-black uppercase tracking-widest text-emerald-600">Progress</div>
-          <div className="h-2 w-24 overflow-hidden rounded-full bg-emerald-200">
-            <div 
-              className="h-full bg-emerald-600 transition-all duration-500" 
-              style={{ width: `${(confirmedFiles.length / files.length) * 100}%` }}
+        <div className="min-w-[220px] rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3">
+          <div className="mb-2 flex items-center justify-between text-xs font-bold text-emerald-700">
+            <span>Ready files</span>
+            <span>{confirmedFiles.length}/{files.length}</span>
+          </div>
+          <div className="h-2 overflow-hidden rounded-full bg-emerald-200">
+            <div
+              className="h-full rounded-full bg-emerald-600 transition-all duration-500"
+              style={{ width: `${readyRatio * 100}%` }}
             />
           </div>
-          <span className="text-xs font-black text-emerald-700">{confirmedFiles.length}/{files.length} Ready</span>
         </div>
       </div>
 
-      <div className="mt-8 space-y-6">
-        <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
-          <div className="space-y-2">
-            <label className="text-[11px] font-black uppercase tracking-widest text-slate-400">Batch Identifier</label>
-            <input
-              type="text"
-              value={importBatchId}
-              onChange={(e) => setImportBatchId(e.target.value)}
-              className="w-full rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3.5 text-sm font-bold outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
-            />
-          </div>
-
-          <div className="flex items-end">
-            <label className="flex w-full cursor-pointer flex-col justify-center rounded-2xl border border-slate-100 bg-slate-50 px-5 py-3.5 transition hover:bg-white hover:border-amber-200">
-              <div className="flex items-center gap-3">
-                <input
-                  type="checkbox"
-                  checked={replaceIfExists}
-                  onChange={(e) => setReplaceIfExists(e.target.checked)}
-                  className="h-5 w-5 rounded-md border-slate-300 text-amber-600 focus:ring-amber-500"
-                />
-                <span className="text-sm font-bold text-slate-700">Update existing records (Upsert)</span>
-              </div>
-              <div className="mt-1 ml-8 text-[10px] font-bold text-amber-600/80">⚠️ Warning: Existing duplicate data will be irreversibly overwritten.</div>
-            </label>
-          </div>
+      <div className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-[1fr_1fr]">
+        <div className="space-y-2">
+          <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+            Batch identifier
+          </label>
+          <input
+            type="text"
+            value={importBatchId}
+            onChange={(event) => setImportBatchId(event.target.value)}
+            className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm font-bold text-slate-800 outline-none transition focus:border-emerald-500 focus:bg-white focus:ring-4 focus:ring-emerald-500/10"
+          />
         </div>
 
-        <div>
-          <button 
-            onClick={() => setShowAdvanced(!showAdvanced)}
-            className="text-[11px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-600 transition flex items-center gap-1"
-          >
-            {showAdvanced ? "▼ Hide Advanced Settings" : "▶ Show Advanced Settings"}
-          </button>
-          
-          {showAdvanced && (
-            <div className="mt-4 p-4 rounded-2xl border border-slate-100 bg-slate-50/50">
-              <div className="space-y-2 max-w-xs">
-                <label className="text-[11px] font-black uppercase tracking-widest text-slate-400">Chunk Processing Size</label>
-                <input
-                  type="number"
-                  value={chunkSize}
-                  onChange={(e) => setChunkSize(e.target.value)}
-                  className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold outline-none transition focus:border-emerald-500"
-                />
-              </div>
-            </div>
-          )}
-        </div>
+        <label className="flex cursor-pointer items-start gap-3 rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3 transition hover:border-amber-200 hover:bg-amber-50/40">
+          <input
+            type="checkbox"
+            checked={replaceIfExists}
+            onChange={(event) => setReplaceIfExists(event.target.checked)}
+            className="mt-0.5 h-5 w-5 rounded-md border-slate-300 text-emerald-600 focus:ring-emerald-500"
+          />
+          <span>
+            <span className="block text-sm font-bold text-slate-800">
+              Update existing records
+            </span>
+            <span className="mt-1 block text-xs leading-5 text-amber-700">
+              Existing duplicate records in the same batch will be overwritten.
+            </span>
+          </span>
+        </label>
       </div>
 
-      <div className={`mt-8 grid grid-cols-1 gap-4 ${files.length > 1 ? '' : 'lg:grid-cols-2'}`}>
+      <div className="mt-5">
         <button
-          onClick={() => onRun({ sessionId, fileIds: confirmedFiles.map(f => f.fileId), options: { importBatchId, chunkSize, replaceIfExists } })}
-          disabled={loading || confirmedFiles.length === 0}
-          className="group relative overflow-hidden rounded-2xl bg-slate-900 py-4 text-sm font-black uppercase tracking-[0.2em] text-white shadow-2xl transition-all hover:bg-slate-800 disabled:opacity-30"
+          type="button"
+          onClick={() => setShowAdvanced((value) => !value)}
+          className="text-xs font-bold text-slate-500 transition hover:text-slate-800"
         >
-          <div className="relative z-10 flex items-center justify-center gap-3">
-            {loading ? "System Processing..." : "Run All Confirmed"}
-            {!loading && <span className="text-emerald-400">→</span>}
-          </div>
-          <div className="absolute inset-0 translate-y-full bg-gradient-to-r from-emerald-600 to-teal-600 transition-transform group-hover:translate-y-0" />
+          {showAdvanced ? "Hide advanced settings" : "Show advanced settings"}
         </button>
 
-        {files.length <= 1 && (
+        {showAdvanced && (
+          <div className="mt-3 rounded-2xl border border-slate-200 bg-slate-50 p-4">
+            <div className="max-w-xs space-y-2">
+              <label className="text-[11px] font-bold uppercase tracking-wider text-slate-500">
+                Chunk processing size
+              </label>
+              <input
+                type="number"
+                min="1"
+                value={chunkSize}
+                onChange={(event) => setChunkSize(event.target.value)}
+                className="w-full rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-bold outline-none transition focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/10"
+              />
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className={`mt-6 grid grid-cols-1 gap-3 ${selectedFile ? "lg:grid-cols-2" : ""}`}>
+        <button
+          type="button"
+          onClick={() => onRun({
+            sessionId,
+            fileIds: confirmedFiles.map((file) => file.fileId),
+            options: runOptions,
+          })}
+          disabled={runDisabled}
+          className="rounded-2xl bg-slate-950 px-6 py-4 text-sm font-black uppercase tracking-[0.16em] text-white shadow-lg shadow-slate-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-700 disabled:translate-y-0 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
+        >
+          {loading ? "Processing import..." : "Run all confirmed"}
+        </button>
+
+        {selectedFile && (
           <button
-            onClick={() => onRun({ sessionId, fileIds: [selectedFile.fileId], options: { importBatchId, chunkSize, replaceIfExists } })}
-            disabled={loading || !selectedIsConfirmed}
-            className="rounded-2xl border-2 border-slate-200 bg-white py-4 text-sm font-black uppercase tracking-[0.2em] text-slate-700 transition hover:border-emerald-500 hover:text-emerald-600 disabled:opacity-30"
+            type="button"
+            onClick={() => onRun({
+              sessionId,
+              fileIds: [selectedFile.fileId],
+              options: runOptions,
+            })}
+            disabled={loading || disabled || !selectedIsConfirmed}
+            className="rounded-2xl border border-slate-200 bg-white px-6 py-4 text-sm font-black uppercase tracking-[0.16em] text-slate-700 transition hover:border-emerald-300 hover:text-emerald-700 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-300"
           >
-            Run Selected Only
+            Run selected only
           </button>
         )}
       </div>

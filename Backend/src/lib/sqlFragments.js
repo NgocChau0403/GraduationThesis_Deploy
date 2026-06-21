@@ -87,7 +87,7 @@ export const punctuality = `punctuality AS (
                       WHERE a.due_day IS NOT NULL
                         AND ar.submission_day IS NOT NULL
                     ), 0)
-           ELSE 1.0
+           ELSE NULL
          END AS punctuality_rate
   FROM assessment_result ar
   JOIN assessment a ON ar.assessment_id = a.assessment_id
@@ -140,22 +140,22 @@ export const riskFlags = `risk_flags AS (
          sa.pass_threshold,
          sa.target_threshold,
          sa.perf_trend,
-         COALESCE(es.engagement_score, 0) AS engagement_score,
+         es.engagement_score AS engagement_score,
          COALESCE(es.has_engagement_data, false) AS engagement_score_available,
-         COALESCE(p.punctuality_rate, 1)::float8 AS punctuality_rate,
+         p.punctuality_rate::float8 AS punctuality_rate,
          COALESCE(e.previous_attempt_count, 0) AS previous_attempt_count,
          e.final_outcome,
          (sa.avg_score < sa.pass_threshold) AS flag_low_score,
          (COALESCE(e.previous_attempt_count, 0) > 0) AS flag_repeated,
          (COALESCE(es.has_engagement_data, false)
-           AND COALESCE(es.engagement_score, 1) < 0.15) AS flag_low_engagement,
-         (COALESCE(p.punctuality_rate, 1) < 0.7) AS flag_low_punctuality,
+           AND es.engagement_score < 0.15) AS flag_low_engagement,
+         (p.punctuality_rate IS NOT NULL AND p.punctuality_rate < 0.7) AS flag_low_punctuality,
          (sa.perf_trend < 0) AS flag_neg_trend,
          ((CASE WHEN sa.avg_score < sa.pass_threshold THEN 1 ELSE 0 END)
           + (CASE WHEN COALESCE(e.previous_attempt_count, 0) > 0 THEN 1 ELSE 0 END)
           + (CASE WHEN COALESCE(es.has_engagement_data, false)
-                    AND COALESCE(es.engagement_score, 1) < 0.15 THEN 1 ELSE 0 END)
-          + (CASE WHEN COALESCE(p.punctuality_rate, 1) < 0.7 THEN 1 ELSE 0 END)
+                    AND es.engagement_score < 0.15 THEN 1 ELSE 0 END)
+          + (CASE WHEN p.punctuality_rate IS NOT NULL AND p.punctuality_rate < 0.7 THEN 1 ELSE 0 END)
           + (CASE WHEN sa.perf_trend < 0 THEN 1 ELSE 0 END)) AS sum_flags
   FROM score_agg sa
   JOIN enrollment e ON e.student_id = sa.student_id

@@ -257,6 +257,12 @@ For every action mentioned:
 - ground the rationale in its linked evidence;
 - obey its claim_limits;
 - identify its rule_id/rule_version in the evidence context when useful.
+- Create exactly one insight for each prioritized action. Combine all linked
+  metrics and thresholds inside that insight instead of creating separate
+  metric-only or threshold-only insights.
+- Use an insight title that clearly refers to the corresponding action. Do not
+  create standalone insights such as "Pass Threshold" when that threshold only
+  supports another action.
 
 If prioritized_actions is empty, explain that no supported action was generated.
 Do not propose next steps beyond the payload.
@@ -423,7 +429,7 @@ Return the JSON explanation structure."""
         ):
             return True
 
-        if req.task_id == "A-G16":
+        if req.task_id in {"A-G03", "A-G16"}:
             return True
 
         method, _warning = BaseExplanationStrategy._resolve_ai_summary_method()
@@ -445,7 +451,7 @@ Return the JSON explanation structure."""
         ):
             return True
 
-        if req.task_id == "A-G16":
+        if req.task_id in {"A-G03", "A-G16"}:
             return True
 
         method, _warning = BaseExplanationStrategy._resolve_ai_summary_method()

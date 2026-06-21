@@ -180,6 +180,161 @@ test("table/card/checklist adapters handle minimal valid data", () => {
   assert.equal(checklist.items.length, 1);
 });
 
+test("checklist distinguishes unavailable evidence from a stable zero", () => {
+  const checklist = checklistAdapter.adapt(
+    [{
+      flag_name: "flag_low_punctuality",
+      flag_value: null,
+      threshold: 0.7,
+      triggered: null,
+      severity: "info",
+      evidence_available: false,
+    }],
+    {}
+  );
+
+  assert.equal(checklist.items[0].available, false);
+  assert.equal(checklist.items[0].triggered, false);
+  assert.equal(checklist.summary.unavailable, 1);
+  assert.equal(
+    checklistAdapter.getChecklistDisplayValue("flag_low_punctuality", null),
+    "Not available"
+  );
+});
+
+test("risk status card uses backend risk score without frontend adjustment", () => {
+  const card = cardAdapter.adapt(
+    [{
+      avg_score: 28.75,
+      engagement_score: 0,
+      punctuality_rate: 1,
+      previous_attempt_count: 0,
+      pass_threshold: 40,
+      target_threshold: 70,
+      at_risk_score: 2,
+      at_risk_label: "high",
+    }],
+    { variant: "risk_status" }
+  );
+
+  assert.equal(card.type, "risk_status");
+  assert.equal(card.riskScore, 2);
+  assert.equal(card.riskLabel, "medium");
+  assert.ok(!card.meta.warnings.some((warning) => warning.includes("adjusted by hard rules")));
+});
+
+test("risk status card marks unavailable engagement instead of displaying zero", () => {
+  const card = cardAdapter.adapt(
+    [{
+      avg_score: 41.25,
+      engagement_score: null,
+      engagement_score_available: false,
+      punctuality_rate: 1,
+      previous_attempt_count: 0,
+      pass_threshold: 40,
+      target_threshold: 70,
+      at_risk_score: 0,
+      at_risk_label: "low",
+    }],
+    { variant: "risk_status" }
+  );
+
+  const engagement = card.metrics.find((metric) => metric.key === "engagement_score");
+  assert.equal(engagement.value, null);
+  assert.equal(engagement.available, false);
+});
+
+test("risk status card marks unavailable punctuality instead of displaying 100 percent", () => {
+  const card = cardAdapter.adapt(
+    [{
+      avg_score: 41.25,
+      engagement_score: null,
+      engagement_score_available: false,
+      punctuality_rate: null,
+      punctuality_rate_available: false,
+      previous_attempt_count: 0,
+      pass_threshold: 40,
+      target_threshold: 70,
+      at_risk_score: 0,
+      at_risk_label: "low",
+    }],
+    { variant: "risk_status" }
+  );
+
+  const punctuality = card.metrics.find((metric) => metric.key === "punctuality_rate");
+  assert.equal(punctuality.value, null);
+  assert.equal(punctuality.available, false);
+});
+
+test("A-G03 contact queue preserves unavailable engagement and punctuality", () => {
+  const queue = cardAdapter.adapt(
+    [{
+      student_id: "S001",
+      avg_score: 35,
+      engagement_score: null,
+      engagement_score_available: false,
+      punctuality_rate: null,
+      punctuality_rate_available: false,
+      previous_attempt_count: 1,
+      at_risk_score: 3,
+      at_risk_label: "high",
+      flag_low_score: true,
+      flag_repeated: true,
+      flag_neg_trend: true,
+    }],
+    { variant: "at_risk_contact_queue" }
+  );
+
+  assert.equal(queue.students[0].engagementScoreAvailable, false);
+  assert.equal(queue.students[0].punctualityRateAvailable, false);
+  assert.equal(queue.students[0].engagementScore, null);
+  assert.equal(queue.students[0].punctualityRate, null);
+  assert.match(queue.students[0].recommendedAdminAction, /academic recovery check-in/i);
+  assert.match(queue.students[0].recommendedAdminAction, /prior-attempt difficulties/i);
+  assert.match(queue.students[0].recommendedAdminAction, /recent feedback/i);
+});
+
+test("S-T13 action plan does not treat unavailable engagement as observed zero", () => {
+  const card = cardAdapter.adapt(
+    [{
+      avg_score: 41.25,
+      performance_trend: 2.5,
+      engagement_score: 0,
+      engagement_score_available: false,
+      absence_rate: 0.125,
+      pass_threshold: 40,
+      target_threshold: 70,
+      at_risk_score: 0,
+      at_risk_label: "low",
+    }],
+    { variant: "action_plan" }
+  );
+
+  assert.deepEqual(card.steps.map((step) => step.key), ["score-target"]);
+  assert.equal(card.summary.engagementScore, null);
+  assert.equal(card.summary.engagementAvailable, false);
+});
+
+test("S-T13 action plan uses the same attendance trigger as AI rules", () => {
+  const card = cardAdapter.adapt(
+    [{
+      avg_score: 75,
+      performance_trend: 1,
+      engagement_score: null,
+      engagement_score_available: false,
+      absence_rate: 0.25,
+      pass_threshold: 40,
+      target_threshold: 70,
+      at_risk_score: 0,
+      at_risk_label: "low",
+    }],
+    { variant: "action_plan" }
+  );
+
+  assert.deepEqual(card.steps.map((step) => step.key), ["attendance"]);
+  assert.match(card.steps[0].reason, /Relative absence index/);
+});
+
 test("multi-query selector uses explicit dataset_label and deterministic fallback", () => {
   const taskMeta = {
     query_labels: ["summary", "detail"],

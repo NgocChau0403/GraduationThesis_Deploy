@@ -1,11 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useOutletContext, useNavigate } from "react-router-dom";
 import ResultPanel from "../../components/import/ResultPanel";
 import { useAppContext } from "../../contexts/AppContext";
 import { getActiveDataset, setActiveDataset as apiSetActive } from "../../services/datasetApi";
 
 /**
- * Step 4: Success State & Ingestion Summary
+ * Step 4: Success State and Ingestion Summary
  */
 export default function CompleteStep() {
   const navigate = useNavigate();
@@ -15,25 +15,17 @@ export default function CompleteStep() {
   const [isSyncingDataset, setIsSyncingDataset] = useState(false);
   const [syncError, setSyncError] = useState(null);
 
-  // Auto-set the newly imported dataset as Active — only if pipeline actually succeeded
   useEffect(() => {
     if (runResult?.success && !hasAutoSet.current) {
       hasAutoSet.current = true;
       setIsSyncingDataset(true);
       setSyncError(null);
 
-      // ─── Resolve importBatchId ───────────────────────────────────────────
-      // Single-file mode: response.result.importBatchId
-      // Bundle mode:      response.result.metadata.options.importBatchId
-      // Fallback:         sessionId (từ OutletContext, luôn tồn tại)
       const importBatchId =
         runResult.result?.importBatchId ||
         runResult.result?.metadata?.options?.importBatchId ||
         sessionId;
 
-      // ─── Resolve source_dataset ──────────────────────────────────────────
-      // Single-file mode: response.result.result.mappingConfigUsed.source_dataset
-      // Fallback:         sourceDataset từ OutletContext (resolved khi upload)
       const resolvedSource =
         runResult.result?.result?.mappingConfigUsed?.source_dataset ||
         sourceDataset ||
@@ -52,7 +44,6 @@ export default function CompleteStep() {
         ? Promise.resolve({ success: true, activeDataset: activeFromRun })
         : apiSetActive(datasetObj);
 
-      // Đồng bộ AppContext theo dataset active mới nhất
       maybeSetActivePromise
         .then(async (res) => {
           const serverActive = await getActiveDataset().catch(() => null);
@@ -71,8 +62,7 @@ export default function CompleteStep() {
   }, [runResult, sessionId, sourceDataset, setActiveDataset, refreshImportHistory]);
 
   const handleViewDashboard = async () => {
-    if (!runResult?.success) return;
-    if (isSyncingDataset) return;
+    if (!runResult?.success || isSyncingDataset) return;
 
     try {
       const serverActive = await getActiveDataset();
@@ -86,18 +76,19 @@ export default function CompleteStep() {
     }
   };
 
-  // Guard clause if someone tries to access this page without a result
   if (!runResult) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center animate-in fade-in zoom-in duration-500">
-        <div className="h-16 w-16 bg-slate-100 rounded-full flex items-center justify-center text-2xl mb-4">🔍</div>
-        <h2 className="text-xl font-bold text-slate-800">No Import Results Found</h2>
-        <p className="text-slate-500 mb-6">It seems like you haven't completed any import process yet.</p>
-        <button 
+      <div className="flex flex-col items-center justify-center py-20 text-center animate-in fade-in duration-500">
+        <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-100 text-2xl">
+          ?
+        </div>
+        <h2 className="text-xl font-bold text-slate-800">No import results found</h2>
+        <p className="mb-6 mt-2 text-slate-500">It seems like you have not completed an import process yet.</p>
+        <button
           onClick={() => navigate("/import/upload")}
-          className="px-6 py-2 bg-emerald-600 text-white rounded-xl font-bold hover:bg-emerald-700 transition-all"
+          className="rounded-xl bg-emerald-600 px-6 py-2 font-bold text-white transition-all hover:bg-emerald-700"
         >
-          Start New Import
+          Start new import
         </button>
       </div>
     );
@@ -106,103 +97,97 @@ export default function CompleteStep() {
   const isSuccess = runResult?.success === true;
 
   return (
-    <div className="animate-in fade-in slide-in-from-top-4 duration-1000 max-w-5xl mx-auto text-center">
-      {/* HEADER — Conditional on success / failure */}
-      <div className="mb-12">
-        <div className="relative inline-flex mb-6">
-          <div
-            className={`absolute inset-0 blur-2xl opacity-20 animate-pulse ${
-              isSuccess ? "bg-emerald-400" : "bg-red-400"
-            }`}
-          />
-          <div
-            className={`relative inline-flex h-24 w-24 items-center justify-center rounded-full text-5xl shadow-inner border ${
-              isSuccess
-                ? "bg-emerald-50 text-emerald-600 border-emerald-100"
-                : "bg-red-50 text-red-500 border-red-100"
-            }`}
-          >
-            {isSuccess ? "🎉" : "⚠️"}
+    <div className="mx-auto max-w-5xl animate-in fade-in duration-700">
+      <section className="overflow-hidden rounded-[28px] border border-slate-200 bg-white shadow-xl shadow-slate-900/5">
+        <div
+          className={`border-b px-6 py-7 sm:px-8 ${
+            isSuccess
+              ? "border-emerald-100 bg-gradient-to-br from-emerald-50 via-white to-slate-50"
+              : "border-red-100 bg-gradient-to-br from-red-50 via-white to-slate-50"
+          }`}
+        >
+          <div className="flex flex-col gap-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-start gap-4">
+              <div
+                className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl text-2xl font-black ${
+                  isSuccess ? "bg-emerald-100 text-emerald-700" : "bg-red-100 text-red-700"
+                }`}
+              >
+                {isSuccess ? "✓" : "!"}
+              </div>
+              <div>
+                <div
+                  className={`mb-2 inline-flex rounded-full border px-3 py-1 text-[11px] font-bold uppercase tracking-wider ${
+                    isSuccess
+                      ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                      : "border-red-200 bg-red-50 text-red-700"
+                  }`}
+                >
+                  {isSuccess ? "Import complete" : "Import failed"}
+                </div>
+                <h2 className="text-2xl font-black tracking-tight text-slate-950 sm:text-3xl">
+                  {isSuccess ? "Dataset is ready" : "Pipeline needs attention"}
+                </h2>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
+                  {isSuccess
+                    ? "Your data has been processed, validated, and loaded into the analytics warehouse."
+                    : "One or more files could not be processed. Review the details below, fix the issues, and run the import again."}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
 
-        {isSuccess ? (
-          <>
-            <h2 className="text-2xl font-black text-slate-900 tracking-tight sm:text-4xl">Mission Accomplished!</h2>
-            <p className="text-slate-500 mt-3 text-base max-w-2xl mx-auto sm:text-lg">
-              Your data has been successfully processed, validated, and ingested into the{" "}
-              <span className="text-emerald-600 font-bold">Learning Data Warehouse</span>.
-            </p>
-          </>
-        ) : (
-          <>
-            <h2 className="text-2xl font-black text-red-600 tracking-tight sm:text-4xl">Pipeline Failed</h2>
-            <p className="text-slate-500 mt-3 text-base max-w-2xl mx-auto sm:text-lg">
-              One or more files could not be processed. Please review the error details below,
-              fix the data issues, and try again.
-            </p>
-          </>
-        )}
-      </div>
-
-      {/* DETAILED LOGS / RESULTS */}
-      <div className="text-left mb-12 rounded-[2.5rem] border border-slate-100 bg-white p-2 shadow-2xl shadow-slate-200/50">
-        <div className="p-4 bg-slate-50/50 rounded-[2.2rem]">
-          <ResultPanel 
-            result={runResult} 
+        <div className="px-6 py-6 sm:px-8">
+          <ResultPanel
+            result={runResult}
             datasetName={datasetName}
             sourceDataset={sourceDataset}
             fileCount={uploadedFiles?.length || 1}
             uploadedFiles={uploadedFiles}
           />
-        </div>
-      </div>
 
-      {/* ACTION BUTTONS */}
-      <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-        {isSuccess ? (
-          <button
-            type="button"
-            onClick={handleViewDashboard}
-            disabled={isSyncingDataset}
-            className="group relative w-full sm:w-auto px-10 py-5 bg-slate-900 text-white rounded-[2rem] font-bold overflow-hidden transition-all hover:scale-105 active:scale-95 disabled:cursor-not-allowed disabled:opacity-70"
-          >
-            <span className="relative z-10 flex items-center justify-center gap-2">
-              {isSyncingDataset ? "Syncing Active Dataset..." : "📊 View Dashboard Analytics"}
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-600 to-emerald-400 opacity-0 group-hover:opacity-100 transition-opacity" />
-          </button>
-        ) : (
-          <button
-            onClick={() => navigate("/import/review")}
-            className="w-full sm:w-auto px-10 py-5 bg-red-600 text-white rounded-[2rem] font-bold hover:bg-red-700 transition-all flex items-center justify-center gap-2 active:scale-95"
-          >
-            ← Go Back &amp; Fix Mapping
-          </button>
-        )}
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-center">
+            {isSuccess ? (
+              <button
+                type="button"
+                onClick={handleViewDashboard}
+                disabled={isSyncingDataset}
+                className="rounded-2xl bg-slate-950 px-8 py-4 text-sm font-black uppercase tracking-[0.14em] text-white shadow-lg shadow-slate-900/15 transition hover:-translate-y-0.5 hover:bg-emerald-700 disabled:translate-y-0 disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-400 disabled:shadow-none"
+              >
+                {isSyncingDataset ? "Syncing active dataset..." : "View dashboard analytics"}
+              </button>
+            ) : (
+              <button
+                onClick={() => navigate("/import/review")}
+                className="rounded-2xl bg-red-600 px-8 py-4 text-sm font-black uppercase tracking-[0.14em] text-white transition hover:bg-red-700"
+              >
+                Go back and fix mapping
+              </button>
+            )}
 
-        <button 
-          onClick={() => navigate("/import/upload")}
-          className="w-full sm:w-auto px-10 py-5 bg-white text-slate-600 border-2 border-slate-100 rounded-[2rem] font-bold hover:bg-slate-50 hover:border-slate-200 transition-all flex items-center justify-center gap-2"
-        >
-          🔄 New Data Import
-        </button>
-      </div>
+            <button
+              onClick={() => navigate("/import/upload")}
+              className="rounded-2xl border border-slate-200 bg-white px-8 py-4 text-sm font-black uppercase tracking-[0.14em] text-slate-700 transition hover:border-emerald-300 hover:text-emerald-700"
+            >
+              New data import
+            </button>
+          </div>
 
-      {/* QUICK TIP — only shown on success */}
-      {isSuccess && (
-        <div className="mt-12 p-6 rounded-2xl bg-emerald-50/30 border border-emerald-100 max-w-2xl mx-auto">
-          <p className="text-xs text-emerald-700 font-medium leading-relaxed">
-            <strong>Tester Tip:</strong> You can now verify the imported records in the Postgres database{" "}
-            using the <code>sessionId</code> provided in the logs above.
-          </p>
-          {syncError && (
-            <p className="mt-3 text-xs text-red-600 font-semibold">
-              Active dataset sync warning: {syncError}
-            </p>
+          {isSuccess && (
+            <div className="mx-auto mt-6 max-w-3xl rounded-2xl border border-emerald-100 bg-emerald-50 px-4 py-3 text-center">
+              <p className="text-xs font-medium leading-5 text-emerald-800">
+                Tester tip: verify imported records in Postgres using the <code className="rounded bg-white px-1 font-mono">sessionId</code> from the logs.
+              </p>
+              {syncError && (
+                <p className="mt-2 text-xs font-semibold text-red-600">
+                  Active dataset sync warning: {syncError}
+                </p>
+              )}
+            </div>
           )}
         </div>
-      )}
+      </section>
     </div>
   );
 }

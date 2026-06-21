@@ -111,32 +111,33 @@ function adaptActionPlan(row, diag) {
   const avgScore = toFiniteNumber(row?.avg_score);
   const performanceTrend = toFiniteNumber(row?.performance_trend);
   const engagementScore = toFiniteNumber(row?.engagement_score);
+  const engagementAvailable = row?.engagement_score_available === true;
+  const relativeAbsenceIndex = toFiniteNumber(row?.absence_rate);
   const riskScore = toFiniteNumber(row?.at_risk_score);
+  const passThreshold = toFiniteNumber(row?.pass_threshold) ?? 40;
   const targetThreshold = toFiniteNumber(row?.target_threshold) ?? 70;
   const lowEngagementThreshold = 0.15;
   const riskLabel = normalizeRiskLabel(row?.at_risk_label);
 
   const steps = [];
 
-  if (engagementScore !== null && engagementScore < lowEngagementThreshold) {
+  if (avgScore !== null && avgScore < passThreshold) {
     steps.push({
-      key: "engagement",
-      area: "Engagement",
-      title: "Rebuild weekly engagement",
-      priority: "High",
-      reason: `Engagement score is ${formatNumber(engagementScore)}, below the ${lowEngagementThreshold} low-engagement threshold.`,
-      action: "Schedule three short course-resource sessions next week before assessment work.",
-    });
-  }
-
-  if (avgScore !== null && avgScore < targetThreshold) {
-    steps.push({
-      key: "score",
+      key: "score-recovery",
       area: "Score",
-      title: "Protect assessment performance",
-      priority: avgScore < 40 ? "High" : "Medium",
+      title: "Build an academic recovery plan",
+      priority: "High",
+      reason: `Average score is ${formatNumber(avgScore)}, below the pass threshold of ${formatNumber(passThreshold)}.`,
+      action: "Contact your tutor and make a short recovery plan for the next assessed topic.",
+    });
+  } else if (avgScore !== null && avgScore < targetThreshold) {
+    steps.push({
+      key: "score-target",
+      area: "Score",
+      title: "Set the next score target",
+      priority: "Medium",
       reason: `Average score is ${formatNumber(avgScore)} against a target of ${formatNumber(targetThreshold)}.`,
-      action: "Review the weakest assessment feedback first, then do one focused practice block.",
+      action: "Choose one upcoming assessment goal and schedule two focused study sessions toward the target.",
     });
   }
 
@@ -144,10 +145,43 @@ function adaptActionPlan(row, diag) {
     steps.push({
       key: "trend",
       area: "Trend",
-      title: "Stop the downward trend",
+      title: "Review the recent score trend",
       priority: "Medium",
       reason: `Performance trend is ${formatNumber(performanceTrend)} score points per assessment.`,
-      action: "Compare recent feedback with earlier stronger work before starting the next assessment.",
+      action: "Review recent assessment feedback and write down one change to apply next week.",
+    });
+  }
+
+  if (engagementAvailable && engagementScore !== null && engagementScore < lowEngagementThreshold) {
+    steps.push({
+      key: "engagement",
+      area: "Engagement",
+      title: "Rebuild weekly engagement",
+      priority: "Medium",
+      reason: `Engagement score is ${formatNumber(engagementScore)}, below the ${lowEngagementThreshold} low-engagement threshold.`,
+      action: "Schedule three short course check-ins next week and complete one course activity during each check-in.",
+    });
+  }
+
+  if (relativeAbsenceIndex !== null && relativeAbsenceIndex >= 0.25) {
+    steps.push({
+      key: "attendance",
+      area: "Attendance",
+      title: "Plan next week's attendance",
+      priority: "Medium",
+      reason: `Relative absence index is ${formatNumber(relativeAbsenceIndex)}, at or above the 0.25 monitoring threshold.`,
+      action: "Plan next week's attendance in advance and set a reminder for each scheduled learning session.",
+    });
+  }
+
+  if (riskScore !== null && riskScore >= 3 && riskLabel === "high") {
+    steps.push({
+      key: "advisor",
+      area: "Support",
+      title: "Coordinate the first support step",
+      priority: "High",
+      reason: `Composite risk is ${formatNumber(riskScore)} / 5 and classified as high.`,
+      action: "Request a short advisor check-in to review the combined signals and choose the first support step.",
     });
   }
 
@@ -168,10 +202,11 @@ function adaptActionPlan(row, diag) {
       riskLabel,
       riskScore,
       avgScore,
-      engagementScore,
+      engagementScore: engagementAvailable ? engagementScore : null,
+      engagementAvailable,
       performanceTrend,
     },
-    steps,
+    steps: steps.slice(0, 5),
   };
 }
 
@@ -554,6 +589,12 @@ function adaptAtRiskContactQueue(rows, diag, options = {}) {
     const avgScore = toFiniteNumber(row?.avg_score);
     const engagementScore = toFiniteNumber(row?.engagement_score);
     const punctualityRate = toFiniteNumber(row?.punctuality_rate);
+    const engagementScoreAvailable = row?.engagement_score_available === undefined
+      ? engagementScore !== null
+      : row.engagement_score_available === true;
+    const punctualityRateAvailable = row?.punctuality_rate_available === undefined
+      ? punctualityRate !== null
+      : row.punctuality_rate_available === true;
     const previousAttemptCount = toFiniteNumber(row?.previous_attempt_count);
     const activeFlags = parseTriggeredFlags(row);
 
@@ -566,8 +607,9 @@ function adaptAtRiskContactQueue(rows, diag, options = {}) {
       riskLabel: normalizeRiskLabel(row?.at_risk_label),
       avgScore,
       engagementScore,
-      engagementScoreAvailable: Boolean(row?.engagement_score_available) || engagementScore !== null,
+      engagementScoreAvailable,
       punctualityRate,
+      punctualityRateAvailable,
       previousAttemptCount,
       finalOutcome: row?.final_outcome,
       primarySupportCategory: row?.primary_support_category,
@@ -652,8 +694,8 @@ function sortInterventionPriorityStudents(students) {
 function getInterventionUrgencyScore(student) {
   const riskScore = student?.riskScore ?? 0;
   const avgScore = student?.avgScore;
-  const engagementScore = student?.engagementScore;
-  const punctualityRate = student?.punctualityRate;
+  const engagementScore = student?.engagementScoreAvailable ? student?.engagementScore : null;
+  const punctualityRate = student?.punctualityRateAvailable ? student?.punctualityRate : null;
   const outcome = String(student?.finalOutcome ?? "").trim().toLowerCase();
   const hasFlag = (key) => (student?.activeFlags || []).some((flag) => flag.key === key);
 
@@ -729,6 +771,15 @@ function buildAdminContactAction({
   if (lowEngagement) {
     return "Set a weekly study routine and check course-resource activity before assessment deadlines.";
   }
+  if (lowScore && repeatedAttempt && negativeTrend) {
+    return "Arrange an academic recovery check-in, review prior-attempt difficulties and recent feedback, then agree one improvement target for the next assessment.";
+  }
+  if (lowScore && repeatedAttempt) {
+    return "Review prior-attempt difficulties with the student and agree a focused catch-up plan before the next assessment.";
+  }
+  if (lowScore && negativeTrend) {
+    return "Review recent assessment feedback, identify the weakest topic, and agree one recovery target for the next assessment.";
+  }
   if (negativeTrend) {
     return "Review recent assessment feedback and agree one improvement target for the next assessment.";
   }
@@ -802,29 +853,12 @@ function getMetricLabel(key) {
 function adaptRiskStatusCard(row, diag) {
   const reportedRiskLabel = normalizeRiskLabel(row.at_risk_label);
   const riskScore = toFiniteNumber(row.at_risk_score);
+  const engagementAvailable = row?.engagement_score_available === true;
+  const punctualityAvailable = row?.punctuality_rate_available === true;
   if (riskScore === null && row.at_risk_score !== 0) {
     diag.warnings.push('Missing/invalid "at_risk_score"; displaying as unknown.');
   }
-  const avgScore = toFiniteNumber(row?.avg_score);
-  const passThreshold = toFiniteNumber(row?.pass_threshold);
-  const engagementScore = toFiniteNumber(row?.engagement_score);
-  const lowScore = avgScore !== null && passThreshold !== null && avgScore < passThreshold;
-  const severeEngagement = engagementScore !== null && engagementScore <= 0.05;
-  const lowEngagement = engagementScore !== null && engagementScore < 0.15;
-  let adjustedRiskScore = riskScore;
-
-  if (lowScore && severeEngagement) {
-    adjustedRiskScore = Math.max(adjustedRiskScore ?? 0, 3);
-  } else if (lowScore || severeEngagement) {
-    adjustedRiskScore = Math.max(adjustedRiskScore ?? 0, 2);
-  } else if (lowEngagement) {
-    adjustedRiskScore = Math.max(adjustedRiskScore ?? 0, 1);
-  }
-
-  const adjustedRiskLabel = riskLabelFromScore(adjustedRiskScore, reportedRiskLabel);
-  if (adjustedRiskScore !== riskScore || adjustedRiskLabel !== reportedRiskLabel) {
-    diag.warnings.push("Risk status adjusted by hard rules for below-pass score and/or severe low engagement.");
-  }
+  const riskLabel = riskLabelFromScore(riskScore, reportedRiskLabel);
 
   const metricOrder = [
     "avg_score",
@@ -836,17 +870,27 @@ function adaptRiskStatusCard(row, diag) {
   ];
 
   const metrics = metricOrder
-    .filter((key) => row[key] !== undefined && row[key] !== null)
+    .filter((key) => (
+      key === "engagement_score" || key === "punctuality_rate"
+        ? row[key] !== undefined
+        : row[key] !== undefined && row[key] !== null
+    ))
     .map((key) => ({
       key,
       label: key.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
       value: row[key],
+      available:
+        key === "engagement_score"
+          ? engagementAvailable
+          : key === "punctuality_rate"
+            ? punctualityAvailable
+            : true,
     }));
 
   return {
     type: "risk_status",
-    riskLabel: adjustedRiskLabel,
-    riskScore: adjustedRiskScore,
+    riskLabel,
+    riskScore,
     metrics,
   };
 }
@@ -902,6 +946,7 @@ function adaptAbsenceImpactSummary(row, diag) {
 
   const absences = toFiniteNumber(row?.absences);
   const absenceRate = toFiniteNumber(row?.absence_rate);
+  const classMaxAbsences = toFiniteNumber(row?.class_max_absences);
   const avgScore = toFiniteNumber(row?.avg_score);
   const latestScore = toFiniteNumber(row?.latest_score);
   const performanceTrend = toFiniteNumber(row?.performance_trend);
@@ -919,7 +964,8 @@ function adaptAbsenceImpactSummary(row, diag) {
     status: getAbsenceImpactStatus({ absenceRate, avgScore, performanceTrend }),
     metrics: [
       { key: "absences", label: "Absences", value: absences },
-      { key: "absence_rate", label: "Absence rate", value: absenceRate },
+      { key: "absence_rate", label: "Relative absence rate", value: absenceRate },
+      { key: "class_max_absences", label: "Class max absences", value: classMaxAbsences },
       { key: "avg_score", label: "Average score", value: avgScore },
       { key: "latest_score", label: "Latest score", value: latestScore },
       { key: "performance_trend", label: "Score trend", value: performanceTrend },

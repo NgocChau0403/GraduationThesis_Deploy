@@ -439,18 +439,33 @@ class CapabilityValidatorService {
       const engagementResult = classId
         ? await prisma.$queryRaw`
             SELECT
-              COUNT(*)::int AS row_count,
-              COUNT(*) FILTER (WHERE COALESCE(eng.engagement_count, 0) > 0)::int AS positive_row_count
-            FROM engagement eng
-            JOIN enrollment e ON eng.enrollment_id = e.enrollment_id
-            WHERE eng.batch_id = ${batchId} AND e.class_id = ${classId}
+              CASE WHEN EXISTS (
+                SELECT 1
+                FROM engagement eng
+                JOIN enrollment e ON eng.enrollment_id = e.enrollment_id
+                WHERE eng.batch_id = ${batchId}
+                  AND e.class_id = ${classId}
+              ) THEN 1 ELSE 0 END::int AS row_count,
+              CASE WHEN EXISTS (
+                SELECT 1
+                FROM engagement eng
+                JOIN enrollment e ON eng.enrollment_id = e.enrollment_id
+                WHERE eng.batch_id = ${batchId}
+                  AND e.class_id = ${classId}
+                  AND COALESCE(eng.engagement_count, 0) > 0
+              ) THEN 1 ELSE 0 END::int AS positive_row_count
           `
         : await prisma.$queryRaw`
             SELECT
-              COUNT(*)::int AS row_count,
-              COUNT(*) FILTER (WHERE COALESCE(engagement_count, 0) > 0)::int AS positive_row_count
-            FROM engagement
-            WHERE batch_id = ${batchId}
+              CASE WHEN EXISTS (
+                SELECT 1 FROM engagement WHERE batch_id = ${batchId}
+              ) THEN 1 ELSE 0 END::int AS row_count,
+              CASE WHEN EXISTS (
+                SELECT 1
+                FROM engagement
+                WHERE batch_id = ${batchId}
+                  AND COALESCE(engagement_count, 0) > 0
+              ) THEN 1 ELSE 0 END::int AS positive_row_count
           `;
 
       const engagementRows = engagementResult[0]?.row_count ?? 0;

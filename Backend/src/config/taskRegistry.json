@@ -1137,7 +1137,7 @@
     "actionableQuestion": "Does submitting late actually lower my score?",
     "sourceTables": [
       "assessment_result",
-      "assessment [OULAD only]"
+      "assessment"
     ],
     "keyDbFields": [
       "submission_delay_days",
@@ -4981,7 +4981,7 @@
       "vizType": "table"
     },
     "datasetCompatibility": "both",
-    "aiPromptHint": "Rank at-risk students by at_risk_score. For each high-risk student, explain triggered_flags_summary and recommend the recommended_admin_action. Do not invent reasons outside triggered_flags.",
+    "aiPromptHint": "Rank at-risk students by at_risk_score and explain triggered_flags_summary. The dashboard already provides recommended_admin_action, so do not generate additional recommendations. Do not invent reasons outside triggered_flags.",
     "aiSummaryType": "ranking",
     "aiEntityColumn": "student_id",
     "aiMetricColumn": "at_risk_score",
@@ -5620,8 +5620,8 @@
       "explanationType": "observation, interpretation, caution",
       "vizType": "scatter, boxplot"
     },
-    "datasetCompatibility": "OULAD_only",
-    "aiPromptHint": "Describe trend. Highlight which imd_band groups have most at-risk students. Recommend equity-aware support.",
+    "datasetCompatibility": "both",
+    "aiPromptHint": "Describe the relationship between the dataset-specific disadvantage score and academic performance. For OULAD, use IMD, disability, and education context. For UCI, use previous failures, parental education, internet access, and paid-class access. Avoid causal claims and recommend equity-aware support.",
     "aiSummaryType": "correlation_evidence",
     "aiXColumn": "disadvantage_score",
     "aiYColumn": "avg_score",
@@ -5631,7 +5631,7 @@
     "aiOutlierPolicy": "high_x_low_y",
     "aiMinimumSampleSize": 30,
     "aiTopK": 10,
-    "sqlQuery": "WITH score_agg AS (\n  SELECT ar.student_id,\n         AVG(ar.score_normalized)                              AS avg_score,\n         REGR_SLOPE(ar.score_normalized, a.assessment_order)  AS perf_trend\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment  e ON ar.student_id   = e.student_id\n                     AND a.class_id     = e.class_id\n  WHERE e.class_id = :class_id\n  GROUP BY ar.student_id\n)\nSELECT e.student_id, s.socioeconomic_band, s.imd_score_numeric, s.disability_flag, s.highest_education, s.disadvantage_score, sa.avg_score, e.final_outcome FROM student s JOIN enrollment e ON s.student_id=e.student_id JOIN score_agg sa ON e.student_id=sa.student_id WHERE e.class_id=:class_id AND e.source_dataset = 'OULAD' ORDER BY s.disadvantage_score DESC",
+    "sqlQuery": "WITH score_agg AS (\n  SELECT ar.student_id,\n         AVG(ar.score_normalized)                              AS avg_score,\n         REGR_SLOPE(ar.score_normalized, a.assessment_order)  AS perf_trend\n  FROM assessment_result ar\n  JOIN assessment a ON ar.assessment_id = a.assessment_id\n  JOIN enrollment  e ON ar.student_id   = e.student_id\n                     AND a.class_id     = e.class_id\n  WHERE e.class_id = :class_id\n  GROUP BY ar.student_id\n)\nSELECT e.student_id, s.source_dataset, s.socioeconomic_band, s.imd_score_numeric, s.disability_flag, s.highest_education, s.mother_education_level, s.father_education_level, s.internet_access_flag, s.has_paid_class, e.previous_attempt_count, s.disadvantage_score, sa.avg_score, e.final_outcome FROM student s JOIN enrollment e ON s.student_id=e.student_id JOIN score_agg sa ON e.student_id=sa.student_id WHERE e.class_id=:class_id AND s.disadvantage_score IS NOT NULL ORDER BY s.disadvantage_score DESC",
     "viz_type": "scatter_plot",
     "visualization_config": {
       "x_field": "disadvantage_score",
@@ -5678,11 +5678,7 @@
         "disadvantage_score",
         "avg_score",
         "final_outcome"
-      ],
-      "dataset_specific": {
-        "source_dataset": "OULAD",
-        "reason": "Task depends on OULAD IMD-derived disadvantage_score and score outcomes."
-      }
+      ]
     },
     "fallbackStrategy": "show_partial_data",
     "registry_status": "validated",

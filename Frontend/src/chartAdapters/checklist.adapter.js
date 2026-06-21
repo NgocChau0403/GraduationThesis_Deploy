@@ -27,21 +27,28 @@ export function adapt(rawData, config = {}) {
     }
 
     const normalizedFlagName = normalizeFlagName(flagName);
-    const triggered = parseBoolean(row.triggered);
-    const stateText = getChecklistStateText(normalizedFlagName, triggered);
+    const currentValue = getRowValue(row, "flag_value");
+    const explicitAvailability = getRowValue(row, "evidence_available");
+    const available = explicitAvailability === undefined
+      ? !isMissingValue(currentValue)
+      : parseBoolean(explicitAvailability);
+    const triggered = available ? parseBoolean(row.triggered) : false;
+    const stateText = getChecklistStateText(normalizedFlagName, triggered, available);
     const severity = normalizeSeverity(
       getRowValue(row, "severity"),
       normalizedFlagName,
-      triggered
+      triggered,
+      available
     );
 
     items.push({
       id: `${normalizedFlagName}-${index}`,
       flagName: normalizedFlagName,
-      currentValue: getRowValue(row, "flag_value"),
+      currentValue,
       threshold: getRowValue(row, "threshold"),
       riskRule: getRiskRuleLabel(normalizedFlagName, getRowValue(row, "threshold")),
       triggered,
+      available,
       severity,
       description: getTextValue(getRowValue(row, "flag_description")) || stateText.description,
       recommendedAction: getTextValue(getRowValue(row, "recommended_action")) || stateText.recommendedAction,
@@ -51,6 +58,7 @@ export function adapt(rawData, config = {}) {
 
   diag.valid_rows = items.length;
   const triggeredCount = items.filter((item) => item.triggered).length;
+  const unavailableCount = items.filter((item) => !item.available).length;
   const highestSeverity = getHighestSeverity(items);
 
   return {
@@ -58,6 +66,7 @@ export function adapt(rawData, config = {}) {
     summary: {
       total: items.length,
       triggered: triggeredCount,
+      unavailable: unavailableCount,
       highestSeverity,
     },
     meta: finalizeDiagnostics(diag),
@@ -95,7 +104,8 @@ function parseBoolean(value) {
   return ["true", "t", "yes", "y", "1", "triggered"].includes(text);
 }
 
-function normalizeSeverity(value, flagName, triggered) {
+function normalizeSeverity(value, flagName, triggered, available = true) {
+  if (!available) return "info";
   const text = String(value ?? "").trim().toLowerCase();
   if (text === "high" || text === "medium" || text === "low" || text === "info") {
     return text;
@@ -165,7 +175,13 @@ function getHighestSeverity(items) {
   }, "info");
 }
 
-function getChecklistStateText(flagName, triggered) {
+function getChecklistStateText(flagName, triggered, available = true) {
+  if (!available) {
+    return {
+      description: "This flag cannot be evaluated because the required source data is unavailable.",
+      recommendedAction: "No action is generated from this flag until reliable data becomes available.",
+    };
+  }
   const stableText = {
     flag_low_score: {
       description: "Average score is at or above the pass threshold for this dataset scale.",
@@ -224,6 +240,7 @@ function getChecklistStateText(flagName, triggered) {
 }
 
 export function getChecklistDisplayValue(flagName, value) {
+  if (isMissingValue(value)) return "Not available";
   const numeric = Number(value);
   if (!Number.isFinite(numeric)) return String(value ?? "—");
   if (["flag_low_engagement", "flag_low_punctuality", "flag_neg_trend", "flag_low_score"].includes(flagName)) {

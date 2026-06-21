@@ -110,10 +110,24 @@ function normalizeGender(value) {
   return String(value).trim();
 }
 
-function normalizeScore(value) {
+function normalizeScore(value, { datasetName = "", sourceDataset = "", transformParams = null } = {}) {
   if (value === null || value === undefined || value === "") return null;
   const parsed = Number(value);
   if (Number.isNaN(parsed)) return null;
+
+  // Canonical score_normalized is always stored on a 0..100 scale.
+  // Allow an explicit mapping multiplier for future/custom datasets, while
+  // keeping the built-in dataset rules identical to the sample adapters.
+  const explicitMultiplier = Number(transformParams?.multiplier);
+  if (Number.isFinite(explicitMultiplier) && explicitMultiplier > 0) {
+    return parsed * explicitMultiplier;
+  }
+
+  if (isUciDataset(datasetName, sourceDataset)) {
+    return parsed * 5;
+  }
+
+  // OULAD scores and unknown sources are already expected to be 0..100.
   return parsed;
 }
 
@@ -141,7 +155,7 @@ function regexExtract(value, pattern) {
   return null;
 }
 
-function applyTransform(transformName, rawValue, transformParams) {
+function applyTransform(transformName, rawValue, transformParams, transformContext = {}) {
   switch (transformName) {
     case "direct_copy": return rawValue ?? null;
     case "ignore": return null;
@@ -149,7 +163,10 @@ function applyTransform(transformName, rawValue, transformParams) {
     case "cast_float": return castFloat(rawValue);
     case "cast_boolean": return castBoolean(rawValue);
     case "normalize_gender": return normalizeGender(rawValue);
-    case "normalize_score": return normalizeScore(rawValue);
+    case "normalize_score": return normalizeScore(rawValue, {
+      ...transformContext,
+      transformParams
+    });
     case "convert_date_to_relative_day": return convertDateToRelativeDay(rawValue);
     case "regex_extract": return regexExtract(rawValue, transformParams?.regex);
     default: throw new Error(`Unsupported transform "${transformName}".`);
@@ -236,9 +253,10 @@ function buildExpandedAssessmentRows(assessmentScores, assessmentBase) {
   if (assessmentScores.length === 0) return [];
 
   if (assessmentScores.length === 1) {
-    const { sourceField, value } = assessmentScores[0];
+    const { sourceField, value, rawValue } = assessmentScores[0];
     return [{
       ...assessmentBase,
+      score_raw: rawValue,
       score_normalized: value,
       // Respect an explicit assessment_id from the mapping; else derive from the source column name
       assessment_id: assessmentBase.assessment_id || sourceField,
@@ -247,8 +265,9 @@ function buildExpandedAssessmentRows(assessmentScores, assessmentBase) {
   }
 
   // Multiple score columns → one assessment row per column (generic unpivot / melt)
-  return assessmentScores.map(({ sourceField, value }, idx) => ({
+  return assessmentScores.map(({ sourceField, value, rawValue }, idx) => ({
     ...assessmentBase,
+    score_raw: rawValue,
     score_normalized: value,
     // Each column becomes its own assessment; the column name IS the assessment identity
     assessment_id: sourceField,
@@ -258,13 +277,64 @@ function buildExpandedAssessmentRows(assessmentScores, assessmentBase) {
   }));
 }
 
+const UCI_ASSESSMENT_DEFAULTS = {
+  G1: {
+    assessment_name: "G1",
+    assessment_type: "quiz",
+    assessment_order: 1,
+    assessment_due_day: 21,
+    assessment_weight_pct: 25,
+    is_final_assessment: false
+  },
+  G2: {
+    assessment_name: "G2",
+    assessment_type: "quiz",
+    assessment_order: 2,
+    assessment_due_day: 56,
+    assessment_weight_pct: 35,
+    is_final_assessment: false
+  },
+  G3: {
+    assessment_name: "G3",
+    assessment_type: "exam",
+    assessment_order: 3,
+    assessment_due_day: 98,
+    assessment_weight_pct: 40,
+    is_final_assessment: true
+  }
+};
+
+function enrichUciAssessmentRows(expandedAssessmentRows, mappingConfig) {
+  if (!isUciDataset(mappingConfig?.dataset_name, mappingConfig?.source_dataset)) {
+    return expandedAssessmentRows;
+  }
+
+  return expandedAssessmentRows.map((row) => {
+    const rawName = String(row?.assessment_name || row?.assessment_id || "").trim().toUpperCase();
+    const defaults = UCI_ASSESSMENT_DEFAULTS[rawName];
+    if (!defaults) return row;
+
+    // Match the sample UCI adapter for imported CSVs. Mapping editor choices
+    // still win if the user explicitly provides assessment metadata.
+    return {
+      ...row,
+      assessment_name: row.assessment_name || defaults.assessment_name,
+      assessment_type: row.assessment_type || defaults.assessment_type,
+      assessment_order: row.assessment_order ?? defaults.assessment_order,
+      assessment_due_day: row.assessment_due_day ?? defaults.assessment_due_day,
+      assessment_weight_pct: row.assessment_weight_pct ?? defaults.assessment_weight_pct,
+      is_final_assessment: row.is_final_assessment ?? defaults.is_final_assessment
+    };
+  });
+}
+
 function normalizeAssessmentKey(value) {
   if (value === null || value === undefined) return "ASSESSMENT";
   const key = String(value).trim();
   return key.length > 0 ? key : "ASSESSMENT";
 }
 
-function deriveFinalOutcomeFromAssessments(expandedAssessmentRows = []) {
+function deriveFinalOutcomeFromAssessments(expandedAssessmentRows = [], sourceDataset = null) {
   if (!Array.isArray(expandedAssessmentRows) || expandedAssessmentRows.length === 0) {
     return null;
   }
@@ -295,11 +365,11 @@ function deriveFinalOutcomeFromAssessments(expandedAssessmentRows = []) {
   });
 
   const finalScore = ordered[ordered.length - 1].numeric;
-  // Scale-aware pass threshold:
-  // - 0..20 scale -> pass at 10
-  // - 0..100 scale (or equivalent normalized) -> pass at 50
-  const passThreshold = finalScore <= 20 ? 10 : 50;
-
+  // score_normalized is canonical 0..100; keep outcome derivation aligned
+  // with source outcome semantics. UCI defines passing as G3 >= 10/20,
+  // which is 50/100 after normalization. Other datasets keep the platform
+  // runtime pass threshold when no explicit final_outcome is supplied.
+  const passThreshold = String(sourceDataset || "").toUpperCase() === "UCI" ? 50 : 40;
   return finalScore >= passThreshold ? "Pass" : "Fail";
 }
 
@@ -411,7 +481,15 @@ export function transformRawRowsToCanonical({
       let transformedValue;
 
       try {
-        transformedValue = applyTransform(mappingItem.transform, rawValue, mappingItem.transform_params);
+        transformedValue = applyTransform(
+          mappingItem.transform,
+          rawValue,
+          mappingItem.transform_params,
+          {
+            datasetName: mappingConfig?.dataset_name,
+            sourceDataset: mappingConfig?.source_dataset
+          }
+        );
       } catch (error) {
         skippedMappingCount += 1;
         pushUnique(warnings, `Transform failed for ${buildRowContext(rowIndex, mappingItem.id, primarySourceField)}.`);
@@ -429,7 +507,11 @@ export function transformRawRowsToCanonical({
       // every iteration (which causes data loss when multiple score columns are
       // mapped), we ACCUMULATE them and defer row generation to Phase 1.5.
       if (logicalGroup === "assessment" && canonicalFieldName === "score_normalized") {
-        assessmentScores.push({ sourceField: primarySourceField, value: finalValue });
+        assessmentScores.push({
+          sourceField: primarySourceField,
+          value: finalValue,
+          rawValue: normalizeScore(rawValue)
+        });
         transformedValueCount += 1;
         continue;
       }
@@ -447,7 +529,10 @@ export function transformRawRowsToCanonical({
 
     // Phase 1.5: Build expanded assessment rows from accumulated scores
     // This converts N score columns into N distinct assessmentLogic objects.
-    const expandedAssessmentRows = buildExpandedAssessmentRows(assessmentScores, assessmentBase);
+    const expandedAssessmentRows = enrichUciAssessmentRows(
+      buildExpandedAssessmentRows(assessmentScores, assessmentBase),
+      mappingConfig
+    );
 
     // Phase 2: Derive Contextual IDs (Surrogate Keys)
     const courseLogic = logicalRecordMap.course;
@@ -554,7 +639,7 @@ export function transformRawRowsToCanonical({
     // 4. ENROLLMENT
     if (enrollmentId) {
       const derivedFinalOutcome =
-        enrollmentLogic.final_outcome || deriveFinalOutcomeFromAssessments(expandedAssessmentRows);
+        enrollmentLogic.final_outcome || deriveFinalOutcomeFromAssessments(expandedAssessmentRows, sourceDataset);
 
       // Compute registration_lead_time [FE]: ABS(enrollment_start_day) only when day < 0 (registered early)
       const startDay = enrollmentLogic.enrollment_start_day != null ? Number(enrollmentLogic.enrollment_start_day) : null;
@@ -623,6 +708,7 @@ export function transformRawRowsToCanonical({
           assessment_id: derivedAssessmentId,
           student_id: derivedStudentId,
           enrollment_id: enrollmentId,
+          score_raw: aLogic.score_raw,
           score_normalized: aLogic.score_normalized,
           submission_day: aLogic.submission_day,
           // submission_delay_days intentionally omitted — not stored in DB per spec.

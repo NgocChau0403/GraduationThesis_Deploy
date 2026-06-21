@@ -38,6 +38,11 @@ function ChecklistSummary({ summary }) {
       <span className="text-xs text-slate-700">
         Active flags: <span className="font-semibold">{summary.triggered}</span> / {summary.total}
       </span>
+      {summary.unavailable > 0 && (
+        <span className="text-xs text-slate-600">
+          Unavailable: <span className="font-semibold">{summary.unavailable}</span>
+        </span>
+      )}
       <span className={`text-[11px] font-semibold px-2.5 py-1 rounded-full border ${severityStyle.badgeClass}`}>
         Highest severity: {capitalize(summary.highestSeverity)}
       </span>
@@ -46,8 +51,12 @@ function ChecklistSummary({ summary }) {
 }
 
 function ChecklistItem({ item }) {
-  const status = item.triggered ? "Triggered" : "Stable";
-  const statusStyle = item.triggered ? "text-rose-700 bg-rose-100 border-rose-300" : "text-emerald-700 bg-emerald-100 border-emerald-300";
+  const status = !item.available ? "Unavailable" : item.triggered ? "Triggered" : "Stable";
+  const statusStyle = !item.available
+    ? "text-slate-700 bg-slate-100 border-slate-300"
+    : item.triggered
+      ? "text-rose-700 bg-rose-100 border-rose-300"
+      : "text-emerald-700 bg-emerald-100 border-emerald-300";
   const severityStyle = getSeverityStyle(item.severity);
 
   return (

@@ -238,7 +238,7 @@ function PerformanceMiniMetric({ metric, accent = false }) {
   if (!metric) return null;
   return (
     <div className={`rounded-lg border p-3 min-w-0 ${accent ? "border-blue-100 bg-blue-50" : "border-slate-200 bg-slate-50"}`}>
-      <div className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 truncate">
+      <div className="min-h-[28px] text-[11px] font-semibold uppercase tracking-wider leading-snug text-slate-500">
         {metric.label}
       </div>
       <div className="mt-1 text-xl font-bold text-slate-900 font-mono">
@@ -414,7 +414,12 @@ function ActionPlanCard({ plan }) {
           <ActionPlanPill label="Risk" value={risk.displayLabel} />
           <ActionPlanPill label="Risk score" value={formatRiskScore(summary.riskScore)} />
           <ActionPlanPill label="Avg score" value={formatNumberValue(summary.avgScore)} />
-          <ActionPlanPill label="Engagement" value={formatEngagementScore(summary.engagementScore)} />
+          <ActionPlanPill
+            label="Engagement"
+            value={summary.engagementAvailable === false
+              ? "Not available"
+              : formatEngagementScore(summary.engagementScore)}
+          />
           {summary.punctualityRate !== null && summary.punctualityRate !== undefined && (
             <ActionPlanPill label="Punctuality" value={formatEngagementScore(summary.punctualityRate)} />
           )}
@@ -807,7 +812,10 @@ function AtRiskContactStudentCard({ student }) {
           label="Engagement"
           value={student?.engagementScoreAvailable ? formatEngagementScore(student?.engagementScore) : "n/a"}
         />
-        <ProfileFigure label="Punctuality" value={formatEngagementScore(student?.punctualityRate)} />
+        <ProfileFigure
+          label="Punctuality"
+          value={student?.punctualityRateAvailable ? formatEngagementScore(student?.punctualityRate) : "n/a"}
+        />
       </div>
 
       <div className="mt-4 rounded-lg border border-white/80 bg-white/80 p-3">
@@ -1209,6 +1217,7 @@ function formatScoreValue(value) {
 }
 
 function formatEngagementScore(value) {
+  if (value === null || value === undefined || value === "") return formatCellValue(value);
   const numeric = Number(value);
   if (!Number.isFinite(numeric)) return formatCellValue(value);
   if (numeric >= 0 && numeric <= 1) return `${(numeric * 100).toFixed(1)}%`;
@@ -1217,6 +1226,12 @@ function formatEngagementScore(value) {
 
 function formatRiskMetric(metric) {
   const value = metric?.value;
+  if (metric?.key === "engagement_score" && metric?.available === false) {
+    return "Not available";
+  }
+  if (metric?.key === "punctuality_rate" && metric?.available === false) {
+    return "Not available";
+  }
   if (typeof value === "number" && Number.isFinite(value)) {
     if (metric.key === "engagement_score" && value >= 0 && value <= 1) {
       return `${(value * 100).toFixed(1)}%`;

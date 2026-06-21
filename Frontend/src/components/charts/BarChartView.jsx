@@ -1285,7 +1285,10 @@ function HorizontalBarList({
   const maxRaw = Math.max(1, ...values);
   const resolvedValueKind = inferHorizontalValueKind(valueKind, valueLabel, maxRaw);
   const usesBoundedPercentScale = ["score", "percent", "rate"].includes(resolvedValueKind);
-  const shouldUseDataScaledPercentAxis = resolvedValueKind === "percent" && maxRaw > 0 && maxRaw <= 20;
+  const shouldUseDataScaledPercentAxis = resolvedValueKind === "percent"
+    && colorMode !== "failure_dropout_risk"
+    && maxRaw > 0
+    && maxRaw <= 20;
   const isCorrelationRank = colorMode === "correlation_rank";
   const maxValue = isCorrelationRank
     ? 1

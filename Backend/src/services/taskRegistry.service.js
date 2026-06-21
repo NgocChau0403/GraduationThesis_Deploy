@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import { scoreAgg as canonicalScoreAgg } from "../lib/sqlFragments.js";
 
 // Construct absolute path to the taskRegistry.json file
 const __filename = fileURLToPath(import.meta.url);
@@ -34,13 +35,160 @@ class TaskRegistryService {
       this.tasks = JSON.parse(rawData);
       // Pre-process all SQL templates to strip -- comments at load time
       // so that buildPositionalQuery never encounters :params inside comments
-      this.tasks.forEach(task => this._preprocessSql(task));
+      this.tasks.forEach(task => {
+        this._applyRuntimeSqlCorrections(task);
+        this._preprocessSql(task);
+      });
       this.loadedMtimeMs = registryStat.mtimeMs;
       this.isLoaded = true;
     } catch (error) {
       console.error("Failed to load taskRegistry.json:", error);
       throw new Error("Task registry could not be loaded. Ensure the JSON file exists.");
     }
+  }
+
+  /**
+   * Apply narrowly scoped corrections that must remain effective for every
+   * registry consumer. S-T13 previously calculated the class maximum after
+   * filtering to the selected student, which made every non-zero relative
+   * absence index equal to 1. It also treated missing engagement observations
+   * as observed zero engagement when calculating the composite risk score.
+   */
+  _applyRuntimeSqlCorrections(task) {
+    const correctedTaskIds = new Set([
+      "S-B02", "S-T04", "S-T12", "S-T13",
+      "A-B04", "A-S01", "A-S04", "A-S05", "A-S08",
+      "A-C03", "A-G03", "A-G15", "A-G16",
+    ]);
+    if (!task || !correctedTaskIds.has(task.taskId)) return;
+    if (Array.isArray(task.sqlQueries)) {
+      task.sqlQueries = task.sqlQueries.map((sqlQuery) => {
+        const queryTask = { ...task, sqlQuery, sqlQueries: undefined };
+        this._applyRuntimeSqlCorrections(queryTask);
+        return queryTask.sqlQuery;
+      });
+    }
+    if (typeof task.sqlQuery !== "string") return;
+
+    if (task.taskId === "A-S05") {
+      const generatedProxyFirst = "WHEN a.assessment_order IS NOT NULL THEN CONCAT(COALESCE(NULLIF(a.assessment_type, ''), 'Assessment'), ' ', a.assessment_order) WHEN a.assessment_name IS NOT NULL AND a.assessment_name !~ '^[0-9]+$' AND a.assessment_name <> a.assessment_type THEN a.assessment_name";
+      const sourceNameFirst = "WHEN a.assessment_name IS NOT NULL AND a.assessment_name !~ '^[0-9]+$' AND a.assessment_name <> a.assessment_type THEN a.assessment_name WHEN a.assessment_order IS NOT NULL THEN CONCAT(COALESCE(NULLIF(a.assessment_type, ''), 'Assessment'), ' ', a.assessment_order)";
+      task.sqlQuery = task.sqlQuery.split(generatedProxyFirst).join(sourceNameFirst);
+      return;
+    }
+
+    if (task.taskId === "A-S04") {
+      task.sqlQuery = task.sqlQuery
+        .replace(
+          "COUNT(*) FILTER (WHERE ar.submission_day <= a.due_day) * 1.0\n           / NULLIF(COUNT(*), 0)",
+          "COUNT(*) FILTER (WHERE a.due_day IS NOT NULL\n                              AND ar.submission_day IS NOT NULL\n                              AND ar.submission_day <= a.due_day) * 1.0\n           / NULLIF(COUNT(*) FILTER (WHERE a.due_day IS NOT NULL\n                                      AND ar.submission_day IS NOT NULL), 0)"
+        )
+        .replace(
+          "SELECT flag_name, flag_value, threshold, triggered, severity, flag_description, recommended_action, support_category\nFROM (",
+          "SELECT flag_name, flag_value, threshold, triggered, severity, flag_description, recommended_action, support_category,\n       (flag_value IS NOT NULL) AS evidence_available\nFROM ("
+        )
+        .replace(
+          "sa.avg_score            AS flag_value,",
+          "ROUND(sa.avg_score::numeric, 2)::float8 AS flag_value,"
+        )
+        .replace(
+          "COALESCE(sa.perf_trend, 0) AS flag_value,",
+          "ROUND(sa.perf_trend::numeric, 2)::float8 AS flag_value,"
+        );
+      return;
+    }
+
+    const legacyRiskScoreTaskIds = new Set(["A-S01", "A-S08", "A-C03", "A-G15", "A-G16"]);
+    if (legacyRiskScoreTaskIds.has(task.taskId)) {
+      task.sqlQuery = this._replaceCteBlock(task.sqlQuery, "score_agg", canonicalScoreAgg)
+        .replace(/sa\.avg_score\s*<\s*40/g, "sa.avg_score < sa.pass_threshold");
+    }
+
+    task.sqlQuery = task.sqlQuery
+      .replace(
+        "COALESCE(es.engagement_score, 0) AS engagement_score,",
+        "es.engagement_score AS engagement_score,"
+      )
+      .replace(
+        "(COALESCE(es.engagement_score, 0) < 0.15) AS flag_low_engagement,",
+        "(COALESCE(es.has_engagement_data, false) AND es.engagement_score < 0.15) AS flag_low_engagement,"
+      )
+      .replace(
+        "+ (CASE WHEN COALESCE(es.engagement_score, 0) < 0.15 THEN 1 ELSE 0 END)",
+        "+ (CASE WHEN COALESCE(es.has_engagement_data, false) AND es.engagement_score < 0.15 THEN 1 ELSE 0 END)"
+      )
+      .replace(
+        "ELSE 1.0\n         END AS punctuality_rate",
+        "ELSE NULL\n         END AS punctuality_rate"
+      )
+      .replace(
+        "COALESCE(p.punctuality_rate, 1)::float8 AS punctuality_rate,",
+        "p.punctuality_rate::float8 AS punctuality_rate,"
+      )
+      .replace(
+        "(COALESCE(p.punctuality_rate, 1) < 0.7) AS flag_low_punctuality,",
+        "(p.punctuality_rate IS NOT NULL AND p.punctuality_rate < 0.7) AS flag_low_punctuality,"
+      )
+      .replace(
+        "+ (CASE WHEN COALESCE(p.punctuality_rate, 1) < 0.7 THEN 1 ELSE 0 END)",
+        "+ (CASE WHEN p.punctuality_rate IS NOT NULL AND p.punctuality_rate < 0.7 THEN 1 ELSE 0 END)"
+      )
+      .replace(
+        "rf.punctuality_rate,\n       rf.previous_attempt_count,",
+        "rf.punctuality_rate,\n       (rf.punctuality_rate IS NOT NULL) AS punctuality_rate_available,\n       rf.previous_attempt_count,"
+      );
+
+    // Older compact SQL variants use single-line formulas. Apply the same
+    // availability-safe semantics without changing valid OULAD observations.
+    task.sqlQuery = task.sqlQuery
+      .replace(
+        /COUNT\(\*\) FILTER \(WHERE ar\.submission_day <= a\.due_day\) \* 1\.0\s*\/\s*NULLIF\(COUNT\(\*\), 0\)/g,
+        "COUNT(*) FILTER (WHERE a.due_day IS NOT NULL AND ar.submission_day IS NOT NULL AND ar.submission_day <= a.due_day) * 1.0 / NULLIF(COUNT(*) FILTER (WHERE a.due_day IS NOT NULL AND ar.submission_day IS NOT NULL), 0)"
+      )
+      .replace(/COALESCE\(p\.punctuality_rate,\s*1(?:\.0)?\)/g, "p.punctuality_rate")
+      .replace(/COALESCE\(es\.engagement_score,\s*0\)/g, "es.engagement_score");
+
+    if (task.taskId !== "S-T13") return;
+
+    task.sqlQuery = task.sqlQuery
+      .replace(
+        "FROM enrollment e\n  WHERE e.student_id = :student_id\n    AND e.class_id = :class_id\n)\nSELECT rf.avg_score,",
+        "FROM enrollment e\n  WHERE e.class_id = :class_id\n)\nSELECT rf.avg_score,"
+      )
+      .replace(
+        "LEFT JOIN absence_calc ac ON ac.student_id = rf.student_id",
+        "LEFT JOIN absence_calc ac ON ac.student_id = rf.student_id\n                             AND ac.class_id = :class_id"
+      );
+  }
+
+  _replaceCteBlock(sql, cteName, replacement) {
+    const matcher = new RegExp(`\\b${cteName}\\s+AS(?:\\s+MATERIALIZED)?\\s*\\(`, "i");
+    const match = matcher.exec(sql);
+    if (!match) return sql;
+
+    const openParenIndex = match.index + match[0].lastIndexOf("(");
+    let depth = 0;
+    let inSingleQuote = false;
+
+    for (let index = openParenIndex; index < sql.length; index += 1) {
+      const char = sql[index];
+      if (char === "'" && sql[index - 1] !== "\\") {
+        if (inSingleQuote && sql[index + 1] === "'") {
+          index += 1;
+          continue;
+        }
+        inSingleQuote = !inSingleQuote;
+        continue;
+      }
+      if (inSingleQuote) continue;
+      if (char === "(") depth += 1;
+      if (char === ")") depth -= 1;
+      if (depth === 0) {
+        return `${sql.slice(0, match.index)}${replacement}${sql.slice(index + 1)}`;
+      }
+    }
+
+    return sql;
   }
 
   /**

@@ -161,6 +161,15 @@ class RiskStrategy(BaseExplanationStrategy):
 
     def build_system_prompt(self, req: ExplainRequest) -> str:
         tone = self.get_audience_tone(req.target_audience)
+        if req.task_id == "A-G03":
+            return f"""You are a Learning Analytics expert explaining an admin contact-priority queue.
+{tone}
+The dashboard already displays a deterministic ADMIN ACTION for every student. Explain only why students are ranked and which returned flags support that ranking.
+Do not create, repeat, paraphrase, or imply additional recommendations or actions.
+Do not use unavailable engagement or punctuality as evidence.
+Set explanation.recommendations and explanation.educational_implications to empty lists [].
+Return ONLY a valid JSON object matching the ExplainResponse schema."""
+
         if req.task_id == "S-T13" and is_task_aware_summary_mode():
             return f"""You are a Learning Analytics expert explaining an already-generated next-week action plan.
 {tone}
@@ -203,6 +212,16 @@ Use severity="high" only for students showing multiple simultaneous risk signals
 
     def build_user_prompt(self, req: ExplainRequest) -> str:
         data_summary = self.summarize_datasets(req)
+        if req.task_id == "A-G03":
+            return f"""CONTACT PRIORITY RATIONALE TASK: {req.task_name or req.task_id}
+
+DATASETS:
+{data_summary}
+
+Explain the ordering using at_risk_score and triggered_flags_summary only. Discuss the visible ADMIN ACTION only as existing dashboard context and do not restate it.
+Do not propose any action. Set explanation.recommendations and explanation.educational_implications to [].
+Return the JSON explanation structure."""
+
         if req.task_id == "S-T13" and is_task_aware_summary_mode():
             return f"""ACTION PLAN RATIONALE TASK: {req.task_name or req.task_id}
 
