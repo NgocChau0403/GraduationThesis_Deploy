@@ -196,15 +196,22 @@ Raw evidence:
 
 Raw evidence:
 
-- [`system_performance_20260619T105017Z_82af79.json`](system_performance_20260619T105017Z_82af79.json)
-- [`system_performance_20260619T105144Z_bd7433.json`](system_performance_20260619T105144Z_bd7433.json)
+- [`system_performance_20260622T150940Z_6f41ef.json`](system_performance_20260622T150940Z_6f41ef.json)
+- [`system_performance_20260622T151137Z_1ef61e.json`](system_performance_20260622T151137Z_1ef61e.json)
 
 | Kịch bản | Dataset | Số lần | Average (ms) | P50 (ms) | P95 (ms) | Maximum (ms) | Total tokens | Estimated cost (USD) | Error Rate |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| AI Explanation | UCI | 10 | 5,733.360 | 5,731.914 | 6,284.419 | 6,284.419 | 18,142 | 0.004909 | 0% |
-| AI Explanation | OULAD | 10 | 6,075.344 | 5,961.053 | 7,420.751 | 7,420.751 | 21,084 | 0.005332 | 0% |
+| AI Explanation | UCI | 10 | 8,283.000 | 8,029.012 | 11,152.375 | 11,152.375 | 20,111 | 0.005425 | 0% |
+| AI Explanation | OULAD | 10 | 9,584.017 | 8,550.248 | 14,912.007 | 14,912.007 | 23,239 | 0.005813 | 0% |
 
 AI service trả về model `gpt-4o-mini-2024-07-18` trong các lượt đo.
+
+Các số liệu này được chạy lại sau bản cập nhật AI explanation v3 để latency, token và chi phí phản ánh generation pipeline hiện tại.
+
+| Dataset | Avg CPU (%) | Peak CPU (%) | Avg RAM (%) | Peak RAM (%) |
+|---|---:|---:|---:|---:|
+| UCI | 53.965 | 100.000 | 88.669 | 93.157 |
+| OULAD | 37.805 | 100.000 | 87.909 | 92.168 |
 
 ### 9.4. Hiệu năng Import Pipeline
 
@@ -266,7 +273,7 @@ Simple Analytics chạy nhanh trên cả hai dataset. Trend Analytics chậm hơ
 
 ### 10.4. AI Explanation
 
-AI Explanation chậm hơn SQL analytics đáng kể vì có gọi LLM bên ngoài. Latency trung bình khoảng 5,7–6,1 giây. Estimated cost cho 20 measured AI calls là khoảng USD 0.010241.
+AI Explanation chậm hơn SQL analytics đáng kể vì có gọi LLM bên ngoài. Sau bản cập nhật AI explanation v3, latency trung bình khoảng 8,28 giây cho UCI và 9,58 giây cho OULAD. Estimated cost cho 20 measured AI calls là khoảng USD 0.011238, với tổng cộng 43.350 tokens. Tất cả measured calls đều hoàn tất thành công và không có degraded response.
 
 ### 10.5. Import Pipeline
 
@@ -285,12 +292,12 @@ Final evidence set giữ các performance log sau:
 | Log file | Vai trò evidence |
 |---|---|
 | `system_performance_20260619T103232Z_5b5d39.json` | Backend, task availability, simple analytics, trend analytics và CPU/RAM sampling |
-| `system_performance_20260619T105017Z_82af79.json` | Hiệu năng AI Explanation cho UCI |
-| `system_performance_20260619T105144Z_bd7433.json` | Hiệu năng AI Explanation cho OULAD |
+| `system_performance_20260622T150940Z_6f41ef.json` | Hiệu năng AI Explanation v3 cho UCI |
+| `system_performance_20260622T151137Z_1ef61e.json` | Hiệu năng AI Explanation v3 cho OULAD |
 | `system_performance_20260619T105308Z_276275.json` | Benchmark import pipeline UCI được lặp nhiều lần |
 | `system_performance_20260619T205853Z_ab8bde.json` | Benchmark OULAD full import thành công |
 
-Các benchmark log bị lỗi hoặc log nháp đã được xóa khỏi thư mục evidence cuối cùng để thư mục chỉ còn các log được dùng trong tài liệu đánh giá này.
+Các log AI performance cũ được giữ làm evidence lịch sử nhưng đã được thay thế bởi hai log v3 ngày 22/06 ở trên. Log lỗi hoặc log nháp không được sử dụng trong kết quả cuối.
 
 Mỗi JSON performance log chứa:
 

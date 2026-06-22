@@ -196,15 +196,22 @@ Raw evidence:
 
 Raw evidence:
 
-- [`system_performance_20260619T105017Z_82af79.json`](system_performance_20260619T105017Z_82af79.json)
-- [`system_performance_20260619T105144Z_bd7433.json`](system_performance_20260619T105144Z_bd7433.json)
+- [`system_performance_20260622T150940Z_6f41ef.json`](system_performance_20260622T150940Z_6f41ef.json)
+- [`system_performance_20260622T151137Z_1ef61e.json`](system_performance_20260622T151137Z_1ef61e.json)
 
 | Scenario | Dataset | Runs | Average (ms) | P50 (ms) | P95 (ms) | Maximum (ms) | Total tokens | Estimated cost (USD) | Error Rate |
 |---|---|---:|---:|---:|---:|---:|---:|---:|---:|
-| AI Explanation | UCI | 10 | 5,733.360 | 5,731.914 | 6,284.419 | 6,284.419 | 18,142 | 0.004909 | 0% |
-| AI Explanation | OULAD | 10 | 6,075.344 | 5,961.053 | 7,420.751 | 7,420.751 | 21,084 | 0.005332 | 0% |
+| AI Explanation | UCI | 10 | 8,283.000 | 8,029.012 | 11,152.375 | 11,152.375 | 20,111 | 0.005425 | 0% |
+| AI Explanation | OULAD | 10 | 9,584.017 | 8,550.248 | 14,912.007 | 14,912.007 | 23,239 | 0.005813 | 0% |
 
 The AI service returned model `gpt-4o-mini-2024-07-18` in the measured runs.
+
+These measurements were rerun after the AI explanation v3 update so that latency, token, and cost figures represent the current generation pipeline.
+
+| Dataset | Avg CPU (%) | Peak CPU (%) | Avg RAM (%) | Peak RAM (%) |
+|---|---:|---:|---:|---:|
+| UCI | 53.965 | 100.000 | 88.669 | 93.157 |
+| OULAD | 37.805 | 100.000 | 87.909 | 92.168 |
 
 ### 9.4. Import Pipeline performance
 
@@ -266,7 +273,7 @@ Simple Analytics remained fast on both datasets. Trend Analytics was slower than
 
 ### 10.4. AI Explanation
 
-AI Explanation is much slower than SQL analytics because it includes an external LLM call. The average latency was around 5.7–6.1 seconds. The estimated cost for 20 measured AI calls was approximately USD 0.010241.
+AI Explanation is much slower than SQL analytics because it includes an external LLM call. After the AI explanation v3 update, average latency was approximately 8.28 seconds for UCI and 9.58 seconds for OULAD. The estimated cost for 20 measured AI calls was approximately USD 0.011238, with 43,350 total tokens. All measured calls completed successfully without degraded responses.
 
 ### 10.5. Import Pipeline
 
@@ -285,12 +292,12 @@ The final evidence set keeps the following performance logs:
 | Log file | Evidence role |
 |---|---|
 | `system_performance_20260619T103232Z_5b5d39.json` | Backend, task availability, simple analytics, trend analytics, and CPU/RAM sampling |
-| `system_performance_20260619T105017Z_82af79.json` | AI Explanation performance for UCI |
-| `system_performance_20260619T105144Z_bd7433.json` | AI Explanation performance for OULAD |
+| `system_performance_20260622T150940Z_6f41ef.json` | AI Explanation v3 performance for UCI |
+| `system_performance_20260622T151137Z_1ef61e.json` | AI Explanation v3 performance for OULAD |
 | `system_performance_20260619T105308Z_276275.json` | Repeated UCI import pipeline benchmark |
 | `system_performance_20260619T205853Z_ab8bde.json` | Successful full OULAD import benchmark |
 
-Failed or draft benchmark logs were removed from the final evidence folder so that the directory contains only logs used by this evaluation document.
+The older AI performance logs are retained as historical evidence but are superseded by the two June 22 v3 logs above. Failed or draft logs are not used in the final results.
 
 Each JSON performance log contains:
 
